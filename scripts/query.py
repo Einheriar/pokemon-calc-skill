@@ -147,7 +147,7 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
     }
 
 
-def cmd_move(name: str) -> dict[str, Any]:
+def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
     resolved = resolve_move(name)
     if not resolved:
         return {"error": f"Move '{name}' not found."}
@@ -400,6 +400,12 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         power = int(power_str)
     except ValueError:
         power = 0
+    # Parse hits: can be int or string like "multi"
+    hits_raw = data.get("hits", 1)
+    try:
+        hits = int(hits_raw)
+    except (ValueError, TypeError):
+        hits = 1
     move = {
         "name": data.get("name_en", ""),
         "name_zh": data.get("name_zh", ""),
@@ -407,8 +413,21 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "type": data.get("type", "一般"),
         "category": data.get("category", "Physical"),
         "accuracy": 100,
-        "hits": 1,
+        "hits": hits,
         "is_crit": False,
+        "makes_contact": data.get("makes_contact", False),
+        "has_recoil": data.get("has_recoil", False),
+        "is_punch": data.get("is_punch", False),
+        "is_sound": data.get("is_sound", False),
+        "is_slice": data.get("is_slice", False),
+        "is_wind": data.get("is_wind", False),
+        "is_bullet": data.get("is_bullet", False),
+        "ignores_burn": data.get("ignores_burn", False),
+        "is_spread": data.get("is_spread", False),
+        "is_ohko": data.get("is_ohko", False),
+        "is_z": data.get("is_z", False),
+        "ignores_screens": data.get("ignores_screens", False),
+        "deals_physical_damage": data.get("deals_physical_damage", False),
     }
     if overrides:
         move.update(overrides)
@@ -528,6 +547,11 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     field = Field()
 
     result = calculate_damage(attacker, defender, move, field, gen=9)
+
+    # KO chance
+    from ko_chance import get_ko_chance_text
+    ko_text = get_ko_chance_text(result.damage, move, defender, field)
+
     return {
         "attacker": attacker_name,
         "move": move_name,
@@ -539,6 +563,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "type_effectiveness": result.type_effectiveness,
         "stab_applied": result.stab_applied,
         "burn_applied": result.burn_applied,
+        "ko_chance": ko_text,
     }
 
 
