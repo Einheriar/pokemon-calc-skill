@@ -52,6 +52,8 @@ python scripts/query.py type 水 火
 python scripts/query.py weak Charizard
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟 "{\"evs\":{\"sp_attack\":252},\"item\":\"木炭\"}" "{}" "{\"evs\":{\"sp_defense\":252}}"
+# 多段攻击招式（如双翼）：calc 会自动返回单次 + 合计总伤害
+python scripts/query.py calc 化石翼龙 双翼 胡地 "{\"evs\":{\"attack\":252,\"speed\":252}}" "{}" "{\"evs\":{\"hp\":0,\"defense\":0}}"
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
 ```
@@ -109,24 +111,62 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
   "attacker": "化石翼龙",
   "move": "双翼",
   "defender": "胡地",
-  "damage_range": [55, 65],
-  "damage_rolls": [55, 56, 57, 58, 59, 61, 62, 63, 65],
-  "description": "效果拔群！",
+  "damage_range": [55, 66],
+  "damage_rolls": [55, 55, 57, 57, 58, 58, 60, 60, 60, 61, 61, 63, 63, 64, 64, 66],
+  "description": "Lv.50 化石翼龙 的 Dual Wingbeat vs Lv.50 胡地 | 威力 40 | 攻击 157 | 防御 65 | 伤害范围 55 ~ 66",
   "is_critical": false,
-  "type_effectiveness": 2.0,
+  "type_effectiveness": 1.0,
   "stab_applied": true,
-  "burn_applied": false
+  "burn_applied": false,
+  "ko_chance": "约 6.2% 概率一击必杀",
+  "attacker_info": {
+    "name_zh": "化石翼龙",
+    "types": ["岩石", "飞行"],
+    "base_stats": {"hp": 80, "attack": 105, "defense": 65, "sp_attack": 60, "sp_defense": 75, "speed": 130},
+    "stats": {"hp": 155, "attack": 157, "defense": 85, "sp_attack": 80, "sp_defense": 95, "speed": 182},
+    "ability": "坚硬脑袋",
+    "all_abilities": ["坚硬脑袋", "压迫感", "紧张感"],
+    "nature": "勤奋",
+    "item": "",
+    "evs": {"attack": 252, "speed": 252},
+    "level": 50
+  },
+  "defender_info": {
+    "name_zh": "胡地",
+    "types": ["超能力"],
+    "base_stats": {"hp": 55, "attack": 50, "defense": 45, "sp_attack": 135, "sp_defense": 95, "speed": 120},
+    "stats": {"hp": 130, "attack": 70, "defense": 65, "sp_attack": 155, "sp_defense": 115, "speed": 140},
+    "ability": "同步",
+    "all_abilities": ["同步", "精神力", "魔法防守"],
+    "nature": "勤奋",
+    "item": "",
+    "evs": {"hp": 0, "defense": 0},
+    "level": 50,
+    "current_hp": 130,
+    "max_hp": 130
+  },
+  "total_damage_range": [110, 132],
+  "total_damage_rolls": [110, 114, 116, 116, 118, 120, 120, 120, 120, 121, 122, 122, 124, 126, 127, 132],
+  "move_hits": 2
 }
 ```
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `damage_range` | [int, int] | [最小伤害, 最大伤害] |
-| `damage_rolls` | int[] | 全部 16 个乱数 roll 的伤害值（已排序） |
+| `damage_range` | [int, int] | [最小伤害, 最大伤害]（**单次打击**） |
+| `damage_rolls` | int[] | 全部 16 个乱数 roll 的伤害值（已排序，**单次打击**） |
 | `type_effectiveness` | float | 属性相克倍率（0, 0.25, 0.5, 1, 2, 4） |
 | `stab_applied` | bool | 是否触发了 STAB |
 | `burn_applied` | bool | 是否因烧伤而伤害减半 |
-| `description` | string | 伤害描述文本（如"效果拔群"） |
+| `description` | string | 伤害描述文本 |
+| `ko_chance` | string | 一击必杀概率的文本描述 |
+| `attacker_info` | object | 攻击方基础信息（属性、种族值、能力值、**全部特性**、道具、努力值、等级） |
+| `defender_info` | object | 防御方基础信息（同上，额外含 `current_hp` / `max_hp`） |
+| `total_damage_range` | [int, int] | **[多段招式特有]** [最小总伤害, 最大总伤害] |
+| `total_damage_rolls` | int[] | **[多段招式特有]** 16 个乱数 roll 的总伤害值 |
+| `move_hits` | int | **[多段招式特有]** 连续攻击次数 |
+
+**多段攻击招式说明**：当招式为多段攻击（如双翼、种子机关枪）时，`damage_range` / `damage_rolls` 仍表示**单次打击**的伤害，`total_damage_range` / `total_damage_rolls` 表示**全部段数合计**的伤害。LLM 在总结时应优先引用 `total_damage_range` 判断能否秒杀。
 
 ---
 

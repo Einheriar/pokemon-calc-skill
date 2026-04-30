@@ -549,10 +549,56 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     result = calculate_damage(attacker, defender, move, field, gen=9)
 
     # KO chance
-    from ko_chance import get_ko_chance_text
+    from ko_chance import get_ko_chance_text, squash_multihit
     ko_text = get_ko_chance_text(result.damage, move, defender, field)
 
-    return {
+    # Multi-hit total damage (for moves like Dual Wingbeat)
+    total_damage_rolls: list[int] = []
+    if move.hits > 1:
+        total_damage_rolls = squash_multihit(result.damage, move.hits)
+
+    # Build attacker / defender summary for transparency
+    # Extract all abilities from the first form
+    att_forms = att_data.get("forms", [{}])
+    att_first_form = att_forms[0] if att_forms else {}
+    att_all_abilities = [a.get("name", "") for a in att_first_form.get("abilities", [])]
+
+    def_forms = def_data.get("forms", [{}])
+    def_first_form = def_forms[0] if def_forms else {}
+    def_all_abilities = [a.get("name", "") for a in def_first_form.get("abilities", [])]
+
+    attacker_info = {
+        "name_zh": attacker.name,
+        "name_en": att_data.get("name_en", ""),
+        "types": attacker.types,
+        "base_stats": attacker.base_stats,
+        "stats": attacker.raw_stats,
+        "ability": attacker.ability,
+        "all_abilities": att_all_abilities,
+        "nature": attacker.nature,
+        "item": attacker.item,
+        "evs": attacker.evs,
+        "ivs": attacker.ivs,
+        "level": attacker.level,
+    }
+    defender_info = {
+        "name_zh": defender.name,
+        "name_en": def_data.get("name_en", ""),
+        "types": defender.types,
+        "base_stats": defender.base_stats,
+        "stats": defender.raw_stats,
+        "ability": defender.ability,
+        "all_abilities": def_all_abilities,
+        "nature": defender.nature,
+        "item": defender.item,
+        "evs": defender.evs,
+        "ivs": defender.ivs,
+        "level": defender.level,
+        "current_hp": defender.current_hp,
+        "max_hp": defender.max_hp,
+    }
+
+    response: dict[str, Any] = {
         "attacker": attacker_name,
         "move": move_name,
         "defender": defender_name,
@@ -564,7 +610,15 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "stab_applied": result.stab_applied,
         "burn_applied": result.burn_applied,
         "ko_chance": ko_text,
+        "attacker_info": attacker_info,
+        "defender_info": defender_info,
     }
+    if move.hits > 1:
+        response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
+        response["total_damage_rolls"] = total_damage_rolls
+        response["move_hits"] = move.hits
+
+    return response
 
 
 COMMANDS: dict[str, Any] = {
