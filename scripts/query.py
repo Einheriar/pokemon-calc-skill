@@ -434,6 +434,13 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
     return move
 
 
+def _apply_field_overrides(field: Any, overrides: dict[str, Any]) -> None:
+    """Apply JSON overrides to a Field dataclass instance."""
+    for k, v in overrides.items():
+        if hasattr(field, k):
+            setattr(field, k, v)
+
+
 def cmd_optimize(
     attacker_name: str,
     move_name: str,
@@ -480,6 +487,10 @@ def cmd_optimize(
         def_override = json.loads(_strip_quotes(extra_args[1])) if len(extra_args) > 1 and extra_args[1] else {}
     except json.JSONDecodeError:
         def_override = {}
+    try:
+        field_override = json.loads(_strip_quotes(extra_args[2])) if len(extra_args) > 2 and extra_args[2] else {}
+    except json.JSONDecodeError:
+        field_override = {}
 
     att_dict = _make_pokemon_from_data(att_data, att_override)
     def_dict = _make_pokemon_from_data(def_data, def_override)
@@ -490,6 +501,7 @@ def cmd_optimize(
     defender = Pokemon(**def_dict)
     move = Move(**move_dict)
     field = Field()
+    _apply_field_overrides(field, field_override)
 
     return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold)  # type: ignore[arg-type]
 
@@ -497,10 +509,11 @@ def cmd_optimize(
 def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args: str) -> dict[str, Any]:
     """Quick damage calculation using default Lv50 stats.
     
-    Optional extra_args: JSON overrides for attacker, move, defender.
+    Optional extra_args: JSON overrides for attacker, move, defender, field.
     Example:
         python query.py calc 喷火龙 喷射火焰 水箭龟
         python query.py calc 喷火龙 喷射火焰 水箭龟 '{"evs":{"sp_attack":252}}' '{}' '{"evs":{"sp_defense":252}}'
+        python query.py calc 喷火龙 喷射火焰 水箭龟 '{"evs":{"sp_attack":252}}' '{}' '{}' '{"weather":"Sun"}'
     """
     import json
     from damage import calculate_damage
@@ -536,6 +549,10 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         def_override = json.loads(_strip_quotes(extra_args[2])) if len(extra_args) > 2 and extra_args[2] else {}
     except json.JSONDecodeError:
         def_override = {}
+    try:
+        field_override = json.loads(_strip_quotes(extra_args[3])) if len(extra_args) > 3 and extra_args[3] else {}
+    except json.JSONDecodeError:
+        field_override = {}
 
     att_dict = _make_pokemon_from_data(att_data, att_override)
     def_dict = _make_pokemon_from_data(def_data, def_override)
@@ -545,6 +562,13 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     defender = Pokemon(**def_dict)
     move = Move(**move_dict)
     field = Field()
+    _apply_field_overrides(field, field_override)
+
+    # Ensure current_hp reflects max_hp when not explicitly overridden
+    if attacker.current_hp == 0:
+        attacker.current_hp = attacker.max_hp
+    if defender.current_hp == 0:
+        defender.current_hp = defender.max_hp
 
     result = calculate_damage(attacker, defender, move, field, gen=9)
 

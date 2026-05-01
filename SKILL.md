@@ -38,8 +38,8 @@ description: >
 | `pokedex <name>` | 宝可梦名 | 各版本图鉴描述 | JSON 数组 |
 | `profile <name>` | 宝可梦名 | 外形描述、原型考据、多语言词源 | JSON 对象 |
 | `find-move <move>` | 招式名 | 反向查询：能学会该招式的所有宝可梦 | JSON 数组 |
-| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50） | JSON 对象（见下方 I/O 规范） |
-| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override]` | 攻击方 招式 防御方 目标 阈值 确信度 | 努力值优化搜索 | JSON 对象（见下方 I/O 规范） |
+| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50） | JSON 对象（见下方 I/O 规范） |
+| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 目标 阈值 确信度 | 努力值优化搜索 | JSON 对象（见下方 I/O 规范） |
 
 ### 使用方式
 
@@ -54,6 +54,8 @@ python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟 "{\"evs\":{\"sp_attack\":252},\"item\":\"木炭\"}" "{}" "{\"evs\":{\"sp_defense\":252}}"
 # 多段攻击招式（如双翼）：calc 会自动返回单次 + 合计总伤害
 python scripts/query.py calc 化石翼龙 双翼 胡地 "{\"evs\":{\"attack\":252,\"speed\":252}}" "{}" "{\"evs\":{\"hp\":0,\"defense\":0}}"
+# 场地条件覆盖（天气、场地、墙壁等）
+python scripts/query.py calc 喷火龙 喷射火焰 水箭龟 "{\"evs\":{\"sp_attack\":252}}" "{}" "{}" "{\"weather\":\"Sun\"}"
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
 ```
@@ -72,6 +74,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 | 4 | `att_override` | JSON string | 否 | 覆盖攻击方默认配置 |
 | 5 | `move_override` | JSON string | 否 | 覆盖招式默认配置 |
 | 6 | `def_override` | JSON string | 否 | 覆盖防御方默认配置 |
+| 7 | `field_override` | JSON string | 否 | 覆盖场地条件（天气、场地、墙壁等） |
 
 ### att_override / def_override 可覆盖字段
 
@@ -103,6 +106,60 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
   "hits": 1
 }
 ```
+
+### field_override 可覆盖字段
+
+```json
+{
+  "weather": "Sun",
+  "terrain": "Electric",
+  "format": "Doubles",
+  "is_gravity": false,
+  "is_reflect": false,
+  "is_light_screen": false,
+  "is_aurora_veil": false,
+  "is_friend_guard": false,
+  "is_battery": false,
+  "is_power_spot": false,
+  "is_steely_spirit": false,
+  "is_tailwind_atk": false,
+  "is_tailwind_def": false,
+  "is_neutralizing_gas": false,
+  "is_sword_of_ruin": false,
+  "is_beads_of_ruin": false,
+  "is_tablets_of_ruin": false,
+  "is_vessel_of_ruin": false,
+  "is_stealth_rock": false,
+  "spikes": 0,
+  "is_salt_cure": false,
+  "is_helping_hand": false
+}
+```
+
+| 字段 | 类型 | 取值 | 说明 |
+|------|------|------|------|
+| `weather` | string | Sun / Rain / Sand / Hail / Snow / Strong Winds / Harsh Sun / Heavy Rain | 天气 |
+| `terrain` | string | Electric / Grassy / Misty / Psychic | 场地 |
+| `format` | string | Singles / Doubles | 对战模式 |
+| `is_gravity` | bool | true / false | 重力 |
+| `is_reflect` | bool | true / false | 反射壁 |
+| `is_light_screen` | bool | true / false | 光墙 |
+| `is_aurora_veil` | bool | true / false | 极光幕 |
+| `is_friend_guard` | bool | true / false | 友情防守 |
+| `is_battery` | bool | true / false | 蓄电池 |
+| `is_power_spot` | bool | true / false | 能量点 |
+| `is_steely_spirit` | bool | true / false | 钢之意志 |
+| `is_tailwind_atk` | bool | true / false | 顺风（攻击方受益） |
+| `is_tailwind_def` | bool | true / false | 顺风（防御方受益） |
+| `is_neutralizing_gas` | bool | true / false | 化学变化气体 |
+| `is_sword_of_ruin` | bool | true / false | 灾祸之简 |
+| `is_beads_of_ruin` | bool | true / false | 灾祸之鼎 |
+| `is_tablets_of_ruin` | bool | true / false | 灾祸之剑 |
+| `is_vessel_of_ruin` | bool | true / false | 灾祸之玉 |
+| `is_stealth_rock` | bool | true / false | 隐形岩 |
+| `spikes` | int | 0~3 | 撒菱层数 |
+| `is_salt_cure` | bool | true / false | 盐腌 |
+| `is_helping_hand` | bool | true / false | 帮助 |
 
 ### 返回值 JSON Schema
 
@@ -184,6 +241,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 | 6 | `threshold` | string | 否 | `guaranteed`（最差乱数）/ `likely`（平均乱数）（默认 `guaranteed`） |
 | 7 | `att_override` | JSON string | 否 | 覆盖攻击方配置 |
 | 8 | `def_override` | JSON string | 否 | 覆盖防御方配置 |
+| 9 | `field_override` | JSON string | 否 | 覆盖场地条件（语法同 calc） |
 
 ### 返回值 JSON Schema
 
