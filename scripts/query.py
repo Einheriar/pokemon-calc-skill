@@ -55,18 +55,97 @@ def load_data() -> None:
         _type_chart = _load_json("type_chart.json")
 
 
-def resolve_pokemon(name: str) -> tuple[str, Any] | None:
-    """Return (stem, data) for a pokemon by zh or en name."""
+def _to_fullwidth(s: str) -> str:
+    """Convert halfwidth ASCII letters/digits to fullwidth."""
+    result = []
+    for ch in s:
+        code = ord(ch)
+        if 0x30 <= code <= 0x39:          # 0-9  -> ０-９
+            result.append(chr(code + 0xFEE0))
+        elif 0x41 <= code <= 0x5A:        # A-Z  -> Ａ-Ｚ
+            result.append(chr(code + 0xFEE0))
+        elif 0x61 <= code <= 0x7A:        # a-z  -> ａ-ｚ
+            result.append(chr(code + 0xFEE0))
+        else:
+            result.append(ch)
+    return "".join(result)
+
+
+def _find_form_index(name: str, data: dict[str, Any]) -> int:
+    """Find the form index matching the given name (which may contain a form suffix).
+
+    Examples:
+        name='超级喷火龙Ｙ', data with forms=['喷火龙', '超级喷火龙Ｘ', '超级喷火龙Ｙ', ...] -> 2
+        name='喷火龙', data with forms=['喷火龙', ...] -> 0
+        name='胡地', data with forms=['胡地', '超级胡地'] -> 0
+    Returns 0 if no specific form is matched.
+    """
+    forms = data.get("forms", [])
+    if not forms:
+        return 0
+
+    # Direct match against any form name
+    for idx, form in enumerate(forms):
+        form_name = form.get("name", "")
+        if form_name and name == form_name:
+            return idx
+
+    # Partial suffix match: if input ends with a form name suffix
+    for idx, form in enumerate(forms):
+        form_name = form.get("name", "")
+        if form_name and len(form_name) > 1 and name.endswith(form_name):
+            return idx
+
+    # Try with fullwidth normalization on input
+    name_fw = _to_fullwidth(name)
+    for idx, form in enumerate(forms):
+        form_name = form.get("name", "")
+        if form_name and name_fw == form_name:
+            return idx
+        if form_name and len(form_name) > 1 and name_fw.endswith(form_name):
+            return idx
+
+    return 0
+
+
+def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
+    """Return (stem, data, form_index) for a pokemon by zh or en name.
+
+    form_index is the index into data['forms'] matching the requested form.
+    """
     load_data()
+
+    # Try exact match first
     stem = _index_data["pokemon"].get(name) or _index_data["pokemon_forms"].get(name)
+
+    # Try case-insensitive match in pokemon base names
     if not stem:
         for k, v in _index_data["pokemon"].items():
             if k.lower() == name.lower():
                 stem = v
                 break
+
+    # Try case-insensitive match in pokemon form aliases
+    if not stem:
+        for k, v in _index_data.get("pokemon_forms", {}).items():
+            if k.lower() == name.lower():
+                stem = v
+                break
+
+    # Try fullwidth-normalized version (e.g. "超级喷火龙Y" -> "超级喷火龙Ｙ")
+    if not stem:
+        name_fw = _to_fullwidth(name)
+        stem = _index_data["pokemon"].get(name_fw) or _index_data.get("pokemon_forms", {}).get(name_fw)
+
     if not stem:
         return None
-    return stem, _pokemon_data.get(stem)
+
+    data = _pokemon_data.get(stem)
+    if not data:
+        return None
+
+    form_index = _find_form_index(name, data)
+    return stem, data, form_index
 
 
 def resolve_move(name: str) -> tuple[str, Any] | None:
@@ -122,7 +201,7 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -219,7 +298,7 @@ def cmd_stats(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -235,7 +314,7 @@ def cmd_weak(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     weaknesses: list[dict[str, Any]] = []
     for te in data.get("type_effectiveness", []):
         form = te.get("form") or "一般"
@@ -257,7 +336,7 @@ def cmd_learnset(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -272,7 +351,7 @@ def cmd_evo(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -285,7 +364,7 @@ def cmd_pokedex(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -297,7 +376,7 @@ def cmd_profile(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data = resolved
+    stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -357,13 +436,24 @@ def _get_method_name(entry: dict[str, Any], category: str) -> str:
     return "未知"
 
 
-def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None) -> dict[str, Any]:
+def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
-    # Use the first form by default
     forms = data.get("forms", [{}])
-    form = forms[0] if forms else {}
+    form = forms[form_index] if form_index < len(forms) and forms else forms[0] if forms else {}
     stats_list = data.get("stats", [])
-    stats = stats_list[0].get("data", {}) if stats_list else {}
+    # Try to find stats matching the form name, fallback to form_index or first
+    stats = {}
+    if stats_list:
+        target_form_name = form.get("name", "")
+        for s in stats_list:
+            if s.get("form") == target_form_name:
+                stats = s.get("data", {})
+                break
+        if not stats:
+            if form_index < len(stats_list):
+                stats = stats_list[form_index].get("data", {})
+            else:
+                stats = stats_list[0].get("data", {})
     # Convert string stats to int
     base_stats = {k: int(v) for k, v in stats.items()}
     types = form.get("types", [])
@@ -472,8 +562,8 @@ def cmd_optimize(
     if not resolved_move:
         return {"error": f"Move '{move_name}' not found."}
 
-    _, att_data = resolved_att
-    _, def_data = resolved_def
+    _, att_data, att_form_idx = resolved_att
+    _, def_data, def_form_idx = resolved_def
     _, move_data = resolved_move
 
     def _strip_quotes(s: str) -> str:
@@ -492,8 +582,8 @@ def cmd_optimize(
     except json.JSONDecodeError:
         field_override = {}
 
-    att_dict = _make_pokemon_from_data(att_data, att_override)
-    def_dict = _make_pokemon_from_data(def_data, def_override)
+    att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
+    def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data)
 
     from models import Pokemon, Move, Field
@@ -529,8 +619,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     if not resolved_move:
         return {"error": f"Move '{move_name}' not found."}
 
-    _, att_data = resolved_att
-    _, def_data = resolved_def
+    _, att_data, att_form_idx = resolved_att
+    _, def_data, def_form_idx = resolved_def
     _, move_data = resolved_move
 
     def _strip_quotes(s: str) -> str:
@@ -554,8 +644,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     except json.JSONDecodeError:
         field_override = {}
 
-    att_dict = _make_pokemon_from_data(att_data, att_override)
-    def_dict = _make_pokemon_from_data(def_data, def_override)
+    att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
+    def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
 
     attacker = Pokemon(**att_dict)
@@ -645,6 +735,209 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     return response
 
 
+def cmd_compute_stats(
+    base_stats_json: str,
+    evs_json: str = "{}",
+    ivs_json: str = "{}",
+    nature: str = "勤奋",
+    level: str = "50",
+) -> dict[str, Any]:
+    """Compute final stats (ability values) from base stats + evs + ivs + nature + level."""
+    import json
+    from damage import calc_hp_stat, calc_raw_stat, get_nature_modifier
+
+    def _strip_quotes(s: str) -> str:
+        return s.strip().strip("'\"'")
+
+    try:
+        base_stats = json.loads(_strip_quotes(base_stats_json))
+    except (json.JSONDecodeError, TypeError):
+        return {"error": "Invalid base_stats JSON"}
+
+    try:
+        evs = json.loads(_strip_quotes(evs_json)) if evs_json else {}
+    except (json.JSONDecodeError, TypeError):
+        evs = {}
+
+    try:
+        ivs = json.loads(_strip_quotes(ivs_json)) if ivs_json else {}
+    except (json.JSONDecodeError, TypeError):
+        ivs = {}
+
+    try:
+        level_int = int(level)
+    except (ValueError, TypeError):
+        level_int = 50
+
+    raw_stats: dict[str, int] = {}
+    for stat_key, base in base_stats.items():
+        ev = evs.get(stat_key, 0)
+        iv = ivs.get(stat_key, 31)
+        if stat_key == "hp":
+            raw = calc_hp_stat(base, iv, ev, level_int)
+        else:
+            raw = calc_raw_stat(base, iv, ev, level_int)
+            nature_mod = get_nature_modifier(nature, stat_key)
+            raw = int(raw * nature_mod)
+        raw_stats[stat_key] = raw
+
+    return {
+        "level": level_int,
+        "nature": nature,
+        "base_stats": base_stats,
+        "evs": evs,
+        "ivs": ivs,
+        "stats": raw_stats,
+    }
+
+
+def cmd_calc_raw(
+    attacker_json: str,
+    move_json: str,
+    defender_json: str,
+    field_json: str = "{}",
+) -> dict[str, Any]:
+    """Pure parameter-driven damage calculation.
+
+    All Pokemon / Move / Field data is passed directly as JSON.
+    No name resolution or data lookup is performed.
+    The attacker_json and defender_json MUST contain a 'stats' field
+    with the final ability values (e.g. {"hp": 153, "attack": 90, ...}).
+    """
+    import json
+    from damage import calculate_damage, get_modified_stat
+    from models import Pokemon, Move, Field
+    from ko_chance import get_ko_chance_text, squash_multihit
+
+    def _strip_quotes(s: str) -> str:
+        return s.strip().strip("'\"'")
+
+    try:
+        att_dict = json.loads(_strip_quotes(attacker_json))
+    except (json.JSONDecodeError, TypeError):
+        return {"error": "Invalid attacker JSON"}
+
+    try:
+        move_dict = json.loads(_strip_quotes(move_json))
+    except (json.JSONDecodeError, TypeError):
+        return {"error": "Invalid move JSON"}
+
+    try:
+        def_dict = json.loads(_strip_quotes(defender_json))
+    except (json.JSONDecodeError, TypeError):
+        return {"error": "Invalid defender JSON"}
+
+    try:
+        field_dict = json.loads(_strip_quotes(field_json)) if field_json else {}
+    except (json.JSONDecodeError, TypeError):
+        field_dict = {}
+
+    # Validate required fields
+    if "stats" not in att_dict:
+        return {"error": "attacker_json missing required field: stats"}
+    if "stats" not in def_dict:
+        return {"error": "defender_json missing required field: stats"}
+
+    # Set raw_stats from the provided stats (bypasses compute_raw_stats in calculate_damage)
+    att_dict["raw_stats"] = att_dict["stats"]
+    def_dict["raw_stats"] = def_dict["stats"]
+
+    # Apply boost modifications to get effective stats
+    att_boosts = att_dict.get("boosts", {})
+    def_boosts = def_dict.get("boosts", {})
+    att_dict["stats"] = {
+        k: get_modified_stat(v, att_boosts.get(k, 0))
+        for k, v in att_dict["raw_stats"].items()
+    }
+    def_dict["stats"] = {
+        k: get_modified_stat(v, def_boosts.get(k, 0))
+        for k, v in def_dict["raw_stats"].items()
+    }
+
+    # Ensure HP fields are set
+    if att_dict.get("max_hp", 0) == 0:
+        att_dict["max_hp"] = att_dict["raw_stats"].get("hp", 0)
+    if att_dict.get("current_hp", 0) == 0:
+        att_dict["current_hp"] = att_dict["max_hp"]
+
+    if def_dict.get("max_hp", 0) == 0:
+        def_dict["max_hp"] = def_dict["raw_stats"].get("hp", 0)
+    if def_dict.get("current_hp", 0) == 0:
+        def_dict["current_hp"] = def_dict["max_hp"]
+
+    # Build objects
+    try:
+        attacker = Pokemon(**att_dict)
+        move = Move(**move_dict)
+        defender = Pokemon(**def_dict)
+        field = Field(**field_dict)
+    except TypeError as e:
+        return {"error": f"Failed to build battle objects: {e}"}
+
+    # Calculate damage
+    result = calculate_damage(attacker, defender, move, field, gen=9)
+
+    # KO chance
+    ko_text = get_ko_chance_text(result.damage, move, defender, field)
+
+    # Multi-hit total damage
+    total_damage_rolls: list[int] = []
+    if move.hits > 1:
+        total_damage_rolls = squash_multihit(result.damage, move.hits)
+
+    # Build response
+    attacker_info = {
+        "name_zh": attacker.name,
+        "name_en": attacker.name_en,
+        "types": attacker.types,
+        "ability": attacker.ability,
+        "nature": attacker.nature,
+        "item": attacker.item,
+        "stats": attacker.raw_stats,
+        "evs": attacker.evs,
+        "ivs": attacker.ivs,
+        "level": attacker.level,
+        "current_hp": attacker.current_hp,
+        "max_hp": attacker.max_hp,
+    }
+    defender_info = {
+        "name_zh": defender.name,
+        "name_en": defender.name_en,
+        "types": defender.types,
+        "ability": defender.ability,
+        "nature": defender.nature,
+        "item": defender.item,
+        "stats": defender.raw_stats,
+        "evs": defender.evs,
+        "ivs": defender.ivs,
+        "level": defender.level,
+        "current_hp": defender.current_hp,
+        "max_hp": defender.max_hp,
+    }
+
+    response: dict[str, Any] = {
+        "attacker": attacker.name,
+        "move": move.name,
+        "defender": defender.name,
+        "damage_range": [result.min_damage, result.max_damage],
+        "damage_rolls": result.damage,
+        "description": result.description,
+        "is_critical": result.is_critical,
+        "type_effectiveness": result.type_effectiveness,
+        "stab_applied": result.stab_applied,
+        "burn_applied": result.burn_applied,
+        "ko_chance": ko_text,
+        "attacker_info": attacker_info,
+        "defender_info": defender_info,
+    }
+    if move.hits > 1:
+        response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
+        response["total_damage_rolls"] = total_damage_rolls
+        response["move_hits"] = move.hits
+
+    return response
+
+
 COMMANDS: dict[str, Any] = {
     "pokemon": cmd_pokemon,
     "move": cmd_move,
@@ -659,6 +952,8 @@ COMMANDS: dict[str, Any] = {
     "profile": cmd_profile,
     "find-move": cmd_find_move,
     "calc": cmd_calc,
+    "calc-raw": cmd_calc_raw,
+    "compute-stats": cmd_compute_stats,
     "optimize": cmd_optimize,
 }
 
