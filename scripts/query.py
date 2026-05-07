@@ -41,6 +41,7 @@ _moves_data: dict[str, Any] | None = None
 _abilities_data: dict[str, Any] | None = None
 _index_data: dict[str, Any] | None = None
 _type_chart: dict[str, dict[str, float]] | None = None
+_champions_patches: dict[str, Any] | None = None
 
 
 def _load_json(name: str) -> Any:
@@ -51,12 +52,48 @@ def _load_json(name: str) -> Any:
 
 def load_data() -> None:
     global _pokemon_data, _moves_data, _abilities_data, _index_data, _type_chart
-    if _pokemon_data is None:
-        _pokemon_data = _load_json("pokemon.json")
-        _moves_data = _load_json("moves.json")
-        _abilities_data = _load_json("abilities.json")
-        _index_data = _load_json("name_index.json")
-        _type_chart = _load_json("type_chart.json")
+    if _pokemon_data is not None:
+        return
+    _pokemon_data = _load_json("pokemon.json")
+    _moves_data = _load_json("moves.json")
+    _abilities_data = _load_json("abilities.json")
+    _index_data = _load_json("name_index.json")
+    _type_chart = _load_json("type_chart.json")
+    # Merge Champions name_index patch
+    patches = _load_champions_patches()
+    if patches and "name_index" in patches:
+        for category in ("pokemon", "moves"):
+            if category in _index_data and category in patches["name_index"]:
+                _index_data[category].update(patches["name_index"][category])
+
+
+def _load_champions_patches() -> dict[str, Any]:
+    """Load Champions patch files. Returns dict with keys: pokemon, moves, learnset, name_index."""
+    global _champions_patches
+    if _champions_patches is not None:
+        return _champions_patches
+    patches = {"pokemon": {}, "moves": {}, "learnset": {}, "name_index": {"pokemon": {}, "moves": {}}}
+    patch_files = {
+        "pokemon": "champions_pokemon_patch.json",
+        "moves": "champions_moves_patch.json",
+        "learnset": "champions_learnset_patch.json",
+        "name_index": "champions_name_index_patch.json",
+    }
+    for key, filename in patch_files.items():
+        path = DATA_DIR / filename
+        if path.exists():
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                if key == "name_index":
+                    patches["name_index"]["pokemon"].update(data.get("pokemon", {}))
+                    patches["name_index"]["moves"].update(data.get("moves", {}))
+                else:
+                    patches[key] = data
+            except Exception:
+                pass  # Silently ignore missing/corrupt patch files
+    _champions_patches = patches
+    return _champions_patches
 
 
 _setdex_data: dict[str, Any] | None = None
@@ -175,6 +212,55 @@ def _to_fullwidth(s: str) -> str:
     return "".join(result)
 
 
+def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str, Any]:
+    """Apply Champions patch to a pokemon data entry if available."""
+    patches = _load_champions_patches()
+    if not patches or stem not in patches.get("pokemon", {}):
+        return data
+    patch = patches["pokemon"][stem]
+    # Deep copy to avoid mutating original
+    merged = json.loads(json.dumps(data))
+    # Merge forms: replace by index order, append if patch has more forms than original
+    if "forms" in patch:
+        orig_forms = merged.get("forms", [])
+        for i, raw_pform in enumerate(patch["forms"]):
+            pform = json.loads(json.dumps(raw_pform))  # deep copy
+            # Normalize abilities from string list to object list
+            abilities = pform.get("abilities")
+            if isinstance(abilities, list) and abilities and isinstance(abilities[0], str):
+                pform["abilities"] = [{"name": a} for a in abilities]
+            if i < len(orig_forms):
+                orig_forms[i].update(pform)
+            else:
+                orig_forms.append(pform)
+        merged["forms"] = orig_forms
+    # Merge stats: replace by index order, append if patch has more stats than original
+    if "stats" in patch:
+        orig_stats = merged.get("stats", [])
+        for i, pstat in enumerate(patch["stats"]):
+            if i < len(orig_stats):
+                orig_stats[i].update(pstat)
+            else:
+                orig_stats.append(pstat)
+        merged["stats"] = orig_stats
+    # Merge any other top-level fields
+    for key, value in patch.items():
+        if key not in ("forms", "stats"):
+            merged[key] = value
+    return merged
+
+
+def _apply_champions_move_patch(name: str, data: dict[str, Any]) -> dict[str, Any]:
+    """Apply Champions patch to a move data entry if available."""
+    patches = _load_champions_patches()
+    if not patches or name not in patches.get("moves", {}):
+        return data
+    patch = patches["moves"][name]
+    merged = data.copy()
+    merged.update(patch)
+    return merged
+
+
 def _find_form_index(name: str, data: dict[str, Any]) -> int:
     """Find the form index matching the given name (which may contain a form suffix).
 
@@ -249,6 +335,7 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
     if not data:
         return None
 
+    data = _apply_champions_pokemon_patch(stem, data)
     form_index = _find_form_index(name, data)
     return stem, data, form_index
 
@@ -265,7 +352,15 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
                 break
     if not stem:
         return None
-    return stem, _moves_data.get(stem)
+    data = _moves_data.get(stem)
+    if data is None:
+        return None
+    patched = _apply_champions_move_patch(stem, data)
+    if patched is data:
+        zh_name = data.get("name_zh", "")
+        if zh_name:
+            patched = _apply_champions_move_patch(zh_name, data)
+    return stem, patched
 
 
 def resolve_ability(name: str) -> tuple[str, Any] | None:
@@ -310,6 +405,14 @@ def cmd_item(name: str) -> dict[str, Any]:
     return {"name_en": en}
 
 
+def _get_champions_learnset(stem: str) -> list[str]:
+    """Get Champions learnset for a pokemon stem if available."""
+    patches = _load_champions_patches()
+    if patches and stem in patches.get("learnset", {}):
+        return patches["learnset"][stem]
+    return []
+
+
 def cmd_pokemon(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
@@ -329,7 +432,7 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
             {
                 "name": f.get("name"),
                 "types": f.get("types"),
-                "abilities": [a["name"] for a in f.get("abilities", [])],
+                "abilities": [a["name"] if isinstance(a, dict) else a for a in f.get("abilities", [])],
                 "category": f.get("category"),
                 "height": f.get("height"),
                 "weight": f.get("weight"),
@@ -341,6 +444,7 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
         "stats": data.get("stats"),
         "evolution_chains": data.get("evolution_chains"),
         "mega_evolution": data.get("mega_evolution"),
+        "_data_source": data.get("_data_source", "gen9"),
     }
 
 
@@ -368,6 +472,7 @@ def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
         "effect": data.get("effect"),
         "additional_effect": data.get("additional_effect"),
         "move_changes": data.get("move_changes"),
+        "_data_source": data.get("_data_source", "gen9"),
     }
 
 
@@ -465,6 +570,19 @@ def cmd_learnset(name: str) -> dict[str, Any]:
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
     stem, data, _form_idx = resolved
+    champions_moves = _get_champions_learnset(stem)
+    if champions_moves:
+        # Champions patch provides a flat list of move names
+        formatted = [{"name": m} for m in champions_moves]
+        return {
+            "name_zh": data.get("name_zh"),
+            "name_en": data.get("name_en"),
+            "learnable_moves": [{"form": "", "data": formatted}],
+            "machine_moves": [],
+            "egg_moves": [],
+            "tutor_moves": [],
+            "_data_source": "champions",
+        }
     return {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -516,8 +634,15 @@ def cmd_profile(name: str) -> dict[str, Any]:
     }
 
 
-def _iter_moves(pdata: dict[str, Any]):
-    """Yield (move_dict, source_category) for all moves in a pokemon entry."""
+def _iter_moves(pdata: dict[str, Any], stem: str = ""):
+    """Yield (move_dict, source_category) for all moves in a pokemon entry.
+    If Champions learnset patch exists for stem, yield from patch instead.
+    """
+    champions_moves = _get_champions_learnset(stem)
+    if champions_moves:
+        for move_name in champions_moves:
+            yield {"name": move_name}, "learnable_moves"
+        return
     for category in ("learnable_moves", "machine_moves", "egg_moves", "tutor_moves"):
         for form_block in pdata.get(category, []):
             if isinstance(form_block, dict) and "data" in form_block:
@@ -536,11 +661,13 @@ def cmd_find_move(move_name: str) -> dict[str, Any]:
                 move_stem = v
                 break
     move_data = _moves_data.get(move_stem) if move_stem else None
+    if move_data is not None:
+        move_data = _apply_champions_move_patch(move_stem, move_data)
     move_zh = move_data.get("name_zh") if move_data else move_name
 
     result: list[dict[str, str]] = []
     for stem, pdata in _pokemon_data.items():
-        for move, category in _iter_moves(pdata):
+        for move, category in _iter_moves(pdata, stem=stem):
             if move.get("name") == move_zh:
                 result.append({
                     "name_zh": pdata.get("name_zh"),

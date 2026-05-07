@@ -1,0 +1,8938 @@
+{
+  "0003-妙蛙花": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "妙蛙花",
+        "types": [
+          "草",
+          "毒"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "叶绿素"
+        ],
+        "weight": 100.0
+      },
+      {
+        "name": "超级妙蛙花",
+        "types": [
+          "草",
+          "毒"
+        ],
+        "abilities": [
+          "厚脂肪",
+          "厚脂肪",
+          "厚脂肪"
+        ],
+        "weight": 155.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "妙蛙花",
+        "data": {
+          "hp": 80,
+          "attack": 82,
+          "defense": 83,
+          "sp_attack": 100,
+          "sp_defense": 100,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级妙蛙花",
+        "data": {
+          "hp": 80,
+          "attack": 100,
+          "defense": 123,
+          "sp_attack": 122,
+          "sp_defense": 120,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0006-喷火龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "喷火龙",
+        "types": [
+          "火",
+          "飞行"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "太阳之力"
+        ],
+        "weight": 90.5
+      },
+      {
+        "name": "超级喷火龙Ｘ",
+        "types": [
+          "火",
+          "龙"
+        ],
+        "abilities": [
+          "硬爪",
+          "硬爪",
+          "硬爪"
+        ],
+        "weight": 110.5
+      },
+      {
+        "name": "超级喷火龙Ｙ",
+        "types": [
+          "火",
+          "飞行"
+        ],
+        "abilities": [
+          "日照",
+          "日照",
+          "日照"
+        ],
+        "weight": 100.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "喷火龙",
+        "data": {
+          "hp": 78,
+          "attack": 84,
+          "defense": 78,
+          "sp_attack": 109,
+          "sp_defense": 85,
+          "speed": 100
+        }
+      },
+      {
+        "form": "超级喷火龙Ｘ",
+        "data": {
+          "hp": 78,
+          "attack": 130,
+          "defense": 111,
+          "sp_attack": 130,
+          "sp_defense": 85,
+          "speed": 100
+        }
+      },
+      {
+        "form": "超级喷火龙Ｙ",
+        "data": {
+          "hp": 78,
+          "attack": 104,
+          "defense": 78,
+          "sp_attack": 159,
+          "sp_defense": 115,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0009-水箭龟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "水箭龟",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "雨盘"
+        ],
+        "weight": 85.5
+      },
+      {
+        "name": "超级水箭龟",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "超级发射器",
+          "超级发射器",
+          "超级发射器"
+        ],
+        "weight": 101.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "水箭龟",
+        "data": {
+          "hp": 79,
+          "attack": 83,
+          "defense": 100,
+          "sp_attack": 85,
+          "sp_defense": 105,
+          "speed": 78
+        }
+      },
+      {
+        "form": "超级水箭龟",
+        "data": {
+          "hp": 79,
+          "attack": 103,
+          "defense": 120,
+          "sp_attack": 135,
+          "sp_defense": 115,
+          "speed": 78
+        }
+      }
+    ]
+  },
+  "0015-大针蜂": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大针蜂",
+        "types": [
+          "虫",
+          "毒"
+        ],
+        "abilities": [
+          "虫之预感",
+          "虫之预感",
+          "狙击手"
+        ],
+        "weight": 29.5
+      },
+      {
+        "name": "超级大针蜂",
+        "types": [
+          "虫",
+          "毒"
+        ],
+        "abilities": [
+          "适应力",
+          "适应力",
+          "适应力"
+        ],
+        "weight": 40.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "大针蜂",
+        "data": {
+          "hp": 65,
+          "attack": 90,
+          "defense": 40,
+          "sp_attack": 45,
+          "sp_defense": 80,
+          "speed": 75
+        }
+      },
+      {
+        "form": "超级大针蜂",
+        "data": {
+          "hp": 65,
+          "attack": 150,
+          "defense": 40,
+          "sp_attack": 15,
+          "sp_defense": 80,
+          "speed": 145
+        }
+      }
+    ]
+  },
+  "0018-大比鸟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大比鸟",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "锐利目光",
+          "蹒跚",
+          "健壮胸肌"
+        ],
+        "weight": 39.5
+      },
+      {
+        "name": "超级大比鸟",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "无防守",
+          "无防守",
+          "无防守"
+        ],
+        "weight": 50.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "大比鸟",
+        "data": {
+          "hp": 83,
+          "attack": 80,
+          "defense": 75,
+          "sp_attack": 70,
+          "sp_defense": 70,
+          "speed": 101
+        }
+      },
+      {
+        "form": "超级大比鸟",
+        "data": {
+          "hp": 83,
+          "attack": 80,
+          "defense": 80,
+          "sp_attack": 135,
+          "sp_defense": 80,
+          "speed": 121
+        }
+      }
+    ]
+  },
+  "0024-阿柏怪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "阿柏怪",
+        "types": [
+          "毒"
+        ],
+        "abilities": [
+          "威吓",
+          "蜕皮",
+          "紧张感"
+        ],
+        "weight": 65.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "阿柏怪",
+        "data": {
+          "hp": 60,
+          "attack": 95,
+          "defense": 69,
+          "sp_attack": 65,
+          "sp_defense": 79,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0025-皮卡丘": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "皮卡丘",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "静电",
+          "静电",
+          "避雷针"
+        ],
+        "weight": 6.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "皮卡丘",
+        "data": {
+          "hp": 35,
+          "attack": 55,
+          "defense": 40,
+          "sp_attack": 50,
+          "sp_defense": 50,
+          "speed": 90
+        }
+      }
+    ]
+  },
+  "0026-雷丘": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雷丘",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "静电",
+          "静电",
+          "避雷针"
+        ],
+        "weight": 30.0
+      },
+      {
+        "name": "阿罗拉的样子",
+        "types": [
+          "电",
+          "超能力"
+        ],
+        "abilities": [
+          "冲浪之尾",
+          "冲浪之尾",
+          "冲浪之尾"
+        ],
+        "weight": 21.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "雷丘",
+        "data": {
+          "hp": 60,
+          "attack": 90,
+          "defense": 55,
+          "sp_attack": 90,
+          "sp_defense": 80,
+          "speed": 110
+        }
+      },
+      {
+        "form": "阿罗拉的样子",
+        "data": {
+          "hp": 60,
+          "attack": 85,
+          "defense": 50,
+          "sp_attack": 95,
+          "sp_defense": 85,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0036-皮可西": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "皮可西",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "迷人之躯",
+          "魔法防守",
+          "纯朴"
+        ],
+        "weight": 40.0
+      },
+      {
+        "name": "超级皮可西",
+        "types": [
+          "妖精",
+          "飞行"
+        ],
+        "abilities": [
+          "魔法镜",
+          "魔法镜",
+          "魔法镜"
+        ],
+        "weight": 42.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "皮可西",
+        "data": {
+          "hp": 95,
+          "attack": 70,
+          "defense": 73,
+          "sp_attack": 95,
+          "sp_defense": 90,
+          "speed": 60
+        }
+      },
+      {
+        "form": "超级皮可西",
+        "data": {
+          "hp": 95,
+          "attack": 80,
+          "defense": 93,
+          "sp_attack": 135,
+          "sp_defense": 110,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0038-九尾": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "九尾",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "引火",
+          "引火",
+          "日照"
+        ],
+        "weight": 19.9
+      },
+      {
+        "name": "阿罗拉的样子",
+        "types": [
+          "冰",
+          "妖精"
+        ],
+        "abilities": [
+          "雪隐",
+          "雪隐",
+          "降雪"
+        ],
+        "weight": 19.9
+      }
+    ],
+    "stats": [
+      {
+        "form": "九尾",
+        "data": {
+          "hp": 73,
+          "attack": 76,
+          "defense": 75,
+          "sp_attack": 81,
+          "sp_defense": 100,
+          "speed": 100
+        }
+      },
+      {
+        "form": "阿罗拉的样子",
+        "data": {
+          "hp": 73,
+          "attack": 67,
+          "defense": 75,
+          "sp_attack": 81,
+          "sp_defense": 100,
+          "speed": 109
+        }
+      }
+    ]
+  },
+  "0059-风速狗": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "风速狗",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "威吓",
+          "引火",
+          "正义之心"
+        ],
+        "weight": 155.0
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "火",
+          "岩石"
+        ],
+        "abilities": [
+          "威吓",
+          "引火",
+          "坚硬脑袋"
+        ],
+        "weight": 168.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "风速狗",
+        "data": {
+          "hp": 90,
+          "attack": 110,
+          "defense": 80,
+          "sp_attack": 100,
+          "sp_defense": 80,
+          "speed": 95
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 95,
+          "attack": 115,
+          "defense": 80,
+          "sp_attack": 95,
+          "sp_defense": 80,
+          "speed": 90
+        }
+      }
+    ]
+  },
+  "0065-胡地": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "胡地",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "同步",
+          "精神力",
+          "魔法防守"
+        ],
+        "weight": 48.0
+      },
+      {
+        "name": "超级胡地",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "复制",
+          "复制",
+          "复制"
+        ],
+        "weight": 48.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "胡地",
+        "data": {
+          "hp": 55,
+          "attack": 50,
+          "defense": 45,
+          "sp_attack": 135,
+          "sp_defense": 95,
+          "speed": 120
+        }
+      },
+      {
+        "form": "超级胡地",
+        "data": {
+          "hp": 55,
+          "attack": 50,
+          "defense": 65,
+          "sp_attack": 175,
+          "sp_defense": 105,
+          "speed": 150
+        }
+      }
+    ]
+  },
+  "0068-怪力": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "怪力",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "毅力",
+          "无防守",
+          "不屈之心"
+        ],
+        "weight": 130.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "怪力",
+        "data": {
+          "hp": 90,
+          "attack": 130,
+          "defense": 80,
+          "sp_attack": 65,
+          "sp_defense": 85,
+          "speed": 55
+        }
+      }
+    ]
+  },
+  "0071-大食花": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大食花",
+        "types": [
+          "草",
+          "毒"
+        ],
+        "abilities": [
+          "叶绿素",
+          "叶绿素",
+          "贪吃鬼"
+        ],
+        "weight": 15.5
+      },
+      {
+        "name": "超级大食花",
+        "types": [
+          "草",
+          "毒"
+        ],
+        "abilities": [
+          "飞出的内在物",
+          "飞出的内在物",
+          "飞出的内在物"
+        ],
+        "weight": 125.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "大食花",
+        "data": {
+          "hp": 80,
+          "attack": 105,
+          "defense": 65,
+          "sp_attack": 100,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "超级大食花",
+        "data": {
+          "hp": 80,
+          "attack": 125,
+          "defense": 85,
+          "sp_attack": 135,
+          "sp_defense": 95,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0080-呆壳兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "呆壳兽",
+        "types": [
+          "水",
+          "超能力"
+        ],
+        "abilities": [
+          "迟钝",
+          "我行我素",
+          "再生力"
+        ],
+        "weight": 78.5
+      },
+      {
+        "name": "超级呆壳兽",
+        "types": [
+          "水",
+          "超能力"
+        ],
+        "abilities": [
+          "硬壳盔甲",
+          "硬壳盔甲",
+          "硬壳盔甲"
+        ],
+        "weight": 120.0
+      },
+      {
+        "name": "伽勒尔的样子",
+        "types": [
+          "毒",
+          "超能力"
+        ],
+        "abilities": [
+          "速击",
+          "我行我素",
+          "再生力"
+        ],
+        "weight": 70.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "呆壳兽",
+        "data": {
+          "hp": 95,
+          "attack": 75,
+          "defense": 110,
+          "sp_attack": 100,
+          "sp_defense": 80,
+          "speed": 30
+        }
+      },
+      {
+        "form": "超级呆壳兽",
+        "data": {
+          "hp": 95,
+          "attack": 75,
+          "defense": 180,
+          "sp_attack": 130,
+          "sp_defense": 80,
+          "speed": 30
+        }
+      },
+      {
+        "form": "伽勒尔的样子",
+        "data": {
+          "hp": 95,
+          "attack": 100,
+          "defense": 95,
+          "sp_attack": 100,
+          "sp_defense": 70,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0094-耿鬼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "耿鬼",
+        "types": [
+          "幽灵",
+          "毒"
+        ],
+        "abilities": [
+          "咒术之躯",
+          "咒术之躯",
+          "咒术之躯"
+        ],
+        "weight": 40.5
+      },
+      {
+        "name": "超级耿鬼",
+        "types": [
+          "幽灵",
+          "毒"
+        ],
+        "abilities": [
+          "踩影",
+          "踩影",
+          "踩影"
+        ],
+        "weight": 40.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "耿鬼",
+        "data": {
+          "hp": 60,
+          "attack": 65,
+          "defense": 60,
+          "sp_attack": 130,
+          "sp_defense": 75,
+          "speed": 110
+        }
+      },
+      {
+        "form": "超级耿鬼",
+        "data": {
+          "hp": 60,
+          "attack": 65,
+          "defense": 80,
+          "sp_attack": 170,
+          "sp_defense": 95,
+          "speed": 130
+        }
+      }
+    ]
+  },
+  "0115-袋兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "袋兽",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "早起",
+          "胆量",
+          "精神力"
+        ],
+        "weight": 80.0
+      },
+      {
+        "name": "超级袋兽",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "亲子爱",
+          "亲子爱",
+          "亲子爱"
+        ],
+        "weight": 100.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "袋兽",
+        "data": {
+          "hp": 105,
+          "attack": 95,
+          "defense": 80,
+          "sp_attack": 40,
+          "sp_defense": 80,
+          "speed": 90
+        }
+      },
+      {
+        "form": "超级袋兽",
+        "data": {
+          "hp": 105,
+          "attack": 125,
+          "defense": 100,
+          "sp_attack": 60,
+          "sp_defense": 100,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0121-宝石海星": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "宝石海星",
+        "types": [
+          "水",
+          "超能力"
+        ],
+        "abilities": [
+          "发光",
+          "自然回复",
+          "分析"
+        ],
+        "weight": 80.0
+      },
+      {
+        "name": "超级宝石海星",
+        "types": [
+          "水",
+          "超能力"
+        ],
+        "abilities": [
+          "大力士",
+          "大力士",
+          "大力士"
+        ],
+        "weight": 80.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "宝石海星",
+        "data": {
+          "hp": 60,
+          "attack": 75,
+          "defense": 85,
+          "sp_attack": 100,
+          "sp_defense": 85,
+          "speed": 115
+        }
+      },
+      {
+        "form": "超级宝石海星",
+        "data": {
+          "hp": 60,
+          "attack": 100,
+          "defense": 105,
+          "sp_attack": 130,
+          "sp_defense": 105,
+          "speed": 120
+        }
+      }
+    ]
+  },
+  "0127-凯罗斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "凯罗斯",
+        "types": [
+          "虫"
+        ],
+        "abilities": [
+          "怪力钳",
+          "破格",
+          "自信过度"
+        ],
+        "weight": 55.0
+      },
+      {
+        "name": "超级凯罗斯",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "飞行皮肤",
+          "飞行皮肤",
+          "飞行皮肤"
+        ],
+        "weight": 59.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "凯罗斯",
+        "data": {
+          "hp": 65,
+          "attack": 125,
+          "defense": 100,
+          "sp_attack": 55,
+          "sp_defense": 70,
+          "speed": 85
+        }
+      },
+      {
+        "form": "超级凯罗斯",
+        "data": {
+          "hp": 65,
+          "attack": 155,
+          "defense": 120,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 105
+        }
+      }
+    ]
+  },
+  "0128-肯泰罗": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "肯泰罗",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "威吓",
+          "愤怒穴位",
+          "强行"
+        ],
+        "weight": 88.4
+      },
+      {
+        "name": "帕底亚的样子・斗战种",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "威吓",
+          "愤怒穴位",
+          "反刍"
+        ],
+        "weight": 115.0
+      },
+      {
+        "name": "帕底亚的样子・火炽种",
+        "types": [
+          "格斗",
+          "火"
+        ],
+        "abilities": [
+          "威吓",
+          "愤怒穴位",
+          "反刍"
+        ],
+        "weight": 85.0
+      },
+      {
+        "name": "帕底亚的样子・水澜种",
+        "types": [
+          "格斗",
+          "水"
+        ],
+        "abilities": [
+          "威吓",
+          "愤怒穴位",
+          "反刍"
+        ],
+        "weight": 110.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "肯泰罗",
+        "data": {
+          "hp": 75,
+          "attack": 100,
+          "defense": 95,
+          "sp_attack": 40,
+          "sp_defense": 70,
+          "speed": 110
+        }
+      },
+      {
+        "form": "帕底亚的样子・斗战种",
+        "data": {
+          "hp": 75,
+          "attack": 110,
+          "defense": 105,
+          "sp_attack": 30,
+          "sp_defense": 70,
+          "speed": 100
+        }
+      },
+      {
+        "form": "帕底亚的样子・火炽种",
+        "data": {
+          "hp": 75,
+          "attack": 110,
+          "defense": 105,
+          "sp_attack": 30,
+          "sp_defense": 70,
+          "speed": 100
+        }
+      },
+      {
+        "form": "帕底亚的样子・水澜种",
+        "data": {
+          "hp": 75,
+          "attack": 110,
+          "defense": 105,
+          "sp_attack": 30,
+          "sp_defense": 70,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0130-暴鲤龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "暴鲤龙",
+        "types": [
+          "水",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "威吓",
+          "自信过度"
+        ],
+        "weight": 235.0
+      },
+      {
+        "name": "超级暴鲤龙",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "破格",
+          "破格",
+          "破格"
+        ],
+        "weight": 305.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "暴鲤龙",
+        "data": {
+          "hp": 95,
+          "attack": 125,
+          "defense": 79,
+          "sp_attack": 60,
+          "sp_defense": 100,
+          "speed": 81
+        }
+      },
+      {
+        "form": "超级暴鲤龙",
+        "data": {
+          "hp": 95,
+          "attack": 155,
+          "defense": 109,
+          "sp_attack": 70,
+          "sp_defense": 130,
+          "speed": 81
+        }
+      }
+    ]
+  },
+  "0132-百变怪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "百变怪",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "柔软",
+          "柔软",
+          "变身者"
+        ],
+        "weight": 4.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "百变怪",
+        "data": {
+          "hp": 48,
+          "attack": 48,
+          "defense": 48,
+          "sp_attack": 48,
+          "sp_defense": 48,
+          "speed": 48
+        }
+      }
+    ]
+  },
+  "0134-水伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "水伊布",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "储水",
+          "储水",
+          "湿润之躯"
+        ],
+        "weight": 29.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "水伊布",
+        "data": {
+          "hp": 130,
+          "attack": 65,
+          "defense": 60,
+          "sp_attack": 110,
+          "sp_defense": 95,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0135-雷伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雷伊布",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "蓄电",
+          "蓄电",
+          "飞毛腿"
+        ],
+        "weight": 24.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "雷伊布",
+        "data": {
+          "hp": 65,
+          "attack": 65,
+          "defense": 60,
+          "sp_attack": 110,
+          "sp_defense": 95,
+          "speed": 130
+        }
+      }
+    ]
+  },
+  "0136-火伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "火伊布",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "引火",
+          "引火",
+          "毅力"
+        ],
+        "weight": 25.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "火伊布",
+        "data": {
+          "hp": 65,
+          "attack": 130,
+          "defense": 60,
+          "sp_attack": 95,
+          "sp_defense": 110,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0142-化石翼龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "化石翼龙",
+        "types": [
+          "岩石",
+          "飞行"
+        ],
+        "abilities": [
+          "坚硬脑袋",
+          "压迫感",
+          "紧张感"
+        ],
+        "weight": 59.0
+      },
+      {
+        "name": "超级化石翼龙",
+        "types": [
+          "岩石",
+          "飞行"
+        ],
+        "abilities": [
+          "硬爪",
+          "硬爪",
+          "硬爪"
+        ],
+        "weight": 79.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "化石翼龙",
+        "data": {
+          "hp": 80,
+          "attack": 105,
+          "defense": 65,
+          "sp_attack": 60,
+          "sp_defense": 75,
+          "speed": 130
+        }
+      },
+      {
+        "form": "超级化石翼龙",
+        "data": {
+          "hp": 80,
+          "attack": 135,
+          "defense": 85,
+          "sp_attack": 70,
+          "sp_defense": 95,
+          "speed": 150
+        }
+      }
+    ]
+  },
+  "0143-卡比兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "卡比兽",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "免疫",
+          "厚脂肪",
+          "贪吃鬼"
+        ],
+        "weight": 460.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "卡比兽",
+        "data": {
+          "hp": 160,
+          "attack": 110,
+          "defense": 65,
+          "sp_attack": 65,
+          "sp_defense": 110,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0149-快龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "快龙",
+        "types": [
+          "龙",
+          "飞行"
+        ],
+        "abilities": [
+          "精神力",
+          "精神力",
+          "多重鳞片"
+        ],
+        "weight": 210.0
+      },
+      {
+        "name": "超级快龙",
+        "types": [
+          "龙",
+          "飞行"
+        ],
+        "abilities": [
+          "多重鳞片",
+          "多重鳞片",
+          "多重鳞片"
+        ],
+        "weight": 290.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "快龙",
+        "data": {
+          "hp": 91,
+          "attack": 134,
+          "defense": 95,
+          "sp_attack": 100,
+          "sp_defense": 100,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级快龙",
+        "data": {
+          "hp": 91,
+          "attack": 124,
+          "defense": 115,
+          "sp_attack": 145,
+          "sp_defense": 125,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0154-大竺葵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大竺葵",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "叶子防守"
+        ],
+        "weight": 100.5
+      },
+      {
+        "name": "超级大竺葵",
+        "types": [
+          "草",
+          "妖精"
+        ],
+        "abilities": [
+          "超级日光",
+          "超级日光",
+          "超级日光"
+        ],
+        "weight": 201.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "大竺葵",
+        "data": {
+          "hp": 80,
+          "attack": 82,
+          "defense": 100,
+          "sp_attack": 83,
+          "sp_defense": 100,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级大竺葵",
+        "data": {
+          "hp": 80,
+          "attack": 92,
+          "defense": 115,
+          "sp_attack": 143,
+          "sp_defense": 115,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0157-火暴兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "火暴兽",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "引火"
+        ],
+        "weight": 79.5
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "火",
+          "幽灵"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "察觉"
+        ],
+        "weight": 69.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "火暴兽",
+        "data": {
+          "hp": 78,
+          "attack": 84,
+          "defense": 78,
+          "sp_attack": 109,
+          "sp_defense": 85,
+          "speed": 100
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 73,
+          "attack": 84,
+          "defense": 78,
+          "sp_attack": 119,
+          "sp_defense": 85,
+          "speed": 95
+        }
+      }
+    ]
+  },
+  "0160-大力鳄": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大力鳄",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "强行"
+        ],
+        "weight": 88.8
+      },
+      {
+        "name": "超级大力鳄",
+        "types": [
+          "水",
+          "龙"
+        ],
+        "abilities": [
+          "龙皮肤",
+          "龙皮肤",
+          "龙皮肤"
+        ],
+        "weight": 108.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "大力鳄",
+        "data": {
+          "hp": 85,
+          "attack": 105,
+          "defense": 100,
+          "sp_attack": 79,
+          "sp_defense": 83,
+          "speed": 78
+        }
+      },
+      {
+        "form": "超级大力鳄",
+        "data": {
+          "hp": 85,
+          "attack": 160,
+          "defense": 125,
+          "sp_attack": 89,
+          "sp_defense": 93,
+          "speed": 78
+        }
+      }
+    ]
+  },
+  "0168-阿利多斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "阿利多斯",
+        "types": [
+          "虫",
+          "毒"
+        ],
+        "abilities": [
+          "虫之预感",
+          "不眠",
+          "狙击手"
+        ],
+        "weight": 33.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "阿利多斯",
+        "data": {
+          "hp": 70,
+          "attack": 90,
+          "defense": 70,
+          "sp_attack": 60,
+          "sp_defense": 70,
+          "speed": 40
+        }
+      }
+    ]
+  },
+  "0181-电龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "电龙",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "静电",
+          "静电",
+          "正电"
+        ],
+        "weight": 61.5
+      },
+      {
+        "name": "超级电龙",
+        "types": [
+          "电",
+          "龙"
+        ],
+        "abilities": [
+          "破格",
+          "破格",
+          "破格"
+        ],
+        "weight": 61.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "电龙",
+        "data": {
+          "hp": 90,
+          "attack": 75,
+          "defense": 85,
+          "sp_attack": 115,
+          "sp_defense": 90,
+          "speed": 55
+        }
+      },
+      {
+        "form": "超级电龙",
+        "data": {
+          "hp": 90,
+          "attack": 95,
+          "defense": 105,
+          "sp_attack": 165,
+          "sp_defense": 110,
+          "speed": 45
+        }
+      }
+    ]
+  },
+  "0184-玛力露丽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "玛力露丽",
+        "types": [
+          "水",
+          "妖精"
+        ],
+        "abilities": [
+          "厚脂肪",
+          "大力士",
+          "食草"
+        ],
+        "weight": 28.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "玛力露丽",
+        "data": {
+          "hp": 100,
+          "attack": 50,
+          "defense": 80,
+          "sp_attack": 60,
+          "sp_defense": 80,
+          "speed": 50
+        }
+      }
+    ]
+  },
+  "0186-蚊香蛙皇": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "蚊香蛙皇",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "储水",
+          "湿气",
+          "降雨"
+        ],
+        "weight": 33.9
+      }
+    ],
+    "stats": [
+      {
+        "form": "蚊香蛙皇",
+        "data": {
+          "hp": 90,
+          "attack": 75,
+          "defense": 75,
+          "sp_attack": 90,
+          "sp_defense": 100,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0196-太阳伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "太阳伊布",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "同步",
+          "同步",
+          "魔法镜"
+        ],
+        "weight": 26.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "太阳伊布",
+        "data": {
+          "hp": 65,
+          "attack": 65,
+          "defense": 60,
+          "sp_attack": 130,
+          "sp_defense": 95,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0197-月亮伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "月亮伊布",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "同步",
+          "同步",
+          "精神力"
+        ],
+        "weight": 27.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "月亮伊布",
+        "data": {
+          "hp": 95,
+          "attack": 65,
+          "defense": 110,
+          "sp_attack": 60,
+          "sp_defense": 130,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0199-呆呆王": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "呆呆王",
+        "types": [
+          "水",
+          "超能力"
+        ],
+        "abilities": [
+          "迟钝",
+          "我行我素",
+          "再生力"
+        ],
+        "weight": 79.5
+      },
+      {
+        "name": "伽勒尔的样子",
+        "types": [
+          "毒",
+          "超能力"
+        ],
+        "abilities": [
+          "怪药",
+          "我行我素",
+          "再生力"
+        ],
+        "weight": 79.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "呆呆王",
+        "data": {
+          "hp": 95,
+          "attack": 75,
+          "defense": 80,
+          "sp_attack": 100,
+          "sp_defense": 110,
+          "speed": 30
+        }
+      },
+      {
+        "form": "伽勒尔的样子",
+        "data": {
+          "hp": 95,
+          "attack": 65,
+          "defense": 80,
+          "sp_attack": 110,
+          "sp_defense": 110,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0205-佛烈托斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "佛烈托斯",
+        "types": [
+          "虫",
+          "钢"
+        ],
+        "abilities": [
+          "结实",
+          "结实",
+          "防尘"
+        ],
+        "weight": 125.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "佛烈托斯",
+        "data": {
+          "hp": 75,
+          "attack": 90,
+          "defense": 140,
+          "sp_attack": 60,
+          "sp_defense": 60,
+          "speed": 40
+        }
+      }
+    ]
+  },
+  "0208-大钢蛇": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大钢蛇",
+        "types": [
+          "钢",
+          "地面"
+        ],
+        "abilities": [
+          "坚硬脑袋",
+          "结实",
+          "强行"
+        ],
+        "weight": 400.0
+      },
+      {
+        "name": "超级大钢蛇",
+        "types": [
+          "钢",
+          "地面"
+        ],
+        "abilities": [
+          "沙之力",
+          "沙之力",
+          "沙之力"
+        ],
+        "weight": 740.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "大钢蛇",
+        "data": {
+          "hp": 75,
+          "attack": 85,
+          "defense": 200,
+          "sp_attack": 55,
+          "sp_defense": 65,
+          "speed": 30
+        }
+      },
+      {
+        "form": "超级大钢蛇",
+        "data": {
+          "hp": 75,
+          "attack": 125,
+          "defense": 230,
+          "sp_attack": 55,
+          "sp_defense": 95,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0212-巨钳螳螂": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "巨钳螳螂",
+        "types": [
+          "虫",
+          "钢"
+        ],
+        "abilities": [
+          "虫之预感",
+          "技术高手",
+          "轻金属"
+        ],
+        "weight": 118.0
+      },
+      {
+        "name": "超级巨钳螳螂",
+        "types": [
+          "虫",
+          "钢"
+        ],
+        "abilities": [
+          "技术高手",
+          "技术高手",
+          "技术高手"
+        ],
+        "weight": 125.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "巨钳螳螂",
+        "data": {
+          "hp": 70,
+          "attack": 130,
+          "defense": 100,
+          "sp_attack": 55,
+          "sp_defense": 80,
+          "speed": 65
+        }
+      },
+      {
+        "form": "超级巨钳螳螂",
+        "data": {
+          "hp": 70,
+          "attack": 150,
+          "defense": 140,
+          "sp_attack": 65,
+          "sp_defense": 100,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0214-赫拉克罗斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "赫拉克罗斯",
+        "types": [
+          "虫",
+          "格斗"
+        ],
+        "abilities": [
+          "虫之预感",
+          "毅力",
+          "自信过度"
+        ],
+        "weight": 54.0
+      },
+      {
+        "name": "超级赫拉克罗斯",
+        "types": [
+          "虫",
+          "格斗"
+        ],
+        "abilities": [
+          "连续攻击",
+          "连续攻击",
+          "连续攻击"
+        ],
+        "weight": 62.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "赫拉克罗斯",
+        "data": {
+          "hp": 80,
+          "attack": 125,
+          "defense": 75,
+          "sp_attack": 40,
+          "sp_defense": 95,
+          "speed": 85
+        }
+      },
+      {
+        "form": "超级赫拉克罗斯",
+        "data": {
+          "hp": 80,
+          "attack": 185,
+          "defense": 115,
+          "sp_attack": 40,
+          "sp_defense": 105,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0227-盔甲鸟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "盔甲鸟",
+        "types": [
+          "钢",
+          "飞行"
+        ],
+        "abilities": [
+          "锐利目光",
+          "结实",
+          "碎裂铠甲"
+        ],
+        "weight": 50.5
+      },
+      {
+        "name": "超级盔甲鸟",
+        "types": [
+          "钢",
+          "飞行"
+        ],
+        "abilities": [
+          "坚毅",
+          "坚毅",
+          "坚毅"
+        ],
+        "weight": 40.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "盔甲鸟",
+        "data": {
+          "hp": 65,
+          "attack": 80,
+          "defense": 140,
+          "sp_attack": 40,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "超级盔甲鸟",
+        "data": {
+          "hp": 65,
+          "attack": 140,
+          "defense": 110,
+          "sp_attack": 40,
+          "sp_defense": 100,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0229-黑鲁加": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "黑鲁加",
+        "types": [
+          "恶",
+          "火"
+        ],
+        "abilities": [
+          "早起",
+          "引火",
+          "紧张感"
+        ],
+        "weight": 35.0
+      },
+      {
+        "name": "超级黑鲁加",
+        "types": [
+          "恶",
+          "火"
+        ],
+        "abilities": [
+          "太阳之力",
+          "太阳之力",
+          "太阳之力"
+        ],
+        "weight": 49.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "黑鲁加",
+        "data": {
+          "hp": 75,
+          "attack": 90,
+          "defense": 50,
+          "sp_attack": 110,
+          "sp_defense": 80,
+          "speed": 95
+        }
+      },
+      {
+        "form": "超级黑鲁加",
+        "data": {
+          "hp": 75,
+          "attack": 90,
+          "defense": 90,
+          "sp_attack": 140,
+          "sp_defense": 90,
+          "speed": 115
+        }
+      }
+    ]
+  },
+  "0248-班基拉斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "班基拉斯",
+        "types": [
+          "岩石",
+          "恶"
+        ],
+        "abilities": [
+          "扬沙",
+          "扬沙",
+          "紧张感"
+        ],
+        "weight": 202.0
+      },
+      {
+        "name": "超级班基拉斯",
+        "types": [
+          "岩石",
+          "恶"
+        ],
+        "abilities": [
+          "扬沙",
+          "扬沙",
+          "扬沙"
+        ],
+        "weight": 255.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "班基拉斯",
+        "data": {
+          "hp": 100,
+          "attack": 134,
+          "defense": 110,
+          "sp_attack": 95,
+          "sp_defense": 100,
+          "speed": 61
+        }
+      },
+      {
+        "form": "超级班基拉斯",
+        "data": {
+          "hp": 100,
+          "attack": 164,
+          "defense": 150,
+          "sp_attack": 95,
+          "sp_defense": 120,
+          "speed": 71
+        }
+      }
+    ]
+  },
+  "0279-大嘴鸥": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大嘴鸥",
+        "types": [
+          "水",
+          "飞行"
+        ],
+        "abilities": [
+          "锐利目光",
+          "降雨",
+          "雨盘"
+        ],
+        "weight": 28.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "大嘴鸥",
+        "data": {
+          "hp": 60,
+          "attack": 50,
+          "defense": 100,
+          "sp_attack": 95,
+          "sp_defense": 70,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0282-沙奈朵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "沙奈朵",
+        "types": [
+          "超能力",
+          "妖精"
+        ],
+        "abilities": [
+          "同步",
+          "复制",
+          "心灵感应"
+        ],
+        "weight": 48.4
+      },
+      {
+        "name": "超级沙奈朵",
+        "types": [
+          "超能力",
+          "妖精"
+        ],
+        "abilities": [
+          "妖精皮肤",
+          "妖精皮肤",
+          "妖精皮肤"
+        ],
+        "weight": 48.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "沙奈朵",
+        "data": {
+          "hp": 68,
+          "attack": 65,
+          "defense": 65,
+          "sp_attack": 125,
+          "sp_defense": 115,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级沙奈朵",
+        "data": {
+          "hp": 68,
+          "attack": 85,
+          "defense": 65,
+          "sp_attack": 165,
+          "sp_defense": 135,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0302-勾魂眼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "勾魂眼",
+        "types": [
+          "恶",
+          "幽灵"
+        ],
+        "abilities": [
+          "锐利目光",
+          "慢出",
+          "恶作剧之心"
+        ],
+        "weight": 11.0
+      },
+      {
+        "name": "超级勾魂眼",
+        "types": [
+          "恶",
+          "幽灵"
+        ],
+        "abilities": [
+          "魔法镜",
+          "魔法镜",
+          "魔法镜"
+        ],
+        "weight": 161.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "勾魂眼",
+        "data": {
+          "hp": 50,
+          "attack": 75,
+          "defense": 75,
+          "sp_attack": 65,
+          "sp_defense": 65,
+          "speed": 50
+        }
+      },
+      {
+        "form": "超级勾魂眼",
+        "data": {
+          "hp": 50,
+          "attack": 85,
+          "defense": 125,
+          "sp_attack": 85,
+          "sp_defense": 115,
+          "speed": 20
+        }
+      }
+    ]
+  },
+  "0306-波士可多拉": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "波士可多拉",
+        "types": [
+          "钢",
+          "岩石"
+        ],
+        "abilities": [
+          "结实",
+          "坚硬脑袋",
+          "重金属"
+        ],
+        "weight": 360.0
+      },
+      {
+        "name": "超级波士可多拉",
+        "types": [
+          "钢"
+        ],
+        "abilities": [
+          "过滤",
+          "过滤",
+          "过滤"
+        ],
+        "weight": 395.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "波士可多拉",
+        "data": {
+          "hp": 70,
+          "attack": 110,
+          "defense": 180,
+          "sp_attack": 60,
+          "sp_defense": 60,
+          "speed": 50
+        }
+      },
+      {
+        "form": "超级波士可多拉",
+        "data": {
+          "hp": 70,
+          "attack": 140,
+          "defense": 230,
+          "sp_attack": 60,
+          "sp_defense": 80,
+          "speed": 50
+        }
+      }
+    ]
+  },
+  "0308-恰雷姆": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "恰雷姆",
+        "types": [
+          "格斗",
+          "超能力"
+        ],
+        "abilities": [
+          "瑜伽之力",
+          "瑜伽之力",
+          "心灵感应"
+        ],
+        "weight": 31.5
+      },
+      {
+        "name": "超级恰雷姆",
+        "types": [
+          "格斗",
+          "超能力"
+        ],
+        "abilities": [
+          "瑜伽之力",
+          "瑜伽之力",
+          "瑜伽之力"
+        ],
+        "weight": 31.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "恰雷姆",
+        "data": {
+          "hp": 60,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 60,
+          "sp_defense": 75,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级恰雷姆",
+        "data": {
+          "hp": 60,
+          "attack": 100,
+          "defense": 85,
+          "sp_attack": 80,
+          "sp_defense": 85,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0310-雷电兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雷电兽",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "静电",
+          "避雷针",
+          "负电"
+        ],
+        "weight": 40.2
+      },
+      {
+        "name": "超级雷电兽",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "威吓",
+          "威吓",
+          "威吓"
+        ],
+        "weight": 44.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "雷电兽",
+        "data": {
+          "hp": 70,
+          "attack": 75,
+          "defense": 60,
+          "sp_attack": 105,
+          "sp_defense": 60,
+          "speed": 105
+        }
+      },
+      {
+        "form": "超级雷电兽",
+        "data": {
+          "hp": 70,
+          "attack": 75,
+          "defense": 80,
+          "sp_attack": 135,
+          "sp_defense": 80,
+          "speed": 135
+        }
+      }
+    ]
+  },
+  "0319-巨牙鲨": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "巨牙鲨",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "粗糙皮肤",
+          "粗糙皮肤",
+          "加速"
+        ],
+        "weight": 88.8
+      },
+      {
+        "name": "超级巨牙鲨",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "强壮之颚",
+          "强壮之颚",
+          "强壮之颚"
+        ],
+        "weight": 130.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "巨牙鲨",
+        "data": {
+          "hp": 70,
+          "attack": 120,
+          "defense": 40,
+          "sp_attack": 95,
+          "sp_defense": 40,
+          "speed": 95
+        }
+      },
+      {
+        "form": "超级巨牙鲨",
+        "data": {
+          "hp": 70,
+          "attack": 140,
+          "defense": 70,
+          "sp_attack": 110,
+          "sp_defense": 65,
+          "speed": 105
+        }
+      }
+    ]
+  },
+  "0323-喷火驼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "喷火驼",
+        "types": [
+          "火",
+          "地面"
+        ],
+        "abilities": [
+          "熔岩铠甲",
+          "坚硬岩石",
+          "愤怒穴位"
+        ],
+        "weight": 220.0
+      },
+      {
+        "name": "超级喷火驼",
+        "types": [
+          "火",
+          "地面"
+        ],
+        "abilities": [
+          "强行",
+          "强行",
+          "强行"
+        ],
+        "weight": 320.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "喷火驼",
+        "data": {
+          "hp": 70,
+          "attack": 100,
+          "defense": 70,
+          "sp_attack": 105,
+          "sp_defense": 75,
+          "speed": 40
+        }
+      },
+      {
+        "form": "超级喷火驼",
+        "data": {
+          "hp": 70,
+          "attack": 120,
+          "defense": 100,
+          "sp_attack": 145,
+          "sp_defense": 105,
+          "speed": 20
+        }
+      }
+    ]
+  },
+  "0324-煤炭龟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "煤炭龟",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "白色烟雾",
+          "日照",
+          "硬壳盔甲"
+        ],
+        "weight": 80.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "煤炭龟",
+        "data": {
+          "hp": 70,
+          "attack": 85,
+          "defense": 140,
+          "sp_attack": 85,
+          "sp_defense": 70,
+          "speed": 20
+        }
+      }
+    ]
+  },
+  "0334-七夕青鸟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "七夕青鸟",
+        "types": [
+          "龙",
+          "飞行"
+        ],
+        "abilities": [
+          "自然回复",
+          "自然回复",
+          "无关天气"
+        ],
+        "weight": 20.6
+      },
+      {
+        "name": "超级七夕青鸟",
+        "types": [
+          "龙",
+          "妖精"
+        ],
+        "abilities": [
+          "妖精皮肤",
+          "妖精皮肤",
+          "妖精皮肤"
+        ],
+        "weight": 20.6
+      }
+    ],
+    "stats": [
+      {
+        "form": "七夕青鸟",
+        "data": {
+          "hp": 75,
+          "attack": 70,
+          "defense": 90,
+          "sp_attack": 70,
+          "sp_defense": 105,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级七夕青鸟",
+        "data": {
+          "hp": 75,
+          "attack": 110,
+          "defense": 110,
+          "sp_attack": 110,
+          "sp_defense": 105,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0350-美纳斯": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "美纳斯",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "神奇鳞片",
+          "好胜",
+          "迷人之躯"
+        ],
+        "weight": 162.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "美纳斯",
+        "data": {
+          "hp": 95,
+          "attack": 60,
+          "defense": 79,
+          "sp_attack": 100,
+          "sp_defense": 125,
+          "speed": 81
+        }
+      }
+    ]
+  },
+  "0351-飘浮泡泡": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "飘浮泡泡的样子",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "阴晴不定",
+          "阴晴不定",
+          "阴晴不定"
+        ],
+        "weight": 0.8
+      },
+      {
+        "name": "太阳的样子",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "阴晴不定",
+          "阴晴不定",
+          "阴晴不定"
+        ],
+        "weight": 0.8
+      },
+      {
+        "name": "雨水的样子",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "阴晴不定",
+          "阴晴不定",
+          "阴晴不定"
+        ],
+        "weight": 0.8
+      },
+      {
+        "name": "雪云的样子",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "阴晴不定",
+          "阴晴不定",
+          "阴晴不定"
+        ],
+        "weight": 0.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "飘浮泡泡的样子",
+        "data": {
+          "hp": 70,
+          "attack": 70,
+          "defense": 70,
+          "sp_attack": 70,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "太阳的样子",
+        "data": {
+          "hp": 70,
+          "attack": 70,
+          "defense": 70,
+          "sp_attack": 70,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "雨水的样子",
+        "data": {
+          "hp": 70,
+          "attack": 70,
+          "defense": 70,
+          "sp_attack": 70,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "雪云的样子",
+        "data": {
+          "hp": 70,
+          "attack": 70,
+          "defense": 70,
+          "sp_attack": 70,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0354-诅咒娃娃": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "诅咒娃娃",
+        "types": [
+          "幽灵"
+        ],
+        "abilities": [
+          "不眠",
+          "察觉",
+          "咒术之躯"
+        ],
+        "weight": 12.5
+      },
+      {
+        "name": "超级诅咒娃娃",
+        "types": [
+          "幽灵"
+        ],
+        "abilities": [
+          "恶作剧之心",
+          "恶作剧之心",
+          "恶作剧之心"
+        ],
+        "weight": 13.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "诅咒娃娃",
+        "data": {
+          "hp": 64,
+          "attack": 115,
+          "defense": 65,
+          "sp_attack": 83,
+          "sp_defense": 63,
+          "speed": 65
+        }
+      },
+      {
+        "form": "超级诅咒娃娃",
+        "data": {
+          "hp": 64,
+          "attack": 165,
+          "defense": 75,
+          "sp_attack": 93,
+          "sp_defense": 83,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0358-风铃铃": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "风铃铃",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 1.0
+      },
+      {
+        "name": "超级风铃铃",
+        "types": [
+          "超能力",
+          "钢"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 8.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "风铃铃",
+        "data": {
+          "hp": 75,
+          "attack": 50,
+          "defense": 80,
+          "sp_attack": 95,
+          "sp_defense": 90,
+          "speed": 65
+        }
+      },
+      {
+        "form": "超级风铃铃",
+        "data": {
+          "hp": 75,
+          "attack": 50,
+          "defense": 110,
+          "sp_attack": 135,
+          "sp_defense": 120,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0359-阿勃梭鲁": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "阿勃梭鲁",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "压迫感",
+          "超幸运",
+          "正义之心"
+        ],
+        "weight": 47.0
+      },
+      {
+        "name": "超级阿勃梭鲁",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "魔法镜",
+          "魔法镜",
+          "魔法镜"
+        ],
+        "weight": 49.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "阿勃梭鲁",
+        "data": {
+          "hp": 65,
+          "attack": 130,
+          "defense": 60,
+          "sp_attack": 75,
+          "sp_defense": 60,
+          "speed": 75
+        }
+      },
+      {
+        "form": "超级阿勃梭鲁",
+        "data": {
+          "hp": 65,
+          "attack": 150,
+          "defense": 60,
+          "sp_attack": 115,
+          "sp_defense": 60,
+          "speed": 115
+        }
+      }
+    ]
+  },
+  "0362-冰鬼护": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冰鬼护",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "精神力",
+          "冰冻之躯",
+          "心情不定"
+        ],
+        "weight": 256.5
+      },
+      {
+        "name": "超级冰鬼护",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "冰冻皮肤",
+          "冰冻皮肤",
+          "冰冻皮肤"
+        ],
+        "weight": 350.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "冰鬼护",
+        "data": {
+          "hp": 80,
+          "attack": 80,
+          "defense": 80,
+          "sp_attack": 80,
+          "sp_defense": 80,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级冰鬼护",
+        "data": {
+          "hp": 80,
+          "attack": 120,
+          "defense": 80,
+          "sp_attack": 120,
+          "sp_defense": 80,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0389-土台龟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "土台龟",
+        "types": [
+          "草",
+          "地面"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "硬壳盔甲"
+        ],
+        "weight": 310.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "土台龟",
+        "data": {
+          "hp": 95,
+          "attack": 109,
+          "defense": 105,
+          "sp_attack": 75,
+          "sp_defense": 85,
+          "speed": 56
+        }
+      }
+    ]
+  },
+  "0392-烈焰猴": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "烈焰猴",
+        "types": [
+          "火",
+          "格斗"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "铁拳"
+        ],
+        "weight": 55.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "烈焰猴",
+        "data": {
+          "hp": 76,
+          "attack": 104,
+          "defense": 71,
+          "sp_attack": 104,
+          "sp_defense": 71,
+          "speed": 108
+        }
+      }
+    ]
+  },
+  "0395-帝王拿波": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "帝王拿波",
+        "types": [
+          "水",
+          "钢"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "好胜"
+        ],
+        "weight": 84.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "帝王拿波",
+        "data": {
+          "hp": 84,
+          "attack": 86,
+          "defense": 88,
+          "sp_attack": 111,
+          "sp_defense": 101,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0405-伦琴猫": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "伦琴猫",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "斗争心",
+          "威吓",
+          "毅力"
+        ],
+        "weight": 42.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "伦琴猫",
+        "data": {
+          "hp": 80,
+          "attack": 120,
+          "defense": 79,
+          "sp_attack": 95,
+          "sp_defense": 79,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0407-罗丝雷朵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "罗丝雷朵",
+        "types": [
+          "草",
+          "毒"
+        ],
+        "abilities": [
+          "自然回复",
+          "毒刺",
+          "技术高手"
+        ],
+        "weight": 14.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "罗丝雷朵",
+        "data": {
+          "hp": 60,
+          "attack": 70,
+          "defense": 65,
+          "sp_attack": 125,
+          "sp_defense": 105,
+          "speed": 90
+        }
+      }
+    ]
+  },
+  "0409-战槌龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "战槌龙",
+        "types": [
+          "岩石"
+        ],
+        "abilities": [
+          "破格",
+          "破格",
+          "强行"
+        ],
+        "weight": 102.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "战槌龙",
+        "data": {
+          "hp": 97,
+          "attack": 165,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 50,
+          "speed": 58
+        }
+      }
+    ]
+  },
+  "0411-护城龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "护城龙",
+        "types": [
+          "岩石",
+          "钢"
+        ],
+        "abilities": [
+          "结实",
+          "结实",
+          "隔音"
+        ],
+        "weight": 149.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "护城龙",
+        "data": {
+          "hp": 60,
+          "attack": 52,
+          "defense": 168,
+          "sp_attack": 47,
+          "sp_defense": 138,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0428-长耳兔": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "长耳兔",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "迷人之躯",
+          "笨拙",
+          "柔软"
+        ],
+        "weight": 33.3
+      },
+      {
+        "name": "超级长耳兔",
+        "types": [
+          "一般",
+          "格斗"
+        ],
+        "abilities": [
+          "胆量",
+          "胆量",
+          "胆量"
+        ],
+        "weight": 28.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "长耳兔",
+        "data": {
+          "hp": 65,
+          "attack": 76,
+          "defense": 84,
+          "sp_attack": 54,
+          "sp_defense": 96,
+          "speed": 105
+        }
+      },
+      {
+        "form": "超级长耳兔",
+        "data": {
+          "hp": 65,
+          "attack": 136,
+          "defense": 94,
+          "sp_attack": 54,
+          "sp_defense": 96,
+          "speed": 135
+        }
+      }
+    ]
+  },
+  "0442-花岩怪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "花岩怪",
+        "types": [
+          "幽灵",
+          "恶"
+        ],
+        "abilities": [
+          "压迫感",
+          "压迫感",
+          "穿透"
+        ],
+        "weight": 108.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "花岩怪",
+        "data": {
+          "hp": 50,
+          "attack": 92,
+          "defense": 108,
+          "sp_attack": 92,
+          "sp_defense": 108,
+          "speed": 35
+        }
+      }
+    ]
+  },
+  "0445-烈咬陆鲨": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "烈咬陆鲨",
+        "types": [
+          "龙",
+          "地面"
+        ],
+        "abilities": [
+          "沙隐",
+          "沙隐",
+          "粗糙皮肤"
+        ],
+        "weight": 95.0
+      },
+      {
+        "name": "超级烈咬陆鲨",
+        "types": [
+          "龙",
+          "地面"
+        ],
+        "abilities": [
+          "沙之力",
+          "沙之力",
+          "沙之力"
+        ],
+        "weight": 95.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "烈咬陆鲨",
+        "data": {
+          "hp": 108,
+          "attack": 130,
+          "defense": 95,
+          "sp_attack": 80,
+          "sp_defense": 85,
+          "speed": 102
+        }
+      },
+      {
+        "form": "超级烈咬陆鲨",
+        "data": {
+          "hp": 108,
+          "attack": 170,
+          "defense": 115,
+          "sp_attack": 120,
+          "sp_defense": 95,
+          "speed": 92
+        }
+      }
+    ]
+  },
+  "0448-路卡利欧": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "路卡利欧",
+        "types": [
+          "格斗",
+          "钢"
+        ],
+        "abilities": [
+          "不屈之心",
+          "精神力",
+          "正义之心"
+        ],
+        "weight": 54.0
+      },
+      {
+        "name": "超级路卡利欧",
+        "types": [
+          "格斗",
+          "钢"
+        ],
+        "abilities": [
+          "适应力",
+          "适应力",
+          "适应力"
+        ],
+        "weight": 57.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "路卡利欧",
+        "data": {
+          "hp": 70,
+          "attack": 110,
+          "defense": 70,
+          "sp_attack": 115,
+          "sp_defense": 70,
+          "speed": 90
+        }
+      },
+      {
+        "form": "超级路卡利欧",
+        "data": {
+          "hp": 70,
+          "attack": 145,
+          "defense": 88,
+          "sp_attack": 140,
+          "sp_defense": 70,
+          "speed": 112
+        }
+      }
+    ]
+  },
+  "0450-河马兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "河马兽",
+        "types": [
+          "地面"
+        ],
+        "abilities": [
+          "扬沙",
+          "扬沙",
+          "沙之力"
+        ],
+        "weight": 300.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "河马兽",
+        "data": {
+          "hp": 108,
+          "attack": 112,
+          "defense": 118,
+          "sp_attack": 68,
+          "sp_defense": 72,
+          "speed": 47
+        }
+      }
+    ]
+  },
+  "0454-毒骷蛙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "毒骷蛙",
+        "types": [
+          "毒",
+          "格斗"
+        ],
+        "abilities": [
+          "危险预知",
+          "干燥皮肤",
+          "毒手"
+        ],
+        "weight": 44.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "毒骷蛙",
+        "data": {
+          "hp": 83,
+          "attack": 106,
+          "defense": 65,
+          "sp_attack": 86,
+          "sp_defense": 65,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0460-暴雪王": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "暴雪王",
+        "types": [
+          "草",
+          "冰"
+        ],
+        "abilities": [
+          "降雪",
+          "降雪",
+          "隔音"
+        ],
+        "weight": 135.5
+      },
+      {
+        "name": "超级暴雪王",
+        "types": [
+          "草",
+          "冰"
+        ],
+        "abilities": [
+          "降雪",
+          "降雪",
+          "降雪"
+        ],
+        "weight": 185.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "暴雪王",
+        "data": {
+          "hp": 90,
+          "attack": 92,
+          "defense": 75,
+          "sp_attack": 92,
+          "sp_defense": 85,
+          "speed": 60
+        }
+      },
+      {
+        "form": "超级暴雪王",
+        "data": {
+          "hp": 90,
+          "attack": 132,
+          "defense": 105,
+          "sp_attack": 132,
+          "sp_defense": 105,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0461-玛狃拉": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "玛狃拉",
+        "types": [
+          "恶",
+          "冰"
+        ],
+        "abilities": [
+          "压迫感",
+          "压迫感",
+          "顺手牵羊"
+        ],
+        "weight": 34.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "玛狃拉",
+        "data": {
+          "hp": 70,
+          "attack": 120,
+          "defense": 65,
+          "sp_attack": 45,
+          "sp_defense": 85,
+          "speed": 125
+        }
+      }
+    ]
+  },
+  "0464-超甲狂犀": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "超甲狂犀",
+        "types": [
+          "地面",
+          "岩石"
+        ],
+        "abilities": [
+          "避雷针",
+          "坚硬岩石",
+          "舍身"
+        ],
+        "weight": 282.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "超甲狂犀",
+        "data": {
+          "hp": 115,
+          "attack": 140,
+          "defense": 130,
+          "sp_attack": 55,
+          "sp_defense": 55,
+          "speed": 40
+        }
+      }
+    ]
+  },
+  "0470-叶伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "叶伊布",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "叶子防守",
+          "叶子防守",
+          "叶绿素"
+        ],
+        "weight": 25.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "叶伊布",
+        "data": {
+          "hp": 65,
+          "attack": 110,
+          "defense": 130,
+          "sp_attack": 60,
+          "sp_defense": 65,
+          "speed": 95
+        }
+      }
+    ]
+  },
+  "0471-冰伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冰伊布",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "雪隐",
+          "雪隐",
+          "冰冻之躯"
+        ],
+        "weight": 25.9
+      }
+    ],
+    "stats": [
+      {
+        "form": "冰伊布",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 110,
+          "sp_attack": 130,
+          "sp_defense": 95,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0472-天蝎王": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "天蝎王",
+        "types": [
+          "地面",
+          "飞行"
+        ],
+        "abilities": [
+          "怪力钳",
+          "沙隐",
+          "毒疗"
+        ],
+        "weight": 42.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "天蝎王",
+        "data": {
+          "hp": 75,
+          "attack": 95,
+          "defense": 125,
+          "sp_attack": 45,
+          "sp_defense": 75,
+          "speed": 95
+        }
+      }
+    ]
+  },
+  "0473-象牙猪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "象牙猪",
+        "types": [
+          "冰",
+          "地面"
+        ],
+        "abilities": [
+          "迟钝",
+          "雪隐",
+          "厚脂肪"
+        ],
+        "weight": 291.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "象牙猪",
+        "data": {
+          "hp": 110,
+          "attack": 130,
+          "defense": 80,
+          "sp_attack": 70,
+          "sp_defense": 60,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0475-艾路雷朵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "艾路雷朵",
+        "types": [
+          "超能力",
+          "格斗"
+        ],
+        "abilities": [
+          "不屈之心",
+          "锋锐",
+          "正义之心"
+        ],
+        "weight": 52.0
+      },
+      {
+        "name": "超级艾路雷朵",
+        "types": [
+          "超能力",
+          "格斗"
+        ],
+        "abilities": [
+          "精神力",
+          "精神力",
+          "精神力"
+        ],
+        "weight": 56.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "艾路雷朵",
+        "data": {
+          "hp": 68,
+          "attack": 125,
+          "defense": 65,
+          "sp_attack": 65,
+          "sp_defense": 115,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级艾路雷朵",
+        "data": {
+          "hp": 68,
+          "attack": 165,
+          "defense": 95,
+          "sp_attack": 65,
+          "sp_defense": 115,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0478-雪妖女": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雪妖女",
+        "types": [
+          "冰",
+          "幽灵"
+        ],
+        "abilities": [
+          "雪隐",
+          "雪隐",
+          "咒术之躯"
+        ],
+        "weight": 26.6
+      },
+      {
+        "name": "超级雪妖女",
+        "types": [
+          "冰",
+          "幽灵"
+        ],
+        "abilities": [
+          "降雪",
+          "降雪",
+          "降雪"
+        ],
+        "weight": 29.6
+      }
+    ],
+    "stats": [
+      {
+        "form": "雪妖女",
+        "data": {
+          "hp": 70,
+          "attack": 80,
+          "defense": 70,
+          "sp_attack": 80,
+          "sp_defense": 70,
+          "speed": 110
+        }
+      },
+      {
+        "form": "超级雪妖女",
+        "data": {
+          "hp": 70,
+          "attack": 80,
+          "defense": 70,
+          "sp_attack": 140,
+          "sp_defense": 100,
+          "speed": 120
+        }
+      }
+    ]
+  },
+  "0479-洛托姆": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "洛托姆的样子",
+        "types": [
+          "电",
+          "幽灵"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      },
+      {
+        "name": "加热洛托姆",
+        "types": [
+          "电",
+          "火"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      },
+      {
+        "name": "清洗洛托姆",
+        "types": [
+          "电",
+          "水"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      },
+      {
+        "name": "结冰洛托姆",
+        "types": [
+          "电",
+          "冰"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      },
+      {
+        "name": "旋转洛托姆",
+        "types": [
+          "电",
+          "飞行"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      },
+      {
+        "name": "切割洛托姆",
+        "types": [
+          "电",
+          "草"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 0.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "洛托姆的样子",
+        "data": {
+          "hp": 50,
+          "attack": 50,
+          "defense": 77,
+          "sp_attack": 95,
+          "sp_defense": 77,
+          "speed": 91
+        }
+      },
+      {
+        "form": "加热洛托姆",
+        "data": {
+          "hp": 50,
+          "attack": 65,
+          "defense": 107,
+          "sp_attack": 105,
+          "sp_defense": 107,
+          "speed": 86
+        }
+      },
+      {
+        "form": "清洗洛托姆",
+        "data": {
+          "hp": 50,
+          "attack": 65,
+          "defense": 107,
+          "sp_attack": 105,
+          "sp_defense": 107,
+          "speed": 86
+        }
+      },
+      {
+        "form": "结冰洛托姆",
+        "data": {
+          "hp": 50,
+          "attack": 65,
+          "defense": 107,
+          "sp_attack": 105,
+          "sp_defense": 107,
+          "speed": 86
+        }
+      },
+      {
+        "form": "旋转洛托姆",
+        "data": {
+          "hp": 50,
+          "attack": 65,
+          "defense": 107,
+          "sp_attack": 105,
+          "sp_defense": 107,
+          "speed": 86
+        }
+      },
+      {
+        "form": "切割洛托姆",
+        "data": {
+          "hp": 50,
+          "attack": 65,
+          "defense": 107,
+          "sp_attack": 105,
+          "sp_defense": 107,
+          "speed": 86
+        }
+      }
+    ]
+  },
+  "0497-君主蛇": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "君主蛇",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "唱反调"
+        ],
+        "weight": 63.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "君主蛇",
+        "data": {
+          "hp": 75,
+          "attack": 75,
+          "defense": 95,
+          "sp_attack": 75,
+          "sp_defense": 95,
+          "speed": 113
+        }
+      }
+    ]
+  },
+  "0500-炎武王": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "炎武王",
+        "types": [
+          "火",
+          "格斗"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "舍身"
+        ],
+        "weight": 150.0
+      },
+      {
+        "name": "超级炎武王",
+        "types": [
+          "火",
+          "格斗"
+        ],
+        "abilities": [
+          "破格",
+          "破格",
+          "破格"
+        ],
+        "weight": 180.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "炎武王",
+        "data": {
+          "hp": 110,
+          "attack": 123,
+          "defense": 65,
+          "sp_attack": 100,
+          "sp_defense": 65,
+          "speed": 65
+        }
+      },
+      {
+        "form": "超级炎武王",
+        "data": {
+          "hp": 110,
+          "attack": 148,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 110,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0503-大剑鬼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大剑鬼",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "硬壳盔甲"
+        ],
+        "weight": 94.6
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "锋锐"
+        ],
+        "weight": 58.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "大剑鬼",
+        "data": {
+          "hp": 95,
+          "attack": 100,
+          "defense": 85,
+          "sp_attack": 108,
+          "sp_defense": 70,
+          "speed": 70
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 90,
+          "attack": 108,
+          "defense": 80,
+          "sp_attack": 100,
+          "sp_defense": 65,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0505-步哨鼠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "步哨鼠",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "发光",
+          "锐利目光",
+          "分析"
+        ],
+        "weight": 27.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "步哨鼠",
+        "data": {
+          "hp": 60,
+          "attack": 85,
+          "defense": 69,
+          "sp_attack": 60,
+          "sp_defense": 69,
+          "speed": 77
+        }
+      }
+    ]
+  },
+  "0510-酷豹": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "酷豹",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "柔软",
+          "轻装",
+          "恶作剧之心"
+        ],
+        "weight": 37.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "酷豹",
+        "data": {
+          "hp": 64,
+          "attack": 88,
+          "defense": 50,
+          "sp_attack": 88,
+          "sp_defense": 50,
+          "speed": 106
+        }
+      }
+    ]
+  },
+  "0512-花椰猿": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "花椰猿",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "贪吃鬼",
+          "贪吃鬼",
+          "茂盛"
+        ],
+        "weight": 30.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "花椰猿",
+        "data": {
+          "hp": 75,
+          "attack": 98,
+          "defense": 63,
+          "sp_attack": 98,
+          "sp_defense": 63,
+          "speed": 101
+        }
+      }
+    ]
+  },
+  "0514-爆香猿": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "爆香猿",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "贪吃鬼",
+          "贪吃鬼",
+          "猛火"
+        ],
+        "weight": 28.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "爆香猿",
+        "data": {
+          "hp": 75,
+          "attack": 98,
+          "defense": 63,
+          "sp_attack": 98,
+          "sp_defense": 63,
+          "speed": 101
+        }
+      }
+    ]
+  },
+  "0516-冷水猿": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冷水猿",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "贪吃鬼",
+          "贪吃鬼",
+          "激流"
+        ],
+        "weight": 29.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "冷水猿",
+        "data": {
+          "hp": 75,
+          "attack": 98,
+          "defense": 63,
+          "sp_attack": 98,
+          "sp_defense": 63,
+          "speed": 101
+        }
+      }
+    ]
+  },
+  "0530-龙头地鼠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "龙头地鼠",
+        "types": [
+          "地面",
+          "钢"
+        ],
+        "abilities": [
+          "拨沙",
+          "沙之力",
+          "破格"
+        ],
+        "weight": 40.4
+      },
+      {
+        "name": "超级龙头地鼠",
+        "types": [
+          "地面",
+          "钢"
+        ],
+        "abilities": [
+          "贯穿钻",
+          "贯穿钻",
+          "贯穿钻"
+        ],
+        "weight": 60.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "龙头地鼠",
+        "data": {
+          "hp": 110,
+          "attack": 135,
+          "defense": 60,
+          "sp_attack": 50,
+          "sp_defense": 65,
+          "speed": 88
+        }
+      },
+      {
+        "form": "超级龙头地鼠",
+        "data": {
+          "hp": 110,
+          "attack": 165,
+          "defense": 100,
+          "sp_attack": 65,
+          "sp_defense": 65,
+          "speed": 103
+        }
+      }
+    ]
+  },
+  "0531-差不多娃娃": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "差不多娃娃",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "治愈之心",
+          "再生力",
+          "笨拙"
+        ],
+        "weight": 31.0
+      },
+      {
+        "name": "超级差不多娃娃",
+        "types": [
+          "一般",
+          "妖精"
+        ],
+        "abilities": [
+          "治愈之心",
+          "治愈之心",
+          "治愈之心"
+        ],
+        "weight": 32.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "差不多娃娃",
+        "data": {
+          "hp": 103,
+          "attack": 60,
+          "defense": 86,
+          "sp_attack": 60,
+          "sp_defense": 86,
+          "speed": 50
+        }
+      },
+      {
+        "form": "超级差不多娃娃",
+        "data": {
+          "hp": 103,
+          "attack": 60,
+          "defense": 126,
+          "sp_attack": 80,
+          "sp_defense": 126,
+          "speed": 50
+        }
+      }
+    ]
+  },
+  "0534-修建老匠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "修建老匠",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "毅力",
+          "强行",
+          "铁拳"
+        ],
+        "weight": 87.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "修建老匠",
+        "data": {
+          "hp": 105,
+          "attack": 140,
+          "defense": 95,
+          "sp_attack": 55,
+          "sp_defense": 65,
+          "speed": 45
+        }
+      }
+    ]
+  },
+  "0547-风妖精": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "风妖精",
+        "types": [
+          "草",
+          "妖精"
+        ],
+        "abilities": [
+          "恶作剧之心",
+          "穿透",
+          "叶绿素"
+        ],
+        "weight": 6.6
+      }
+    ],
+    "stats": [
+      {
+        "form": "风妖精",
+        "data": {
+          "hp": 60,
+          "attack": 67,
+          "defense": 85,
+          "sp_attack": 77,
+          "sp_defense": 75,
+          "speed": 116
+        }
+      }
+    ]
+  },
+  "0553-流氓鳄": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "流氓鳄",
+        "types": [
+          "地面",
+          "恶"
+        ],
+        "abilities": [
+          "威吓",
+          "自信过度",
+          "愤怒穴位"
+        ],
+        "weight": 96.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "流氓鳄",
+        "data": {
+          "hp": 95,
+          "attack": 117,
+          "defense": 80,
+          "sp_attack": 65,
+          "sp_defense": 70,
+          "speed": 92
+        }
+      }
+    ]
+  },
+  "0563-迭失棺": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "迭失棺",
+        "types": [
+          "幽灵"
+        ],
+        "abilities": [
+          "木乃伊",
+          "木乃伊",
+          "木乃伊"
+        ],
+        "weight": 76.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "迭失棺",
+        "data": {
+          "hp": 58,
+          "attack": 50,
+          "defense": 145,
+          "sp_attack": 95,
+          "sp_defense": 105,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0569-灰尘山": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "灰尘山",
+        "types": [
+          "毒"
+        ],
+        "abilities": [
+          "恶臭",
+          "碎裂铠甲",
+          "诱爆"
+        ],
+        "weight": 107.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "灰尘山",
+        "data": {
+          "hp": 80,
+          "attack": 95,
+          "defense": 82,
+          "sp_attack": 60,
+          "sp_defense": 82,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0571-索罗亚克": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "索罗亚克",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "幻觉",
+          "幻觉",
+          "幻觉"
+        ],
+        "weight": 81.1
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "一般",
+          "幽灵"
+        ],
+        "abilities": [
+          "幻觉",
+          "幻觉",
+          "幻觉"
+        ],
+        "weight": 73.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "索罗亚克",
+        "data": {
+          "hp": 60,
+          "attack": 105,
+          "defense": 60,
+          "sp_attack": 120,
+          "sp_defense": 60,
+          "speed": 105
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 55,
+          "attack": 100,
+          "defense": 60,
+          "sp_attack": 125,
+          "sp_defense": 60,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0579-人造细胞卵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "人造细胞卵",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "防尘",
+          "魔法防守",
+          "再生力"
+        ],
+        "weight": 20.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "人造细胞卵",
+        "data": {
+          "hp": 110,
+          "attack": 65,
+          "defense": 75,
+          "sp_attack": 125,
+          "sp_defense": 85,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0584-双倍多多冰": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "双倍多多冰",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "冰冻之躯",
+          "降雪",
+          "碎裂铠甲"
+        ],
+        "weight": 57.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "双倍多多冰",
+        "data": {
+          "hp": 71,
+          "attack": 95,
+          "defense": 85,
+          "sp_attack": 110,
+          "sp_defense": 95,
+          "speed": 79
+        }
+      }
+    ]
+  },
+  "0587-电飞鼠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "电飞鼠",
+        "types": [
+          "电",
+          "飞行"
+        ],
+        "abilities": [
+          "静电",
+          "静电",
+          "电气引擎"
+        ],
+        "weight": 5.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "电飞鼠",
+        "data": {
+          "hp": 55,
+          "attack": 75,
+          "defense": 60,
+          "sp_attack": 75,
+          "sp_defense": 60,
+          "speed": 103
+        }
+      }
+    ]
+  },
+  "0609-水晶灯火灵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "水晶灯火灵",
+        "types": [
+          "幽灵",
+          "火"
+        ],
+        "abilities": [
+          "引火",
+          "火焰之躯",
+          "穿透"
+        ],
+        "weight": 34.3
+      },
+      {
+        "name": "超级水晶灯火灵",
+        "types": [
+          "幽灵",
+          "火"
+        ],
+        "abilities": [
+          "穿透",
+          "穿透",
+          "穿透"
+        ],
+        "weight": 69.6
+      }
+    ],
+    "stats": [
+      {
+        "form": "水晶灯火灵",
+        "data": {
+          "hp": 60,
+          "attack": 55,
+          "defense": 90,
+          "sp_attack": 145,
+          "sp_defense": 90,
+          "speed": 80
+        }
+      },
+      {
+        "form": "超级水晶灯火灵",
+        "data": {
+          "hp": 60,
+          "attack": 75,
+          "defense": 110,
+          "sp_attack": 175,
+          "sp_defense": 110,
+          "speed": 90
+        }
+      }
+    ]
+  },
+  "0614-冻原熊": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冻原熊",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "雪隐",
+          "拨雪",
+          "悠游自如"
+        ],
+        "weight": 260.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "冻原熊",
+        "data": {
+          "hp": 95,
+          "attack": 130,
+          "defense": 80,
+          "sp_attack": 70,
+          "sp_defense": 80,
+          "speed": 50
+        }
+      }
+    ]
+  },
+  "0618-泥巴鱼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "泥巴鱼",
+        "types": [
+          "地面",
+          "电"
+        ],
+        "abilities": [
+          "静电",
+          "柔软",
+          "沙隐"
+        ],
+        "weight": 11.0
+      },
+      {
+        "name": "伽勒尔的样子",
+        "types": [
+          "地面",
+          "钢"
+        ],
+        "abilities": [
+          "拟态",
+          "拟态",
+          "拟态"
+        ],
+        "weight": 20.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "泥巴鱼",
+        "data": {
+          "hp": 109,
+          "attack": 66,
+          "defense": 84,
+          "sp_attack": 81,
+          "sp_defense": 99,
+          "speed": 32
+        }
+      },
+      {
+        "form": "伽勒尔的样子",
+        "data": {
+          "hp": 109,
+          "attack": 81,
+          "defense": 99,
+          "sp_attack": 66,
+          "sp_defense": 84,
+          "speed": 32
+        }
+      }
+    ]
+  },
+  "0623-泥偶巨人": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "泥偶巨人",
+        "types": [
+          "地面",
+          "幽灵"
+        ],
+        "abilities": [
+          "铁拳",
+          "笨拙",
+          "无防守"
+        ],
+        "weight": 330.0
+      },
+      {
+        "name": "超级泥偶巨人",
+        "types": [
+          "地面",
+          "幽灵"
+        ],
+        "abilities": [
+          "无形拳",
+          "无形拳",
+          "无形拳"
+        ],
+        "weight": 330.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "泥偶巨人",
+        "data": {
+          "hp": 89,
+          "attack": 124,
+          "defense": 80,
+          "sp_attack": 55,
+          "sp_defense": 80,
+          "speed": 55
+        }
+      },
+      {
+        "form": "超级泥偶巨人",
+        "data": {
+          "hp": 89,
+          "attack": 159,
+          "defense": 105,
+          "sp_attack": 70,
+          "sp_defense": 105,
+          "speed": 55
+        }
+      }
+    ]
+  },
+  "0635-三首恶龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "三首恶龙",
+        "types": [
+          "恶",
+          "龙"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 160.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "三首恶龙",
+        "data": {
+          "hp": 92,
+          "attack": 105,
+          "defense": 90,
+          "sp_attack": 125,
+          "sp_defense": 90,
+          "speed": 98
+        }
+      }
+    ]
+  },
+  "0637-火神蛾": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "火神蛾",
+        "types": [
+          "虫",
+          "火"
+        ],
+        "abilities": [
+          "火焰之躯",
+          "火焰之躯",
+          "虫之预感"
+        ],
+        "weight": 46.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "火神蛾",
+        "data": {
+          "hp": 85,
+          "attack": 60,
+          "defense": 65,
+          "sp_attack": 135,
+          "sp_defense": 105,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0652-布里卡隆": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "布里卡隆",
+        "types": [
+          "草",
+          "格斗"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "防弹"
+        ],
+        "weight": 90.0
+      },
+      {
+        "name": "超级布里卡隆",
+        "types": [
+          "草",
+          "格斗"
+        ],
+        "abilities": [
+          "防弹",
+          "防弹",
+          "防弹"
+        ],
+        "weight": 90.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "布里卡隆",
+        "data": {
+          "hp": 88,
+          "attack": 107,
+          "defense": 122,
+          "sp_attack": 74,
+          "sp_defense": 75,
+          "speed": 64
+        }
+      },
+      {
+        "form": "超级布里卡隆",
+        "data": {
+          "hp": 88,
+          "attack": 137,
+          "defense": 172,
+          "sp_attack": 74,
+          "sp_defense": 115,
+          "speed": 44
+        }
+      }
+    ]
+  },
+  "0655-妖火红狐": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "妖火红狐",
+        "types": [
+          "火",
+          "超能力"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "魔术师"
+        ],
+        "weight": 39.0
+      },
+      {
+        "name": "超级妖火红狐",
+        "types": [
+          "火",
+          "超能力"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 39.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "妖火红狐",
+        "data": {
+          "hp": 75,
+          "attack": 69,
+          "defense": 72,
+          "sp_attack": 114,
+          "sp_defense": 100,
+          "speed": 104
+        }
+      },
+      {
+        "form": "超级妖火红狐",
+        "data": {
+          "hp": 75,
+          "attack": 69,
+          "defense": 72,
+          "sp_attack": 159,
+          "sp_defense": 125,
+          "speed": 134
+        }
+      }
+    ]
+  },
+  "0658-甲贺忍蛙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "甲贺忍蛙",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "变幻自如"
+        ],
+        "weight": 40.0
+      },
+      {
+        "name": "超级甲贺忍蛙",
+        "types": [
+          "水",
+          "恶"
+        ],
+        "abilities": [
+          "变幻自如",
+          "变幻自如",
+          "变幻自如"
+        ],
+        "weight": 40.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "甲贺忍蛙",
+        "data": {
+          "hp": 72,
+          "attack": 95,
+          "defense": 67,
+          "sp_attack": 103,
+          "sp_defense": 71,
+          "speed": 122
+        }
+      },
+      {
+        "form": "超级甲贺忍蛙",
+        "data": {
+          "hp": 72,
+          "attack": 125,
+          "defense": 77,
+          "sp_attack": 133,
+          "sp_defense": 81,
+          "speed": 142
+        }
+      }
+    ]
+  },
+  "0660-掘地兔": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "掘地兔",
+        "types": [
+          "一般",
+          "地面"
+        ],
+        "abilities": [
+          "捡拾",
+          "颊囊",
+          "大力士"
+        ],
+        "weight": 42.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "掘地兔",
+        "data": {
+          "hp": 85,
+          "attack": 56,
+          "defense": 77,
+          "sp_attack": 50,
+          "sp_defense": 77,
+          "speed": 78
+        }
+      }
+    ]
+  },
+  "0663-烈箭鹰": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "烈箭鹰",
+        "types": [
+          "火",
+          "飞行"
+        ],
+        "abilities": [
+          "火焰之躯",
+          "火焰之躯",
+          "疾风之翼"
+        ],
+        "weight": 24.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "烈箭鹰",
+        "data": {
+          "hp": 78,
+          "attack": 81,
+          "defense": 71,
+          "sp_attack": 74,
+          "sp_defense": 69,
+          "speed": 126
+        }
+      }
+    ]
+  },
+  "0666-彩粉蝶": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冰雪花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "雪国花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "雪原花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "大陆花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "庭园花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "高雅花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "花园花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "摩登花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "大海花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "群岛花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "荒野花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "沙尘花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "大河花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "骤雨花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "热带草原花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "太阳花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "大洋花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "热带雨林花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "幻彩花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      },
+      {
+        "name": "球球花纹",
+        "types": [
+          "虫",
+          "飞行"
+        ],
+        "abilities": [
+          "鳞粉",
+          "复眼",
+          "友情防守"
+        ],
+        "weight": 17.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "冰雪花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "雪国花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "雪原花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "大陆花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "庭园花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "高雅花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "花园花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "摩登花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "大海花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "群岛花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "荒野花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "沙尘花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "大河花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "骤雨花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "热带草原花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "太阳花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "大洋花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "热带雨林花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "幻彩花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      },
+      {
+        "form": "球球花纹",
+        "data": {
+          "hp": 80,
+          "attack": 52,
+          "defense": 50,
+          "sp_attack": 90,
+          "sp_defense": 50,
+          "speed": 89
+        }
+      }
+    ]
+  },
+  "0670-花叶蒂": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "永恒之花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 0.9
+      },
+      {
+        "name": "超级花叶蒂",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "妖精气场",
+          "妖精气场",
+          "妖精气场"
+        ],
+        "weight": 100.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "永恒之花",
+        "data": {
+          "hp": 74,
+          "attack": 65,
+          "defense": 67,
+          "sp_attack": 125,
+          "sp_defense": 128,
+          "speed": 92
+        }
+      },
+      {
+        "form": "超级花叶蒂",
+        "data": {
+          "hp": 74,
+          "attack": 85,
+          "defense": 87,
+          "sp_attack": 155,
+          "sp_defense": 148,
+          "speed": 102
+        }
+      }
+    ]
+  },
+  "0671-花洁夫人": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "红花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 10.0
+      },
+      {
+        "name": "黄花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 10.0
+      },
+      {
+        "name": "橙花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 10.0
+      },
+      {
+        "name": "蓝花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 10.0
+      },
+      {
+        "name": "白花",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "花幕",
+          "花幕",
+          "共生"
+        ],
+        "weight": 10.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "红花",
+        "data": {
+          "hp": 78,
+          "attack": 65,
+          "defense": 68,
+          "sp_attack": 112,
+          "sp_defense": 154,
+          "speed": 75
+        }
+      },
+      {
+        "form": "黄花",
+        "data": {
+          "hp": 78,
+          "attack": 65,
+          "defense": 68,
+          "sp_attack": 112,
+          "sp_defense": 154,
+          "speed": 75
+        }
+      },
+      {
+        "form": "橙花",
+        "data": {
+          "hp": 78,
+          "attack": 65,
+          "defense": 68,
+          "sp_attack": 112,
+          "sp_defense": 154,
+          "speed": 75
+        }
+      },
+      {
+        "form": "蓝花",
+        "data": {
+          "hp": 78,
+          "attack": 65,
+          "defense": 68,
+          "sp_attack": 112,
+          "sp_defense": 154,
+          "speed": 75
+        }
+      },
+      {
+        "form": "白花",
+        "data": {
+          "hp": 78,
+          "attack": 65,
+          "defense": 68,
+          "sp_attack": 112,
+          "sp_defense": 154,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0675-霸道熊猫": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "霸道熊猫",
+        "types": [
+          "格斗",
+          "恶"
+        ],
+        "abilities": [
+          "铁拳",
+          "破格",
+          "胆量"
+        ],
+        "weight": 136.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "霸道熊猫",
+        "data": {
+          "hp": 95,
+          "attack": 124,
+          "defense": 78,
+          "sp_attack": 69,
+          "sp_defense": 71,
+          "speed": 58
+        }
+      }
+    ]
+  },
+  "0676-多丽米亚": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "野生的样子",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "心形造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "星形造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "菱形造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "淑女造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "贵妇造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "绅士造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "女王造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "歌舞伎造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      },
+      {
+        "name": "国王造型",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "毛皮大衣",
+          "毛皮大衣"
+        ],
+        "weight": 28.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "野生的样子",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "心形造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "星形造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "菱形造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "淑女造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "贵妇造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "绅士造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "女王造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "歌舞伎造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      },
+      {
+        "form": "国王造型",
+        "data": {
+          "hp": 75,
+          "attack": 80,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 90,
+          "speed": 102
+        }
+      }
+    ]
+  },
+  "0678-超能妙喵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雄性的样子",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "锐利目光",
+          "穿透",
+          "恶作剧之心"
+        ],
+        "weight": 8.5
+      },
+      {
+        "name": "雌性的样子",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "锐利目光",
+          "穿透",
+          "好胜"
+        ],
+        "weight": 8.5
+      },
+      {
+        "name": "超级超能妙喵",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "复制",
+          "复制",
+          "复制"
+        ],
+        "weight": 10.1
+      },
+      {
+        "name": "超级超能妙喵",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "复制",
+          "复制",
+          "复制"
+        ],
+        "weight": 10.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "雄性的样子",
+        "data": {
+          "hp": 74,
+          "attack": 48,
+          "defense": 76,
+          "sp_attack": 83,
+          "sp_defense": 81,
+          "speed": 104
+        }
+      },
+      {
+        "form": "雌性的样子",
+        "data": {
+          "hp": 74,
+          "attack": 48,
+          "defense": 76,
+          "sp_attack": 83,
+          "sp_defense": 81,
+          "speed": 104
+        }
+      },
+      {
+        "form": "超级超能妙喵",
+        "data": {
+          "hp": 74,
+          "attack": 48,
+          "defense": 76,
+          "sp_attack": 143,
+          "sp_defense": 101,
+          "speed": 124
+        }
+      },
+      {
+        "form": "超级超能妙喵",
+        "data": {
+          "hp": 74,
+          "attack": 48,
+          "defense": 76,
+          "sp_attack": 143,
+          "sp_defense": 101,
+          "speed": 124
+        }
+      }
+    ]
+  },
+  "0681-坚盾剑怪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "盾牌形态",
+        "types": [
+          "钢",
+          "幽灵"
+        ],
+        "abilities": [
+          "战斗切换",
+          "战斗切换",
+          "战斗切换"
+        ],
+        "weight": 53.0
+      },
+      {
+        "name": "刀剑形态",
+        "types": [
+          "钢",
+          "幽灵"
+        ],
+        "abilities": [
+          "战斗切换",
+          "战斗切换",
+          "战斗切换"
+        ],
+        "weight": 53.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "盾牌形态",
+        "data": {
+          "hp": 60,
+          "attack": 50,
+          "defense": 140,
+          "sp_attack": 50,
+          "sp_defense": 140,
+          "speed": 60
+        }
+      },
+      {
+        "form": "刀剑形态",
+        "data": {
+          "hp": 60,
+          "attack": 140,
+          "defense": 50,
+          "sp_attack": 140,
+          "sp_defense": 50,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0683-芳香精": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "芳香精",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "治愈之心",
+          "治愈之心",
+          "芳香幕"
+        ],
+        "weight": 15.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "芳香精",
+        "data": {
+          "hp": 101,
+          "attack": 72,
+          "defense": 72,
+          "sp_attack": 99,
+          "sp_defense": 89,
+          "speed": 29
+        }
+      }
+    ]
+  },
+  "0685-胖甜妮": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "胖甜妮",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "轻装"
+        ],
+        "weight": 5.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "胖甜妮",
+        "data": {
+          "hp": 82,
+          "attack": 80,
+          "defense": 86,
+          "sp_attack": 85,
+          "sp_defense": 75,
+          "speed": 72
+        }
+      }
+    ]
+  },
+  "0693-钢炮臂虾": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "钢炮臂虾",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "超级发射器",
+          "超级发射器",
+          "超级发射器"
+        ],
+        "weight": 35.3
+      }
+    ],
+    "stats": [
+      {
+        "form": "钢炮臂虾",
+        "data": {
+          "hp": 71,
+          "attack": 73,
+          "defense": 88,
+          "sp_attack": 120,
+          "sp_defense": 89,
+          "speed": 59
+        }
+      }
+    ]
+  },
+  "0695-光电伞蜥": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "光电伞蜥",
+        "types": [
+          "电",
+          "一般"
+        ],
+        "abilities": [
+          "干燥皮肤",
+          "沙隐",
+          "太阳之力"
+        ],
+        "weight": 21.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "光电伞蜥",
+        "data": {
+          "hp": 62,
+          "attack": 55,
+          "defense": 52,
+          "sp_attack": 109,
+          "sp_defense": 94,
+          "speed": 109
+        }
+      }
+    ]
+  },
+  "0697-怪颚龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "怪颚龙",
+        "types": [
+          "岩石",
+          "龙"
+        ],
+        "abilities": [
+          "强壮之颚",
+          "强壮之颚",
+          "坚硬脑袋"
+        ],
+        "weight": 270.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "怪颚龙",
+        "data": {
+          "hp": 82,
+          "attack": 121,
+          "defense": 119,
+          "sp_attack": 69,
+          "sp_defense": 59,
+          "speed": 71
+        }
+      }
+    ]
+  },
+  "0699-冰雪巨龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冰雪巨龙",
+        "types": [
+          "岩石",
+          "冰"
+        ],
+        "abilities": [
+          "冰冻皮肤",
+          "冰冻皮肤",
+          "降雪"
+        ],
+        "weight": 225.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "冰雪巨龙",
+        "data": {
+          "hp": 123,
+          "attack": 77,
+          "defense": 72,
+          "sp_attack": 99,
+          "sp_defense": 92,
+          "speed": 58
+        }
+      }
+    ]
+  },
+  "0700-仙子伊布": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "仙子伊布",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "迷人之躯",
+          "迷人之躯",
+          "妖精皮肤"
+        ],
+        "weight": 23.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "仙子伊布",
+        "data": {
+          "hp": 95,
+          "attack": 65,
+          "defense": 65,
+          "sp_attack": 110,
+          "sp_defense": 130,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0701-摔角鹰人": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "摔角鹰人",
+        "types": [
+          "格斗",
+          "飞行"
+        ],
+        "abilities": [
+          "柔软",
+          "轻装",
+          "破格"
+        ],
+        "weight": 21.5
+      },
+      {
+        "name": "超级摔角鹰人",
+        "types": [
+          "格斗",
+          "飞行"
+        ],
+        "abilities": [
+          "无防守",
+          "无防守",
+          "无防守"
+        ],
+        "weight": 25.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "摔角鹰人",
+        "data": {
+          "hp": 78,
+          "attack": 92,
+          "defense": 75,
+          "sp_attack": 74,
+          "sp_defense": 63,
+          "speed": 118
+        }
+      },
+      {
+        "form": "超级摔角鹰人",
+        "data": {
+          "hp": 78,
+          "attack": 137,
+          "defense": 100,
+          "sp_attack": 74,
+          "sp_defense": 93,
+          "speed": 118
+        }
+      }
+    ]
+  },
+  "0702-咚咚鼠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "咚咚鼠",
+        "types": [
+          "电",
+          "妖精"
+        ],
+        "abilities": [
+          "颊囊",
+          "捡拾",
+          "正电"
+        ],
+        "weight": 2.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "咚咚鼠",
+        "data": {
+          "hp": 67,
+          "attack": 58,
+          "defense": 57,
+          "sp_attack": 81,
+          "sp_defense": 67,
+          "speed": 101
+        }
+      }
+    ]
+  },
+  "0706-黏美龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "黏美龙",
+        "types": [
+          "龙"
+        ],
+        "abilities": [
+          "食草",
+          "湿润之躯",
+          "黏滑"
+        ],
+        "weight": 150.5
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "钢",
+          "龙"
+        ],
+        "abilities": [
+          "食草",
+          "硬壳盔甲",
+          "黏滑"
+        ],
+        "weight": 334.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "黏美龙",
+        "data": {
+          "hp": 90,
+          "attack": 100,
+          "defense": 70,
+          "sp_attack": 110,
+          "sp_defense": 150,
+          "speed": 80
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 80,
+          "attack": 100,
+          "defense": 100,
+          "sp_attack": 110,
+          "sp_defense": 150,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0707-钥圈儿": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "钥圈儿",
+        "types": [
+          "钢",
+          "妖精"
+        ],
+        "abilities": [
+          "恶作剧之心",
+          "恶作剧之心",
+          "魔术师"
+        ],
+        "weight": 3.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "钥圈儿",
+        "data": {
+          "hp": 57,
+          "attack": 80,
+          "defense": 91,
+          "sp_attack": 80,
+          "sp_defense": 87,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0709-朽木妖": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "朽木妖",
+        "types": [
+          "幽灵",
+          "草"
+        ],
+        "abilities": [
+          "自然回复",
+          "察觉",
+          "收获"
+        ],
+        "weight": 71.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "朽木妖",
+        "data": {
+          "hp": 85,
+          "attack": 110,
+          "defense": 76,
+          "sp_attack": 65,
+          "sp_defense": 82,
+          "speed": 56
+        }
+      }
+    ]
+  },
+  "0711-南瓜怪人": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "中颗种",
+        "types": [
+          "幽灵",
+          "草"
+        ],
+        "abilities": [
+          "捡拾",
+          "察觉",
+          "不眠"
+        ],
+        "weight": 12.5
+      },
+      {
+        "name": "小颗种",
+        "types": [
+          "幽灵",
+          "草"
+        ],
+        "abilities": [
+          "捡拾",
+          "察觉",
+          "不眠"
+        ],
+        "weight": 9.5
+      },
+      {
+        "name": "大颗种",
+        "types": [
+          "幽灵",
+          "草"
+        ],
+        "abilities": [
+          "捡拾",
+          "察觉",
+          "不眠"
+        ],
+        "weight": 14.0
+      },
+      {
+        "name": "巨颗种",
+        "types": [
+          "幽灵",
+          "草"
+        ],
+        "abilities": [
+          "捡拾",
+          "察觉",
+          "不眠"
+        ],
+        "weight": 39.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "中颗种",
+        "data": {
+          "hp": 65,
+          "attack": 90,
+          "defense": 122,
+          "sp_attack": 58,
+          "sp_defense": 75,
+          "speed": 84
+        }
+      },
+      {
+        "form": "小颗种",
+        "data": {
+          "hp": 55,
+          "attack": 85,
+          "defense": 122,
+          "sp_attack": 58,
+          "sp_defense": 75,
+          "speed": 99
+        }
+      },
+      {
+        "form": "大颗种",
+        "data": {
+          "hp": 75,
+          "attack": 95,
+          "defense": 122,
+          "sp_attack": 58,
+          "sp_defense": 75,
+          "speed": 69
+        }
+      },
+      {
+        "form": "巨颗种",
+        "data": {
+          "hp": 85,
+          "attack": 100,
+          "defense": 122,
+          "sp_attack": 58,
+          "sp_defense": 75,
+          "speed": 54
+        }
+      }
+    ]
+  },
+  "0713-冰岩怪": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "冰岩怪",
+        "types": [
+          "冰"
+        ],
+        "abilities": [
+          "我行我素",
+          "冰冻之躯",
+          "结实"
+        ],
+        "weight": 505.0
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "冰",
+          "岩石"
+        ],
+        "abilities": [
+          "强壮之颚",
+          "冰冻之躯",
+          "结实"
+        ],
+        "weight": 262.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "冰岩怪",
+        "data": {
+          "hp": 95,
+          "attack": 117,
+          "defense": 184,
+          "sp_attack": 44,
+          "sp_defense": 46,
+          "speed": 28
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 95,
+          "attack": 127,
+          "defense": 184,
+          "sp_attack": 34,
+          "sp_defense": 36,
+          "speed": 38
+        }
+      }
+    ]
+  },
+  "0715-音波龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "音波龙",
+        "types": [
+          "飞行",
+          "龙"
+        ],
+        "abilities": [
+          "察觉",
+          "穿透",
+          "心灵感应"
+        ],
+        "weight": 85.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "音波龙",
+        "data": {
+          "hp": 85,
+          "attack": 70,
+          "defense": 80,
+          "sp_attack": 97,
+          "sp_defense": 80,
+          "speed": 123
+        }
+      }
+    ]
+  },
+  "0724-狙射树枭": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "狙射树枭",
+        "types": [
+          "草",
+          "幽灵"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "远隔"
+        ],
+        "weight": 36.6
+      },
+      {
+        "name": "洗翠的样子",
+        "types": [
+          "草",
+          "格斗"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "胆量"
+        ],
+        "weight": 37.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "狙射树枭",
+        "data": {
+          "hp": 78,
+          "attack": 107,
+          "defense": 75,
+          "sp_attack": 100,
+          "sp_defense": 100,
+          "speed": 70
+        }
+      },
+      {
+        "form": "洗翠的样子",
+        "data": {
+          "hp": 88,
+          "attack": 112,
+          "defense": 80,
+          "sp_attack": 95,
+          "sp_defense": 95,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0727-炽焰咆哮虎": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "炽焰咆哮虎",
+        "types": [
+          "火",
+          "恶"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "威吓"
+        ],
+        "weight": 83.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "炽焰咆哮虎",
+        "data": {
+          "hp": 95,
+          "attack": 115,
+          "defense": 90,
+          "sp_attack": 80,
+          "sp_defense": 90,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0730-西狮海壬": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "西狮海壬",
+        "types": [
+          "水",
+          "妖精"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "湿润之声"
+        ],
+        "weight": 44.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "西狮海壬",
+        "data": {
+          "hp": 80,
+          "attack": 74,
+          "defense": 74,
+          "sp_attack": 126,
+          "sp_defense": 116,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0733-铳嘴大鸟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "铳嘴大鸟",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "锐利目光",
+          "连续攻击",
+          "强行"
+        ],
+        "weight": 26.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "铳嘴大鸟",
+        "data": {
+          "hp": 80,
+          "attack": 120,
+          "defense": 75,
+          "sp_attack": 75,
+          "sp_defense": 75,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0740-好胜毛蟹": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "好胜毛蟹",
+        "types": [
+          "格斗",
+          "冰"
+        ],
+        "abilities": [
+          "怪力钳",
+          "铁拳",
+          "愤怒穴位"
+        ],
+        "weight": 180.0
+      },
+      {
+        "name": "超级好胜毛蟹",
+        "types": [
+          "格斗",
+          "冰"
+        ],
+        "abilities": [
+          "铁拳",
+          "铁拳",
+          "铁拳"
+        ],
+        "weight": 252.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "好胜毛蟹",
+        "data": {
+          "hp": 97,
+          "attack": 132,
+          "defense": 77,
+          "sp_attack": 62,
+          "sp_defense": 67,
+          "speed": 43
+        }
+      },
+      {
+        "form": "超级好胜毛蟹",
+        "data": {
+          "hp": 97,
+          "attack": 157,
+          "defense": 122,
+          "sp_attack": 62,
+          "sp_defense": 107,
+          "speed": 33
+        }
+      }
+    ]
+  },
+  "0745-鬃岩狼人": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "白昼的样子",
+        "types": [
+          "岩石"
+        ],
+        "abilities": [
+          "锐利目光",
+          "拨沙",
+          "不屈之心"
+        ],
+        "weight": 25.0
+      },
+      {
+        "name": "黑夜的样子",
+        "types": [
+          "岩石"
+        ],
+        "abilities": [
+          "锐利目光",
+          "干劲",
+          "无防守"
+        ],
+        "weight": 25.0
+      },
+      {
+        "name": "黄昏的样子",
+        "types": [
+          "岩石"
+        ],
+        "abilities": [
+          "硬爪",
+          "硬爪",
+          "硬爪"
+        ],
+        "weight": 25.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "白昼的样子",
+        "data": {
+          "hp": 75,
+          "attack": 115,
+          "defense": 65,
+          "sp_attack": 55,
+          "sp_defense": 65,
+          "speed": 112
+        }
+      },
+      {
+        "form": "黑夜的样子",
+        "data": {
+          "hp": 85,
+          "attack": 115,
+          "defense": 75,
+          "sp_attack": 55,
+          "sp_defense": 75,
+          "speed": 82
+        }
+      },
+      {
+        "form": "黄昏的样子",
+        "data": {
+          "hp": 75,
+          "attack": 117,
+          "defense": 65,
+          "sp_attack": 55,
+          "sp_defense": 65,
+          "speed": 110
+        }
+      }
+    ]
+  },
+  "0748-超坏星": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "超坏星",
+        "types": [
+          "毒",
+          "水"
+        ],
+        "abilities": [
+          "不仁不义",
+          "柔软",
+          "再生力"
+        ],
+        "weight": 14.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "超坏星",
+        "data": {
+          "hp": 50,
+          "attack": 63,
+          "defense": 152,
+          "sp_attack": 53,
+          "sp_defense": 142,
+          "speed": 35
+        }
+      }
+    ]
+  },
+  "0750-重泥挽马": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "重泥挽马",
+        "types": [
+          "地面"
+        ],
+        "abilities": [
+          "我行我素",
+          "持久力",
+          "精神力"
+        ],
+        "weight": 920.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "重泥挽马",
+        "data": {
+          "hp": 100,
+          "attack": 125,
+          "defense": 100,
+          "sp_attack": 55,
+          "sp_defense": 85,
+          "speed": 35
+        }
+      }
+    ]
+  },
+  "0752-滴蛛霸": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "滴蛛霸",
+        "types": [
+          "水",
+          "虫"
+        ],
+        "abilities": [
+          "水泡",
+          "水泡",
+          "储水"
+        ],
+        "weight": 82.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "滴蛛霸",
+        "data": {
+          "hp": 68,
+          "attack": 70,
+          "defense": 92,
+          "sp_attack": 50,
+          "sp_defense": 132,
+          "speed": 42
+        }
+      }
+    ]
+  },
+  "0758-焰后蜥": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "焰后蜥",
+        "types": [
+          "毒",
+          "火"
+        ],
+        "abilities": [
+          "腐蚀",
+          "腐蚀",
+          "迟钝"
+        ],
+        "weight": 22.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "焰后蜥",
+        "data": {
+          "hp": 68,
+          "attack": 64,
+          "defense": 60,
+          "sp_attack": 111,
+          "sp_defense": 60,
+          "speed": 117
+        }
+      }
+    ]
+  },
+  "0763-甜冷美后": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "甜冷美后",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "叶子防守",
+          "女王的威严",
+          "甜幕"
+        ],
+        "weight": 21.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "甜冷美后",
+        "data": {
+          "hp": 72,
+          "attack": 120,
+          "defense": 98,
+          "sp_attack": 50,
+          "sp_defense": 98,
+          "speed": 72
+        }
+      }
+    ]
+  },
+  "0765-智挥猩": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "智挥猩",
+        "types": [
+          "一般",
+          "超能力"
+        ],
+        "abilities": [
+          "精神力",
+          "心灵感应",
+          "共生"
+        ],
+        "weight": 76.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "智挥猩",
+        "data": {
+          "hp": 90,
+          "attack": 60,
+          "defense": 80,
+          "sp_attack": 90,
+          "sp_defense": 110,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0766-投掷猴": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "投掷猴",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "接球手",
+          "接球手",
+          "不服输"
+        ],
+        "weight": 82.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "投掷猴",
+        "data": {
+          "hp": 100,
+          "attack": 120,
+          "defense": 90,
+          "sp_attack": 40,
+          "sp_defense": 60,
+          "speed": 80
+        }
+      }
+    ]
+  },
+  "0778-谜拟丘": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "化形的样子",
+        "types": [
+          "幽灵",
+          "妖精"
+        ],
+        "abilities": [
+          "画皮",
+          "画皮",
+          "画皮"
+        ],
+        "weight": 0.7
+      },
+      {
+        "name": "现形的样子",
+        "types": [
+          "幽灵",
+          "妖精"
+        ],
+        "abilities": [
+          "画皮",
+          "画皮",
+          "画皮"
+        ],
+        "weight": 0.7
+      }
+    ],
+    "stats": [
+      {
+        "form": "化形的样子",
+        "data": {
+          "hp": 55,
+          "attack": 90,
+          "defense": 80,
+          "sp_attack": 50,
+          "sp_defense": 105,
+          "speed": 96
+        }
+      },
+      {
+        "form": "现形的样子",
+        "data": {
+          "hp": 55,
+          "attack": 90,
+          "defense": 80,
+          "sp_attack": 50,
+          "sp_defense": 105,
+          "speed": 96
+        }
+      }
+    ]
+  },
+  "0780-老翁龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "老翁龙",
+        "types": [
+          "一般",
+          "龙"
+        ],
+        "abilities": [
+          "怒火冲天",
+          "食草",
+          "无关天气"
+        ],
+        "weight": 185.0
+      },
+      {
+        "name": "超级老翁龙",
+        "types": [
+          "一般",
+          "龙"
+        ],
+        "abilities": [
+          "怒火冲天",
+          "怒火冲天",
+          "怒火冲天"
+        ],
+        "weight": 240.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "老翁龙",
+        "data": {
+          "hp": 78,
+          "attack": 60,
+          "defense": 85,
+          "sp_attack": 135,
+          "sp_defense": 91,
+          "speed": 36
+        }
+      },
+      {
+        "form": "超级老翁龙",
+        "data": {
+          "hp": 78,
+          "attack": 85,
+          "defense": 110,
+          "sp_attack": 160,
+          "sp_defense": 116,
+          "speed": 36
+        }
+      }
+    ]
+  },
+  "0784-杖尾鳞甲龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "杖尾鳞甲龙",
+        "types": [
+          "龙",
+          "格斗"
+        ],
+        "abilities": [
+          "防弹",
+          "隔音",
+          "防尘"
+        ],
+        "weight": 78.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "杖尾鳞甲龙",
+        "data": {
+          "hp": 75,
+          "attack": 110,
+          "defense": 125,
+          "sp_attack": 100,
+          "sp_defense": 105,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0823-钢铠鸦": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "钢铠鸦",
+        "types": [
+          "飞行",
+          "钢"
+        ],
+        "abilities": [
+          "压迫感",
+          "紧张感",
+          "镜甲"
+        ],
+        "weight": 75.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "钢铠鸦",
+        "data": {
+          "hp": 98,
+          "attack": 87,
+          "defense": 105,
+          "sp_attack": 53,
+          "sp_defense": 85,
+          "speed": 67
+        }
+      }
+    ]
+  },
+  "0841-苹裹龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "苹裹龙",
+        "types": [
+          "草",
+          "龙"
+        ],
+        "abilities": [
+          "熟成",
+          "贪吃鬼",
+          "活力"
+        ],
+        "weight": 1.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "苹裹龙",
+        "data": {
+          "hp": 70,
+          "attack": 110,
+          "defense": 80,
+          "sp_attack": 95,
+          "sp_defense": 60,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0842-丰蜜龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "丰蜜龙",
+        "types": [
+          "草",
+          "龙"
+        ],
+        "abilities": [
+          "熟成",
+          "贪吃鬼",
+          "厚脂肪"
+        ],
+        "weight": 13.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "丰蜜龙",
+        "data": {
+          "hp": 110,
+          "attack": 85,
+          "defense": 80,
+          "sp_attack": 100,
+          "sp_defense": 80,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0844-沙螺蟒": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "沙螺蟒",
+        "types": [
+          "地面"
+        ],
+        "abilities": [
+          "吐沙",
+          "蜕皮",
+          "沙隐"
+        ],
+        "weight": 65.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "沙螺蟒",
+        "data": {
+          "hp": 72,
+          "attack": 107,
+          "defense": 125,
+          "sp_attack": 65,
+          "sp_defense": 70,
+          "speed": 71
+        }
+      }
+    ]
+  },
+  "0855-怖思壶": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "赝品形态",
+        "types": [
+          "幽灵"
+        ],
+        "abilities": [
+          "碎裂铠甲",
+          "碎裂铠甲",
+          "咒术之躯"
+        ],
+        "weight": 0.4
+      },
+      {
+        "name": "真品形态",
+        "types": [
+          "幽灵"
+        ],
+        "abilities": [
+          "碎裂铠甲",
+          "碎裂铠甲",
+          "咒术之躯"
+        ],
+        "weight": 0.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "赝品形态",
+        "data": {
+          "hp": 60,
+          "attack": 65,
+          "defense": 65,
+          "sp_attack": 134,
+          "sp_defense": 114,
+          "speed": 70
+        }
+      },
+      {
+        "form": "真品形态",
+        "data": {
+          "hp": 60,
+          "attack": 65,
+          "defense": 65,
+          "sp_attack": 134,
+          "sp_defense": 114,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0858-布莉姆温": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "布莉姆温",
+        "types": [
+          "超能力",
+          "妖精"
+        ],
+        "abilities": [
+          "治愈之心",
+          "危险预知",
+          "魔法镜"
+        ],
+        "weight": 5.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "布莉姆温",
+        "data": {
+          "hp": 57,
+          "attack": 90,
+          "defense": 95,
+          "sp_attack": 136,
+          "sp_defense": 103,
+          "speed": 29
+        }
+      }
+    ]
+  },
+  "0866-踏冰人偶": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "踏冰人偶",
+        "types": [
+          "冰",
+          "超能力"
+        ],
+        "abilities": [
+          "蹒跚",
+          "除障",
+          "冰冻之躯"
+        ],
+        "weight": 58.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "踏冰人偶",
+        "data": {
+          "hp": 80,
+          "attack": 85,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 100,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "0867-迭失板": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "迭失板",
+        "types": [
+          "地面",
+          "幽灵"
+        ],
+        "abilities": [
+          "游魂",
+          "游魂",
+          "游魂"
+        ],
+        "weight": 66.6
+      }
+    ],
+    "stats": [
+      {
+        "form": "迭失板",
+        "data": {
+          "hp": 58,
+          "attack": 95,
+          "defense": 145,
+          "sp_attack": 50,
+          "sp_defense": 105,
+          "speed": 30
+        }
+      }
+    ]
+  },
+  "0869-霜奶仙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "奶香香草",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "奶香红钻",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "奶香抹茶",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "奶香薄荷",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "奶香柠檬",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "奶香雪盐",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "红钻综合",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "焦糖综合",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      },
+      {
+        "name": "三色综合",
+        "types": [
+          "妖精"
+        ],
+        "abilities": [
+          "甜幕",
+          "甜幕",
+          "芳香幕"
+        ],
+        "weight": 0.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "奶香香草",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "奶香红钻",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "奶香抹茶",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "奶香薄荷",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "奶香柠檬",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "奶香雪盐",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "红钻综合",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "焦糖综合",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      },
+      {
+        "form": "三色综合",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 75,
+          "sp_attack": 110,
+          "sp_defense": 121,
+          "speed": 64
+        }
+      }
+    ]
+  },
+  "0877-莫鲁贝可": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "满腹花纹",
+        "types": [
+          "电",
+          "恶"
+        ],
+        "abilities": [
+          "饱了又饿",
+          "饱了又饿",
+          "饱了又饿"
+        ],
+        "weight": 3.0
+      },
+      {
+        "name": "空腹花纹",
+        "types": [
+          "电",
+          "恶"
+        ],
+        "abilities": [
+          "饱了又饿",
+          "饱了又饿",
+          "饱了又饿"
+        ],
+        "weight": 3.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "满腹花纹",
+        "data": {
+          "hp": 58,
+          "attack": 95,
+          "defense": 58,
+          "sp_attack": 70,
+          "sp_defense": 58,
+          "speed": 97
+        }
+      },
+      {
+        "form": "空腹花纹",
+        "data": {
+          "hp": 58,
+          "attack": 95,
+          "defense": 58,
+          "sp_attack": 70,
+          "sp_defense": 58,
+          "speed": 97
+        }
+      }
+    ]
+  },
+  "0887-多龙巴鲁托": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "多龙巴鲁托",
+        "types": [
+          "龙",
+          "幽灵"
+        ],
+        "abilities": [
+          "恒净之躯",
+          "穿透",
+          "咒术之躯"
+        ],
+        "weight": 50.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "多龙巴鲁托",
+        "data": {
+          "hp": 88,
+          "attack": 120,
+          "defense": 75,
+          "sp_attack": 100,
+          "sp_defense": 75,
+          "speed": 142
+        }
+      }
+    ]
+  },
+  "0899-诡角鹿": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "诡角鹿",
+        "types": [
+          "一般",
+          "超能力"
+        ],
+        "abilities": [
+          "威吓",
+          "察觉",
+          "食草"
+        ],
+        "weight": 95.1
+      }
+    ],
+    "stats": [
+      {
+        "form": "诡角鹿",
+        "data": {
+          "hp": 103,
+          "attack": 105,
+          "defense": 72,
+          "sp_attack": 105,
+          "sp_defense": 75,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0900-劈斧螳螂": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "劈斧螳螂",
+        "types": [
+          "虫",
+          "岩石"
+        ],
+        "abilities": [
+          "虫之预感",
+          "强行",
+          "锋锐"
+        ],
+        "weight": 89.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "劈斧螳螂",
+        "data": {
+          "hp": 70,
+          "attack": 135,
+          "defense": 95,
+          "sp_attack": 45,
+          "sp_defense": 70,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0902-幽尾玄鱼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雄性的样子",
+        "types": [
+          "水",
+          "幽灵"
+        ],
+        "abilities": [
+          "悠游自如",
+          "适应力",
+          "破格"
+        ],
+        "weight": 110.0
+      },
+      {
+        "name": "雌性的样子",
+        "types": [
+          "水",
+          "幽灵"
+        ],
+        "abilities": [
+          "悠游自如",
+          "适应力",
+          "破格"
+        ],
+        "weight": 110.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "雄性的样子",
+        "data": {
+          "hp": 120,
+          "attack": 112,
+          "defense": 65,
+          "sp_attack": 80,
+          "sp_defense": 75,
+          "speed": 78
+        }
+      },
+      {
+        "form": "雌性的样子",
+        "data": {
+          "hp": 120,
+          "attack": 92,
+          "defense": 65,
+          "sp_attack": 100,
+          "sp_defense": 75,
+          "speed": 78
+        }
+      }
+    ]
+  },
+  "0903-大狃拉": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大狃拉",
+        "types": [
+          "格斗",
+          "毒"
+        ],
+        "abilities": [
+          "压迫感",
+          "轻装",
+          "毒手"
+        ],
+        "weight": 43.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "大狃拉",
+        "data": {
+          "hp": 80,
+          "attack": 130,
+          "defense": 60,
+          "sp_attack": 40,
+          "sp_defense": 80,
+          "speed": 120
+        }
+      }
+    ]
+  },
+  "0908-魔幻假面喵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "魔幻假面喵",
+        "types": [
+          "草",
+          "恶"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "变幻自如"
+        ],
+        "weight": 31.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "魔幻假面喵",
+        "data": {
+          "hp": 76,
+          "attack": 110,
+          "defense": 70,
+          "sp_attack": 81,
+          "sp_defense": 70,
+          "speed": 123
+        }
+      }
+    ]
+  },
+  "0911-骨纹巨声鳄": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "骨纹巨声鳄",
+        "types": [
+          "火",
+          "幽灵"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "纯朴"
+        ],
+        "weight": 326.5
+      }
+    ],
+    "stats": [
+      {
+        "form": "骨纹巨声鳄",
+        "data": {
+          "hp": 104,
+          "attack": 75,
+          "defense": 100,
+          "sp_attack": 110,
+          "sp_defense": 75,
+          "speed": 66
+        }
+      }
+    ]
+  },
+  "0914-狂欢浪舞鸭": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "狂欢浪舞鸭",
+        "types": [
+          "水",
+          "格斗"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "自信过度"
+        ],
+        "weight": 61.9
+      }
+    ],
+    "stats": [
+      {
+        "form": "狂欢浪舞鸭",
+        "data": {
+          "hp": 85,
+          "attack": 120,
+          "defense": 80,
+          "sp_attack": 85,
+          "sp_defense": 75,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0925-一家鼠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "三只家庭",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "友情防守",
+          "颊囊",
+          "技术高手"
+        ],
+        "weight": 2.3
+      },
+      {
+        "name": "四只家庭",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "友情防守",
+          "颊囊",
+          "技术高手"
+        ],
+        "weight": 2.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "三只家庭",
+        "data": {
+          "hp": 74,
+          "attack": 75,
+          "defense": 70,
+          "sp_attack": 65,
+          "sp_defense": 75,
+          "speed": 111
+        }
+      },
+      {
+        "form": "四只家庭",
+        "data": {
+          "hp": 74,
+          "attack": 75,
+          "defense": 70,
+          "sp_attack": 65,
+          "sp_defense": 75,
+          "speed": 111
+        }
+      }
+    ]
+  },
+  "0934-盐石巨灵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "海豚侠",
+        "types": [
+          "岩石"
+        ],
+        "abilities": [
+          "洁净之盐",
+          "结实",
+          "恒净之躯"
+        ],
+        "weight": 240.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "海豚侠",
+        "data": {
+          "hp": 100,
+          "attack": 100,
+          "defense": 130,
+          "sp_attack": 45,
+          "sp_defense": 90,
+          "speed": 35
+        }
+      }
+    ]
+  },
+  "0936-红莲铠骑": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "奥利纽",
+        "types": [
+          "火",
+          "超能力"
+        ],
+        "abilities": [
+          "引火",
+          "引火",
+          "碎裂铠甲"
+        ],
+        "weight": 85.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "奥利纽",
+        "data": {
+          "hp": 85,
+          "attack": 60,
+          "defense": 100,
+          "sp_attack": 125,
+          "sp_defense": 80,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0937-苍炎刃鬼": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "奥利瓦",
+        "types": [
+          "火",
+          "幽灵"
+        ],
+        "abilities": [
+          "引火",
+          "引火",
+          "碎裂铠甲"
+        ],
+        "weight": 62.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "奥利瓦",
+        "data": {
+          "hp": 75,
+          "attack": 125,
+          "defense": 80,
+          "sp_attack": 60,
+          "sp_defense": 100,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "0939-电肚蛙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "狠辣椒",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "电力转换",
+          "静电",
+          "湿气"
+        ],
+        "weight": 113.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "狠辣椒",
+        "data": {
+          "hp": 109,
+          "attack": 64,
+          "defense": 91,
+          "sp_attack": 103,
+          "sp_defense": 83,
+          "speed": 45
+        }
+      }
+    ]
+  },
+  "0952-狠辣椒": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "米立龙",
+        "types": [
+          "草",
+          "火"
+        ],
+        "abilities": [
+          "叶绿素",
+          "不眠",
+          "心情不定"
+        ],
+        "weight": 15.0
+      },
+      {
+        "name": "超级狠辣椒",
+        "types": [
+          "草",
+          "火"
+        ],
+        "abilities": [
+          "辣椒喷发",
+          "辣椒喷发",
+          "辣椒喷发"
+        ],
+        "weight": 22.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "米立龙",
+        "data": {
+          "hp": 65,
+          "attack": 108,
+          "defense": 65,
+          "sp_attack": 108,
+          "sp_defense": 65,
+          "speed": 75
+        }
+      },
+      {
+        "form": "超级狠辣椒",
+        "data": {
+          "hp": 65,
+          "attack": 138,
+          "defense": 85,
+          "sp_attack": 138,
+          "sp_defense": 85,
+          "speed": 75
+        }
+      }
+    ]
+  },
+  "0956-超能艳鸵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "巴布土拨",
+        "types": [
+          "超能力"
+        ],
+        "abilities": [
+          "跟风",
+          "察觉",
+          "加速"
+        ],
+        "weight": 90.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "巴布土拨",
+        "data": {
+          "hp": 95,
+          "attack": 60,
+          "defense": 60,
+          "sp_attack": 101,
+          "sp_defense": 60,
+          "speed": 105
+        }
+      }
+    ]
+  },
+  "0959-巨锻匠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "下石鸟",
+        "types": [
+          "妖精",
+          "钢"
+        ],
+        "abilities": [
+          "破格",
+          "我行我素",
+          "顺手牵羊"
+        ],
+        "weight": 112.8
+      }
+    ],
+    "stats": [
+      {
+        "form": "下石鸟",
+        "data": {
+          "hp": 85,
+          "attack": 75,
+          "defense": 77,
+          "sp_attack": 70,
+          "sp_defense": 105,
+          "speed": 94
+        }
+      }
+    ]
+  },
+  "0964-海豚侠": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "平凡形态",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "全能变身",
+          "全能变身",
+          "全能变身"
+        ],
+        "weight": 60.2
+      },
+      {
+        "name": "全能形态",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "全能变身",
+          "全能变身",
+          "全能变身"
+        ],
+        "weight": 97.4
+      }
+    ],
+    "stats": [
+      {
+        "form": "平凡形态",
+        "data": {
+          "hp": 100,
+          "attack": 70,
+          "defense": 72,
+          "sp_attack": 53,
+          "sp_defense": 62,
+          "speed": 100
+        }
+      },
+      {
+        "form": "全能形态",
+        "data": {
+          "hp": 100,
+          "attack": 160,
+          "defense": 97,
+          "sp_attack": 106,
+          "sp_defense": 87,
+          "speed": 100
+        }
+      }
+    ]
+  },
+  "0968-拖拖蚓": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "滋汁鼹",
+        "types": [
+          "钢"
+        ],
+        "abilities": [
+          "食土",
+          "食土",
+          "沙隐"
+        ],
+        "weight": 310.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "滋汁鼹",
+        "data": {
+          "hp": 70,
+          "attack": 85,
+          "defense": 145,
+          "sp_attack": 60,
+          "sp_defense": 55,
+          "speed": 65
+        }
+      }
+    ]
+  },
+  "0970-晶光花": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "狗仔包",
+        "types": [
+          "岩石",
+          "毒"
+        ],
+        "abilities": [
+          "毒满地",
+          "毒满地",
+          "腐蚀"
+        ],
+        "weight": 45.0
+      },
+      {
+        "name": "超级晶光花",
+        "types": [
+          "岩石",
+          "毒"
+        ],
+        "abilities": [
+          "适应力",
+          "适应力",
+          "适应力"
+        ],
+        "weight": 77.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "狗仔包",
+        "data": {
+          "hp": 83,
+          "attack": 55,
+          "defense": 90,
+          "sp_attack": 130,
+          "sp_defense": 81,
+          "speed": 86
+        }
+      },
+      {
+        "form": "超级晶光花",
+        "data": {
+          "hp": 83,
+          "attack": 90,
+          "defense": 105,
+          "sp_attack": 150,
+          "sp_defense": 96,
+          "speed": 101
+        }
+      }
+    ]
+  },
+  "0981-奇麒麟": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "沙铁皮",
+        "types": [
+          "一般",
+          "超能力"
+        ],
+        "abilities": [
+          "反刍",
+          "尾甲",
+          "食草"
+        ],
+        "weight": 160.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "沙铁皮",
+        "data": {
+          "hp": 120,
+          "attack": 90,
+          "defense": 70,
+          "sp_attack": 110,
+          "sp_defense": 70,
+          "speed": 60
+        }
+      }
+    ]
+  },
+  "0983-仆刀将军": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "振翼发",
+        "types": [
+          "恶",
+          "钢"
+        ],
+        "abilities": [
+          "不服输",
+          "大将",
+          "压迫感"
+        ],
+        "weight": 120.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "振翼发",
+        "data": {
+          "hp": 100,
+          "attack": 135,
+          "defense": 120,
+          "sp_attack": 60,
+          "sp_defense": 85,
+          "speed": 50
+        }
+      }
+    ]
+  },
+  "1013-来悲粗茶": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "凡作的样子",
+        "types": [
+          "草",
+          "幽灵"
+        ],
+        "abilities": [
+          "款待",
+          "款待",
+          "耐热"
+        ],
+        "weight": 2.2
+      },
+      {
+        "name": "杰作的样子",
+        "types": [
+          "草",
+          "幽灵"
+        ],
+        "abilities": [
+          "款待",
+          "款待",
+          "耐热"
+        ],
+        "weight": 2.2
+      }
+    ],
+    "stats": [
+      {
+        "form": "凡作的样子",
+        "data": {
+          "hp": 71,
+          "attack": 60,
+          "defense": 106,
+          "sp_attack": 121,
+          "sp_defense": 80,
+          "speed": 70
+        }
+      },
+      {
+        "form": "杰作的样子",
+        "data": {
+          "hp": 71,
+          "attack": 60,
+          "defense": 106,
+          "sp_attack": 121,
+          "sp_defense": 80,
+          "speed": 70
+        }
+      }
+    ]
+  },
+  "1018-铝钢桥龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "猛雷鼓",
+        "types": [
+          "钢",
+          "龙"
+        ],
+        "abilities": [
+          "持久力",
+          "结实",
+          "坚毅"
+        ],
+        "weight": 60.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "猛雷鼓",
+        "data": {
+          "hp": 90,
+          "attack": 105,
+          "defense": 130,
+          "sp_attack": 125,
+          "sp_defense": 65,
+          "speed": 85
+        }
+      }
+    ]
+  },
+  "1019-蜜集大蛇": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "铁头壳",
+        "types": [
+          "草",
+          "龙"
+        ],
+        "abilities": [
+          "甘露之蜜",
+          "再生力",
+          "黏着"
+        ],
+        "weight": 93.0
+      }
+    ],
+    "stats": [
+      {
+        "form": "铁头壳",
+        "data": {
+          "hp": 106,
+          "attack": 80,
+          "defense": 110,
+          "sp_attack": 120,
+          "sp_defense": 80,
+          "speed": 44
+        }
+      }
+    ]
+  }
+}

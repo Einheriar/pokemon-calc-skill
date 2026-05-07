@@ -1,0 +1,7762 @@
+{
+  "拍击": {
+    "_data_source": "champions",
+    "name_en": "Pound",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "空手劈": {
+    "_data_source": "champions",
+    "name_en": "Karate Chop",
+    "type": "格斗",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "连环巴掌": {
+    "_data_source": "champions",
+    "name_en": "Double Slap",
+    "type": "一般",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "连续拳": {
+    "_data_source": "champions",
+    "name_en": "Comet Punch",
+    "type": "一般",
+    "category": "物理",
+    "power": "18",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "百万吨重拳": {
+    "_data_source": "champions",
+    "name_en": "Mega Punch",
+    "type": "一般",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "聚宝功": {
+    "_data_source": "champions",
+    "name_en": "Pay Day",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "火焰拳": {
+    "_data_source": "champions",
+    "name_en": "Fire Punch",
+    "type": "火",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "冰冻拳": {
+    "_data_source": "champions",
+    "name_en": "Ice Punch",
+    "type": "冰",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "雷电拳": {
+    "_data_source": "champions",
+    "name_en": "Thunder Punch",
+    "type": "电",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "抓": {
+    "_data_source": "champions",
+    "name_en": "Scratch",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "夹住": {
+    "_data_source": "champions",
+    "name_en": "Vise Grip",
+    "type": "一般",
+    "category": "物理",
+    "power": "55",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "极落钳": {
+    "_data_source": "champions",
+    "name_en": "Guillotine",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "30",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "旋风刀": {
+    "_data_source": "champions",
+    "name_en": "Razor Wind",
+    "type": "一般",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "剑舞": {
+    "_data_source": "champions",
+    "name_en": "Swords Dance",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "居合劈": {
+    "_data_source": "champions",
+    "name_en": "Cut",
+    "type": "一般",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "起风": {
+    "_data_source": "champions",
+    "name_en": "Gust",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "翅膀攻击": {
+    "_data_source": "champions",
+    "name_en": "Wing Attack",
+    "type": "飞行",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "吹飞": {
+    "_data_source": "champions",
+    "name_en": "Whirlwind",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "飞翔": {
+    "_data_source": "champions",
+    "name_en": "Fly",
+    "type": "飞行",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "绑紧": {
+    "_data_source": "champions",
+    "name_en": "Bind",
+    "type": "一般",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "摔打": {
+    "_data_source": "champions",
+    "name_en": "Slam",
+    "type": "一般",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "75",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "藤鞭": {
+    "_data_source": "champions",
+    "name_en": "Vine Whip",
+    "type": "草",
+    "category": "物理",
+    "power": "45",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "踩踏": {
+    "_data_source": "champions",
+    "name_en": "Stomp",
+    "type": "一般",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "二连踢": {
+    "_data_source": "champions",
+    "name_en": "Double Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "百万吨重踢": {
+    "_data_source": "champions",
+    "name_en": "Mega Kick",
+    "type": "一般",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "75",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "飞踢": {
+    "_data_source": "champions",
+    "name_en": "Jump Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "回旋踢": {
+    "_data_source": "champions",
+    "name_en": "Rolling Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "泼沙": {
+    "_data_source": "champions",
+    "name_en": "Sand Attack",
+    "type": "地面",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "头锤": {
+    "_data_source": "champions",
+    "name_en": "Headbutt",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "角撞": {
+    "_data_source": "champions",
+    "name_en": "Horn Attack",
+    "type": "一般",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "乱击": {
+    "_data_source": "champions",
+    "name_en": "Fury Attack",
+    "type": "一般",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "角钻": {
+    "_data_source": "champions",
+    "name_en": "Horn Drill",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "30",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "撞击": {
+    "_data_source": "champions",
+    "name_en": "Tackle",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "泰山压顶": {
+    "_data_source": "champions",
+    "name_en": "Body Slam",
+    "type": "一般",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "紧束": {
+    "_data_source": "champions",
+    "name_en": "Wrap",
+    "type": "一般",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "猛撞": {
+    "_data_source": "champions",
+    "name_en": "Take Down",
+    "type": "一般",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "大闹一番": {
+    "_data_source": "champions",
+    "name_en": "Thrash",
+    "type": "一般",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "舍身冲撞": {
+    "_data_source": "champions",
+    "name_en": "Double-Edge",
+    "type": "一般",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "摇尾巴": {
+    "_data_source": "champions",
+    "name_en": "Tail Whip",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "毒针": {
+    "_data_source": "champions",
+    "name_en": "Poison Sting",
+    "type": "毒",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "双针": {
+    "_data_source": "champions",
+    "name_en": "Twineedle",
+    "type": "虫",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "飞弹针": {
+    "_data_source": "champions",
+    "name_en": "Pin Missile",
+    "type": "虫",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "瞪眼": {
+    "_data_source": "champions",
+    "name_en": "Leer",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "咬住": {
+    "_data_source": "champions",
+    "name_en": "Bite",
+    "type": "恶",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "叫声": {
+    "_data_source": "champions",
+    "name_en": "Growl",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "吼叫": {
+    "_data_source": "champions",
+    "name_en": "Roar",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "唱歌": {
+    "_data_source": "champions",
+    "name_en": "Sing",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "55",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "超音波": {
+    "_data_source": "champions",
+    "name_en": "Supersonic",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "55",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "音爆": {
+    "_data_source": "champions",
+    "name_en": "Sonic Boom",
+    "type": "一般",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "定身法": {
+    "_data_source": "champions",
+    "name_en": "Disable",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "溶解液": {
+    "_data_source": "champions",
+    "name_en": "Acid",
+    "type": "毒",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "火花": {
+    "_data_source": "champions",
+    "name_en": "Ember",
+    "type": "火",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "喷射火焰": {
+    "_data_source": "champions",
+    "name_en": "Flamethrower",
+    "type": "火",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "白雾": {
+    "_data_source": "champions",
+    "name_en": "Mist",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "水枪": {
+    "_data_source": "champions",
+    "name_en": "Water Gun",
+    "type": "水",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "水炮": {
+    "_data_source": "champions",
+    "name_en": "Hydro Pump",
+    "type": "水",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "冲浪": {
+    "_data_source": "champions",
+    "name_en": "Surf",
+    "type": "水",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "冰冻光束": {
+    "_data_source": "champions",
+    "name_en": "Ice Beam",
+    "type": "冰",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "暴风雪": {
+    "_data_source": "champions",
+    "name_en": "Blizzard",
+    "type": "冰",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "70",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "幻象光线": {
+    "_data_source": "champions",
+    "name_en": "Psybeam",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "泡沫光线": {
+    "_data_source": "champions",
+    "name_en": "Bubble Beam",
+    "type": "水",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "极光束": {
+    "_data_source": "champions",
+    "name_en": "Aurora Beam",
+    "type": "冰",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "破坏光线": {
+    "_data_source": "champions",
+    "name_en": "Hyper Beam",
+    "type": "一般",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "啄": {
+    "_data_source": "champions",
+    "name_en": "Peck",
+    "type": "飞行",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "啄钻": {
+    "_data_source": "champions",
+    "name_en": "Drill Peck",
+    "type": "飞行",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "深渊翻滚": {
+    "_data_source": "champions",
+    "name_en": "Submission",
+    "type": "格斗",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "80",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "踢倒": {
+    "_data_source": "champions",
+    "name_en": "Low Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "双倍奉还": {
+    "_data_source": "champions",
+    "name_en": "Counter",
+    "type": "格斗",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "地球上投": {
+    "_data_source": "champions",
+    "name_en": "Seismic Toss",
+    "type": "格斗",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "怪力": {
+    "_data_source": "champions",
+    "name_en": "Strength",
+    "type": "一般",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "吸取": {
+    "_data_source": "champions",
+    "name_en": "Absorb",
+    "type": "草",
+    "category": "特殊",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "超级吸取": {
+    "_data_source": "champions",
+    "name_en": "Mega Drain",
+    "type": "草",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "寄生种子": {
+    "_data_source": "champions",
+    "name_en": "Leech Seed",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "生长": {
+    "_data_source": "champions",
+    "name_en": "Growth",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "飞叶快刀": {
+    "_data_source": "champions",
+    "name_en": "Razor Leaf",
+    "type": "草",
+    "category": "物理",
+    "power": "55",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "日光束": {
+    "_data_source": "champions",
+    "name_en": "Solar Beam",
+    "type": "草",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "毒粉": {
+    "_data_source": "champions",
+    "name_en": "Poison Powder",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "75",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "麻痹粉": {
+    "_data_source": "champions",
+    "name_en": "Stun Spore",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "75",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "催眠粉": {
+    "_data_source": "champions",
+    "name_en": "Sleep Powder",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "75",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "花瓣舞": {
+    "_data_source": "champions",
+    "name_en": "Petal Dance",
+    "type": "草",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "吐丝": {
+    "_data_source": "champions",
+    "name_en": "String Shot",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "龙之怒": {
+    "_data_source": "champions",
+    "name_en": "Dragon Rage",
+    "type": "龙",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "火焰旋涡": {
+    "_data_source": "champions",
+    "name_en": "Fire Spin",
+    "type": "火",
+    "category": "特殊",
+    "power": "35",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "电击": {
+    "_data_source": "champions",
+    "name_en": "Thunder Shock",
+    "type": "电",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "十万伏特": {
+    "_data_source": "champions",
+    "name_en": "Thunderbolt",
+    "type": "电",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "电磁波": {
+    "_data_source": "champions",
+    "name_en": "Thunder Wave",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "打雷": {
+    "_data_source": "champions",
+    "name_en": "Thunder",
+    "type": "电",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "70",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "落石": {
+    "_data_source": "champions",
+    "name_en": "Rock Throw",
+    "type": "岩石",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "地震": {
+    "_data_source": "champions",
+    "name_en": "Earthquake",
+    "type": "地面",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "地裂": {
+    "_data_source": "champions",
+    "name_en": "Fissure",
+    "type": "地面",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "30",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "挖洞": {
+    "_data_source": "champions",
+    "name_en": "Dig",
+    "type": "地面",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "剧毒": {
+    "_data_source": "champions",
+    "name_en": "Toxic",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "念力": {
+    "_data_source": "champions",
+    "name_en": "Confusion",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "精神强念": {
+    "_data_source": "champions",
+    "name_en": "Psychic",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "催眠术": {
+    "_data_source": "champions",
+    "name_en": "Hypnosis",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "60",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "瑜伽姿势": {
+    "_data_source": "champions",
+    "name_en": "Meditate",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "高速移动": {
+    "_data_source": "champions",
+    "name_en": "Agility",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "电光一闪": {
+    "_data_source": "champions",
+    "name_en": "Quick Attack",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "愤怒": {
+    "_data_source": "champions",
+    "name_en": "Rage",
+    "type": "一般",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "瞬间移动": {
+    "_data_source": "champions",
+    "name_en": "Teleport",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "黑夜魔影": {
+    "_data_source": "champions",
+    "name_en": "Night Shade",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "模仿": {
+    "_data_source": "champions",
+    "name_en": "Mimic",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "刺耳声": {
+    "_data_source": "champions",
+    "name_en": "Screech",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "影子分身": {
+    "_data_source": "champions",
+    "name_en": "Double Team",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "自我再生": {
+    "_data_source": "champions",
+    "name_en": "Recover",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "变硬": {
+    "_data_source": "champions",
+    "name_en": "Harden",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "变小": {
+    "_data_source": "champions",
+    "name_en": "Minimize",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "烟幕": {
+    "_data_source": "champions",
+    "name_en": "Smokescreen",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "奇异之光": {
+    "_data_source": "champions",
+    "name_en": "Confuse Ray",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "缩入壳中": {
+    "_data_source": "champions",
+    "name_en": "Withdraw",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "变圆": {
+    "_data_source": "champions",
+    "name_en": "Defense Curl",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "屏障": {
+    "_data_source": "champions",
+    "name_en": "Barrier",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "光墙": {
+    "_data_source": "champions",
+    "name_en": "Light Screen",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "黑雾": {
+    "_data_source": "champions",
+    "name_en": "Haze",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "反射壁": {
+    "_data_source": "champions",
+    "name_en": "Reflect",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "聚气": {
+    "_data_source": "champions",
+    "name_en": "Focus Energy",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "忍耐": {
+    "_data_source": "champions",
+    "name_en": "Bide",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "挥指": {
+    "_data_source": "champions",
+    "name_en": "Metronome",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "鹦鹉学舌": {
+    "_data_source": "champions",
+    "name_en": "Mirror Move",
+    "type": "飞行",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "玉石俱碎": {
+    "_data_source": "champions",
+    "name_en": "Self-Destruct",
+    "type": "一般",
+    "category": "物理",
+    "power": "200",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "炸蛋": {
+    "_data_source": "champions",
+    "name_en": "Egg Bomb",
+    "type": "一般",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "75",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "舌舔": {
+    "_data_source": "champions",
+    "name_en": "Lick",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "浊雾": {
+    "_data_source": "champions",
+    "name_en": "Smog",
+    "type": "毒",
+    "category": "特殊",
+    "power": "30",
+    "accuracy": "70",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "污泥攻击": {
+    "_data_source": "champions",
+    "name_en": "Sludge",
+    "type": "毒",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "骨棒": {
+    "_data_source": "champions",
+    "name_en": "Bone Club",
+    "type": "地面",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "大字爆炎": {
+    "_data_source": "champions",
+    "name_en": "Fire Blast",
+    "type": "火",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "85",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "攀瀑": {
+    "_data_source": "champions",
+    "name_en": "Waterfall",
+    "type": "水",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "贝壳夹击": {
+    "_data_source": "champions",
+    "name_en": "Clamp",
+    "type": "水",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "高速星星": {
+    "_data_source": "champions",
+    "name_en": "Swift",
+    "type": "一般",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "火箭头锤": {
+    "_data_source": "champions",
+    "name_en": "Skull Bash",
+    "type": "一般",
+    "category": "物理",
+    "power": "130",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "尖刺加农炮": {
+    "_data_source": "champions",
+    "name_en": "Spike Cannon",
+    "type": "一般",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "缠绕": {
+    "_data_source": "champions",
+    "name_en": "Constrict",
+    "type": "一般",
+    "category": "物理",
+    "power": "10",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "瞬间失忆": {
+    "_data_source": "champions",
+    "name_en": "Amnesia",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "折弯汤匙": {
+    "_data_source": "champions",
+    "name_en": "Kinesis",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "80",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "生蛋": {
+    "_data_source": "champions",
+    "name_en": "Soft-Boiled",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "飞膝踢": {
+    "_data_source": "champions",
+    "name_en": "High Jump Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "130",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "大蛇瞪眼": {
+    "_data_source": "champions",
+    "name_en": "Glare",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "食梦": {
+    "_data_source": "champions",
+    "name_en": "Dream Eater",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "毒瓦斯": {
+    "_data_source": "champions",
+    "name_en": "Poison Gas",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "投球": {
+    "_data_source": "champions",
+    "name_en": "Barrage",
+    "type": "一般",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "汲取": {
+    "_data_source": "champions",
+    "name_en": "Leech Life",
+    "type": "虫",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "恶魔之吻": {
+    "_data_source": "champions",
+    "name_en": "Lovely Kiss",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "75",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "神鸟猛击": {
+    "_data_source": "champions",
+    "name_en": "Sky Attack",
+    "type": "飞行",
+    "category": "物理",
+    "power": "140",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "变身": {
+    "_data_source": "champions",
+    "name_en": "Transform",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "泡沫": {
+    "_data_source": "champions",
+    "name_en": "Bubble",
+    "type": "水",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "迷昏拳": {
+    "_data_source": "champions",
+    "name_en": "Dizzy Punch",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "蘑菇孢子": {
+    "_data_source": "champions",
+    "name_en": "Spore",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "闪光": {
+    "_data_source": "champions",
+    "name_en": "Flash",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "精神波": {
+    "_data_source": "champions",
+    "name_en": "Psywave",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "跃起": {
+    "_data_source": "champions",
+    "name_en": "Splash",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "溶化": {
+    "_data_source": "champions",
+    "name_en": "Acid Armor",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "蟹钳锤": {
+    "_data_source": "champions",
+    "name_en": "Crabhammer",
+    "type": "水",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "大爆炸": {
+    "_data_source": "champions",
+    "name_en": "Explosion",
+    "type": "一般",
+    "category": "物理",
+    "power": "250",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "乱抓": {
+    "_data_source": "champions",
+    "name_en": "Fury Swipes",
+    "type": "一般",
+    "category": "物理",
+    "power": "18",
+    "accuracy": "80",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "骨头回力镖": {
+    "_data_source": "champions",
+    "name_en": "Bonemerang",
+    "type": "地面",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "睡觉": {
+    "_data_source": "champions",
+    "name_en": "Rest",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "岩崩": {
+    "_data_source": "champions",
+    "name_en": "Rock Slide",
+    "type": "岩石",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "终结门牙": {
+    "_data_source": "champions",
+    "name_en": "Hyper Fang",
+    "type": "一般",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "棱角化": {
+    "_data_source": "champions",
+    "name_en": "Sharpen",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "纹理": {
+    "_data_source": "champions",
+    "name_en": "Conversion",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "三重攻击": {
+    "_data_source": "champions",
+    "name_en": "Tri Attack",
+    "type": "一般",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "愤怒门牙": {
+    "_data_source": "champions",
+    "name_en": "Super Fang",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "劈开": {
+    "_data_source": "champions",
+    "name_en": "Slash",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "替身": {
+    "_data_source": "champions",
+    "name_en": "Substitute",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "挣扎": {
+    "_data_source": "champions",
+    "name_en": "Struggle",
+    "type": "一般",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "101",
+    "pp": "1 （最大 1）",
+    "makes_contact": true
+  },
+  "写生": {
+    "_data_source": "champions",
+    "name_en": "Sketch",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "1 （最大 1）",
+    "makes_contact": false
+  },
+  "三连踢": {
+    "_data_source": "champions",
+    "name_en": "Triple Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "10",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "小偷": {
+    "_data_source": "champions",
+    "name_en": "Thief",
+    "type": "恶",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "蛛网": {
+    "_data_source": "champions",
+    "name_en": "Spider Web",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "心之眼": {
+    "_data_source": "champions",
+    "name_en": "Mind Reader",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "恶梦": {
+    "_data_source": "champions",
+    "name_en": "Nightmare",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "火焰轮": {
+    "_data_source": "champions",
+    "name_en": "Flame Wheel",
+    "type": "火",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "打鼾": {
+    "_data_source": "champions",
+    "name_en": "Snore",
+    "type": "一般",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "咒术": {
+    "_data_source": "champions",
+    "name_en": "Curse",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "抓狂": {
+    "_data_source": "champions",
+    "name_en": "Flail",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "纹理２": {
+    "_data_source": "champions",
+    "name_en": "Conversion 2",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "气旋攻击": {
+    "_data_source": "champions",
+    "name_en": "Aeroblast",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "棉孢子": {
+    "_data_source": "champions",
+    "name_en": "Cotton Spore",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "绝处逢生": {
+    "_data_source": "champions",
+    "name_en": "Reversal",
+    "type": "格斗",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "怨恨": {
+    "_data_source": "champions",
+    "name_en": "Spite",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "细雪": {
+    "_data_source": "champions",
+    "name_en": "Powder Snow",
+    "type": "冰",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "守住": {
+    "_data_source": "champions",
+    "name_en": "Protect",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "音速拳": {
+    "_data_source": "champions",
+    "name_en": "Mach Punch",
+    "type": "格斗",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "可怕面孔": {
+    "_data_source": "champions",
+    "name_en": "Scary Face",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "出奇一击": {
+    "_data_source": "champions",
+    "name_en": "Feint Attack",
+    "type": "恶",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "天使之吻": {
+    "_data_source": "champions",
+    "name_en": "Sweet Kiss",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "75",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "腹鼓": {
+    "_data_source": "champions",
+    "name_en": "Belly Drum",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "污泥炸弹": {
+    "_data_source": "champions",
+    "name_en": "Sludge Bomb",
+    "type": "毒",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "掷泥": {
+    "_data_source": "champions",
+    "name_en": "Mud-Slap",
+    "type": "地面",
+    "category": "特殊",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "章鱼桶炮": {
+    "_data_source": "champions",
+    "name_en": "Octazooka",
+    "type": "水",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "撒菱": {
+    "_data_source": "champions",
+    "name_en": "Spikes",
+    "type": "地面",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "电磁炮": {
+    "_data_source": "champions",
+    "name_en": "Zap Cannon",
+    "type": "电",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "50",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "识破": {
+    "_data_source": "champions",
+    "name_en": "Foresight",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "同命": {
+    "_data_source": "champions",
+    "name_en": "Destiny Bond",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "终焉之歌": {
+    "_data_source": "champions",
+    "name_en": "Perish Song",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "冰冻之风": {
+    "_data_source": "champions",
+    "name_en": "Icy Wind",
+    "type": "冰",
+    "category": "特殊",
+    "power": "55",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "看穿": {
+    "_data_source": "champions",
+    "name_en": "Detect",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "骨棒乱打": {
+    "_data_source": "champions",
+    "name_en": "Bone Rush",
+    "type": "地面",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "锁定": {
+    "_data_source": "champions",
+    "name_en": "Lock-On",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "逆鳞": {
+    "_data_source": "champions",
+    "name_en": "Outrage",
+    "type": "龙",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "沙暴": {
+    "_data_source": "champions",
+    "name_en": "Sandstorm",
+    "type": "岩石",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "终极吸取": {
+    "_data_source": "champions",
+    "name_en": "Giga Drain",
+    "type": "草",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "挺住": {
+    "_data_source": "champions",
+    "name_en": "Endure",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "撒娇": {
+    "_data_source": "champions",
+    "name_en": "Charm",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "滚动": {
+    "_data_source": "champions",
+    "name_en": "Rollout",
+    "type": "岩石",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "点到为止": {
+    "_data_source": "champions",
+    "name_en": "False Swipe",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "虚张声势": {
+    "_data_source": "champions",
+    "name_en": "Swagger",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "喝牛奶": {
+    "_data_source": "champions",
+    "name_en": "Milk Drink",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "电光": {
+    "_data_source": "champions",
+    "name_en": "Spark",
+    "type": "电",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "连斩": {
+    "_data_source": "champions",
+    "name_en": "Fury Cutter",
+    "type": "虫",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "钢翼": {
+    "_data_source": "champions",
+    "name_en": "Steel Wing",
+    "type": "钢",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "黑色目光": {
+    "_data_source": "champions",
+    "name_en": "Mean Look",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "迷人": {
+    "_data_source": "champions",
+    "name_en": "Attract",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "梦话": {
+    "_data_source": "champions",
+    "name_en": "Sleep Talk",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "治愈铃声": {
+    "_data_source": "champions",
+    "name_en": "Heal Bell",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "报恩": {
+    "_data_source": "champions",
+    "name_en": "Return",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "礼物": {
+    "_data_source": "champions",
+    "name_en": "Present",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "迁怒": {
+    "_data_source": "champions",
+    "name_en": "Frustration",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "神秘守护": {
+    "_data_source": "champions",
+    "name_en": "Safeguard",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "分担痛楚": {
+    "_data_source": "champions",
+    "name_en": "Pain Split",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "神圣之火": {
+    "_data_source": "champions",
+    "name_en": "Sacred Fire",
+    "type": "火",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "震级": {
+    "_data_source": "champions",
+    "name_en": "Magnitude",
+    "type": "地面",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "爆裂拳": {
+    "_data_source": "champions",
+    "name_en": "Dynamic Punch",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "50",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "超级角击": {
+    "_data_source": "champions",
+    "name_en": "Megahorn",
+    "type": "虫",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "龙息": {
+    "_data_source": "champions",
+    "name_en": "Dragon Breath",
+    "type": "龙",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "接棒": {
+    "_data_source": "champions",
+    "name_en": "Baton Pass",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "再来一次": {
+    "_data_source": "champions",
+    "name_en": "Encore",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "追打": {
+    "_data_source": "champions",
+    "name_en": "Pursuit",
+    "type": "恶",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "高速旋转": {
+    "_data_source": "champions",
+    "name_en": "Rapid Spin",
+    "type": "一般",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "甜甜香气": {
+    "_data_source": "champions",
+    "name_en": "Sweet Scent",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "铁尾": {
+    "_data_source": "champions",
+    "name_en": "Iron Tail",
+    "type": "钢",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "75",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "金属爪": {
+    "_data_source": "champions",
+    "name_en": "Metal Claw",
+    "type": "钢",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "借力摔": {
+    "_data_source": "champions",
+    "name_en": "Vital Throw",
+    "type": "格斗",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "晨光": {
+    "_data_source": "champions",
+    "name_en": "Morning Sun",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "光合作用": {
+    "_data_source": "champions",
+    "name_en": "Synthesis",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "月光": {
+    "_data_source": "champions",
+    "name_en": "Moonlight",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "觉醒力量": {
+    "_data_source": "champions",
+    "name_en": "Hidden Power",
+    "type": "一般",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "十字劈": {
+    "_data_source": "champions",
+    "name_en": "Cross Chop",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "龙卷风": {
+    "_data_source": "champions",
+    "name_en": "Twister",
+    "type": "龙",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "求雨": {
+    "_data_source": "champions",
+    "name_en": "Rain Dance",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "大晴天": {
+    "_data_source": "champions",
+    "name_en": "Sunny Day",
+    "type": "火",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "咬碎": {
+    "_data_source": "champions",
+    "name_en": "Crunch",
+    "type": "恶",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "镜面反射": {
+    "_data_source": "champions",
+    "name_en": "Mirror Coat",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "自我暗示": {
+    "_data_source": "champions",
+    "name_en": "Psych Up",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "神速": {
+    "_data_source": "champions",
+    "name_en": "Extreme Speed",
+    "type": "一般",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "原始之力": {
+    "_data_source": "champions",
+    "name_en": "Ancient Power",
+    "type": "岩石",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "暗影球": {
+    "_data_source": "champions",
+    "name_en": "Shadow Ball",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "预知未来": {
+    "_data_source": "champions",
+    "name_en": "Future Sight",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "碎岩": {
+    "_data_source": "champions",
+    "name_en": "Rock Smash",
+    "type": "格斗",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "潮旋": {
+    "_data_source": "champions",
+    "name_en": "Whirlpool",
+    "type": "水",
+    "category": "特殊",
+    "power": "35",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "围攻": {
+    "_data_source": "champions",
+    "name_en": "Beat Up",
+    "type": "恶",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "击掌奇袭": {
+    "_data_source": "champions",
+    "name_en": "Fake Out",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "吵闹": {
+    "_data_source": "champions",
+    "name_en": "Uproar",
+    "type": "一般",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "蓄力": {
+    "_data_source": "champions",
+    "name_en": "Stockpile",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "喷出": {
+    "_data_source": "champions",
+    "name_en": "Spit Up",
+    "type": "一般",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "吞下": {
+    "_data_source": "champions",
+    "name_en": "Swallow",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "热风": {
+    "_data_source": "champions",
+    "name_en": "Heat Wave",
+    "type": "火",
+    "category": "特殊",
+    "power": "95",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冰雹": {
+    "_data_source": "champions",
+    "name_en": "Hail",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "无理取闹": {
+    "_data_source": "champions",
+    "name_en": "Torment",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "吹捧": {
+    "_data_source": "champions",
+    "name_en": "Flatter",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "磷火": {
+    "_data_source": "champions",
+    "name_en": "Will-O-Wisp",
+    "type": "火",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "临别礼物": {
+    "_data_source": "champions",
+    "name_en": "Memento",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "硬撑": {
+    "_data_source": "champions",
+    "name_en": "Facade",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "真气拳": {
+    "_data_source": "champions",
+    "name_en": "Focus Punch",
+    "type": "格斗",
+    "category": "物理",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "清醒": {
+    "_data_source": "champions",
+    "name_en": "Smelling Salts",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "看我嘛": {
+    "_data_source": "champions",
+    "name_en": "Follow Me",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "自然之力": {
+    "_data_source": "champions",
+    "name_en": "Nature Power",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "充电": {
+    "_data_source": "champions",
+    "name_en": "Charge",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "挑衅": {
+    "_data_source": "champions",
+    "name_en": "Taunt",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "帮助": {
+    "_data_source": "champions",
+    "name_en": "Helping Hand",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "戏法": {
+    "_data_source": "champions",
+    "name_en": "Trick",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "扮演": {
+    "_data_source": "champions",
+    "name_en": "Role Play",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "祈愿": {
+    "_data_source": "champions",
+    "name_en": "Wish",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "借助": {
+    "_data_source": "champions",
+    "name_en": "Assist",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "扎根": {
+    "_data_source": "champions",
+    "name_en": "Ingrain",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "蛮力": {
+    "_data_source": "champions",
+    "name_en": "Superpower",
+    "type": "格斗",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "魔法反射": {
+    "_data_source": "champions",
+    "name_en": "Magic Coat",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "回收利用": {
+    "_data_source": "champions",
+    "name_en": "Recycle",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "报复": {
+    "_data_source": "champions",
+    "name_en": "Revenge",
+    "type": "格斗",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "劈瓦": {
+    "_data_source": "champions",
+    "name_en": "Brick Break",
+    "type": "格斗",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "哈欠": {
+    "_data_source": "champions",
+    "name_en": "Yawn",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "拍落": {
+    "_data_source": "champions",
+    "name_en": "Knock Off",
+    "type": "恶",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "蛮干": {
+    "_data_source": "champions",
+    "name_en": "Endeavor",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "喷火": {
+    "_data_source": "champions",
+    "name_en": "Eruption",
+    "type": "火",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "特性互换": {
+    "_data_source": "champions",
+    "name_en": "Skill Swap",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "封印": {
+    "_data_source": "champions",
+    "name_en": "Imprison",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "焕然一新": {
+    "_data_source": "champions",
+    "name_en": "Refresh",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "怨念": {
+    "_data_source": "champions",
+    "name_en": "Grudge",
+    "type": "幽灵",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "化为己用": {
+    "_data_source": "champions",
+    "name_en": "Snatch",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "秘密之力": {
+    "_data_source": "champions",
+    "name_en": "Secret Power",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "潜水": {
+    "_data_source": "champions",
+    "name_en": "Dive",
+    "type": "水",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "猛推": {
+    "_data_source": "champions",
+    "name_en": "Arm Thrust",
+    "type": "格斗",
+    "category": "物理",
+    "power": "15",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "保护色": {
+    "_data_source": "champions",
+    "name_en": "Camouflage",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "萤火": {
+    "_data_source": "champions",
+    "name_en": "Tail Glow",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "洁净光芒": {
+    "_data_source": "champions",
+    "name_en": "Luster Purge",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "薄雾球": {
+    "_data_source": "champions",
+    "name_en": "Mist Ball",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "羽毛舞": {
+    "_data_source": "champions",
+    "name_en": "Feather Dance",
+    "type": "飞行",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "摇晃舞": {
+    "_data_source": "champions",
+    "name_en": "Teeter Dance",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "火焰踢": {
+    "_data_source": "champions",
+    "name_en": "Blaze Kick",
+    "type": "火",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "玩泥巴": {
+    "_data_source": "champions",
+    "name_en": "Mud Sport",
+    "type": "地面",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "冰球": {
+    "_data_source": "champions",
+    "name_en": "Ice Ball",
+    "type": "冰",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "尖刺臂": {
+    "_data_source": "champions",
+    "name_en": "Needle Arm",
+    "type": "草",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "偷懒": {
+    "_data_source": "champions",
+    "name_en": "Slack Off",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "巨声": {
+    "_data_source": "champions",
+    "name_en": "Hyper Voice",
+    "type": "一般",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "剧毒牙": {
+    "_data_source": "champions",
+    "name_en": "Poison Fang",
+    "type": "毒",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "撕裂爪": {
+    "_data_source": "champions",
+    "name_en": "Crush Claw",
+    "type": "一般",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "爆炸烈焰": {
+    "_data_source": "champions",
+    "name_en": "Blast Burn",
+    "type": "火",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "加农水炮": {
+    "_data_source": "champions",
+    "name_en": "Hydro Cannon",
+    "type": "水",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "彗星拳": {
+    "_data_source": "champions",
+    "name_en": "Meteor Mash",
+    "type": "钢",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "惊吓": {
+    "_data_source": "champions",
+    "name_en": "Astonish",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "气象球": {
+    "_data_source": "champions",
+    "name_en": "Weather Ball",
+    "type": "一般",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "芳香治疗": {
+    "_data_source": "champions",
+    "name_en": "Aromatherapy",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "假哭": {
+    "_data_source": "champions",
+    "name_en": "Fake Tears",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "空气利刃": {
+    "_data_source": "champions",
+    "name_en": "Air Cutter",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "95",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "过热": {
+    "_data_source": "champions",
+    "name_en": "Overheat",
+    "type": "火",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "气味侦测": {
+    "_data_source": "champions",
+    "name_en": "Odor Sleuth",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "岩石封锁": {
+    "_data_source": "champions",
+    "name_en": "Rock Tomb",
+    "type": "岩石",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "银色旋风": {
+    "_data_source": "champions",
+    "name_en": "Silver Wind",
+    "type": "虫",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "金属音": {
+    "_data_source": "champions",
+    "name_en": "Metal Sound",
+    "type": "钢",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "85",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "草笛": {
+    "_data_source": "champions",
+    "name_en": "Grass Whistle",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "55",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "挠痒": {
+    "_data_source": "champions",
+    "name_en": "Tickle",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "宇宙力量": {
+    "_data_source": "champions",
+    "name_en": "Cosmic Power",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "喷水": {
+    "_data_source": "champions",
+    "name_en": "Water Spout",
+    "type": "水",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "信号光束": {
+    "_data_source": "champions",
+    "name_en": "Signal Beam",
+    "type": "虫",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "暗影拳": {
+    "_data_source": "champions",
+    "name_en": "Shadow Punch",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "神通力": {
+    "_data_source": "champions",
+    "name_en": "Extrasensory",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "冲天拳": {
+    "_data_source": "champions",
+    "name_en": "Sky Uppercut",
+    "type": "格斗",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "流沙深渊": {
+    "_data_source": "champions",
+    "name_en": "Sand Tomb",
+    "type": "地面",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "85",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "绝对零度": {
+    "_data_source": "champions",
+    "name_en": "Sheer Cold",
+    "type": "冰",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "30",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "浊流": {
+    "_data_source": "champions",
+    "name_en": "Muddy Water",
+    "type": "水",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "种子机关枪": {
+    "_data_source": "champions",
+    "name_en": "Bullet Seed",
+    "type": "草",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "燕返": {
+    "_data_source": "champions",
+    "name_en": "Aerial Ace",
+    "type": "飞行",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "冰锥": {
+    "_data_source": "champions",
+    "name_en": "Icicle Spear",
+    "type": "冰",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "铁壁": {
+    "_data_source": "champions",
+    "name_en": "Iron Defense",
+    "type": "钢",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "挡路": {
+    "_data_source": "champions",
+    "name_en": "Block",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "长嚎": {
+    "_data_source": "champions",
+    "name_en": "Howl",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "龙爪": {
+    "_data_source": "champions",
+    "name_en": "Dragon Claw",
+    "type": "龙",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "疯狂植物": {
+    "_data_source": "champions",
+    "name_en": "Frenzy Plant",
+    "type": "草",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "健美": {
+    "_data_source": "champions",
+    "name_en": "Bulk Up",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "弹跳": {
+    "_data_source": "champions",
+    "name_en": "Bounce",
+    "type": "飞行",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "85",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "泥巴射击": {
+    "_data_source": "champions",
+    "name_en": "Mud Shot",
+    "type": "地面",
+    "category": "特殊",
+    "power": "55",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "毒尾": {
+    "_data_source": "champions",
+    "name_en": "Poison Tail",
+    "type": "毒",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "渴望": {
+    "_data_source": "champions",
+    "name_en": "Covet",
+    "type": "一般",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "伏特攻击": {
+    "_data_source": "champions",
+    "name_en": "Volt Tackle",
+    "type": "电",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "魔法叶": {
+    "_data_source": "champions",
+    "name_en": "Magical Leaf",
+    "type": "草",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "玩水": {
+    "_data_source": "champions",
+    "name_en": "Water Sport",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "冥想": {
+    "_data_source": "champions",
+    "name_en": "Calm Mind",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "叶刃": {
+    "_data_source": "champions",
+    "name_en": "Leaf Blade",
+    "type": "草",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "龙之舞": {
+    "_data_source": "champions",
+    "name_en": "Dragon Dance",
+    "type": "龙",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "岩石爆击": {
+    "_data_source": "champions",
+    "name_en": "Rock Blast",
+    "type": "岩石",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "电击波": {
+    "_data_source": "champions",
+    "name_en": "Shock Wave",
+    "type": "电",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "水之波动": {
+    "_data_source": "champions",
+    "name_en": "Water Pulse",
+    "type": "水",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "破灭之愿": {
+    "_data_source": "champions",
+    "name_en": "Doom Desire",
+    "type": "钢",
+    "category": "特殊",
+    "power": "140",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "精神突进": {
+    "_data_source": "champions",
+    "name_en": "Psycho Boost",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "140",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "羽栖": {
+    "_data_source": "champions",
+    "name_en": "Roost",
+    "type": "飞行",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "重力": {
+    "_data_source": "champions",
+    "name_en": "Gravity",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "臂锤": {
+    "_data_source": "champions",
+    "name_en": "Hammer Arm",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "陀螺球": {
+    "_data_source": "champions",
+    "name_en": "Gyro Ball",
+    "type": "钢",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "治愈之愿": {
+    "_data_source": "champions",
+    "name_en": "Healing Wish",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "盐水": {
+    "_data_source": "champions",
+    "name_en": "Brine",
+    "type": "水",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "佯攻": {
+    "_data_source": "champions",
+    "name_en": "Feint",
+    "type": "一般",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "啄食": {
+    "_data_source": "champions",
+    "name_en": "Pluck",
+    "type": "飞行",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "顺风": {
+    "_data_source": "champions",
+    "name_en": "Tailwind",
+    "type": "飞行",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "点穴": {
+    "_data_source": "champions",
+    "name_en": "Acupressure",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "金属爆炸": {
+    "_data_source": "champions",
+    "name_en": "Metal Burst",
+    "type": "钢",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "急速折返": {
+    "_data_source": "champions",
+    "name_en": "U-turn",
+    "type": "虫",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "近身战": {
+    "_data_source": "champions",
+    "name_en": "Close Combat",
+    "type": "格斗",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "以牙还牙": {
+    "_data_source": "champions",
+    "name_en": "Payback",
+    "type": "恶",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "恶意追击": {
+    "_data_source": "champions",
+    "name_en": "Assurance",
+    "type": "恶",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "投掷": {
+    "_data_source": "champions",
+    "name_en": "Fling",
+    "type": "恶",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "力量戏法": {
+    "_data_source": "champions",
+    "name_en": "Power Trick",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "胃液": {
+    "_data_source": "champions",
+    "name_en": "Gastro Acid",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "仿效": {
+    "_data_source": "champions",
+    "name_en": "Copycat",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "力量互换": {
+    "_data_source": "champions",
+    "name_en": "Power Swap",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "防守互换": {
+    "_data_source": "champions",
+    "name_en": "Guard Swap",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "珍藏": {
+    "_data_source": "champions",
+    "name_en": "Last Resort",
+    "type": "一般",
+    "category": "物理",
+    "power": "140",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "烦恼种子": {
+    "_data_source": "champions",
+    "name_en": "Worry Seed",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "突袭": {
+    "_data_source": "champions",
+    "name_en": "Sucker Punch",
+    "type": "恶",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "毒菱": {
+    "_data_source": "champions",
+    "name_en": "Toxic Spikes",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "心灵互换": {
+    "_data_source": "champions",
+    "name_en": "Heart Swap",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "水流环": {
+    "_data_source": "champions",
+    "name_en": "Aqua Ring",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "电磁飘浮": {
+    "_data_source": "champions",
+    "name_en": "Magnet Rise",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "闪焰冲锋": {
+    "_data_source": "champions",
+    "name_en": "Flare Blitz",
+    "type": "火",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "发劲": {
+    "_data_source": "champions",
+    "name_en": "Force Palm",
+    "type": "格斗",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "波导弹": {
+    "_data_source": "champions",
+    "name_en": "Aura Sphere",
+    "type": "格斗",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "岩石打磨": {
+    "_data_source": "champions",
+    "name_en": "Rock Polish",
+    "type": "岩石",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "毒击": {
+    "_data_source": "champions",
+    "name_en": "Poison Jab",
+    "type": "毒",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "恶之波动": {
+    "_data_source": "champions",
+    "name_en": "Dark Pulse",
+    "type": "恶",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "暗袭要害": {
+    "_data_source": "champions",
+    "name_en": "Night Slash",
+    "type": "恶",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "水流尾": {
+    "_data_source": "champions",
+    "name_en": "Aqua Tail",
+    "type": "水",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "种子炸弹": {
+    "_data_source": "champions",
+    "name_en": "Seed Bomb",
+    "type": "草",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "空气之刃": {
+    "_data_source": "champions",
+    "name_en": "Air Slash",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "十字剪": {
+    "_data_source": "champions",
+    "name_en": "X-Scissor",
+    "type": "虫",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "虫鸣": {
+    "_data_source": "champions",
+    "name_en": "Bug Buzz",
+    "type": "虫",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "龙之波动": {
+    "_data_source": "champions",
+    "name_en": "Dragon Pulse",
+    "type": "龙",
+    "category": "特殊",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "龙之俯冲": {
+    "_data_source": "champions",
+    "name_en": "Dragon Rush",
+    "type": "龙",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "75",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "力量宝石": {
+    "_data_source": "champions",
+    "name_en": "Power Gem",
+    "type": "岩石",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "吸取拳": {
+    "_data_source": "champions",
+    "name_en": "Drain Punch",
+    "type": "格斗",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "真空波": {
+    "_data_source": "champions",
+    "name_en": "Vacuum Wave",
+    "type": "格斗",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "真气弹": {
+    "_data_source": "champions",
+    "name_en": "Focus Blast",
+    "type": "格斗",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "70",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "能量球": {
+    "_data_source": "champions",
+    "name_en": "Energy Ball",
+    "type": "草",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "勇鸟猛攻": {
+    "_data_source": "champions",
+    "name_en": "Brave Bird",
+    "type": "飞行",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "大地之力": {
+    "_data_source": "champions",
+    "name_en": "Earth Power",
+    "type": "地面",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "掉包": {
+    "_data_source": "champions",
+    "name_en": "Switcheroo",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "终极冲击": {
+    "_data_source": "champions",
+    "name_en": "Giga Impact",
+    "type": "一般",
+    "category": "物理",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "诡计": {
+    "_data_source": "champions",
+    "name_en": "Nasty Plot",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "子弹拳": {
+    "_data_source": "champions",
+    "name_en": "Bullet Punch",
+    "type": "钢",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "雪崩": {
+    "_data_source": "champions",
+    "name_en": "Avalanche",
+    "type": "冰",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "冰砾": {
+    "_data_source": "champions",
+    "name_en": "Ice Shard",
+    "type": "冰",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "暗影爪": {
+    "_data_source": "champions",
+    "name_en": "Shadow Claw",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "雷电牙": {
+    "_data_source": "champions",
+    "name_en": "Thunder Fang",
+    "type": "电",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "冰冻牙": {
+    "_data_source": "champions",
+    "name_en": "Ice Fang",
+    "type": "冰",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "火焰牙": {
+    "_data_source": "champions",
+    "name_en": "Fire Fang",
+    "type": "火",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "影子偷袭": {
+    "_data_source": "champions",
+    "name_en": "Shadow Sneak",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "精神利刃": {
+    "_data_source": "champions",
+    "name_en": "Psycho Cut",
+    "type": "超能力",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "意念头锤": {
+    "_data_source": "champions",
+    "name_en": "Zen Headbutt",
+    "type": "超能力",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "加农光炮": {
+    "_data_source": "champions",
+    "name_en": "Flash Cannon",
+    "type": "钢",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "清除浓雾": {
+    "_data_source": "champions",
+    "name_en": "Defog",
+    "type": "飞行",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "戏法空间": {
+    "_data_source": "champions",
+    "name_en": "Trick Room",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "流星群": {
+    "_data_source": "champions",
+    "name_en": "Draco Meteor",
+    "type": "龙",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "放电": {
+    "_data_source": "champions",
+    "name_en": "Discharge",
+    "type": "电",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "喷烟": {
+    "_data_source": "champions",
+    "name_en": "Lava Plume",
+    "type": "火",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "飞叶风暴": {
+    "_data_source": "champions",
+    "name_en": "Leaf Storm",
+    "type": "草",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "强力鞭打": {
+    "_data_source": "champions",
+    "name_en": "Power Whip",
+    "type": "草",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "岩石炮": {
+    "_data_source": "champions",
+    "name_en": "Rock Wrecker",
+    "type": "岩石",
+    "category": "物理",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "十字毒刃": {
+    "_data_source": "champions",
+    "name_en": "Cross Poison",
+    "type": "毒",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "垃圾射击": {
+    "_data_source": "champions",
+    "name_en": "Gunk Shot",
+    "type": "毒",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "铁头": {
+    "_data_source": "champions",
+    "name_en": "Iron Head",
+    "type": "钢",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "尖石攻击": {
+    "_data_source": "champions",
+    "name_en": "Stone Edge",
+    "type": "岩石",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "隐形岩": {
+    "_data_source": "champions",
+    "name_en": "Stealth Rock",
+    "type": "岩石",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "打草结": {
+    "_data_source": "champions",
+    "name_en": "Grass Knot",
+    "type": "草",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "喋喋不休": {
+    "_data_source": "champions",
+    "name_en": "Chatter",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "制裁光砾": {
+    "_data_source": "champions",
+    "name_en": "Judgment",
+    "type": "一般",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "虫咬": {
+    "_data_source": "champions",
+    "name_en": "Bug Bite",
+    "type": "虫",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "充电光束": {
+    "_data_source": "champions",
+    "name_en": "Charge Beam",
+    "type": "电",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "木槌": {
+    "_data_source": "champions",
+    "name_en": "Wood Hammer",
+    "type": "草",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "水流喷射": {
+    "_data_source": "champions",
+    "name_en": "Aqua Jet",
+    "type": "水",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "攻击指令": {
+    "_data_source": "champions",
+    "name_en": "Attack Order",
+    "type": "虫",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "防御指令": {
+    "_data_source": "champions",
+    "name_en": "Defend Order",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "双刃头锤": {
+    "_data_source": "champions",
+    "name_en": "Head Smash",
+    "type": "岩石",
+    "category": "物理",
+    "power": "150",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "二连击": {
+    "_data_source": "champions",
+    "name_en": "Double Hit",
+    "type": "一般",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "时光咆哮": {
+    "_data_source": "champions",
+    "name_en": "Roar of Time",
+    "type": "龙",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "亚空裂斩": {
+    "_data_source": "champions",
+    "name_en": "Spacial Rend",
+    "type": "龙",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "新月舞": {
+    "_data_source": "champions",
+    "name_en": "Lunar Dance",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "捏碎": {
+    "_data_source": "champions",
+    "name_en": "Crush Grip",
+    "type": "一般",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "熔岩风暴": {
+    "_data_source": "champions",
+    "name_en": "Magma Storm",
+    "type": "火",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "75",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "暗黑洞": {
+    "_data_source": "champions",
+    "name_en": "Dark Void",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "50",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "种子闪光": {
+    "_data_source": "champions",
+    "name_en": "Seed Flare",
+    "type": "草",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "85",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "暗影潜袭": {
+    "_data_source": "champions",
+    "name_en": "Shadow Force",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "磨爪": {
+    "_data_source": "champions",
+    "name_en": "Hone Claws",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "广域防守": {
+    "_data_source": "champions",
+    "name_en": "Wide Guard",
+    "type": "岩石",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "防守平分": {
+    "_data_source": "champions",
+    "name_en": "Guard Split",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "力量平分": {
+    "_data_source": "champions",
+    "name_en": "Power Split",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "奇妙空间": {
+    "_data_source": "champions",
+    "name_en": "Wonder Room",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "精神冲击": {
+    "_data_source": "champions",
+    "name_en": "Psyshock",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "毒液冲击": {
+    "_data_source": "champions",
+    "name_en": "Venoshock",
+    "type": "毒",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "愤怒粉": {
+    "_data_source": "champions",
+    "name_en": "Rage Powder",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "魔法空间": {
+    "_data_source": "champions",
+    "name_en": "Magic Room",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "击落": {
+    "_data_source": "champions",
+    "name_en": "Smack Down",
+    "type": "岩石",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "山岚摔": {
+    "_data_source": "champions",
+    "name_en": "Storm Throw",
+    "type": "格斗",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "污泥波": {
+    "_data_source": "champions",
+    "name_en": "Sludge Wave",
+    "type": "毒",
+    "category": "特殊",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "蝶舞": {
+    "_data_source": "champions",
+    "name_en": "Quiver Dance",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "重磅冲撞": {
+    "_data_source": "champions",
+    "name_en": "Heavy Slam",
+    "type": "钢",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "电球": {
+    "_data_source": "champions",
+    "name_en": "Electro Ball",
+    "type": "电",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "浸水": {
+    "_data_source": "champions",
+    "name_en": "Soak",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "蓄能焰袭": {
+    "_data_source": "champions",
+    "name_en": "Flame Charge",
+    "type": "火",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "盘蜷": {
+    "_data_source": "champions",
+    "name_en": "Coil",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "下盘踢": {
+    "_data_source": "champions",
+    "name_en": "Low Sweep",
+    "type": "格斗",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "酸液炸弹": {
+    "_data_source": "champions",
+    "name_en": "Acid Spray",
+    "type": "毒",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "移花接木": {
+    "_data_source": "champions",
+    "name_en": "Foul Play",
+    "type": "恶",
+    "category": "物理",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "单纯光束": {
+    "_data_source": "champions",
+    "name_en": "Simple Beam",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "找伙伴": {
+    "_data_source": "champions",
+    "name_en": "Entrainment",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "您先请": {
+    "_data_source": "champions",
+    "name_en": "After You",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "轮唱": {
+    "_data_source": "champions",
+    "name_en": "Round",
+    "type": "一般",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "回声": {
+    "_data_source": "champions",
+    "name_en": "Echoed Voice",
+    "type": "一般",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "清除之烟": {
+    "_data_source": "champions",
+    "name_en": "Clear Smog",
+    "type": "毒",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "辅助力量": {
+    "_data_source": "champions",
+    "name_en": "Stored Power",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "快速防守": {
+    "_data_source": "champions",
+    "name_en": "Quick Guard",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "交换场地": {
+    "_data_source": "champions",
+    "name_en": "Ally Switch",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "热水": {
+    "_data_source": "champions",
+    "name_en": "Scald",
+    "type": "水",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "破壳": {
+    "_data_source": "champions",
+    "name_en": "Shell Smash",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "治愈波动": {
+    "_data_source": "champions",
+    "name_en": "Heal Pulse",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "祸不单行": {
+    "_data_source": "champions",
+    "name_en": "Hex",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "换档": {
+    "_data_source": "champions",
+    "name_en": "Shift Gear",
+    "type": "钢",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "巴投": {
+    "_data_source": "champions",
+    "name_en": "Circle Throw",
+    "type": "格斗",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "烧净": {
+    "_data_source": "champions",
+    "name_en": "Incinerate",
+    "type": "火",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "延后": {
+    "_data_source": "champions",
+    "name_en": "Quash",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "杂技": {
+    "_data_source": "champions",
+    "name_en": "Acrobatics",
+    "type": "飞行",
+    "category": "物理",
+    "power": "55",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "镜面属性": {
+    "_data_source": "champions",
+    "name_en": "Reflect Type",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "报仇": {
+    "_data_source": "champions",
+    "name_en": "Retaliate",
+    "type": "一般",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "搏命": {
+    "_data_source": "champions",
+    "name_en": "Final Gambit",
+    "type": "格斗",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "烈火深渊": {
+    "_data_source": "champions",
+    "name_en": "Inferno",
+    "type": "火",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "50",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "水之誓约": {
+    "_data_source": "champions",
+    "name_en": "Water Pledge",
+    "type": "水",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "火之誓约": {
+    "_data_source": "champions",
+    "name_en": "Fire Pledge",
+    "type": "火",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "草之誓约": {
+    "_data_source": "champions",
+    "name_en": "Grass Pledge",
+    "type": "草",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "伏特替换": {
+    "_data_source": "champions",
+    "name_en": "Volt Switch",
+    "type": "电",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "虫之抵抗": {
+    "_data_source": "champions",
+    "name_en": "Struggle Bug",
+    "type": "虫",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "重踏": {
+    "_data_source": "champions",
+    "name_en": "Bulldoze",
+    "type": "地面",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "冰息": {
+    "_data_source": "champions",
+    "name_en": "Frost Breath",
+    "type": "冰",
+    "category": "特殊",
+    "power": "60",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "龙尾": {
+    "_data_source": "champions",
+    "name_en": "Dragon Tail",
+    "type": "龙",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "自我激励": {
+    "_data_source": "champions",
+    "name_en": "Work Up",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "电网": {
+    "_data_source": "champions",
+    "name_en": "Electroweb",
+    "type": "电",
+    "category": "特殊",
+    "power": "55",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "疯狂伏特": {
+    "_data_source": "champions",
+    "name_en": "Wild Charge",
+    "type": "电",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "直冲钻": {
+    "_data_source": "champions",
+    "name_en": "Drill Run",
+    "type": "地面",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "木角": {
+    "_data_source": "champions",
+    "name_en": "Horn Leech",
+    "type": "草",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "圣剑": {
+    "_data_source": "champions",
+    "name_en": "Sacred Sword",
+    "type": "格斗",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "贝壳刃": {
+    "_data_source": "champions",
+    "name_en": "Razor Shell",
+    "type": "水",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "高温重压": {
+    "_data_source": "champions",
+    "name_en": "Heat Crash",
+    "type": "火",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "棉花防守": {
+    "_data_source": "champions",
+    "name_en": "Cotton Guard",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "暗黑爆破": {
+    "_data_source": "champions",
+    "name_en": "Night Daze",
+    "type": "恶",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "精神击破": {
+    "_data_source": "champions",
+    "name_en": "Psystrike",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "扫尾拍打": {
+    "_data_source": "champions",
+    "name_en": "Tail Slap",
+    "type": "一般",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "暴风": {
+    "_data_source": "champions",
+    "name_en": "Hurricane",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "70",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "火焰弹": {
+    "_data_source": "champions",
+    "name_en": "Searing Shot",
+    "type": "火",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "高科技光炮": {
+    "_data_source": "champions",
+    "name_en": "Techno Blast",
+    "type": "一般",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "古老之歌": {
+    "_data_source": "champions",
+    "name_en": "Relic Song",
+    "type": "一般",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "神秘之剑": {
+    "_data_source": "champions",
+    "name_en": "Secret Sword",
+    "type": "格斗",
+    "category": "特殊",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冰封世界": {
+    "_data_source": "champions",
+    "name_en": "Glaciate",
+    "type": "冰",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "雷击": {
+    "_data_source": "champions",
+    "name_en": "Bolt Strike",
+    "type": "电",
+    "category": "物理",
+    "power": "130",
+    "accuracy": "85",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "青焰": {
+    "_data_source": "champions",
+    "name_en": "Blue Flare",
+    "type": "火",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "85",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "火之舞": {
+    "_data_source": "champions",
+    "name_en": "Fiery Dance",
+    "type": "火",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冰冻伏特": {
+    "_data_source": "champions",
+    "name_en": "Freeze Shock",
+    "type": "冰",
+    "category": "物理",
+    "power": "140",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "极寒冷焰": {
+    "_data_source": "champions",
+    "name_en": "Ice Burn",
+    "type": "冰",
+    "category": "特殊",
+    "power": "140",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "大声咆哮": {
+    "_data_source": "champions",
+    "name_en": "Snarl",
+    "type": "恶",
+    "category": "特殊",
+    "power": "55",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "冰柱坠击": {
+    "_data_source": "champions",
+    "name_en": "Icicle Crash",
+    "type": "冰",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "Ｖ热焰": {
+    "_data_source": "champions",
+    "name_en": "V-create",
+    "type": "火",
+    "category": "物理",
+    "power": "180",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "交错火焰": {
+    "_data_source": "champions",
+    "name_en": "Fusion Flare",
+    "type": "火",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "交错闪电": {
+    "_data_source": "champions",
+    "name_en": "Fusion Bolt",
+    "type": "电",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "飞身重压": {
+    "_data_source": "champions",
+    "name_en": "Flying Press",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "打嗝": {
+    "_data_source": "champions",
+    "name_en": "Belch",
+    "type": "毒",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "黏黏网": {
+    "_data_source": "champions",
+    "name_en": "Sticky Web",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "致命针刺": {
+    "_data_source": "champions",
+    "name_en": "Fell Stinger",
+    "type": "虫",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "潜灵奇袭": {
+    "_data_source": "champions",
+    "name_en": "Phantom Force",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "战吼": {
+    "_data_source": "champions",
+    "name_en": "Noble Roar",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "抛物面充电": {
+    "_data_source": "champions",
+    "name_en": "Parabolic Charge",
+    "type": "电",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "森林咒术": {
+    "_data_source": "champions",
+    "name_en": "Forest’s Curse",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "落英缤纷": {
+    "_data_source": "champions",
+    "name_en": "Petal Blizzard",
+    "type": "草",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "冷冻干燥": {
+    "_data_source": "champions",
+    "name_en": "Freeze-Dry",
+    "type": "冰",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "魅惑之声": {
+    "_data_source": "champions",
+    "name_en": "Disarming Voice",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "抛下狠话": {
+    "_data_source": "champions",
+    "name_en": "Parting Shot",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "颠倒": {
+    "_data_source": "champions",
+    "name_en": "Topsy-Turvy",
+    "type": "恶",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "吸取之吻": {
+    "_data_source": "champions",
+    "name_en": "Draining Kiss",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "青草场地": {
+    "_data_source": "champions",
+    "name_en": "Grassy Terrain",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "薄雾场地": {
+    "_data_source": "champions",
+    "name_en": "Misty Terrain",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "嬉闹": {
+    "_data_source": "champions",
+    "name_en": "Play Rough",
+    "type": "妖精",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "妖精之风": {
+    "_data_source": "champions",
+    "name_en": "Fairy Wind",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "月亮之力": {
+    "_data_source": "champions",
+    "name_en": "Moonblast",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "爆音波": {
+    "_data_source": "champions",
+    "name_en": "Boomburst",
+    "type": "一般",
+    "category": "特殊",
+    "power": "140",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "妖精之锁": {
+    "_data_source": "champions",
+    "name_en": "Fairy Lock",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "钻石风暴": {
+    "_data_source": "champions",
+    "name_en": "Diamond Storm",
+    "type": "岩石",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "蒸汽爆炸": {
+    "_data_source": "champions",
+    "name_en": "Steam Eruption",
+    "type": "水",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "异次元洞": {
+    "_data_source": "champions",
+    "name_en": "Hyperspace Hole",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "飞水手里剑": {
+    "_data_source": "champions",
+    "name_en": "Water Shuriken",
+    "type": "水",
+    "category": "特殊",
+    "power": "15",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "魔法火焰": {
+    "_data_source": "champions",
+    "name_en": "Mystical Fire",
+    "type": "火",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "尖刺防守": {
+    "_data_source": "champions",
+    "name_en": "Spiky Shield",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "芳香薄雾": {
+    "_data_source": "champions",
+    "name_en": "Aromatic Mist",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "怪异电波": {
+    "_data_source": "champions",
+    "name_en": "Eerie Impulse",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "大地掌控": {
+    "_data_source": "champions",
+    "name_en": "Geomancy",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "磁场操控": {
+    "_data_source": "champions",
+    "name_en": "Magnetic Flux",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "欢乐时光": {
+    "_data_source": "champions",
+    "name_en": "Happy Hour",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "电气场地": {
+    "_data_source": "champions",
+    "name_en": "Electric Terrain",
+    "type": "电",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "魔法闪耀": {
+    "_data_source": "champions",
+    "name_en": "Dazzling Gleam",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "庆祝": {
+    "_data_source": "champions",
+    "name_en": "Celebrate",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "牵手": {
+    "_data_source": "champions",
+    "name_en": "Hold Hands",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "圆瞳": {
+    "_data_source": "champions",
+    "name_en": "Baby-Doll Eyes",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "蹭蹭脸颊": {
+    "_data_source": "champions",
+    "name_en": "Nuzzle",
+    "type": "电",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "手下留情": {
+    "_data_source": "champions",
+    "name_en": "Hold Back",
+    "type": "一般",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "纠缠不休": {
+    "_data_source": "champions",
+    "name_en": "Infestation",
+    "type": "虫",
+    "category": "特殊",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "归天之翼": {
+    "_data_source": "champions",
+    "name_en": "Oblivion Wing",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "千箭齐发": {
+    "_data_source": "champions",
+    "name_en": "Thousand Arrows",
+    "type": "地面",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "千波激荡": {
+    "_data_source": "champions",
+    "name_en": "Thousand Waves",
+    "type": "地面",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "大地神力": {
+    "_data_source": "champions",
+    "name_en": "Land’s Wrath",
+    "type": "地面",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "根源波动": {
+    "_data_source": "champions",
+    "name_en": "Origin Pulse",
+    "type": "水",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "断崖之剑": {
+    "_data_source": "champions",
+    "name_en": "Precipice Blades",
+    "type": "地面",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "画龙点睛": {
+    "_data_source": "champions",
+    "name_en": "Dragon Ascent",
+    "type": "飞行",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "异次元猛攻": {
+    "_data_source": "champions",
+    "name_en": "Hyperspace Fury",
+    "type": "恶",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "集沙": {
+    "_data_source": "champions",
+    "name_en": "Shore Up",
+    "type": "地面",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "迎头一击": {
+    "_data_source": "champions",
+    "name_en": "First Impression",
+    "type": "虫",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "碉堡": {
+    "_data_source": "champions",
+    "name_en": "Baneful Bunker",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "缝影": {
+    "_data_source": "champions",
+    "name_en": "Spirit Shackle",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "ＤＤ金勾臂": {
+    "_data_source": "champions",
+    "name_en": "Darkest Lariat",
+    "type": "恶",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "泡影的咏叹调": {
+    "_data_source": "champions",
+    "name_en": "Sparkling Aria",
+    "type": "水",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冰锤": {
+    "_data_source": "champions",
+    "name_en": "Ice Hammer",
+    "type": "冰",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "花疗": {
+    "_data_source": "champions",
+    "name_en": "Floral Healing",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "十万马力": {
+    "_data_source": "champions",
+    "name_en": "High Horsepower",
+    "type": "地面",
+    "category": "物理",
+    "power": "95",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "吸取力量": {
+    "_data_source": "champions",
+    "name_en": "Strength Sap",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "日光刃": {
+    "_data_source": "champions",
+    "name_en": "Solar Blade",
+    "type": "草",
+    "category": "物理",
+    "power": "125",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "树叶": {
+    "_data_source": "champions",
+    "name_en": "Leafage",
+    "type": "草",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "毒丝": {
+    "_data_source": "champions",
+    "name_en": "Toxic Thread",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "深渊突刺": {
+    "_data_source": "champions",
+    "name_en": "Throat Chop",
+    "type": "恶",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "花粉团": {
+    "_data_source": "champions",
+    "name_en": "Pollen Puff",
+    "type": "虫",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "掷锚": {
+    "_data_source": "champions",
+    "name_en": "Anchor Shot",
+    "type": "钢",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "精神场地": {
+    "_data_source": "champions",
+    "name_en": "Psychic Terrain",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "猛扑": {
+    "_data_source": "champions",
+    "name_en": "Lunge",
+    "type": "虫",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "火焰鞭": {
+    "_data_source": "champions",
+    "name_en": "Fire Lash",
+    "type": "火",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "嚣张": {
+    "_data_source": "champions",
+    "name_en": "Power Trip",
+    "type": "恶",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "燃尽": {
+    "_data_source": "champions",
+    "name_en": "Burn Up",
+    "type": "火",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "速度互换": {
+    "_data_source": "champions",
+    "name_en": "Speed Swap",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "修长之角": {
+    "_data_source": "champions",
+    "name_en": "Smart Strike",
+    "type": "钢",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "净化": {
+    "_data_source": "champions",
+    "name_en": "Purify",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "觉醒之舞": {
+    "_data_source": "champions",
+    "name_en": "Revelation Dance",
+    "type": "一般",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "核心惩罚者": {
+    "_data_source": "champions",
+    "name_en": "Core Enforcer",
+    "type": "龙",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "热带踢": {
+    "_data_source": "champions",
+    "name_en": "Trop Kick",
+    "type": "草",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "号令": {
+    "_data_source": "champions",
+    "name_en": "Instruct",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "鸟嘴加农炮": {
+    "_data_source": "champions",
+    "name_en": "Beak Blast",
+    "type": "飞行",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "鳞片噪音": {
+    "_data_source": "champions",
+    "name_en": "Clanging Scales",
+    "type": "龙",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "龙锤": {
+    "_data_source": "champions",
+    "name_en": "Dragon Hammer",
+    "type": "龙",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "狂舞挥打": {
+    "_data_source": "champions",
+    "name_en": "Brutal Swing",
+    "type": "恶",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "极光幕": {
+    "_data_source": "champions",
+    "name_en": "Aurora Veil",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "陷阱甲壳": {
+    "_data_source": "champions",
+    "name_en": "Shell Trap",
+    "type": "火",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "花朵加农炮": {
+    "_data_source": "champions",
+    "name_en": "Fleur Cannon",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "精神之牙": {
+    "_data_source": "champions",
+    "name_en": "Psychic Fangs",
+    "type": "超能力",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "跺脚": {
+    "_data_source": "champions",
+    "name_en": "Stomping Tantrum",
+    "type": "地面",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "暗影之骨": {
+    "_data_source": "champions",
+    "name_en": "Shadow Bone",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冲岩": {
+    "_data_source": "champions",
+    "name_en": "Accelerock",
+    "type": "岩石",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "水流裂破": {
+    "_data_source": "champions",
+    "name_en": "Liquidation",
+    "type": "水",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "棱镜镭射": {
+    "_data_source": "champions",
+    "name_en": "Prismatic Laser",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "160",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "暗影偷盗": {
+    "_data_source": "champions",
+    "name_en": "Spectral Thief",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "流星闪冲": {
+    "_data_source": "champions",
+    "name_en": "Sunsteel Strike",
+    "type": "钢",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "暗影之光": {
+    "_data_source": "champions",
+    "name_en": "Moongeist Beam",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "泪眼汪汪": {
+    "_data_source": "champions",
+    "name_en": "Tearful Look",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "麻麻刺刺": {
+    "_data_source": "champions",
+    "name_en": "Zing Zap",
+    "type": "电",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "自然之怒": {
+    "_data_source": "champions",
+    "name_en": "Nature’s Madness",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "多属性攻击": {
+    "_data_source": "champions",
+    "name_en": "Multi-Attack",
+    "type": "一般",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "惊爆大头": {
+    "_data_source": "champions",
+    "name_en": "Mind Blown",
+    "type": "火",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "等离子闪电拳": {
+    "_data_source": "champions",
+    "name_en": "Plasma Fists",
+    "type": "电",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "光子喷涌": {
+    "_data_source": "champions",
+    "name_en": "Photon Geyser",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "钢拳双击": {
+    "_data_source": "champions",
+    "name_en": "Double Iron Bash",
+    "type": "钢",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "极巨炮": {
+    "_data_source": "champions",
+    "name_en": "Dynamax Cannon",
+    "type": "龙",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "狙击": {
+    "_data_source": "champions",
+    "name_en": "Snipe Shot",
+    "type": "水",
+    "category": "特殊",
+    "power": "85",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "紧咬不放": {
+    "_data_source": "champions",
+    "name_en": "Jaw Lock",
+    "type": "恶",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "大快朵颐": {
+    "_data_source": "champions",
+    "name_en": "Stuff Cheeks",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "背水一战": {
+    "_data_source": "champions",
+    "name_en": "No Retreat",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "沥青射击": {
+    "_data_source": "champions",
+    "name_en": "Tar Shot",
+    "type": "岩石",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "魔法粉": {
+    "_data_source": "champions",
+    "name_en": "Magic Powder",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "龙箭": {
+    "_data_source": "champions",
+    "name_en": "Dragon Darts",
+    "type": "龙",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "茶会": {
+    "_data_source": "champions",
+    "name_en": "Teatime",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "蛸固": {
+    "_data_source": "champions",
+    "name_en": "Octolock",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "电喙": {
+    "_data_source": "champions",
+    "name_en": "Bolt Beak",
+    "type": "电",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "鳃咬": {
+    "_data_source": "champions",
+    "name_en": "Fishious Rend",
+    "type": "水",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "换场": {
+    "_data_source": "champions",
+    "name_en": "Court Change",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "魂舞烈音爆": {
+    "_data_source": "champions",
+    "name_en": "Clangorous Soul",
+    "type": "龙",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "扑击": {
+    "_data_source": "champions",
+    "name_en": "Body Press",
+    "type": "格斗",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "装饰": {
+    "_data_source": "champions",
+    "name_en": "Decorate",
+    "type": "妖精",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "鼓击": {
+    "_data_source": "champions",
+    "name_en": "Drum Beating",
+    "type": "草",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "捕兽夹": {
+    "_data_source": "champions",
+    "name_en": "Snap Trap",
+    "type": "钢",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "火焰球": {
+    "_data_source": "champions",
+    "name_en": "Pyro Ball",
+    "type": "火",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "巨兽斩": {
+    "_data_source": "champions",
+    "name_en": "Behemoth Blade",
+    "type": "钢",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "巨兽弹": {
+    "_data_source": "champions",
+    "name_en": "Behemoth Bash",
+    "type": "钢",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "气场轮": {
+    "_data_source": "champions",
+    "name_en": "Aura Wheel",
+    "type": "电",
+    "category": "物理",
+    "power": "110",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "广域破坏": {
+    "_data_source": "champions",
+    "name_en": "Breaking Swipe",
+    "type": "龙",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "木枝突刺": {
+    "_data_source": "champions",
+    "name_en": "Branch Poke",
+    "type": "草",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "破音": {
+    "_data_source": "champions",
+    "name_en": "Overdrive",
+    "type": "电",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "苹果酸": {
+    "_data_source": "champions",
+    "name_en": "Apple Acid",
+    "type": "草",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "万有引力": {
+    "_data_source": "champions",
+    "name_en": "Grav Apple",
+    "type": "草",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "灵魂冲击": {
+    "_data_source": "champions",
+    "name_en": "Spirit Break",
+    "type": "妖精",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "神奇蒸汽": {
+    "_data_source": "champions",
+    "name_en": "Strange Steam",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "生命水滴": {
+    "_data_source": "champions",
+    "name_en": "Life Dew",
+    "type": "水",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "假跪真撞": {
+    "_data_source": "champions",
+    "name_en": "False Surrender",
+    "type": "恶",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "流星突击": {
+    "_data_source": "champions",
+    "name_en": "Meteor Assault",
+    "type": "格斗",
+    "category": "物理",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "铁蹄光线": {
+    "_data_source": "champions",
+    "name_en": "Steel Beam",
+    "type": "钢",
+    "category": "特殊",
+    "power": "140",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "广域战力": {
+    "_data_source": "champions",
+    "name_en": "Expanding Force",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "铁滚轮": {
+    "_data_source": "champions",
+    "name_en": "Steel Roller",
+    "type": "钢",
+    "category": "物理",
+    "power": "130",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "鳞射": {
+    "_data_source": "champions",
+    "name_en": "Scale Shot",
+    "type": "龙",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "90",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "流星光束": {
+    "_data_source": "champions",
+    "name_en": "Meteor Beam",
+    "type": "岩石",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "臂贝武器": {
+    "_data_source": "champions",
+    "name_en": "Shell Side Arm",
+    "type": "毒",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "薄雾炸裂": {
+    "_data_source": "champions",
+    "name_en": "Misty Explosion",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "青草滑梯": {
+    "_data_source": "champions",
+    "name_en": "Grassy Glide",
+    "type": "草",
+    "category": "物理",
+    "power": "55",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "电力上升": {
+    "_data_source": "champions",
+    "name_en": "Rising Voltage",
+    "type": "电",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "大地波动": {
+    "_data_source": "champions",
+    "name_en": "Terrain Pulse",
+    "type": "一般",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "爬击": {
+    "_data_source": "champions",
+    "name_en": "Skitter Smack",
+    "type": "虫",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "妒火": {
+    "_data_source": "champions",
+    "name_en": "Burning Jealousy",
+    "type": "火",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "泄愤": {
+    "_data_source": "champions",
+    "name_en": "Lash Out",
+    "type": "恶",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "灵骚": {
+    "_data_source": "champions",
+    "name_en": "Poltergeist",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "110",
+    "accuracy": "90",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "腐蚀气体": {
+    "_data_source": "champions",
+    "name_en": "Corrosive Gas",
+    "type": "毒",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "指导": {
+    "_data_source": "champions",
+    "name_en": "Coaching",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "快速折返": {
+    "_data_source": "champions",
+    "name_en": "Flip Turn",
+    "type": "水",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "三旋击": {
+    "_data_source": "champions",
+    "name_en": "Triple Axel",
+    "type": "冰",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "双翼": {
+    "_data_source": "champions",
+    "name_en": "Dual Wingbeat",
+    "type": "飞行",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "热沙大地": {
+    "_data_source": "champions",
+    "name_en": "Scorching Sands",
+    "type": "地面",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "丛林治疗": {
+    "_data_source": "champions",
+    "name_en": "Jungle Healing",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "暗冥强击": {
+    "_data_source": "champions",
+    "name_en": "Wicked Blow",
+    "type": "恶",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "水流连打": {
+    "_data_source": "champions",
+    "name_en": "Surging Strikes",
+    "type": "水",
+    "category": "物理",
+    "power": "25",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "雷电囚笼": {
+    "_data_source": "champions",
+    "name_en": "Thunder Cage",
+    "type": "电",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "巨龙威能": {
+    "_data_source": "champions",
+    "name_en": "Dragon Energy",
+    "type": "龙",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "冰冷视线": {
+    "_data_source": "champions",
+    "name_en": "Freezing Glare",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "怒火中烧": {
+    "_data_source": "champions",
+    "name_en": "Fiery Wrath",
+    "type": "恶",
+    "category": "特殊",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "雷鸣蹴击": {
+    "_data_source": "champions",
+    "name_en": "Thunderous Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "雪矛": {
+    "_data_source": "champions",
+    "name_en": "Glacial Lance",
+    "type": "冰",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "星碎": {
+    "_data_source": "champions",
+    "name_en": "Astral Barrage",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "110",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "诡异咒语": {
+    "_data_source": "champions",
+    "name_en": "Eerie Spell",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "克命爪": {
+    "_data_source": "champions",
+    "name_en": "Dire Claw",
+    "type": "毒",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "屏障猛攻": {
+    "_data_source": "champions",
+    "name_en": "Psyshield Bash",
+    "type": "超能力",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "力量转换": {
+    "_data_source": "champions",
+    "name_en": "Power Shift",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "岩斧": {
+    "_data_source": "champions",
+    "name_en": "Stone Axe",
+    "type": "岩石",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "阳春风暴": {
+    "_data_source": "champions",
+    "name_en": "Springtide Storm",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "神秘之力": {
+    "_data_source": "champions",
+    "name_en": "Mystical Power",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "大愤慨": {
+    "_data_source": "champions",
+    "name_en": "Raging Fury",
+    "type": "火",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "波动冲": {
+    "_data_source": "champions",
+    "name_en": "Wave Crash",
+    "type": "水",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "叶绿爆震": {
+    "_data_source": "champions",
+    "name_en": "Chloroblast",
+    "type": "草",
+    "category": "特殊",
+    "power": "150",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "冰山风": {
+    "_data_source": "champions",
+    "name_en": "Mountain Gale",
+    "type": "冰",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "85",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "胜利之舞": {
+    "_data_source": "champions",
+    "name_en": "Victory Dance",
+    "type": "格斗",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "突飞猛扑": {
+    "_data_source": "champions",
+    "name_en": "Headlong Rush",
+    "type": "地面",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "毒千针": {
+    "_data_source": "champions",
+    "name_en": "Barb Barrage",
+    "type": "毒",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "气场之翼": {
+    "_data_source": "champions",
+    "name_en": "Esper Wing",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冤冤相报": {
+    "_data_source": "champions",
+    "name_en": "Bitter Malice",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "闭关": {
+    "_data_source": "champions",
+    "name_en": "Shelter",
+    "type": "钢",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "三连箭": {
+    "_data_source": "champions",
+    "name_en": "Triple Arrows",
+    "type": "格斗",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "群魔乱舞": {
+    "_data_source": "champions",
+    "name_en": "Infernal Parade",
+    "type": "幽灵",
+    "category": "特殊",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "秘剑・千重涛": {
+    "_data_source": "champions",
+    "name_en": "Ceaseless Edge",
+    "type": "恶",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "枯叶风暴": {
+    "_data_source": "champions",
+    "name_en": "Bleakwind Storm",
+    "type": "飞行",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "鸣雷风暴": {
+    "_data_source": "champions",
+    "name_en": "Wildbolt Storm",
+    "type": "电",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "热沙风暴": {
+    "_data_source": "champions",
+    "name_en": "Sandsear Storm",
+    "type": "地面",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "80",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "新月祈祷": {
+    "_data_source": "champions",
+    "name_en": "Lunar Blessing",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "勇气填充": {
+    "_data_source": "champions",
+    "name_en": "Take Heart",
+    "type": "超能力",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "太晶爆发": {
+    "_data_source": "champions",
+    "name_en": "Tera Blast",
+    "type": "一般",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "线阱": {
+    "_data_source": "champions",
+    "name_en": "Silk Trap",
+    "type": "虫",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "下压踢": {
+    "_data_source": "champions",
+    "name_en": "Axe Kick",
+    "type": "格斗",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "扫墓": {
+    "_data_source": "champions",
+    "name_en": "Last Respects",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "琉光冲激": {
+    "_data_source": "champions",
+    "name_en": "Lumina Crash",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "上菜": {
+    "_data_source": "champions",
+    "name_en": "Order Up",
+    "type": "龙",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "喷射拳": {
+    "_data_source": "champions",
+    "name_en": "Jet Punch",
+    "type": "水",
+    "category": "物理",
+    "power": "60",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "辣椒精华": {
+    "_data_source": "champions",
+    "name_en": "Spicy Extract",
+    "type": "草",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "疾速转轮": {
+    "_data_source": "champions",
+    "name_en": "Spin Out",
+    "type": "钢",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "鼠数儿": {
+    "_data_source": "champions",
+    "name_en": "Population Bomb",
+    "type": "一般",
+    "category": "物理",
+    "power": "20",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "冰旋": {
+    "_data_source": "champions",
+    "name_en": "Ice Spinner",
+    "type": "冰",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "巨剑突击": {
+    "_data_source": "champions",
+    "name_en": "Glaive Rush",
+    "type": "龙",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "盐腌": {
+    "_data_source": "champions",
+    "name_en": "Salt Cure",
+    "type": "岩石",
+    "category": "物理",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "三连钻": {
+    "_data_source": "champions",
+    "name_en": "Triple Dive",
+    "type": "水",
+    "category": "物理",
+    "power": "35",
+    "accuracy": "95",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "晶光转转": {
+    "_data_source": "champions",
+    "name_en": "Mortal Spin",
+    "type": "毒",
+    "category": "物理",
+    "power": "30",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "描绘": {
+    "_data_source": "champions",
+    "name_en": "Doodle",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "甩肉": {
+    "_data_source": "champions",
+    "name_en": "Fillet Away",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "仆刀": {
+    "_data_source": "champions",
+    "name_en": "Kowtow Cleave",
+    "type": "恶",
+    "category": "物理",
+    "power": "85",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "千变万花": {
+    "_data_source": "champions",
+    "name_en": "Flower Trick",
+    "type": "草",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "闪焰高歌": {
+    "_data_source": "champions",
+    "name_en": "Torch Song",
+    "type": "火",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "流水旋舞": {
+    "_data_source": "champions",
+    "name_en": "Aqua Step",
+    "type": "水",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "怒牛": {
+    "_data_source": "champions",
+    "name_en": "Raging Bull",
+    "type": "一般",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "淘金潮": {
+    "_data_source": "champions",
+    "name_en": "Make It Rain",
+    "type": "钢",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "95",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "精神剑": {
+    "_data_source": "champions",
+    "name_en": "Psyblade",
+    "type": "超能力",
+    "category": "物理",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "水蒸气": {
+    "_data_source": "champions",
+    "name_en": "Hydro Steam",
+    "type": "水",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "大灾难": {
+    "_data_source": "champions",
+    "name_en": "Ruination",
+    "type": "恶",
+    "category": "特殊",
+    "power": "1",
+    "accuracy": "90",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "全开猛撞": {
+    "_data_source": "champions",
+    "name_en": "Collision Course",
+    "type": "格斗",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "闪电猛冲": {
+    "_data_source": "champions",
+    "name_en": "Electro Drift",
+    "type": "电",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "断尾": {
+    "_data_source": "champions",
+    "name_en": "Shed Tail",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "冷笑话": {
+    "_data_source": "champions",
+    "name_en": "Chilly Reception",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "大扫除": {
+    "_data_source": "champions",
+    "name_en": "Tidy Up",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "雪景": {
+    "_data_source": "champions",
+    "name_en": "Snowscape",
+    "type": "冰",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "虫扑": {
+    "_data_source": "champions",
+    "name_en": "Pounce",
+    "type": "虫",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "起草": {
+    "_data_source": "champions",
+    "name_en": "Trailblaze",
+    "type": "草",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": true
+  },
+  "泼冷水": {
+    "_data_source": "champions",
+    "name_en": "Chilling Water",
+    "type": "水",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "强力钻": {
+    "_data_source": "champions",
+    "name_en": "Hyper Drill",
+    "type": "一般",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "双光束": {
+    "_data_source": "champions",
+    "name_en": "Twin Beam",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "40",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "愤怒之拳": {
+    "_data_source": "champions",
+    "name_en": "Rage Fist",
+    "type": "幽灵",
+    "category": "物理",
+    "power": "50",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "铠农炮": {
+    "_data_source": "champions",
+    "name_en": "Armor Cannon",
+    "type": "火",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "悔念剑": {
+    "_data_source": "champions",
+    "name_en": "Bitter Blade",
+    "type": "火",
+    "category": "物理",
+    "power": "90",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "巨力锤": {
+    "_data_source": "champions",
+    "name_en": "Gigaton Hammer",
+    "type": "钢",
+    "category": "物理",
+    "power": "160",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "复仇": {
+    "_data_source": "champions",
+    "name_en": "Comeuppance",
+    "type": "恶",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "水波刀": {
+    "_data_source": "champions",
+    "name_en": "Aqua Cutter",
+    "type": "水",
+    "category": "物理",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "20 （最大 32）",
+    "makes_contact": false
+  },
+  "血月": {
+    "_data_source": "champions",
+    "name_en": "Blood Moon",
+    "type": "一般",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "刷刷茶炮": {
+    "_data_source": "champions",
+    "name_en": "Matcha Gotcha",
+    "type": "草",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "90",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "棘藤棒": {
+    "_data_source": "champions",
+    "name_en": "Ivy Cudgel",
+    "type": "草",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "电光束": {
+    "_data_source": "champions",
+    "name_en": "Electro Shot",
+    "type": "电",
+    "category": "特殊",
+    "power": "130",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "晶光星群": {
+    "_data_source": "champions",
+    "name_en": "Tera Starstorm",
+    "type": "一般",
+    "category": "特殊",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "随机光": {
+    "_data_source": "champions",
+    "name_en": "Fickle Beam",
+    "type": "龙",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "火焰守护": {
+    "_data_source": "champions",
+    "name_en": "Burning Bulwark",
+    "type": "火",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "迅雷": {
+    "_data_source": "champions",
+    "name_en": "Thunderclap",
+    "type": "电",
+    "category": "特殊",
+    "power": "70",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  },
+  "强刃攻击": {
+    "_data_source": "champions",
+    "name_en": "Mighty Cleave",
+    "type": "岩石",
+    "category": "物理",
+    "power": "95",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": true
+  },
+  "迅子利刃": {
+    "_data_source": "champions",
+    "name_en": "Tachyon Cutter",
+    "type": "钢",
+    "category": "特殊",
+    "power": "50",
+    "accuracy": "101",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "硬压": {
+    "_data_source": "champions",
+    "name_en": "Hard Press",
+    "type": "钢",
+    "category": "物理",
+    "power": "1",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "龙声鼓舞": {
+    "_data_source": "champions",
+    "name_en": "Dragon Cheer",
+    "type": "龙",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "16 （最大 25）",
+    "makes_contact": false
+  },
+  "魅诱之声": {
+    "_data_source": "champions",
+    "name_en": "Alluring Voice",
+    "type": "妖精",
+    "category": "特殊",
+    "power": "80",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "豁出去": {
+    "_data_source": "champions",
+    "name_en": "Temper Flare",
+    "type": "火",
+    "category": "物理",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "闪电强袭": {
+    "_data_source": "champions",
+    "name_en": "Supercell Slam",
+    "type": "电",
+    "category": "物理",
+    "power": "100",
+    "accuracy": "95",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "精神噪音": {
+    "_data_source": "champions",
+    "name_en": "Psychic Noise",
+    "type": "超能力",
+    "category": "特殊",
+    "power": "75",
+    "accuracy": "100",
+    "pp": "12 （最大 19）",
+    "makes_contact": false
+  },
+  "快手还击": {
+    "_data_source": "champions",
+    "name_en": "Upper Hand",
+    "type": "格斗",
+    "category": "物理",
+    "power": "65",
+    "accuracy": "100",
+    "pp": "16 （最大 25）",
+    "makes_contact": true
+  },
+  "邪毒锁链": {
+    "_data_source": "champions",
+    "name_en": "Malignant Chain",
+    "type": "毒",
+    "category": "特殊",
+    "power": "100",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
+    "makes_contact": false
+  }
+}
