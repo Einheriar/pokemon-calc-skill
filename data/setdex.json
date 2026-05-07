@@ -1,0 +1,6866 @@
+{
+  "Meowscarada": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Overgrow",
+      "item": "Focus Sash",
+      "moves": [
+        "Flower Trick",
+        "Knock Off",
+        "Sucker Punch",
+        "Protect"
+      ]
+    },
+    "Choice Band Protean": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Protean",
+      "item": "Choice Band",
+      "moves": [
+        "Flower Trick",
+        "Knock Off",
+        "Play Rough",
+        "U-turn"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Skeledirge": {
+    "Bulky Tera Grass": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Unaware",
+      "item": "Leftovers",
+      "moves": [
+        "Torch Song",
+        "Shadow Ball",
+        "Slack Off",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Quaquaval": {
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Moxie",
+      "item": "Life Orb",
+      "moves": [
+        "Aqua Step",
+        "Close Combat",
+        "Ice Spinner",
+        "Protect"
+      ]
+    }
+  },
+  "Oinkologne": {
+    "Don't use this": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Lingering Aroma",
+      "item": "Figy Berry",
+      "moves": [
+        "Stuff Cheeks",
+        "Body Press",
+        "Rest",
+        "Yawn"
+      ],
+      "tera_type": "Fighting"
+    }
+  },
+  "Oinkologne-F": {
+    "Surely, there are better Pokemon": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Lingering Aroma",
+      "item": "Leftovers",
+      "moves": [
+        "Stockpile",
+        "Body Press",
+        "Protect",
+        "Yawn"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Lokix": {
+    "Choice Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Tinted Lens",
+      "item": "Choice Band",
+      "moves": [
+        "First Impression",
+        "U-turn",
+        "Throat Chop",
+        "Axe Kick"
+      ],
+      "tera_type": "Fighting"
+    }
+  },
+  "Jumpluff": {
+    "Tailwind Support Set": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 60,
+        "sp_attack": 4,
+        "sp_defense": 4,
+        "speed": 196
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Chlorophyll",
+      "item": "Covert Cloak",
+      "moves": [
+        "Leaf Storm",
+        "Sleep Powder",
+        "Encore",
+        "Tailwind"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Talonflame": {
+    "Bulky Tera Ghost Goggles": {
+      "level": 50,
+      "evs": {
+        "hp": 204,
+        "attack": 36,
+        "defense": 180,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 84
+      },
+      "nature": "Jolly",
+      "ability": "Gale Wings",
+      "item": "Safety Goggles",
+      "moves": [
+        "Brave Bird",
+        "Flare Blitz",
+        "Taunt",
+        "Tailwind"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Sharp Beak Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Gale Wings",
+      "item": "Sharp Beak",
+      "moves": [
+        "Brave Bird",
+        "Tailwind",
+        "Taunt",
+        "Protect"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Pawmot": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Natural Cure",
+      "item": "Focus Sash",
+      "moves": [
+        "Fake Out",
+        "Double Shock",
+        "Close Combat",
+        "Revival Blessing"
+      ]
+    }
+  },
+  "Vivillon": {
+    "Remember Butterfree?": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Friend Guard",
+      "item": "Focus Sash",
+      "moves": [
+        "Tailwind",
+        "Rage Powder",
+        "Pollen Puff",
+        "Sleep Powder"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Corviknight": {
+    "Bulk Up Tailwind": {
+      "level": 50,
+      "evs": {
+        "hp": 220,
+        "attack": 204,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 76
+      },
+      "nature": "Adamant",
+      "ability": "Mirror Armor",
+      "item": "Leftovers",
+      "moves": [
+        "Brave Bird",
+        "Tailwind",
+        "Roost",
+        "Bulk Up"
+      ],
+      "tera_type": "Dragon"
+    },
+    "SoulSur Banded Corv": {
+      "level": 50,
+      "evs": {
+        "hp": 116,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 140
+      },
+      "nature": "Adamant",
+      "ability": "Mirror Armor",
+      "item": "Leftovers",
+      "moves": [
+        "Brave Bird",
+        "Tera Blast",
+        "U-turn",
+        "Iron Head"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Azumarill": {
+    "Belly Drum Set": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Huge Power",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Belly Drum",
+        "Aqua Jet",
+        "Play Rough",
+        "Protect"
+      ]
+    },
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 236,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 20
+      },
+      "nature": "Adamant",
+      "ability": "Huge Power",
+      "item": "Assault Vest",
+      "moves": [
+        "Aqua Jet",
+        "Play Rough",
+        "Liquidation",
+        "Ice Spinner"
+      ]
+    }
+  },
+  "Floatzel": {
+    "Choice Band Rain Sweeper": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Swift Swim",
+      "item": "Choice Band",
+      "moves": [
+        "Wave Crash",
+        "Ice Spinner",
+        "Aqua Jet",
+        "Brick Break"
+      ]
+    }
+  },
+  "Clodsire": {
+    "Haze Toxic Leftovers": {
+      "level": 50,
+      "evs": {
+        "hp": 164,
+        "attack": 28,
+        "defense": 236,
+        "sp_attack": 0,
+        "sp_defense": 76,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Relaxed",
+      "ability": "Water Absorb",
+      "item": "Leftovers",
+      "moves": [
+        "Haze",
+        "Toxic",
+        "Recover",
+        "Gunk Shot"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Drednaw": {
+    "Tera Grass Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Swift Swim",
+      "item": "Life Orb",
+      "moves": [
+        "Liquidation",
+        "Rock Slide",
+        "Tera Blast",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Gardevoir": {
+    "Trick Choice Scarf": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Trace",
+      "item": "Choice Scarf",
+      "moves": [
+        "Psychic",
+        "Moonblast",
+        "Dazzling Gleam",
+        "Trick"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Ashton's Sitrus Tera Grass": {
+      "level": 50,
+      "evs": {
+        "hp": 180,
+        "attack": 0,
+        "defense": 212,
+        "sp_attack": 44,
+        "sp_defense": 4,
+        "speed": 68
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Trace",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Psychic",
+        "Moonblast",
+        "Protect",
+        "Trick Room"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Gallade": {
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Sharpness",
+      "item": "Life Orb",
+      "moves": [
+        "Psycho Cut",
+        "Sacred Sword",
+        "Night Slash",
+        "Protect"
+      ],
+      "tera_type": "Fighting"
+    }
+  },
+  "Gengar": {
+    "Tera Flying Focus Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Cursed Body",
+      "item": "Focus Sash",
+      "moves": [
+        "Shadow Ball",
+        "Sludge Bomb",
+        "Icy Wind",
+        "Haze"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Maushold": {
+    "Bulky Goggles Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 100,
+        "speed": 0
+      },
+      "nature": "Impish",
+      "ability": "Friend Guard",
+      "item": "Safety Goggles",
+      "moves": [
+        "Super Fang",
+        "U-turn",
+        "Beat Up",
+        "Follow Me"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Wide Lens Technician": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Technician",
+      "item": "Wide Lens",
+      "moves": [
+        "Population Bomb",
+        "Follow Me",
+        "Protect",
+        "Tidy Up"
+      ]
+    }
+  },
+  "Maushold-Four": {
+    "Bulky Goggles Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 100,
+        "speed": 0
+      },
+      "nature": "Impish",
+      "ability": "Friend Guard",
+      "item": "Safety Goggles",
+      "moves": [
+        "Super Fang",
+        "U-turn",
+        "Beat Up",
+        "Follow Me"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Wide Lens Technician": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Technician",
+      "item": "Wide Lens",
+      "moves": [
+        "Population Bomb",
+        "Follow Me",
+        "Protect",
+        "Tidy Up"
+      ]
+    }
+  },
+  "Raichu": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 4,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "ability": "Lightning Rod",
+      "item": "Focus Sash",
+      "moves": [
+        "Fake Out",
+        "Nuzzle",
+        "Volt Switch",
+        "Helping Hand"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Dachsbun": {
+    "Well-Baked Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 36,
+        "sp_attack": 0,
+        "sp_defense": 188,
+        "speed": 28
+      },
+      "nature": "Impish",
+      "ability": "Well-Baked Body",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Snarl",
+        "Play Rough",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Slaking": {
+    "Tera Ghost Bulk Up": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Truant",
+      "item": "Leftovers",
+      "moves": [
+        "Bulk Up",
+        "Drain Punch",
+        "Body Slam",
+        "Sucker Punch"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Tsareena": {
+    "Tera Rock Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 76,
+        "defense": 116,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 76
+      },
+      "nature": "Adamant",
+      "ability": "Queenly Majesty",
+      "item": "Assault Vest",
+      "moves": [
+        "Trop Kick",
+        "High Jump Kick",
+        "U-turn",
+        "Tera Blast"
+      ],
+      "tera_type": "Rock"
+    }
+  },
+  "Arboliva": {
+    "Tera Ground Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Seed Sower",
+      "item": "Life Orb",
+      "moves": [
+        "Terrain Pulse",
+        "Giga Drain",
+        "Earth Power",
+        "Protect"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Lycanroc-Midday": {
+    "Endeavor Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Sand Rush",
+      "item": "Focus Sash",
+      "moves": [
+        "Rock Slide",
+        "Endeavor",
+        "Accelerock",
+        "Protect"
+      ]
+    }
+  },
+  "Lycanroc-Dusk": {
+    "Tera Dark Choice Band": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Tough Claws",
+      "item": "Choice Band",
+      "moves": [
+        "Rock Slide",
+        "Close Combat",
+        "Psychic Fangs",
+        "Sucker Punch"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Coalossal": {
+    "Tera Grass Absorb Bulb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Steam Engine",
+      "item": "Absorb Bulb",
+      "moves": [
+        "Heat Wave",
+        "Tera Blast",
+        "Power Gem",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Staraptor": {
+    "Choice Scarf Lead": {
+      "level": 50,
+      "evs": {
+        "hp": 132,
+        "attack": 108,
+        "defense": 28,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 236
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Choice Scarf",
+      "moves": [
+        "Final Gambit",
+        "Brave Bird",
+        "U-turn",
+        "Close Combat"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Oricorio-Sensu": {
+    "Tera Steel Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Dancer",
+      "item": "Life Orb",
+      "moves": [
+        "Revelation Dance",
+        "Air Slash",
+        "Quiver Dance",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Oricorio-Pom-Pom": {
+    "Tera Ice Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Dancer",
+      "item": "Life Orb",
+      "moves": [
+        "Revelation Dance",
+        "Air Slash",
+        "Quiver Dance",
+        "Protect"
+      ],
+      "tera_type": "Ice"
+    }
+  },
+  "Lilligant": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Chlorophyll",
+      "item": "Focus Sash",
+      "moves": [
+        "Leaf Storm",
+        "Sleep Powder",
+        "After You",
+        "Pollen Puff"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Breloom": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Technician",
+      "item": "Focus Sash",
+      "moves": [
+        "Spore",
+        "Mach Punch",
+        "Bullet Seed",
+        "Rock Tomb"
+      ]
+    }
+  },
+  "Misdreavus": {
+    "Floating Dusclops": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Bold",
+      "ability": "Levitate",
+      "item": "Eviolite",
+      "moves": [
+        "Night Shade",
+        "Will-O-Wisp",
+        "Trick Room",
+        "Helping Hand"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Hariyama": {
+    "Flame Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "ability": "Guts",
+      "item": "Flame Orb",
+      "moves": [
+        "Close Combat",
+        "Knock Off",
+        "Fake Out",
+        "Wide Guard"
+      ]
+    }
+  },
+  "Salazzle": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "ability": "Oblivious",
+      "item": "Focus Sash",
+      "moves": [
+        "Fake Out",
+        "Overheat",
+        "Acid Spray",
+        "Encore"
+      ]
+    }
+  },
+  "Garchomp": {
+    "Clear Amulet 3 Attacks": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Rough Skin",
+      "item": "Clear Amulet",
+      "moves": [
+        "Stomping Tantrum",
+        "Earthquake",
+        "Dragon Claw",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    },
+    "Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 36,
+        "attack": 212,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Rough Skin",
+      "item": "Choice Scarf",
+      "moves": [
+        "Dragon Claw",
+        "Earthquake",
+        "Rock Slide",
+        "Stomping Tantrum"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Garganacl": {
+    "Tera Ghost Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 12,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Purifying Salt",
+      "item": "Leftovers",
+      "moves": [
+        "Iron Defense",
+        "Body Press",
+        "Salt Cure",
+        "Recover"
+      ],
+      "tera_type": "Ghost"
+    },
+    "MeLuCa's Tera Poison Support": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 12,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Purifying Salt",
+      "item": "Leftovers",
+      "moves": [
+        "Salt Cure",
+        "Wide Guard",
+        "Protect",
+        "Recover"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Pelipper": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Drizzle",
+      "item": "Focus Sash",
+      "moves": [
+        "Hurricane",
+        "Tailwind",
+        "Wide Guard",
+        "Hydro Pump"
+      ],
+      "tera_type": "Flying"
+    },
+    "Bulky Damp Rock Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 76,
+        "sp_attack": 4,
+        "sp_defense": 140,
+        "speed": 36
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Drizzle",
+      "item": "Damp Rock",
+      "moves": [
+        "Hurricane",
+        "Tailwind",
+        "Wide Guard",
+        "Hydro Pump"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Gyarados": {
+    "Bulky Support Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 20,
+        "defense": 76,
+        "sp_attack": 0,
+        "sp_defense": 156,
+        "speed": 4
+      },
+      "nature": "Careful",
+      "ability": "Intimdate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Waterfall",
+        "Iron Head",
+        "Taunt",
+        "Thunder Wave"
+      ],
+      "tera_type": "Steel"
+    },
+    "Tera Flying Dragon Dance": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Intimdate",
+      "item": "Clear Amulet",
+      "moves": [
+        "Waterfall",
+        "Tera Blast",
+        "Dragon Dance",
+        "Protect"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Barraskewda": {
+    "Swift Swim Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Swift Swim",
+      "item": "Life Orb",
+      "moves": [
+        "Liquidation",
+        "Close Combat",
+        "Psychic Fangs",
+        "Throat Chop"
+      ]
+    }
+  },
+  "Drifblim": {
+    "Psychic Seed Unburden Support": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 204,
+        "sp_attack": 4,
+        "sp_defense": 92,
+        "speed": 196
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Unburden",
+      "item": "Psychic Seed",
+      "moves": [
+        "Shadow Ball",
+        "Will-O-Wisp",
+        "Tailwind",
+        "Strength Sap"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Florges": {
+    "Tera Fire Leftovers": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 36,
+        "sp_attack": 220,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Flower Veil",
+      "item": "Leftovers",
+      "moves": [
+        "Moonblast",
+        "Tera Blast",
+        "Pollen Puff",
+        "Helping Hand"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Torkoal": {
+    "Charcoal Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Drought",
+      "item": "Charcoal",
+      "moves": [
+        "Eruption",
+        "Heat Wave",
+        "Earth Power",
+        "Protect"
+      ]
+    }
+  },
+  "Bronzong": {
+    "Body Press Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 108,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Sassy",
+      "ability": "Levitate",
+      "item": "Leftovers",
+      "moves": [
+        "Heavy Slam",
+        "Body Press",
+        "Iron Defense",
+        "Trick Room"
+      ],
+      "tera_type": "Electric"
+    }
+  },
+  "Annihilape": {
+    "Choice Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Defiant",
+      "item": "Choice Scarf",
+      "moves": [
+        "Final Gambit",
+        "Close Combat",
+        "U-turn",
+        "Shadow Claw"
+      ]
+    },
+    "Bulk Up Set": {
+      "level": 50,
+      "evs": {
+        "hp": 180,
+        "attack": 36,
+        "defense": 108,
+        "sp_attack": 0,
+        "sp_defense": 172,
+        "speed": 12
+      },
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Leftovers",
+      "moves": [
+        "Rage Fist",
+        "Drain Punch",
+        "Bulk Up",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Armarouge": {
+    "Life Orb Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Flash Fire",
+      "item": "Life Orb",
+      "moves": [
+        "Expanding Force",
+        "Armor Cannon",
+        "Trick Room",
+        "Wide Guard"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Ceruledge": {
+    "Bulk Up Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Flash Fire",
+      "item": "Clear Amulet",
+      "moves": [
+        "Bitter Blade",
+        "Shadow Sneak",
+        "Bulk Up",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Bellibolt": {
+    "WP Electromorphosis": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 12,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Electromorphosis",
+      "item": "Weakness Policy",
+      "moves": [
+        "Parabolic Charge",
+        "Thunderbolt",
+        "Discharge",
+        "Protect"
+      ]
+    }
+  },
+  "Goodra": {
+    "Tera Water Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 204,
+        "attack": 0,
+        "defense": 36,
+        "sp_attack": 236,
+        "sp_defense": 28,
+        "speed": 4
+      },
+      "nature": "Modest",
+      "ability": "Sap Sipper",
+      "item": "Assault Vest",
+      "moves": [
+        "Draco Meteor",
+        "Muddy Water",
+        "Acid Spray",
+        "Flamethrower"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Kilowattrel": {
+    "Tailwind Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Wind Power",
+      "item": "Focus Sash",
+      "moves": [
+        "Thunderbolt",
+        "Air Slash",
+        "Tailwind",
+        "Protect"
+      ]
+    }
+  },
+  "Vaporeon": {
+    "Hard Dondozo Check": {
+      "level": 50,
+      "evs": {
+        "hp": 148,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 4,
+        "sp_defense": 100,
+        "speed": 4
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Water Absorb",
+      "item": "Leftovers",
+      "moves": [
+        "Muddy Water",
+        "Ice Beam",
+        "Haze",
+        "Recover"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Sylveon": {
+    "Tera Water Choice Specs": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Modest",
+      "ability": "Pixilate",
+      "item": "Choice Specs",
+      "moves": [
+        "Hyper Voice",
+        "Tera Blast",
+        "Quick Attack",
+        "Hyper Beam"
+      ],
+      "tera_type": "Water"
+    },
+    "Tera Fire Throat Spray": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Modest",
+      "ability": "Pixilate",
+      "item": "Throat Spray",
+      "moves": [
+        "Hyper Voice",
+        "Tera Blast",
+        "Quick Attack",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Dudunsparce": {
+    "Rattled WP Tera Psychic": {
+      "level": 50,
+      "evs": {
+        "hp": 140,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 164,
+        "sp_defense": 0,
+        "speed": 204
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Rattled",
+      "item": "Weakness Policy",
+      "moves": [
+        "Boomburst",
+        "Stored Power",
+        "Baton Pass",
+        "Roost"
+      ],
+      "tera_type": "Psychic"
+    }
+  },
+  "Dudunsparce-Big": {
+    "Rattled WP Tera Psychic": {
+      "level": 50,
+      "evs": {
+        "hp": 140,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 164,
+        "sp_defense": 0,
+        "speed": 204
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Rattled",
+      "item": "Weakness Policy",
+      "moves": [
+        "Boomburst",
+        "Stored Power",
+        "Baton Pass",
+        "Roost"
+      ],
+      "tera_type": "Psychic"
+    }
+  },
+  "Farigiraf": {
+    "Bulky Imprison Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Armor Tail",
+      "item": "Rocky Helmet",
+      "moves": [
+        "Dazzling Gleam",
+        "Psychic",
+        "Imprison",
+        "Trick Room"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Safety Goggles Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Armor Tail",
+      "item": "Safety Goggles",
+      "moves": [
+        "Hyper Voice",
+        "Psychic",
+        "Helping Hand",
+        "Trick Room"
+      ]
+    }
+  },
+  "Toxtricity": {
+    "Tera Normal Specs": {
+      "level": 50,
+      "evs": {
+        "hp": 52,
+        "attack": 0,
+        "defense": 52,
+        "sp_attack": 220,
+        "sp_defense": 52,
+        "speed": 132
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Punk Rock",
+      "item": "Choice Specs",
+      "moves": [
+        "Overdrive",
+        "Sludge Bomb",
+        "Boomburst",
+        "Volt Switch"
+      ],
+      "tera_type": "Normal"
+    }
+  },
+  "Grafaiai": {
+    "Doodle Support Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "ability": "Prankster",
+      "item": "Focus Sash",
+      "moves": [
+        "Doodle",
+        "Parting Shot",
+        "Super Fang",
+        "Taunt"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Amoonguss": {
+    "Sitrus Berry Set": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Regenerator",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Clear Smog",
+        "Pollen Puff",
+        "Spore",
+        "Rage Powder"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Magnezone": {
+    "Tera Flying Specs Analytic": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Analytic",
+      "item": "Choice Specs",
+      "moves": [
+        "Thunderbolt",
+        "Flash Cannon",
+        "Tera Blast",
+        "Volt Switch"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Arcanine": {
+    "Fast Goggles Set": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 68,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 196
+      },
+      "nature": "Jolly",
+      "ability": "Intimidate",
+      "item": "Safety Goggles",
+      "moves": [
+        "Flare Blitz",
+        "Extreme Speed",
+        "Will-O-Wisp",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    },
+    "Bulky Sitrus Set": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 52,
+        "defense": 100,
+        "sp_attack": 0,
+        "sp_defense": 76,
+        "speed": 36
+      },
+      "nature": "Careful",
+      "ability": "Intimidate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Flare Blitz",
+        "Extreme Speed",
+        "Snarl",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    },
+    "Tera Normal Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Choice Band",
+      "moves": [
+        "Flare Blitz",
+        "Extreme Speed",
+        "Close Combat",
+        "Crunch"
+      ],
+      "tera_type": "Normal"
+    },
+    "Chuppa's & D'Angelo's San Diego AV": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 236,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Assault Vest",
+      "moves": [
+        "Flare Blitz",
+        "Extreme Speed",
+        "Play Rough",
+        "Snarl"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Tauros-Paldea-Blaze": {
+    "Will-O-Wisp Support": {
+      "level": 50,
+      "evs": {
+        "hp": 220,
+        "attack": 20,
+        "defense": 44,
+        "sp_attack": 0,
+        "sp_defense": 108,
+        "speed": 116
+      },
+      "nature": "Impish",
+      "ability": "Intimidate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Close Combat",
+        "Flare Blitz",
+        "Will-O-Wisp",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Tauros-Paldea-Aqua": {
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Intimidate",
+      "item": "Life Orb",
+      "moves": [
+        "Wave Crash",
+        "Close Combat",
+        "Aqua Jet",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    },
+    "Assault Vest Anger Point": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Anger Point",
+      "item": "Assault Vest",
+      "moves": [
+        "Raging Bull",
+        "Close Combat",
+        "Aqua Jet",
+        "Earthquake"
+      ],
+      "tera_type": "Ground"
+    },
+    "Mirror Herb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Intimidate",
+      "item": "Mirror Herb",
+      "moves": [
+        "Raging Bull",
+        "Close Combat",
+        "Aqua Jet",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Weavile": {
+    "4 Attacks Focus Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Pressure",
+      "item": "Focus Sash",
+      "moves": [
+        "Fake Out",
+        "Ice Spinner",
+        "Night Slash",
+        "Ice Shard"
+      ],
+      "tera_type": "Ice"
+    }
+  },
+  "Murkrow": {
+    "Eviolite Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 116,
+        "sp_attack": 0,
+        "sp_defense": 140,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "ability": "Prankster",
+      "item": "Eviolite",
+      "moves": [
+        "Foul Play",
+        "Tailwind",
+        "Taunt",
+        "Haze"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Sash Brave Bird Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Prankster",
+      "item": "Focus Sash",
+      "moves": [
+        "Brave Bird",
+        "Tailwind",
+        "Protect",
+        "Haze"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Gothitelle": {
+    "Shadow Tag TR Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 100,
+        "sp_attack": 0,
+        "sp_defense": 156,
+        "speed": 0
+      },
+      "nature": "Calm",
+      "ability": "Shadow Tag",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Psychic",
+        "Fake Out",
+        "Trick Room",
+        "Helping Hand"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Mimikyu": {
+    "Trick Room Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 164,
+        "defense": 44,
+        "sp_attack": 0,
+        "sp_defense": 36,
+        "speed": 12
+      },
+      "nature": "Adamant",
+      "ability": "Disguise",
+      "item": "Safety Goggles",
+      "moves": [
+        "Play Rough",
+        "Shadow Sneak",
+        "Trick Room",
+        "Will-O-Wisp"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Disguise",
+      "item": "Life Orb",
+      "moves": [
+        "Play Rough",
+        "Shadow Sneak",
+        "Shadow Claw",
+        "Protect"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Klefki": {
+    "Screens Speed Control": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 76,
+        "sp_attack": 0,
+        "sp_defense": 180,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "ability": "Prankster",
+      "item": "Light Clay",
+      "moves": [
+        "Dazzling Gleam",
+        "Reflect",
+        "Light Screen",
+        "Thunder Wave"
+      ]
+    }
+  },
+  "Indeedee-M": {
+    "Sash Imprison Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Psychic Surge",
+      "item": "Focus Sash",
+      "moves": [
+        "Psychic",
+        "Dazzling Gleam",
+        "Trick Room",
+        "Imprison"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Indeedee-F": {
+    "Trick Room Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Psychic Surge",
+      "item": "Psychic Seed",
+      "moves": [
+        "Dazzling Gleam",
+        "Follow Me",
+        "Helping Hand",
+        "Trick Room"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Brambleghast": {
+    "Regulation E Offense": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Wind Rider",
+      "item": "Focus Sash",
+      "moves": [
+        "Power Whip",
+        "Shadow Sneak",
+        "Poltergeist",
+        "Seed Bomb"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Emilio Forbes' 2023 Worlds Top 16 Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Wind Rider",
+      "item": "Focus Sash",
+      "moves": [
+        "Power Whip",
+        "Shadow Sneak",
+        "Tera Blast",
+        "Strength Sap"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Tera Fire Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Wind Rider",
+      "item": "Life Orb",
+      "moves": [
+        "Power Whip",
+        "Shadow Sneak",
+        "Tera Blast",
+        "Phantom Force"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Toedscruel": {
+    "Defensive Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Mycelium Might",
+      "item": "Occa Berry",
+      "moves": [
+        "Earth Power",
+        "Spore",
+        "Rage Powder",
+        "Trick Room"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Lurantis": {
+    "TR Sitrus Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "ability": "Contrary",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Superpower",
+        "Knock Off",
+        "Leaf Blade",
+        "Petal Blizzard"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Scovillain": {
+    "Offensive Chlorophyll": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Chlorophyll",
+      "item": "Focus Sash",
+      "moves": [
+        "Flamethrower",
+        "Energy Ball",
+        "Pollen Puff",
+        "Spicy Extract"
+      ]
+    }
+  },
+  "Rabsca": {
+    "Leppa Revival Blessing": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 164,
+        "sp_attack": 0,
+        "sp_defense": 92,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Sassy",
+      "ability": "Telepathy",
+      "item": "Leppa Berry",
+      "moves": [
+        "Bug Buzz",
+        "Trick Room",
+        "Revival Blessing",
+        "Recover"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Scizor": {
+    "Swords Dance Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Technician",
+      "item": "Clear Amulet",
+      "moves": [
+        "Bullet Punch",
+        "Close Combat",
+        "Swords Dance",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    },
+    "Choice Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Technician",
+      "item": "Choice Band",
+      "moves": [
+        "Bullet Punch",
+        "Close Combat",
+        "Pounce",
+        "U-turn"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Espathra": {
+    "Life Orb Speed Boost": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Speed Boost",
+      "item": "Life Orb",
+      "moves": [
+        "Lumina Crash",
+        "Dazzling Gleam",
+        "Calm Mind",
+        "Protect"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Sash Hypnosis Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Speed Boost",
+      "item": "Focus Sash",
+      "moves": [
+        "Lumina Crash",
+        "Dazzling Gleam",
+        "Hypnosis",
+        "Protect"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Mudsdale": {
+    "Stamina Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 196,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 60,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "ability": "Stamina",
+      "item": "Assault Vest",
+      "moves": [
+        "High Horsepower",
+        "Body Press",
+        "Rock Slide",
+        "Heavy Slam"
+      ]
+    }
+  },
+  "Volcarona": {
+    "Leftovers Quiver Dance": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 84,
+        "sp_attack": 4,
+        "sp_defense": 4,
+        "speed": 164
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Flame Body",
+      "item": "Leftovers",
+      "moves": [
+        "Fiery Dance",
+        "Giga Drain",
+        "Protect",
+        "Quiver Dance"
+      ],
+      "tera_type": "Water"
+    },
+    "Sitrus Berry Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 212,
+        "sp_attack": 4,
+        "sp_defense": 36,
+        "speed": 4
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "ability": "Flame Body",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Struggle Bug",
+        "Overheat",
+        "Tailwind",
+        "Rage Powder"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Salamence": {
+    "Bulky Rocky Helmet": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 0,
+        "defense": 172,
+        "sp_attack": 4,
+        "sp_defense": 12,
+        "speed": 84
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Intimidate",
+      "item": "Rocky Helmet",
+      "moves": [
+        "Draco Meteor",
+        "Air Slash",
+        "Tailwind",
+        "Roost"
+      ],
+      "tera_type": "Poison"
+    },
+    "Tera Steel Dragon Dance": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Clear Amulet",
+      "moves": [
+        "Dragon Claw",
+        "Dual Wingbeat",
+        "Iron Head",
+        "Dragon Dance"
+      ],
+      "tera_type": "Steel"
+    },
+    "Special LO Tailwind": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Intimidate",
+      "item": "Life Orb",
+      "moves": [
+        "Draco Meteor",
+        "Heat Wave",
+        "Tailwind",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Tinkaton": {
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Own Tempo",
+      "item": "Assault Vest",
+      "moves": [
+        "Fake Out",
+        "Gigaton Hammer",
+        "Play Rough",
+        "Knock Off"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Hatterene": {
+    "Tera Fire Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Magic Bounce",
+      "item": "Covert Cloak",
+      "moves": [
+        "Psychic",
+        "Dazzling Gleam",
+        "Mystical Fire",
+        "Trick Room"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Grimmsnarl": {
+    "Screens Light Clay": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 124,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 12
+      },
+      "nature": "Careful",
+      "ability": "Prankster",
+      "item": "Light Clay",
+      "moves": [
+        "Spirit Break",
+        "Reflect",
+        "Light Screen",
+        "Taunt"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Bombirdier": {
+    "Tera Rock Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Rocky Payload",
+      "item": "Assault Vest",
+      "moves": [
+        "Rock Slide",
+        "Brave Bird",
+        "Knock Off",
+        "Sucker Punch"
+      ],
+      "tera_type": "Rock"
+    }
+  },
+  "Palafin": {
+    "Mystic Water Haze": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Zero to Hero",
+      "item": "Mystic Water",
+      "moves": [
+        "Jet Punch",
+        "Wave Crash",
+        "Haze",
+        "Protect"
+      ]
+    },
+    "Choice Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Zero to Hero",
+      "item": "Choice Band",
+      "moves": [
+        "Flip Turn",
+        "Jet Punch",
+        "Ice Punch",
+        "Close Combat"
+      ]
+    }
+  },
+  "Cyclizar": {
+    "Shed Tail Support": {
+      "level": 50,
+      "evs": {
+        "hp": 116,
+        "attack": 4,
+        "defense": 68,
+        "sp_attack": 0,
+        "sp_defense": 140,
+        "speed": 180
+      },
+      "nature": "Jolly",
+      "ability": "Regenerator",
+      "item": "Leftovers",
+      "moves": [
+        "Knock Off",
+        "Taunt",
+        "Shed Tail",
+        "Protect"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Orthworm": {
+    "Body Press Shed Tail": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 36,
+        "sp_attack": 0,
+        "sp_defense": 228,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Earth Eater",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Heavy Slam",
+        "Shed Tail",
+        "Iron Defense"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Sableye": {
+    "Quash Will-O-Wisp": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 116,
+        "sp_attack": 0,
+        "sp_defense": 140,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Prankster",
+      "item": "Roseli Berry",
+      "moves": [
+        "Foul Play",
+        "Fake Out",
+        "Quash",
+        "Will-O-Wisp"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Avalugg": {
+    "Physically Defensive Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "nature": "Impish",
+      "ability": "Sturdy",
+      "item": "Figy Berry",
+      "moves": [
+        "Body Press",
+        "Ice Spinner",
+        "Wide Guard",
+        "Recover"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Noivern": {
+    "Tera Normal Boomburst": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Frisk",
+      "item": "Focus Sash",
+      "moves": [
+        "Boomburst",
+        "Draco Meteor",
+        "Heat Wave",
+        "Tailwind"
+      ],
+      "tera_type": "Normal"
+    }
+  },
+  "Dragapult": {
+    "Choice Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Clear Body",
+      "item": "Choice Band",
+      "moves": [
+        "Dragon Darts",
+        "Tera Blast",
+        "Phantom Force",
+        "U-turn"
+      ],
+      "tera_type": "Steel"
+    },
+    "Choice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Clear Body",
+      "item": "Choice Specs",
+      "moves": [
+        "Draco Meteor",
+        "Shadow Ball",
+        "Flamethrower",
+        "Tera Blast"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Glimmora": {
+    "Tera Grass Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 212,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 156,
+        "sp_defense": 124,
+        "speed": 12
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Toxic Debris",
+      "item": "Assault Vest",
+      "moves": [
+        "Power Gem",
+        "Sludge Bomb",
+        "Earth Power",
+        "Energy Ball"
+      ],
+      "tera_type": "Grass"
+    },
+    "Emilio's Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 20,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 236,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Toxic Debris",
+      "item": "Choice Specs",
+      "moves": [
+        "Power Gem",
+        "Sludge Bomb",
+        "Earth Power",
+        "Sludge Wave"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Rotom-Wash": {
+    "Bulky Sitrus Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 100,
+        "sp_attack": 44,
+        "sp_defense": 76,
+        "speed": 36
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Levitate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Thunderbolt",
+        "Hydro Pump",
+        "Will-O-Wisp",
+        "Protect"
+      ]
+    }
+  },
+  "Rotom-Heat": {
+    "Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Levitate",
+      "item": "Choice Specs",
+      "moves": [
+        "Thunderbolt",
+        "Overheat",
+        "Volt Switch",
+        "Trick"
+      ]
+    }
+  },
+  "Rotom-Mow": {
+    "Sitrus DisQuake": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 92,
+        "sp_defense": 44,
+        "speed": 116
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Levitate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Discharge",
+        "Leaf Storm",
+        "Will-O-Wisp",
+        "Protect"
+      ],
+      "tera_type": "Electric"
+    }
+  },
+  "Houndstone": {
+    "Sand Rush Choice Band": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Sand Rush",
+      "item": "Choice Band",
+      "moves": [
+        "Last Respects",
+        "Body Press",
+        "Play Rough",
+        "Trick"
+      ],
+      "tera_type": "Fighting"
+    }
+  },
+  "Oranguru": {
+    "Safety Goggles Trick Room": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 108,
+        "sp_attack": 0,
+        "sp_defense": 156,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Sassy",
+      "ability": "Inner Focus",
+      "item": "Safety Goggles",
+      "moves": [
+        "Foul Play",
+        "Trick Room",
+        "Instruct",
+        "Protect"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Tyranitar": {
+    "EternalSnowman's Sacramento 1st AV Tera Psychic": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 244
+      },
+      "nature": "Adamant",
+      "ability": "Sand Stream",
+      "item": "Assault Vest",
+      "moves": [
+        "Rock Slide",
+        "Knock Off",
+        "Low Kick",
+        "Tera Blast"
+      ],
+      "tera_type": "Psychic"
+    },
+    "Tera Flying AV": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 204,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 52
+      },
+      "nature": "Adamant",
+      "ability": "Sand Stream",
+      "item": "Assault Vest",
+      "moves": [
+        "Rock Slide",
+        "Assurance",
+        "Low Kick",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    },
+    "Dragon Dance Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Sand Stream",
+      "item": "Life Orb",
+      "moves": [
+        "Rock Slide",
+        "Crunch",
+        "Dragon Dance",
+        "Protect"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Slowbro": {
+    "Trick Room Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Relaxed",
+      "ability": "Oblivious",
+      "item": "Leftovers",
+      "moves": [
+        "Scald",
+        "Psychic",
+        "Body Press",
+        "Trick Room"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Slowking": {
+    "Trick Room Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 108,
+        "sp_attack": 108,
+        "sp_defense": 36,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Regenerator",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Psychic",
+        "Hydro Pump",
+        "Trick Room",
+        "Helping Hand"
+      ]
+    }
+  },
+  "Gastrodon": {
+    "Tera Fire Leftovers": {
+      "level": 50,
+      "evs": {
+        "hp": 116,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 140,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Storm Drain",
+      "item": "Leftovers",
+      "moves": [
+        "Earth Power",
+        "Muddy Water",
+        "Ice Beam",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Bruxish": {
+    "TR Setter + Attacker": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "ability": "Dazzling",
+      "item": "Focus Sash",
+      "moves": [
+        "Wave Crash",
+        "Psychic Fangs",
+        "Aqua Jet",
+        "Trick Room"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Flamigo": {
+    "Costar Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Costar",
+      "item": "Life Orb",
+      "moves": [
+        "Close Combat",
+        "Brave Bird",
+        "Throat Chop",
+        "Detect"
+      ]
+    },
+    "Scrappy Choice Scarf": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Costar",
+      "item": "Choice Scarf",
+      "moves": [
+        "Close Combat",
+        "Brave Bird",
+        "Liquidation",
+        "U-turn"
+      ],
+      "tera_type": "Fighting"
+    }
+  },
+  "Dragonite": {
+    "Tera Normal Choice Band": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 20
+      },
+      "nature": "Adamant",
+      "ability": "Inner Focus",
+      "item": "Choice Band",
+      "moves": [
+        "Extreme Speed",
+        "Outrage",
+        "Stomping Tantrum",
+        "Aerial Ace"
+      ],
+      "tera_type": "Normal"
+    },
+    "Tera Flying Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Multiscale",
+      "item": "Assault Vest",
+      "moves": [
+        "Extreme Speed",
+        "Dragon Claw",
+        "Stomping Tantrum",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Abomasnow": {
+    "Sash Aurora Veil": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 220,
+        "sp_defense": 0,
+        "speed": 36
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Snow Warning",
+      "item": "Focus Sash",
+      "moves": [
+        "Blizzard",
+        "Leaf Storm",
+        "Aurora Veil",
+        "Earth Power"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Cryogonal": {
+    "1.5% usage in December in 1760+ how": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Levitate",
+      "item": "Focus Sash",
+      "moves": [
+        "Freeze-Dry",
+        "Icy Wind",
+        "Haze",
+        "Protect"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Cetitan": {
+    "Belly Drum Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 20,
+        "sp_attack": 0,
+        "sp_defense": 84,
+        "speed": 148
+      },
+      "nature": "Adamant",
+      "ability": "Slush Rush",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Belly Drum",
+        "Ice Spinner",
+        "Ice Shard",
+        "Liquidation"
+      ],
+      "tera_type": "Water"
+    },
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 20,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 116
+      },
+      "nature": "Adamant",
+      "ability": "Slush Rush",
+      "item": "Assault Vest",
+      "moves": [
+        "Ice Spinner",
+        "Liquidation",
+        "Superpower",
+        "Earthquake"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Kingambit": {
+    "Black Glasses Set SUGGESTION BY ASHTONCOXGAZ": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Black Glasses",
+      "moves": [
+        "Kowtow Cleave",
+        "Sucker Punch",
+        "Iron Head",
+        "Assurance"
+      ],
+      "tera_type": "Dark"
+    },
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 188,
+        "attack": 252,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 60,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Assault Vest",
+      "moves": [
+        "Kowtow Cleave",
+        "Iron Head",
+        "Sucker Punch",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Hydreigon": {
+    "Tera Fire Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Levitate",
+      "item": "Life Orb",
+      "moves": [
+        "Dark Pulse",
+        "Draco Meteor",
+        "Heat Wave",
+        "Tailwind"
+      ],
+      "tera_type": "Fire"
+    },
+    "Tera Steel Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 188,
+        "attack": 0,
+        "defense": 20,
+        "sp_attack": 116,
+        "sp_defense": 12,
+        "speed": 172
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Levitate",
+      "item": "Assault Vest",
+      "moves": [
+        "Dark Pulse",
+        "Draco Meteor",
+        "Snarl",
+        "Flash Cannon"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Dondozo": {
+    "Kenji Yabata's 2023 Worlds Cut (No Tatsu)": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 4,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 4
+      },
+      "nature": "Careful",
+      "ability": "Unaware",
+      "item": "Leftovers",
+      "moves": [
+        "Wave Crash",
+        "Fissure",
+        "Curse",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    },
+    "Tera Grass Offensive": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 100,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 172,
+        "speed": 228
+      },
+      "nature": "Adamant",
+      "ability": "Oblivious",
+      "item": "Leftovers",
+      "moves": [
+        "Tera Blast",
+        "Earthquake",
+        "Wave Crash",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    },
+    "Mixed Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 4,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Hasty",
+      "ability": "Unaware",
+      "item": "Life Orb",
+      "moves": [
+        "Surf",
+        "Wave Crash",
+        "Sleep Talk",
+        "Protect"
+      ]
+    },
+    "Tera Steel Bulky": {
+      "level": 50,
+      "evs": {
+        "hp": 116,
+        "attack": 156,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 236
+      },
+      "nature": "Adamant",
+      "ability": "Unaware",
+      "item": "Chesto Berry",
+      "moves": [
+        "Earthquake",
+        "Wave Crash",
+        "Rest",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Tatsugiri": {
+    "Choice Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Commander",
+      "item": "Choice Scarf",
+      "moves": [
+        "Muddy Water",
+        "Draco Meteor",
+        "Icy Wind",
+        "Dragon Pulse"
+      ],
+      "tera_type": "Steel"
+    },
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Commander",
+      "item": "Focus Sash",
+      "moves": [
+        "Muddy Water",
+        "Draco Meteor",
+        "Taunt",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Great Tusk": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Focus Sash",
+      "moves": [
+        "Headlong Rush",
+        "Close Combat",
+        "Earthquake",
+        "Ice Spinner"
+      ]
+    },
+    "Choice Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Choice Scarf",
+      "moves": [
+        "Earthquake",
+        "Close Combat",
+        "Headlong Rush",
+        "Rock Slide"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Scream Tail": {
+    "Trick Room Disruption": {
+      "level": 50,
+      "evs": {
+        "hp": 212,
+        "attack": 0,
+        "defense": 164,
+        "sp_attack": 0,
+        "sp_defense": 132,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Dazzling Gleam",
+        "Disable",
+        "Encore",
+        "Trick Room"
+      ],
+      "tera_type": "Steel"
+    },
+    "Wolfe's Orlando 1st Perish Trap": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 60,
+        "defense": 60,
+        "sp_attack": 0,
+        "sp_defense": 36,
+        "speed": 100
+      },
+      "nature": "Jolly",
+      "item": "Booster Energy",
+      "moves": [
+        "Play Rough",
+        "Disable",
+        "Protect",
+        "Perish Song"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Brute Bonnet": {
+    "Offensive Support Set": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 0
+      },
+      "nature": "Impish",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Seed Bomb",
+        "Sucker Punch",
+        "Spore",
+        "Rage Powder"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Loaded Dice Tera Poison": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 20,
+        "defense": 20,
+        "sp_attack": 0,
+        "sp_defense": 220,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "item": "Loaded Dice",
+      "moves": [
+        "Bullet Seed",
+        "Crunch",
+        "Spore",
+        "Rage Powder"
+      ],
+      "tera_type": "Poison"
+    },
+    "Ashton's Runner-Up Bonnet": {
+      "level": 50,
+      "evs": {
+        "hp": 180,
+        "attack": 12,
+        "defense": 12,
+        "sp_attack": 0,
+        "sp_defense": 68,
+        "speed": 236
+      },
+      "nature": "Adamant",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Pollen Puff",
+        "Crunch",
+        "Spore",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Flutter Mane": {
+    "Bulky Speed Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 212,
+        "attack": 0,
+        "defense": 132,
+        "sp_attack": 36,
+        "sp_defense": 4,
+        "speed": 124
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Shadow Ball",
+        "Moonblast",
+        "Dazzling Gleam",
+        "Icy Wind"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Focus Sash",
+      "moves": [
+        "Shadow Ball",
+        "Moonblast",
+        "Perish Song",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    },
+    "Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Choice Specs",
+      "moves": [
+        "Shadow Ball",
+        "Moonblast",
+        "Dazzling Gleam",
+        "Power Gem"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Bulky SpAtk Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 68,
+        "attack": 0,
+        "defense": 116,
+        "sp_attack": 116,
+        "sp_defense": 4,
+        "speed": 204
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Booster Energy",
+      "moves": [
+        "Shadow Ball",
+        "Moonblast",
+        "Dazzling Gleam",
+        "Protect"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Slither Wing": {
+    "Tera Fire Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 20,
+        "attack": 252,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 228
+      },
+      "nature": "Adamant",
+      "item": "Booster Energy",
+      "moves": [
+        "Leech Life",
+        "Close Combat",
+        "Flame Charge",
+        "Protect"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Sandy Shocks": {
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Volt Switch",
+        "Earth Power",
+        "Thunderbolt",
+        "Protect"
+      ],
+      "tera_type": "Electric"
+    },
+    "Tera Ice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 36,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 204,
+        "sp_defense": 12,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Choice Specs",
+      "moves": [
+        "Volt Switch",
+        "Earth Power",
+        "Thunderbolt",
+        "Tera Blast"
+      ],
+      "tera_type": "Ice"
+    }
+  },
+  "Iron Treads": {
+    "Tera Flying Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 172,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 84,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Assault Vest",
+      "moves": [
+        "Iron Head",
+        "Stomping Tantrum",
+        "Ice Spinner",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Iron Bundle": {
+    "Fast Booster Energy Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Freeze-Dry",
+        "Hydro Pump",
+        "Icy Wind",
+        "Protect"
+      ],
+      "tera_type": "Ice"
+    },
+    "Bulky Speed Booster Set": {
+      "level": 50,
+      "evs": {
+        "hp": 44,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 228,
+        "sp_defense": 204,
+        "speed": 28
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Freeze-Dry",
+        "Hydro Pump",
+        "Icy Wind",
+        "Encore"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Snow Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Choice Specs",
+      "moves": [
+        "Freeze-Dry",
+        "Hydro Pump",
+        "Icy Wind",
+        "Blizzard"
+      ],
+      "tera_type": "Ice"
+    }
+  },
+  "Iron Hands": {
+    "Tera Grass Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 236,
+        "speed": 12
+      },
+      "nature": "Adamant",
+      "item": "Assault Vest",
+      "moves": [
+        "Drain Punch",
+        "Wild Charge",
+        "Fake Out",
+        "Heavy Slam"
+      ],
+      "tera_type": "Grass"
+    },
+    "Tera Fire Swords Dance": {
+      "level": 50,
+      "evs": {
+        "hp": 84,
+        "attack": 124,
+        "defense": 36,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 12
+      },
+      "nature": "Adamant",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Drain Punch",
+        "Thunder Punch",
+        "Fake Out",
+        "Swords Dance"
+      ],
+      "tera_type": "Fire"
+    }
+  },
+  "Iron Jugulis": {
+    "Tera Poison Tailwind Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 84,
+        "sp_attack": 36,
+        "sp_defense": 44,
+        "speed": 92
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Snarl",
+        "Air Slash",
+        "Tailwind",
+        "Protect"
+      ],
+      "tera_type": "Poison"
+    },
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Dark Pulse",
+        "Hurricane",
+        "Earth Power",
+        "Tailwind"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Iron Moth": {
+    "Speed-Boosting Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 116,
+        "sp_attack": 132,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Heat Wave",
+        "Acid Spray",
+        "Energy Ball",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    },
+    "SpAtk-Boosting Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Booster Energy",
+      "moves": [
+        "Overheat",
+        "Sludge Wave",
+        "Energy Ball",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Iron Thorns": {
+    "Tera Flying Booster Energy": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "item": "Booster Energy",
+      "moves": [
+        "Rock Slide",
+        "Wild Charge",
+        "Tera Blast",
+        "Protect"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Baxcalibur": {
+    "Fast Scale Shot Loaded Dice": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Ice Body",
+      "item": "Loaded Dice",
+      "moves": [
+        "Icicle Spear",
+        "Scale Shot",
+        "Ice Shard",
+        "Swords Dance"
+      ],
+      "tera_type": "Poison"
+    },
+    "Standard Clear Amulet": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 196,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 60
+      },
+      "nature": "Adamant",
+      "ability": "Thermal Exchange",
+      "item": "Clear Amulet",
+      "moves": [
+        "Icicle Crash",
+        "Glaive Rush",
+        "Ice Shard",
+        "Protect"
+      ],
+      "tera_type": "Poison"
+    },
+    "Tera Ground Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 228,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 28
+      },
+      "nature": "Adamant",
+      "ability": "Thermal Exchange",
+      "item": "Assault Vest",
+      "moves": [
+        "Glaive Rush",
+        "Ice Shard",
+        "Icicle Crash",
+        "Earthquake"
+      ],
+      "tera_type": "Ground"
+    },
+    "MeLuCa's Loaded Dice Icicle Spear": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 196,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 52
+      },
+      "nature": "Adamant",
+      "ability": "Thermal Exchange",
+      "item": "Loaded Dice",
+      "moves": [
+        "Glaive Rush",
+        "Ice Shard",
+        "Icicle Spear",
+        "Protect"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Gholdengo": {
+    "Nasty Plot Leftovers": {
+      "level": 50,
+      "evs": {
+        "hp": 148,
+        "attack": 0,
+        "defense": 100,
+        "sp_attack": 68,
+        "sp_defense": 4,
+        "speed": 188
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Good as Gold",
+      "item": "Leftovers",
+      "moves": [
+        "Make It Rain",
+        "Shadow Ball",
+        "Power Gem",
+        "Nasty Plot"
+      ],
+      "tera_type": "Water"
+    },
+    "Choice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Good as Gold",
+      "item": "Choice Specs",
+      "moves": [
+        "Make It Rain",
+        "Shadow Ball",
+        "Power Gem",
+        "Steel Beam"
+      ],
+      "tera_type": "Steel"
+    },
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Good as Gold",
+      "item": "Life Orb",
+      "moves": [
+        "Make It Rain",
+        "Shadow Ball",
+        "Nasty Plot",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Wo-Chien": {
+    "Defensive Leftovers": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 140,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "item": "Leftovers",
+      "moves": [
+        "Pollen Puff",
+        "Snarl",
+        "Foul Play",
+        "Giga Drain"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Chien-Pao": {
+    "Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Focus Sash",
+      "moves": [
+        "Sucker Punch",
+        "Icicle Crash",
+        "Lash Out",
+        "Sacred Sword"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Ting-Lu": {
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 100,
+        "attack": 156,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "item": "Assault Vest",
+      "moves": [
+        "Stomping Tantrum",
+        "Payback",
+        "Heavy Slam",
+        "Earthquake"
+      ],
+      "tera_type": "Poison"
+    },
+    "Offensive Sitrus Berry": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 244,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Stomping Tantrum",
+        "Throat Chop",
+        "Heavy Slam",
+        "Body Press"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Chi-Yu": {
+    "Choice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Choice Specs",
+      "moves": [
+        "Heat Wave",
+        "Tera Blast",
+        "Dark Pulse",
+        "Overheat"
+      ],
+      "tera_type": "Water"
+    },
+    "Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Heat Wave",
+        "Flamethrower",
+        "Dark Pulse",
+        "Overheat"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Roaring Moon": {
+    "Speed Booster Tailwind": {
+      "level": 50,
+      "evs": {
+        "hp": 28,
+        "attack": 220,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Booster Energy",
+      "moves": [
+        "Acrobatics",
+        "Knock Off",
+        "Tailwind",
+        "Breaking Swipe"
+      ],
+      "tera_type": "Flying"
+    },
+    "Attack Booster Dragon Dance": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 252,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "item": "Booster Energy",
+      "moves": [
+        "Acrobatics",
+        "Knock Off",
+        "Dragon Dance",
+        "Earthquake"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Iron Valiant": {
+    "Mixed Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 100,
+        "defense": 0,
+        "sp_attack": 156,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Naive",
+      "item": "Focus Sash",
+      "moves": [
+        "Moonblast",
+        "Close Combat",
+        "Shadow Sneak",
+        "Protect"
+      ]
+    }
+  },
+  "Zoroark-Hisui": {
+    "Tera Fighting Sash Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Focus Sash",
+      "moves": [
+        "Tera Blast",
+        "Shadow Ball",
+        "Nasty Plot",
+        "Protect"
+      ],
+      "tera_type": "Fighting"
+    },
+    "Tera Fairy Life Orb Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Tera Blast",
+        "Shadow Ball",
+        "Nasty Plot",
+        "Protect"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Persian-Alola": {
+    "Fur Coat Sitrus": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "ability": "Fur Coat",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Foul Play",
+        "Fake Out",
+        "Icy Wind",
+        "Parting Shot"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Arcanine-Hisui": {
+    "Choice Band Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Choice Band",
+      "moves": [
+        "Flare Blitz",
+        "Head Smash",
+        "Extreme Speed",
+        "Rock Slide"
+      ],
+      "tera_type": "Normal"
+    },
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Intimidate",
+      "item": "Assault Vest",
+      "moves": [
+        "Flare Blitz",
+        "Tera Blast",
+        "Extreme Speed",
+        "Rock Slide"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Electrode-Hisui": {
+    "Choice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Soundproof",
+      "item": "Choice Specs",
+      "moves": [
+        "Chloroblast",
+        "Thunderbolt",
+        "Giga Drain",
+        "Volt Switch"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Lilligant-Hisui": {
+    "Chlorophyll Sun": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Focus Sash",
+      "moves": [
+        "Solar Blade",
+        "Close Combat",
+        "Ice Spinner",
+        "Leaf Blade"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Braviary-Hisui": {
+    "Sheer Force Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Sheer Force",
+      "item": "Life Orb",
+      "moves": [
+        "Esper Wing",
+        "Air Slash",
+        "Heat Wave",
+        "Dazzling Gleam"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Goodra-Hisui": {
+    "Physical Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Sap Sipper",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Heavy Slam",
+        "Dragon Tail",
+        "Acid Armor"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Kleavor": {
+    "Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Sharpness",
+      "item": "Choice Scarf",
+      "moves": [
+        "Stone Axe",
+        "U-turn",
+        "X-Scissor",
+        "Close Combat"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Ursaluna": {
+    "Trick Room Guts": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "item": "Flame Orb",
+      "moves": [
+        "Facade",
+        "Headlong Rush",
+        "Earthquake",
+        "Ice Punch"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Basculegion": {
+    "Rain Adaptability Sweeper": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Adaptability",
+      "item": "Life Orb",
+      "moves": [
+        "Wave Crash",
+        "Last Respects",
+        "Phantom Force",
+        "Aqua Jet"
+      ]
+    }
+  },
+  "Sneasler": {
+    "Tera Flying Unburden Acrobatics": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "item": "Psychic Seed",
+      "moves": [
+        "Dire Claw",
+        "Close Combat",
+        "Acrobatics",
+        "Fake Out"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Carbink": {
+    "Trick Room Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Relaxed",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Moonblast",
+        "Iron Defense",
+        "Trick Room"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Charizard": {
+    "Life Orb Sun Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Solar Power",
+      "item": "Life Orb",
+      "moves": [
+        "Heat Wave",
+        "Overheat",
+        "Air Slash",
+        "Solar Beam"
+      ]
+    }
+  },
+  "Typhlosion": {
+    "Scarf Eruption": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Flash Fire",
+      "item": "Choice Scarf",
+      "moves": [
+        "Heat Wave",
+        "Eruption",
+        "Overheat",
+        "Tera Blast"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Chesnaught": {
+    "Budget(?) Ferrothorn": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "ability": "Bulletproof",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Leech Seed",
+        "Protect",
+        "Iron Defense"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Greninja": {
+    "Choice Specs Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Protean",
+      "item": "Choice Specs",
+      "moves": [
+        "Water Shuriken",
+        "Grass Knot",
+        "Dark Pulse",
+        "Ice Beam"
+      ]
+    }
+  },
+  "Rillaboom": {
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 116,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 124,
+        "speed": 12
+      },
+      "nature": "Adamant",
+      "item": "Assault Vest",
+      "moves": [
+        "Fake Out",
+        "Wood Hammer",
+        "High Horsepower",
+        "Grassy Glide"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Typhlosion-Hisui": {
+    "Scarf Eruption Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Blaze",
+      "item": "Choice Scarf",
+      "moves": [
+        "Heat Wave",
+        "Eruption",
+        "Infernal Parade",
+        "Shadow Ball"
+      ]
+    }
+  },
+  "Samurott-Hisui": {
+    "Bulky Sitrus Attacker": {
+      "level": 50,
+      "evs": {
+        "hp": 196,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 60
+      },
+      "nature": "Adamant",
+      "ability": "Sharpness",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Ceaseless Edge",
+        "Razor Shell",
+        "Sacred Sword",
+        "Aqua Jet"
+      ]
+    }
+  },
+  "Decidueye-Hisui": {
+    "Offensive Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "item": "Focus Sash",
+      "moves": [
+        "Leaf Blade",
+        "Triple Arrows",
+        "Sucker Punch",
+        "Knock Off"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Articuno": {
+    "Patrick Donegan's Worlds Day 2 Snowbelle": {
+      "level": 50,
+      "evs": {
+        "hp": 212,
+        "attack": 0,
+        "defense": 68,
+        "sp_attack": 124,
+        "sp_defense": 4,
+        "speed": 100
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Snow Cloak",
+      "item": "Bright Powder",
+      "moves": [
+        "Freeze-Dry",
+        "Blizzard",
+        "Sheer Cold",
+        "Roost"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Articuno-Galar": {
+    "Jamie Boyt's Gda\\u0144sk Tera Ground": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 140,
+        "sp_attack": 44,
+        "sp_defense": 12,
+        "speed": 60
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Competitive",
+      "item": "Rocky Helmet",
+      "moves": [
+        "Freezing Glare",
+        "Tera Blast",
+        "Calm Mind",
+        "Recover"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Zapdos": {
+    "Bold Rocky Helmet": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 236,
+        "sp_attack": 0,
+        "sp_defense": 20,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Static",
+      "item": "Rocky Helmet",
+      "moves": [
+        "Thunderbolt",
+        "Hurricane",
+        "Heat Wave",
+        "Volt Switch"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Sitrus Berry Attacker": {
+      "level": 50,
+      "evs": {
+        "hp": 60,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 196,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Static",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Thunderbolt",
+        "Hurricane",
+        "Heat Wave",
+        "Tailwind"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Moltres-Galar": {
+    "Nasty Plot Sitrus": {
+      "level": 50,
+      "evs": {
+        "hp": 212,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 156,
+        "sp_defense": 0,
+        "speed": 140
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Fiery Wrath",
+        "Air Slash",
+        "Hurricane",
+        "Nasty Plot"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Heatran": {
+    "Offensive Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 4
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Life Orb",
+      "moves": [
+        "Heat Wave",
+        "Flash Cannon",
+        "Earth Power",
+        "Flamethrower"
+      ],
+      "tera_type": "Fairy"
+    },
+    "Kenji Miura's 2023 Worlds Top 16 Magma Storm": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 20,
+        "sp_attack": 76,
+        "sp_defense": 148,
+        "speed": 20
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Leftovers",
+      "moves": [
+        "Magma Storm",
+        "Earth Power",
+        "Tera Blast",
+        "Protect"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Cresselia": {
+    "Trick Room Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 180,
+        "sp_attack": 0,
+        "sp_defense": 76,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "item": "Mental Herb",
+      "moves": [
+        "Psychic",
+        "Ice Beam",
+        "Moonblast",
+        "Trick Room"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Tornadus": {
+    "Offensive Tailwind Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Prankster",
+      "item": "Mental Herb",
+      "moves": [
+        "Bleakwind Storm",
+        "Icy Wind",
+        "Hurricane",
+        "Tailwind"
+      ],
+      "tera_type": "Ghost"
+    },
+    "Mattie Morgan's 2023 Worlds Top 8 Bulky Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 220,
+        "sp_attack": 4,
+        "sp_defense": 4,
+        "speed": 28
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Prankster",
+      "item": "Aguav Berry",
+      "moves": [
+        "Bleakwind Storm",
+        "Taunt",
+        "Rain Dance",
+        "Tailwind"
+      ],
+      "tera_type": "Steel"
+    },
+    "Thiago Lattanzi's 2024 LAIC Finalist Bulky Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 28
+      },
+      "nature": "Bold",
+      "ability": "Prankster",
+      "item": "Safety Goggles",
+      "moves": [
+        "Bleakwind Storm",
+        "Protect",
+        "Rain Dance",
+        "Tailwind"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Thundurus": {
+    "Bulky Prankster Disruption": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Prankster",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Thunderbolt",
+        "Wildbolt Storm",
+        "Eerie Impulse",
+        "Thunder Wave"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Thundurus-Therian": {
+    "Offensive Rain Beneficiary": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Wildbolt Storm",
+        "Thunder",
+        "Volt Switch",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Landorus": {
+    "Offensive Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Sheer Force",
+      "item": "Life Orb",
+      "moves": [
+        "Sandsear Storm",
+        "Earth Power",
+        "Sludge Bomb",
+        "Psychic"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Landorus-Therian": {
+    "Tera Flying Choice Scarf": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "item": "Choice Scarf",
+      "moves": [
+        "Stomping Tantrum",
+        "Tera Blast",
+        "U-turn",
+        "Rock Slide"
+      ],
+      "tera_type": "Flying"
+    },
+    "Tera Water Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 196,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 60,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "item": "Assault Vest",
+      "moves": [
+        "Earthquake",
+        "Stomping Tantrum",
+        "U-turn",
+        "Rock Slide"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Enamorus": {
+    "Special Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Life Orb",
+      "moves": [
+        "Springtide Storm",
+        "Moonblast",
+        "Earth Power",
+        "Sludge Bomb"
+      ],
+      "tera_type": "Fairy"
+    }
+  },
+  "Enamorus-Therian": {
+    "Tera Fairy Choice Specs": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Choice Specs",
+      "moves": [
+        "Dazzling Gleam",
+        "Moonblast",
+        "Earth Power",
+        "Mystical Fire"
+      ]
+    },
+    "Tera Flying Offense": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Pixie Plate",
+      "moves": [
+        "Springtide Storm",
+        "Moonblast",
+        "Earth Power",
+        "Tera Blast"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Urshifu-Single Strike": {
+    "Offensive Focus Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Focus Sash",
+      "moves": [
+        "Wicked Blow",
+        "Close Combat",
+        "Sucker Punch",
+        "Poison Jab"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Urshifu-Rapid Strike": {
+    "Mystic Water Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Mystic Water",
+      "moves": [
+        "Surging Strikes",
+        "Close Combat",
+        "Aqua Jet",
+        "Rock Slide"
+      ],
+      "tera_type": "Water"
+    },
+    "Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "item": "Choice Scarf",
+      "moves": [
+        "Surging Strikes",
+        "Close Combat",
+        "Aqua Jet",
+        "U-turn"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Regieleki": {
+    "Tera Ice Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Focus Sash",
+      "moves": [
+        "Thunderbolt",
+        "Electroweb",
+        "Volt Switch",
+        "Tera Blast"
+      ],
+      "tera_type": "Ice"
+    },
+    "Tera Normal Life Orb": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "item": "Life Orb",
+      "moves": [
+        "Wild Charge",
+        "Explosion",
+        "Electroweb",
+        "Extreme Speed"
+      ],
+      "tera_type": "Normal"
+    }
+  },
+  "Regidrago": {
+    "Dragon Fang Set": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 100,
+        "sp_attack": 252,
+        "sp_defense": 12,
+        "speed": 140
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "item": "Dragon Fang",
+      "moves": [
+        "Dragon Energy",
+        "Draco Meteor",
+        "Dragon Pulse",
+        "Earth Power"
+      ],
+      "tera_type": "Steel"
+    },
+    "Choice Scarf Set": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Choice Scarf",
+      "moves": [
+        "Dragon Energy",
+        "Draco Meteor",
+        "Dragon Pulse",
+        "Earth Power"
+      ]
+    }
+  },
+  "Glastrier": {
+    "Assault Vest Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "item": "Assault Vest",
+      "moves": [
+        "Icicle Crash",
+        "Heavy Slam",
+        "Close Combat",
+        "Stomping Tantrum"
+      ],
+      "tera_type": "Poison"
+    }
+  },
+  "Illumise": {
+    "Tailwind Full Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 188,
+        "sp_attack": 0,
+        "sp_defense": 68,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Prankster",
+      "item": "Mental Herb",
+      "moves": [
+        "Infestation",
+        "Tailwind",
+        "Encore",
+        "Fake Tears"
+      ],
+      "tera_type": "Ghost"
+    }
+  },
+  "Politoed": {
+    "Bulky Rain Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Drizzle",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Muddy Water",
+        "Icy Wind",
+        "Weather Ball",
+        "Helping Hand"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Mamoswine": {
+    "Offensive Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Oblivious",
+      "item": "Focus Sash",
+      "moves": [
+        "Icicle Crash",
+        "High Horsepower",
+        "Ice Shard",
+        "Rock Slide"
+      ],
+      "tera_type": "Ground"
+    }
+  },
+  "Sinistcha": {
+    "Trick Room Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 84,
+        "sp_attack": 4,
+        "sp_defense": 156,
+        "speed": 12
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Calm",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Matcha Gotcha",
+        "Rage Powder",
+        "Strength Sap",
+        "Trick Room"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Kommo-o": {
+    "Throat Spray Clangerous Soul": {
+      "level": 50,
+      "evs": {
+        "hp": 28,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 220
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "ability": "Bulletproof",
+      "item": "Throat Spray",
+      "moves": [
+        "Clanging Scales",
+        "Flash Cannon",
+        "Aura Sphere",
+        "Clangerous Soul"
+      ],
+      "tera_type": "Steel"
+    },
+    "EternalSnowman's Sacramento 1st Body Press": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 4,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 92,
+        "speed": 4
+      },
+      "nature": "Impish",
+      "ability": "Bulletproof",
+      "item": "Leftovers",
+      "moves": [
+        "Body Press",
+        "Iron Head",
+        "Iron Defense",
+        "Protect"
+      ],
+      "tera_type": "Steel"
+    }
+  },
+  "Weezing": {
+    "General Disruption": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "nature": "Impish",
+      "ability": "Neutralizing Gas",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Gunk Shot",
+        "Pain Split",
+        "Will-O-Wisp",
+        "Taunt"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Dusclops": {
+    "Trick Room Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 0,
+        "sp_defense": 252,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Sassy",
+      "ability": "Pressure",
+      "item": "Eviolite",
+      "moves": [
+        "Night Shade",
+        "Pain Split",
+        "Will-O-Wisp",
+        "Trick Room"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Clefairy": {
+    "Common Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Friend Guard",
+      "item": "Eviolite",
+      "moves": [
+        "Icy Wind",
+        "Moonblast",
+        "Follow Me",
+        "Helping Hand"
+      ],
+      "tera_type": "Grass"
+    }
+  },
+  "Milotic": {
+    "Bulky Icy Wind Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 252,
+        "sp_attack": 4,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Competitive",
+      "item": "Leftovers",
+      "moves": [
+        "Scald",
+        "Icy Wind",
+        "Ice Beam",
+        "Hydro Pump"
+      ],
+      "tera_type": "Dragon"
+    }
+  },
+  "Okidogi": {
+    "Bulk Up Set": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Guard Dog",
+      "item": "Leftovers",
+      "moves": [
+        "Poison Jab",
+        "Drain Punch",
+        "Knock Off",
+        "Bulk Up"
+      ],
+      "tera_type": "Dark"
+    }
+  },
+  "Munkidori": {
+    "Offensive Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "item": "Focus Sash",
+      "moves": [
+        "Psychic",
+        "Sludge Bomb",
+        "Sludge Wave",
+        "Fake Out"
+      ]
+    }
+  },
+  "Fezandipiti": {
+    "Special Support": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Icy Wind",
+        "Acid Spray",
+        "Dazzling Gleam",
+        "Tailwind"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Ogerpon": {
+    "Max Speed Sash": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "item": "Focus Sash",
+      "moves": [
+        "Ivy Cudgel",
+        "Stomping Tantrum",
+        "Knock Off",
+        "U-turn"
+      ]
+    }
+  },
+  "Ogerpon-Wellspring": {
+    "Offensive Support": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 76,
+        "defense": 148,
+        "sp_attack": 0,
+        "sp_defense": 28,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "moves": [
+        "Ivy Cudgel",
+        "Horn Leech",
+        "Wood Hammer",
+        "Spiky Shield"
+      ]
+    }
+  },
+  "Ogerpon-Hearthflame": {
+    "All-Out Offense": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "moves": [
+        "Ivy Cudgel",
+        "Horn Leech",
+        "Wood Hammer",
+        "Stomping Tantrum"
+      ]
+    }
+  },
+  "Ogerpon-Cornerstone": {
+    "No Bulk Support": {
+      "level": 50,
+      "evs": {
+        "hp": 0,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 4,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "moves": [
+        "Ivy Cudgel",
+        "Horn Leech",
+        "Wood Hammer",
+        "Follow Me"
+      ]
+    }
+  },
+  "Ninetales-Alola": {
+    "Bulky Light Clay": {
+      "level": 50,
+      "evs": {
+        "hp": 220,
+        "attack": 0,
+        "defense": 20,
+        "sp_attack": 4,
+        "sp_defense": 60,
+        "speed": 204
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Timid",
+      "item": "Light Clay",
+      "moves": [
+        "Aurora Veil",
+        "Blizzard",
+        "Moonblast",
+        "Icy Wind"
+      ],
+      "tera_type": "Water"
+    }
+  },
+  "Weezing-Galar": {
+    "General Disruption": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 0,
+        "sp_defense": 100,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Bold",
+      "ability": "Neutralizing Gas",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Sludge Bomb",
+        "Dazzling Gleam",
+        "Strange Steam",
+        "Clear Smog"
+      ],
+      "tera_type": "Flying"
+    }
+  },
+  "Ursaluna-Bloodmoon": {
+    "Trick Room Special Offense": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "item": "Life Orb",
+      "moves": [
+        "Hyper Voice",
+        "Earth Power",
+        "Blood Moon",
+        "Vacuum Wave"
+      ],
+      "tera_type": "Normal"
+    }
+  },
+  "Empoleon": {
+    "Offensive Assault Vest": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 4,
+        "speed": 0
+      },
+      "ivs": {
+        "hp": 31,
+        "attack": 0,
+        "defense": 31,
+        "sp_attack": 31,
+        "sp_defense": 31,
+        "speed": 31
+      },
+      "nature": "Modest",
+      "ability": "Competitive",
+      "item": "Assault Vest",
+      "moves": [
+        "Flash Cannon",
+        "Hydro Pump",
+        "Ice Beam",
+        "Vacuum Wave"
+      ],
+      "tera_type": "Water"
+    }
+  }
+}

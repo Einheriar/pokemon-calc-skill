@@ -52,13 +52,16 @@ NATURES: dict[str, tuple[str, str]] = {
     "爽朗": ("speed", "sp_attack"), "天真": ("speed", "sp_defense"),
 }
 
-# Common Chinese nature aliases
+# Common Chinese nature aliases (English -> Chinese)
+# Note: setdex presets use capitalized English names (e.g. "Adamant", "Jolly"),
+# so these keys must match the lowercase form exactly.
 _NATURE_ALIASES: dict[str, str] = {
-    "adament": "固执", "modest": "内敛", "jolly": "爽朗", "timid": "胆小",
+    "adamant": "固执", "modest": "内敛", "jolly": "爽朗", "timid": "胆小",
     "brave": "勇敢", "bold": "大胆", "impish": "淘气", "careful": "慎重",
     "calm": "温和", "quiet": "冷静", "sassy": "自大", "relaxed": "悠闲",
-    "lonely": "孤独", "mild": "温和", "gentle": "温顺", "hasty": "急躁",
+    "lonely": "孤独", "mild": "慢吞吞", "gentle": "温顺", "hasty": "急躁",
     "naive": "天真", "rash": "马虎", "naughty": "顽皮", "lax": "乐天",
+    "hardy": "勤奋",
 }
 
 ATE_IZE_ABILITIES = [

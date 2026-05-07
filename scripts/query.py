@@ -16,6 +16,8 @@ Usage:
     python query.py pokedex <name>          # Pokedex entries
     python query.py profile <name>          # Profile + prototype + detail
     python query.py find-move <move_name>   # Reverse: pokemon that learn a move
+    python query.py preset <pokemon>        # List presets for a pokemon
+    python query.py preset <pokemon> <name> # Get specific preset config
 """
 
 import io
@@ -23,6 +25,8 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
+
+from normalize import get_suggestions, normalize_name
 
 # Force UTF-8 stdout/stderr on Windows
 if sys.platform == "win32":
@@ -53,6 +57,106 @@ def load_data() -> None:
         _abilities_data = _load_json("abilities.json")
         _index_data = _load_json("name_index.json")
         _type_chart = _load_json("type_chart.json")
+
+
+_setdex_data: dict[str, Any] | None = None
+
+
+def _load_setdex() -> dict[str, Any]:
+    global _setdex_data
+    if _setdex_data is None:
+        path = DATA_DIR / "setdex.json"
+        with open(path, "r", encoding="utf-8") as f:
+            _setdex_data = json.load(f)
+    return _setdex_data
+
+
+def _resolve_preset(pokemon_name: str, preset_name: str | None = None) -> dict[str, Any] | None:
+    """Resolve preset by pokemon name (zh or en) and optional preset name.
+    
+    Returns dict with presets list, or specific preset config.
+    """
+    load_data()
+    setdex = _load_setdex()
+    
+    # Try direct match (English name)
+    pokemon_en = None
+    if pokemon_name in setdex:
+        pokemon_en = pokemon_name
+    else:
+        # Use resolve_pokemon to get the English name from Chinese name
+        resolved = resolve_pokemon(pokemon_name)
+        if resolved:
+            _, data, _ = resolved
+            pokemon_en = data.get("name_en", "")
+    
+    if not pokemon_en or pokemon_en not in setdex:
+        return None
+    
+    presets = setdex[pokemon_en]
+    if preset_name is None:
+        return {"pokemon_en": pokemon_en, "presets": list(presets.keys())}
+    
+    if preset_name not in presets:
+        return None
+    
+    return {"pokemon_en": pokemon_en, "preset_name": preset_name, "config": presets[preset_name]}
+
+
+def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict[str, Any]:
+    """If override contains 'preset' key, merge preset config with override.
+    
+    Preset fields are used as base, override fields take precedence.
+    Filters out fields not supported by the Pokemon model (e.g. moves).
+    """
+    preset_name = override.pop("preset", None)
+    if preset_name is None:
+        return override
+    
+    setdex = _load_setdex()
+    if pokemon_en not in setdex:
+        return override
+    
+    presets = setdex[pokemon_en]
+    if preset_name not in presets:
+        return override
+    
+    # Fields that Pokemon model accepts; discard setdex-specific fields like 'moves'
+    _VALID_PK_FIELDS = {
+        "name", "name_en", "level", "base_stats", "evs", "ivs",
+        "nature", "ability", "item", "types", "tera_type",
+        "is_terastalize", "boosts", "current_hp", "max_hp",
+        "status", "weight", "is_dynamax", "can_evolve",
+        "raw_stats", "stats",
+    }
+    
+    preset_config = {k: v for k, v in presets[preset_name].items() if k in _VALID_PK_FIELDS}
+    # User override takes precedence over preset
+    preset_config.update(override)
+    return preset_config
+
+
+def cmd_preset(pokemon_name: str, preset_name: str = "") -> dict[str, Any]:
+    """List presets for a pokemon, or get a specific preset config."""
+    resolved = _resolve_preset(pokemon_name, preset_name or None)
+    if not resolved:
+        if preset_name:
+            return {"error": f"Preset '{preset_name}' not found for '{pokemon_name}'."}
+        return {"error": f"No presets found for '{pokemon_name}'."}
+    
+    if "presets" in resolved:
+        return {
+            "pokemon": pokemon_name,
+            "pokemon_en": resolved["pokemon_en"],
+            "presets": resolved["presets"],
+            "count": len(resolved["presets"]),
+        }
+    return {
+        "pokemon": pokemon_name,
+        "pokemon_en": resolved["pokemon_en"],
+        "preset_name": resolved["preset_name"],
+        "config": resolved["config"],
+    }
 
 
 def _to_fullwidth(s: str) -> str:
@@ -114,6 +218,7 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
     form_index is the index into data['forms'] matching the requested form.
     """
     load_data()
+    name = normalize_name(name, "pokemon")
 
     # Try exact match first
     stem = _index_data["pokemon"].get(name) or _index_data["pokemon_forms"].get(name)
@@ -151,6 +256,7 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
 def resolve_move(name: str) -> tuple[str, Any] | None:
     """Return (stem, data) for a move by zh or en name."""
     load_data()
+    name = normalize_name(name, "moves")
     stem = _index_data["moves"].get(name)
     if not stem:
         for k, v in _index_data["moves"].items():
@@ -165,6 +271,7 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
 def resolve_ability(name: str) -> tuple[str, Any] | None:
     """Return (stem, data) for an ability by zh or en name."""
     load_data()
+    name = normalize_name(name, "abilities")
     stem = _index_data["abilities"].get(name)
     if not stem:
         for k, v in _index_data["abilities"].items():
@@ -179,6 +286,7 @@ def resolve_ability(name: str) -> tuple[str, Any] | None:
 def resolve_item(name: str) -> str | None:
     """Return English canonical name for an item by zh, ja, or en name."""
     load_data()
+    name = normalize_name(name, "items")
     items = _index_data.get("items", {})
     en = items.get(name)
     if not en:
@@ -193,14 +301,24 @@ def cmd_item(name: str) -> dict[str, Any]:
     """Lookup item by any language name. Returns canonical English name."""
     en = resolve_item(name)
     if not en:
-        return {"error": f"Item '{name}' not found."}
+        candidates = list(_index_data.get("items", {}).keys())
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Item '{name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     return {"name_en": en}
 
 
 def cmd_pokemon(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
-        return {"error": f"Pokemon '{name}' not found."}
+        candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Pokemon '{name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     stem, data, _form_idx = resolved
     return {
         "name_zh": data.get("name_zh"),
@@ -229,7 +347,12 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
 def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
     resolved = resolve_move(name)
     if not resolved:
-        return {"error": f"Move '{name}' not found."}
+        candidates = list(_index_data.get("moves", {}).keys())
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Move '{name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     stem, data = resolved
     return {
         "name_zh": data.get("name_zh"),
@@ -251,7 +374,12 @@ def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
 def cmd_ability(name: str) -> dict[str, Any]:
     resolved = resolve_ability(name)
     if not resolved:
-        return {"error": f"Ability '{name}' not found."}
+        candidates = list(_index_data.get("abilities", {}).keys())
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Ability '{name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     stem, data = resolved
     return {
         "name_zh": data.get("name_zh"),
@@ -556,11 +684,29 @@ def cmd_optimize(
     resolved_def = resolve_pokemon(defender_name)
     resolved_move = resolve_move(move_name)
     if not resolved_att:
-        return {"error": f"Attacker '{attacker_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
+        suggestions = get_suggestions(attacker_name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Attacker '{attacker_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     if not resolved_def:
-        return {"error": f"Defender '{defender_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
+        suggestions = get_suggestions(defender_name, candidates, n=3)
+        err = {"error": f"Defender '{defender_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     if not resolved_move:
-        return {"error": f"Move '{move_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("moves", {}).keys())
+        suggestions = get_suggestions(move_name, candidates, n=3)
+        err = {"error": f"Move '{move_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
 
     _, att_data, att_form_idx = resolved_att
     _, def_data, def_form_idx = resolved_def
@@ -613,11 +759,29 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     resolved_def = resolve_pokemon(defender_name)
     resolved_move = resolve_move(move_name)
     if not resolved_att:
-        return {"error": f"Attacker '{attacker_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
+        suggestions = get_suggestions(attacker_name, candidates, n=3)
+        err: dict[str, Any] = {"error": f"Attacker '{attacker_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     if not resolved_def:
-        return {"error": f"Defender '{defender_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
+        suggestions = get_suggestions(defender_name, candidates, n=3)
+        err = {"error": f"Defender '{defender_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
     if not resolved_move:
-        return {"error": f"Move '{move_name}' not found."}
+        load_data()
+        candidates = list(_index_data.get("moves", {}).keys())
+        suggestions = get_suggestions(move_name, candidates, n=3)
+        err = {"error": f"Move '{move_name}' not found."}
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
 
     _, att_data, att_form_idx = resolved_att
     _, def_data, def_form_idx = resolved_def
@@ -643,6 +807,10 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         field_override = json.loads(_strip_quotes(extra_args[3])) if len(extra_args) > 3 and extra_args[3] else {}
     except json.JSONDecodeError:
         field_override = {}
+
+    # Apply presets if specified in overrides
+    att_override = _apply_preset_to_override(att_override, att_data.get("name_en", ""))
+    def_override = _apply_preset_to_override(def_override, def_data.get("name_en", ""))
 
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
@@ -865,6 +1033,16 @@ def cmd_calc_raw(
     if def_dict.get("current_hp", 0) == 0:
         def_dict["current_hp"] = def_dict["max_hp"]
 
+    # Auto-fill is_spread from moves.json if not explicitly provided
+    if "is_spread" not in move_dict:
+        move_name = move_dict.get("name") or move_dict.get("name_zh", "")
+        if move_name:
+            resolved = resolve_move(move_name)
+            if resolved:
+                _, move_data = resolved
+                if "is_spread" in move_data:
+                    move_dict["is_spread"] = move_data["is_spread"]
+
     # Build objects
     try:
         attacker = Pokemon(**att_dict)
@@ -951,6 +1129,7 @@ COMMANDS: dict[str, Any] = {
     "pokedex": cmd_pokedex,
     "profile": cmd_profile,
     "find-move": cmd_find_move,
+    "preset": cmd_preset,
     "calc": cmd_calc,
     "calc-raw": cmd_calc_raw,
     "compute-stats": cmd_compute_stats,

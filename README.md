@@ -29,26 +29,25 @@
 
 ```
 pokemon-calc/
-├── SKILL.md              # Skill 使用说明与 LLM 规范
+├── SKILL.md              # Skill 使用说明与 LLM 行为规范
 ├── README.md             # 本文件（技术文档）
 ├── data/
 │   ├── pokemon.json      # 宝可梦百科数据（1025 只）
 │   ├── moves.json        # 招式数据（782 个，含 SV 全世代）
 │   ├── abilities.json    # 特性数据
 │   ├── type_chart.json   # 18x18 属性相克表
-│   └── name_index.json   # 中英文名称索引
+│   ├── name_index.json   # 中英文名称索引
+│   ├── setdex.json       # VGC 预设配置（189 只，264 个预设）
+│   └── aliases.json      # 玩家俗称 → 标准名称映射
 └── scripts/
-    ├── query.py          # 主查询入口（12 个子命令）
+    ├── query.py          # 主查询入口（百科 + calc + preset + optimize）
     ├── damage.py         # 伤害计算引擎
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
-    ├── build_item_index.py   # 道具索引构建工具
-    ├── check_data.py         # 数据完整性检查
-    ├── test_damage.py        # 伤害计算单元测试
-    ├── test_ko.py            # KO 概率单元测试
-    └── test_ev_optimizer.py  # 努力值优化单元测试
+    └── normalize.py      # 输入标准化层（别名/拼写纠正）
 ```
+
 
 ---
 
@@ -65,6 +64,7 @@ pokemon-calc/
 | `pokemon <name>` | 宝可梦中文/英文名 | 基础信息、形态、特性、种族值、进化链 | JSON 对象 |
 | `move <name>` | 招式中文/英文名 | 威力、命中、PP、属性、分类、效果描述 | JSON 对象 |
 | `ability <name>` | 特性中文/英文名 | 效果描述、元信息 | JSON 对象 |
+| `item <name>` | 道具中文/英文名 | 效果描述、分类、持有效果 | JSON 对象 |
 | `type <atk> <def>` | 攻击属性 防御属性 | 属性相克倍率与描述 | JSON 对象 |
 | `stats <name>` | 宝可梦名 | 各形态种族值与总和 | JSON 对象 |
 | `weak <name>` | 宝可梦名 | 弱点、抗性、免疫列表 | JSON 对象 |
@@ -73,8 +73,12 @@ pokemon-calc/
 | `pokedex <name>` | 宝可梦名 | 各版本图鉴描述 | JSON 数组 |
 | `profile <name>` | 宝可梦名 | 外形描述、原型考据、多语言词源 | JSON 对象 |
 | `find-move <move>` | 招式名 | 反向查询：能学会该招式的所有宝可梦 | JSON 数组 |
-| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50） | JSON 对象 |
-| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override]` | 攻击方 招式 防御方 目标 阈值 确信度 | 努力值优化搜索 | JSON 对象 |
+| `preset <pokemon> [preset_name]` | 宝可梦名 [预设名] | 列出/获取 VGC 预设配置 | JSON 对象 |
+| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
+| `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
+| `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
+| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
+
 
 #### calc 命令 I/O
 
@@ -352,7 +356,10 @@ class DamageResult:
 | `data/moves.json` | 782 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式 |
 | `data/abilities.json` | ~307 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
 | `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表 |
-| `data/name_index.json` | ~4000 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities） |
+| `data/name_index.json` | ~4000 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
+| `data/setdex.json` | 189 只 / 264 预设 | `script_res/setdex_ncp-g9.js` | VGC 预设配置（性格、努力值、道具、特性、招式参考） |
+| `data/aliases.json` | 22 条 | 手工维护 | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等） |
+
 
 ### 数据修复记录
 
@@ -368,14 +375,24 @@ python scripts/query.py stats 喷火龙
 python scripts/query.py type 水 火
 python scripts/query.py weak Charizard
 
-# 伤害计算
+# 伤害计算（快捷模式）
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
 python scripts/query.py calc 化石翼龙 "Dual Wingbeat" 胡地 '{"evs":{"attack":252,"speed":252}}' '{}' '{"evs":{}}'
+
+# 使用预设配置
+python scripts/query.py preset 烈箭鹰
+python scripts/query.py calc 烈箭鹰 Brave\ Bird 喷火龙 '{"preset":"Sharp Beak Set"}'
+
+# 纯参数模式（未过签宝可梦）
+python scripts/query.py pokemon 超级喷火龙Y
+python scripts/query.py compute-stats '{"hp":78,"attack":104,"defense":78,"sp_attack":159,"sp_defense":115,"speed":100}' '{"sp_attack":252}' '{}' '内敛' 50
+python scripts/query.py calc-raw '{"name":"超级喷火龙Y","level":50,"stats":{...}}' '{"name":"热风",...}' '{"name":"超级胡地",...}' '{"weather":"Sun"}'
 
 # 努力值优化
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
 ```
+
 
 ---
 
@@ -389,8 +406,15 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 
 ## 测试
 
+回归测试脚本位于 `../cache/` 目录：
+
 ```bash
-python scripts/test_damage.py
-python scripts/test_ko.py
-python scripts/test_ev_optimizer.py
+python cache/test_damage.py
+python cache/test_ko.py
+python cache/test_ev_optimizer.py
+python cache/test_calc_raw.py
+python cache/test_field_overrides.py
+python cache/test_normalization.py
+python cache/regression_test.py
 ```
+
