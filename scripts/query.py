@@ -714,9 +714,11 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     types = form.get("types", [])
     abilities = form.get("abilities", [])
     ability = abilities[0].get("name", "") if abilities else ""
+    form_name = form.get("name", "")
+    is_mega = form_name.startswith("超级") or form_name.startswith("原始")
 
     pk = {
-        "name": data.get("name_zh", ""),
+        "name": form_name or data.get("name_zh", ""),
         "name_en": data.get("name_en", ""),
         "level": 50,
         "base_stats": base_stats,
@@ -732,6 +734,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "tera_type": None,
         "is_dynamax": False,
         "weight": 0.0,
+        "_data_source": data.get("_data_source", "gen9"),
+        "is_unobtainable": is_mega,
     }
     if overrides:
         pk.update(overrides)
@@ -943,6 +947,16 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
 
+    # Extract extra metadata before passing to model constructors
+    att_extra = {
+        "_data_source": att_dict.pop("_data_source", "gen9"),
+        "is_unobtainable": att_dict.pop("is_unobtainable", False),
+    }
+    def_extra = {
+        "_data_source": def_dict.pop("_data_source", "gen9"),
+        "is_unobtainable": def_dict.pop("is_unobtainable", False),
+    }
+
     attacker = Pokemon(**att_dict)
     defender = Pokemon(**def_dict)
     move = Move(**move_dict)
@@ -989,6 +1003,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "evs": attacker.evs,
         "ivs": attacker.ivs,
         "level": attacker.level,
+        "_data_source": att_extra.get("_data_source", "gen9"),
+        "is_unobtainable": att_extra.get("is_unobtainable", False),
     }
     defender_info = {
         "name_zh": defender.name,
@@ -1005,6 +1021,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "level": defender.level,
         "current_hp": defender.current_hp,
         "max_hp": defender.max_hp,
+        "_data_source": def_extra.get("_data_source", "gen9"),
+        "is_unobtainable": def_extra.get("is_unobtainable", False),
     }
 
     response: dict[str, Any] = {
@@ -1021,7 +1039,10 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "ko_chance": ko_text,
         "attacker_info": attacker_info,
         "defender_info": defender_info,
+        "_data_source": attacker_info.get("_data_source", "gen9"),
     }
+    if attacker_info.get("is_unobtainable") or defender_info.get("is_unobtainable"):
+        response["warning"] = "该形态在当前对战环境中不可用，以下结果为理论计算"
     if move.hits > 1:
         response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
         response["total_damage_rolls"] = total_damage_rolls

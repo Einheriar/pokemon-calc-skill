@@ -316,6 +316,10 @@ def base_power_func(
         bp = 150
     elif name == "Rising Voltage" and field.terrain == "Electric":
         bp = 140
+    elif name == "Weather Ball" and field.weather and field.weather not in ("", "Strong Winds"):
+        bp *= 2
+    elif name == "Terrain Pulse" and field.terrain:
+        bp *= 2
 
     return bp
 
@@ -857,6 +861,24 @@ def calculate_damage(
 
     # Critical hit
     is_critical = move.is_crit and def_ability not in ("Battle Armor", "Shell Armor")
+
+    # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
+    if move.name == "Weather Ball" and field.weather and attacker.item not in ("Utility Umbrella", "大晴天伞"):
+        weather_type_map = {
+            "Sun": "火", "Harsh Sun": "火",
+            "Rain": "水", "Heavy Rain": "水",
+            "Sand": "岩石",
+            "Hail": "冰", "Snow": "冰",
+        }
+        move.type = weather_type_map.get(field.weather, move.type)
+    elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
+        terrain_type_map = {
+            "Electric": "电",
+            "Grassy": "草",
+            "Misty": "妖精",
+            "Psychic": "超能力",
+        }
+        move.type = terrain_type_map.get(field.terrain, move.type)
 
     # Turn order (for speed-based moves)
     turn_order = "FIRST" if attacker.stats.get("speed", 0) > defender.stats.get("speed", 0) else "LAST"
