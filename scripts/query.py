@@ -1352,7 +1352,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -1387,6 +1387,14 @@ def main() -> int:
         raw_parser.add_argument("--def", required=True, dest="defender_json", help="Defender JSON")
         raw_parser.add_argument("--field", default="{}", help="Field JSON")
 
+        # compute-stats
+        stats_parser = subparsers.add_parser("compute-stats", help="Compute ability values")
+        stats_parser.add_argument("base_stats", help="Base stats JSON")
+        stats_parser.add_argument("--evs", default="{}", help="EVs JSON")
+        stats_parser.add_argument("--ivs", default="{}", help="IVs JSON")
+        stats_parser.add_argument("--nature", default="勤奋", help="Nature name (Chinese or English)")
+        stats_parser.add_argument("--level", default="50", help="Level")
+
         args = parser.parse_args()
 
         try:
@@ -1411,6 +1419,14 @@ def main() -> int:
                     args.att_ov,
                     args.def_ov,
                     args.field_ov,
+                )
+            elif cmd == "compute-stats":
+                result = cmd_compute_stats(
+                    args.base_stats,
+                    args.evs,
+                    args.ivs,
+                    args.nature,
+                    args.level,
                 )
             else:  # calc-raw
                 result = cmd_calc_raw(

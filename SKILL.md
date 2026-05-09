@@ -44,7 +44,7 @@ preset <pokemon> [name] # 列出预设配置或获取具体配置
 # Phase 2 — 伤害计算与优化
 calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤害计算（Lv.50）
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算
-compute-stats <base_stats> [evs] [ivs] [nature] [level]              # 种族值+配置 → 能力值
+compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
 ```
 
