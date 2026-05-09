@@ -294,7 +294,7 @@ def base_power_func(
     elif name in ("Flail", "Reversal"):
         ratio = attacker.current_hp / max(1, attacker.max_hp)
         bp = 200 if ratio <= 0.0417 else 150 if ratio <= 0.104 else 100 if ratio <= 0.208 else 80 if ratio <= 0.354 else 40 if ratio <= 0.688 else 20
-    elif name == "Water Shuriken" and attacker.name == "Greninja-Ash":
+    elif name == "Water Shuriken" and attacker.name_en == "Greninja-Ash":
         bp = 20
     elif name == "Facade" and attacker.status not in (None, "Healthy"):
         bp = 70
@@ -444,7 +444,7 @@ def calc_at_mods(
         at_mods.append(0x800)
 
     # Flower Gift
-    if (attacker.ability == "Flower Gift" and attacker.name == "Cherrim"
+    if (attacker.ability == "Flower Gift" and attacker.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
             and move.category == "Physical" and attacker.item != "大晴天伞"):
         at_mods.append(0x1800)
@@ -498,9 +498,9 @@ def calc_at_mods(
         at_mods.append(0x800)
 
     # 2.0x items
-    if ((attacker.item == "Thick Club" and attacker.name in ("Cubone", "Marowak", "Marowak-Alola") and move.category == "Physical")
-            or (attacker.item == "Deep Sea Tooth" and attacker.name == "Clamperl" and move.category == "Special")
-            or (attacker.item == "Light Ball" and attacker.name.startswith("Pikachu"))):
+    if ((attacker.item == "Thick Club" and attacker.name_en in ("Cubone", "Marowak", "Marowak-Alola") and move.category == "Physical")
+            or (attacker.item == "Deep Sea Tooth" and attacker.name_en == "Clamperl" and move.category == "Special")
+            or (attacker.item == "Light Ball" and attacker.name_en.startswith("Pikachu"))):
         at_mods.append(0x2000)
     # 1.5x items
     elif ((attacker.item in ("讲究头带", "Choice Band") and move.category == "Physical" and not attacker.is_dynamax)
@@ -570,7 +570,7 @@ def calc_def_mods(
         df_mods.append(0x0C00)
 
     # Flower Gift
-    if (def_ability == "Flower Gift" and defender.name == "Cherrim"
+    if (def_ability == "Flower Gift" and defender.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
             and not hits_physical and defender.item != "大晴天伞"):
         df_mods.append(0x1800)
@@ -599,8 +599,8 @@ def calc_def_mods(
             ):
         df_mods.append(0x1800)
     # 2.0x items
-    elif ((defender.item == "Deep Sea Scale" and defender.name == "Clamperl" and not hits_physical)
-          or (defender.item == "Metal Powder" and defender.name == "Ditto" and hits_physical)):
+    elif ((defender.item == "Deep Sea Scale" and defender.name_en == "Clamperl" and not hits_physical)
+          or (defender.item == "Metal Powder" and defender.name_en == "Ditto" and hits_physical)):
         df_mods.append(0x2000)
 
     return df_mods
@@ -818,7 +818,7 @@ def calculate_damage(
     # Type effectiveness
     def_type1 = defender.types[0] if defender.types else "一般"
     def_type2 = defender.types[1] if len(defender.types) > 1 else None
-    type_eff1 = get_move_effectiveness(
+    type_effectiveness = get_move_effectiveness(
         move.type, def_type1, def_type2,
         is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
         is_gravity=field.is_gravity,
@@ -828,21 +828,6 @@ def calculate_damage(
         def_is_tera=defender.is_terastalize,
         move_name=move.name,
     )
-    # For dual-type defenders, effectiveness on second type
-    if def_type2 and def_type2 != def_type1 and move.type != "星晶":
-        type_eff2 = get_move_effectiveness(
-            move.type, def_type2, def_type1,
-            is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
-            is_gravity=field.is_gravity,
-            def_item=defender.item,
-            is_strong_winds=(field.weather == "Strong Winds"),
-            is_tera_shell=False,
-            def_is_tera=defender.is_terastalize,
-            move_name=move.name,
-        )
-    else:
-        type_eff2 = 1.0
-    type_effectiveness = type_eff1 * type_eff2
 
     # Immunity check
     if type_effectiveness == 0:

@@ -77,7 +77,7 @@ class Field:
     """Battle field conditions."""
     weather: Optional[str] = None      # Sun, Rain, Sand, Hail, Snow, Strong Winds, Harsh Sun, Heavy Rain
     terrain: Optional[str] = None      # Electric, Grassy, Misty, Psychic
-    format: str = "Singles"            # Singles / Doubles
+    format: str = "Doubles"            # Singles / Doubles
     is_gravity: bool = False
     is_reflect: bool = False
     is_light_screen: bool = False

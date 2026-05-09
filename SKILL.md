@@ -90,11 +90,19 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 ### 命令示例
 
 ```bash
+# 基础查询（仅需位置参数）
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
-python scripts/query.py calc 超级喷火龙Y 气象球 超级胡地 "{}" "{}" "{}" "{\"weather\":\"Sun\"}"
-python scripts/query.py calc 密勒顿 电气上升 故勒顿 "{}" "{}" "{}" "{\"terrain\":\"Electric\"}"
-python scripts/query.py calc 喷火龙 喷射火焰 水箭龟 "{}" "{}" "{}" "{\"weather\":\"Sun\",\"terrain\":\"Electric\"}"
-python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
+
+# 命名参数方式（推荐，避免括号错位）
+python scripts/query.py calc 超级喷火龙Y 气象球 超级胡地 --field_ov '{"weather":"Sun"}'
+python scripts/query.py calc 密勒顿 电气上升 故勒顿 --field_ov '{"terrain":"Electric"}'
+python scripts/query.py calc 喷火龙 喷射火焰 水箭龟 --field_ov '{"weather":"Sun","terrain":"Electric"}'
+python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
+  --att_ov '{"evs":{"sp_attack":252}}' \
+  --field_ov '{"weather":"Sun","format":"Doubles"}'
+
+# optimize 也使用命名参数
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
 ```
 
 ### 天气联动招式（引擎自动处理）
@@ -136,10 +144,10 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaran
 
 ```bash
 python scripts/query.py calc-raw \
-  '{"name":"ATT_NAME","level":50,"stats":ATT_STATS,"types":ATT_TYPES,"ability":"ATT_ABILITY","nature":"ATT_NATURE","current_hp":ATT_HP,"max_hp":ATT_HP}' \
-  '{"name":"MOVE_NAME","base_power":BP,"type":"MOVE_TYPE","category":"CATEGORY"}' \
-  '{"name":"DEF_NAME","level":50,"stats":DEF_STATS,"types":DEF_TYPES,"ability":"DEF_ABILITY","nature":"DEF_NATURE","current_hp":DEF_HP,"max_hp":DEF_HP}' \
-  '{"weather":"Sun"}'
+  --att '{"name":"ATT_NAME","level":50,"stats":ATT_STATS,"types":ATT_TYPES,"ability":"ATT_ABILITY","nature":"ATT_NATURE","current_hp":ATT_HP,"max_hp":ATT_HP}' \
+  --move '{"name":"MOVE_NAME","base_power":BP,"type":"MOVE_TYPE","category":"CATEGORY"}' \
+  --def '{"name":"DEF_NAME","level":50,"stats":DEF_STATS,"types":DEF_TYPES,"ability":"DEF_ABILITY","nature":"DEF_NATURE","current_hp":DEF_HP,"max_hp":DEF_HP}' \
+  --field '{"weather":"Sun"}'
 ```
 
 字段精简原则：calc-raw 只读取传入的字段。至少传入 `name`, `level`, `stats`, `types`, `ability`, `nature`, `current_hp`, `max_hp` 即可。
@@ -175,16 +183,17 @@ python scripts/query.py calc-raw \
 1. 意图：{百科查询 / 伤害计算 / 努力值优化}
 2. 实体：攻方={name} | 招式={name} | 守方={name}
 3. 环境推断：
-   - 天气：{Sun/Rain/Sand/Hail/Snow/无}（依据：用户提及 / 特性暗示 / 招式联动 / 无）
+   - 天气：{Sun/Rain/Sand/Hail/Snow/无}（依据：用户本轮提及 / 继承自上一轮对话 / 特性暗示 / 招式联动 / 无）
    - 场地：{Electric/Grassy/Misty/Psychic/无}（依据同上）
-   - 对战模式：{Singles/Doubles}（默认 Singles）
+   - 对战模式：{Singles/Doubles}（默认 Doubles）
 4. 配置推断：
-   - 攻方：{角色类型} → 性格={nature} 努力值={evs} 道具={item}
-   - 守方：{角色类型} → 性格={nature} 努力值={evs} 道具={item}
+   - 攻方/守方配置 = 待 calc 命令返回后，从 attacker_info 和 defender_info 提取（禁止在 plan 阶段预设具体数值）
 5. 命令选择：{calc / calc-raw / optimize}
-6. 参数构造：field_override={"weather":"Sun"}（仅输出紧凑的一行 JSON；若无环境覆盖则输出 {}）
+6. 参数构造：--field_ov '{"weather":"Sun","format":"Doubles"}'（仅传入需要覆盖的字段）
 </plan>
 ```
+
+> **多轮状态继承**：若上一轮对话中已确定环境条件（如晴天），且用户本轮未提及环境变化，则在 `<plan>` 中标注"继承自上一轮"，并在 `--field_ov` 中继续传入该环境条件。
 
 > **规则**：未输出 `<plan>` 标签，不得执行任何伤害计算命令。
 
@@ -202,7 +211,7 @@ python scripts/query.py calc-raw \
 |---|--------|---------------|---------|
 | 3.1 | 天气 (weather) | 用户明确提及天气词汇；或攻击方特性为天气特性；或使用气象球/大地波动等联动招式 | `field_override` |
 | 3.2 | 场地 (terrain) | 用户明确提及场地词汇；或使用场地联动招式（电气上升/精神强念/薄雾爆炸/大地波动） | `field_override` |
-| 3.3 | 对战模式 (format) | 用户提及"双打/VGC" → Doubles；否则默认 Singles | `field_override` |
+| 3.3 | 对战模式 (format) | 用户提及"单打" → Singles；否则默认 Doubles | `field_override` |
 | 3.4 | 墙壁 (screen) | 用户提及光墙/反射壁/极光幕 | `field_override` |
 | 3.5 | 岩钉/撒菱 | 用户提及隐形岩/撒菱 | `field_override` |
 | 3.6 | 其他场地效果 | 用户提及帮助/友情防守/蓄电池/能量点/灾祸系列等 | `field_override` |
@@ -227,7 +236,11 @@ python scripts/query.py calc-raw \
 
 **推断优先级**：用户明确指定 > 角色类型推断。无论使用何种默认配置，回答开头必须声明假设。
 
-**未过签/Mega 形态例外**：使用 **0 努力值 + 勤奋性格** 作为默认配置，并在回答中注明"该形态在标准对战中不可用，以下结果为理论计算"。`calc` 返回 JSON 中的 `"warning"` 字段必须原样引用。
+**配置覆盖铁律**：无论任何默认推断规则（包括未过签形态的 0 努力值规则、Mega 形态默认道具规则），**用户的显式指定拥有最高优先级**。若用户指定了"252特攻"或特定道具，必须严格在 `--att_ov` 中传入该值，不再使用默认配置。
+
+**未过签/Mega 形态例外**：
+- 使用 **0 努力值 + 勤奋性格** 作为默认配置，并在回答中注明"该形态在标准对战中不可用，以下结果为理论计算"。`calc` 返回 JSON 中的 `"warning"` 字段必须原样引用。
+- **Mega 形态默认道具**：引擎自动根据形态名推导默认携带的 Mega 石（如 `超级喷火龙Ｙ` → `喷火龙进化石Ｙ`，`原始盖欧卡` → `原始回归宝珠`）。若用户显式指定其他道具，按配置覆盖铁律处理。
 
 #### Step 5: 命令选择
 
@@ -244,7 +257,16 @@ python scripts/query.py calc-raw \
 - 多段攻击招式（如双翼）：calc 自动返回单次 + 合计总伤害
 - 性格未指定时的对比场景：同时计算两种常见性格（如爽朗 vs 固执），输出能力值对比表
 
-#### Step 7: 异常处理与重试
+#### Step 7: 参数一致性校验
+
+构造命令后，对照 `<plan>` 中的环境推断检查 `--field_ov` 内容：
+
+- 若 plan 推断出 weather/terrain/format 不为空，则 `--field_ov` 绝对不能是 `{}` 或省略
+- 若 plan 推断出无环境，则 `--field_ov` 可以省略
+
+> **常见错误**：plan 推断出晴天，但 `--field_ov` 漏传。这会遗漏天气加成，导致伤害结果严重偏低。
+
+#### Step 8: 异常处理与重试
 
 若命令返回错误信息（如 `not found`、JSON 解析错误、参数无效）：
 
@@ -253,7 +275,7 @@ python scripts/query.py calc-raw \
 3. **修正参数后重试** —— 修正后再次执行命令
 4. **若再次失败** —— 原样输出报错信息给用户，说明无法完成计算
 
-#### Step 8: 结果解析与回答
+#### Step 9: 结果解析与回答
 
 按第 4 节"输出格式"组织回答。使用命令返回的精确数字，禁止编造。
 
@@ -264,6 +286,18 @@ python scripts/query.py calc-raw \
 一句话总结核心信息，可附关键数据表格。
 
 ### 4.2 伤害计算标准回答结构
+
+> **回答结构铁律**：执行 calc 命令后，你的最终回答**必须严格包含**以下 Markdown 标题，不得遗漏任何一个。利用标题的自回归惯性强制输出完整表格。
+>
+> 必须包含的标题（按顺序）：
+> 1. `## 结论摘要` —— 先回答用户核心问题（如"能不能接下""能否秒杀"）
+> 2. `## 攻击方详细信息` —— 必须附带完整表格（使用 calc 返回的 attacker_info）
+> 3. `## 防御方详细信息` —— 必须附带完整表格（使用 calc 返回的 defender_info）
+> 4. `## 招式信息` —— 必须附带完整表格
+> 5. `## 环境条件` —— 必须附带完整表格
+> 6. `## 伤害计算结果` —— 必须附带完整表格
+>
+> 若用户询问努力值优化，追加 `## 努力值优化结果`。
 
 #### 前言：假设声明（强制，不可省略）
 

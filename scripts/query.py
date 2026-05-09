@@ -691,6 +691,40 @@ def _get_method_name(entry: dict[str, Any], category: str) -> str:
     return "未知"
 
 
+def _derive_mega_stone(form_name: str) -> str:
+    """Derive the Mega Stone name from a Mega form name.
+
+    Rules:
+        - "超级喷火龙Ｙ" -> "喷火龙进化石Ｙ"
+        - "超级胡地"     -> "胡地进化石"
+        - "原始盖欧卡"   -> "原始回归宝珠"
+    """
+    if form_name.startswith("原始"):
+        return "原始回归宝珠"
+    if form_name.startswith("超级"):
+        base = form_name[2:]  # Strip "超级" prefix
+        # Handle X/Y suffixes like 喷火龙Ｘ / 喷火龙Ｙ
+        if base.endswith("Ｘ") or base.endswith("Ｙ"):
+            return base[:-1] + "进化石" + base[-1]
+        return base + "进化石"
+    return ""
+
+
+def _resolve_ability_to_en(ability_name: str) -> str:
+    """Resolve an ability name (zh or en) to its English canonical name."""
+    if not ability_name:
+        return ""
+    # Already English
+    if ability_name.isascii():
+        return ability_name
+    load_data()
+    if _abilities_data is not None:
+        info = _abilities_data.get(ability_name)
+        if info:
+            return info.get("name_en", ability_name)
+    return ability_name
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -713,9 +747,21 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     base_stats = {k: int(v) for k, v in stats.items()}
     types = form.get("types", [])
     abilities = form.get("abilities", [])
-    ability = abilities[0].get("name", "") if abilities else ""
+    # Handle gen9 string format vs gen8/Champions dict format
+    if abilities and isinstance(abilities[0], str):
+        ability_zh = abilities[0]
+    elif abilities and isinstance(abilities[0], dict):
+        ability_zh = abilities[0].get("name", "")
+    else:
+        ability_zh = ""
+
+    ability = _resolve_ability_to_en(ability_zh)
     form_name = form.get("name", "")
     is_mega = form_name.startswith("超级") or form_name.startswith("原始")
+
+    default_item = ""
+    if is_mega:
+        default_item = _derive_mega_stone(form_name)
 
     pk = {
         "name": form_name or data.get("name_zh", ""),
@@ -724,7 +770,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "base_stats": base_stats,
         "types": types,
         "ability": ability,
-        "item": "",
+        "item": default_item,
         "nature": "勤奋",
         "evs": {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0},
         "ivs": {"hp": 31, "attack": 31, "defense": 31, "sp_attack": 31, "sp_defense": 31, "speed": 31},
@@ -739,11 +785,18 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     }
     if overrides:
         pk.update(overrides)
+    # Post-override: ensure ability is in English for the damage engine
+    pk["ability"] = _resolve_ability_to_en(pk.get("ability", ""))
     return pk
 
 
 def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     """Build a Move dict suitable for damage.py from move data."""
+    _MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
+        "物理": "Physical",
+        "特殊": "Special",
+        "变化": "Status",
+    }
     power_str = str(data.get("power", "0"))
     try:
         power = int(power_str)
@@ -760,7 +813,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "name_zh": data.get("name_zh", ""),
         "base_power": power,
         "type": data.get("type", "一般"),
-        "category": data.get("category", "Physical"),
+        "category": _MOVE_CATEGORY_ZH_TO_EN.get(data.get("category", ""), "Physical"),
         "accuracy": 100,
         "hits": hits,
         "is_crit": False,
@@ -806,8 +859,8 @@ def cmd_optimize(
     threshold: guaranteed | likely
 
     Examples:
-        python query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko
-        python query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
+        python query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
+        python query.py optimize 喷火龙 喷射火焰 水箭龟 --goal survive --target survive --threshold guaranteed
     """
     from ev_optimizer import optimize_evs
 
@@ -863,6 +916,12 @@ def cmd_optimize(
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data)
 
+    # Remove extra metadata before passing to model constructors
+    att_dict.pop("_data_source", None)
+    att_dict.pop("is_unobtainable", None)
+    def_dict.pop("_data_source", None)
+    def_dict.pop("is_unobtainable", None)
+
     from models import Pokemon, Move, Field
     attacker = Pokemon(**att_dict)
     defender = Pokemon(**def_dict)
@@ -875,12 +934,12 @@ def cmd_optimize(
 
 def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args: str) -> dict[str, Any]:
     """Quick damage calculation using default Lv50 stats.
-    
+
     Optional extra_args: JSON overrides for attacker, move, defender, field.
+    (Used by legacy positional callers; argparse callers pass overrides as named args.)
     Example:
         python query.py calc 喷火龙 喷射火焰 水箭龟
-        python query.py calc 喷火龙 喷射火焰 水箭龟 '{"evs":{"sp_attack":252}}' '{}' '{"evs":{"sp_defense":252}}'
-        python query.py calc 喷火龙 喷射火焰 水箭龟 '{"evs":{"sp_attack":252}}' '{}' '{}' '{"weather":"Sun"}'
+        python query.py calc 喷火龙 喷射火焰 水箭龟 --att_ov '{"evs":{"sp_attack":252}}' --field_ov '{"weather":"Sun"}'
     """
     import json
     from damage import calculate_damage
@@ -1289,7 +1348,85 @@ def main() -> int:
     if len(sys.argv) < 2:
         print(__doc__)
         return 1
+
     cmd = sys.argv[1]
+
+    # Named-argument commands: use argparse
+    if cmd in ("calc", "optimize", "calc-raw"):
+        import argparse
+
+        parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
+        subparsers = parser.add_subparsers(dest="command")
+
+        # calc
+        calc_parser = subparsers.add_parser("calc", help="Quick damage calculation")
+        calc_parser.add_argument("attacker", help="Attacker Pokemon name")
+        calc_parser.add_argument("move", help="Move name")
+        calc_parser.add_argument("defender", help="Defender Pokemon name")
+        calc_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
+        calc_parser.add_argument("--move_ov", default="{}", help="Move override JSON")
+        calc_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
+        calc_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
+
+        # optimize
+        opt_parser = subparsers.add_parser("optimize", help="EV optimization")
+        opt_parser.add_argument("attacker", help="Attacker Pokemon name")
+        opt_parser.add_argument("move", help="Move name")
+        opt_parser.add_argument("defender", help="Defender Pokemon name")
+        opt_parser.add_argument("--goal", default="ko", help="Optimization goal")
+        opt_parser.add_argument("--target", default="ohko", help="Optimization target")
+        opt_parser.add_argument("--threshold", default="guaranteed", help="Threshold")
+        opt_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
+        opt_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
+        opt_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
+
+        # calc-raw
+        raw_parser = subparsers.add_parser("calc-raw", help="Pure parameter-driven damage calculation")
+        raw_parser.add_argument("--att", required=True, help="Attacker JSON")
+        raw_parser.add_argument("--move", required=True, dest="move_json", help="Move JSON")
+        raw_parser.add_argument("--def", required=True, dest="defender_json", help="Defender JSON")
+        raw_parser.add_argument("--field", default="{}", help="Field JSON")
+
+        args = parser.parse_args()
+
+        try:
+            if cmd == "calc":
+                result = cmd_calc(
+                    args.attacker,
+                    args.move,
+                    args.defender,
+                    args.att_ov,
+                    args.move_ov,
+                    args.def_ov,
+                    args.field_ov,
+                )
+            elif cmd == "optimize":
+                result = cmd_optimize(
+                    args.attacker,
+                    args.move,
+                    args.defender,
+                    args.goal,
+                    args.target,
+                    args.threshold,
+                    args.att_ov,
+                    args.def_ov,
+                    args.field_ov,
+                )
+            else:  # calc-raw
+                result = cmd_calc_raw(
+                    args.att,
+                    args.move_json,
+                    args.defender_json,
+                    args.field,
+                )
+        except TypeError as e:
+            print(f"Argument error for '{cmd}': {e}")
+            return 1
+
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+
+    # Phase 1 commands: legacy positional-arg routing
     if cmd not in COMMANDS:
         print(f"Unknown command: {cmd}")
         print(__doc__)
