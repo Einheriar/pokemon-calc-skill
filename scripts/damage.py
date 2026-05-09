@@ -142,6 +142,29 @@ def chain_mods(mods: list[int]) -> int:
     return M
 
 
+def is_grounded(pokemon: Pokemon, field: Field) -> bool:
+    """Check if a Pokemon is grounded (affected by terrain effects)."""
+    if pokemon.item == "Iron Ball" or field.is_gravity:
+        return True
+    if "飞行" in pokemon.types:
+        return False
+    if pokemon.item == "Air Balloon":
+        return False
+    if pokemon.ability == "Levitate":
+        return False
+    return True
+
+def check_conditional_spread(move, field, attacker, att_is_grounded):
+    """Dynamically set is_spread for moves that become spread under certain conditions.
+
+    Mirrors JS checkConditionalSpread() in damage_MASTER.js:
+    - Expanding Force becomes spread in Psychic Terrain when attacker is grounded
+    - Tera Starstorm becomes spread when used by Terapagos-Stellar
+    """
+    if (move.name == "Expanding Force" and field.terrain == "Psychic" and att_is_grounded) or        (move.name == "Tera Starstorm" and attacker.name_en == "Terapagos-Stellar"):
+        move.is_spread = True
+
+
 def get_modified_stat(stat: int, mod: int) -> int:
     """Apply stat stage modifiers."""
     if mod > 0:
@@ -337,6 +360,8 @@ def calc_bp_mods(
     base_power: int,
     turn_order: str,
     def_ability: str,
+    att_is_grounded: bool,
+    def_is_grounded: bool,
 ) -> list[int]:
     """Calculate base power modifiers (hex values)."""
     bp_mods: list[int] = []
@@ -376,6 +401,23 @@ def calc_bp_mods(
         pass  # Choice items are AT mods
     if attacker.item in ("讲究眼镜", "Choice Specs") and move.category == "Special" and not attacker.is_dynamax:
         pass
+
+    # v. Offensive Terrain (Gen9: 0x14CD = ~1.3x)
+    if att_is_grounded:
+        terrain_multiplier = 0x14CD  # Gen9
+        if field.terrain == "Electric" and move.type == "电":
+            bp_mods.append(terrain_multiplier)
+        elif field.terrain == "Grassy" and move.type == "草":
+            bp_mods.append(terrain_multiplier)
+        elif field.terrain == "Psychic" and move.type == "超能力":
+            bp_mods.append(terrain_multiplier)
+
+    # w. Defensive Terrain
+    if def_is_grounded:
+        if field.terrain == "Misty" and move.type == "龙":
+            bp_mods.append(0x800)
+        elif field.terrain == "Grassy" and move.name in ("Earthquake", "Bulldoze"):
+            bp_mods.append(0x800)
 
     return bp_mods
 
@@ -875,8 +917,15 @@ def calculate_damage(
     # Ate/Ize type change (Pixilate, Aerilate, etc.)
     move, ate_ize_boosted = _ate_ize_type_change(move, attacker)
 
+    # Grounded checks for terrain effects
+    att_is_grounded = is_grounded(attacker, field)
+    def_is_grounded = is_grounded(defender, field)
+
+    # Conditional spread (e.g. Expanding Force in Psychic Terrain)
+    check_conditional_spread(move, field, attacker, att_is_grounded)
+
     # BP mods
-    bp_mods = calc_bp_mods(attacker, defender, field, move, ate_ize_boosted, base_power, turn_order, def_ability)
+    bp_mods = calc_bp_mods(attacker, defender, field, move, ate_ize_boosted, base_power, turn_order, def_ability, att_is_grounded, def_is_grounded)
     base_power = max(1, poke_round(base_power * chain_mods(bp_mods) / 0x1000))
 
     # Attack
