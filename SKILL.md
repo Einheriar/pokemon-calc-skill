@@ -21,6 +21,7 @@ description: >
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
 5. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。
 6. **环境参数只能通过 `field_override` 传入**。`move_override` 仅用于覆盖 `is_crit`、`hits` 等行为参数，绝对禁止修改 `base_power` 或 `type` 来模拟天气/场地效果。
+7. **禁止在回答中手动推导威力修正链**。引擎返回的 `effective_power` 或 `description` 中的威力值即为权威结果。LLM 不得在回答中写出"基础威力 × 场地 × STAB = ..."等中间推导式，仅可陈述"引擎报告计算威力为 X"。
 
 ## 2. 命令速查
 
@@ -87,6 +88,30 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 - `terrain`: Electric / Grassy / Misty / Psychic
 - `format`: Singles / Doubles
 - 墙壁/辅助特性/灾祸系列等：布尔开关，见 `field_override` JSON 示例
+
+### 命令执行环境兼容性
+
+| 环境 | 推荐方式 | 说明 |
+|------|---------|------|
+| bash / zsh | 命令行直接执行 | 单引号包裹 JSON：`--att_ov '{"evs":...}'` |
+| Windows cmd.exe / PowerShell | **写临时脚本调用** | cmd.exe 对 JSON 引号解析不友好，建议写临时 Python 脚本直接 import `cmd_calc` |
+
+**Windows 临时脚本模板**：
+
+```python
+import json, sys
+sys.path.insert(0, "pokemon-calc/scripts")
+from query import cmd_calc
+
+result = cmd_calc(
+    "ATT_NAME", "MOVE_NAME", "DEF_NAME",
+    json.dumps({"evs": {"sp_attack": 252}}),  # att_override
+    json.dumps({}),                            # move_override
+    json.dumps({}),                            # def_override
+    json.dumps({"terrain": "Psychic"})         # field_override
+)
+print(json.dumps(result, ensure_ascii=False, indent=2))
+```
 
 ### 命令示例
 
@@ -328,7 +353,7 @@ python scripts/query.py calc-raw \
 | 项目 | 数值 |
 |------|------|
 | 属性 | {属性1} / {属性2} |
-| 特性 | {当前特性}（可选：{特性1} / {特性2} / {特性3}） |
+| 特性 | {当前特性} |
 | 等级 | Lv.{level} |
 | 种族值 | HP {hp} / 攻击 {atk} / 防御 {def} / 特攻 {spa} / 特防 {spd} / 速度 {spe} |
 | 个体值 | 全 {iv}（默认 31，若有 0 则标注） |
@@ -340,6 +365,10 @@ python scripts/query.py calc-raw \
 | 能力等级变化 | 攻击 {atk_boost} / 防御 {def_boost} / 特攻 {spa_boost} / 特防 {spd_boost} / 速度 {spe_boost} |
 | 状态异常 | {status} |
 ```
+
+> **特性显示规则**：
+> - 普通形态：可追加"全部可选特性"行（该宝可梦所有可获得特性）
+> - Mega / 原始回归形态：**严格只输出"特性"一行，禁止输出"全部可选特性"**。`all_abilities` 来自普通形态，与 Mega 专属特性无关
 
 #### 第二部分：防御方详细信息
 
@@ -365,9 +394,10 @@ python scripts/query.py calc-raw \
 | 效果 | {effect_description} |
 | 广域招式 | {是/否} |
 
-> **威力修正链**：{基础威力} → {天气/场地修正} → {特性修正} → {道具修正} → {其他修正} = **{最终计算威力}**
+> **计算威力说明**：引擎根据传入的环境条件自动计算最终威力。以下为引擎返回的计算结果：
+> 基础威力 {base_power} → 引擎计算威力 {effective_power}
 >
-> 示例：气象球基础威力 50 → 晴天下威力翻倍至 100 → 晴天火系加成 ×1.5（引擎内部处理）
+> LLM 禁止自行推导中间步骤（如"基础威力 × 场地 × STAB = ..."），仅可陈述引擎报告的最终值。
 ```
 
 #### 第四部分：环境条件

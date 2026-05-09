@@ -1367,6 +1367,10 @@ def main() -> int:
         calc_parser.add_argument("--move_ov", default="{}", help="Move override JSON")
         calc_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
         calc_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
+        calc_parser.add_argument("--att_ov_file", default=None, help="Path to attacker override JSON file (takes precedence over --att_ov)")
+        calc_parser.add_argument("--move_ov_file", default=None, help="Path to move override JSON file (takes precedence over --move_ov)")
+        calc_parser.add_argument("--def_ov_file", default=None, help="Path to defender override JSON file (takes precedence over --def_ov)")
+        calc_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
         # optimize
         opt_parser = subparsers.add_parser("optimize", help="EV optimization")
@@ -1379,6 +1383,9 @@ def main() -> int:
         opt_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
         opt_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
         opt_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
+        opt_parser.add_argument("--att_ov_file", default=None, help="Path to attacker override JSON file (takes precedence over --att_ov)")
+        opt_parser.add_argument("--def_ov_file", default=None, help="Path to defender override JSON file (takes precedence over --def_ov)")
+        opt_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
         # calc-raw
         raw_parser = subparsers.add_parser("calc-raw", help="Pure parameter-driven damage calculation")
@@ -1396,6 +1403,23 @@ def main() -> int:
         stats_parser.add_argument("--level", default="50", help="Level")
 
         args = parser.parse_args()
+
+        # If *_ov_file is provided, read file content and override the JSON string args.
+        # File-based input takes precedence over inline JSON.
+        def _read_file_or_default(path: str | None, default: str) -> str:
+            if path is None:
+                return default
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    return f.read()
+            except Exception as e:
+                print(f"Error reading override file '{path}': {e}")
+                return default
+
+        args.att_ov = _read_file_or_default(getattr(args, "att_ov_file", None), args.att_ov)
+        args.move_ov = _read_file_or_default(getattr(args, "move_ov_file", None), args.move_ov)
+        args.def_ov = _read_file_or_default(getattr(args, "def_ov_file", None), args.def_ov)
+        args.field_ov = _read_file_or_default(getattr(args, "field_ov_file", None), args.field_ov)
 
         try:
             if cmd == "calc":
