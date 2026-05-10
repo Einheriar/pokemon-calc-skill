@@ -22,6 +22,7 @@ description: >
 5. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。
 6. **环境参数只能通过 `field_override` 传入**。`move_override` 仅用于覆盖 `is_crit`、`hits` 等行为参数，绝对禁止修改 `base_power` 或 `type` 来模拟天气/场地效果。
 7. **禁止在回答中手动推导威力修正链**。引擎返回的 `effective_power` 或 `description` 中的威力值即为权威结果。LLM 不得在回答中写出"基础威力 × 场地 × STAB = ..."等中间推导式，仅可陈述"引擎报告计算威力为 X"。
+8. **禁止凭内部知识编造招式效果或特性分析**。`calc` 命令返回的 JSON 中不包含招式完整效果描述和特性效果解释。回答中涉及招式效果、特性对伤害/KO 的影响等描述，必须通过独立的 `move <name>` 或 `ability <name>` 命令查询后引用，禁止凭 LLM 内部记忆编造。若引擎 KO 概率已给出确定结论，直接引用即可，不得附加"即使某特性存在也能击杀"等条件分析。特性信息仅限列出 `attacker_info.ability` / `defender_info.ability` 返回的当前特性名称，不做任何效果推导。
 
 ## 2. 命令速查
 
@@ -226,6 +227,10 @@ python scripts/query.py calc-raw \
    - 攻方/守方配置 = 待 calc 命令返回后，从 attacker_info 和 defender_info 提取（禁止在 plan 阶段预设具体数值）
 5. 命令选择：{calc / calc-raw / optimize}
 6. 参数构造：--field_ov '{"weather":"Sun","format":"Doubles"}'（仅传入需要覆盖的字段）
+7. 信息缺口检查：
+   - 若用户未明确提及招式效果，plan 中标注"招式效果未查询，回答中不做效果描述"
+   - 若用户未明确提及特性效果，plan 中标注"特性效果未查询，回答中不做特性分析"
+   - 禁止在 calc 回答中自行补充上述信息
 </plan>
 ```
 
@@ -274,8 +279,17 @@ python scripts/query.py calc-raw \
 
 **配置覆盖铁律**：无论任何默认推断规则（包括未过签形态的 0 努力值规则、Mega 形态默认道具规则），**用户的显式指定拥有最高优先级**。若用户指定了"252特攻"或特定道具，必须严格在 `--att_ov` 中传入该值，不再使用默认配置。
 
-**未过签/Mega 形态例外**：
-- 使用 **0 努力值 + 勤奋性格** 作为默认配置，并在回答中注明"该形态在标准对战中不可用，以下结果为理论计算"。`calc` 返回 JSON 中的 `"warning"` 字段必须原样引用。
+**形态可用性警告规则**：
+
+- 若 `_data_source == "gen9"` 且 `is_unobtainable == true`：
+  > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
+
+- 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
+  > ⚠️ 该形态基于 Champions M-A 规则数据。若您询问的是 Gen9 规则，结果可能不适用。
+
+- 若 `_data_source == "champions"` 且 `is_unobtainable == false`：
+  > 无需警告
+
 - **Mega 形态默认道具**：引擎自动根据形态名推导默认携带的 Mega 石（如 `超级喷火龙Ｙ` → `喷火龙进化石Ｙ`，`原始盖欧卡` → `原始回归宝珠`）。若用户显式指定其他道具，按配置覆盖铁律处理。
 
 #### Step 5: 命令选择
@@ -341,10 +355,16 @@ python scripts/query.py calc-raw \
 - 任何未过签形态的警告（`warning` 字段原样引用）
 - **默认配置推断清单**：当用户未明确指定性格/努力值/道具时，逐条列出系统推断的具体参数及推断依据
 
-若涉及未过签形态，**首先输出**：
-```
-⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
-```
+**形态可用性警告规则**：
+
+- 若 `_data_source == "gen9"` 且 `is_unobtainable == true`：
+  > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
+
+- 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
+  > ⚠️ 该形态基于 Champions M-A 规则数据。若您询问的是 Gen9 规则，结果可能不适用。
+
+- 若 `_data_source == "champions"` 且 `is_unobtainable == false`：
+  > 无需警告
 
 **推断参数显式列出示例**：
 
@@ -369,6 +389,7 @@ python scripts/query.py calc-raw \
 |------|------|
 | 属性 | {属性1} / {属性2} |
 | 特性 | {当前特性} |
+| 全部可选特性 | {特性1} / {特性2} / {特性3} |
 | 等级 | Lv.{level} |
 | 种族值 | HP {hp} / 攻击 {atk} / 防御 {def} / 特攻 {spa} / 特防 {spd} / 速度 {spe} |
 | 个体值 | 全 {iv}（默认 31，若有 0 则标注） |
@@ -382,14 +403,31 @@ python scripts/query.py calc-raw \
 ```
 
 > **特性显示规则**：
-> - 普通形态：可追加"全部可选特性"行（该宝可梦所有可获得特性）
-> - Mega / 原始回归形态：**严格只输出"特性"一行，禁止输出"全部可选特性"**。`all_abilities` 来自普通形态，与 Mega 专属特性无关
+> - 所有形态：**必须同时输出**"特性"（`ability` 字段）和"全部可选特性"（`all_abilities` 字段）
+> - 格式：`{当前特性}（可选：{特性1} / {特性2} / {特性3}）`
+> - 用户指定特性时，当前特性为用户指定值；未指定时，当前特性为默认特性（`all_abilities` 列表第一项）
+> - Mega / 原始回归形态同样适用此规则，`all_abilities` 展示 Mega 形态的专属特性列表
 
 #### 第二部分：防御方详细信息
 
-结构同第一部分，追加：
-
 ```
+## 防御方：{宝可梦名}
+
+| 项目 | 数值 |
+|------|------|
+| 属性 | {属性1} / {属性2} |
+| 特性 | {当前特性} |
+| 全部可选特性 | {特性1} / {特性2} / {特性3} |
+| 等级 | Lv.{level} |
+| 种族值 | HP {hp} / 攻击 {atk} / 防御 {def} / 特攻 {spa} / 特防 {spd} / 速度 {spe} |
+| 个体值 | 全 {iv}（默认 31，若有 0 则标注） |
+| 努力值 | HP {hp_ev} / 攻击 {atk_ev} / 防御 {def_ev} / 特攻 {spa_ev} / 特防 {spd_ev} / 速度 {spe_ev} |
+| 性格 | {nature}（{+修正项} / {-修正项}） |
+| 实际能力值 | HP {hp_stat} / 攻击 {atk_stat} / 防御 {def_stat} / 特攻 {spa_stat} / 特防 {spd_stat} / 速度 {spe_stat} |
+| 道具 | {item} |
+| 太晶化 | {是/否}，太晶属性：{tera_type} |
+| 能力等级变化 | 攻击 {atk_boost} / 防御 {def_boost} / 特攻 {spa_boost} / 特防 {spd_boost} / 速度 {spe_boost} |
+| 状态异常 | {status} |
 | 当前 HP / 最大 HP | {current_hp} / {max_hp} |
 ```
 
@@ -406,7 +444,7 @@ python scripts/query.py calc-raw \
 | 计算威力 | {effective_power} |
 | 命中 | {accuracy} |
 | 打击次数 | {hits} |
-| 效果 | {effect_description} |
+| 引擎修正链简述 | {description} |
 | 广域招式 | {是/否} |
 
 > **计算威力说明**：引擎根据传入的环境条件自动计算最终威力。以下为引擎返回的计算结果：
@@ -446,7 +484,7 @@ python scripts/query.py calc-raw \
 | 天气加成 | {是/否}（晴天火系 ×1.5 / 雨天水系 ×1.5 / 沙暴岩系 ×1.5） |
 | 场地加成 | {是/否}（电气场地电系 ×1.3 / 青草场地草系 ×1.3 / 薄雾场地龙系 ×0.5 / 精神场地超能系 ×1.3） |
 | 道具加成 | {是/否}（生命宝珠 ×1.3 / 讲究头带/眼镜 ×1.5 等） |
-| 特性加成 | {是/否}（日照/强子引擎/古代活性等） |
+| 引擎报告的计算威力 | {description 中引擎返回的威力值} |
 | 烧伤减半 | {是/否} |
 | KO 概率 | {ko_chance} |
 

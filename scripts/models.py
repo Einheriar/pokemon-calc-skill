@@ -25,7 +25,8 @@ class Pokemon:
         "sp_attack": 31, "sp_defense": 31, "speed": 31
     })
     nature: str = "勤奋"               # Chinese nature name
-    ability: str = ""
+    ability: str = ""                # English (engine layer)
+    ability_zh: str = ""             # Chinese (display layer)
     item: str = ""
     types: list[str] = field(default_factory=list)
     tera_type: Optional[str] = None

@@ -766,6 +766,21 @@ def _resolve_ability_to_en(ability_name: str) -> str:
     return ability_name
 
 
+def _resolve_ability_to_zh(ability_name: str) -> str:
+    """Resolve an ability name (zh or en) to its Chinese canonical name."""
+    if not ability_name:
+        return ""
+    # Already Chinese
+    if not ability_name.isascii():
+        return ability_name
+    load_data()
+    if _abilities_data is not None:
+        for zh_name, info in _abilities_data.items():
+            if info.get("name_en") == ability_name:
+                return zh_name
+    return ability_name
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -810,7 +825,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "level": 50,
         "base_stats": base_stats,
         "types": types,
-        "ability": ability,
+        "ability": ability,          # English (engine layer)
+        "ability_zh": ability_zh,    # Chinese (display layer)
         "item": default_item,
         "nature": "勤奋",
         "evs": {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0},
@@ -822,12 +838,16 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_dynamax": False,
         "weight": 0.0,
         "_data_source": data.get("_data_source", "gen9"),
-        "is_unobtainable": is_mega,
+        "is_unobtainable": is_mega and data.get("_data_source", "gen9") == "gen9",
     }
     if overrides:
         pk.update(overrides)
     # Post-override: ensure ability is in English for the damage engine
-    pk["ability"] = _resolve_ability_to_en(pk.get("ability", ""))
+    overridden_ability = pk.get("ability", "")
+    pk["ability"] = _resolve_ability_to_en(overridden_ability)
+    # Sync ability_zh with the final ability
+    if overrides and "ability" in overrides:
+        pk["ability_zh"] = _resolve_ability_to_zh(overridden_ability) or pk.get("ability_zh", "")
     return pk
 
 
@@ -1102,7 +1122,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "types": attacker.types,
         "base_stats": attacker.base_stats,
         "stats": attacker.raw_stats,
-        "ability": attacker.ability,
+        "ability": attacker.ability_zh,
         "all_abilities": att_all_abilities,
         "nature": attacker.nature,
         "item": attacker.item,
@@ -1120,7 +1140,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "types": defender.types,
         "base_stats": defender.base_stats,
         "stats": defender.raw_stats,
-        "ability": defender.ability,
+        "ability": defender.ability_zh,
         "all_abilities": def_all_abilities,
         "nature": defender.nature,
         "item": defender.item,
@@ -1324,7 +1344,7 @@ def cmd_calc_raw(
         "name_zh": attacker.name,
         "name_en": attacker.name_en,
         "types": attacker.types,
-        "ability": attacker.ability,
+        "ability": attacker.ability_zh,
         "nature": attacker.nature,
         "item": attacker.item,
         "stats": attacker.raw_stats,
@@ -1338,7 +1358,7 @@ def cmd_calc_raw(
         "name_zh": defender.name,
         "name_en": defender.name_en,
         "types": defender.types,
-        "ability": defender.ability,
+        "ability": defender.ability_zh,
         "nature": defender.nature,
         "item": defender.item,
         "stats": defender.raw_stats,
