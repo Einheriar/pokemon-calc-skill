@@ -710,6 +710,47 @@ def _derive_mega_stone(form_name: str) -> str:
     return ""
 
 
+def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> None:
+    """Apply stat_changes from setup moves to attacker state and field.
+    
+    Reads moves.json for each setup move and applies structured stat changes.
+    This eliminates LLM dependency on move effect knowledge.
+    """
+    for move_name in setup_moves:
+        move_data = _moves_data.get(move_name)
+        if not move_data:
+            continue
+        stat_changes = move_data.get("stat_changes")
+        if not stat_changes:
+            continue
+        
+        # Apply self boosts
+        if "self" in stat_changes:
+            for stat, change in stat_changes["self"].items():
+                attacker.boosts[stat] = attacker.boosts.get(stat, 0) + change
+        
+        # Apply weather
+        if "weather" in stat_changes:
+            field.weather = stat_changes["weather"]
+        
+        # Apply terrain
+        if "terrain" in stat_changes:
+            field.terrain = stat_changes["terrain"]
+        
+        # Apply opponent debuffs
+        if "opponent" in stat_changes:
+            for stat, change in stat_changes["opponent"].items():
+                defender.boosts[stat] = defender.boosts.get(stat, 0) + change
+        
+        # Apply heal
+        if "heal" in stat_changes:
+            heal_target = stat_changes["heal"].get("target", "self")
+            ratio = stat_changes["heal"].get("ratio", 0)
+            if heal_target == "self" and attacker.max_hp > 0:
+                heal_amount = int(attacker.max_hp * ratio)
+                attacker.current_hp = min(attacker.max_hp, attacker.current_hp + heal_amount)
+
+
 def _resolve_ability_to_en(ability_name: str) -> str:
     """Resolve an ability name (zh or en) to its English canonical name."""
     if not ability_name:
@@ -1006,7 +1047,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
 
-    # Extract extra metadata before passing to model constructors
+    # Extract setup_moves and extra metadata before passing to model constructors
+    setup_moves = att_dict.pop("setup_moves", [])
     att_extra = {
         "_data_source": att_dict.pop("_data_source", "gen9"),
         "is_unobtainable": att_dict.pop("is_unobtainable", False),
@@ -1027,6 +1069,11 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         attacker.current_hp = attacker.max_hp
     if defender.current_hp == 0:
         defender.current_hp = defender.max_hp
+
+    # Apply setup moves (e.g., Nasty Plot, Swords Dance) if specified in att_override
+    setup_moves = att_override.get("setup_moves", [])
+    if setup_moves:
+        _apply_setup_moves(attacker, defender, field, setup_moves)
 
     result = calculate_damage(attacker, defender, move, field, gen=9)
 
@@ -1062,6 +1109,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "evs": attacker.evs,
         "ivs": attacker.ivs,
         "level": attacker.level,
+        "current_hp": attacker.current_hp,
+        "max_hp": attacker.max_hp,
         "_data_source": att_extra.get("_data_source", "gen9"),
         "is_unobtainable": att_extra.get("is_unobtainable", False),
     }

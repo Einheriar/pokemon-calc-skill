@@ -63,7 +63,8 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
   "boosts": {"attack": 0},
   "is_terastalize": false,
   "tera_type": null,
-  "preset": "Sharp Beak Set"    // 从 setdex 加载预设配置，覆盖字段在此基础上叠加
+  "preset": "Sharp Beak Set",    // 从 setdex 加载预设配置，覆盖字段在此基础上叠加
+  "setup_moves": ["诡计", "求雨"]  // 由引擎自动解析招式效果并应用（替代手动构造 boosts/weather）
 }
 
 // move_override — 仅限行为参数，禁止改 base_power / type
@@ -82,6 +83,17 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
   "is_helping_hand": false
 }
 ```
+
+**setup_moves 说明**：
+
+- `setup_moves` 是 `att_override` 的字段，接收变化类招式名称数组
+- 引擎自动查询 `moves.json` 中的 `stat_changes` 字段，应用以下效果：
+  - 能力等级变化（如诡计→特攻+2，剑舞→攻击+2）
+  - 天气/场地设置（如求雨→Rain，电气场地→Electric）
+  - HP 回复（如自我再生→回复50% HP）
+  - 状态异常赋予（如电磁波→麻痹）
+- **禁止同时传入 `setup_moves` 和对应的手动 `boosts`/`weather`/`terrain`**，避免冲突
+- 若招式无 `stat_changes` 数据（如保护、替身），引擎静默跳过
 
 **field_override 取值**：
 - `weather`: Sun / Rain / Sand / Hail / Snow / Strong Winds / Harsh Sun / Heavy Rain
@@ -133,18 +145,16 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 ### 天气联动招式（引擎自动处理）
 
-以下招式的威力/属性会随天气/场地自动变化。**LLM 唯一需要做的事：在 `field_override` 中传入天气或场地。**
+以下招式的威力/属性会随天气/场地自动变化。**LLM 唯一需要做的事：在 `field_override` 中传入天气或场地。具体威力变化由引擎自动计算，LLM 禁止自行推演或在回答中写出中间计算式。**
 
-| 招式 | 触发条件 | 引擎自动效果 |
-|------|---------|-------------|
-| 气象球 / Weather Ball | weather 非空 | 威力 ×2，属性变为天气对应属性 |
-| 大地波动 / Terrain Pulse | terrain 非空 | 威力 ×2，属性变为场地对应属性 |
-| 电气上升 / Rising Voltage | Electric 场地 | 威力从 70 提升至 140 |
-| 精神强念 / Expanding Force | Psychic 场地 | 威力从 80 提升至 120 |
-| 薄雾爆炸 / Misty Explosion | Misty 场地 | 威力从 100 提升至 150 |
-| 重力苹果 / Grav Apple | is_gravity=true | 威力从 80 提升至 120 |
-
-**修正链示例（晴天下气象球）**：气象球基础威力 50 → 晴天下威力翻倍至 100 → 晴天火系加成 ×1.5（引擎内部）→ STAB → 其他修正。**LLM 只传 `{"weather":"Sun"}`，其余交给引擎。**
+| 招式 | 说明 |
+|------|------|
+| 气象球 / Weather Ball | 天气联动招式，需确认 weather 字段 |
+| 大地波动 / Terrain Pulse | 场地联动招式，需确认 terrain 字段 |
+| 电气上升 / Rising Voltage | 电气场地联动招式 |
+| 精神强念 / Expanding Force | 精神场地联动招式 |
+| 薄雾爆炸 / Misty Explosion | 薄雾场地联动招式 |
+| 重力苹果 / Grav Apple | 重力联动招式 |
 
 ### calc 返回值关键字段
 
@@ -325,25 +335,30 @@ python scripts/query.py calc-raw \
 >
 > 若用户询问努力值优化，追加 `## 努力值优化结果`。
 
-#### 前言：假设声明（强制，不可省略）
+#### 1. 前言：假设声明（强制不可省略）
 
-若涉及未过签形态，**首先输出**（在假设声明之前）：
+**必须包含的内容**：
+- 任何未过签形态的警告（`warning` 字段原样引用）
+- **默认配置推断清单**：当用户未明确指定性格/努力值/道具时，逐条列出系统推断的具体参数及推断依据
+
+若涉及未过签形态，**首先输出**：
 ```
 ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
 ```
 
-若用户未提供完整配置，继续声明所有假设：
+**推断参数显式列出示例**：
 
-```
-⚠️ 以下计算基于以下假设：
-- 攻击方：{宝可梦名}（{努力值描述} + {性格}，{道具/无道具}）
-- 防御方：{宝可梦名}（{努力值描述} + {性格}，{道具/无道具}）
-- 环境：{天气} / {场地} / 无环境（{推断依据}）
-- 对战模式：{Singles / Doubles}
-- 其他：{光墙/反射壁/岩钉等若有}
+> **假设声明**：以下参数未由用户明确指定，使用角色类型默认推断：
+> - 性格：爽朗（+速度 -特攻）— 推断依据：烈箭鹰为物理速攻型
+> - 努力值：252攻击 / 252速度 / 4HP
+> - 道具：气势披带
+> - 对战模式：Doubles（VGC 默认）
+>
+> 若实际配置不同，伤害结果可能有变化。
 
-若实际配置不同，结果可能有变化。
-```
+**禁止的做法**：
+- 笼统地写"使用了默认配置"而不列出具体参数
+- 将推断参数作为绝对事实陈述，不声明为"推断"
 
 #### 第一部分：攻击方详细信息
 
@@ -501,7 +516,7 @@ python scripts/query.py calc-raw \
 - 抗性树果：16 种树果在效果拔群时触发
 - 其他：烧伤减半、要害 1.5x、能力等级变化、重力、光墙/反射壁/极光幕
 
-### 5.3 field_override 完整字段参考
+### 5.3 field_override 字段参考
 
 ```json
 {
@@ -530,30 +545,32 @@ python scripts/query.py calc-raw \
 }
 ```
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `weather` | string | Sun / Rain / Sand / Hail / Snow / Strong Winds / Harsh Sun / Heavy Rain |
-| `terrain` | string | Electric / Grassy / Misty / Psychic |
-| `format` | string | Singles / Doubles |
-| `is_gravity` | bool | 重力 |
-| `is_reflect` | bool | 反射壁 |
-| `is_light_screen` | bool | 光墙 |
-| `is_aurora_veil` | bool | 极光幕 |
-| `is_friend_guard` | bool | 友情防守 |
-| `is_battery` | bool | 蓄电池 |
-| `is_power_spot` | bool | 能量点 |
-| `is_steely_spirit` | bool | 钢之意志 |
-| `is_tailwind_atk` | bool | 顺风（攻击方速度×2） |
-| `is_tailwind_def` | bool | 顺风（防御方速度×2） |
-| `is_neutralizing_gas` | bool | 化学变化气体 |
-| `is_sword_of_ruin` | bool | 灾祸之简（降低敌方防御） |
-| `is_beads_of_ruin` | bool | 灾祸之鼎（降低敌方特防） |
-| `is_tablets_of_ruin` | bool | 灾祸之剑（降低敌方攻击） |
-| `is_vessel_of_ruin` | bool | 灾祸之玉（降低敌方特攻） |
-| `is_stealth_rock` | bool | 隐形岩 |
-| `spikes` | int | 撒菱层数 0~3 |
-| `is_salt_cure` | bool | 盐腌 |
-| `is_helping_hand` | bool | 帮助 |
+| 用户可能描述 | 传入字段 |
+|-------------|---------|
+| 晴天/雨天/沙暴/下雪/暴风雪/大日照/大雨/强风 | `weather` |
+| 电气场地/青草场地/薄雾场地/精神场地 | `terrain` |
+| 单打/双打 | `format` |
+| 重力 | `is_gravity` |
+| 反射壁 | `is_reflect` |
+| 光墙 | `is_light_screen` |
+| 极光幕 | `is_aurora_veil` |
+| 友情防守 | `is_friend_guard` |
+| 蓄电池 | `is_battery` |
+| 能量点 | `is_power_spot` |
+| 钢之意志 | `is_steely_spirit` |
+| 顺风（攻击方） | `is_tailwind_atk` |
+| 顺风（防御方） | `is_tailwind_def` |
+| 化学变化气体 | `is_neutralizing_gas` |
+| 灾祸之简 | `is_sword_of_ruin` |
+| 灾祸之鼎 | `is_beads_of_ruin` |
+| 灾祸之剑 | `is_tablets_of_ruin` |
+| 灾祸之玉 | `is_vessel_of_ruin` |
+| 隐形岩 | `is_stealth_rock` |
+| 撒菱 | `spikes`（0~3） |
+| 盐腌 | `is_salt_cure` |
+| 帮助 | `is_helping_hand` |
+
+> 字段含义由底层引擎处理，LLM 只需根据用户描述传入对应开关即可。
 
 ### 5.4 对战机制速览
 
