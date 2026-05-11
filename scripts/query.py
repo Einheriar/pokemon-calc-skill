@@ -161,7 +161,7 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
     # Fields that Pokemon model accepts; discard setdex-specific fields like 'moves'
     _VALID_PK_FIELDS = {
         "name", "name_en", "level", "base_stats", "evs", "ivs",
-        "nature", "ability", "item", "types", "tera_type",
+        "nature", "ability", "ability_zh", "item", "types", "tera_type",
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "raw_stats", "stats",
@@ -651,8 +651,11 @@ def _iter_moves(pdata: dict[str, Any], stem: str = ""):
                         yield move, category
 
 
-def cmd_find_move(move_name: str) -> dict[str, Any]:
-    """Find all pokemon that can learn a given move."""
+def cmd_find_move(move_name: str, source: str = "") -> dict[str, Any]:
+    """Find all pokemon that can learn a given move.
+
+    Optional source filter: "champions" | "gen9"
+    """
     load_data()
     move_stem = _index_data["moves"].get(move_name)
     if not move_stem:
@@ -665,15 +668,28 @@ def cmd_find_move(move_name: str) -> dict[str, Any]:
         move_data = _apply_champions_move_patch(move_stem, move_data)
     move_zh = move_data.get("name_zh") if move_data else move_name
 
-    result: list[dict[str, str]] = []
+    result: list[dict[str, Any]] = []
     for stem, pdata in _pokemon_data.items():
+        # Apply Champions patch to determine data_source for filtering
+        merged_pdata = _apply_champions_pokemon_patch(stem, pdata)
+        data_source = merged_pdata.get("_data_source", "gen9")
+
+        # Apply source filter
+        if source == "champions" and data_source != "champions":
+            continue
+        if source == "gen9" and data_source == "champions":
+            continue
+
         for move, category in _iter_moves(pdata, stem=stem):
             if move.get("name") == move_zh:
+                forms = merged_pdata.get("forms", [{}])
+                first_form_types = forms[0].get("types", []) if forms else []
                 result.append({
                     "name_zh": pdata.get("name_zh"),
                     "name_en": pdata.get("name_en"),
                     "pokedex_id": pdata.get("pokedex_id"),
                     "method": _get_method_name(move, category),
+                    "types": first_form_types,
                 })
                 break
     return {"move": move_zh, "count": len(result), "pokemon": result}
@@ -848,6 +864,15 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     # Sync ability_zh with the final ability
     if overrides and "ability" in overrides:
         pk["ability_zh"] = _resolve_ability_to_zh(overridden_ability) or pk.get("ability_zh", "")
+    # Filter out fields not supported by the Pokemon dataclass
+    _VALID_PK_FIELDS = {
+        "name", "name_en", "level", "base_stats", "evs", "ivs",
+        "nature", "ability", "ability_zh", "item", "types", "tera_type",
+        "is_terastalize", "boosts", "current_hp", "max_hp",
+        "status", "weight", "is_dynamax", "can_evolve",
+        "raw_stats", "stats",
+    }
+    pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}
     return pk
 
 
@@ -1422,7 +1447,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -1472,6 +1497,11 @@ def main() -> int:
         stats_parser.add_argument("--nature", default="勤奋", help="Nature name (Chinese or English)")
         stats_parser.add_argument("--level", default="50", help="Level")
 
+        # find-move
+        findmove_parser = subparsers.add_parser("find-move", help="Find all pokemon that can learn a given move")
+        findmove_parser.add_argument("move", help="Move name")
+        findmove_parser.add_argument("--source", default="", help="Data source filter: champions | gen9")
+
         args = parser.parse_args()
 
         # If *_ov_file is provided, read file content and override the JSON string args.
@@ -1486,10 +1516,10 @@ def main() -> int:
                 print(f"Error reading override file '{path}': {e}")
                 return default
 
-        args.att_ov = _read_file_or_default(getattr(args, "att_ov_file", None), args.att_ov)
-        args.move_ov = _read_file_or_default(getattr(args, "move_ov_file", None), args.move_ov)
-        args.def_ov = _read_file_or_default(getattr(args, "def_ov_file", None), args.def_ov)
-        args.field_ov = _read_file_or_default(getattr(args, "field_ov_file", None), args.field_ov)
+        args.att_ov = _read_file_or_default(getattr(args, "att_ov_file", None), getattr(args, "att_ov", "{}"))
+        args.move_ov = _read_file_or_default(getattr(args, "move_ov_file", None), getattr(args, "move_ov", "{}"))
+        args.def_ov = _read_file_or_default(getattr(args, "def_ov_file", None), getattr(args, "def_ov", "{}"))
+        args.field_ov = _read_file_or_default(getattr(args, "field_ov_file", None), getattr(args, "field_ov", "{}"))
 
         try:
             if cmd == "calc":
@@ -1521,6 +1551,11 @@ def main() -> int:
                     args.ivs,
                     args.nature,
                     args.level,
+                )
+            elif cmd == "find-move":
+                result = cmd_find_move(
+                    args.move,
+                    args.source,
                 )
             else:  # calc-raw
                 result = cmd_calc_raw(

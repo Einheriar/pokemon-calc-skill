@@ -32,6 +32,7 @@ description: >
 # Phase 1 — 百科查询（纯数据查询，无计算）
 pokemon <name>        # 基础信息、形态、特性、种族值、进化链
 move <name>           # 威力、命中、PP、属性、分类、效果
+                      # `description` 为游戏内官方中文描述（单行，换行符已替换为空格）。若为空，表示该招式暂无官方描述。
 ability <name>        # 效果描述、元信息
 item <name>           # 效果描述、分类、持有效果
 type <atk> <def>      # 属性相克倍率
@@ -41,7 +42,7 @@ learnset <name>       # 升级/TM/遗传/教学招式
 evo <name>            # 进化链与超级进化
 pokedex <name>        # 各版本图鉴描述
 profile <name>        # 外形描述、原型考据、多语言词源
-find-move <move>      # 反向查询：能学会该招式的所有宝可梦
+find-move <move> [--source champions|gen9]  # 反向查询：能学会该招式的所有宝可梦（返回含 types 字段）
 preset <pokemon> [name] # 列出预设配置或获取具体配置
 
 # Phase 2 — 伤害计算与优化
@@ -142,7 +143,15 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 # optimize 也使用命名参数
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
+
+# find-move 支持数据来源过滤
+python scripts/query.py find-move 顺风 --source champions  # 仅 Champions M-A 规则
+python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作数据
 ```
+
+> **`--source` 过滤说明**：`find-move` 默认返回全国图鉴（Gen9 + Champions）所有能学会该招式的宝可梦。传入 `--source champions` 仅返回 Champions M-A 规则可用宝可梦；传入 `--source gen9` 排除 Champions 专属宝可梦，仅保留 Gen9 正作数据。
+>
+> **`types` 字段**：`find-move` 返回的每个宝可梦条目均包含 `"types"` 数组，可直接用于属性筛选（如"找出能学会顺风的恶系宝可梦"），无需二次查询。
 
 ### 天气联动招式（引擎自动处理）
 
@@ -253,6 +262,8 @@ python scripts/query.py calc-raw \
 #### Step 2: 名称规范化
 
 确认标准中文名/英文名，确定形态（未指定则默认"一般"形态）。别名由 `data/aliases.json` 和 `normalize.py` 自动处理。
+
+**形态指定方式**：形态必须通过宝可梦名称本身指定（如 `"清洗洛托姆"`、`"超级喷火龙Ｙ"`），**严禁**在 `att_override` / `def_override` 中传入 `"form"` 字段。`Pokemon` dataclass 不支持 `form` 参数，传入将导致 `TypeError`。
 
 #### Step 3: 环境条件检查（强制逐项确认）
 
@@ -660,6 +671,31 @@ python scripts/query.py calc-raw \
 | 突击背心 | Assault Vest | 特防 ×1.5，不能使用变化招式 | 背心、AV |
 | 弱点保险 | Weakness Policy | 被弱点攻击时攻击/特攻+2 | 弱策、WP |
 | 气势头带 | Focus Band | 10% 概率一击不死 | 头带（易与气势披带混淆） |
+
+#### 抗性树果
+
+抗性树果在受到**效果拔群**的对应属性招式攻击时触发，将该招式伤害减半（×0.5）。
+
+| 俗称 | 官方中文名 | 英文名 | 抵抗属性 |
+|------|-----------|--------|---------|
+| 抗火果 | 千香果 | Occa Berry | 火 |
+| 抗水果 | 烛木果 | Passho Berry | 水 |
+| 抗电果 | 罗子果 | Wacan Berry | 电 |
+| 抗草果 | 番荔果 | Rindo Berry | 草 |
+| 抗冰果 | 腰木果 | Yache Berry | 冰 |
+| 抗斗果 | 巧可果 | Chople Berry | 格斗 |
+| 抗毒果 | 棱瓜果 | Kebia Berry | 毒 |
+| 抗地果 | 葫苏果 | Shuca Berry | 地面 |
+| 抗飞果 | 乐芭果 | Coba Berry | 飞行 |
+| 抗超果 | 芭亚果 | Payapa Berry | 超能力 |
+| 抗虫果 | 莲蒲果 | Tanga Berry | 虫 |
+| 抗岩果 | 霹霹果 | Charti Berry | 岩石 |
+| 抗鬼果 | 佛柑果 | Kasib Berry | 幽灵 |
+| 抗龙果 | 烛龙果 | Haban Berry | 龙 |
+| 抗恶果 | 刺耳果 | Colbur Berry | 恶 |
+| 抗钢果 | 穹犀果 | Babiri Berry | 钢 |
+| 抗仙果 | 香罗果 | Roseli Berry | 妖精 |
+| 抗一般果 | 投鲜果 | Chilan Berry | 一般 |
 
 #### 招式类
 
