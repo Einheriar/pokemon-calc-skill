@@ -343,6 +343,8 @@ def base_power_func(
         bp *= 2
     elif name == "Terrain Pulse" and field.terrain:
         bp *= 2
+    elif name == "Last Respects":
+        bp += 50 * move.fainted_allies
 
     return bp
 

@@ -69,7 +69,7 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 }
 
 // move_override — 仅限行为参数，禁止改 base_power / type
-{"is_crit": false, "hits": 1}
+{"is_crit": false, "hits": 1, "fainted_allies": 0}
 
 // field_override — 环境条件唯一入口
 {
@@ -156,6 +156,14 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 | 精神强念 / Expanding Force | 精神场地联动招式 |
 | 薄雾爆炸 / Misty Explosion | 薄雾场地联动招式 |
 | 重力苹果 / Grav Apple | 重力联动招式 |
+
+### 队友阵亡联动招式
+
+| 招式 | 说明 |
+|------|------|
+| 扫墓 / Last Respects | 每有 1 名队友阵亡，威力 +50。需通过 `move_override.fainted_allies` 传入阵亡数 |
+
+> **使用示例**：`--move_ov '{"fainted_allies": 1}'` 表示已阵亡 1 名队友，威力 = 50 + 50 × 1 = 100。
 
 ### calc 返回值关键字段
 

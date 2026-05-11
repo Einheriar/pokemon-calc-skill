@@ -71,6 +71,7 @@ class Move:
     is_slice: bool = False             # For Sharpness ability
     is_wind: bool = False              # For Wind Rider ability
     is_bullet: bool = False            # For Bulletproof ability
+    fainted_allies: int = 0            # For Last Respects base power boost
 
 
 @dataclass

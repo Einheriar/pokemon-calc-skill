@@ -110,12 +110,12 @@ def _load_setdex() -> dict[str, Any]:
 
 def _resolve_preset(pokemon_name: str, preset_name: str | None = None) -> dict[str, Any] | None:
     """Resolve preset by pokemon name (zh or en) and optional preset name.
-    
+
     Returns dict with presets list, or specific preset config.
     """
     load_data()
     setdex = _load_setdex()
-    
+
     # Try direct match (English name)
     pokemon_en = None
     if pokemon_name in setdex:
@@ -126,38 +126,38 @@ def _resolve_preset(pokemon_name: str, preset_name: str | None = None) -> dict[s
         if resolved:
             _, data, _ = resolved
             pokemon_en = data.get("name_en", "")
-    
+
     if not pokemon_en or pokemon_en not in setdex:
         return None
-    
+
     presets = setdex[pokemon_en]
     if preset_name is None:
         return {"pokemon_en": pokemon_en, "presets": list(presets.keys())}
-    
+
     if preset_name not in presets:
         return None
-    
+
     return {"pokemon_en": pokemon_en, "preset_name": preset_name, "config": presets[preset_name]}
 
 
 def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict[str, Any]:
     """If override contains 'preset' key, merge preset config with override.
-    
+
     Preset fields are used as base, override fields take precedence.
     Filters out fields not supported by the Pokemon model (e.g. moves).
     """
     preset_name = override.pop("preset", None)
     if preset_name is None:
         return override
-    
+
     setdex = _load_setdex()
     if pokemon_en not in setdex:
         return override
-    
+
     presets = setdex[pokemon_en]
     if preset_name not in presets:
         return override
-    
+
     # Fields that Pokemon model accepts; discard setdex-specific fields like 'moves'
     _VALID_PK_FIELDS = {
         "name", "name_en", "level", "base_stats", "evs", "ivs",
@@ -166,7 +166,7 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
         "status", "weight", "is_dynamax", "can_evolve",
         "raw_stats", "stats",
     }
-    
+
     preset_config = {k: v for k, v in presets[preset_name].items() if k in _VALID_PK_FIELDS}
     # User override takes precedence over preset
     preset_config.update(override)
@@ -180,7 +180,7 @@ def cmd_preset(pokemon_name: str, preset_name: str = "") -> dict[str, Any]:
         if preset_name:
             return {"error": f"Preset '{preset_name}' not found for '{pokemon_name}'."}
         return {"error": f"No presets found for '{pokemon_name}'."}
-    
+
     if "presets" in resolved:
         return {
             "pokemon": pokemon_name,
@@ -712,7 +712,7 @@ def _derive_mega_stone(form_name: str) -> str:
 
 def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> None:
     """Apply stat_changes from setup moves to attacker state and field.
-    
+
     Reads moves.json for each setup move and applies structured stat changes.
     This eliminates LLM dependency on move effect knowledge.
     """
@@ -723,25 +723,25 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
         stat_changes = move_data.get("stat_changes")
         if not stat_changes:
             continue
-        
+
         # Apply self boosts
         if "self" in stat_changes:
             for stat, change in stat_changes["self"].items():
                 attacker.boosts[stat] = attacker.boosts.get(stat, 0) + change
-        
+
         # Apply weather
         if "weather" in stat_changes:
             field.weather = stat_changes["weather"]
-        
+
         # Apply terrain
         if "terrain" in stat_changes:
             field.terrain = stat_changes["terrain"]
-        
+
         # Apply opponent debuffs
         if "opponent" in stat_changes:
             for stat, change in stat_changes["opponent"].items():
                 defender.boosts[stat] = defender.boosts.get(stat, 0) + change
-        
+
         # Apply heal
         if "heal" in stat_changes:
             heal_target = stat_changes["heal"].get("target", "self")
@@ -891,6 +891,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "is_z": data.get("is_z", False),
         "ignores_screens": data.get("ignores_screens", False),
         "deals_physical_damage": data.get("deals_physical_damage", False),
+        "fainted_allies": 0,
     }
     if overrides:
         move.update(overrides)
