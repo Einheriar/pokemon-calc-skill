@@ -41,6 +41,8 @@ class Pokemon:
     weight: float = 0.0
     is_dynamax: bool = False
     can_evolve: bool = False           # For Eviolite item
+    ability_on: bool = False           # Flash Fire / Slow Start / Plus / Minus / Stakeout activation
+    fainted_allies: int = 0            # For Supreme Overlord AT boost
     # Derived stats (calculated once then cached)
     raw_stats: dict[str, int] = field(default_factory=dict)
     stats: dict[str, int] = field(default_factory=dict)

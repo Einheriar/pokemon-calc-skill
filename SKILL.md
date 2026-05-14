@@ -28,6 +28,8 @@ description: >
 
 所有查询通过执行 bundled script [`scripts/query.py`](scripts/query.py) 完成。
 
+> **路径解析说明**：脚本通过 `__file__` 动态定位自身目录，并自动查找同级目录下的 `data/` 文件夹。若 Skill 被安装到其他位置，可通过设置环境变量 `POKEMON_CALC_DATA_DIR` 显式指定数据目录。
+
 ```bash
 # Phase 1 — 百科查询（纯数据查询，无计算）
 pokemon <name>        # 基础信息、形态、特性、种族值、进化链
@@ -72,6 +74,10 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 // move_override — 仅限行为参数，禁止改 base_power / type
 {"is_crit": false, "hits": 1, "fainted_allies": 0}
 
+// 需要激活 abilityOn 类特性时，在 att_override / def_override 中传入
+{"ability": "Flash Fire", "ability_on": true}
+{"ability": "Supreme Overlord", "fainted_allies": 3}
+
 // field_override — 环境条件唯一入口
 {
   "weather": "Sun",
@@ -113,8 +119,10 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 **Windows 临时脚本模板**：
 
 ```python
-import json, sys
-sys.path.insert(0, "pokemon-calc/scripts")
+import json, os, sys
+# 根据实际安装路径调整
+skill_root = os.environ.get("POKEMON_CALC_SKILL_ROOT", "pokemon-calc")
+sys.path.insert(0, os.path.join(skill_root, "scripts"))
 from query import cmd_calc
 
 result = cmd_calc(
@@ -126,6 +134,10 @@ result = cmd_calc(
 )
 print(json.dumps(result, ensure_ascii=False, indent=2))
 ```
+
+> **环境变量说明**：
+> - `POKEMON_CALC_SKILL_ROOT`：Skill 根目录（包含 `scripts/` 和 `data/`），用于临时脚本中的 `sys.path.insert`
+> - `POKEMON_CALC_DATA_DIR`：数据目录绝对路径，用于覆盖脚本内部的数据路径推断
 
 ### 命令示例
 
@@ -263,7 +275,40 @@ python scripts/query.py calc-raw \
 
 确认标准中文名/英文名，确定形态（未指定则默认"一般"形态）。别名由 `data/aliases.json` 和 `normalize.py` 自动处理。
 
-**形态指定方式**：形态必须通过宝可梦名称本身指定（如 `"清洗洛托姆"`、`"超级喷火龙Ｙ"`），**严禁**在 `att_override` / `def_override` 中传入 `"form"` 字段。`Pokemon` dataclass 不支持 `form` 参数，传入将导致 `TypeError`。
+**形态查询与消歧规则**：
+
+部分宝可梦存在多形态（如 Mega 进化、地区形态、原始回归等）。`pokemon` 命令返回的数据中，`forms` 字段列出所有可用形态。当用户输入的名称可能对应多个形态时，按以下工作流处理：
+
+1. **先执行 `pokemon <name>` 查询**，查看返回的 `forms` 列表和 `form_selection_note`。
+2. **LLM 根据上下文推断用户意图的形态**（如用户说"洗翠火暴兽"则选"洗翠的样子"，说"火暴兽"则选默认"火暴兽"）。
+3. **在 `calc` / `optimize` 的 `att_override` 或 `def_override` 中传入 `"form_name"`**，明确指定形态名称。
+
+```json
+// 指定洗翠形态（火+幽灵，HP 73）
+{"form_name": "洗翠的样子", "item": "讲究围巾"}
+
+// 指定 Mega 形态（火+飞行，特性日照）
+{"form_name": "超级喷火龙Ｙ", "evs": {"sp_attack": 252}}
+```
+
+**规则**：
+- `form_name` 的值必须是 `pokemon` 命令返回的 `forms[].name` 中的某一个，大小写敏感。
+- 不传 `form_name` 时，默认使用 `_find_form_index` 推断的形态（通常是第一个形态或索引匹配的形态）。
+- **严禁**传入 `"form"` 字段（已废弃），`Pokemon` dataclass 不支持该参数。
+
+**示例工作流**（洗翠火暴兽 vs 超级胡地）：
+
+```bash
+# Step 1: 查询形态列表
+python scripts/query.py pokemon 洗翠火暴兽
+# 返回 form_selection_note: "该宝可梦存在 2 种形态：火暴兽, 洗翠的样子。..."
+
+# Step 2: LLM 根据"洗翠"推断选"洗翠的样子"，执行 calc
+python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
+  --att_ov '{"evs":{"sp_attack":252},"nature":"内敛"}' \
+  --def_ov '{"item":"讲究围巾","form_name":"洗翠的样子"}' \
+  --field_ov '{"format":"Doubles"}'
+```
 
 #### Step 3: 环境条件检查（强制逐项确认）
 
@@ -566,7 +611,11 @@ python scripts/query.py calc-raw \
 
 - 属性相克：18 属性完整相克表，含 Stellar、Freeze-Dry、Flying Press 等特殊规则
 - STAB / 太晶化：含 Adaptability、星晶属性加成
-- 特性修正：含 30+ 种攻击/防御特性（Overgrow/Blaze/Torrent、Huge Power、Guts、Protosynthesis 等）
+- 特性修正：含 40+ 种攻击/防御特性（Overgrow/Blaze/Torrent、Huge Power、Guts、Protosynthesis、Supreme Overlord 等）
+  - **威力修正**：Mega Launcher（波动类 ×1.5）、Technician（≤60 威力 ×1.5）、Sheer Force（追加效果 ×1.3）、Tough Claws（接触类 ×1.3）、Strong Jaw（啃咬类 ×1.5）、Sand Force（沙暴下岩/钢/地面 ×1.3）、Analytic（后手 ×1.3）
+  - **攻击修正**：Supreme Overlord（每阵亡队友 +10%，上限 50%）
+  - **abilityOn 动态激活**：Flash Fire / Slow Start / Plus / Minus / Stakeout 支持通过 `ability_on` 字段控制激活状态
+  - **特殊效果**：Long Reach（接触招式不触发接触效果，如绕过 Fluffy）、Merciless（对中毒/剧毒目标必定要害）
 - 道具修正：生命宝珠、讲究头带/眼镜、突击背心、进化奇石、深海的牙齿/鳞片、厚骨棒、光粉等
 - 场地/天气：晴天/雨天/沙暴/下雪、青草/电气/薄雾/精神场地
 - Ate/Ize 特性：Pixilate / Aerilate / Refrigerate / Galvanize / Normalize 类型转换 + 威力提升

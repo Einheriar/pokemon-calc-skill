@@ -22,6 +22,7 @@ Usage:
 
 import io
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -34,7 +35,8 @@ if sys.platform == "win32":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-DATA_DIR = SCRIPT_DIR.parent / "data"
+# Allow overriding data directory via environment variable (useful when installed as a standalone skill)
+DATA_DIR = Path(os.environ.get("POKEMON_CALC_DATA_DIR", SCRIPT_DIR.parent / "data"))
 
 _pokemon_data: dict[str, Any] | None = None
 _moves_data: dict[str, Any] | None = None
@@ -423,7 +425,8 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
             err["suggestions"] = suggestions
         return err
     stem, data, _form_idx = resolved
-    return {
+    forms = data.get("forms", [])
+    result: dict[str, Any] = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
         "pokedex_id": data.get("pokedex_id"),
@@ -439,13 +442,21 @@ def cmd_pokemon(name: str) -> dict[str, Any]:
                 "catch_rate": f.get("catch_rate"),
                 "egg_groups": f.get("egg_groups"),
             }
-            for f in data.get("forms", [])
+            for f in forms
         ],
         "stats": data.get("stats"),
         "evolution_chains": data.get("evolution_chains"),
         "mega_evolution": data.get("mega_evolution"),
         "_data_source": data.get("_data_source", "gen9"),
     }
+    # Prompt LLM to disambiguate when multiple forms exist
+    if len(forms) > 1:
+        form_names = [f.get("name", "") for f in forms]
+        result["form_selection_note"] = (
+            f"该宝可梦存在 {len(forms)} 种形态：{', '.join(form_names)}。"
+            "请在 calc / optimize 的 override 中传入 'form_name' 字段以指定具体形态。"
+        )
+    return result
 
 
 def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
@@ -800,6 +811,13 @@ def _resolve_ability_to_zh(ability_name: str) -> str:
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
+    # Allow override by explicit form_name (e.g. "洗翠的样子")
+    if overrides and "form_name" in overrides:
+        target = overrides["form_name"]
+        for idx, f in enumerate(forms):
+            if f.get("name") == target:
+                form_index = idx
+                break
     form = forms[form_index] if form_index < len(forms) and forms else forms[0] if forms else {}
     stats_list = data.get("stats", [])
     # Try to find stats matching the form name, fallback to form_index or first
@@ -870,6 +888,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "nature", "ability", "ability_zh", "item", "types", "tera_type",
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
+        "ability_on", "fainted_allies",
         "raw_stats", "stats",
     }
     pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}

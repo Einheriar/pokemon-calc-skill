@@ -74,6 +74,54 @@ _ATE_IZE_IGNORED_MOVES = {
     "Techno Blast", "Revelation Dance", "Multi-Attack", "Terrain Pulse"
 }
 
+# Hardcoded move name sets for ability checks (mirrors JS move_data.js flags)
+_PULSE_MOVES = {
+    "Water Pulse", "Aura Sphere", "Dark Pulse", "Dragon Pulse",
+    "Heal Pulse", "Origin Pulse", "Terrain Pulse",
+}
+
+_BITE_MOVES = {
+    "Bite", "Hyper Fang", "Crunch", "Poison Fang", "Fire Fang",
+    "Ice Fang", "Thunder Fang", "Psychic Fangs", "Jaw Lock", "Fishious Rend",
+}
+
+_SECONDARY_EFFECT_MOVES = {
+    "Acid", "Blizzard", "Body Slam", "BubbleBeam", "Fire Blast", "Fire Punch",
+    "Flamethrower", "Ice Beam", "Ice Punch", "Psychic", "Rock Slide", "Sky Attack",
+    "Sludge", "Thunder", "ThunderPunch", "Thunderbolt", "Twineedle", "Stomp",
+    "Rolling Kick", "Poison Sting", "Ember", "Psybeam", "Aurora Beam", "Thunder Shock",
+    "Lick", "Smog", "Bone Club", "Constrict", "Bubble", "Dizzy Punch", "Tri Attack",
+    "Waterfall", "Ancient Power", "Dynamic Punch", "Flame Wheel", "Headbutt", "Icy Wind",
+    "Iron Tail", "Sacred Fire", "Shadow Ball", "Sludge Bomb", "Steel Wing", "Zap Cannon",
+    "Snore", "Powder Snow", "Mud-Slap", "Octazooka", "Spark", "Dragon Breath", "Metal Claw",
+    "Twister", "Rock Smash", "Blaze Kick", "Bounce", "Extrasensory", "Fake Out", "Heat Wave",
+    "Luster Purge", "Meteor Mash", "Muddy Water", "Mud Shot", "Rock Tomb", "Signal Beam",
+    "Volt Tackle", "Secret Power", "Mist Ball", "Needle Arm", "Astonish", "Silver Wind",
+    "Poison Tail", "Air Slash", "Bug Buzz", "Charge Beam", "Chatter", "Cross Poison",
+    "Discharge", "Dragon Rush", "Earth Power", "Energy Ball", "Flare Blitz", "Flash Cannon",
+    "Focus Blast", "Force Palm", "Gunk Shot", "Iron Head", "Lava Plume", "Mud Bomb",
+    "Nature Power", "Poison Jab", "Rock Climb", "Seed Flare", "Zen Headbutt", "Mirror Shot",
+    "Ominous Wind", "Electroweb", "Acid Spray", "Blue Flare", "Bolt Strike", "Bulldoze",
+    "Fiery Dance", "Flame Charge", "Freeze Shock", "Glaciate", "Hurricane", "Ice Burn",
+    "Icicle Crash", "Inferno", "Low Sweep", "Night Daze", "Razor Shell", "Relic Song",
+    "Scald", "Searing Shot", "Sludge Wave", "Snarl", "Struggle Bug", "Heart Stamp",
+    "Leaf Tornado", "Steamroller", "Diamond Storm", "Freeze-Dry", "Moonblast", "Play Rough",
+    "Power-Up Punch", "Mystical Fire", "Steam Eruption", "Nuzzle", "Zing Zap", "Liquidation",
+    "Shadow Bone", "Genesis Supernova", "Stoked Sparksurfer", "Trop Kick", "Fire Lash",
+    "Lunge", "Anchor Shot", "Throat Chop", "Sparkling Aria", "Spirit Shackle",
+    "Clangorous Soulblaze", "Drum Beating", "Pyro Ball", "Aura Wheel", "Breaking Swipe",
+    "Apple Acid", "Grav Apple", "Spirit Break", "Strange Steam", "Rapid Spin",
+    "Burning Jealousy", "Scorching Sands", "Shell Side Arm", "Skitter Smack", "Eerie Spell",
+    "Fiery Wrath", "Freezing Glare", "Thunderous Kick", "Double Iron Bash", "Dire Claw",
+    "Psyshield Bash", "Stone Axe", "Springtide Storm", "Mystical Power", "Mountain Gale",
+    "Barb Barrage", "Esper Wing", "Bitter Malice", "Triple Arrows", "Infernal Parade",
+    "Ceaseless Edge", "Bleakwind Storm", "Wildbolt Storm", "Sandsear Storm", "Axe Kick",
+    "Lumina Crash", "Order Up", "Jet Punch", "Salt Cure", "Mortal Spin", "Torch Song",
+    "Aqua Step", "Pounce", "Trailblaze", "Chilling Water", "Blazing Torque", "Wicked Torque",
+    "Noxious Torque", "Combat Torque", "Magical Torque", "Matcha Gotcha", "Syrup Bomb",
+    "Electro Shot", "Alluring Voice", "Psychic Noise", "Upper Hand", "Malignant Chain",
+}
+
 
 def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
     """
@@ -323,7 +371,7 @@ def base_power_func(
         bp = 70
     elif name in ("Brine", "Venoshock") and attacker.current_hp <= attacker.max_hp // 2:
         bp *= 2
-    elif name == "Retaliate" and attacker.abilityOn:  # type: ignore[attr-defined]
+    elif name == "Retaliate" and getattr(attacker, "ability_on", False):
         bp *= 2
     elif name == "Earthquake" and defender.item == "Float Stone":
         pass  # No BP change, handled elsewhere
@@ -377,6 +425,26 @@ def calc_bp_mods(
     if ((attacker.ability == "Reckless" and move.has_recoil)
             or (attacker.ability == "Iron Fist" and move.is_punch)):
         bp_mods.append(0x1333)
+
+    # d. 1.3x BP abilities (Sheer Force, Sand Force, Analytic, Tough Claws)
+    if attacker.ability == "Sheer Force" and move.name in _SECONDARY_EFFECT_MOVES:
+        bp_mods.append(0x14CD)
+    elif attacker.ability == "Sand Force" and field.weather == "Sand" and move.type in ("岩石", "钢", "地面"):
+        bp_mods.append(0x14CD)
+    elif attacker.ability == "Analytic" and turn_order == "LAST":
+        bp_mods.append(0x14CD)
+    elif attacker.ability == "Tough Claws" and move.makes_contact:
+        bp_mods.append(0x14CD)
+
+    # e. 1.5x BP abilities (Mega Launcher, Strong Jaw, Technician)
+    # Technician checks BP AFTER prior mods are applied
+    temp_bp = poke_round(base_power * chain_mods(bp_mods) / 0x1000)
+    if attacker.ability == "Mega Launcher" and move.name in _PULSE_MOVES:
+        bp_mods.append(0x1800)
+    elif attacker.ability == "Strong Jaw" and move.name in _BITE_MOVES:
+        bp_mods.append(0x1800)
+    elif attacker.ability == "Technician" and temp_bp <= 60:
+        bp_mods.append(0x1800)
 
     # d. Field abilities
     if field.is_battery and move.category == "Special":
@@ -483,7 +551,7 @@ def calc_at_mods(
         at_mods.append(0x0C00)
 
     # Slow Start / Defeatist
-    if ((attacker.ability == "Slow Start" and False)  # abilityOn flag
+    if ((attacker.ability == "Slow Start" and attacker.ability_on)
             or (attacker.ability == "Defeatist" and attacker.current_hp <= attacker.max_hp // 2)):
         at_mods.append(0x800)
 
@@ -503,10 +571,10 @@ def calc_at_mods(
             or (attacker.ability == "Torrent" and attacker.current_hp <= hp_third and move.type == "水")
             or (attacker.ability == "Swarm" and attacker.current_hp <= hp_third and move.type == "虫")
             or (attacker.ability == "Dragon's Maw" and move.type == "龙")
-            or (attacker.ability == "Flash Fire" and False and move.type == "火")  # abilityOn
+            or (attacker.ability == "Flash Fire" and attacker.ability_on and move.type == "火")
             or (attacker.ability == "Steelworker" and move.type == "钢")
             or (attacker.ability == "Gorilla Tactics" and move.category == "Physical" and not attacker.is_dynamax)
-            or (attacker.ability in ("Plus", "Minus") and False)  # abilityOn
+            or (attacker.ability in ("Plus", "Minus") and attacker.ability_on)
             or (attacker.ability == "Sharpness" and move.is_slice)
             or (attacker.ability == "Rocky Payload" and move.type == "岩石")):
         at_mods.append(0x1800)
@@ -531,8 +599,14 @@ def calc_at_mods(
     # 2.0x abilities
     if ((attacker.ability == "Water Bubble" and move.type == "水")
             or (attacker.ability in ("Huge Power", "Pure Power") and move.category == "Physical")
-            or (attacker.ability == "Stakeout" and False)):  # abilityOn
+            or (attacker.ability == "Stakeout" and attacker.ability_on)):
         at_mods.append(0x2000)
+
+    # Supreme Overlord (Gen9): +10% per fainted ally, up to 5 allies (+50%)
+    if attacker.ability == "Supreme Overlord" and attacker.fainted_allies > 0:
+        overlord_boost = [0x119A, 0x1333, 0x14CD, 0x1666, 0x1800]
+        idx = min(attacker.fainted_allies, 5) - 1
+        at_mods.append(overlord_boost[idx])
 
     # 0.5x defensive abilities
     if ((def_ability == "Thick Fat" and move.type in ("火", "冰"))
@@ -708,8 +782,9 @@ def calc_final_mods(
     if def_ability in ("Multiscale", "Shadow Shield") and defender.current_hp == defender.max_hp:
         final_mods.append(0x800)
 
-    # Fluffy (contact)
-    if def_ability == "Fluffy" and move.makes_contact:
+    # Fluffy (contact) - Long Reach ignores contact effects
+    is_contact = move.makes_contact and attacker.ability != "Long Reach"
+    if def_ability == "Fluffy" and is_contact:
         final_mods.append(0x800)
 
     # Punk Rock
@@ -892,6 +967,9 @@ def calculate_damage(
 
     # Critical hit
     is_critical = move.is_crit and def_ability not in ("Battle Armor", "Shell Armor")
+    # Merciless: always crit against poisoned/toxiced defender
+    if attacker.ability == "Merciless" and defender.status in ("Poisoned", "Badly Poisoned"):
+        is_critical = True
 
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
     if move.name == "Weather Ball" and field.weather and attacker.item not in ("Utility Umbrella", "大晴天伞"):
