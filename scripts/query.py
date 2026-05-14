@@ -415,7 +415,53 @@ def _get_champions_learnset(stem: str) -> list[str]:
     return []
 
 
-def cmd_pokemon(name: str) -> dict[str, Any]:
+def _find_pokemon_by_types(type_filters: list[str]) -> dict[str, Any]:
+    """Find all pokemon whose primary/secondary types match all given filters."""
+    load_data()
+    from normalize import normalize_type_name
+
+    normalized_filters = [normalize_type_name(t) for t in type_filters]
+    valid_types = list(_type_chart.keys())
+    for t in normalized_filters:
+        if t not in valid_types:
+            return {"error": f"Type '{t}' not found. Valid types: {sorted(valid_types)}"}
+
+    matches: list[dict[str, Any]] = []
+    for stem, data in _pokemon_data.items():
+        for form in data.get("forms", []):
+            form_types = form.get("types", [])
+            if not form_types:
+                continue
+            # Match: all filter types must be present in the form's types
+            if all(ft in form_types for ft in normalized_filters):
+                matches.append({
+                    "name": form.get("name") or data.get("name_zh"),
+                    "name_en": data.get("name_en"),
+                    "pokedex_id": data.get("pokedex_id"),
+                    "types": form_types,
+                    "form_name": form.get("name"),
+                })
+
+    # Deduplicate by name
+    seen = set()
+    deduped = []
+    for m in matches:
+        key = m["name"]
+        if key not in seen:
+            seen.add(key)
+            deduped.append(m)
+
+    return {
+        "query_types": normalized_filters,
+        "count": len(deduped),
+        "results": deduped,
+    }
+
+
+def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[str, Any]:
+    if type_filters:
+        return _find_pokemon_by_types(type_filters)
+
     resolved = resolve_pokemon(name)
     if not resolved:
         candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
@@ -506,19 +552,50 @@ def cmd_ability(name: str) -> dict[str, Any]:
     }
 
 
-def cmd_type(atk: str, dfn: str) -> dict[str, Any]:
+def cmd_type(atk: str, dfn: str = "") -> dict[str, Any]:
     load_data()
     chart = _type_chart
+    # Normalize type names (supports English input like "Psychic" -> "超能力")
+    from normalize import normalize_type_name
+
+    atk = normalize_type_name(atk)
     if atk not in chart:
-        return {"error": f"Attack type '{atk}' not found. Valid types: {list(chart.keys())}"}
-    row = chart[atk]
-    if dfn not in row:
-        return {"error": f"Defense type '{dfn}' not found. Valid types: {list(row.keys())}"}
+        return {"error": f"Type '{atk}' not found. Valid types: {list(chart.keys())}"}
+
+    if dfn:
+        # Backward-compatible: point-to-point query
+        dfn = normalize_type_name(dfn)
+        row = chart[atk]
+        if dfn not in row:
+            return {"error": f"Defense type '{dfn}' not found. Valid types: {list(row.keys())}"}
+        return {
+            "attack_type": atk,
+            "defense_type": dfn,
+            "multiplier": row[dfn],
+            "description": _describe_multiplier(row[dfn]),
+        }
+
+    # Aggregate query: only one type provided
+    # Offensive profile (atk as attacker)
+    offensive_row = chart[atk]
+    offensive: dict[str, list[str]] = {
+        "super_effective": [t for t, m in offensive_row.items() if m > 1],
+        "not_very_effective": [t for t, m in offensive_row.items() if 0 < m < 1],
+        "no_effect": [t for t, m in offensive_row.items() if m == 0],
+    }
+
+    # Defensive profile (atk as defender)
+    defensive: dict[str, list[str]] = {
+        "weak_to": [t for t, row in chart.items() if row[atk] > 1],
+        "resists": [t for t, row in chart.items() if 0 < row[atk] < 1],
+        "immune_to": [t for t, row in chart.items() if row[atk] == 0],
+    }
+
     return {
-        "attack_type": atk,
-        "defense_type": dfn,
-        "multiplier": row[dfn],
-        "description": _describe_multiplier(row[dfn]),
+        "type": atk,
+        "mode": "aggregate",
+        "offensive": offensive,
+        "defensive": defensive,
     }
 
 
@@ -1466,11 +1543,16 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
         subparsers = parser.add_subparsers(dest="command")
+
+        # pokemon
+        pokemon_parser = subparsers.add_parser("pokemon", help="Pokemon info or type-filtered search")
+        pokemon_parser.add_argument("name", nargs="?", default="", help="Pokemon name (optional if --type is used)")
+        pokemon_parser.add_argument("--type", dest="type_filters", action="append", default=[], help="Filter by type (can specify multiple, e.g. --type 超能 --type 恶)")
 
         # calc
         calc_parser = subparsers.add_parser("calc", help="Quick damage calculation")
@@ -1563,6 +1645,11 @@ def main() -> int:
                     args.def_ov,
                     args.field_ov,
                 )
+            elif cmd == "pokemon":
+                if args.type_filters:
+                    result = cmd_pokemon(type_filters=args.type_filters)
+                else:
+                    result = cmd_pokemon(name=args.name)
             elif cmd == "compute-stats":
                 result = cmd_compute_stats(
                     args.base_stats,

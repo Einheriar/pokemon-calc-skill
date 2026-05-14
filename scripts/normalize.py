@@ -16,6 +16,29 @@ _DATA_DIR = _SCRIPT_DIR.parent / "data"
 
 _aliases_data: dict[str, dict[str, str]] | None = None
 
+_TYPE_EN_TO_ZH: dict[str, str] = {
+    "normal": "一般",
+    "fighting": "格斗",
+    "flying": "飞行",
+    "poison": "毒",
+    "ground": "地面",
+    "rock": "岩石",
+    "bug": "虫",
+    "ghost": "幽灵",
+    "steel": "钢",
+    "fire": "火",
+    "water": "水",
+    "grass": "草",
+    "electric": "电",
+    "psychic": "超能力",
+    "ice": "冰",
+    "dragon": "龙",
+    "dark": "恶",
+    "fairy": "妖精",
+}
+
+_TYPE_ZH_SET: set[str] = set(_TYPE_EN_TO_ZH.values())
+
 
 def _to_fullwidth(s: str) -> str:
     """Convert halfwidth ASCII letters/digits to fullwidth.
@@ -86,6 +109,31 @@ def normalize_name(name: str, entity_type: str) -> str:
             return canonical
 
     # No alias found; return the original name unchanged
+    return name
+
+
+def normalize_type_name(name: str) -> str:
+    """Normalize a user-provided type name to its canonical Chinese form.
+
+    Args:
+        name: Raw input name (may be English or Chinese, full or abbreviated).
+
+    Returns:
+        Chinese canonical name if the input is recognized;
+        otherwise returns the original name unchanged.
+    """
+    # If already canonical Chinese, return as-is
+    if name in _TYPE_ZH_SET:
+        return name
+    # Try English lookup (case-insensitive)
+    canonical = _TYPE_EN_TO_ZH.get(name.lower())
+    if canonical:
+        return canonical
+    # Fuzzy match for Chinese abbreviations (e.g. "超能" -> "超能力")
+    import difflib
+    close = difflib.get_close_matches(name, _TYPE_ZH_SET, n=1, cutoff=0.6)
+    if close:
+        return close[0]
     return name
 
 
