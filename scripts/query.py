@@ -481,7 +481,9 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
             {
                 "name": f.get("name"),
                 "types": f.get("types"),
-                "abilities": [a["name"] if isinstance(a, dict) else a for a in f.get("abilities", [])],
+                "abilities": list(dict.fromkeys(
+                    a["name"] if isinstance(a, dict) else a for a in f.get("abilities", [])
+                )),
                 "category": f.get("category"),
                 "height": f.get("height"),
                 "weight": f.get("weight"),
@@ -930,8 +932,22 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     if is_mega:
         default_item = _derive_mega_stone(form_name)
 
+    # Build display name: combine regional prefix with base name for descriptive forms
+    name_zh = data.get("name_zh", "")
+    if not form_name or form_name == name_zh:
+        display_name = name_zh
+    elif name_zh in form_name:
+        # form_name already contains base name, e.g. "超级喷火龙Ｙ"
+        display_name = form_name
+    elif "的样子" in form_name:
+        # Descriptive form name like "洗翠的样子", "阿罗拉的样子"
+        prefix = form_name.replace("的样子", "")
+        display_name = prefix + name_zh
+    else:
+        display_name = form_name
+
     pk = {
-        "name": form_name or data.get("name_zh", ""),
+        "name": display_name,
         "name_en": data.get("name_en", ""),
         "level": 50,
         "base_stats": base_stats,
@@ -1229,14 +1245,20 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         total_damage_rolls = squash_multihit(result.damage, move.hits)
 
     # Build attacker / defender summary for transparency
-    # Extract all abilities from the first form
+    # Extract all abilities from the *selected* form (not always forms[0])
     att_forms = att_data.get("forms", [{}])
-    att_first_form = att_forms[0] if att_forms else {}
-    att_all_abilities = [a.get("name", "") for a in att_first_form.get("abilities", [])]
+    att_selected_form = att_forms[att_form_idx] if att_forms and att_form_idx < len(att_forms) else (att_forms[0] if att_forms else {})
+    att_all_abilities = list(dict.fromkeys(
+        a.get("name", "") if isinstance(a, dict) else a
+        for a in att_selected_form.get("abilities", [])
+    ))
 
     def_forms = def_data.get("forms", [{}])
-    def_first_form = def_forms[0] if def_forms else {}
-    def_all_abilities = [a.get("name", "") for a in def_first_form.get("abilities", [])]
+    def_selected_form = def_forms[def_form_idx] if def_forms and def_form_idx < len(def_forms) else (def_forms[0] if def_forms else {})
+    def_all_abilities = list(dict.fromkeys(
+        a.get("name", "") if isinstance(a, dict) else a
+        for a in def_selected_form.get("abilities", [])
+    ))
 
     attacker_info = {
         "name_zh": attacker.name,

@@ -205,6 +205,7 @@ python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作�
 
 - `damage_range` / `damage_rolls` 为**单次打击**（多段招式）
 - `total_damage_range` / `total_damage_rolls` 为**多段合计**，判断秒杀时优先引用
+- `type_effectiveness` 仅反映**属性相克原始倍率**（如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，应对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
 
 ### calc-raw 快速填空模板
 
@@ -268,7 +269,9 @@ python scripts/query.py calc-raw \
 
 #### Step 2: 名称规范化
 
-确认标准中文名/英文名，确定形态（未指定则默认"一般"形态）。别名由 `data/aliases.json` 和 `normalize.py` 自动处理。
+确认标准中文名/英文名，确定形态（未指定则默认"一般"形态）。
+
+**别名处理规则**：`data/aliases.json` 已收录常见俗称（如"钢兵"→"仆刀将军"、"抗斗果"→"巧可果"），`normalize.py` 在所有查询命令的底层自动完成映射。**Agent 无需预先转换别名，直接使用用户提供的原始名称作为参数传入即可，以查询的结果为准。**
 
 **形态查询与消歧规则**：
 
