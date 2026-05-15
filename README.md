@@ -1,420 +1,355 @@
-# pokemon-calc Skill 技术文档
+# pokemon-calc: Pokédex & Damage Calculator for AI Agents
 
-## 设计原则
+Traditional Pokémon damage calculators are web apps or tools built for humans. `pokemon-calc` is a purpose-built computation engine designed for **AI Agents (Large Language Models)**.
 
-1. **LLM 只做理解，不做计算**
-   LLM 仅负责将用户的自然语言请求转化为结构化参数，所有伤害数值计算由固定 Python 程序完成。
-
-2. **零外部依赖**
-   核心计算模块仅使用 Python 标准库，不依赖 numpy、pandas 等重型库。
-
-3. **数据静态化**
-   将 JS 数据文件一次性提取为 JSON，运行时直接加载，不解析 JS。
-
-4. **纯函数接口**
-   计算函数为纯函数，输入输出明确，便于测试和集成。
-
-5. **中文优先，能力值优先**
-   数据以中文名为主索引，同时支持英文名称。在回答中始终使用能力值描述，将用户输入的努力值转换为能力值呈现。
-
-6. **全国图鉴百科 + Gen9 伤害计算**
-   百科查询数据（`pokemon.json`）覆盖全国图鉴（1~1025 号），包含所有世代的宝可梦信息。伤害计算引擎（`damage.py`）默认以 **Gen9（朱紫）** 规则执行，使用的招式数据来自 `MOVES_SV`。若用户询问的宝可梦在 Gen9 中未过签，百科信息仍可正常查询，但伤害计算会按 Gen9 规则处理（如招式威力、特性效果等以 Gen9 为准）。
-
-7. **招式数据权威来源**
-   伤害计算相关的招式数据以 `script_res/move_data.js` 的 `MOVES_SV` 为唯一权威来源，而非 `pokemon-dataset-zh`。
+By providing standardized pure-function CLI interfaces and fully localized static data, this project eliminates the **numerical hallucinations** that LLMs commonly produce when handling complex multiplicative modifiers in Pokémon battles (type matchups × abilities × items × weather × terrain).
 
 ---
 
-## 目录结构
+## Core Values
 
-```
-pokemon-calc/
-├── SKILL.md              # Skill 使用说明与 LLM 行为规范
-├── README.md             # 本文件（技术文档）
-├── data/
-│   ├── pokemon.json      # 宝可梦百科数据（1025 只）
-│   ├── moves.json        # 招式数据（782 个，含 SV 全世代）
-│   ├── abilities.json    # 特性数据
-│   ├── type_chart.json   # 18x18 属性相克表
-│   ├── name_index.json   # 中英文名称索引
-│   ├── setdex.json       # VGC 预设配置（189 只，264 个预设）
-│   └── aliases.json      # 玩家俗称 → 标准名称映射
-└── scripts/
-    ├── query.py          # 主查询入口（百科 + calc + preset + optimize）
-    ├── damage.py         # 伤害计算引擎
-    ├── ko_chance.py      # KO 概率计算
-    ├── ev_optimizer.py   # 努力值优化搜索
-    ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
-    └── normalize.py      # 输入标准化层（别名/拼写纠正）
-```
+### 1. Designed for Agents: LLM Understands, Engine Computes
 
+Large language models excel at intent recognition and parameter extraction, but they inevitably fail at numerical calculations involving extensive table lookups and multi-level modifiers. This project decouples the two responsibilities:
+
+- **LLM's Job**: Parse natural language (e.g. "Can Life Orb max SpA Mega Charizard Y OHKO max SpD Amoonguss in Sun?") into structured JSON parameters.
+- **Engine's Job**: Receive parameters, execute deterministic calculations covering 40+ modifiers (STAB, weather, items, Tera, etc.), and return exact damage ranges and KO probabilities.
+- **Pure-Function Interface**: All queries and calculations flow through a single entry point, `query.py`, with well-defined JSON In / JSON Out semantics. This makes it trivial to wrap as a GPTs Action, Dify plugin, or MCP (Model Context Protocol) tool.
+
+### 2. 100% Local & Zero External Dependencies
+
+No database configuration, no external API calls (avoiding network latency and token consumption). Truly out-of-the-box:
+
+- **Embedded Static Data**: ~38 MB of preprocessed JSON data (National Dex #1–1025, 782 moves, abilities, VGC sets, etc.) all bundled inside.
+- **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, **no** `pip install` of any kind. Clone and run — ideal as a lightweight submodule for any AI agent project.
 
 ---
 
-## 脚本 I/O 规范
+## Installation & Usage
 
-### 1. query.py（主查询入口）
+This project is an Agent Skill that can be installed into any AI coding assistant or agent framework that supports custom skills.
 
-所有查询通过执行 `query.py` 完成，命令与参数以空格分隔。
+### Install as a Skill
 
-#### 子命令列表
+Assuming you have cloned this repo and are at the repository root.
 
-| 命令 | 参数 | 用途 | 返回值 |
-|------|------|------|--------|
-| `pokemon <name>` | 宝可梦中文/英文名 | 基础信息、形态、特性、种族值、进化链 | JSON 对象 |
-| `move <name>` | 招式中文/英文名 | 威力、命中、PP、属性、分类、效果描述 | JSON 对象 |
-| `ability <name>` | 特性中文/英文名 | 效果描述、元信息 | JSON 对象 |
-| `item <name>` | 道具中文/英文名 | 效果描述、分类、持有效果 | JSON 对象 |
-| `type <atk> <def>` | 攻击属性 防御属性 | 属性相克倍率与描述 | JSON 对象 |
-| `stats <name>` | 宝可梦名 | 各形态种族值与总和 | JSON 对象 |
-| `weak <name>` | 宝可梦名 | 弱点、抗性、免疫列表 | JSON 对象 |
-| `learnset <name>` | 宝可梦名 | 升级/TM/遗传/教学招式 | JSON 数组 |
-| `evo <name>` | 宝可梦名 | 进化链与超级进化 | JSON 对象 |
-| `pokedex <name>` | 宝可梦名 | 各版本图鉴描述 | JSON 数组 |
-| `profile <name>` | 宝可梦名 | 外形描述、原型考据、多语言词源 | JSON 对象 |
-| `find-move <move>` | 招式名 | 反向查询：能学会该招式的所有宝可梦 | JSON 数组 |
-| `preset <pokemon> [preset_name]` | 宝可梦名 [预设名] | 列出/获取 VGC 预设配置 | JSON 对象 |
-| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
-| `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
-| `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
-| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
+#### Codex
 
-
-#### calc 命令 I/O
-
-**输入参数**
-
-| 位置 | 参数名 | 类型 | 必填 | 说明 |
-|------|--------|------|------|------|
-| 1 | `attacker` | string | 是 | 攻击方宝可梦中文/英文名 |
-| 2 | `move` | string | 是 | 招式中文/英文名 |
-| 3 | `defender` | string | 是 | 防御方宝可梦中文/英文名 |
-| 4 | `att_override` | JSON string | 否 | 覆盖攻击方默认配置 |
-| 5 | `move_override` | JSON string | 否 | 覆盖招式默认配置 |
-| 6 | `def_override` | JSON string | 否 | 覆盖防御方默认配置 |
-
-**att_override / def_override 可覆盖字段**
-
-```json
-{
-  "level": 50,
-  "evs": {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0},
-  "ivs": {"hp": 31, "attack": 31, "defense": 31, "sp_attack": 31, "sp_defense": 31, "speed": 31},
-  "nature": "爽朗",
-  "ability": "坚硬脑袋",
-  "item": "讲究头带",
-  "types": ["飞行", "岩石"],
-  "boosts": {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0},
-  "status": null,
-  "is_terastalize": false,
-  "tera_type": null,
-  "is_dynamax": false
-}
+```bash
+mkdir -p "$CODEX_HOME/skills"
+cp -R pokemon-calc "$CODEX_HOME/skills/"
 ```
 
-**move_override 可覆盖字段**
+Usage example:
 
-```json
-{
-  "base_power": 80,
-  "type": "飞行",
-  "category": "Physical",
-  "is_crit": false,
-  "hits": 1
-}
+```text
+Use $pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.
 ```
 
-**返回值 JSON Schema**
+#### Claude Code
+
+Supports either global or project-level installation.
+
+Global:
+
+```bash
+mkdir -p "$HOME/.claude/skills"
+cp -R pokemon-calc "$HOME/.claude/skills/"
+```
+
+Project-level:
+
+```bash
+mkdir -p .claude/skills
+cp -R pokemon-calc .claude/skills/
+```
+
+In prompts, explicitly request this skill, for example:
+
+```text
+Please use the pokemon-calc skill to run a damage calc.
+```
+
+### Use as a Standalone CLI Tool
+
+Even without an Agent framework, you can run it directly from the command line:
+
+```bash
+cd pokemon-calc
+python scripts/query.py calc Charizard Flamethrower Blastoise
+```
+
+---
+
+## Quick Start
+
+After cloning, no dependencies to install — just run with Python:
+
+### 1. Encyclopedia & Mechanics Queries
+
+```bash
+# Query base stats and typing
+python scripts/query.py stats Hisuian Decidueye
+
+# Query move mechanics
+python scripts/query.py move Expanding Force
+
+# Query type matchup
+python scripts/query.py type Fairy Steel
+```
+
+### 2. Damage Calculation Engine
+
+Combines positional arguments with named override parameters.
+
+```bash
+# Basic quick calc (defaults to Lv.50 Doubles)
+python scripts/query.py calc Charizard Flamethrower Blastoise
+
+# Complex calc with environment and config overrides (JSON)
+python scripts/query.py calc "Mega Charizard Y" Heat Wave "Mega Alakazam" \
+  --att_ov '{"evs":{"sp_attack":252},"nature":"Modest"}' \
+  --def_ov '{"item":"Choice Scarf"}' \
+  --field_ov '{"weather":"Sun","format":"Doubles"}'
+```
+
+Sample response (excerpt):
 
 ```json
 {
-  "attacker": "化石翼龙",
-  "move": "双翼",
-  "defender": "胡地",
-  "damage_range": [55, 66],
-  "damage_rolls": [55, 55, 57, 57, 58, 58, 60, 60, 60, 61, 61, 63, 63, 64, 64, 66],
-  "description": "Lv.50 化石翼龙 的 Dual Wingbeat vs Lv.50 胡地 | 威力 40 | 攻击 157 | 防御 65 | 伤害范围 55 ~ 66",
-  "is_critical": false,
+  "damage_range": [130, 154],
+  "ko_chance": "Approx. 93.8% chance to OHKO",
   "type_effectiveness": 1.0,
-  "stab_applied": true,
-  "burn_applied": false
+  "stab_applied": true
 }
 ```
 
-#### optimize 命令 I/O
-
-**输入参数**
-
-| 位置 | 参数名 | 类型 | 必填 | 说明 |
-|------|--------|------|------|------|
-| 1 | `attacker` | string | 是 | 攻击方宝可梦名 |
-| 2 | `move` | string | 是 | 招式名 |
-| 3 | `defender` | string | 是 | 防御方宝可梦名 |
-| 4 | `goal` | string | 否 | `ko` / `survive` / `survive_bulk`（默认 `ko`） |
-| 5 | `target` | string | 否 | `ohko` / `2hko` / `3hko` / `survive` / `survive_2hko`（默认 `ohko`） |
-| 6 | `threshold` | string | 否 | `guaranteed`（最差乱数）/ `likely`（平均乱数）（默认 `guaranteed`） |
-| 7 | `att_override` | JSON string | 否 | 覆盖攻击方配置 |
-| 8 | `def_override` | JSON string | 否 | 覆盖防御方配置 |
-
-**返回值 JSON Schema**
-
-```json
-{
-  "goal": "ko",
-  "target": "ohko",
-  "threshold": "guaranteed",
-  "result": "found",
-  "optimized_evs": {"attack": 252},
-  "damage_range": [130, 156],
-  "description": "攻击能力值 172（对应 252 攻击努力值）可保证一击击杀"
-}
-```
-
----
-
-### 2. damage.py（伤害计算引擎）
-
-**核心函数签名**
-
-```python
-def calculate_damage(
-    attacker: Pokemon,
-    defender: Pokemon,
-    move: Move,
-    field: Field,
-    gen: int = 9,
-) -> DamageResult:
-```
-
-**输入模型**
-
-- `Pokemon`: 包含 name, level, base_stats, evs, ivs, nature, ability, item, types, boosts, status 等
-- `Move`: 包含 name, base_power, type, category, hits, is_crit, makes_contact 等
-- `Field`: 包含 weather, terrain, format, is_reflect, is_light_screen 等场地条件
-
-**输出模型（DamageResult）**
-
-```python
-@dataclass
-class DamageResult:
-    damage: list[int]          # 16 个乱数 roll 的伤害值（已排序）
-    min_damage: int
-    max_damage: int
-    description: str
-    is_critical: bool
-    type_effectiveness: float
-    stab_applied: bool
-    burn_applied: bool
-```
-
-**已实现的修正**
-
-- 属性相克（含 Stellar、Freeze-Dry、Flying Press 等特殊规则）
-- STAB / 太晶化（含 Adaptability、星晶属性加成）
-- 特性修正（30+ 种：Overgrow/Blaze/Torrent、Huge Power、Guts、Protosynthesis 等）
-- 道具修正（生命宝珠、讲究头带/眼镜、突击背心、进化奇石、深海的牙齿/鳞片等）
-- 场地/天气（晴天/雨天/沙暴/下雪、青草/电气/薄雾/精神场地）
-- Ate/Ize 特性（Pixilate / Aerilate / Refrigerate / Galvanize / Normalize）
-- 抗性树果（16 种，效果拔群时触发 0.5x 修正）
-- 其他：烧伤减半、要害 1.5x、能力等级变化、重力、光墙/反射壁/极光幕
-
----
-
-### 3. ko_chance.py（KO 概率计算）
-
-**核心函数签名**
-
-```python
-def get_ko_chance_text(
-    damage: list[int],
-    move: Move,
-    defender: Pokemon,
-    field: Field,
-    is_bad_dreams: bool = False,
-) -> str:
-```
-
-**输入**
-
-- `damage`: `calculate_damage` 返回的 16 个乱数 roll 列表
-- `move`: 攻击招式
-- `defender`: 防御方宝可梦
-- `field`: 场地条件
-- `is_bad_dreams`: 是否处于噩梦状态
-
-**输出**
-
-- 人类可读的 KO 概率描述字符串（如"约 93.8% 几率 2次攻击击杀"）
-
----
-
-### 4. ev_optimizer.py（努力值优化）
-
-**核心函数签名**
-
-```python
-def optimize_evs(
-    attacker: Pokemon,
-    defender: Pokemon,
-    move: Move,
-    field: Field,
-    goal: str = "ko",        # "ko" | "survive" | "survive_bulk"
-    target: str = "ohko",    # "ohko" | "2hko" | "3hko" | "survive" | "survive_2hko"
-    threshold: str = "guaranteed",  # "guaranteed" | "likely"
-) -> dict:
-```
-
-**功能**
-
-- `ko` + `ohko`: 搜索最少攻击/特攻努力值以一击击杀
-- `ko` + `2hko`/`3hko`: 搜索最少攻击努力值以多击击杀
-- `survive`: 搜索最少防御/特防努力值以扛住一击
-- `survive_bulk`: 联合搜索 HP + 防御的最优分配以扛住一击
-
-**输出**
-
-返回包含 `optimized_evs`, `damage_range`, `description` 的字典。
-
----
-
-### 5. models.py（数据模型）
-
-定义以下 dataclass：
-
-```python
-@dataclass
-class Pokemon:
-    name: str
-    level: int = 50
-    base_stats: dict[str, int]
-    evs: dict[str, int]
-    ivs: dict[str, int]
-    nature: str
-    ability: str
-    item: str
-    types: list[str]
-    boosts: dict[str, int]
-    status: Optional[str]
-    is_terastalize: bool
-    tera_type: Optional[str]
-    is_dynamax: bool
-    can_evolve: bool
-    weight: float
-
-@dataclass
-class Move:
-    name: str
-    base_power: int
-    type: str
-    category: str          # Physical / Special / Status
-    hits: int = 1
-    is_crit: bool = False
-    makes_contact: bool = False
-    has_recoil: bool = False
-    is_punch: bool = False
-    is_sound: bool = False
-    is_slice: bool = False
-    is_wind: bool = False
-    is_bullet: bool = False
-    ignores_burn: bool = False
-    is_spread: bool = False
-    is_ohko: bool = False
-    is_z: bool = False
-
-@dataclass
-class Field:
-    weather: Optional[str]
-    terrain: Optional[str]
-    format: str = "Singles"
-    is_reflect: bool = False
-    is_light_screen: bool = False
-    is_aurora_veil: bool = False
-    is_gravity: bool = False
-    is_stealth_rock: bool = False
-    spikes: int = 0
-    # ... 以及其他双打/场地条件
-
-@dataclass
-class DamageResult:
-    damage: list[int]
-    min_damage: int
-    max_damage: int
-    description: str
-    is_critical: bool
-    type_effectiveness: float
-    stab_applied: bool
-    burn_applied: bool
-```
-
----
-
-## 数据资产清单
-
-| 文件 | 条目数 | 来源 | 说明 |
-|------|--------|------|------|
-| `data/pokemon.json` | 1025 | `pokemon-dataset-zh` | 宝可梦百科数据（含 profile、prototype、图鉴、技能池、进化链） |
-| `data/moves.json` | 782 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式 |
-| `data/abilities.json` | ~307 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
-| `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表 |
-| `data/name_index.json` | ~4000 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
-| `data/setdex.json` | 189 只 / 264 预设 | `script_res/setdex_ncp-g9.js` | VGC 预设配置（性格、努力值、道具、特性、招式参考） |
-| `data/aliases.json` | 22 条 | 手工维护 | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等） |
-
-
-### 数据修复记录
-
-- **2026-04-30**: `moves.json` 从 349 条补充至 **782 条**。关键修复：从 `script_res/move_data.js` 的 `MOVES_SV` 提取全部 712 个招式，与现有数据合并，解决了"双翼"（Dual Wingbeat）等大量 SV 世代招式缺失的问题。
-
----
-
-## 使用示例
+### 3. EV Reverse Optimization
 
 ```bash
-# 百科查询
-python scripts/query.py stats 喷火龙
-python scripts/query.py type 水 火
-python scripts/query.py weak Charizard
-
-# 伤害计算（快捷模式）
-python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
-python scripts/query.py calc 化石翼龙 "Dual Wingbeat" 胡地 '{"evs":{"attack":252,"speed":252}}' '{}' '{"evs":{}}'
-
-# 使用预设配置
-python scripts/query.py preset 烈箭鹰
-python scripts/query.py calc 烈箭鹰 Brave\ Bird 喷火龙 '{"preset":"Sharp Beak Set"}'
-
-# 纯参数模式（未过签宝可梦）
-python scripts/query.py pokemon 超级喷火龙Y
-python scripts/query.py compute-stats '{"hp":78,"attack":104,"defense":78,"sp_attack":159,"sp_defense":115,"speed":100}' '{"sp_attack":252}' '{}' '内敛' 50
-python scripts/query.py calc-raw '{"name":"超级喷火龙Y","level":50,"stats":{...}}' '{"name":"热风",...}' '{"name":"超级胡地",...}' '{"weather":"Sun"}'
-
-# 努力值优化
-python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
-python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
+# Search for minimum SpA EVs needed to guarantee the OHKO
+python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --target ohko
 ```
-
 
 ---
 
-## 依赖
+## Real-World Examples
 
-- Python 3.10+
-- 仅使用标准库（`json`, `math`, `pathlib`, `typing`, `dataclasses` 等）
-- 无需 pip/uv 安装任何第三方包
+> The following examples are shown in Chinese to preserve the authentic interaction style of this Skill, which defaults to Chinese queries.
+
+### Example 1: Mega Charizard Y Heat Wave vs Mega Alakazam in Sun
+
+**User:** 252特攻的mega喷火龙Y，性格修正特攻，晴天下打热风技能，能打mega胡地多少血？
+
+**Agent's `<plan>`:**
+
+```text
+<plan>
+1. 提取指令信息：攻方 = 超级喷火龙Y | 守方 = 超级胡地 | 招式 = 热风
+2. 环境决策强制检查：
+   - 用户明确提及天气：是，晴天（Sun）
+   - 用户明确提及单打/双打：否，强制推断为 Doubles
+3. 危险动作核对：
+   - 我是否试图在 plan 阶段预设能力值、努力值、性格或伤害数字？否
+   - 我是否打算凭内部记忆解释属性相克、特性效果或招式机制？否
+4. 即将执行的精确命令：
+   python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 --att_ov '{"evs":{"sp_attack":252},"nature":"内敛","form_name":"超级喷火龙Ｙ"}' --field_ov '{"weather":"Sun","format":"Doubles"}'
+</plan>
+```
+
+**Agent's final answer (excerpt):**
+
+> ## 结论摘要
+>
+> 252 特攻努力值、内敛性格的超级喷火龙Y，在晴天下对超级胡地使用热风，**伤害范围 111～132**。超级胡地最大 HP 为 130，因此**有 12.5% 的概率一击必杀**（16 个乱数中 130 和 132 两个 roll 可击杀）。
+>
+> ### 攻击方详细信息
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 属性 | 火 / 飞行 |
+> | 特性 | 日照（可选：日照） |
+> | 等级 | Lv.50 |
+> | 种族值 | HP 78 / 攻击 104 / 防御 78 / 特攻 159 / 特防 115 / 速度 100 |
+> | 个体值 | 全 31 |
+> | 努力值 | HP 0 / 攻击 0 / 防御 0 / 特攻 252 / 特防 0 / 速度 0 |
+> | 性格 | 内敛（特攻↑ / 攻击↓） |
+> | 实际能力值 | HP 153 / 攻击 111 / 防御 98 / 特攻 **232** / 特防 135 / 速度 120 |
+> | 道具 | 喷火龙进化石Ｙ |
+> | 太晶化 | 否 |
+> | 能力等级变化 | 全 0 |
+> | 状态异常 | 无 |
+>
+> ### 防御方详细信息
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 属性 | 超能力 |
+> | 特性 | 复制（可选：复制） |
+> | 等级 | Lv.50 |
+> | 种族值 | HP 55 / 攻击 50 / 防御 65 / 特攻 175 / 特防 105 / 速度 150 |
+> | 个体值 | 全 31 |
+> | 努力值 | 全 0 |
+> | 性格 | 勤奋（无修正） |
+> | 实际能力值 | HP **130** / 攻击 70 / 防御 85 / 特攻 195 / 特防 125 / 速度 170 |
+> | 道具 | 胡地进化石 |
+> | 太晶化 | 否 |
+> | 能力等级变化 | 全 0 |
+> | 状态异常 | 无 |
+> | 当前 HP / 最大 HP | 130 / 130 |
+>
+> ### 伤害计算结果
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 伤害范围（单次） | 111 ～ 132 |
+> | 属性相克倍率 | 1.0x |
+> | 是否触发 STAB | 是 |
+> | 天气加成 | 是（晴天火系威力 ×1.5） |
+> | KO 概率 | **12.5% 概率一击必杀** |
+>
+> **综合判断**：超级胡地特防 125 且 HP 仅 130，面对晴天下超级喷火龙Y的热风非常脆弱。虽然大部分情况不会被确一，但残血时基本必死。
 
 ---
 
-## 测试
+### Example 2: Hisuian Decidueye Triple Arrows vs Kingambit with Chople Berry
 
-回归测试脚本位于 `../cache/` 目录：
+**User:** 洗翠狙射树枭，252攻击，性格修正攻击，打三连箭，防守方是252HP，带抗斗果的的钢兵，钢兵能不能接？
 
-```bash
-python cache/test_damage.py
-python cache/test_ko.py
-python cache/test_ev_optimizer.py
-python cache/test_calc_raw.py
-python cache/test_field_overrides.py
-python cache/test_normalization.py
-python cache/regression_test.py
+**Agent's final answer (excerpt):**
+
+> ## 结论摘要
+>
+> **对仆刀将军（Kingambit）：不能 OHKO，确定 2HKO。** 携带抗斗果（巧可果）的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，最少剩 51 血。
+>
+> **对劈斩司令（Bisharp）：约 31.2% 概率 OHKO，多数情况接下后残血。**
+>
+> ---
+>
+> ### 攻击方详细信息
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 属性 | 草 / 格斗 |
+> | 特性 | 茂盛（可选：茂盛 / 远隔） |
+> | 等级 | Lv.50 |
+> | 种族值 | HP 88 / 攻击 112 / 防御 80 / 特攻 95 / 特防 95 / 速度 60 |
+> | 个体值 | 全 31 |
+> | 努力值 | HP 0 / 攻击 252 / 防御 0 / 特攻 0 / 特防 0 / 速度 0 |
+> | 性格 | 固执（+攻击 / -特攻） |
+> | 实际能力值 | HP 163 / 攻击 **180** / 防御 100 / 特攻 103 / 特防 115 / 速度 80 |
+> | 道具 | 无 |
+> | 太晶化 | 否 |
+>
+> ### 防御方详细信息（仆刀将军 Kingambit）
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 属性 | 恶 / 钢 |
+> | 特性 | 不服输（可选：不服输 / 大将 / 压迫感） |
+> | 等级 | Lv.50 |
+> | 种族值 | HP 100 / 攻击 135 / 防御 120 / 特攻 60 / 特防 85 / 速度 50 |
+> | 个体值 | 全 31 |
+> | 努力值 | HP 252 / 其余 0 |
+> | 性格 | 勤奋（无修正） |
+> | 实际能力值 | HP **207** / 防御 **140** |
+> | 道具 | **巧可果（抗斗果，格斗伤害减半）** |
+> | 当前 HP / 最大 HP | 207 / 207 |
+>
+> ### 伤害计算结果（对仆刀将军）
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 伤害范围（单次） | 132 ～ 156 |
+> | 属性相克倍率 | 4.0x（格斗 vs 恶/钢） |
+> | 是否触发 STAB | 是 |
+> | 道具加成（巧可果） | 是，伤害减半 |
+> | KO 概率 | **确定 2 击必杀** |
+> | 最大伤害占 HP 比 | 156 / 207 = **75.4%** |
+>
+> **综合判断**：
+> - **不能一击秒杀**。最小剩余 HP = 207 - 156 = **51**
+> - 必为 2HKO，巧可果有效保命
+>
+> ### 伤害计算结果（对劈斩司令 Bisharp）
+>
+> | 项目 | 数值 |
+> |------|------|
+> | 伤害范围（单次） | 152 ～ 182 |
+> | KO 概率 | **31.2% 概率一击必杀** |
+> | 最小/最大剩余 HP | -10（秒杀） / **20**（存活） |
+>
+> **综合判断**：有 31.2% 概率被 OHKO，约 68.8% 概率接下并剩 2～20 血（残血）。
+>
+> ## 总结
+>
+> 带巧可果的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，确认为 2HKO，最小剩 51 血，绝不被 OHKO。若用户本意是原始劈斩司令，则有约 31.2% 概率被 OHKO。
+
+---
+
+## Domain Features
+
+Despite being a low-level engine, it makes no compromises on competitive rule coverage:
+
+- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* M-A rules.
+- **VGC Battle Presets**: 264 pre-built sets across 189 Pokémon. When the LLM encounters a query without explicit EVs, it can fall back to a preset.
+- **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
+- **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), lowering the burden on LLM entity extraction.
+
+---
+
+## Architecture & Workflow
+
+```text
+User's natural-language question
+       |
+       v
++---------------+
+|   AI Agent    | Understands semantics, extracts entities & params, queries pokedex
++-------+-------+
+        | Builds complete CLI command (JSON overrides)
+        v
++---------------+
+|   query.py    | Single CLI entry point
++-------+-------+
+        | Routes to sub-commands
+        v
++---------------+
+|   damage.py   | Pure-parameter deterministic calculator (reads local data/*.json)
++-------+-------+
+        | Returns exact numerical result (DamageResult JSON)
+        v
++---------------+
+|   AI Agent    | Formats JSON into natural language, tables, or analysis
++-------+-------+
+        |
+        v
+Final professional answer to user
 ```
 
+---
+
+## Developer & Integration Guide
+
+If you want to integrate this engine into your own LLM application, refer to:
+
+- **[`SKILL.md`](./SKILL.md)**: The System Prompt written specifically for LLMs. Contains complete behavior specifications, chain-of-thought (`<plan>`) requirements, and tool-call definitions. Inject its contents directly into your Agent Prompt to teach the LLM how to use this engine.
+- **[`DEVELOPER.md`](./DEVELOPER.md)**: Human-facing technical documentation with full I/O specifications, JSON Schema definitions, and internal architecture details.
+
+---
+
+## Data Sources & Credits
+
+- **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
+- ***Pokémon Champions* (M-A Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
+- **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
+
+---
+
+## Credits
+
+This project was built with **vibe coding** by [Kimi K2.6](https://kimi.moonshot.cn).
+
+## License
+
+MIT License
