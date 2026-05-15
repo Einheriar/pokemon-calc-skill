@@ -1,3 +1,8 @@
+<div align="right">
+  🇺🇸 English |
+  <a href="./README_CN.md">🇨🇳 简体中文</a>
+</div>
+
 # pokemon-calc: Pokédex & Damage Calculator for AI Agents
 
 Traditional Pokémon damage calculators are web apps or tools built for humans. `pokemon-calc` is a purpose-built computation engine designed for **AI Agents (Large Language Models)**.
@@ -69,6 +74,10 @@ In prompts, explicitly request this skill, for example:
 ```text
 Please use the pokemon-calc skill to run a damage calc.
 ```
+
+#### Hermes Agent
+
+Tested and verified to work with Hermes Agent. Install the Skill folder into your Agent's skills directory and reference it in conversations.
 
 ### Use as a Standalone CLI Tool
 

@@ -1,3 +1,8 @@
+<div align="right">
+  <a href="./README.md">🇺🇸 English</a> |
+  🇨🇳 简体中文
+</div>
+
 # pokemon-calc: 面向 AI Agent 的宝可梦百科与伤害计算 Skill
 
 传统宝可梦伤害计算器是给"人"用的网页或 App，而 `pokemon-calc` 是专为 **AI Agent (大语言模型)** 量身定制的底层计算 Skill。
@@ -69,6 +74,10 @@ cp -R pokemon-calc .claude/skills/
 ```text
 Please use the pokemon-calc skill to run a damage calc.
 ```
+
+#### Hermes Agent
+
+已在 Hermes Agent 中测试验证可用。将 Skill 文件夹安装到 Agent 的 skills 目录下，即可在对话中调用。
 
 ### 作为独立 CLI 工具使用
 
