@@ -45,6 +45,9 @@ evo <name>            # 进化链与超级进化
 pokedex <name>        # 各版本图鉴描述
 profile <name>        # 外形描述、原型考据、多语言词源
 find-move <move> [--source champions|gen9]  # 反向查询：能学会该招式的所有宝可梦（返回含 types 字段）
+filter-moves [--type <type> ...] [--category <cat> ...] [--min-power <n>] [--max-power <n>]
+                        # 招式筛选：按属性、分类、威力范围过滤。同维度多选为 OR，不同维度为 AND。
+                        # 例：`filter-moves --type 恶 --category 物理 --min-power 90`
 preset <pokemon> [name] # 列出预设配置或获取具体配置
 
 # Phase 2 — 伤害计算与优化

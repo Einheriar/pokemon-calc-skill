@@ -16,6 +16,7 @@ Usage:
     python query.py pokedex <name>          # Pokedex entries
     python query.py profile <name>          # Profile + prototype + detail
     python query.py find-move <move_name>   # Reverse: pokemon that learn a move
+    python query.py filter-moves            # Filter moves by type/category/power
     python query.py preset <pokemon>        # List presets for a pokemon
     python query.py preset <pokemon> <name> # Get specific preset config
 """
@@ -859,6 +860,140 @@ def _get_method_name(entry: dict[str, Any], category: str) -> str:
     return "未知"
 
 
+def cmd_filter_moves(
+    type_filters: list[str] | None = None,
+    category_filters: list[str] | None = None,
+    min_power: int | None = None,
+    max_power: int | None = None,
+) -> dict[str, Any]:
+    """Filter moves by type, category, and/or power range.
+
+    Multiple filters within the same dimension use OR logic;
+    different dimensions use AND logic.
+
+    Args:
+        type_filters: List of type names (zh or en).
+                      Moves matching ANY listed type are included.
+        category_filters: List of categories (zh: 物理/特殊/变化 or
+                          en: Physical/Special/Status).
+                          Moves matching ANY listed category are included.
+        min_power: Minimum base power (inclusive). Non-numeric power values
+                   (e.g. status moves marked "—") are treated as 0.
+        max_power: Maximum base power (inclusive). If None, no upper bound.
+    """
+    load_data()
+
+    from normalize import normalize_type_name
+
+    valid_types = set(_type_chart.keys()) if _type_chart else set()
+
+    # Normalize type names
+    normalized_types: set[str] = set()
+    if type_filters:
+        for t in type_filters:
+            nt = normalize_type_name(t)
+            if nt in valid_types:
+                normalized_types.add(nt)
+            else:
+                # Try direct lowercase match for edge cases
+                for vt in valid_types:
+                    if vt.lower() == t.lower():
+                        normalized_types.add(vt)
+                        break
+                else:
+                    return {"error": f"Invalid type '{t}'. Valid types: {sorted(valid_types)}"}
+
+    # Normalize category names to Chinese
+    _CATEGORY_MAP: dict[str, str] = {
+        "physical": "物理",
+        "special": "特殊",
+        "status": "变化",
+        "物理": "物理",
+        "特殊": "特殊",
+        "变化": "变化",
+    }
+    normalized_categories: set[str] = set()
+    if category_filters:
+        for c in category_filters:
+            key = c.lower()
+            if key in _CATEGORY_MAP:
+                normalized_categories.add(_CATEGORY_MAP[key])
+            else:
+                return {
+                    "error": (
+                        f"Unknown category '{c}'. "
+                        "Valid: Physical/Special/Status or 物理/特殊/变化"
+                    )
+                }
+
+    results: list[dict[str, Any]] = []
+
+    for stem, data in _moves_data.items():
+        # Apply Champions patch if available
+        patched = _apply_champions_move_patch(stem, data)
+        if not patched:
+            continue
+        data = patched
+
+        # Type filter (OR within dimension)
+        if normalized_types:
+            move_type = data.get("type", "")
+            if move_type not in normalized_types:
+                continue
+
+        # Category filter (OR within dimension)
+        if normalized_categories:
+            move_category = data.get("category", "")
+            if move_category not in normalized_categories:
+                continue
+
+        # Power filter
+        if min_power is not None or max_power is not None:
+            power_str = str(data.get("power", "0"))
+            try:
+                power = int(power_str)
+            except ValueError:
+                power = 0
+
+            if min_power is not None and power < min_power:
+                continue
+            if max_power is not None and power > max_power:
+                continue
+
+        results.append({
+            "name_zh": data.get("name_zh", ""),
+            "name_en": data.get("name_en", ""),
+            "type": data.get("type", ""),
+            "category": data.get("category", ""),
+            "power": data.get("power", ""),
+            "accuracy": data.get("accuracy", ""),
+            "pp": data.get("pp", ""),
+            "description": data.get("description", ""),
+        })
+
+    # Sort by power descending, then by Chinese name ascending
+    def _sort_key(entry: dict[str, Any]) -> tuple[int, str]:
+        p = entry.get("power", "")
+        try:
+            power_val = int(p)
+        except (ValueError, TypeError):
+            power_val = 0
+        return (-power_val, entry.get("name_zh", ""))
+
+    results.sort(key=_sort_key)
+
+    return {
+        "count": len(results),
+        "filters": {
+            "types": sorted(normalized_types),
+            "categories": sorted(normalized_categories),
+            "min_power": min_power,
+            "max_power": max_power,
+        },
+        "results": results,
+    }
+
+
 def _derive_mega_stone(form_name: str) -> str:
     """Derive the Mega Stone name from a Mega form name.
 
@@ -1633,6 +1768,7 @@ COMMANDS: dict[str, Any] = {
     "pokedex": cmd_pokedex,
     "profile": cmd_profile,
     "find-move": cmd_find_move,
+    "filter-moves": cmd_filter_moves,
     "preset": cmd_preset,
     "calc": cmd_calc,
     "calc-raw": cmd_calc_raw,
@@ -1649,7 +1785,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -1708,6 +1844,13 @@ def main() -> int:
         findmove_parser = subparsers.add_parser("find-move", help="Find all pokemon that can learn a given move")
         findmove_parser.add_argument("move", help="Move name")
         findmove_parser.add_argument("--source", default="", help="Data source filter: champions | gen9")
+
+        # filter-moves
+        filter_parser = subparsers.add_parser("filter-moves", help="Filter moves by type, category, and/or power")
+        filter_parser.add_argument("--type", dest="type_filters", action="append", default=[], help="Filter by type (can specify multiple)")
+        filter_parser.add_argument("--category", dest="category_filters", action="append", default=[], help="Filter by category (物理/特殊/变化 or Physical/Special/Status)")
+        filter_parser.add_argument("--min-power", type=int, default=None, help="Minimum base power (inclusive)")
+        filter_parser.add_argument("--max-power", type=int, default=None, help="Maximum base power (inclusive)")
 
         args = parser.parse_args()
 
@@ -1768,6 +1911,13 @@ def main() -> int:
                 result = cmd_find_move(
                     args.move,
                     args.source,
+                )
+            elif cmd == "filter-moves":
+                result = cmd_filter_moves(
+                    type_filters=args.type_filters or None,
+                    category_filters=args.category_filters or None,
+                    min_power=args.min_power,
+                    max_power=args.max_power,
                 )
             else:  # calc-raw
                 result = cmd_calc_raw(
