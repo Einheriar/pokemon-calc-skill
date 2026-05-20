@@ -175,6 +175,68 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
     return preset_config
 
 
+# Fields allowed for auto-preset fallback (evs/nature/ivs only; item/ability excluded)
+_AUTO_PRESET_FIELDS = {"evs", "nature", "ivs"}
+
+
+def _score_preset(preset_config: dict[str, Any], user_override: dict[str, Any]) -> int:
+    """Score how well a preset matches the user's partial specification."""
+    score = 0
+    # Nature match
+    if user_override.get("nature") and user_override.get("nature") == preset_config.get("nature"):
+        score += 10
+    # EV field matches
+    user_evs = user_override.get("evs", {})
+    preset_evs = preset_config.get("evs", {})
+    for stat, val in user_evs.items():
+        if preset_evs.get(stat) == val:
+            score += 5
+    return score
+
+
+def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) -> tuple[dict[str, Any], str | None]:
+    """If user partially specified config, auto-match best preset from setdex.
+
+    Only evs/nature/ivs are filled from preset; item/ability/tera_type are excluded.
+    Returns (updated_override, matched_preset_name_or_None).
+    """
+    # Skip if user already provided "preset" key (explicit preset takes precedence)
+    if "preset" in override:
+        return override, None
+
+    setdex = _load_setdex()
+    if pokemon_en not in setdex:
+        return override, None
+
+    presets = setdex[pokemon_en]
+    if not presets:
+        return override, None
+
+    best_preset_name: str | None = None
+    best_score = -1
+    for preset_name, preset_config in presets.items():
+        score = _score_preset(preset_config, override)
+        if score > best_score:
+            best_score = score
+            best_preset_name = preset_name
+
+    if best_preset_name is None or best_score <= 0:
+        return override, None
+
+    preset_config = presets[best_preset_name]
+    # Fill only missing fields from the allowed whitelist
+    for field in _AUTO_PRESET_FIELDS:
+        if field not in override and field in preset_config:
+            override[field] = preset_config[field]
+        # For dict fields (evs, ivs), merge at key level so user-specified keys take precedence
+        elif field in override and field in preset_config and isinstance(override[field], dict) and isinstance(preset_config[field], dict):
+            merged = dict(preset_config[field])  # Start with preset values
+            merged.update(override[field])       # User values override
+            override[field] = merged
+
+    return override, best_preset_name
+
+
 def cmd_preset(pokemon_name: str, preset_name: str = "") -> dict[str, Any]:
     """List presets for a pokemon, or get a specific preset config."""
     resolved = _resolve_preset(pokemon_name, preset_name or None)
@@ -1197,9 +1259,27 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     except json.JSONDecodeError:
         field_override = {}
 
+    # Remember if user explicitly specified a preset before _apply_preset_to_override pops it
+    att_has_explicit_preset = "preset" in att_override
+    def_has_explicit_preset = "preset" in def_override
+
     # Apply presets if specified in overrides
     att_override = _apply_preset_to_override(att_override, att_data.get("name_en", ""))
     def_override = _apply_preset_to_override(def_override, def_data.get("name_en", ""))
+
+    # Auto-match preset for partially specified configs (evs/nature/ivs only)
+    if not att_has_explicit_preset:
+        att_override, att_auto_preset = _apply_auto_preset_to_override(
+            att_override, att_data.get("name_en", "")
+        )
+    else:
+        att_auto_preset = None
+    if not def_has_explicit_preset:
+        def_override, def_auto_preset = _apply_auto_preset_to_override(
+            def_override, def_data.get("name_en", "")
+        )
+    else:
+        def_auto_preset = None
 
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
@@ -1313,6 +1393,10 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "defender_info": defender_info,
         "_data_source": attacker_info.get("_data_source", "gen9"),
     }
+    if att_auto_preset:
+        response["attacker_auto_preset"] = att_auto_preset
+    if def_auto_preset:
+        response["defender_auto_preset"] = def_auto_preset
     if attacker_info.get("is_unobtainable") or defender_info.get("is_unobtainable"):
         response["warning"] = "该形态在当前对战环境中不可用，以下结果为理论计算"
     if move.hits > 1:

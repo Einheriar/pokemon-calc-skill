@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 import math
 import sys
+from copy import copy
 from pathlib import Path
 from typing import Any, Optional
 
@@ -75,6 +76,13 @@ _ATE_IZE_IGNORED_MOVES = {
 }
 
 # Hardcoded move name sets for ability checks (mirrors JS move_data.js flags)
+# Moves that are ignored by Parental Bond (Gen 6+)
+_PARENTAL_BOND_IGNORED_MOVES = {
+    "Counter", "Mirror Coat", "Metal Burst", "Final Gambit",
+    "Seismic Toss", "Night Shade", "Dragon Rage", "Sonic Boom",
+    "Endeavor", "Sheer Cold", "Fissure", "Horn Drill", "Guillotine",
+}
+
 _PULSE_MOVES = {
     "Water Pulse", "Aura Sphere", "Dark Pulse", "Dragon Pulse",
     "Heal Pulse", "Origin Pulse", "Terrain Pulse",
@@ -1086,6 +1094,27 @@ def calculate_damage(
 
     damage_rolls.sort()
 
+    # Parental Bond: second hit at 25% base power (Gen 6+)
+    if (attacker.ability == "Parental Bond"
+            and move.name not in _PARENTAL_BOND_IGNORED_MOVES
+            and move.hits == 1):
+        second_move = copy(move)
+        second_move.base_power = max(1, math.floor(second_move.base_power * 0.25))
+        second_move.fainted_allies = 0  # Prevent dynamic BP boosts from reapplying
+        # Temporarily disable Parental Bond to prevent infinite recursion
+        original_ability = attacker.ability
+        attacker.ability = ""
+        second_result = calculate_damage(attacker, defender, second_move, field, gen)
+        attacker.ability = original_ability
+
+        # Merge damage rolls: all combinations of first + second hit
+        merged_rolls: list[int] = []
+        for d1 in damage_rolls:
+            for d2 in second_result.damage:
+                merged_rolls.append(d1 + d2)
+        merged_rolls.sort()
+        damage_rolls = merged_rolls
+
     # Build description
     eff_desc = ""
     if type_effectiveness > 1:
@@ -1095,10 +1124,13 @@ def calculate_damage(
 
     crit_desc = " 击中要害" if is_critical else ""
     burn_desc = "（烧伤减半）" if apply_burn else ""
+    pb_desc = "（亲子爱：两段攻击）" if (attacker.ability == "Parental Bond"
+                                         and move.name not in _PARENTAL_BOND_IGNORED_MOVES
+                                         and move.hits == 1) else ""
 
     description = (
         f"Lv.{attacker.level} {attacker.name} 的 {move.name} "
-        f"vs Lv.{defender.level} {defender.name}{eff_desc}{crit_desc}{burn_desc} | "
+        f"vs Lv.{defender.level} {defender.name}{eff_desc}{crit_desc}{burn_desc}{pb_desc} | "
         f"威力 {base_power} | 攻击 {attack} | 防御 {defense} | "
         f"伤害范围 {damage_rolls[0]} ~ {damage_rolls[-1]}"
     )

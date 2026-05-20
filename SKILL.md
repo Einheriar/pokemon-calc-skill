@@ -199,13 +199,16 @@ python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作�
   "attacker_info": {"name_zh": "...", "stats": {...}, "evs": {...}, "nature": "..."},
   "defender_info": {"name_zh": "...", "stats": {...}, "current_hp": 130, "max_hp": 130},
   "total_damage_range": [110, 132],
-  "move_hits": 2
+  "move_hits": 2,
+  "attacker_auto_preset": null,
+  "defender_auto_preset": "Bulky Tera Grass"
 }
 ```
 
 - `damage_range` / `damage_rolls` 为**单次打击**（多段招式）
 - `total_damage_range` / `total_damage_rolls` 为**多段合计**，判断秒杀时优先引用
 - `type_effectiveness` 仅反映**属性相克原始倍率**（如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，应对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
+- `attacker_auto_preset` / `defender_auto_preset`：当用户部分指定配置（如只给了性格+某属性努力值）时，引擎自动从 setdex 匹配最相似的预设，用其 **evs / nature / ivs** 补全未指定字段。道具和特性**不参与**自动兜底。若该宝可梦不在 setdex 中（共 189 只），值为 `null`。Agent 在回答中若发现该字段非 null，必须声明："未指定努力值按 VGC 热门预设 `{preset_name}` 补全"
 
 ### calc-raw 快速填空模板
 
@@ -497,7 +500,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
   - **威力修正**：Mega Launcher（波动类 ×1.5）、Technician（≤60 威力 ×1.5）、Sheer Force（追加效果 ×1.3）、Tough Claws（接触类 ×1.3）、Strong Jaw（啃咬类 ×1.5）、Sand Force（沙暴下岩/钢/地面 ×1.3）、Analytic（后手 ×1.3）
   - **攻击修正**：Supreme Overlord（每阵亡队友 +10%，上限 50%）
   - **abilityOn 动态激活**：Flash Fire / Slow Start / Plus / Minus / Stakeout 支持通过 `ability_on` 字段控制激活状态
-  - **特殊效果**：Long Reach（接触招式不触发接触效果，如绕过 Fluffy）、Merciless（对中毒/剧毒目标必定要害）
+  - **特殊效果**：Long Reach（接触招式不触发接触效果，如绕过 Fluffy）、Merciless（对中毒/剧毒目标必定要害）、Parental Bond（亲子爱：攻击命中两次，第二段 1/4 威力）
 - 道具修正：生命宝珠、讲究头带/眼镜、突击背心、进化奇石、深海的牙齿/鳞片、厚骨棒、光粉等
 - 场地/天气：晴天/雨天/沙暴/下雪、青草/电气/薄雾/精神场地
 - Ate/Ize 特性：Pixilate / Aerilate / Refrigerate / Galvanize / Normalize 类型转换 + 威力提升
