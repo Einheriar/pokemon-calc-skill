@@ -130,6 +130,65 @@ _SECONDARY_EFFECT_MOVES = {
     "Electro Shot", "Alluring Voice", "Psychic Noise", "Upper Hand", "Malignant Chain",
 }
 
+# Elemental boost items: item name -> boosted type (Chinese)
+# Maps both English and Chinese item names to Chinese type names
+# for comparison with move.type in the engine layer.
+_ITEM_BOOST_MAP: dict[str, str] = {
+    # Water
+    "Mystic Water": "水", "神秘水滴": "水",
+    "Sea Incense": "水", "Wave Incense": "水", "Splash Plate": "水",
+    # Fire
+    "Charcoal": "火", "木炭": "火",
+    "Flame Plate": "火",
+    # Grass
+    "Miracle Seed": "草", "奇迹种子": "草",
+    "Rose Incense": "草", "Meadow Plate": "草",
+    # Electric
+    "Magnet": "电", "磁铁": "电",
+    "Zap Plate": "电",
+    # Ice
+    "Never-Melt Ice": "冰", "NeverMeltIce": "冰", "不融冰": "冰",
+    "Icicle Plate": "冰",
+    # Fighting
+    "Black Belt": "格斗", "黑带": "格斗",
+    "Fist Plate": "格斗",
+    # Poison
+    "Poison Barb": "毒", "毒针": "毒",
+    "Toxic Plate": "毒",
+    # Ground
+    "Soft Sand": "地面", "柔软沙子": "地面",
+    "Earth Plate": "地面",
+    # Flying
+    "Sharp Beak": "飞行", "锐利鸟嘴": "飞行",
+    "Sky Plate": "飞行",
+    # Psychic
+    "Twisted Spoon": "超能力", "TwistedSpoon": "超能力", "弯曲的汤匙": "超能力",
+    "Odd Incense": "超能力", "Mind Plate": "超能力",
+    # Bug
+    "Silver Powder": "虫", "SilverPowder": "虫", "银色粉": "虫",
+    "Insect Plate": "虫",
+    # Rock
+    "Hard Stone": "岩石", "硬石头": "岩石",
+    "Rock Incense": "岩石", "Stone Plate": "岩石",
+    # Ghost
+    "Spell Tag": "幽灵", "诅咒之符": "幽灵",
+    "Spooky Plate": "幽灵",
+    # Dragon
+    "Dragon Fang": "龙", "龙之牙": "龙",
+    "Draco Plate": "龙",
+    # Dark
+    "Black Glasses": "恶", "BlackGlasses": "恶", "黑色眼镜": "恶",
+    "Dread Plate": "恶",
+    # Steel
+    "Metal Coat": "钢", "金属膜": "钢",
+    "Iron Plate": "钢",
+    # Fairy
+    "Fairy Feather": "妖精", "Pixie Plate": "妖精",
+    # Normal
+    "Silk Scarf": "一般", "丝绸围巾": "一般",
+    "Pink Bow": "一般", "Polkadot Bow": "一般",
+}
+
 
 def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
     """
@@ -471,14 +530,16 @@ def calc_bp_mods(
     if move.name == "Terrain Pulse" and field.terrain:
         bp_mods.append(0x1800)
 
-    # h. Type-based items (Muscle Band, Wise Glasses, Plates, etc.)
-    # Simplified: common boosting items
-    if attacker.item in ("生命宝珠", "Life Orb"):
-        pass  # Life Orb is a final mod, not BP mod
-    if attacker.item in ("讲究头带", "Choice Band") and move.category == "Physical" and not attacker.is_dynamax:
-        pass  # Choice items are AT mods
-    if attacker.item in ("讲究眼镜", "Choice Specs") and move.category == "Special" and not attacker.is_dynamax:
-        pass
+    # h. Muscle Band / Wise Glasses (1.1x)
+    if attacker.item in ("Muscle Band", "力量头带") and move.category == "Physical":
+        bp_mods.append(0x1199)
+    elif attacker.item in ("Wise Glasses", "博识眼镜") and move.category == "Special":
+        bp_mods.append(0x1199)
+
+    # i. Elemental boost items (1.2x) — Plates, Incenses, type gems, etc.
+    boost_type = _ITEM_BOOST_MAP.get(attacker.item)
+    if boost_type and boost_type == move.type:
+        bp_mods.append(0x1333)
 
     # v. Offensive Terrain (Gen9: 0x14CD = ~1.3x)
     if att_is_grounded:
@@ -591,8 +652,8 @@ def calc_at_mods(
         at_mods.append(0x1800)
 
     # 1.3x abilities (Protosynthesis / Quark Drive / Transistor Gen9)
-    if (((attacker.ability == "Protosynthesis" and (attacker.item == "Booster Energy" or (field.weather and "Sun" in field.weather)))
-         or (attacker.ability == "Quark Drive" and (attacker.item == "Booster Energy" or field.terrain == "Electric")))
+    if (((attacker.ability == "Protosynthesis" and (attacker.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
+         or (attacker.ability == "Quark Drive" and (attacker.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
             and ((attacker.stats.get("attack", 0) >= attacker.stats.get("sp_attack", 0) and move.category == "Physical")
                  or (attacker.stats.get("sp_attack", 0) > attacker.stats.get("attack", 0) and move.category == "Special"))):
         at_mods.append(0x14CD)
@@ -709,8 +770,8 @@ def calc_def_mods(
         df_mods.append(0x1800)
 
     # 1.3x abilities (Protosynthesis / Quark Drive on defense)
-    if (((def_ability == "Protosynthesis" and (defender.item == "Booster Energy" or (field.weather and "Sun" in field.weather)))
-         or (def_ability == "Quark Drive" and (defender.item == "Booster Energy" or field.terrain == "Electric")))
+    if (((def_ability == "Protosynthesis" and (defender.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
+         or (def_ability == "Quark Drive" and (defender.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
             and ((defender.stats.get("defense", 0) >= defender.stats.get("sp_defense", 0) and hits_physical)
                  or (defender.stats.get("sp_defense", 0) > defender.stats.get("defense", 0) and not hits_physical))):
         df_mods.append(0x14CD)
@@ -720,8 +781,8 @@ def calc_def_mods(
         df_mods.append(0x2000)
 
     # 1.5x items
-    if ((defender.item == "突击背心" and not hits_physical)
-            or (defender.item == "进化奇石" and defender.can_evolve)
+    if ((defender.item in ("突击背心", "Assault Vest") and not hits_physical)
+            or (defender.item in ("进化奇石", "Eviolite") and defender.can_evolve)
             ):
         df_mods.append(0x1800)
     # 2.0x items
@@ -816,7 +877,7 @@ def calc_final_mods(
         final_mods.append(0x2000)
 
     # Expert Belt
-    if attacker.item == "达人带" and type_effectiveness > 1:
+    if attacker.item in ("达人带", "Expert Belt") and type_effectiveness > 1:
         final_mods.append(0x1333)
     # Life Orb
     elif attacker.item in ("生命宝珠", "Life Orb"):
