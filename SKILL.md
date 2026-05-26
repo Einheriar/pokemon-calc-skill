@@ -19,7 +19,7 @@ description: >
 2. **数据优先原则**。本 Skill 拥有权威的宝可梦数据库，所有涉及具体数据的问题（种族值、招式、特性、属性相克等）必须通过 `query.py` 命令查询后回答，原样引用引擎返回的数据。
 3. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
-5. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。
+5. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `att_override` / `def_override` 的 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
 6. **环境参数唯一入口**。`field_override` 是传入环境条件（天气、场地、对战模式等）的唯一入口。`move_override` 仅限行为参数（`is_crit`、`hits`、`fainted_allies`），如需模拟天气或场地效果，必须通过 `field_override` 传入，不得修改 `base_power` 或 `type`。
 7. **威力修正链由引擎自动计算**。引擎返回的 `effective_power` 或 `description` 中的威力值即为权威结果，直接引用。LLM 不得在回答中写出"基础威力 × 场地 × STAB = ..."等中间推导式。
 8. **招式效果与特性分析必须通过查询获取**。回答中涉及招式效果、特性对伤害/KO 的影响等描述，必须通过独立的 `move <name>` 或 `ability <name>` 命令查询后原样引用。若引擎 KO 概率已给出确定结论，直接引用即可，不得附加条件分析。特性信息仅限列出 `attacker_info.ability` / `defender_info.ability` 返回的当前特性名称，不做任何效果推导。
@@ -73,6 +73,15 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
   "preset": "Sharp Beak Set",    // 从 setdex 加载预设配置，覆盖字段在此基础上叠加
   "setup_moves": ["诡计", "求雨"]  // 由引擎自动解析招式效果并应用（替代手动构造 boosts/weather）
 }
+
+// 直接传入能力值（跳过 compute-stats，适用于用户已明确给出能力值时）
+{
+  "raw_stats": {"hp": 155, "attack": 80, "defense": 85, "sp_attack": 192, "sp_defense": 105, "speed": 90},
+  "stats": {"hp": 155, "attack": 80, "defense": 85, "sp_attack": 192, "sp_defense": 105, "speed": 90},
+  "item": "龙之牙"
+}
+// raw_stats = 最终能力值（已含性格修正），stats = raw_stats 经 boosts 修正后的值
+// 无能力等级变化时，raw_stats 和 stats 传相同值即可
 
 // move_override — 仅限行为参数，禁止改 base_power / type
 {"is_crit": false, "hits": 1, "fainted_allies": 0}
