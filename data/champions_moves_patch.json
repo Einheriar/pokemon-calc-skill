@@ -7269,6 +7269,16 @@
     "pp": "8 （最大 12）",
     "makes_contact": true
   },
+  "复生祈祷": {
+    "_data_source": "champions",
+    "name_en": "Revival Blessing",
+    "type": "一般",
+    "category": "变化",
+    "power": "0",
+    "accuracy": "101",
+    "pp": "1 （最大 1）",
+    "makes_contact": false
+  },
   "盐腌": {
     "_data_source": "champions",
     "name_en": "Salt Cure",
@@ -7547,6 +7557,16 @@
     "power": "90",
     "accuracy": "100",
     "pp": "12 （最大 19）",
+    "makes_contact": true
+  },
+  "电光双击": {
+    "_data_source": "champions",
+    "name_en": "Double Shock",
+    "type": "电",
+    "category": "物理",
+    "power": "120",
+    "accuracy": "100",
+    "pp": "8 （最大 12）",
     "makes_contact": true
   },
   "巨力锤": {

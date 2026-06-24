@@ -300,7 +300,7 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 
 Despite being a low-level engine, it makes no compromises on competitive rule coverage:
 
-- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* M-A rules.
+- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* M-B rules (updated 2026-06-24).
 - **VGC Battle Presets**: 264 pre-built sets across 189 Pokémon. When the LLM encounters a query without explicit EVs, it can fall back to a preset.
 - **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
 - **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), lowering the burden on LLM entity extraction.
@@ -350,7 +350,7 @@ If you want to integrate this engine into your own LLM application, refer to:
 ## Data Sources & Credits
 
 - **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
-- ***Pokémon Champions* (M-A Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
+- ***Pokémon Champions* (M-B Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
 - **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
 
 ---

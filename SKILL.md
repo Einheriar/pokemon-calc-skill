@@ -8,7 +8,7 @@ description: >
   (3) 宝可梦伤害计算、KO 概率、努力值优化（Phase 2+）；
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询。
-  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-A 规则与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合。
+  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合。
 ---
 
 # 宝可梦伤害计算器 Skill
@@ -169,11 +169,11 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
 
 # find-move 支持数据来源过滤
-python scripts/query.py find-move 顺风 --source champions  # 仅 Champions M-A 规则
+python scripts/query.py find-move 顺风 --source champions  # 仅 Champions M-B 规则
 python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作数据
 ```
 
-> **`--source` 过滤说明**：`find-move` 默认返回全国图鉴（Gen9 + Champions）所有能学会该招式的宝可梦。传入 `--source champions` 仅返回 Champions M-A 规则可用宝可梦；传入 `--source gen9` 排除 Champions 专属宝可梦，仅保留 Gen9 正作数据。
+> **`--source` 过滤说明**：`find-move` 默认返回全国图鉴（Gen9 + Champions）所有能学会该招式的宝可梦。传入 `--source champions` 仅返回 Champions M-B 规则可用宝可梦；传入 `--source gen9` 排除 Champions 专属宝可梦，仅保留 Gen9 正作数据。
 >
 > **`types` 字段**：`find-move` 返回的每个宝可梦条目均包含 `"types"` 数组，可直接用于属性筛选（如"找出能学会顺风的恶系宝可梦"），无需二次查询。
 
@@ -362,7 +362,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
   > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
 
 - 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
-  > ⚠️ 该形态基于 Champions M-A 规则数据。若您询问的是 Gen9 规则，结果可能不适用。
+  > ⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。
 
 - 若 `_data_source == "champions"` 且 `is_unobtainable == false`：
   > 无需警告
@@ -443,7 +443,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
      > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
 
    - 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
-     > ⚠️ 该形态基于 Champions M-A 规则数据。若您询问的是 Gen9 规则，结果可能不适用。
+     > ⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。
 
 4. **默认配置推断清单**
    当用户未明确指定性格/努力值/道具时，逐条列出系统推断的具体参数及推断依据：
@@ -497,7 +497,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 
 | 层级 | 来源 | 覆盖范围 | 优先级 |
 |------|------|----------|--------|
-| 第一层 | 《宝可梦冠军》(Pokémon Champions) M-A 规则 | 323 种形态 | **高** |
+| 第一层 | 《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新） | 361 种形态 | **高** |
 | 第二层 | Gen9（朱紫）正作数据 | 全国图鉴 1~1025 | 低 |
 
 当 Champions 数据与 Gen9 正作数据存在差异时，以 Champions 为准。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。

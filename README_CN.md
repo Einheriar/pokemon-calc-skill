@@ -298,7 +298,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 虽然是一个底层引擎，但在宝可梦对战的规则支持上毫不妥协：
 
-- **全图鉴与双层数据架构**：支持 1~1025 号宝可梦的所有形态（含 Mega、原始回归、地区形态）。底层整合 Gen9（朱紫）官方数据与《宝可梦冠军》M-A 规则。
+- **全图鉴与双层数据架构**：支持 1~1025 号宝可梦的所有形态（含 Mega、原始回归、地区形态）。底层整合 Gen9（朱紫）官方数据与《宝可梦冠军》M-B 规则（2026-06-24 更新）。
 - **VGC 实战预设**：内置 189 只宝可梦共 264 个对战预设配置。LLM 遇到未明确指定努力值的查询时，可直接调用预设。
 - **努力值逆向优化 (EV Optimizer)**：不仅能算伤害，还能"反推"努力值。自动搜索满足"确一 (OHKO)"或"确二生存"目标的最低努力值配置。
 - **人类语言容错 (Normalize 层)**：内置"老喷"、"命玉"、"抗斗果"等玩家俗称与官方标准译名的自动映射映射，降低 LLM 实体提取的难度。
@@ -348,7 +348,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 ## 数据来源与致谢
 
 - **1~9 世代宝可梦百科数据**：爬虫数据来自 [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
-- **《宝可梦冠军》(Pokémon Champions) 数据**：游戏 ROM 抓取与解析来自 [projectpokemon/champout](https://github.com/projectpokemon/champout)
+- **《宝可梦冠军》(Pokémon Champions) 数据**：游戏 ROM 抓取与解析来自 [projectpokemon/champout](https://github.com/projectpokemon/champout)（M-B 规则，2026-06-24 更新）
 - **VGC 伤害计算器前端逻辑**：基于 [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) 的 JavaScript 引擎移植与重构
 
 ---
