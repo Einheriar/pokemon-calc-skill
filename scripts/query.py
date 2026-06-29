@@ -1956,10 +1956,21 @@ def _find_survivability_bp(
     category: str,
     max_bp: int = 500,
     safe_threshold: float = 0.15,
+    def_boosts: dict[str, int] | None = None,
 ) -> dict[str, Any]:
     """Binary search for safe_bp and absolute_safe_bp."""
     from models import Move
-    from damage import calculate_damage
+    from damage import calculate_damage, get_modified_stat
+
+    # Apply defender boost overrides before the binary search
+    if def_boosts:
+        for stat, change in def_boosts.items():
+            defender.boosts[stat] = defender.boosts.get(stat, 0) + change
+
+    # Recalculate defender.stats from raw_stats + boosts (survivability bypasses compute_raw_stats)
+    if defender.raw_stats:
+        for stat_key, raw in defender.raw_stats.items():
+            defender.stats[stat_key] = get_modified_stat(raw, defender.boosts.get(stat_key, 0))
 
     lo, hi = 1, max_bp
 
@@ -2040,6 +2051,7 @@ def cmd_survivability(
     category: str,
     def_ov: str = "{}",
     field_ov: str = "{}",
+    setup_moves: list[str] | None = None,
 ) -> dict[str, Any]:
     """Reverse survivability lookup: find max unboosted BP a defender can survive.
 
@@ -2047,8 +2059,9 @@ def cmd_survivability(
         defender_name: Pokemon name (zh/en) or JSON with raw_stats.
         attacker_stat: Attacker's attack or sp_attack stat value.
         category: "Physical" or "Special".
-        def_ov: JSON override for defender (e.g. raw_stats).
+        def_ov: JSON override for defender (e.g. raw_stats, boosts, setup_moves).
         field_ov: JSON override for field (e.g. format).
+        setup_moves: Optional list of defender setup moves to apply as boosts.
 
     Returns:
         dict with safe_bp, absolute_safe_bp, defender info, etc.
@@ -2065,6 +2078,10 @@ def cmd_survivability(
         field_override = json.loads(field_ov) if field_ov else {}
     except (json.JSONDecodeError, TypeError):
         field_override = {}
+
+    # Extract setup moves and boosts from defender override
+    setup_moves = def_override.pop("setup_moves", setup_moves) or []
+    def_boosts = def_override.pop("boosts", {})
 
     # Build virtual attacker (only relevant attack stat set, no STAB, no item, no ability)
     raw_stats = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
@@ -2169,7 +2186,13 @@ def cmd_survivability(
     if not getattr(field, "format", None):
         field.format = "Doubles"
 
-    result = _find_survivability_bp(attacker, defender, field, category)
+    # Apply defender setup moves (e.g., Calm Mind, Iron Defense) before searching BP
+    if setup_moves:
+        _apply_setup_moves(defender, attacker, field, setup_moves)
+
+    result = _find_survivability_bp(
+        attacker, defender, field, category, def_boosts=def_boosts
+    )
 
     return {
         "defender": {
@@ -2183,6 +2206,7 @@ def cmd_survivability(
         "attacker_stat": attacker_stat,
         "category": category,
         "format": field.format,
+        "defender_boosts": dict(defender.boosts),
         "safe_bp": result["safe_bp"],
         "absolute_safe_bp": result["absolute_safe_bp"],
         "safe_damage_range": result["safe_damage_range"],
@@ -2295,8 +2319,10 @@ def main() -> int:
         surv_parser.add_argument("defender", help="Defender Pokemon name or JSON with raw_stats")
         surv_parser.add_argument("attacker_stat", type=int, help="Attacker's attack/sp_attack stat value")
         surv_parser.add_argument("category", help="Physical or Special")
-        surv_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
+        surv_parser.add_argument("--def_ov", default="{}", help="Defender override JSON (supports boosts, setup_moves, raw_stats)")
+        surv_parser.add_argument("--def_ov_file", default=None, help="Path to defender override JSON file (takes precedence over --def_ov)")
         surv_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
+        surv_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
         args = parser.parse_args()
 

@@ -255,13 +255,19 @@ python scripts/query.py calc-raw \
 python scripts/query.py survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]
 ```
 
-- **用途**：给定防御方的能力值（或宝可梦名称），以及攻击方的物攻/特攻能力值，反查该防御方在**无加成条件下**（无 STAB、无道具、无特性、无天气/场地）能承受的**最大招式基础威力**。
+- **用途**：给定防御方的能力值（或宝可梦名称），以及攻击方的物攻/特攻能力值，反查该防御方在**无攻击方加成条件下**（无攻击方 STAB、无道具、无特性、无天气/场地）能承受的**最大招式基础威力**。
+- **支持 `def_ov` 中的 `boosts` 和 `setup_moves`**：引擎支持在防御方身上预置能力等级变化（如 "铁壁"+2 防御、"冥想"+1 特攻特防），从而计算“强化后”能承受的最大威力。例如：
+  - `def_ov '{"boosts":{"defense":2}}'` 模拟已使用铁壁的防御方
+  - `def_ov '{"setup_moves":["冥想"]}'` 自动解析冥想效果并应用 +1 特攻特防
+  - `def_ov '{"setup_moves":["铁壁","冥想"]}'` 同时应用多个变化招式
+- **输出关键字段**：`safe_bp`（安全线）、`absolute_safe_bp`（绝对安全线）、`defender`（含 hp/defense/sp_defense 等）、`defender_boosts`（最终生效的能力等级）。
 - **安全线**（`safe_bp`）：KO 概率 < 15% 的最大威力。
 - **绝对安全线**（`absolute_safe_bp`）：KO 概率 = 0% 的最大威力。
 - **输入方式**：
   - 直接传能力值：`def_ov '{"raw_stats":{"hp":185,"defense":85}}'`
   - 传名称自动推导 Lv.50 默认能力值：`survivability 烈咬陆鲨 200 Physical`
-- **输出关键字段**：`safe_bp`（安全线）、`absolute_safe_bp`（绝对安全线）、`defender`（含 hp/defense 等）。
+  - 带防御强化：`survivability 水箭龟 200 Special --def_ov '{"setup_moves":["冥想"]}'`
+  - 直接指定能力等级：`survivability 烈咬陆鲨 200 Physical --def_ov '{"boosts":{"defense":2}}'`
 - **LLM 使用规则**：只引用引擎返回的 `safe_bp` 和 `absolute_safe_bp`，不做任何中间推导。用户提及的本系/命玉/分散/天气/场地等加成由用户自行心算，引擎不计算。
 - **属性相克说明**：引擎输出的等效威力为属性相克倍率 1.0 的基准值。若用户询问具体属性招式（如飞行系），需将结果除以对应倍率（飞行 ×4 打地龙 = 结果 ÷ 4）。
 
