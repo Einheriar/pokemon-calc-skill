@@ -34,7 +34,7 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 | Quick damage calc | "How much does Sun Mega Charizard Y Heat Wave do to Mega Alakazam?" |
 | EV optimization | "How much SpA EV does Charizard need to OHKO Blastoise?" |
 | SP optimization | "Pokémon Champions (SP system: 66/32/1), how much SpA SP does Charizard need to OHKO Blastoise?" |
-| Survivability lookup | "What base power Physical move can Garchomp survive against a 200-Atk attacker?" |
+| Survivability lookup | "My Garchomp has 185 HP. What base power Physical/Special moves can it survive from a 200-Atk/SpA attacker?" |
 | Stat computation | "What's the Attack stat of 95 base, 252 EV, Adamant, Lv.50?" |
 
 ---
