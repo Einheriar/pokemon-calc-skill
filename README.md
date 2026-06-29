@@ -9,6 +9,34 @@ Traditional Pokémon damage calculators are web apps or tools built for humans. 
 
 By providing standardized pure-function CLI interfaces and fully localized static data, this project eliminates the **numerical hallucinations** that LLMs commonly produce when handling complex multiplicative modifiers in Pokémon battles (type matchups × abilities × items × weather × terrain).
 
+## What can you ask?
+
+Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Pokémon Champions **Stat Points (SP)** (32/1/66 rule).
+
+### Encyclopedia & Mechanics
+
+| Capability | Example question |
+|------------|------------------|
+| Look up a Pokémon | "What are Charizard's base stats and typing?" |
+| Type matchups | "How effective is Fairy against Steel?" |
+| Move details | "What's Heat Wave's power, accuracy, and effect?" |
+| Ability effects | "What does Drought do?" |
+| Held items | "What's the difference between Focus Sash and Choice Scarf?" |
+| Learnset | "What Fire-type moves can Charizard learn?" |
+| Evolution line | "How does Eevee evolve into Sylveon?" |
+| Pokédex entries | "What does Mew's Pokédex entry say?" |
+| VGC presets | "What are common Charizard VGC sets?" |
+
+### Damage Calculation & Optimization
+
+| Capability | Example question |
+|------------|------------------|
+| Quick damage calc | "How much does Sun Mega Charizard Y Heat Wave do to Mega Alakazam?" |
+| EV optimization | "How much SpA EV does Charizard need to OHKO Blastoise?" |
+| SP optimization | "Pokémon Champions (SP system: 66/32/1), how much SpA SP does Charizard need to OHKO Blastoise?" |
+| Survivability lookup | "What base power Physical move can Garchomp survive against a 200-Atk attacker?" |
+| Stat computation | "What's the Attack stat of 95 base, 252 EV, Adamant, Lv.50?" |
+
 ---
 
 ## Core Values
@@ -133,12 +161,22 @@ Sample response (excerpt):
 }
 ```
 
-### 3. EV Reverse Optimization
+### 3. EV / SP Optimization
+
+Supports both Gen9 EV system (default) and Pokémon Champions SP (Stat Points) system.
 
 ```bash
-# Search for minimum SpA EVs needed to guarantee the OHKO
+# Gen9 EV mode (default): search for minimum SpA EVs to guarantee OHKO
 python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --target ohko
+
+# Champions SP mode: search for minimum Stat Points (1 SP = +1 stat at Lv.50)
+python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --target ohko --mode sp
 ```
+
+| Mode | Flag | Total Points | Max per Stat | Step | Stat gain at Lv.50 |
+|------|------|--------------|--------------|------|-------------------|
+| Gen9 EV | `--mode ev` (default) | 508 | 252 | 4 | +1 per 8 EV |
+| Champions SP | `--mode sp` | 66 | 32 | 1 | +1 per 1 SP |
 
 ---
 

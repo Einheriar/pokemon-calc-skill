@@ -479,6 +479,7 @@ def calc_bp_mods(
     def_ability: str,
     att_is_grounded: bool,
     def_is_grounded: bool,
+    gen: int,
 ) -> list[int]:
     """Calculate base power modifiers (hex values)."""
     bp_mods: list[int] = []
@@ -488,7 +489,19 @@ def calc_bp_mods(
     if ate_ize_boosted and not move.is_z and not attacker.is_dynamax:
         bp_mods.append(0x1333)  # Gen 7+
 
-    # c. Reckless / Iron Fist
+    # c. Aura abilities (Fairy Aura, Dark Aura, Aura Break)
+    _AURA_MAP = {"妖精": "Fairy Aura", "恶": "Dark Aura"}
+    expected_aura = _AURA_MAP.get(move.type)
+    if expected_aura and not field.is_neutralizing_gas:
+        aura_active = (attacker.ability == expected_aura or def_ability == expected_aura)
+        aura_break = (attacker.ability == "Aura Break" or def_ability == "Aura Break")
+        if aura_active:
+            if aura_break and def_ability != "[ignored]":
+                bp_mods.append(0x0C00)  # 0.75x
+            elif gen > 7 or def_ability != "[ignored]":
+                bp_mods.append(0x1548)  # ~1.33x
+
+    # d. Reckless / Iron Fist
     if ((attacker.ability == "Reckless" and move.has_recoil)
             or (attacker.ability == "Iron Fist" and move.is_punch)):
         bp_mods.append(0x1333)
@@ -1076,7 +1089,7 @@ def calculate_damage(
     check_conditional_spread(move, field, attacker, att_is_grounded)
 
     # BP mods
-    bp_mods = calc_bp_mods(attacker, defender, field, move, ate_ize_boosted, base_power, turn_order, def_ability, att_is_grounded, def_is_grounded)
+    bp_mods = calc_bp_mods(attacker, defender, field, move, ate_ize_boosted, base_power, turn_order, def_ability, att_is_grounded, def_is_grounded, gen)
     base_power = max(1, poke_round(base_power * chain_mods(bp_mods) / 0x1000))
 
     # Attack

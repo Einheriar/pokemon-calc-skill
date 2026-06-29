@@ -55,6 +55,8 @@ calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
+survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（无加成最大可承受招式威力）
+```
 ```
 
 ### 参数覆盖 JSON 示例
@@ -168,6 +170,9 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 # optimize 也使用命名参数
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
 
+# 能力点数（SP）模式：Champions 规则
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko --mode sp
+
 # find-move 支持数据来源过滤
 python scripts/query.py find-move 顺风 --source champions  # 仅 Champions M-B 规则
 python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作数据
@@ -243,6 +248,22 @@ python scripts/query.py calc-raw \
 ```
 
 `optimal_ev` 在 LLM 回答时必须转换为**能力值描述**（如"特攻能力值需要达到 177"），禁止直接说"252 特攻努力值"。
+
+### survivability 命令说明
+
+```bash
+python scripts/query.py survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]
+```
+
+- **用途**：给定防御方的能力值（或宝可梦名称），以及攻击方的物攻/特攻能力值，反查该防御方在**无加成条件下**（无 STAB、无道具、无特性、无天气/场地）能承受的**最大招式基础威力**。
+- **安全线**（`safe_bp`）：KO 概率 < 15% 的最大威力。
+- **绝对安全线**（`absolute_safe_bp`）：KO 概率 = 0% 的最大威力。
+- **输入方式**：
+  - 直接传能力值：`def_ov '{"raw_stats":{"hp":185,"defense":85}}'`
+  - 传名称自动推导 Lv.50 默认能力值：`survivability 烈咬陆鲨 200 Physical`
+- **输出关键字段**：`safe_bp`（安全线）、`absolute_safe_bp`（绝对安全线）、`defender`（含 hp/defense 等）。
+- **LLM 使用规则**：只引用引擎返回的 `safe_bp` 和 `absolute_safe_bp`，不做任何中间推导。用户提及的本系/命玉/分散/天气/场地等加成由用户自行心算，引擎不计算。
+- **属性相克说明**：引擎输出的等效威力为属性相克倍率 1.0 的基准值。若用户询问具体属性招式（如飞行系），需将结果除以对应倍率（飞行 ×4 打地龙 = 结果 ÷ 4）。
 
 ## 3. 执行工作流
 
@@ -504,7 +525,57 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 
 数据中覆盖全国图鉴 1~1025 号，**包含所有形态**（含 Mega、原始回归等），不区分世代过签状态。伤害计算时不过签过滤。
 
-### 5.2 已实现的修正
+### 5.2 能力点数（SP）系统与努力值（EV）系统区分
+
+本 Skill 支持两套能力值分配系统，通过 `optimize` 命令的 `--mode` 参数切换：
+
+| 参数 | 系统名称 | 总点数 | 单项上限 | 步进 | 对应能力值增长（Lv.50, IV=31） |
+|------|----------|--------|----------|------|-------------------------------|
+| `--mode ev`（默认） | 努力值（EV） | 508 | 252 | 4 | 每 8 EV = +1 能力值 |
+| `--mode sp` | 能力点数（Stat Points） | 66 | 32 | 1 | 每 1 SP = +1 能力值 |
+
+**术语规范**：
+- 用户提及"努力值""252""4""508"时，默认使用 `--mode ev`（Gen9 标准规则）。
+- 用户提及"能力点数""SP""32""66"或询问《宝可梦冠军》(Pokémon Champions) 相关优化时，使用 `--mode sp`。
+- 回答中始终使用**能力值描述**（如"攻击能力值需要达到 172"），避免直接输出"252 攻击努力值"或"32 攻击能力点数"。
+
+**命令示例**：
+
+```bash
+# 默认 Gen9 努力值优化（EV 模式）
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
+
+# Champions 能力点数优化（SP 模式）
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko --mode sp
+```
+
+**返回值字段说明**：
+
+`optimize` 命令始终返回两套字段以兼容双模式：
+
+```json
+// EV 模式（--mode ev）
+{
+  "success": true,
+  "optimal_ev": 252,
+  "remaining_evs": 256,
+  "optimal_sp": 0,
+  "remaining_sp": 0
+}
+
+// SP 模式（--mode sp）
+{
+  "success": true,
+  "optimal_ev": 0,
+  "remaining_evs": 0,
+  "optimal_sp": 25,
+  "remaining_sp": 41
+}
+```
+
+未使用模式的字段固定为 0，避免解析歧义。
+
+### 5.4 已实现的修正
 
 - 属性相克：18 属性完整相克表，含 Stellar、Freeze-Dry、Flying Press 等特殊规则
 - STAB / 太晶化：含 Adaptability、星晶属性加成
@@ -519,7 +590,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 - 抗性树果：16 种树果在效果拔群时触发
 - 其他：烧伤减半、要害 1.5x、能力等级变化、重力、光墙/反射壁/极光幕
 
-### 5.3 field_override 字段参考
+### 5.5 field_override 字段参考
 
 ```json
 {
@@ -575,7 +646,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 
 > 字段含义由底层引擎处理，LLM 只需根据用户描述传入对应开关即可。
 
-### 5.4 常见实体词汇启动列表（Vocabulary Priming）
+### 5.6 常见实体词汇启动列表（Vocabulary Priming）
 
 > **强制声明**：以下词汇列表仅用于实体识别和名称映射。严禁在回答中自行解释任何机制或效果。遇到这些词汇时，必须原样或按映射关系传递给 `query.py` 查询后引用。
 
@@ -590,7 +661,7 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 > - 地面 → 飞行：**无效（0x）**
 > - 电 → 地面：**无效（0x）**
 
-### 5.5 当前阶段
+### 5.7 当前阶段
 
 - **Phase 1（百科查询）**：已可用
 - **Phase 2（伤害计算）**：已可用（calc / calc-raw / compute-stats）

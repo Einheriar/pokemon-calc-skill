@@ -23,6 +23,7 @@ Usage:
 
 import io
 import json
+from models import Pokemon, Move, Field
 import os
 import sys
 from pathlib import Path
@@ -1415,6 +1416,7 @@ def cmd_optimize(
     goal: str = "ko",
     target: str = "ohko",
     threshold: str = "guaranteed",
+    mode: str = "ev",
     *extra_args: str,
 ) -> dict[str, Any]:
     """Optimize EV allocation for a given battle scenario.
@@ -1494,7 +1496,7 @@ def cmd_optimize(
     field = Field()
     _apply_field_overrides(field, field_override)
 
-    return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold)  # type: ignore[arg-type]
+    return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
 
 
 def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args: str) -> dict[str, Any]:
@@ -1924,6 +1926,271 @@ def cmd_calc_raw(
     return response
 
 
+def _get_ko_prob(
+    damage: list[int],
+    hp: int,
+    max_hp: int,
+) -> float:
+    """Return single-hit KO probability (0.0 ~ 1.0) with no hazards/berries/eot."""
+    from ko_chance import _get_ko_chance
+
+    return _get_ko_chance(
+        damage=damage,
+        multihit=False,
+        hp=hp,
+        eot=0,
+        hits=1,
+        max_hp=max_hp,
+        toxic_counter=0,
+        has_sitrus=False,
+        has_figy=False,
+        gluttony=False,
+        ripen=1,
+    )
+
+
+def _find_survivability_bp(
+    attacker: Pokemon,
+    defender: Pokemon,
+    field: Field,
+    category: str,
+    max_bp: int = 500,
+    safe_threshold: float = 0.15,
+) -> dict[str, Any]:
+    """Binary search for safe_bp and absolute_safe_bp."""
+    from models import Move
+    from damage import calculate_damage
+
+    lo, hi = 1, max_bp
+
+    def _test(bp: int) -> tuple[list[int], float]:
+        move = Move(
+            name="Test",
+            base_power=bp,
+            type="Normal",
+            category=category,
+            accuracy=100,
+            hits=1,
+            is_spread=False,
+        )
+        result = calculate_damage(attacker, defender, move, field, gen=9)
+        ko_prob = _get_ko_prob(result.damage, defender.current_hp, defender.max_hp)
+        return result.damage, ko_prob
+
+    # Safe line (KO prob < safe_threshold)
+    _, safe_ko_hi = _test(hi)
+    if safe_ko_hi < safe_threshold:
+        safe_bp = hi
+    else:
+        _, safe_ko_lo = _test(lo)
+        if safe_ko_lo >= safe_threshold:
+            safe_bp = 0
+        else:
+            l, h = lo, hi
+            while l < h:
+                mid = (l + h) // 2
+                _, ko_prob = _test(mid)
+                if ko_prob < safe_threshold:
+                    l = mid + 1
+                else:
+                    h = mid
+            safe_bp = l - 1
+
+    # Absolute safe line (KO prob == 0)
+    _, abs_ko_hi = _test(hi)
+    if abs_ko_hi == 0.0:
+        abs_safe_bp = hi
+    else:
+        _, abs_ko_lo = _test(lo)
+        if abs_ko_lo > 0.0:
+            abs_safe_bp = 0
+        else:
+            l, h = lo, hi
+            while l < h:
+                mid = (l + h) // 2
+                _, ko_prob = _test(mid)
+                if ko_prob == 0.0:
+                    l = mid + 1
+                else:
+                    h = mid
+            abs_safe_bp = l - 1
+
+    # Get damage ranges for reporting
+    safe_dr = [0, 0]
+    if safe_bp > 0:
+        safe_damage, _ = _test(safe_bp)
+        safe_dr = [min(safe_damage), max(safe_damage)]
+
+    abs_dr = [0, 0]
+    if abs_safe_bp > 0:
+        abs_damage, _ = _test(abs_safe_bp)
+        abs_dr = [min(abs_damage), max(abs_damage)]
+
+    return {
+        "safe_bp": safe_bp,
+        "absolute_safe_bp": abs_safe_bp,
+        "safe_damage_range": safe_dr,
+        "absolute_safe_damage_range": abs_dr,
+    }
+
+
+def cmd_survivability(
+    defender_name: str,
+    attacker_stat: int,
+    category: str,
+    def_ov: str = "{}",
+    field_ov: str = "{}",
+) -> dict[str, Any]:
+    """Reverse survivability lookup: find max unboosted BP a defender can survive.
+
+    Args:
+        defender_name: Pokemon name (zh/en) or JSON with raw_stats.
+        attacker_stat: Attacker's attack or sp_attack stat value.
+        category: "Physical" or "Special".
+        def_ov: JSON override for defender (e.g. raw_stats).
+        field_ov: JSON override for field (e.g. format).
+
+    Returns:
+        dict with safe_bp, absolute_safe_bp, defender info, etc.
+    """
+    import json
+
+
+    # Parse overrides
+    try:
+        def_override = json.loads(def_ov) if def_ov else {}
+    except (json.JSONDecodeError, TypeError):
+        def_override = {}
+    try:
+        field_override = json.loads(field_ov) if field_ov else {}
+    except (json.JSONDecodeError, TypeError):
+        field_override = {}
+
+    # Build virtual attacker (only relevant attack stat set, no STAB, no item, no ability)
+    raw_stats = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
+    if category == "Physical":
+        raw_stats["attack"] = attacker_stat
+    else:
+        raw_stats["sp_attack"] = attacker_stat
+
+    # Use Fire type to avoid STAB with Normal-type move (ensuring "no boost" calculation)
+    attacker = Pokemon(
+        name="VirtualAttacker",
+        name_en="VirtualAttacker",
+        level=50,
+        types=["Fire"],
+        stats=raw_stats,
+        raw_stats=raw_stats,
+        ability="",
+        ability_zh="",
+        nature="Hardy",
+        item="",
+        current_hp=0,
+        max_hp=0,
+    )
+
+    # Build defender
+    defender_data: dict[str, Any] = {}
+    try:
+        maybe_json = json.loads(defender_name)
+        if isinstance(maybe_json, dict) and "raw_stats" in maybe_json:
+            defender_data = maybe_json
+            defender_name = defender_data.get("name", "Defender")
+    except (json.JSONDecodeError, TypeError):
+        pass
+
+    if not defender_data:
+        resolved = resolve_pokemon(defender_name)
+        if resolved:
+            _, data, form_idx = resolved
+            pk_info = _make_pokemon_from_data(data, form_index=form_idx)
+            defender_data = {
+                "name": pk_info.get("name", defender_name),
+                "name_en": pk_info.get("name_en", ""),
+                "types": pk_info.get("types", ["Normal"]),
+                "base_stats": pk_info.get("base_stats", {}),
+            }
+        else:
+            return {"error": f"Defender '{defender_name}' not found."}
+
+    # 1. Compute default Lv.50 stats first (from base_stats), if not already present
+    if "stats" not in defender_data and "raw_stats" not in defender_data:
+        base_stats = defender_data.get("base_stats", {})
+        if base_stats:
+            from damage import calc_hp_stat, calc_raw_stat, get_nature_modifier
+            stats = {}
+            for stat_key, base in base_stats.items():
+                if stat_key == "hp":
+                    stats[stat_key] = calc_hp_stat(base, 31, 0, 50)
+                else:
+                    raw = calc_raw_stat(base, 31, 0, 50)
+                    stats[stat_key] = int(raw * get_nature_modifier("Hardy", stat_key))
+            defender_data["stats"] = stats
+
+    # 2. Merge user overrides: user-specified fields override defaults, rest keep default Lv.50 values
+    user_raw_stats = def_override.get("raw_stats", {})
+    if user_raw_stats:
+        default_stats = defender_data.get("stats", {})
+        merged_stats = default_stats.copy()
+        merged_stats.update(user_raw_stats)
+        defender_data["raw_stats"] = merged_stats
+    user_stats = def_override.get("stats", {})
+    if user_stats:
+        default_stats = defender_data.get("stats", {})
+        merged_stats = default_stats.copy()
+        merged_stats.update(user_stats)
+        defender_data["stats"] = merged_stats
+
+    if "stats" not in defender_data and "raw_stats" not in defender_data:
+        return {"error": f"No stats available for defender '{defender_name}'."}
+
+    stats = defender_data.get("raw_stats") or defender_data.get("stats", {})
+    hp = stats.get("hp", 0)
+    defender = Pokemon(
+        name=defender_data.get("name", defender_name),
+        name_en=defender_data.get("name_en", "Defender"),
+        level=50,
+        types=defender_data.get("types", ["Normal"]),
+        stats=stats,
+        raw_stats=stats,
+        ability="",
+        ability_zh="",
+        nature="Hardy",
+        item="",
+        current_hp=hp,
+        max_hp=hp,
+    )
+
+    # Build field
+    field = Field()
+    for k, v in field_override.items():
+        if hasattr(field, k):
+            setattr(field, k, v)
+    if not getattr(field, "format", None):
+        field.format = "Doubles"
+
+    result = _find_survivability_bp(attacker, defender, field, category)
+
+    return {
+        "defender": {
+            "name_zh": defender.name,
+            "name_en": defender.name_en,
+            "hp": defender.current_hp,
+            "defense": defender.raw_stats.get("defense", 0),
+            "sp_defense": defender.raw_stats.get("sp_defense", 0),
+            "level": 50,
+        },
+        "attacker_stat": attacker_stat,
+        "category": category,
+        "format": field.format,
+        "safe_bp": result["safe_bp"],
+        "absolute_safe_bp": result["absolute_safe_bp"],
+        "safe_damage_range": result["safe_damage_range"],
+        "absolute_safe_damage_range": result["absolute_safe_damage_range"],
+    }
+
+
+
 COMMANDS: dict[str, Any] = {
     "pokemon": cmd_pokemon,
     "move": cmd_move,
@@ -1943,6 +2210,7 @@ COMMANDS: dict[str, Any] = {
     "calc-raw": cmd_calc_raw,
     "compute-stats": cmd_compute_stats,
     "optimize": cmd_optimize,
+    "survivability": cmd_survivability,
 }
 
 
@@ -1954,7 +2222,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "survivability"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -1980,13 +2248,14 @@ def main() -> int:
         calc_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
         # optimize
-        opt_parser = subparsers.add_parser("optimize", help="EV optimization")
+        opt_parser = subparsers.add_parser("optimize", help="EV / SP optimization")
         opt_parser.add_argument("attacker", help="Attacker Pokemon name")
         opt_parser.add_argument("move", help="Move name")
         opt_parser.add_argument("defender", help="Defender Pokemon name")
         opt_parser.add_argument("--goal", default="ko", help="Optimization goal")
         opt_parser.add_argument("--target", default="ohko", help="Optimization target")
         opt_parser.add_argument("--threshold", default="guaranteed", help="Threshold")
+        opt_parser.add_argument("--mode", default="ev", help="Optimization mode: ev (Gen9) or sp (Champions Stat Points)")
         opt_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
         opt_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
         opt_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
@@ -2020,6 +2289,14 @@ def main() -> int:
         filter_parser.add_argument("--category", dest="category_filters", action="append", default=[], help="Filter by category (物理/特殊/变化 or Physical/Special/Status)")
         filter_parser.add_argument("--min-power", type=int, default=None, help="Minimum base power (inclusive)")
         filter_parser.add_argument("--max-power", type=int, default=None, help="Maximum base power (inclusive)")
+
+        # survivability
+        surv_parser = subparsers.add_parser("survivability", help="Reverse survivability: max unboosted BP defender can survive")
+        surv_parser.add_argument("defender", help="Defender Pokemon name or JSON with raw_stats")
+        surv_parser.add_argument("attacker_stat", type=int, help="Attacker's attack/sp_attack stat value")
+        surv_parser.add_argument("category", help="Physical or Special")
+        surv_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
+        surv_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
 
         args = parser.parse_args()
 
@@ -2059,6 +2336,7 @@ def main() -> int:
                     args.goal,
                     args.target,
                     args.threshold,
+                    args.mode,
                     args.att_ov,
                     args.def_ov,
                     args.field_ov,
@@ -2080,6 +2358,14 @@ def main() -> int:
                 result = cmd_find_move(
                     args.move,
                     args.source,
+                )
+            elif cmd == "survivability":
+                result = cmd_survivability(
+                    args.defender,
+                    args.attacker_stat,
+                    args.category,
+                    args.def_ov,
+                    args.field_ov,
                 )
             elif cmd == "filter-moves":
                 result = cmd_filter_moves(

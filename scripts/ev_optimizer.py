@@ -24,6 +24,11 @@ MAX_TOTAL_EVS = 508
 MAX_SINGLE_EVS = 252
 EV_STEP = 4
 
+# Champions Stat Points (SP) constants
+MAX_TOTAL_SP = 66
+MAX_SINGLE_SP = 32
+SP_STEP = 1
+
 _STAT_KEYS = ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"]
 
 # ---------------------------------------------------------------------------
@@ -42,16 +47,41 @@ def _set_ev(pokemon: Pokemon, stat: str, ev: int) -> Pokemon:
     return pk
 
 
+def _set_sp(pokemon: Pokemon, stat: str, sp: int) -> Pokemon:
+    """Return a copy of pokemon with the given stat's SP converted to equivalent EV.
+
+    Champions SP mode: 1 SP = +1 stat at Lv.50 with IV=31.
+    Conversion: ev = sp * 8, because in Gen9 formula at Lv.50/IV=31,
+    each 8 EV increases raw stat by 1 (for non-HP) or 1 (for HP, since floor(8/4)/2=1).
+
+    After setting ev, we invalidate cached stats so compute_raw_stats()
+    in the damage engine will recalculate them correctly.
+    """
+    pk = copy.copy(pokemon)
+    if not pk.evs:
+        pk.evs = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
+    pk.evs = dict(pk.evs)
+    pk.evs[stat] = sp * 8
+    # Invalidate cached stats so compute_raw_stats recalculates
+    pk.raw_stats = {}
+    pk.stats = {}
+    return pk
+
+
 def _evaluate_attack(
     attacker: Pokemon,
     defender: Pokemon,
     move: Move,
     field: Field,
     stat: str,
-    ev: int,
+    value: int,
+    mode: Literal["ev", "sp"] = "ev",
 ) -> DamageResult:
-    """Evaluate damage with a specific EV investment on the attacking stat."""
-    att = _set_ev(attacker, stat, ev)
+    """Evaluate damage with a specific EV/SP investment on the attacking stat."""
+    if mode == "sp":
+        att = _set_sp(attacker, stat, value)
+    else:
+        att = _set_ev(attacker, stat, value)
     return calculate_damage(att, defender, move, field, gen=9)
 
 
@@ -61,10 +91,14 @@ def _evaluate_defense(
     move: Move,
     field: Field,
     stat: str,
-    ev: int,
+    value: int,
+    mode: Literal["ev", "sp"] = "ev",
 ) -> DamageResult:
-    """Evaluate damage with a specific EV investment on the defending stat."""
-    dfn = _set_ev(defender, stat, ev)
+    """Evaluate damage with a specific EV/SP investment on the defending stat."""
+    if mode == "sp":
+        dfn = _set_sp(defender, stat, value)
+    else:
+        dfn = _set_ev(defender, stat, value)
     return calculate_damage(attacker, dfn, move, field, gen=9)
 
 
@@ -80,6 +114,7 @@ def optimize_attack_ev(
     field: Field,
     target: Literal["ohko", "2hko", "3hko"] = "ohko",
     threshold: Literal["guaranteed", "likely"] = "guaranteed",
+    mode: Literal["ev", "sp"] = "ev",
 ) -> dict:
     """
     Find the minimal attacking EV investment to reach a KO threshold.
@@ -113,29 +148,39 @@ def optimize_attack_ev(
     hits_physical = uses_physical_attack(attacker, defender, move)
     stat = "attack" if hits_physical else "sp_attack"
 
-    best_ev: Optional[int] = None
+    best_val: Optional[int] = None
     best_damage: Optional[DamageResult] = None
 
-    # Linear search with step EV_STEP (4) — fast enough for 64 iterations max
-    for ev in range(0, MAX_SINGLE_EVS + 1, EV_STEP):
-        result = _evaluate_attack(attacker, defender, move, field, stat, ev)
+    if mode == "sp":
+        max_single = MAX_SINGLE_SP
+        step = SP_STEP
+        max_total = MAX_TOTAL_SP
+        val_label = "能力点数"
+    else:
+        max_single = MAX_SINGLE_EVS
+        step = EV_STEP
+        max_total = MAX_TOTAL_EVS
+        val_label = "努力值"
+
+    for val in range(0, max_single + 1, step):
+        result = _evaluate_attack(attacker, defender, move, field, stat, val, mode=mode)
         dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
         total = dmg * hits_needed
 
         if total >= defender.current_hp:
-            best_ev = ev
+            best_val = val
             best_damage = result
             break
 
-    if best_ev is None:
-        # Even 252 EVs not enough
-        result_252 = _evaluate_attack(attacker, defender, move, field, stat, MAX_SINGLE_EVS)
+    if best_val is None:
+        result_max = _evaluate_attack(attacker, defender, move, field, stat, max_single, mode=mode)
         return {
             "success": False,
-            "reason": f"即使满 {MAX_SINGLE_EVS} {stat} 努力值也无法达成 {target}",
-            "optimal_ev": MAX_SINGLE_EVS,
-            "damage_at_optimal": result_252.min_damage,
-            "damage_range": [result_252.min_damage, result_252.max_damage],
+            "reason": f"即使满 {max_single} {stat} {val_label}也无法达成 {target}",
+            "optimal_ev": max_single if mode == "ev" else 0,
+            "optimal_sp": max_single if mode == "sp" else 0,
+            "damage_at_optimal": result_max.min_damage,
+            "damage_range": [result_max.min_damage, result_max.max_damage],
         }
 
     return {
@@ -143,8 +188,10 @@ def optimize_attack_ev(
         "target": target,
         "threshold": threshold,
         "stat": stat,
-        "optimal_ev": best_ev,
-        "remaining_evs": MAX_TOTAL_EVS - best_ev,
+        "optimal_ev": best_val if mode == "ev" else 0,
+        "optimal_sp": best_val if mode == "sp" else 0,
+        "remaining_evs": max_total - best_val if mode == "ev" else 0,
+        "remaining_sp": max_total - best_val if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
     }
@@ -157,6 +204,7 @@ def optimize_defense_ev(
     field: Field,
     target: Literal["survive", "survive_2hko"] = "survive",
     threshold: Literal["guaranteed", "likely"] = "guaranteed",
+    mode: Literal["ev", "sp"] = "ev",
 ) -> dict:
     """
     Find the minimal defensive EV investment to survive a hit.
@@ -188,27 +236,38 @@ def optimize_defense_ev(
             "damage_range": [0, 0],
         }
 
-    best_ev: Optional[int] = None
+    best_val: Optional[int] = None
     best_damage: Optional[DamageResult] = None
 
-    for ev in range(0, MAX_SINGLE_EVS + 1, EV_STEP):
-        result = _evaluate_defense(attacker, defender, move, field, stat, ev)
+    if mode == "sp":
+        max_single = MAX_SINGLE_SP
+        step = SP_STEP
+        max_total = MAX_TOTAL_SP
+        val_label = "能力点数"
+    else:
+        max_single = MAX_SINGLE_EVS
+        step = EV_STEP
+        max_total = MAX_TOTAL_EVS
+        val_label = "努力值"
+
+    for val in range(0, max_single + 1, step):
+        result = _evaluate_defense(attacker, defender, move, field, stat, val, mode=mode)
         dmg = result.max_damage if use_max else sum(result.damage) // len(result.damage)
         total = dmg * hits_to_survive
 
         if total < defender.current_hp:
-            best_ev = ev
+            best_val = val
             best_damage = result
             break
 
-    if best_ev is None:
-        # Even 252 EVs not enough — try HP instead or report failure
-        result_252 = _evaluate_defense(attacker, defender, move, field, stat, MAX_SINGLE_EVS)
+    if best_val is None:
+        result_max = _evaluate_defense(attacker, defender, move, field, stat, max_single, mode=mode)
         return {
             "success": False,
-            "reason": f"即使满 {MAX_SINGLE_EVS} {stat} 努力值也无法{target}",
-            "optimal_ev": MAX_SINGLE_EVS,
-            "damage_range": [result_252.min_damage, result_252.max_damage],
+            "reason": f"即使满 {max_single} {stat} {val_label}也无法{target}",
+            "optimal_ev": max_single if mode == "ev" else 0,
+            "optimal_sp": max_single if mode == "sp" else 0,
+            "damage_range": [result_max.min_damage, result_max.max_damage],
             "suggestion": "尝试同时投资 HP 和防御",
         }
 
@@ -217,8 +276,10 @@ def optimize_defense_ev(
         "target": target,
         "threshold": threshold,
         "stat": stat,
-        "optimal_ev": best_ev,
-        "remaining_evs": MAX_TOTAL_EVS - best_ev,
+        "optimal_ev": best_val if mode == "ev" else 0,
+        "optimal_sp": best_val if mode == "sp" else 0,
+        "remaining_evs": max_total - best_val if mode == "ev" else 0,
+        "remaining_sp": max_total - best_val if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
     }
@@ -235,6 +296,7 @@ def optimize_bulk_evs(
     move: Move,
     field: Field,
     target: Literal["survive", "survive_2hko"] = "survive",
+    mode: Literal["ev", "sp"] = "ev",
 ) -> dict:
     """
     Search for the minimal combined HP + Defense (or HP + Sp. Defense)
@@ -251,29 +313,44 @@ def optimize_bulk_evs(
     def_stat = "defense" if hits_physical else "sp_defense"
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
 
-    best_total = MAX_TOTAL_EVS + 1
+    if mode == "sp":
+        max_single = MAX_SINGLE_SP
+        step = SP_STEP
+        max_total = MAX_TOTAL_SP
+        val_label = "能力点数"
+    else:
+        max_single = MAX_SINGLE_EVS
+        step = EV_STEP
+        max_total = MAX_TOTAL_EVS
+        val_label = "努力值"
+
+    best_total = max_total + 1
     best_combo = (0, 0)
     best_result = None
 
-    # Grid search with step EV_STEP — at most (64 * 64) = 4096 iterations
-    for hp_ev in range(0, MAX_SINGLE_EVS + 1, EV_STEP):
-        for def_ev in range(0, MAX_SINGLE_EVS + 1, EV_STEP):
-            if hp_ev + def_ev > MAX_TOTAL_EVS:
+    # Grid search — at most (33 * 33) = 1089 iterations in SP mode
+    for hp_val in range(0, max_single + 1, step):
+        for def_val in range(0, max_single + 1, step):
+            if hp_val + def_val > max_total:
                 break
-            if hp_ev + def_ev >= best_total:
+            if hp_val + def_val >= best_total:
                 continue
 
             dfn = copy.copy(defender)
-            dfn.evs = dict(defender.evs)
-            dfn.evs["hp"] = hp_ev
-            dfn.evs[def_stat] = def_ev
-            dfn.raw_stats = {}
-            dfn.stats = {}
+            if mode == "sp":
+                dfn = _set_sp(dfn, "hp", hp_val)
+                dfn = _set_sp(dfn, def_stat, def_val)
+            else:
+                dfn.evs = dict(defender.evs)
+                dfn.evs["hp"] = hp_val
+                dfn.evs[def_stat] = def_val
+                dfn.raw_stats = {}
+                dfn.stats = {}
 
             result = calculate_damage(attacker, dfn, move, field, gen=9)
             if result.max_damage * hits_to_survive < dfn.current_hp:
-                best_total = hp_ev + def_ev
-                best_combo = (hp_ev, def_ev)
+                best_total = hp_val + def_val
+                best_combo = (hp_val, def_val)
                 best_result = result
                 # Early exit: can't do better than this total
                 break
@@ -281,21 +358,27 @@ def optimize_bulk_evs(
     if best_result is None:
         return {
             "success": False,
-            "reason": f"即使满努力值分配也无法{target}",
+            "reason": f"即使满{val_label}分配也无法{target}",
             "optimal_hp_ev": 0,
             "optimal_def_ev": 0,
+            "optimal_hp_sp": 0,
+            "optimal_def_sp": 0,
         }
 
-    hp_ev, def_ev = best_combo
+    hp_val, def_val = best_combo
     return {
         "success": True,
         "target": target,
         "hp_stat": "hp",
         "def_stat": def_stat,
-        "optimal_hp_ev": hp_ev,
-        "optimal_def_ev": def_ev,
-        "total_evs": best_total,
-        "remaining_evs": MAX_TOTAL_EVS - best_total,
+        "optimal_hp_ev": hp_val if mode == "ev" else 0,
+        "optimal_def_ev": def_val if mode == "ev" else 0,
+        "optimal_hp_sp": hp_val if mode == "sp" else 0,
+        "optimal_def_sp": def_val if mode == "sp" else 0,
+        "total_evs": best_total if mode == "ev" else 0,
+        "total_sp": best_total if mode == "sp" else 0,
+        "remaining_evs": max_total - best_total if mode == "ev" else 0,
+        "remaining_sp": max_total - best_total if mode == "sp" else 0,
         "damage_range": [best_result.min_damage, best_result.max_damage],
         "description": best_result.description,
     }
@@ -314,28 +397,33 @@ def optimize_evs(
     goal: Literal["ko", "survive", "survive_bulk"] = "ko",
     target: Literal["ohko", "2hko", "3hko", "survive", "survive_2hko"] = "ohko",
     threshold: Literal["guaranteed", "likely"] = "guaranteed",
+    mode: Literal["ev", "sp"] = "ev",
 ) -> dict:
     """
-    Unified EV optimizer entry point.
+    Unified EV/SP optimizer entry point.
+
+    mode:
+        "ev" -> Gen9 effort values (508/252/4 system)
+        "sp" -> Champions stat points (66/32/1 system)
 
     goal:
-        "ko"           -> optimize attacking EVs (use target="ohko"/"2hko"/"3hko")
-        "survive"      -> optimize single defensive EV (use target="survive"/"survive_2hko")
+        "ko"           -> optimize attacking EVs/SPs (use target="ohko"/"2hko"/"3hko")
+        "survive"      -> optimize single defensive EV/SP (use target="survive"/"survive_2hko")
         "survive_bulk" -> optimize HP + Defense combined
 
     Examples:
         # How many Attack EVs to OHKO?
         optimize_evs(att, dfn, move, field, goal="ko", target="ohko")
 
-        # How many Defense EVs to survive?
-        optimize_evs(att, dfn, move, field, goal="survive", target="survive")
+        # How many Defense SPs to survive? (Champions)
+        optimize_evs(att, dfn, move, field, goal="survive", target="survive", mode="sp")
 
         # Optimal HP + Defense split to survive?
         optimize_evs(att, dfn, move, field, goal="survive_bulk", target="survive")
     """
     if goal == "ko":
-        return optimize_attack_ev(attacker, defender, move, field, target=target, threshold=threshold)  # type: ignore[arg-type]
+        return optimize_attack_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
     elif goal == "survive":
-        return optimize_defense_ev(attacker, defender, move, field, target=target, threshold=threshold)  # type: ignore[arg-type]
+        return optimize_defense_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
     else:
-        return optimize_bulk_evs(attacker, defender, move, field, target=target)  # type: ignore[arg-type]
+        return optimize_bulk_evs(attacker, defender, move, field, target=target, mode=mode)  # type: ignore[arg-type]
