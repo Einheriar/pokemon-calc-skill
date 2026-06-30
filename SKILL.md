@@ -15,15 +15,11 @@ description: >
 
 ## 1. 核心原则
 
-1. **LLM 只做理解，不做计算**。所有伤害数值、KO 概率、能力值必须通过 `query.py` 命令获取并原样引用。
-2. **数据优先原则**。本 Skill 拥有权威的宝可梦数据库，所有涉及具体数据的问题（种族值、招式、特性、属性相克等）必须通过 `query.py` 命令查询后回答，原样引用引擎返回的数据。
-3. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。
+1. **LLM 只做理解，不做计算**。所有伤害数值、KO 概率、能力值、属性相克倍率、招式效果、特性分析、道具增伤等必须通过 `query.py` 命令获取并原样引用。引擎返回的有效威力即为权威结果。禁止凭 LLM 内部知识补充任何数值类信息。不确定时，优先查询而非猜测。
+2. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
+3. **环境参数唯一入口**。`field_override` 是传入环境条件（天气、场地、对战模式等）的唯一入口。`move_override` 仅限行为参数（`is_crit`、`hits`、`fainted_allies`），不得修改 `base_power` 或 `type`。
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
-5. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `att_override` / `def_override` 的 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
-6. **环境参数唯一入口**。`field_override` 是传入环境条件（天气、场地、对战模式等）的唯一入口。`move_override` 仅限行为参数（`is_crit`、`hits`、`fainted_allies`），如需模拟天气或场地效果，必须通过 `field_override` 传入，不得修改 `base_power` 或 `type`。
-7. **威力修正链由引擎自动计算**。引擎返回的 `effective_power` 或 `description` 中的威力值即为权威结果，直接引用。LLM 不得在回答中写出"基础威力 × 场地 × STAB = ..."等中间推导式。
-8. **招式效果与特性分析必须通过查询获取**。回答中涉及招式效果、特性对伤害/KO 的影响等描述，必须通过独立的 `move <name>` 或 `ability <name>` 命令查询后原样引用。若引擎 KO 概率已给出确定结论，直接引用即可，不得附加条件分析。特性信息仅限列出 `attacker_info.ability` / `defender_info.ability` 返回的当前特性名称，不做任何效果推导。
-9. **属性相克与数值推导必须通过查询获取**。回答中涉及属性相克倍率、STAB 修正、道具增伤比例、招式效果等具体数值说明时，必须通过对应查询命令（`type` / `move` / `ability` / `calc`）获取后原样引用。禁止凭 LLM 内部知识补充任何数值类信息。不确定时，优先查询而非猜测。
+5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。
 
 ## 2. 命令速查
 
@@ -57,7 +53,6 @@ calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
 survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（无加成最大可承受招式威力）
-```
 ```
 
 ### 参数覆盖 JSON 示例
@@ -450,65 +445,11 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 
 ### 4.2 伤害计算标准回答结构
 
-> **回答结构铁律**：执行 calc 命令后，你的最终回答**必须严格包含**以下 Markdown 标题，不得遗漏任何一个。利用标题的自回归惯性强制输出完整表格。
->
-> 必须包含的标题（按顺序）：
-> 1. `## 结论摘要` —— 先回答用户核心问题（如"能不能接下""能否秒杀"）
-> 2. `## 攻击方详细信息` —— 必须附带完整表格（使用 calc 返回的 attacker_info）
-> 3. `## 防御方详细信息` —— 必须附带完整表格（使用 calc 返回的 defender_info）
-> 4. `## 招式信息` —— 必须附带完整表格
-> 5. `## 环境条件` —— 必须附带完整表格
-> 6. `## 伤害计算结果` —— 必须附带完整表格
->
-> 若用户询问努力值优化，追加 `## 努力值优化结果`。
+**执行 `calc` 后，严格按照文档末尾的「输出格式铁律」模板组织回答。**
 
-#### 1. 前言：假设声明（强制不可省略）
+必须包含六个二级标题（结论摘要 / 攻击方详细信息 / 防御方详细信息 / 招式信息 / 环境条件 / 伤害计算结果），按顺序输出，不得遗漏。若用户询问努力值优化，追加「努力值优化结果」。
 
-**必须包含的内容**：
-
-1. **对战环境声明（强制不可省略）**
-   > **本次计算环境：[用户明确指定的模式 / 默认推断的 Doubles 模式]。**
-
-2. **数据来源声明（强制）**
-   > 攻方数据来源：`attacker_info._data_source` | 守方数据来源：`defender_info._data_source`
-   > （若双方数据来源不同，必须分别列出）
-
-3. **未过签形态警告（原样引用 `warning` 字段）**
-
-   - 若 `_data_source == "gen9"` 且 `is_unobtainable == true`：
-     > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
-
-   - 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
-     > ⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。
-
-4. **默认配置推断清单**
-   当用户未明确指定性格/努力值/道具时，逐条列出系统推断的具体参数及推断依据：
-   > **假设声明**：以下参数未由用户明确指定，使用角色类型默认推断：
-   > - 性格：[推断值] — 推断依据：[角色类型]
-   > - 努力值：[推断值]
-   > - 道具：[推断值]
-   >
-   > 若实际配置不同，伤害结果可能有变化。
-
-**禁止的做法**：
-- 省略对战环境声明
-- 省略数据来源声明
-- 笼统地写"使用了默认配置"而不列出具体参数
-- 将推断参数作为绝对事实陈述，不声明为"推断"
-
-#### 特性显示规则
-
-> - 所有形态：**必须同时输出**"特性"（`ability` 字段）和"全部可选特性"（`all_abilities` 字段）
-> - 格式：`{当前特性}（可选：{特性1} / {特性2} / {特性3}）`
-> - 用户指定特性时，当前特性为用户指定值；未指定时，当前特性为默认特性（`all_abilities` 列表第一项）
-> - Mega / 原始回归形态同样适用此规则，`all_abilities` 展示 Mega 形态的专属特性列表
-
-#### 输出模板位置
-
-第一至第六部分的完整输出模板见文档末尾的「输出格式铁律」节。执行 `calc` 后，严格按照该模板填写引擎返回的数据，不得擅自增删标题。
-
-> 多段攻击招式（如双翼、种子机关枪）：`damage_range` 为单次伤害，`total_damage_range` 为合计伤害，判断秒杀时优先引用 `total_damage_range`。
-> 回答时必须转换为**能力值描述**，禁止直接输出努力值。
+多段攻击招式（如双翼）：`damage_range` 为单次伤害，`total_damage_range` 为合计伤害，判断秒杀时优先引用 `total_damage_range`。回答时必须转换为**能力值描述**，禁止直接输出努力值。
 
 ### 4.3 多方案对比输出格式
 
@@ -590,78 +531,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 未使用模式的字段固定为 0，避免解析歧义。
 
-### 5.4 已实现的修正
-
-- 属性相克：18 属性完整相克表，含 Stellar、Freeze-Dry、Flying Press 等特殊规则
-- STAB / 太晶化：含 Adaptability、星晶属性加成
-- 特性修正：含 40+ 种攻击/防御特性（Overgrow/Blaze/Torrent、Huge Power、Guts、Protosynthesis、Supreme Overlord 等）
-  - **威力修正**：Mega Launcher（波动类 ×1.5）、Technician（≤60 威力 ×1.5）、Sheer Force（追加效果 ×1.3）、Tough Claws（接触类 ×1.3）、Strong Jaw（啃咬类 ×1.5）、Sand Force（沙暴下岩/钢/地面 ×1.3）、Analytic（后手 ×1.3）
-  - **攻击修正**：Supreme Overlord（每阵亡队友 +10%，上限 50%）
-  - **abilityOn 动态激活**：Flash Fire / Slow Start / Plus / Minus / Stakeout 支持通过 `ability_on` 字段控制激活状态
-  - **特殊效果**：Long Reach（接触招式不触发接触效果，如绕过 Fluffy）、Merciless（对中毒/剧毒目标必定要害）、Parental Bond（亲子爱：攻击命中两次，第二段 1/4 威力）
-- 道具修正：生命宝珠、讲究头带/眼镜、突击背心、进化奇石、深海的牙齿/鳞片、厚骨棒、光粉等
-- 场地/天气：晴天/雨天/沙暴/下雪、青草/电气/薄雾/精神场地
-- Ate/Ize 特性：Pixilate / Aerilate / Refrigerate / Galvanize / Normalize 类型转换 + 威力提升
-- 抗性树果：16 种树果在效果拔群时触发
-- 其他：烧伤减半、要害 1.5x、能力等级变化、重力、光墙/反射壁/极光幕
-
-### 5.5 field_override 字段参考
-
-```json
-{
-  "weather": "Sun",
-  "terrain": "Electric",
-  "format": "Doubles",
-  "is_gravity": false,
-  "is_reflect": false,
-  "is_light_screen": false,
-  "is_aurora_veil": false,
-  "is_friend_guard": false,
-  "is_battery": false,
-  "is_power_spot": false,
-  "is_steely_spirit": false,
-  "is_tailwind_atk": false,
-  "is_tailwind_def": false,
-  "is_neutralizing_gas": false,
-  "is_sword_of_ruin": false,
-  "is_beads_of_ruin": false,
-  "is_tablets_of_ruin": false,
-  "is_vessel_of_ruin": false,
-  "is_stealth_rock": false,
-  "spikes": 0,
-  "is_salt_cure": false,
-  "is_helping_hand": false
-}
-```
-
-| 用户可能描述 | 传入字段 |
-|-------------|---------|
-| 晴天/雨天/沙暴/下雪/暴风雪/大日照/大雨/强风 | `weather` |
-| 电气场地/青草场地/薄雾场地/精神场地 | `terrain` |
-| 单打/双打 | `format` |
-| 重力 | `is_gravity` |
-| 反射壁 | `is_reflect` |
-| 光墙 | `is_light_screen` |
-| 极光幕 | `is_aurora_veil` |
-| 友情防守 | `is_friend_guard` |
-| 蓄电池 | `is_battery` |
-| 能量点 | `is_power_spot` |
-| 钢之意志 | `is_steely_spirit` |
-| 顺风（攻击方） | `is_tailwind_atk` |
-| 顺风（防御方） | `is_tailwind_def` |
-| 化学变化气体 | `is_neutralizing_gas` |
-| 灾祸之简 | `is_sword_of_ruin` |
-| 灾祸之鼎 | `is_beads_of_ruin` |
-| 灾祸之剑 | `is_tablets_of_ruin` |
-| 灾祸之玉 | `is_vessel_of_ruin` |
-| 隐形岩 | `is_stealth_rock` |
-| 撒菱 | `spikes`（0~3） |
-| 盐腌 | `is_salt_cure` |
-| 帮助 | `is_helping_hand` |
-
-> 字段含义由底层引擎处理，LLM 只需根据用户描述传入对应开关即可。
-
-### 5.6 常见实体词汇启动列表（Vocabulary Priming）
+### 5.4 常见实体词汇启动列表（Vocabulary Priming）
 
 > **强制声明**：以下词汇列表仅用于实体识别和名称映射。严禁在回答中自行解释任何机制或效果。遇到这些词汇时，必须原样或按映射关系传递给 `query.py` 查询后引用。
 
@@ -676,17 +546,27 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 > - 地面 → 飞行：**无效（0x）**
 > - 电 → 地面：**无效（0x）**
 
-### 5.7 当前阶段
-
-- **Phase 1（百科查询）**：已可用
-- **Phase 2（伤害计算）**：已可用（calc / calc-raw / compute-stats）
-- **Phase 3（努力值优化）**：已可用（optimize）
-
 ---
 
 ## 输出格式铁律（最终输出模板）
 
 > **强制指令**：本 Skill 的最终输出必须严格复制以下模板结构。将括号内的占位符替换为引擎返回的真实数据。严禁擅自增删任何二级标题或改变顺序。
+
+**回答前必须声明的假设**（不可省略）：
+
+1. **对战环境声明**：`本次计算环境：[用户指定 / 默认 Doubles]。`
+2. **数据来源声明**：`攻方数据来源：attacker_info._data_source | 守方数据来源：defender_info._data_source`
+3. **未过签形态警告**（若 `is_unobtainable == true`）：
+   - Gen9 不可用 → `⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。`
+   - Champions 不可用 → `⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。`
+4. **默认配置推断清单**（当用户未指定性格/努力值/道具时）：
+   `假设声明：以下参数未由用户明确指定，使用角色类型默认推断：`
+   `- 性格：[推断值] — 推断依据：[角色类型]`
+   `- 努力值：[推断值]`
+   `- 道具：[推断值]`
+   `若实际配置不同，伤害结果可能有变化。`
+
+**禁止的做法**：省略对战环境声明 / 省略数据来源声明 / 笼统写"使用了默认配置"而不列出具体参数 / 将推断参数作为绝对事实陈述。
 
 ### 结论摘要
 
