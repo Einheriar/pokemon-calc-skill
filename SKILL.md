@@ -104,14 +104,8 @@ survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]         
 
 **setup_moves 说明**：
 
-- `setup_moves` 是 `att_override` 的字段，接收变化类招式名称数组
-- 引擎自动查询 `moves.json` 中的 `stat_changes` 字段，应用以下效果：
-  - 能力等级变化（如诡计→特攻+2，剑舞→攻击+2）
-  - 天气/场地设置（如求雨→Rain，电气场地→Electric）
-  - HP 回复（如自我再生→回复50% HP）
-  - 状态异常赋予（如电磁波→麻痹）
-- **禁止同时传入 `setup_moves` 和对应的手动 `boosts`/`weather`/`terrain`**，避免冲突
-- 若招式无 `stat_changes` 数据（如保护、替身），引擎静默跳过
+- `setup_moves` 是 `att_override` 的字段，接收变化类招式名称数组（如 `["诡计", "求雨"]`）。引擎自动解析并应用招式效果（能力等级变化、天气/场地设置等）。
+- **禁止同时传入 `setup_moves` 和对应的手动 `boosts`/`weather`/`terrain`**，避免冲突。
 
 **field_override 取值**：
 - `weather`: Sun / Rain / Sand / Hail / Snow / Strong Winds / Harsh Sun / Heavy Rain
@@ -129,25 +123,13 @@ survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]         
 **Windows 临时脚本模板**：
 
 ```python
-import json, os, sys
-# 根据实际安装路径调整
-skill_root = os.environ.get("POKEMON_CALC_SKILL_ROOT", "pokemon-calc")
-sys.path.insert(0, os.path.join(skill_root, "scripts"))
+import json, sys; sys.path.insert(0, "pokemon-calc/scripts")
 from query import cmd_calc
-
-result = cmd_calc(
-    "ATT_NAME", "MOVE_NAME", "DEF_NAME",
-    json.dumps({"evs": {"sp_attack": 252}}),  # att_override
-    json.dumps({}),                            # move_override
-    json.dumps({}),                            # def_override
-    json.dumps({"terrain": "Psychic"})         # field_override
-)
+result = cmd_calc("ATT", "MOVE", "DEF", json.dumps({...}), json.dumps({}), json.dumps({}), json.dumps({...}))
 print(json.dumps(result, ensure_ascii=False, indent=2))
 ```
 
-> **环境变量说明**：
-> - `POKEMON_CALC_SKILL_ROOT`：Skill 根目录（包含 `scripts/` 和 `data/`），用于临时脚本中的 `sys.path.insert`
-> - `POKEMON_CALC_DATA_DIR`：数据目录绝对路径，用于覆盖脚本内部的数据路径推断
+> **环境变量**：可通过 `POKEMON_CALC_SKILL_ROOT` 指定 Skill 根目录；`POKEMON_CALC_DATA_DIR` 覆盖数据目录。
 
 ### 命令示例
 
@@ -251,29 +233,17 @@ python scripts/query.py calc-raw \
 python scripts/query.py survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]
 ```
 
-- **用途**：给定防御方的能力值（或宝可梦名称），以及攻击方的物攻/特攻能力值，反查该防御方在**无攻击方加成条件下**（无攻击方 STAB、无道具、无特性、无天气/场地）能承受的**最大招式基础威力**。
-- **支持 `def_ov` 中的 `boosts` 和 `setup_moves`**：引擎支持在防御方身上预置能力等级变化（如 "铁壁"+2 防御、"冥想"+1 特攻特防），从而计算“强化后”能承受的最大威力。例如：
-  - `def_ov '{"boosts":{"defense":2}}'` 模拟已使用铁壁的防御方
-  - `def_ov '{"setup_moves":["冥想"]}'` 自动解析冥想效果并应用 +1 特攻特防
-  - `def_ov '{"setup_moves":["铁壁","冥想"]}'` 同时应用多个变化招式
-- **输出关键字段**：`safe_bp`（安全线）、`absolute_safe_bp`（绝对安全线）、`defender`（含 hp/defense/sp_defense 等）、`defender_boosts`（最终生效的能力等级）。
-- **安全线**（`safe_bp`）：KO 概率 < 15% 的最大威力。
-- **绝对安全线**（`absolute_safe_bp`）：KO 概率 = 0% 的最大威力。
-- **输入方式**：
-  - 直接传能力值：`def_ov '{"raw_stats":{"hp":185,"defense":85}}'`
-  - 传名称自动推导 Lv.50 默认能力值：`survivability 烈咬陆鲨 200 Physical`
-  - 带防御强化：`survivability 水箭龟 200 Special --def_ov '{"setup_moves":["冥想"]}'`
-  - 直接指定能力等级：`survivability 烈咬陆鲨 200 Physical --def_ov '{"boosts":{"defense":2}}'`
-- **LLM 使用规则**：只引用引擎返回的 `safe_bp` 和 `absolute_safe_bp`，不做任何中间推导。用户提及的本系/命玉/分散/天气/场地等加成，Agent 应使用 `calc` 命令重新计算完整伤害，不得自行估算。当用户提供属性名称时，必须通过 `type` 命令查询倍率，禁止凭内部知识计算。
-- **属性相克说明**：引擎输出的等效威力为属性相克倍率 1.0 的基准值。若用户追问具体属性招式（如"飞行系招式打过去会怎样"），必须先调用 `type <atk_type> <def_type1> <def_type2>` 命令查询属性相克倍率，再将结果除以对应倍率。禁止凭内部知识直接断言倍率。例如：飞行系打地面+龙 = 0.5x 抵抗（地面免疫电、龙抵抗火水草电，飞行打地面+龙是 0.5x），不是 4x 克制。
-- **延伸问答工具调用规则**：当用户在 survivability 返回后续问以下问题时，Agent 必须调用对应工具，禁止凭内部知识作答：
+- **用途**：给定防御方能力值（或宝可梦名称）和攻击方物攻/特攻能力值，反查**无攻击方加成**（无 STAB、道具、特性、天气/场地）下防御方能承受的最大招式基础威力。
+- **输出字段**：`safe_bp`（KO 概率 < 15% 的最大威力）、`absolute_safe_bp`（KO 概率 = 0% 的最大威力）、`defender`（含最终能力值）、`defender_boosts`（最终生效的能力等级）。
+- **输入方式**：传名称自动推导 Lv.50 默认能力值：`survivability 烈咬陆鲨 200 Physical`；直接传能力值：`def_ov '{"raw_stats":{"hp":185,"defense":85}}'`。`def_ov` 支持 `boosts` 和 `setup_moves`（详见上方 setup_moves 说明），例：`survivability 水箭龟 200 Special --def_ov '{"setup_moves":["冥想"]}'`。
+- **LLM 使用规则**：只引用引擎返回的 `safe_bp` 和 `absolute_safe_bp`，不做任何中间推导。引擎输出为属性相克倍率 1.0 的基准值。用户追问以下问题时，必须调用对应工具重算，禁止凭内部知识作答：
 
-  | 用户追问 | 必须调用的工具 | 说明 |
-  |---------|--------------|------|
-  | "X 属性招式打过去会怎样" | `type <atk> <def_types>` | 查询属性相克倍率 |
-  | "加上 STAB 后是多少" | `calc` 重新计算 | 不可手算 STAB 修正 |
-  | "如果带命玉/头带呢" | `calc` 重新计算 | 道具修正由引擎处理 |
-  | "XX 宝可梦的防御能力值和这个一样吗" | `pokemon <name>` + `compute-stats` | 查种族值算能力值 |
+  | 用户追问 | 必须调用的工具 |
+  |---------|--------------|
+  | "X 属性招式打过去会怎样" | `type <atk> <def_types>` 查询倍率，再将结果除以对应倍率 |
+  | "加上 STAB 后是多少" | `calc` 重新计算（不可手算 STAB） |
+  | "如果带命玉/头带呢" | `calc` 重新计算（道具修正由引擎处理） |
+  | "XX 宝可梦的防御能力值和这个一样吗" | `pokemon <name>` + `compute-stats` 查种族值 |
 
 ## 3. 执行工作流
 

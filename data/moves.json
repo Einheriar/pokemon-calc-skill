@@ -8831,7 +8831,10 @@
     "additional_effect": "攻击目标造成伤害。\n雷电拳有10%的几率使目标陷入麻痹状态。",
     "details": "",
     "move_changes": "仅在《传说 阿尔宙斯》中",
-    "id": "9"
+    "id": "9",
+    "is_punch": true,
+    "makes_contact": true,
+    "has_secondary_effect": true
   },
   "震级": {
     "name_zh": "震级",
@@ -9599,26 +9602,6 @@
     "details": "",
     "move_changes": "",
     "has_secondary_effect": true
-  },
-  "ThunderPunch": {
-    "name_zh": "ThunderPunch",
-    "name_en": "ThunderPunch",
-    "name_ja": "",
-    "type": "Electric",
-    "category": "Physical",
-    "pp": "",
-    "power": "75",
-    "accuracy": "100",
-    "range": "",
-    "description": "用充满电流的拳头攻击对手。有时会让对手陷入麻痹状态。",
-    "intro": "",
-    "effect": [],
-    "additional_effect": "",
-    "details": "",
-    "move_changes": "",
-    "makes_contact": true,
-    "has_secondary_effect": true,
-    "is_punch": true
   },
   "破灭之愿": {
     "name_zh": "破灭之愿",

@@ -484,7 +484,12 @@ def calc_bp_mods(
     """Calculate base power modifiers (hex values)."""
     bp_mods: list[int] = []
 
-    # a. Rivalry (omitted for simplicity; add if needed)
+    # a. Rivalry (斗争心): same gender 1.25x, opposite 0.75x, no effect if unknown/genderless
+    if attacker.ability == "Rivalry" and attacker.gender and defender.gender:
+        if attacker.gender == defender.gender:
+            bp_mods.append(0x1400)  # 1.25x
+        else:
+            bp_mods.append(0x0C00)  # 0.75x
     # b. Ate/Ize abilities (Pixilate, etc.)
     if ate_ize_boosted and not move.is_z and not attacker.is_dynamax:
         bp_mods.append(0x1333)  # Gen 7+
@@ -534,9 +539,9 @@ def calc_bp_mods(
     if field.is_steely_spirit and move.type == "钢":
         bp_mods.append(0x1800)
 
-    # e. Helping Hand
+    # e. Helping Hand (1.5x)
     if field.is_helping_hand:
-        bp_mods.append(0x14CD)
+        bp_mods.append(0x1800)
 
     # f. Charge, Power Spot etc omitted for brevity
     # g. Terrain pulse
@@ -648,6 +653,8 @@ def calc_at_mods(
     # 1.5x offensive abilities
     hp_third = attacker.max_hp // 3
     if ((attacker.ability == "Guts" and attacker.status not in (None, "Healthy") and move.category == "Physical")
+            or (attacker.ability == "Toxic Boost" and attacker.status in ("Poisoned", "Badly Poisoned") and move.category == "Physical")
+            or (attacker.ability == "Flare Boost" and attacker.status == "Burned" and move.category == "Special")
             or (attacker.ability == "Overgrow" and attacker.current_hp <= hp_third and move.type == "草")
             or (attacker.ability == "Blaze" and attacker.current_hp <= hp_third and move.type == "火")
             or (attacker.ability == "Torrent" and attacker.current_hp <= hp_third and move.type == "水")
@@ -889,6 +896,10 @@ def calc_final_mods(
     if def_ability == "Fluffy" and move.type == "火":
         final_mods.append(0x2000)
 
+    # Dry Skin: fire moves deal 1.25x damage
+    if def_ability == "Dry Skin" and move.type == "火":
+        final_mods.append(0x1400)
+
     # Expert Belt
     if attacker.item in ("达人带", "Expert Belt") and type_effectiveness > 1:
         final_mods.append(0x1333)
@@ -1032,13 +1043,27 @@ def calculate_damage(
         move_name=move.name,
     )
 
+    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), etc.
+    # Use defender.ability directly since def_ability (Mold Breaker-aware) is set later.
+    if defender.ability == "Wind Rider" and getattr(move, "is_wind", False):
+        type_effectiveness = 0.0
+    if defender.ability == "Well-Baked Body" and move.type == "火":
+        type_effectiveness = 0.0
+
     # Immunity check
     if type_effectiveness == 0:
+        immunity_reason = ""
+        if defender.ability == "Wind Rider":
+            immunity_reason = "（乘风特性免疫风系招式）"
+        elif defender.ability == "Well-Baked Body":
+            immunity_reason = "（焦香之躯特性免疫火系招式）"
+        else:
+            immunity_reason = "（属性免疫）"
         return DamageResult(
             damage=[0],
             min_damage=0,
             max_damage=0,
-            description=f"{move.name} 对 {defender.name} 无效（属性免疫）",
+            description=f"{move.name} 对 {defender.name} 无效{immunity_reason}",
             type_effectiveness=0.0,
         )
 

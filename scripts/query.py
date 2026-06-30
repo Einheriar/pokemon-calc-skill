@@ -1254,6 +1254,26 @@ def _resolve_ability_to_zh(ability_name: str) -> str:
     return ability_name
 
 
+def _resolve_gender(form: dict[str, Any]) -> str:
+    """Extract gender from a form's gender_ratio field.
+
+    Returns "M" for male-only, "F" for female-only, "" for mixed or unknown.
+    Rivalry only cares about the three-way comparison (M/F/neither).
+    """
+    gr = form.get("gender_ratio", {})
+    if not isinstance(gr, dict):
+        return ""
+    male = gr.get("male", -1)
+    female = gr.get("female", -1)
+    if male == 100 and female == 0:
+        return "M"
+    if male == 0 and female == 100:
+        return "F"
+    if male == 0 and female == 0:
+        return ""       # genderless
+    return ""           # mixed ratio — needs LLM override
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -1331,6 +1351,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "tera_type": None,
         "is_dynamax": False,
         "weight": 0.0,
+        "gender": _resolve_gender(form),
         "_data_source": data.get("_data_source", "gen9"),
         "is_unobtainable": is_mega and data.get("_data_source", "gen9") == "gen9",
     }
@@ -1349,6 +1370,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "ability_on", "fainted_allies",
+        "gender",
         "raw_stats", "stats",
     }
     pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}
@@ -1361,6 +1383,15 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "物理": "Physical",
         "特殊": "Special",
         "变化": "Status",
+    }
+    # English → Chinese type mapping: moves.json has mixed EN/ZH types (~55% EN),
+    # but damage.py compares against Chinese strings (e.g. "火", not "Fire").
+    _MOVE_TYPE_EN_TO_ZH: dict[str, str] = {
+        "Normal": "一般", "Fire": "火", "Water": "水", "Electric": "电",
+        "Grass": "草", "Ice": "冰", "Fighting": "格斗", "Poison": "毒",
+        "Ground": "地面", "Flying": "飞行", "Psychic": "超能力", "Bug": "虫",
+        "Rock": "岩石", "Ghost": "幽灵", "Dragon": "龙", "Dark": "恶",
+        "Steel": "钢", "Fairy": "妖精",
     }
     power_str = str(data.get("power", "0"))
     try:
@@ -1377,7 +1408,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "name": data.get("name_en", ""),
         "name_zh": data.get("name_zh", ""),
         "base_power": power,
-        "type": data.get("type", "一般"),
+        "type": _MOVE_TYPE_EN_TO_ZH.get(data.get("type", "一般"), data.get("type", "一般")),
         "category": _MOVE_CATEGORY_ZH_TO_EN.get(data.get("category", ""), "Physical"),
         "accuracy": 100,
         "hits": hits,
