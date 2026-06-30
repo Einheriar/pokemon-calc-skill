@@ -27,7 +27,8 @@ class Pokemon:
     nature: str = "勤奋"               # Chinese nature name
     ability: str = ""                # English (engine layer)
     ability_zh: str = ""             # Chinese (display layer)
-    item: str = ""
+    item: str = ""                   # English canonical (engine layer)
+    item_zh: str = ""                # Chinese/display name (display layer)
     types: list[str] = field(default_factory=list)
     tera_type: Optional[str] = None
     is_terastalize: bool = False

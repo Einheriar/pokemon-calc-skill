@@ -616,6 +616,18 @@ def resolve_item(name: str) -> str | None:
     return en
 
 
+def _resolve_item_to_zh(en_name: str) -> str | None:
+    """Resolve an English item name to its Chinese canonical name if available."""
+    if not en_name:
+        return None
+    load_data()
+    items = _index_data.get("items", {})
+    for zh, en in items.items():
+        if en == en_name:
+            return zh
+    return None
+
+
 def cmd_item(name: str) -> dict[str, Any]:
     """Lookup item by any language name. Returns canonical English name and effect."""
     en = resolve_item(name)
@@ -703,8 +715,13 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
         if suggestions:
             err["suggestions"] = suggestions
         return err
-    stem, data, _form_idx = resolved
+    stem, data, form_idx = resolved
     forms = data.get("forms", [])
+    selected_form = forms[form_idx] if forms and form_idx < len(forms) else {}
+    form_name = selected_form.get("name", "")
+    is_mega = form_name.startswith("超级") or form_name.startswith("原始")
+    data_source = data.get("_data_source", "gen9")
+    is_unobtainable = is_mega and data_source == "gen9"
     result: dict[str, Any] = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -728,7 +745,8 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
         "stats": data.get("stats"),
         "evolution_chains": data.get("evolution_chains"),
         "mega_evolution": data.get("mega_evolution"),
-        "_data_source": data.get("_data_source", "gen9"),
+        "_data_source": data_source,
+        "is_unobtainable": is_unobtainable,
     }
     # Prompt LLM to disambiguate when multiple forms exist
     if len(forms) > 1:
@@ -1316,8 +1334,10 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     is_mega = form_name.startswith("超级") or form_name.startswith("原始")
 
     default_item = ""
+    default_item_zh = ""
     if is_mega:
-        default_item = _derive_mega_stone(form_name)
+        default_item_zh = _derive_mega_stone(form_name)
+        default_item = resolve_item(default_item_zh) or default_item_zh
 
     # Build display name: combine regional prefix with base name for descriptive forms
     name_zh = data.get("name_zh", "")
@@ -1341,7 +1361,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "types": types,
         "ability": ability,          # English (engine layer)
         "ability_zh": ability_zh,    # Chinese (display layer)
-        "item": default_item,
+        "item": default_item,        # English canonical (engine layer)
+        "item_zh": default_item_zh,  # Chinese/display name (display layer)
         "nature": "勤奋",
         "evs": {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0},
         "ivs": {"hp": 31, "attack": 31, "defense": 31, "sp_attack": 31, "sp_defense": 31, "speed": 31},
@@ -1363,15 +1384,33 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     # Sync ability_zh with the final ability
     if overrides and "ability" in overrides:
         pk["ability_zh"] = _resolve_ability_to_zh(overridden_ability) or pk.get("ability_zh", "")
-    # Filter out fields not supported by the Pokemon dataclass
+    # Post-override: ensure item is canonical English for the damage engine
+    # while preserving the original display name (usually Chinese) for UI output
+    overridden_item = pk.get("item", "")
+    overridden_item_zh = pk.get("item_zh", "")
+    if overridden_item:
+        resolved_item = resolve_item(overridden_item)
+        if resolved_item:
+            pk["item"] = resolved_item
+            # If the user explicitly passed an item override, keep that original
+            # text as the display name. Otherwise (Mega default item), prefer the
+            # stored Chinese display name.
+            if overrides and "item" in overrides:
+                pk["item_zh"] = overridden_item
+            else:
+                pk["item_zh"] = overridden_item_zh or _resolve_item_to_zh(resolved_item) or overridden_item
+    # Filter out fields not supported by the Pokemon dataclass.
+    # _data_source and is_unobtainable are kept so callers (cmd_calc etc.) can
+    # report provenance and availability; they are popped before Pokemon construction.
     _VALID_PK_FIELDS = {
         "name", "name_en", "level", "base_stats", "evs", "ivs",
-        "nature", "ability", "ability_zh", "item", "types", "tera_type",
+        "nature", "ability", "ability_zh", "item", "item_zh", "types", "tera_type",
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "ability_on", "fainted_allies",
         "gender",
         "raw_stats", "stats",
+        "_data_source", "is_unobtainable",
     }
     pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}
     return pk
@@ -1686,7 +1725,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "ability": attacker.ability_zh,
         "all_abilities": att_all_abilities,
         "nature": attacker.nature,
-        "item": attacker.item,
+        "item": attacker.item_zh or attacker.item,
         "evs": attacker.evs,
         "ivs": attacker.ivs,
         "level": attacker.level,
@@ -1704,7 +1743,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "ability": defender.ability_zh,
         "all_abilities": def_all_abilities,
         "nature": defender.nature,
-        "item": defender.item,
+        "item": defender.item_zh or defender.item,
         "evs": defender.evs,
         "ivs": defender.ivs,
         "level": defender.level,
@@ -1873,6 +1912,14 @@ def cmd_calc_raw(
         def_dict["max_hp"] = def_dict["raw_stats"].get("hp", 0)
     if def_dict.get("current_hp", 0) == 0:
         def_dict["current_hp"] = def_dict["max_hp"]
+
+    # Normalize item names to English canonical for the damage engine
+    for side_dict in (att_dict, def_dict):
+        item = side_dict.get("item", "")
+        if item:
+            resolved = resolve_item(item)
+            if resolved:
+                side_dict["item"] = resolved
 
     # Auto-fill is_spread from moves.json if not explicitly provided
     if "is_spread" not in move_dict:
