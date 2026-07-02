@@ -66,7 +66,7 @@ _NATURE_ALIASES: dict[str, str] = {
 }
 
 ATE_IZE_ABILITIES = [
-    "Aerilate", "Pixilate", "Refrigerate", "Galvanize", "Normalize"
+    "Aerilate", "Pixilate", "Refrigerate", "Galvanize", "Normalize", "Dragonize"
 ]
 
 # Moves that are NOT affected by Ate/Ize type changes
@@ -208,6 +208,7 @@ def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
                 "Pixilate": "妖精",
                 "Refrigerate": "冰",
                 "Galvanize": "电",
+                "Dragonize": "龙",
             }
             move.type = type_map.get(attacker.ability, move.type)
             is_boosted = True
@@ -527,6 +528,8 @@ def calc_bp_mods(
     if attacker.ability == "Mega Launcher" and move.name in _PULSE_MOVES:
         bp_mods.append(0x1800)
     elif attacker.ability == "Strong Jaw" and move.name in _BITE_MOVES:
+        bp_mods.append(0x1800)
+    elif attacker.ability == "Fire Mane" and move.type == "火":
         bp_mods.append(0x1800)
     elif attacker.ability == "Technician" and temp_bp <= 60:
         bp_mods.append(0x1800)
@@ -1078,15 +1081,20 @@ def calculate_damage(
     if attacker.ability == "Merciless" and defender.status in ("Poisoned", "Badly Poisoned"):
         is_critical = True
 
+    # Effective weather for the attacker (Mega Sol treats it as Sun)
+    effective_weather = field.weather
+    if attacker.ability == "Mega Sol" and field.weather not in ("Heavy Rain", "Harsh Sun"):
+        effective_weather = "Sun"
+
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
-    if move.name == "Weather Ball" and field.weather and attacker.item not in ("Utility Umbrella", "大晴天伞"):
+    if move.name == "Weather Ball" and effective_weather and attacker.item not in ("Utility Umbrella", "大晴天伞"):
         weather_type_map = {
             "Sun": "火", "Harsh Sun": "火",
             "Rain": "水", "Heavy Rain": "水",
             "Sand": "岩石",
             "Hail": "冰", "Snow": "冰",
         }
-        move.type = weather_type_map.get(field.weather, move.type)
+        move.type = weather_type_map.get(effective_weather, move.type)
     elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
         terrain_type_map = {
             "Electric": "电",
@@ -1136,10 +1144,10 @@ def calculate_damage(
         base_dmg = poke_round(base_dmg * 0xC00 / 0x1000)
 
     # b. Weather
-    if field.weather:
-        if (("Sun" in field.weather and move.type == "火") or ("Rain" in field.weather and move.type == "水")) and defender.item != "大晴天伞":
+    if effective_weather:
+        if (("Sun" in effective_weather and move.type == "火") or ("Rain" in effective_weather and move.type == "水")) and defender.item != "大晴天伞":
             base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
-        elif ((field.weather == "Sun" and move.type == "水") or (field.weather == "Rain" and move.type == "火")) and defender.item != "大晴天伞":
+        elif ((effective_weather == "Sun" and move.type == "水") or (effective_weather == "Rain" and move.type == "火")) and defender.item != "大晴天伞":
             base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
 
     # c. Critical hit
