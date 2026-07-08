@@ -1678,9 +1678,15 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     field = Field()
     _apply_field_overrides(field, field_override)
 
-    # Ensure current_hp reflects max_hp when not explicitly overridden
+    # Ensure max_hp/current_hp are derived from stats when not explicitly overridden.
+    # Users may pass stats/raw_stats without current_hp/max_hp, so derive from hp stat.
+    if attacker.max_hp == 0:
+        attacker.max_hp = attacker.raw_stats.get("hp", attacker.stats.get("hp", 0))
     if attacker.current_hp == 0:
         attacker.current_hp = attacker.max_hp
+
+    if defender.max_hp == 0:
+        defender.max_hp = defender.raw_stats.get("hp", defender.stats.get("hp", 0))
     if defender.current_hp == 0:
         defender.current_hp = defender.max_hp
 

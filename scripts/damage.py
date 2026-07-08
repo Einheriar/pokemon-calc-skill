@@ -1053,6 +1053,28 @@ def calculate_damage(
     if defender.ability == "Well-Baked Body" and move.type == "火":
         type_effectiveness = 0.0
 
+    def _check_seeds(defender: Pokemon, field: Field) -> None:
+        """Apply terrain seed boosts to the defender's defensive stats.
+
+        Mirrors the front-end checkSeeds behaviour: when the defender holds
+        a seed and the corresponding terrain is active, raise the matching
+        defensive stat by one stage.  Seeds are consumed in-game, but the
+        calculator treats them as a one-time boost for the current calculation.
+        """
+        stat = ""
+        if field.terrain == "Psychic" and defender.item == "Psychic Seed":
+            stat = "sp_defense"
+        elif field.terrain == "Misty" and defender.item == "Misty Seed":
+            stat = "sp_defense"
+        elif field.terrain == "Electric" and defender.item == "Electric Seed":
+            stat = "defense"
+        elif field.terrain == "Grassy" and defender.item == "Grassy Seed":
+            stat = "defense"
+        if stat:
+            new_boost = min(6, defender.boosts.get(stat, 0) + 1)
+            defender.boosts[stat] = new_boost
+            defender.stats[stat] = get_modified_stat(defender.raw_stats.get(stat, 0), new_boost)
+
     # Immunity check
     if type_effectiveness == 0:
         immunity_reason = ""
@@ -1074,6 +1096,12 @@ def calculate_damage(
     def_ability = defender.ability
     if attacker.ability in ("Mold Breaker", "Teravolt", "Turboblaze"):
         def_ability = "[ignored]"
+
+    # Terrain Seed items apply a one-time defensive boost.  Copy boosts so the
+    # original Pokemon object is not mutated across multiple calculate_damage calls.
+    original_boosts = defender.boosts
+    defender.boosts = dict(original_boosts)
+    _check_seeds(defender, field)
 
     # Critical hit
     is_critical = move.is_crit and def_ability not in ("Battle Armor", "Shell Armor")
