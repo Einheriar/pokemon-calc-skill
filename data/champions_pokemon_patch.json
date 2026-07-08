@@ -9934,7 +9934,7 @@
     "_data_source": "champions",
     "forms": [
       {
-        "name": "猛雷鼓",
+        "name": "铝钢桥龙",
         "types": [
           "钢",
           "龙"
@@ -9949,7 +9949,7 @@
     ],
     "stats": [
       {
-        "form": "猛雷鼓",
+        "form": "铝钢桥龙",
         "data": {
           "hp": 90,
           "attack": 105,

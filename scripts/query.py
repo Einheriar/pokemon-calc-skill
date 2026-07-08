@@ -1416,22 +1416,36 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     return pk
 
 
+# Move field normalization constants (module-level for reuse).
+_MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
+    "物理": "Physical",
+    "特殊": "Special",
+    "变化": "Status",
+}
+# English → Chinese type mapping: damage.py compares against Chinese strings (e.g. "火", not "Fire").
+_MOVE_TYPE_EN_TO_ZH: dict[str, str] = {
+    "Normal": "一般", "Fire": "火", "Water": "水", "Electric": "电",
+    "Grass": "草", "Ice": "冰", "Fighting": "格斗", "Poison": "毒",
+    "Ground": "地面", "Flying": "飞行", "Psychic": "超能力", "Bug": "虫",
+    "Rock": "岩石", "Ghost": "幽灵", "Dragon": "龙", "Dark": "恶",
+    "Steel": "钢", "Fairy": "妖精",
+}
+
+
+def _normalize_move_fields(move: dict[str, Any]) -> None:
+    """Normalize move type/category for the damage engine.
+
+    Mutates the dict in place: English type names are converted to Chinese,
+    and Chinese category names are converted to English.
+    """
+    if "type" in move:
+        move["type"] = _MOVE_TYPE_EN_TO_ZH.get(move["type"], move["type"])
+    if "category" in move:
+        move["category"] = _MOVE_CATEGORY_ZH_TO_EN.get(move["category"], move["category"])
+
+
 def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     """Build a Move dict suitable for damage.py from move data."""
-    _MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
-        "物理": "Physical",
-        "特殊": "Special",
-        "变化": "Status",
-    }
-    # English → Chinese type mapping: moves.json has mixed EN/ZH types (~55% EN),
-    # but damage.py compares against Chinese strings (e.g. "火", not "Fire").
-    _MOVE_TYPE_EN_TO_ZH: dict[str, str] = {
-        "Normal": "一般", "Fire": "火", "Water": "水", "Electric": "电",
-        "Grass": "草", "Ice": "冰", "Fighting": "格斗", "Poison": "毒",
-        "Ground": "地面", "Flying": "飞行", "Psychic": "超能力", "Bug": "虫",
-        "Rock": "岩石", "Ghost": "幽灵", "Dragon": "龙", "Dark": "恶",
-        "Steel": "钢", "Fairy": "妖精",
-    }
     power_str = str(data.get("power", "0"))
     try:
         power = int(power_str)
@@ -1447,8 +1461,8 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "name": data.get("name_en", ""),
         "name_zh": data.get("name_zh", ""),
         "base_power": power,
-        "type": _MOVE_TYPE_EN_TO_ZH.get(data.get("type", "一般"), data.get("type", "一般")),
-        "category": _MOVE_CATEGORY_ZH_TO_EN.get(data.get("category", ""), "Physical"),
+        "type": data.get("type", "一般"),
+        "category": data.get("category", ""),
         "accuracy": 100,
         "hits": hits,
         "is_crit": False,
@@ -1467,8 +1481,10 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "deals_physical_damage": data.get("deals_physical_damage", False),
         "fainted_allies": 0,
     }
+    _normalize_move_fields(move)
     if overrides:
         move.update(overrides)
+        _normalize_move_fields(move)
     return move
 
 
@@ -1891,6 +1907,16 @@ def cmd_calc_raw(
         return {"error": "attacker_json missing required field: stats"}
     if "stats" not in def_dict:
         return {"error": "defender_json missing required field: stats"}
+
+    # Normalize move fields for the damage engine (Chinese category/type -> English category / Chinese type)
+    _normalize_move_fields(move_dict)
+
+    # Normalize Pokemon types: English type names should be converted to Chinese for the engine.
+    # This keeps calc-raw aligned with the intermediate-layer philosophy of bilingual input.
+    if att_dict.get("types"):
+        att_dict["types"] = [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in att_dict["types"]]
+    if def_dict.get("types"):
+        def_dict["types"] = [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in def_dict["types"]]
 
     # Set raw_stats from the provided stats (bypasses compute_raw_stats in calculate_damage)
     att_dict["raw_stats"] = att_dict["stats"]
