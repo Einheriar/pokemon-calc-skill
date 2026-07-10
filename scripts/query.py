@@ -363,22 +363,6 @@ def cmd_preset(pokemon_name: str, preset_name: str = "") -> dict[str, Any]:
     }
 
 
-def _to_fullwidth(s: str) -> str:
-    """Convert halfwidth ASCII letters/digits to fullwidth."""
-    result = []
-    for ch in s:
-        code = ord(ch)
-        if 0x30 <= code <= 0x39:          # 0-9  -> ０-９
-            result.append(chr(code + 0xFEE0))
-        elif 0x41 <= code <= 0x5A:        # A-Z  -> Ａ-Ｚ
-            result.append(chr(code + 0xFEE0))
-        elif 0x61 <= code <= 0x7A:        # a-z  -> ａ-ｚ
-            result.append(chr(code + 0xFEE0))
-        else:
-            result.append(ch)
-    return "".join(result)
-
-
 def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str, Any]:
     """Apply Champions patch to a pokemon data entry if available."""
     patches = _load_champions_patches()
@@ -453,15 +437,6 @@ def _find_form_index(name: str, data: dict[str, Any]) -> int:
         if form_name and len(form_name) > 1 and name.endswith(form_name):
             return idx
 
-    # Try with fullwidth normalization on input
-    name_fw = _to_fullwidth(name)
-    for idx, form in enumerate(forms):
-        form_name = form.get("name", "")
-        if form_name and name_fw == form_name:
-            return idx
-        if form_name and len(form_name) > 1 and name_fw.endswith(form_name):
-            return idx
-
     return 0
 
 
@@ -489,11 +464,6 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
             if k.lower() == name.lower():
                 stem = v
                 break
-
-    # Try fullwidth-normalized version (e.g. "超级喷火龙Y" -> "超级喷火龙Ｙ")
-    if not stem:
-        name_fw = _to_fullwidth(name)
-        stem = _index_data["pokemon"].get(name_fw) or _index_data.get("pokemon_forms", {}).get(name_fw)
 
     if not stem:
         return None
@@ -1617,6 +1587,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "gender": _resolve_gender(form),
         "_data_source": data.get("_data_source", "gen9"),
         "is_unobtainable": is_mega and data.get("_data_source", "gen9") == "gen9",
+        "is_mega": is_mega,
     }
     if overrides:
         pk.update(overrides)
@@ -1650,7 +1621,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "ability_on", "fainted_allies",
-        "gender",
+        "gender", "is_mega",
         "raw_stats", "stats",
         "_data_source", "is_unobtainable",
     }
@@ -1924,10 +1895,12 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     att_extra = {
         "_data_source": att_dict.pop("_data_source", "gen9"),
         "is_unobtainable": att_dict.pop("is_unobtainable", False),
+        "is_mega": att_dict.pop("is_mega", False),
     }
     def_extra = {
         "_data_source": def_dict.pop("_data_source", "gen9"),
         "is_unobtainable": def_dict.pop("is_unobtainable", False),
+        "is_mega": def_dict.pop("is_mega", False),
     }
 
     attacker = Pokemon(**att_dict)
@@ -1997,6 +1970,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "max_hp": attacker.max_hp,
         "_data_source": att_extra.get("_data_source", "gen9"),
         "is_unobtainable": att_extra.get("is_unobtainable", False),
+        "is_mega": att_extra.get("is_mega", False),
     }
     defender_info = {
         "name_zh": defender.name,
@@ -2015,6 +1989,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "max_hp": defender.max_hp,
         "_data_source": def_extra.get("_data_source", "gen9"),
         "is_unobtainable": def_extra.get("is_unobtainable", False),
+        "is_mega": def_extra.get("is_mega", False),
     }
 
     response: dict[str, Any] = {

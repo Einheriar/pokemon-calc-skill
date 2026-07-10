@@ -266,7 +266,7 @@ def is_grounded(pokemon: Pokemon, field: Field) -> bool:
         return False
     if pokemon.item == "Air Balloon":
         return False
-    if pokemon.ability == "Levitate":
+    if pokemon.ability in ("Levitate", "Eelevate"):
         return False
     return True
 
@@ -1118,11 +1118,13 @@ def calculate_damage(
         move_name=move.name,
     )
 
-    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), etc.
+    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), Eelevate (ground), etc.
     # Use defender.ability directly since def_ability (Mold Breaker-aware) is set later.
     if defender.ability == "Wind Rider" and getattr(move, "is_wind", False):
         type_effectiveness = 0.0
     if defender.ability == "Well-Baked Body" and move.type == "火":
+        type_effectiveness = 0.0
+    if defender.ability == "Eelevate" and move.type == "地面":
         type_effectiveness = 0.0
 
     # Immunity check
@@ -1132,6 +1134,8 @@ def calculate_damage(
             immunity_reason = "（乘风特性免疫风系招式）"
         elif defender.ability == "Well-Baked Body":
             immunity_reason = "（焦香之躯特性免疫火系招式）"
+        elif defender.ability == "Eelevate":
+            immunity_reason = "（鳗鳗高升特性免疫地面招式）"
         else:
             immunity_reason = "（属性免疫）"
         return DamageResult(

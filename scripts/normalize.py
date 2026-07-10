@@ -73,6 +73,14 @@ def _load_aliases() -> dict[str, dict[str, str]]:
     return _aliases_data  # type: ignore[return-value]
 
 
+def _contains_chinese(s: str) -> bool:
+    """Return True if the string contains any CJK unified ideographs."""
+    for ch in s:
+        if "\u4e00" <= ch <= "\u9fff":
+            return True
+    return False
+
+
 def normalize_name(name: str, entity_type: str) -> str:
     """Normalize a user-provided name to its canonical form.
 
@@ -83,32 +91,35 @@ def normalize_name(name: str, entity_type: str) -> str:
     Returns:
         Canonical name if a mapping exists, otherwise the original name
         (case-preserved so downstream case-insensitive matching still works).
+        For pokemon, when no alias matches and the input contains Chinese
+        characters, the name is returned in fullwidth form so that form
+        suffixes like Y/X match the canonical fullwidth index keys.
     """
     aliases = _load_aliases()
     alias_map = aliases.get(entity_type, {})
 
-    # For pokemon, also apply fullwidth normalization before alias lookup
-    lookup_name = name
+    # For pokemon, apply fullwidth normalization before alias lookup, but also
+    # fall back to the original form (halfwidth) so aliases like "超梦X" work.
+    lookup_names = [name]
     if entity_type == "pokemon":
-        lookup_name = _to_fullwidth(name)
+        lookup_names.insert(0, _to_fullwidth(name))
 
-    # Try exact alias match first (case-sensitive)
-    canonical = alias_map.get(lookup_name)
-    if canonical:
-        return canonical
-
-    # Try lowercase alias match (case-insensitive)
-    canonical = alias_map.get(lookup_name.lower())
-    if canonical:
-        return canonical
-
-    # Also try lowercase on the original name (without fullwidth) for non-pokemon
-    if entity_type != "pokemon":
-        canonical = alias_map.get(name.lower())
+    for lookup_name in lookup_names:
+        # Try exact alias match first (case-sensitive)
+        canonical = alias_map.get(lookup_name)
         if canonical:
             return canonical
 
-    # No alias found; return the original name unchanged
+        # Try lowercase alias match (case-insensitive)
+        canonical = alias_map.get(lookup_name.lower())
+        if canonical:
+            return canonical
+
+    # No alias found; for pokemon with Chinese characters, return fullwidth form
+    # so resolve_pokemon/_find_form_index do not need their own fullwidth fallback.
+    if entity_type == "pokemon" and _contains_chinese(name):
+        return _to_fullwidth(name)
+
     return name
 
 

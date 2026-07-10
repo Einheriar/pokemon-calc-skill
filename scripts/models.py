@@ -45,6 +45,7 @@ class Pokemon:
     ability_on: bool = False           # Flash Fire / Slow Start / Plus / Minus / Stakeout activation
     fainted_allies: int = 0            # For Supreme Overlord AT boost
     gender: str = ""                   # "M" / "F" / "" (unknown/genderless, for Rivalry)
+    is_mega: bool = False              # Mega Evolution or Primal Reversion form
     # Derived stats (calculated once then cached)
     raw_stats: dict[str, int] = field(default_factory=dict)
     stats: dict[str, int] = field(default_factory=dict)

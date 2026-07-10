@@ -11116,9 +11116,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "毒菱": {
@@ -12630,9 +12628,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "盘蜷": {
@@ -12676,9 +12672,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "找伙伴": {
@@ -12698,9 +12692,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "您先请": {
@@ -13377,9 +13369,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "抛下狠话": {
@@ -13399,7 +13389,10 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "unmodeled": true
+      "opponent": {
+        "attack": -1,
+        "sp_attack": -1
+      }
     }
   },
   "颠倒": {
@@ -13419,9 +13412,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "青草场地": {
@@ -13502,7 +13493,7 @@
     "move_changes": "",
     "stat_changes": {
       "opponent": {
-        "attack": -2
+        "sp_attack": -2
       }
     }
   },
@@ -13608,7 +13599,8 @@
     "move_changes": "",
     "stat_changes": {
       "opponent": {
-        "attack": -1
+        "attack": -1,
+        "sp_attack": -1
       }
     }
   },
@@ -13671,7 +13663,10 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "unmodeled": true
+      "self": {
+        "defense": 1,
+        "sp_defense": 1
+      }
     }
   },
   "欢乐时光": {
@@ -14613,7 +14608,9 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "unmodeled": true
+      "opponent": {
+        "attack": -1
+      }
     }
   },
   "精神场地": {
@@ -14803,6 +14800,9 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
+      "opponent": {
+        "speed": -2
+      },
       "status": {
         "target": "opponent",
         "condition": "poison",
@@ -14851,8 +14851,8 @@
     "move_changes": "",
     "stat_changes": {
       "opponent": {
-        "attack": -2,
-        "sp_attack": -2
+        "attack": -1,
+        "sp_attack": -1
       }
     }
   },
@@ -16044,9 +16044,7 @@
     "details": "",
     "move_changes": "",
     "stat_changes": {
-      "opponent": {
-        "unmodeled": true
-      }
+      "unmodeled": true
     }
   },
   "茶会": {
@@ -16921,8 +16919,8 @@
     "move_changes": "",
     "stat_changes": {
       "self": {
-        "attack": -1,
-        "defense": -1,
+        "attack": 2,
+        "sp_attack": 2,
         "speed": 2
       }
     }
