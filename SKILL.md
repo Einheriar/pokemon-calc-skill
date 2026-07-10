@@ -154,11 +154,40 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 # find-move 支持数据来源过滤
 python scripts/query.py find-move 顺风 --source champions  # 仅 Champions M-B 规则
 python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作数据
+
+# filter-pokemon 按属性/种族值/特性筛选
+python scripts/query.py filter-pokemon --type 火 --type 龙 --min-stat speed 100
+python scripts/query.py filter-pokemon --type 水 --max-stat hp 60 --ability 悠游自如
 ```
 
 > **`--source` 过滤说明**：`find-move` 默认返回全国图鉴（Gen9 + Champions）所有能学会该招式的宝可梦。传入 `--source champions` 仅返回 Champions M-B 规则可用宝可梦；传入 `--source gen9` 排除 Champions 专属宝可梦，仅保留 Gen9 正作数据。
 >
 > **`types` 字段**：`find-move` 返回的每个宝可梦条目均包含 `"types"` 数组，可直接用于属性筛选（如"找出能学会顺风的恶系宝可梦"），无需二次查询。
+
+### filter-pokemon 命令说明
+
+```bash
+python scripts/query.py filter-pokemon [OPTIONS]
+```
+
+按属性、种族值、特性筛选宝可梦。
+
+| 参数 | 说明 | 示例 |
+|------|------|------|
+| `--type` | 属性（可多次指定，AND 关系） | `--type 火 --type 龙` |
+| `--min-stat` | 最小基础种族值 | `--min-stat speed 100` |
+| `--max-stat` | 最大基础种族值 | `--max-stat hp 60` |
+| `--ability` | 特性（可多次指定，OR 关系） | `--ability 悠游自如` |
+
+**返回值字段**：
+- `count`: 匹配数量
+- `filters`: 实际生效的筛选条件
+- `results`: 匹配宝可梦列表，每个条目包含 `name_zh`、`name_en`、`pokedex_id`、`types`、`base_stats`、`abilities`
+
+**筛选规则**：
+- 多个 `--type` 之间为 AND 关系（宝可梦必须同时具有所有指定属性）
+- 多个 `--ability` 之间为 OR 关系（任意形态拥有其中一个特性即可）
+- `--min-stat` 和 `--max-stat` 的统计项名称为：`hp`、`attack`、`defense`、`sp_attack`、`sp_defense`、`speed`
 
 ### 天气联动招式（引擎自动处理）
 
@@ -202,8 +231,8 @@ python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作�
 
 - `damage_range` / `damage_rolls` 为**单次打击**（多段招式）
 - `total_damage_range` / `total_damage_rolls` 为**多段合计**，判断秒杀时优先引用
-- `type_effectiveness` 仅反映**属性相克原始倍率**（如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，应对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
-- `attacker_auto_preset` / `defender_auto_preset`：当用户部分指定配置（如只给了性格+某属性努力值）时，引擎自动从 setdex 匹配最相似的预设，用其 **evs / nature / ivs** 补全未指定字段。道具和特性**不参与**自动兜底。若该宝可梦不在 setdex 中（共 189 只），值为 `null`。Agent 在回答中若发现该字段非 null，必须声明："未指定努力值按 VGC 热门预设 `{preset_name}` 补全"
+- `type_effectiveness` 反映**实际生效属性**经过属性相克后的原始倍率（已包含 Ate/Ize 特性、气象球、大地波动等导致的类型转换；如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，应对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
+- `attacker_auto_preset` / `defender_auto_preset`：当用户未指定配置或只给出部分配置（如性格、某项努力值）时，引擎自动从 setdex 匹配最相似的预设，用其 **evs / nature / ivs** 补全未指定字段；若用户完全未指定配置，还会同时采用该预设的 **特性**。道具**不参与**自动兜底。若该宝可梦不在 setdex 中（共 189 只），值为 `null`。Agent 在回答中若发现该字段非 null，必须声明："未指定努力值按 VGC 热门预设 `{preset_name}` 补全"
 
 ### calc-raw 快速填空模板
 

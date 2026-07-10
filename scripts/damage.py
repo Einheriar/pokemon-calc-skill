@@ -1032,26 +1032,15 @@ def calculate_damage(
     hits_physical = uses_physical_attack(attacker, defender, move)
     move.category = "Physical" if hits_physical else "Special"
 
-    # Type effectiveness
-    def_type1 = defender.types[0] if defender.types else "一般"
-    def_type2 = defender.types[1] if len(defender.types) > 1 else None
-    type_effectiveness = get_move_effectiveness(
-        move.type, def_type1, def_type2,
-        is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
-        is_gravity=field.is_gravity,
-        def_item=defender.item,
-        is_strong_winds=(field.weather == "Strong Winds"),
-        is_tera_shell=(defender.ability == "Tera Shell" and defender.current_hp == defender.max_hp),
-        def_is_tera=defender.is_terastalize,
-        move_name=move.name,
-    )
+    # Ability ignore (Mold Breaker, Teravolt, Turboblaze)
+    def_ability = defender.ability
+    if attacker.ability in ("Mold Breaker", "Teravolt", "Turboblaze"):
+        def_ability = "[ignored]"
 
-    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), etc.
-    # Use defender.ability directly since def_ability (Mold Breaker-aware) is set later.
-    if defender.ability == "Wind Rider" and getattr(move, "is_wind", False):
-        type_effectiveness = 0.0
-    if defender.ability == "Well-Baked Body" and move.type == "火":
-        type_effectiveness = 0.0
+    # Terrain Seed items apply a one-time defensive boost.  Copy boosts so the
+    # original Pokemon object is not mutated across multiple calculate_damage calls.
+    original_boosts = defender.boosts
+    defender.boosts = dict(original_boosts)
 
     def _check_seeds(defender: Pokemon, field: Field) -> None:
         """Apply terrain seed boosts to the defender's defensive stats.
@@ -1075,32 +1064,6 @@ def calculate_damage(
             defender.boosts[stat] = new_boost
             defender.stats[stat] = get_modified_stat(defender.raw_stats.get(stat, 0), new_boost)
 
-    # Immunity check
-    if type_effectiveness == 0:
-        immunity_reason = ""
-        if defender.ability == "Wind Rider":
-            immunity_reason = "（乘风特性免疫风系招式）"
-        elif defender.ability == "Well-Baked Body":
-            immunity_reason = "（焦香之躯特性免疫火系招式）"
-        else:
-            immunity_reason = "（属性免疫）"
-        return DamageResult(
-            damage=[0],
-            min_damage=0,
-            max_damage=0,
-            description=f"{move.name} 对 {defender.name} 无效{immunity_reason}",
-            type_effectiveness=0.0,
-        )
-
-    # Ability ignore (Mold Breaker, Teravolt, Turboblaze)
-    def_ability = defender.ability
-    if attacker.ability in ("Mold Breaker", "Teravolt", "Turboblaze"):
-        def_ability = "[ignored]"
-
-    # Terrain Seed items apply a one-time defensive boost.  Copy boosts so the
-    # original Pokemon object is not mutated across multiple calculate_damage calls.
-    original_boosts = defender.boosts
-    defender.boosts = dict(original_boosts)
     _check_seeds(defender, field)
 
     # Critical hit
@@ -1141,6 +1104,44 @@ def calculate_damage(
 
     # Ate/Ize type change (Pixilate, Aerilate, etc.)
     move, ate_ize_boosted = _ate_ize_type_change(move, attacker)
+    # Type effectiveness
+    def_type1 = defender.types[0] if defender.types else "一般"
+    def_type2 = defender.types[1] if len(defender.types) > 1 else None
+    type_effectiveness = get_move_effectiveness(
+        move.type, def_type1, def_type2,
+        is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
+        is_gravity=field.is_gravity,
+        def_item=defender.item,
+        is_strong_winds=(field.weather == "Strong Winds"),
+        is_tera_shell=(defender.ability == "Tera Shell" and defender.current_hp == defender.max_hp),
+        def_is_tera=defender.is_terastalize,
+        move_name=move.name,
+    )
+
+    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), etc.
+    # Use defender.ability directly since def_ability (Mold Breaker-aware) is set later.
+    if defender.ability == "Wind Rider" and getattr(move, "is_wind", False):
+        type_effectiveness = 0.0
+    if defender.ability == "Well-Baked Body" and move.type == "火":
+        type_effectiveness = 0.0
+
+    # Immunity check
+    if type_effectiveness == 0:
+        immunity_reason = ""
+        if defender.ability == "Wind Rider":
+            immunity_reason = "（乘风特性免疫风系招式）"
+        elif defender.ability == "Well-Baked Body":
+            immunity_reason = "（焦香之躯特性免疫火系招式）"
+        else:
+            immunity_reason = "（属性免疫）"
+        return DamageResult(
+            damage=[0],
+            min_damage=0,
+            max_damage=0,
+            description=f"{move.name} 对 {defender.name} 无效{immunity_reason}",
+            type_effectiveness=0.0,
+        )
+
 
     # Grounded checks for terrain effects
     att_is_grounded = is_grounded(attacker, field)

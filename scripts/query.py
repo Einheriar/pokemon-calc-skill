@@ -181,6 +181,76 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
 _AUTO_PRESET_FIELDS = {"evs", "nature", "ivs"}
 
 
+# Direction scoring thresholds
+_DIRECTION_HIGH_EV = 200  # User input strong enough to infer a direction
+
+
+def _infer_direction(evs: dict[str, int], nature: str | None = None) -> set[str]:
+    """Infer build direction from partial EVs and nature.
+
+    Returns a set of direction tags: physical, special, bulky, fast, mixed.
+    """
+    directions: set[str] = set()
+    atk = evs.get("attack", 0)
+    spa = evs.get("sp_attack", 0)
+    hp = evs.get("hp", 0)
+    defense = evs.get("defense", 0)
+    spd = evs.get("sp_defense", 0)
+    spe = evs.get("speed", 0)
+
+    if spa >= _DIRECTION_HIGH_EV and spa >= atk:
+        directions.add("special")
+    if atk >= _DIRECTION_HIGH_EV and atk >= spa:
+        directions.add("physical")
+    if hp >= _DIRECTION_HIGH_EV or defense >= _DIRECTION_HIGH_EV or spd >= _DIRECTION_HIGH_EV:
+        directions.add("bulky")
+    if spe >= _DIRECTION_HIGH_EV:
+        directions.add("fast")
+
+    # Nature hints
+    if nature:
+        nature_lower = nature.lower()
+        if nature_lower in ("modest", "timid", "mild", "quiet", "rash"):
+            directions.add("special")
+        elif nature_lower in ("adamant", "jolly", "naughty", "lonely", "brave"):
+            directions.add("physical")
+        if nature_lower in ("timid", "jolly", "naive", "hasty"):
+            directions.add("fast")
+        if nature_lower in ("bold", "impish", "calm", "careful", "sassy", "relaxed"):
+            directions.add("bulky")
+
+    if not directions:
+        directions.add("balanced")
+    return directions
+
+
+def _preset_directions(evs: dict[str, int]) -> set[str]:
+    """Infer preset direction from its EV spread."""
+    directions: set[str] = set()
+    atk = evs.get("attack", 0)
+    spa = evs.get("sp_attack", 0)
+    hp = evs.get("hp", 0)
+    defense = evs.get("defense", 0)
+    spd = evs.get("sp_defense", 0)
+    spe = evs.get("speed", 0)
+
+    # Output direction: whichever offensive stat is highest (and meaningfully invested)
+    if spa > atk and spa >= 100:
+        directions.add("special")
+    elif atk > spa and atk >= 100:
+        directions.add("physical")
+    elif atk >= 100 and spa >= 100:
+        directions.add("mixed")
+
+    if hp >= 100 or defense >= 100 or spd >= 100:
+        directions.add("bulky")
+    if spe >= 100:
+        directions.add("fast")
+    if not directions:
+        directions.add("balanced")
+    return directions
+
+
 def _score_preset(preset_config: dict[str, Any], user_override: dict[str, Any]) -> int:
     """Score how well a preset matches the user's partial specification."""
     score = 0
@@ -193,13 +263,28 @@ def _score_preset(preset_config: dict[str, Any], user_override: dict[str, Any]) 
     for stat, val in user_evs.items():
         if preset_evs.get(stat) == val:
             score += 5
+
+    # Direction alignment: reward presets that match the user's build intent
+    user_dirs = _infer_direction(user_evs, user_override.get("nature"))
+    preset_dirs = _preset_directions(preset_evs)
+    overlap = user_dirs & preset_dirs
+    if "physical" in overlap or "special" in overlap or "mixed" in overlap:
+        score += 15
+    if "bulky" in overlap:
+        score += 10
+    if "fast" in overlap:
+        score += 8
+
     return score
 
 
 def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) -> tuple[dict[str, Any], str | None]:
-    """If user partially specified config, auto-match best preset from setdex.
+    """Auto-match best preset from setdex for the given pokemon.
 
     Only evs/nature/ivs are filled from preset; item/ability/tera_type are excluded.
+    When the user provides no config at all (empty override), the matched preset's
+    ability is also used so the default form ability does not silently override the
+    intended competitive ability.
     Returns (updated_override, matched_preset_name_or_None).
     """
     # Skip if user already provided "preset" key (explicit preset takes precedence)
@@ -214,15 +299,26 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
     if not presets:
         return override, None
 
+    # For empty overrides, default to the most invested preset (highest total EVs).
+    # If the user has specified any build-related field, do not force the preset's ability.
+    _BUILD_FIELDS = {"evs", "nature", "ivs", "ability", "ability_zh", "item", "item_zh",
+                     "tera_type", "is_terastalize", "boosts", "status", "level",
+                     "raw_stats", "stats", "current_hp", "max_hp"}
+    is_empty_override = not any(k in _BUILD_FIELDS for k in override)
+
     best_preset_name: str | None = None
     best_score = -1
+    best_total_evs = -1
     for preset_name, preset_config in presets.items():
         score = _score_preset(preset_config, override)
-        if score > best_score:
+        total_evs = sum(preset_config.get("evs", {}).values())
+        # Prefer higher score; tie-break by total EVs for empty overrides, else first
+        if score > best_score or (is_empty_override and score == best_score and total_evs > best_total_evs):
             best_score = score
+            best_total_evs = total_evs
             best_preset_name = preset_name
 
-    if best_preset_name is None or best_score <= 0:
+    if best_preset_name is None:
         return override, None
 
     preset_config = presets[best_preset_name]
@@ -235,6 +331,11 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
             merged = dict(preset_config[field])  # Start with preset values
             merged.update(override[field])       # User values override
             override[field] = merged
+
+    # When the user provided no config at all, also adopt the preset's ability so that
+    # the default form ability does not replace the competitive intended ability.
+    if is_empty_override and "ability" not in override and preset_config.get("ability"):
+        override["ability"] = preset_config["ability"]
 
     return override, best_preset_name
 
@@ -1177,6 +1278,147 @@ def cmd_filter_moves(
             "categories": sorted(normalized_categories),
             "min_power": min_power,
             "max_power": max_power,
+        },
+        "results": results,
+    }
+
+
+def cmd_filter_pokemon(
+    type_filters: list[str] | None = None,
+    min_stats: dict[str, int] | None = None,
+    max_stats: dict[str, int] | None = None,
+    ability_filters: list[str] | None = None,
+) -> dict[str, Any]:
+    """Filter pokemon by type, base stats, and/or ability.
+
+    Multiple filters within the same dimension use OR logic;
+    different dimensions use AND logic.
+
+    Args:
+        type_filters: List of type names (zh or en). Pokemon matching ANY
+                      listed type across any of their forms are included.
+        min_stats: Dict of stat -> minimum base stat value (inclusive).
+                   e.g. {"hp": 80, "attack": 100}
+        max_stats: Dict of stat -> maximum base stat value (inclusive).
+        ability_filters: List of ability names (zh or en). Pokemon matching ANY
+                         listed ability across any of their forms are included.
+    """
+    load_data()
+
+    from normalize import normalize_type_name
+
+    valid_types = set(_type_chart.keys()) if _type_chart else set()
+
+    # Normalize type names
+    normalized_types: set[str] = set()
+    if type_filters:
+        for t in type_filters:
+            nt = normalize_type_name(t)
+            if nt in valid_types:
+                normalized_types.add(nt)
+            else:
+                # Try direct lowercase match for edge cases
+                for vt in valid_types:
+                    if vt.lower() == t.lower():
+                        normalized_types.add(vt)
+                        break
+                else:
+                    return {"error": f"Invalid type '{t}'. Valid types: {sorted(valid_types)}"}
+
+    # Normalize ability names to Chinese canonical form
+    normalized_abilities: set[str] = set()
+    if ability_filters:
+        for ability in ability_filters:
+            zh = _resolve_ability_to_zh(ability)
+            if not zh:
+                zh = _resolve_ability_to_en(ability)
+            if zh:
+                normalized_abilities.add(zh)
+            else:
+                return {"error": f"Ability '{ability}' not found."}
+
+    if min_stats is None:
+        min_stats = {}
+    if max_stats is None:
+        max_stats = {}
+
+    valid_stats = {"hp", "attack", "defense", "sp_attack", "sp_defense", "speed"}
+    for stat in {**min_stats, **max_stats}.keys():
+        if stat not in valid_stats:
+            return {"error": f"Invalid stat '{stat}'. Valid stats: {sorted(valid_stats)}"}
+
+    results: list[dict[str, Any]] = []
+
+    for stem, data in _pokemon_data.items():
+        # Apply Champions patch if available
+        pdata = _apply_champions_pokemon_patch(stem, data)
+        if not pdata:
+            continue
+
+        forms = pdata.get("forms", [{}])
+        # Base stats are taken from the first matching stats entry (usually the default form)
+        stats_list = pdata.get("stats", [])
+        base_stats = stats_list[0].get("data", {}) if stats_list else {}
+
+        # Collect all types and abilities across all forms
+        all_types: set[str] = set()
+        all_abilities: set[str] = set()
+        for form in forms:
+            form_types = form.get("types", [])
+            all_types.update(form_types)
+            for ability in form.get("abilities", []):
+                if isinstance(ability, str):
+                    all_abilities.add(ability)
+                elif isinstance(ability, dict):
+                    all_abilities.add(ability.get("name", ""))
+
+        # Type filter (OR within dimension): any form must contain all filter types
+        if normalized_types:
+            if not all(ft in all_types for ft in normalized_types):
+                continue
+
+        # Ability filter (OR within dimension): any form must contain at least one filter ability
+        if normalized_abilities:
+            if not all_abilities & normalized_abilities:
+                continue
+
+        # Base stat filters (AND across dimensions, each stat range inclusive)
+        stat_ok = True
+        for stat, val in (min_stats or {}).items():
+            if int(base_stats.get(stat, 0)) < val:
+                stat_ok = False
+                break
+        if not stat_ok:
+            continue
+        for stat, val in (max_stats or {}).items():
+            if int(base_stats.get(stat, 0)) > val:
+                stat_ok = False
+                break
+        if not stat_ok:
+            continue
+
+        # De-duplicate abilities and strip empties
+        abilities = sorted({a for a in all_abilities if a})
+
+        results.append({
+            "name_zh": pdata.get("name_zh", ""),
+            "name_en": pdata.get("name_en", ""),
+            "pokedex_id": pdata.get("pokedex_id"),
+            "types": sorted(all_types),
+            "base_stats": {k: int(v) for k, v in base_stats.items()},
+            "abilities": abilities,
+        })
+
+    # Sort by pokedex_id, then by Chinese name
+    results.sort(key=lambda x: (x.get("pokedex_id") or 0, x.get("name_zh", "")))
+
+    return {
+        "count": len(results),
+        "filters": {
+            "types": sorted(normalized_types),
+            "min_stats": min_stats or {},
+            "max_stats": max_stats or {},
+            "abilities": sorted(normalized_abilities),
         },
         "results": results,
     }
@@ -2339,6 +2581,7 @@ COMMANDS: dict[str, Any] = {
     "profile": cmd_profile,
     "find-move": cmd_find_move,
     "filter-moves": cmd_filter_moves,
+    "filter-pokemon": cmd_filter_pokemon,
     "preset": cmd_preset,
     "calc": cmd_calc,
     "calc-raw": cmd_calc_raw,
@@ -2356,7 +2599,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "survivability"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -2423,6 +2666,13 @@ def main() -> int:
         filter_parser.add_argument("--category", dest="category_filters", action="append", default=[], help="Filter by category (物理/特殊/变化 or Physical/Special/Status)")
         filter_parser.add_argument("--min-power", type=int, default=None, help="Minimum base power (inclusive)")
         filter_parser.add_argument("--max-power", type=int, default=None, help="Maximum base power (inclusive)")
+
+        # filter-pokemon
+        filter_pokemon_parser = subparsers.add_parser("filter-pokemon", help="Filter pokemon by type, base stats, and/or ability")
+        filter_pokemon_parser.add_argument("--type", dest="type_filters", action="append", default=[], help="Filter by type (can specify multiple, e.g. --type 火 --type 龙)")
+        filter_pokemon_parser.add_argument("--min-stat", dest="min_stat_pairs", action="append", default=[], nargs=2, metavar=("STAT", "VALUE"), help="Minimum base stat, e.g. --min-stat hp 80")
+        filter_pokemon_parser.add_argument("--max-stat", dest="max_stat_pairs", action="append", default=[], nargs=2, metavar=("STAT", "VALUE"), help="Maximum base stat, e.g. --max-stat speed 100")
+        filter_pokemon_parser.add_argument("--ability", dest="ability_filters", action="append", default=[], help="Filter by ability (can specify multiple)")
 
         # survivability
         surv_parser = subparsers.add_parser("survivability", help="Reverse survivability: max unboosted BP defender can survive")
@@ -2509,6 +2759,21 @@ def main() -> int:
                     category_filters=args.category_filters or None,
                     min_power=args.min_power,
                     max_power=args.max_power,
+                )
+            elif cmd == "filter-pokemon":
+                min_stats = {}
+                max_stats = {}
+                for pair in args.min_stat_pairs:
+                    stat, val = pair
+                    min_stats[stat] = int(val)
+                for pair in args.max_stat_pairs:
+                    stat, val = pair
+                    max_stats[stat] = int(val)
+                result = cmd_filter_pokemon(
+                    type_filters=args.type_filters or None,
+                    min_stats=min_stats or None,
+                    max_stats=max_stats or None,
+                    ability_filters=args.ability_filters or None,
                 )
             else:  # calc-raw
                 result = cmd_calc_raw(
