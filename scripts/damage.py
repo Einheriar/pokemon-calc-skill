@@ -39,16 +39,24 @@ _TYPE_ZH_TO_EN: dict[str, str] = {
 _TYPE_EN_TO_ZH = {v: k for k, v in _TYPE_ZH_TO_EN.items()}
 
 # Nature modifiers (zh name -> (boosted stat, lowered stat))
-# Stats use English keys to match JS internals
+# Stats use English keys to match JS internals.
+# Table follows the official nature chart (zh names). Empty strings = neutral nature.
 NATURES: dict[str, tuple[str, str]] = {
-    "勤奋": ("", ""), "固执": ("attack", "sp_attack"), "顽皮": ("attack", "defense"),
-    "勇敢": ("attack", "speed"), " lonely": ("attack", "defense"),
+    # Neutral natures (no stat change)
+    "勤奋": ("", ""), "坦率": ("", ""), "害羞": ("", ""), "浮躁": ("", ""), "认真": ("", ""),
+    # +Attack
+    "怕寂寞": ("attack", "defense"), "固执": ("attack", "sp_attack"),
+    "顽皮": ("attack", "sp_defense"), "勇敢": ("attack", "speed"),
+    # +Defense
     "大胆": ("defense", "attack"), "淘气": ("defense", "sp_attack"),
-    "乐天": ("defense", "speed"), "悠闲": ("defense", "speed"),
+    "乐天": ("defense", "sp_defense"), "悠闲": ("defense", "speed"),
+    # +Sp. Attack
     "内敛": ("sp_attack", "attack"), "慢吞吞": ("sp_attack", "defense"),
     "马虎": ("sp_attack", "sp_defense"), "冷静": ("sp_attack", "speed"),
+    # +Sp. Defense
     "温和": ("sp_defense", "attack"), "温顺": ("sp_defense", "defense"),
     "慎重": ("sp_defense", "sp_attack"), "自大": ("sp_defense", "speed"),
+    # +Speed
     "胆小": ("speed", "attack"), "急躁": ("speed", "defense"),
     "爽朗": ("speed", "sp_attack"), "天真": ("speed", "sp_defense"),
 }
@@ -60,9 +68,13 @@ _NATURE_ALIASES: dict[str, str] = {
     "adamant": "固执", "modest": "内敛", "jolly": "爽朗", "timid": "胆小",
     "brave": "勇敢", "bold": "大胆", "impish": "淘气", "careful": "慎重",
     "calm": "温和", "quiet": "冷静", "sassy": "自大", "relaxed": "悠闲",
-    "lonely": "孤独", "mild": "慢吞吞", "gentle": "温顺", "hasty": "急躁",
+    "lonely": "怕寂寞", "mild": "慢吞吞", "gentle": "温顺", "hasty": "急躁",
     "naive": "天真", "rash": "马虎", "naughty": "顽皮", "lax": "乐天",
     "hardy": "勤奋",
+    # Chinese-name aliases (fault tolerance): alternate zh name -> canonical zh name
+    "孤独": "怕寂寞",
+    # Neutral-nature English names -> canonical zh names
+    "docile": "坦率", "bashful": "害羞", "quirky": "浮躁", "serious": "认真",
 }
 
 ATE_IZE_ABILITIES = [
@@ -749,10 +761,11 @@ def calc_defense(
         defense = defender.stats.get(defense_stat, 0)
 
     # Weather defense mods (applied directly)
-    if (field.weather == "Sand" and ("岩石" in defender.types or defender.types[1] == "岩石" if len(defender.types) > 1 else False)
+    # Sand boosts Sp. Defense of Rock-types by 1.5x; Snow boosts Defense of Ice-types.
+    if (field.weather == "Sand" and "岩石" in defender.types
             and not hits_physical):
         defense = poke_round(defense * 3 / 2)
-    elif (field.weather == "Snow" and ("冰" in defender.types)
+    elif (field.weather == "Snow" and "冰" in defender.types
             and hits_physical):
         defense = poke_round(defense * 3 / 2)
 
@@ -1013,6 +1026,10 @@ def calculate_damage(
       - description: human-readable summary
       - is_critical, type_effectiveness, stab_applied, burn_applied
     """
+    # Work on a copy of the move so type/category/is_spread mutations below do not
+    # leak back to a Move object reused across multiple calls (e.g. EV optimizer loop).
+    move = copy(move)
+
     # Ensure stats are computed
     if not attacker.raw_stats:
         compute_raw_stats(attacker)

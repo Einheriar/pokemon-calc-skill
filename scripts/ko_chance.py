@@ -62,7 +62,7 @@ def get_ko_chance_text(
         hazards += math.floor(eff * defender.max_hp / 8)
         hazard_texts.append("隐形岩")
 
-    if "飞行" not in defender.types and defender.ability not in ("Magic Guard", "Levitate") and defender.item not in ("Air Balloon", "Heavy-Duty Boots"):
+    if "飞行" not in defender.types and defender.ability not in ("Magic Guard", "Levitate", "Eelevate") and defender.item not in ("Air Balloon", "Heavy-Duty Boots"):
         if field.spikes == 1:
             hazards += math.floor(defender.max_hp / 8)
             hazard_texts.append("1层撒菱")
