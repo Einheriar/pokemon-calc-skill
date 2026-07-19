@@ -1504,6 +1504,24 @@ def _resolve_gender(form: dict[str, Any]) -> str:
     return ""           # mixed ratio — needs LLM override
 
 
+def _parse_weight(raw: Any) -> float:
+    """Parse a weight value from pokemon.json into a float kg value.
+
+    The data layer stores weight as strings like "460.0kg"; G-Max forms use
+    "???.?kg". Strip the "kg" suffix and convert to float, returning 0.0 for
+    any non-numeric or missing value so the engine always sees a number.
+    """
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    if isinstance(raw, str):
+        num = raw.rstrip("kg").strip()
+        try:
+            return float(num)
+        except ValueError:
+            return 0.0
+    return 0.0
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -1583,7 +1601,11 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_terastalize": False,
         "tera_type": None,
         "is_dynamax": False,
-        "weight": 0.0,
+        # Populate weight from data so weight-based moves (Low Kick, Grass Knot,
+        # Heavy Slam, Heat Crash) work out of the box. Data layer stores weight
+        # as strings like "460.0kg"; G-Max forms use "???.?kg". Strip the unit
+        # and fall back to 0.0 for non-numeric values.
+        "weight": _parse_weight(form.get("weight")),
         "gender": _resolve_gender(form),
         "_data_source": data.get("_data_source", "gen9"),
         "is_unobtainable": is_mega and data.get("_data_source", "gen9") == "gen9",
