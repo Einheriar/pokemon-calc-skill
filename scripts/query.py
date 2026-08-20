@@ -1522,6 +1522,35 @@ def _parse_weight(raw: Any) -> float:
     return 0.0
 
 
+def _sp_to_ev(sp: int) -> int:
+    """Convert Champions Stat Points to Gen9 EVs (Lv.50, IV=31).
+
+    The first stat point costs only 4 EVs; each further point costs 8 EVs,
+    so EV = 8*SP - 4. SP=0 maps to 0 EV. SP=32 maps to 252 EV (the Gen9 cap).
+    """
+    sp = int(sp)
+    if sp <= 0:
+        return 0
+    return 8 * sp - 4
+
+
+def _ev_to_sp(ev: int) -> int:
+    """Convert Gen9 EVs to Champions Stat Points for display (Lv.50, IV=31).
+
+    Inverse of _sp_to_ev: SP = (EV + 4) // 8. 252 EV -> 32 SP, 248 EV -> 31 SP,
+    4 EV -> 1 SP. Exact at IV=31; IV parity edge cases may differ by one.
+    """
+    ev = int(ev)
+    if ev <= 0:
+        return 0
+    return (ev + 4) // 8
+
+
+def _evs_to_sps(evs: dict[str, int]) -> dict[str, int]:
+    """Convert an EV dict to an SP dict for display (does not mutate input)."""
+    return {k: _ev_to_sp(v) for k, v in evs.items()}
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -1613,6 +1642,14 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     }
     if overrides:
         pk.update(overrides)
+    # Merge SP (Stat Points) override into EVs. The engine stores EVs (keeping
+    # full 4-EV granularity); `sps` is only an input/view layer. sps takes
+    # precedence over evs for the same stat key when both are supplied.
+    if overrides and isinstance(overrides.get("sps"), dict):
+        base_evs = dict(pk.get("evs", {}))
+        for stat, sp_val in overrides["sps"].items():
+            base_evs[stat] = _sp_to_ev(sp_val)
+        pk["evs"] = base_evs
     # Post-override: ensure ability is in English for the damage engine
     overridden_ability = pk.get("ability", "")
     pk["ability"] = _resolve_ability_to_en(overridden_ability)
@@ -1648,6 +1685,9 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "_data_source", "is_unobtainable",
     }
     pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}
+    # Stash the SP display view under a single meta key so callers can pop it
+    # before Pokemon(**pk); evs themselves stay as raw EVs (no flooring).
+    pk["_sp_meta"] = {"sps": _evs_to_sps(pk.get("evs", {}))}
     return pk
 
 
@@ -1807,8 +1847,12 @@ def cmd_optimize(
     # Remove extra metadata before passing to model constructors
     att_dict.pop("_data_source", None)
     att_dict.pop("is_unobtainable", None)
+    att_dict.pop("is_mega", None)
+    att_dict.pop("_sp_meta", None)
     def_dict.pop("_data_source", None)
     def_dict.pop("is_unobtainable", None)
+    def_dict.pop("is_mega", None)
+    def_dict.pop("_sp_meta", None)
 
     from models import Pokemon, Move, Field
     attacker = Pokemon(**att_dict)
@@ -1918,11 +1962,13 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "_data_source": att_dict.pop("_data_source", "gen9"),
         "is_unobtainable": att_dict.pop("is_unobtainable", False),
         "is_mega": att_dict.pop("is_mega", False),
+        "_sp_meta": att_dict.pop("_sp_meta", {}),
     }
     def_extra = {
         "_data_source": def_dict.pop("_data_source", "gen9"),
         "is_unobtainable": def_dict.pop("is_unobtainable", False),
         "is_mega": def_dict.pop("is_mega", False),
+        "_sp_meta": def_dict.pop("_sp_meta", {}),
     }
 
     attacker = Pokemon(**att_dict)
@@ -1986,6 +2032,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "nature": attacker.nature,
         "item": attacker.item_zh or attacker.item,
         "evs": attacker.evs,
+        "sps": att_extra.get("_sp_meta", {}).get("sps", _evs_to_sps(attacker.evs)),
         "ivs": attacker.ivs,
         "level": attacker.level,
         "current_hp": attacker.current_hp,
@@ -2005,6 +2052,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "nature": defender.nature,
         "item": defender.item_zh or defender.item,
         "evs": defender.evs,
+        "sps": def_extra.get("_sp_meta", {}).get("sps", _evs_to_sps(defender.evs)),
         "ivs": defender.ivs,
         "level": defender.level,
         "current_hp": defender.current_hp,
@@ -2078,6 +2126,7 @@ def cmd_compute_stats(
     except (ValueError, TypeError):
         level_int = 50
 
+    # EVs are kept as raw values (full 4-EV granularity); SP is only a view.
     raw_stats: dict[str, int] = {}
     for stat_key, base in base_stats.items():
         ev = evs.get(stat_key, 0)
@@ -2095,6 +2144,7 @@ def cmd_compute_stats(
         "nature": nature,
         "base_stats": base_stats,
         "evs": evs,
+        "sps": _evs_to_sps(evs),
         "ivs": ivs,
         "stats": raw_stats,
     }
@@ -2173,6 +2223,16 @@ def cmd_calc_raw(
         for k, v in def_dict["raw_stats"].items()
     }
 
+    # Merge optional `sps` override into EVs (SP is an input/view layer; the
+    # engine stores raw EVs). sps takes precedence over evs for the same key.
+    for side_dict in (att_dict, def_dict):
+        if isinstance(side_dict.get("sps"), dict):
+            base_evs = dict(side_dict.get("evs", {}))
+            for stat, sp_val in side_dict["sps"].items():
+                base_evs[stat] = _sp_to_ev(sp_val)
+            side_dict["evs"] = base_evs
+        side_dict.pop("sps", None)
+
     # Ensure HP fields are set
     if att_dict.get("max_hp", 0) == 0:
         att_dict["max_hp"] = att_dict["raw_stats"].get("hp", 0)
@@ -2232,6 +2292,7 @@ def cmd_calc_raw(
         "item": attacker.item,
         "stats": attacker.raw_stats,
         "evs": attacker.evs,
+        "sps": _evs_to_sps(attacker.evs),
         "ivs": attacker.ivs,
         "level": attacker.level,
         "current_hp": attacker.current_hp,
@@ -2246,6 +2307,7 @@ def cmd_calc_raw(
         "item": defender.item,
         "stats": defender.raw_stats,
         "evs": defender.evs,
+        "sps": _evs_to_sps(defender.evs),
         "ivs": defender.ivs,
         "level": defender.level,
         "current_hp": defender.current_hp,
@@ -2629,7 +2691,7 @@ def main() -> int:
         opt_parser.add_argument("--goal", default="ko", help="Optimization goal")
         opt_parser.add_argument("--target", default="ohko", help="Optimization target")
         opt_parser.add_argument("--threshold", default="guaranteed", help="Threshold")
-        opt_parser.add_argument("--mode", default="ev", help="Optimization mode: ev (Gen9) or sp (Champions Stat Points)")
+        opt_parser.add_argument("--mode", default="ev", help="Optimization mode: ev (Gen9 Effort Values, default) or sp (Champions Stat Points)")
         opt_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
         opt_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
         opt_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
