@@ -363,7 +363,7 @@ class DamageResult:
 - **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则 M-B）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
 - **三层数据**：内置快照（`data/usage_stats.json` / `data/meta_teams.json` / `data/teams_full.json.gz`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
 - **蒸馏函数**：`distill_usage_snapshot()` / `distill_teams_snapshot()` / `distill_teams_full()` 同时被构建脚本（`cache/build_usage_stats.py`、`cache/build_teams_pack.py`）和在线模式复用，保证快照与在线结果结构一致；`meta_snapshot_from_pack()` 可从全量包直接派生前 12 支的轻量快照。
-- **在线查询成本**：`usage <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建。
+- **在线查询成本**：`usage <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。
 - **爬虫礼仪**：仅在用户显式 `--online` 或维护者刷新快照时发起请求；结果本地缓存；不批量遍历站点；遵守 robots.txt。
 
 ### 7. teams_index.py（全量队伍本地索引）
@@ -458,6 +458,14 @@ python cache/test_teams_index.py   # 全量队伍索引（建库/筛选/聚合/�
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 4.8.02（2026-08-26）
+
+`teams --online` 增加 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）：距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明；避免用户反复触发最新数据查询时重复下载队伍列表。新增节流测试，teams 索引测试 12/12 通过。
+
+### 4.8.01（2026-08-26）
+
+修复 `teams_full.json.gz` 提交进仓库时被 EOL 规范化损坏的问题：根 `.gitattributes` 的 `pokemon-calc/** text eol=lf` 把 gzip 当文本处理了，新增 `*.gz binary` / `*.db binary` 规则（位于目录级 text 规则之后）并重新提交完好文件。
 
 ### 4.8.00（2026-08-26）
 

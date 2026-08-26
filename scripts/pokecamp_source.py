@@ -426,6 +426,20 @@ def _teams_sha256(teams_data: list[dict[str, Any]]) -> str:
     return hashlib.sha256(blob).hexdigest()
 
 
+#: Repeated `teams --online` calls within this window reuse the current index
+#: without any network request (the teams list alone is ~1.3 MB gzip).
+ONLINE_MIN_INTERVAL_SEC = 24 * 3600
+
+
+def _parse_iso_utc(text: str) -> float | None:
+    """Parse 'YYYY-MM-DDTHH:MM:SSZ' as a UTC epoch; None on failure."""
+    try:
+        import calendar
+        return calendar.timegm(time.strptime(text, "%Y-%m-%dT%H:%M:%SZ"))
+    except Exception:
+        return None
+
+
 def get_teams_index(data_dir: Path, online: bool = False,
                     source: PokecampSource | None = None) -> dict[str, Any]:
     """Make the local teams index available and return {db_path, meta}.
@@ -434,9 +448,12 @@ def get_teams_index(data_dir: Path, online: bool = False,
     teams_full.json.gz pack. db_path is None when neither exists (callers
     fall back to the light meta_teams.json snapshot).
 
-    online: fetch teams.json once (gzip ~1.3 MB), skip the rebuild when the
-    content hash is unchanged, otherwise incrementally fetch team-details for
-    new tournaments only (per-tournament permanent cache) and rebuild.
+    online: throttled — if the current index was built from a fetch less than
+    ONLINE_MIN_INTERVAL_SEC (24h) ago, it is returned as-is with a note and
+    no network request is made. Otherwise fetch teams.json once (gzip ~1.3
+    MB), skip the rebuild when the content hash is unchanged, otherwise
+    incrementally fetch team-details for new tournaments only (per-tournament
+    permanent cache) and rebuild.
     Fallback chain on network failure: existing DB -> bundled pack -> raise.
     meta.origin in {"online", "cache", "snapshot"}; meta.online_error carries
     the failure reason when a fallback was used.
@@ -458,6 +475,15 @@ def get_teams_index(data_dir: Path, online: bool = False,
 
     source = source or get_source()
     try:
+        if db_path.exists():
+            cur_meta = tix.load_index_meta(db_path)
+            last_fetch = _parse_iso_utc(cur_meta.get("data_fetched_at") or "")
+            if last_fetch is not None \
+                    and (time.time() - last_fetch) < ONLINE_MIN_INTERVAL_SEC:
+                cur_meta["note"] = (
+                    f"teams data was fetched at {cur_meta['data_fetched_at']} "
+                    "(less than 24h ago); skipped re-download")
+                return {"db_path": db_path, "meta": cur_meta}
         teams = source.fetch_teams()
         sha = _teams_sha256(teams)
         if db_path.exists():
