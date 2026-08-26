@@ -76,11 +76,14 @@ pokemon-calc/
 | `pokedex <name>` | 宝可梦名 | 各版本图鉴描述 | JSON 数组 |
 | `profile <name>` | 宝可梦名 | 外形描述、原型考据、多语言词源 | JSON 对象 |
 | `find-move <move>` | 招式名 | 反向查询：能学会该招式的所有宝可梦 | JSON 数组 |
+| `filter-moves [--type ...] [--category ...] [--min-power n] [--max-power n]` | 筛选条件 | 按属性/分类/威力范围筛选招式 | JSON 对象 |
+| `filter-pokemon [--type ...] [--min-stat stat n] [--max-stat stat n] [--ability ...]` | 筛选条件 | 按属性（AND）/种族值范围/特性（OR）筛选宝可梦 | JSON 对象 |
 | `preset <pokemon> [preset_name]` | 宝可梦名 [预设名] | 列出/获取 VGC 预设配置 | JSON 对象 |
 | `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
 | `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
+| `survivability <defender> <attacker_stat> <category> [def_override] [field_override]` | 防御方 攻击方能力值 分类 | 等效威力反查（无加成最大可承受招式威力） | JSON 对象 |
 | `usage [name] [--top N] [--online]` | 宝可梦名（可选） | 环境使用率排行 / 单只宝可梦常用配置与队友（pokecamp.cc 赛事数据） | JSON 对象 |
 | `teams [query] [--top N] [--online]` | 序号或宝可梦名（可选） | 近期赛事队伍列表 / 完整配置 / 按宝可梦筛选（pokecamp.cc 赛事数据） | JSON 对象 |
 
