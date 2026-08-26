@@ -27,6 +27,17 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 | Pokédex entries | "What does Mew's Pokédex entry say?" |
 | VGC presets | "What are common Charizard VGC sets?" |
 
+### Meta Environment (Pokémon Champions Regulation M-B)
+
+| Capability | Example question |
+|------------|------------------|
+| Usage ranking | "Which Pokémon has the highest usage rate right now?" |
+| Per-Pokémon meta detail | "What moves/items does Kingambit run? Who are its common teammates?" |
+| Recent tournament teams | "Show me the latest tournament-winning teams" |
+| Filter teams by Pokémon | "Which teams run Basculegion?" |
+
+> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). A bundled snapshot works offline; `--online` fetches fresh data.
+
 ### Damage Calculation & Optimization
 
 | Capability | Example question |
@@ -390,6 +401,9 @@ If you want to integrate this engine into your own LLM application, refer to:
 - **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
 - ***Pokémon Champions* (M-B Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
 - **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
+- **Meta Environment Data (usage / tournament teams)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats) — with thanks
+
+> **Crawling policy**: access to pokecamp.cc is restrained and on-demand, not bulk scraping — requests are made only when a user explicitly asks for fresh data (`--online`) or a maintainer periodically refreshes the bundled snapshot; results are always cached locally, no site-wide traversal, and robots.txt is respected. If the pokecamp.cc team has any concerns, please open an Issue and we will adjust promptly.
 
 ---
 

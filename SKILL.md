@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.6.00
+version: 4.7.00
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -8,8 +8,9 @@ description: >
   (2) 招式威力、命中、PP、效果、属性相克；
   (3) 宝可梦伤害计算、KO 概率、努力值优化（Phase 2+）；
   (4) 黑话翻译、对战术语解释；
-  (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询。
-  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合。
+  (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
+  (6) 当前天梯/赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
+  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。
 ---
 
 # 宝可梦伤害计算器 Skill
@@ -20,7 +21,7 @@ description: >
 2. **能力值优先**。回答中始终使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
 3. **环境参数唯一入口**。`field_override` 是传入环境条件（天气、场地、对战模式等）的唯一入口。`move_override` 仅限行为参数（`is_crit`、`hits`、`fainted_allies`），不得修改 `base_power` 或 `type`。
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
-5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。
+5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。环境查询命令（`usage` / `teams`）默认读取内置快照（离线可用）；仅当用户显式要求最新数据时才加 `--online` 按需联网（pokecamp.cc，仅用标准库 `urllib`），网络失败自动回退快照，并在回答中注明数据来源与日期。
 
 ## 2. 命令速查
 
@@ -54,7 +55,18 @@ calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
 survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（无加成最大可承受招式威力）
+
+# Phase 3 — 环境情报查询（pokecamp.cc / Limitless 赛事数据）
+usage [--top N] [--online]      # 当前环境使用率总排行（默认前 20）
+usage <name> [--online]         # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
+teams [--top N] [--online]      # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
+teams <N>                       # 第 N 支队伍的完整配置（道具/特性/招式/性格）
+teams <pokemon>                 # 筛选含有指定宝可梦的队伍
 ```
+
+> **数据性质说明**：`usage` / `teams` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），默认读取内置快照（`meta.origin = "snapshot"`）。回答中必须注明数据窗口（`meta.date_range`）与来源。
+>
+> **`--online` 使用规则（强制）**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置快照。`teams --online` 会下载完整队伍列表（gzip 后约 1.3 MB），尤其不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到快照/缓存数据及其日期。
 
 ### 参数覆盖 JSON 示例
 
@@ -159,7 +171,42 @@ python scripts/query.py find-move 顺风 --source gen9       # 仅 Gen9 正作�
 # filter-pokemon 按属性/种族值/特性筛选
 python scripts/query.py filter-pokemon --type 火 --type 龙 --min-stat speed 100
 python scripts/query.py filter-pokemon --type 水 --max-stat hp 60 --ability 悠游自如
+
+# 环境情报（默认离线快照；--online 实时拉取）
+python scripts/query.py usage --top 10        # 使用率前十
+python scripts/query.py usage 仆刀将军          # 单只宝可梦环境详情
+python scripts/query.py teams                 # 近期赛事队伍（前 12 支）
+python scripts/query.py teams 1               # 第 1 支队伍完整配置
+python scripts/query.py teams 幽尾玄鱼          # 含幽尾玄鱼的队伍
+python scripts/query.py usage 仆刀将军 --online  # 强制拉取最新数据
 ```
+
+### usage 命令说明
+
+```bash
+python scripts/query.py usage [name] [--top N] [--online]
+```
+
+查询《宝可梦冠军》M-B 规则当前赛事环境的使用率统计（pokecamp.cc / Limitless 公开赛事数据，滚动 30 天窗口）。
+
+- **不带名称**：返回使用率总排行，每条含 `rank`、`name_zh`、`usage_percent`、`win_rate`、`team_count`。
+- **带名称**（中文/英文/别名均可）：返回单只宝可梦的环境详情——使用率排名、胜率、Top 12 常用招式、Top 8 特性、Top 8 道具、Top 8 性格、Top 8 能力点数（SP）分配推荐、Top 12 常见队友，均带百分比。
+- **`--online`**：实时拉取 pokecamp 最新数据（单只查询只多下载该只的详情，约 23 KB）；结果缓存到 `data/cache/`；网络失败自动回退内置快照。
+- **`meta` 字段**：`origin`（snapshot/cache/online）、`date_range`（数据窗口）、`tournament_count` / `team_count`（样本量）。回答时必须引用 `date_range` 说明数据时效。
+
+### teams 命令说明
+
+```bash
+python scripts/query.py teams [query] [--top N] [--online]
+```
+
+查询近期赛事的真实队伍（pokecamp.cc / Limitless 公开赛事数据）。
+
+- **不带参数**：按赛事日期降序列出前 12 支队伍（与 pokecamp 赛事队伍页首页一致），每条含赛事名、日期、选手、名次、战绩与 6 只宝可梦名称。
+- **`teams <N>`**：返回第 N 支队伍的完整配置（每只宝可梦的道具、特性、4 个招式、性格，均为中英文双语）。
+- **`teams <宝可梦名>`**：在当前队伍范围内筛选含有该宝可梦的队伍。
+- **`--online`**：实时拉取最新队伍数据（需下载完整队伍列表一次，gzip 后约 1.3 MB），**仅在用户显式要求最新/当前热门队伍时使用**；缓存到 `data/cache/`；失败回退快照且 `meta.online_error` 会给出失败原因，必须告知用户。
+- 队伍详情不含能力点数分配；如需加点参考，用 `usage <宝可梦名>` 查看该宝可梦的 SP 分配推荐。
 
 > **`--source` 过滤说明**：`find-move` 默认返回全国图鉴（Gen9 + Champions）所有能学会该招式的宝可梦。传入 `--source champions` 仅返回 Champions M-B 规则可用宝可梦；传入 `--source gen9` 排除 Champions 专属宝可梦，仅保留 Gen9 正作数据。
 >
@@ -482,6 +529,20 @@ python scripts/query.py calc 超级胡地 广域战力 洗翠火暴兽 \
 当 Champions 数据与 Gen9 正作数据存在差异时，以 Champions 为准。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。
 
 数据中覆盖全国图鉴 1~1025 号，**包含所有形态**（含 Mega、原始回归等），不区分世代过签状态。伤害计算时不过签过滤。
+
+### 5.1.1 环境情报数据层（usage / teams）
+
+`usage` / `teams` 命令的数据独立于上述百科数据层：
+
+| 项目 | 说明 |
+|------|------|
+| 来源 | pokecamp.cc（聚合 Limitless 公开赛事统计） |
+| 规则 | 《宝可梦冠军》VGC 2026 规则 M-B（双打） |
+| 样本 | 滚动 30 天窗口内的公开赛事队伍（快照内置样本量见 `meta.tournament_count` / `meta.team_count`） |
+| 更新 | 内置快照随版本更新；`--online` 可实时拉取（按需请求，结果本地缓存） |
+| 性质 | 赛事环境统计，非官方游戏内天梯数据，也非模拟器数据 |
+
+> 实现上数据源做成了可插拔模块（`scripts/pokecamp_source.py`），未来如需更换或新增数据源，实现同一接口并注册到 `SOURCES` 即可，`query.py` 不需要改动。
 
 ### 5.2 能力点数（SP）与努力值（EV）双视图
 

@@ -38,14 +38,17 @@ pokemon-calc/
 │   ├── type_chart.json   # 18x18 属性相克表
 │   ├── name_index.json   # 中英文名称索引
 │   ├── setdex.json       # VGC 预设配置（189 只，264 个预设）
-│   └── aliases.json      # 玩家俗称 → 标准名称映射
+│   ├── aliases.json      # 玩家俗称 → 标准名称映射
+│   ├── usage_stats.json  # 环境使用率快照（pokecamp.cc / Limitless 赛事数据）
+│   └── meta_teams.json   # 近期赛事队伍快照（pokecamp.cc / Limitless 赛事数据）
 └── scripts/
-    ├── query.py          # 主查询入口（百科 + calc + preset + optimize）
+    ├── query.py          # 主查询入口（百科 + calc + preset + optimize + usage/teams）
     ├── damage.py         # 伤害计算引擎
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
-    └── normalize.py      # 输入标准化层（别名/拼写纠正）
+    ├── normalize.py      # 输入标准化层（别名/拼写纠正）
+    └── pokecamp_source.py # 环境数据源模块（可插拔；快照/缓存/在线三层）
 ```
 
 
@@ -78,6 +81,8 @@ pokemon-calc/
 | `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
+| `usage [name] [--top N] [--online]` | 宝可梦名（可选） | 环境使用率排行 / 单只宝可梦常用配置与队友（pokecamp.cc 赛事数据） | JSON 对象 |
+| `teams [query] [--top N] [--online]` | 序号或宝可梦名（可选） | 近期赛事队伍列表 / 完整配置 / 按宝可梦筛选（pokecamp.cc 赛事数据） | JSON 对象 |
 
 
 #### calc 命令 I/O
@@ -275,8 +280,6 @@ def optimize_evs(
 
 返回包含 `optimized_evs`, `damage_range`, `description` 的字典。
 
----
-
 ### 5. models.py（数据模型）
 
 定义以下 dataclass：
@@ -348,6 +351,18 @@ class DamageResult:
 
 ---
 
+### 6. pokecamp_source.py（环境数据源模块）
+
+`usage` / `teams` 命令的数据访问层，可插拔设计：
+
+- **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则 M-B）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
+- **三层数据**：内置快照（`data/usage_stats.json` / `data/meta_teams.json`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
+- **蒸馏函数**：`distill_usage_snapshot()` / `distill_teams_snapshot()` 同时被构建脚本（`cache/build_usage_stats.py`、`cache/build_meta_teams.py`）和在线模式复用，保证快照与在线结果结构一致。
+- **在线查询成本**：`usage <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`teams --online` 需下载完整队伍列表（9,250 支全量，原始约 15 MB、gzip 传输约 1.3 MB），仅在用户显式要求最新数据时使用。
+- **爬虫礼仪**：仅在用户显式 `--online` 或维护者刷新快照时发起请求；结果本地缓存；不批量遍历站点；遵守 robots.txt。
+
+---
+
 ## 数据资产清单
 
 | 文件 | 条目数 | 来源 | 说明 |
@@ -359,6 +374,8 @@ class DamageResult:
 | `data/name_index.json` | ~4000 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
 | `data/setdex.json` | 189 只 / 264 预设 | `script_res/setdex_ncp-g9.js` | VGC 预设配置（性格、努力值、道具、特性、招式参考） |
 | `data/aliases.json` | 22 条 | 手工维护 | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等） |
+| `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
+| `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍快照：完整阵容配置（由 `cache/build_meta_teams.py` 构建） |
 
 
 ### 数据修复记录
@@ -401,6 +418,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 - Python 3.10+
 - 仅使用标准库（`json`, `math`, `pathlib`, `typing`, `dataclasses` 等）
 - 无需 pip/uv 安装任何第三方包
+- 联网说明：默认完全离线。仅 `usage --online` / `teams --online` 使用标准库 `urllib.request` 按需访问 pokecamp.cc（尊重 `HTTP_PROXY`/`HTTPS_PROXY` 环境变量），失败自动回退内置快照
 
 ---
 
@@ -416,6 +434,7 @@ python cache/test_calc_raw.py
 python cache/test_field_overrides.py
 python cache/test_normalization.py
 python cache/regression_test.py
+python cache/test_usage_stats.py   # usage/teams 环境查询（离线快照 + 在线回退）
 ```
 
 ---
@@ -423,6 +442,10 @@ python cache/regression_test.py
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 4.7.00（2026-08-26）
+
+新增环境情报查询（Phase 3）：`usage` 命令（使用率总排行 / 单只宝可梦的常用招式、特性、道具、性格、SP 分配推荐、常见队友）与 `teams` 命令（近期赛事队伍列表 / 完整配置 / 按宝可梦筛选，默认前 12 支）。数据来自 pokecamp.cc（Limitless 公开赛事统计，滚动 30 天窗口），以内置快照（`data/usage_stats.json` 299 只、`data/meta_teams.json` 12 支）离线保底，`--online` 可按需实时拉取并本地缓存、失败自动回退快照。数据访问层为可插拔模块 `scripts/pokecamp_source.py`，快照由 `cache/build_usage_stats.py` / `cache/build_meta_teams.py` 构建。Smogon 数据不入 Skill（仅作者本地分析用，见仓库 `smogon_data/`，未提交）。新增测试 `cache/test_usage_stats.py`（14 例全过），回归 36 例无破坏。
 
 ### 4.6.00（2026-08-19）
 

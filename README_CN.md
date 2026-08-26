@@ -27,6 +27,17 @@
 | 查询图鉴描述 | "梦幻在各代图鉴里怎么描述的？" |
 | 查询热门配置 | "喷火龙有什么常用的 VGC 配置？" |
 
+### 环境情报（《宝可梦冠军》M-B 规则）
+
+| 功能 | 你可以这样问 |
+|------|-------------|
+| 使用率排行 | "现在环境里使用率最高的宝可梦是谁？" |
+| 单只环境详情 | "仆刀将军现在都带什么招式和道具？常见队友是谁？" |
+| 近期赛事队伍 | "最近比赛有什么队伍？把冠军的阵容给我看看" |
+| 按宝可梦筛队伍 | "有哪些队伍带了幽尾玄鱼？" |
+
+> 环境数据来自 [pokecamp.cc](https://pokecamp.cc) 聚合的 Limitless 公开赛事统计（滚动 30 天），内置快照离线可查，`--online` 可拉取最新数据。
+
 ### 伤害计算与优化
 
 | 功能 | 你可以这样问 |
@@ -388,6 +399,9 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 - **1~9 世代宝可梦百科数据**：爬虫数据来自 [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
 - **《宝可梦冠军》(Pokémon Champions) 数据**：游戏 ROM 抓取与解析来自 [projectpokemon/champout](https://github.com/projectpokemon/champout)（M-B 规则，2026-06-24 更新）
 - **VGC 伤害计算器前端逻辑**：基于 [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) 的 JavaScript 引擎移植与重构
+- **环境情报数据（使用率 / 赛事队伍）**：来自 [pokecamp.cc](https://pokecamp.cc)（数据源于 Limitless 公开赛事统计），特此致谢
+
+> **爬虫说明**：本项目对 pokecamp.cc 的访问是克制的按需抓取，并非批量爬虫——只在用户显式要求最新数据（`--online`）或维护者定期刷新内置快照时发起少量请求，结果一律本地缓存复用，不遍历站点页面，并遵守其 robots.txt。若 pokecamp.cc 方面对此有任何疑虑，请提交 Issue 联系，我们会及时调整。
 
 ---
 

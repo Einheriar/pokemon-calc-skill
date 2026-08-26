@@ -19,6 +19,10 @@ Usage:
     python query.py filter-moves            # Filter moves by type/category/power
     python query.py preset <pokemon>        # List presets for a pokemon
     python query.py preset <pokemon> <name> # Get specific preset config
+    python query.py usage [--top N]         # Meta usage ranking (pokecamp.cc)
+    python query.py usage <name>            # Pokemon's common moves/items/teammates
+    python query.py teams                   # Recent tournament teams (top 12)
+    python query.py teams <N|pokemon>       # Team detail / filter by pokemon
 """
 
 import io
@@ -30,6 +34,8 @@ from pathlib import Path
 from typing import Any
 
 from normalize import get_suggestions, normalize_name
+
+import pokecamp_source as pcs
 
 # Force UTF-8 stdout/stderr on Windows
 if sys.platform == "win32":
@@ -2626,6 +2632,122 @@ def cmd_survivability(
 
 
 
+# ---------------------------------------------------------------------------
+# Meta environment commands (pokecamp.cc / Limitless tournament data)
+# ---------------------------------------------------------------------------
+
+
+def _find_usage_entry(pokemon_list: list[dict[str, Any]], name: str) -> dict[str, Any] | None:
+    """Find a usage entry by zh/en/identifier, with alias normalization."""
+    if not name:
+        return None
+    norm = normalize_name(name, "pokemon")
+    lowered = {c.strip().lower() for c in (name, norm) if c and c.strip()}
+    for e in pokemon_list:
+        names = {str(e.get("name_zh", "")).lower(),
+                 str(e.get("name_en", "")).lower(),
+                 str(e.get("identifier", "")).lower()}
+        if names & lowered:
+            return e
+    # Fall back to the local index: resolve to stem / name_en, then match
+    resolved = resolve_pokemon(name)
+    if resolved:
+        stem, pdata, _ = resolved
+        en = (pdata.get("name_en") or "").lower()
+        for e in pokemon_list:
+            if (str(e.get("identifier", "")).lower() == stem.lower()
+                    or str(e.get("name_en", "")).lower() == en):
+                return e
+    return None
+
+
+def cmd_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, Any]:
+    """Meta usage stats: top ranking, or one pokemon's common builds/teammates."""
+    data = pcs.get_usage_data(DATA_DIR, online=online)
+    meta = data.get("meta", {})
+    plist = data.get("pokemon", [])
+
+    if not name:
+        ranking = [{
+            "rank": e.get("rank"),
+            "name_zh": e.get("name_zh"),
+            "name_en": e.get("name_en"),
+            "usage_percent": e.get("usage_percent"),
+            "win_rate": e.get("win_rate"),
+            "team_count": e.get("team_count"),
+        } for e in plist[:top]]
+        return {"meta": meta, "usage_top": ranking}
+
+    entry = _find_usage_entry(plist, name)
+    if not entry:
+        candidates = [e.get("name_zh", "") for e in plist] + [e.get("name_en", "") for e in plist]
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {
+            "error": f"Pokemon '{name}' not found in meta usage data (format {meta.get('format')}).",
+            "meta": meta,
+        }
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
+
+    # Online light mode returns ranking-only entries; enrich with one detail fetch.
+    if "abilities" not in entry and online:
+        detailed = pcs.get_usage_entry_detail(DATA_DIR, entry.get("id"), online=True)
+        if detailed:
+            entry = detailed
+
+    result: dict[str, Any] = {"meta": meta}
+    result.update(entry)
+    return result
+
+
+def cmd_teams(query: str = "", top: int = 12, online: bool = False) -> dict[str, Any]:
+    """Recent tournament teams: list, detail by number, or filter by pokemon."""
+    data = pcs.get_teams_data(DATA_DIR, online=online, top=max(top, 12))
+    meta = data.get("meta", {})
+    teams = data.get("teams", [])[:top]
+
+    def _summary(i: int, t: dict[str, Any]) -> dict[str, Any]:
+        tinfo = t.get("tournament") or {}
+        return {
+            "no": i + 1,
+            "tournament": tinfo.get("name"),
+            "date": tinfo.get("date"),
+            "player": t.get("player"),
+            "country": t.get("country"),
+            "placing": t.get("placing"),
+            "record": t.get("record"),
+            "pokemon": [p.get("name_zh") for p in t.get("pokemon", [])],
+        }
+
+    if not query:
+        return {"meta": meta, "teams": [_summary(i, t) for i, t in enumerate(teams)]}
+
+    if query.isdigit():
+        idx = int(query) - 1
+        if 0 <= idx < len(teams):
+            return {"meta": meta, "no": idx + 1, **teams[idx]}
+        return {"error": f"Team number out of range: {query} (1-{len(teams)})", "meta": meta}
+
+    norm = normalize_name(query, "pokemon")
+    wanted = {c.strip().lower() for c in (query, norm) if c and c.strip()}
+    matched = []
+    for i, t in enumerate(teams):
+        names = set()
+        for p in t.get("pokemon", []):
+            names.add(str(p.get("name_zh", "")).lower())
+            names.add(str(p.get("identifier", "")).lower())
+        if names & wanted:
+            matched.append((i, t))
+    if not matched:
+        return {
+            "error": f"No team containing '{query}' in the current top {len(teams)} teams.",
+            "meta": meta,
+        }
+    return {"meta": meta, "filter": query,
+            "teams": [_summary(i, t) for i, t in matched]}
+
+
 COMMANDS: dict[str, Any] = {
     "pokemon": cmd_pokemon,
     "move": cmd_move,
@@ -2658,7 +2780,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -2743,6 +2865,18 @@ def main() -> int:
         surv_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
         surv_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
+        # usage
+        usage_parser = subparsers.add_parser("usage", help="Meta usage stats (pokecamp.cc / Limitless tournament data)")
+        usage_parser.add_argument("name", nargs="?", default="", help="Pokemon name (optional; empty = top ranking)")
+        usage_parser.add_argument("--top", type=int, default=20, help="Number of entries in the ranking (default 20)")
+        usage_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (cached; falls back to bundled snapshot)")
+
+        # teams
+        teams_parser = subparsers.add_parser("teams", help="Recent tournament teams (pokecamp.cc / Limitless)")
+        teams_parser.add_argument("query", nargs="?", default="", help="Team number for full detail, or pokemon name to filter (empty = list)")
+        teams_parser.add_argument("--top", type=int, default=12, help="Number of teams (default 12)")
+        teams_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (downloads ~15 MB once; falls back to snapshot)")
+
         args = parser.parse_args()
 
         # If *_ov_file is provided, read file content and override the JSON string args.
@@ -2819,6 +2953,10 @@ def main() -> int:
                     min_power=args.min_power,
                     max_power=args.max_power,
                 )
+            elif cmd == "usage":
+                result = cmd_usage(args.name, args.top, args.online)
+            elif cmd == "teams":
+                result = cmd_teams(args.query, args.top, args.online)
             elif cmd == "filter-pokemon":
                 min_stats = {}
                 max_stats = {}
