@@ -18,15 +18,21 @@ python scripts/query.py usage [name] [--top N] [--online]
 ### teams 命令说明
 
 ```bash
-python scripts/query.py teams [query] [--top N] [--online]
+python scripts/query.py teams [query] [--top N] [--pokemon 名] [--player 名]
+                          [--tournament 名] [--stats [--placing-max N]]
+                          [--teammates 名] [--online]
 ```
 
-查询近期赛事的真实队伍（pokecamp.cc / Limitless 公开赛事数据）。
+查询赛事真实队伍（pokecamp.cc / Limitless 公开赛事数据）。当前窗口的**全量队伍**（约 9,000+ 支，含完整明细）已内置为 `data/teams_full.json.gz`，首次全量查询自动派生本地 SQLite 索引（一次性数秒，之后离线可用）。
 
 - **不带参数**：按赛事日期降序列出前 12 支队伍（与 pokecamp 赛事队伍页首页一致），每条含赛事名、日期、选手、名次、战绩与 6 只宝可梦名称。
-- **`teams <N>`**：返回第 N 支队伍的完整配置（每只宝可梦的道具、特性、4 个招式、性格，均为中英文双语）。
-- **`teams <宝可梦名>`**：在当前队伍范围内筛选含有该宝可梦的队伍。
-- **`--online`**：实时拉取最新队伍数据（需下载完整队伍列表一次，gzip 后约 1.3 MB），**仅在用户显式要求最新/当前热门队伍时使用**；缓存到 `data/cache/`；失败回退快照且 `meta.online_error` 会给出失败原因，必须告知用户。
+- **`teams <N>`**：全量列表按日期降序第 N 支的完整配置（每只宝可梦的道具、特性、4 个招式、性格，均为中英文双语）。
+- **`teams --pokemon <名>`**（或位置参数直接写宝可梦名）：在全量队伍中检索使用该宝可梦的队伍，返回摘要列表（默认前 12 条，硬上限 50）。
+- **`teams --player <名>` / `--tournament <名>`**：按选手名 / 赛事名（子串匹配）检索，可互相组合。
+- **`teams --stats`**：全量队伍的出现率排行（默认前 20），可加 `--placing-max 8`（仅统计前八队伍）或 `--tournament <名>`（单赛事）做子集聚合。与 `usage` 的使用率同口径同数据集（已数值验证一致），此命令的价值在于子集统计与交叉验证。
+- **`teams --stats --pokemon <名>`**：该宝可梦在全量队伍中的道具 / 特性 / 招式 / 性格占比（由队伍明细本地聚合）。
+- **`teams --teammates <名>`**：该宝可梦的队友共现排行（默认前 12）。
+- **`--online`**：增量更新（下载队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），**仅在用户显式要求最新/当前热门队伍时使用**；失败回退缓存/内置数据且 `meta.online_error` 会给出失败原因，必须告知用户。
 - 队伍详情不含能力点数分配；如需加点参考，用 `usage <宝可梦名>` 查看该宝可梦的 SP 分配推荐。
 
 ### usage / teams 示例
@@ -35,8 +41,12 @@ python scripts/query.py teams [query] [--top N] [--online]
 python scripts/query.py usage --top 10        # 使用率前十
 python scripts/query.py usage 仆刀将军          # 单只宝可梦环境详情
 python scripts/query.py teams                 # 近期赛事队伍（前 12 支）
-python scripts/query.py teams 1               # 第 1 支队伍完整配置
-python scripts/query.py teams 幽尾玄鱼          # 含幽尾玄鱼的队伍
+python scripts/query.py teams 1               # 全量列表第 1 支队伍完整配置
+python scripts/query.py teams --pokemon 幽尾玄鱼  # 全量检索：哪些队伍用了幽尾玄鱼
+python scripts/query.py teams --player Sooner   # 某选手的全部队伍
+python scripts/query.py teams --stats --placing-max 8  # 前八队伍的出现率排行
+python scripts/query.py teams --stats --pokemon 烈咬陆鲨  # 烈咬陆鲨的道具/特性/招式占比
+python scripts/query.py teams --teammates 炽焰咆哮虎     # 炽焰咆哮虎的常见队友
 python scripts/query.py usage 仆刀将军 --online  # 强制拉取最新数据
 ```
 

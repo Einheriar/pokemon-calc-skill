@@ -29,14 +29,18 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 
 ### Meta Environment (Pokémon Champions Regulation M-B)
 
+The full tournament-team dataset of the rolling 30-day window (9,000+ teams with moves/items/abilities) ships bundled, so every query below works offline out of the box.
+
 | Capability | Example question |
 |------------|------------------|
 | Usage ranking | "Which Pokémon has the highest usage rate right now?" |
 | Per-Pokémon meta detail | "What moves/items does Kingambit run? Who are its common teammates?" |
 | Recent tournament teams | "Show me the latest tournament-winning teams" |
-| Filter teams by Pokémon | "Which teams run Basculegion?" |
+| Filter teams by Pokémon / player / tournament | "Which teams run Basculegion?" / "Show me all of Sooner's teams" |
+| Appearance stats on subsets | "What's the usage ranking among top-8 teams only?" |
+| Teammate co-occurrence | "Who partners Incineroar most often?" |
 
-> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). A bundled snapshot works offline; `--online` fetches fresh data.
+> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). Bundled data works offline; `--online` fetches fresh data incrementally on explicit request.
 
 ### Damage Calculation & Optimization
 

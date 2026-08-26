@@ -9,8 +9,8 @@
   },
   "tournament_count": 150,
   "team_count": 9250,
-  "top": 12,
-  "fetched_at": "2026-08-26T11:16:54Z"
+  "fetched_at": "2026-08-26T12:33:13Z",
+  "top": 12
  },
  "teams": [
   {
@@ -35,8 +35,6 @@
      "item_zh": "花叶蒂进化石",
      "ability_en": "Fairy Aura",
      "ability_zh": "妖精气场",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕",
      "moves_en": [
       "Moonblast",
       "Dazzling Gleam",
@@ -50,7 +48,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Flower Veil",
+     "pre_mega_ability_zh": "花幕"
     },
     {
      "identifier": "whimsicott",
@@ -186,8 +186,6 @@
      "item_zh": "喷火龙进化石Ｙ",
      "ability_en": "Drought",
      "ability_zh": "日照",
-     "pre_mega_ability_en": "Solar Power",
-     "pre_mega_ability_zh": "太阳之力",
      "moves_en": [
       "Heat Wave",
       "Weather Ball",
@@ -201,7 +199,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Solar Power",
+     "pre_mega_ability_zh": "太阳之力"
     },
     {
      "identifier": "whimsicott",
@@ -298,8 +298,6 @@
      "item_zh": "花叶蒂进化石",
      "ability_en": "Fairy Aura",
      "ability_zh": "妖精气场",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕",
      "moves_en": [
       "Moonblast",
       "Dazzling Gleam",
@@ -313,7 +311,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Flower Veil",
+     "pre_mega_ability_zh": "花幕"
     }
    ]
   },
@@ -339,8 +339,6 @@
      "item_zh": "姆克鹰进化石",
      "ability_en": "Contrary",
      "ability_zh": "唱反调",
-     "pre_mega_ability_en": "Intimidate",
-     "pre_mega_ability_zh": "威吓",
      "moves_en": [
       "Protect",
       "Roost",
@@ -354,7 +352,9 @@
       "勇鸟猛攻"
      ],
      "nature_en": "Jolly",
-     "nature_zh": "爽朗"
+     "nature_zh": "爽朗",
+     "pre_mega_ability_en": "Intimidate",
+     "pre_mega_ability_zh": "威吓"
     },
     {
      "identifier": "garchomp",
@@ -407,8 +407,6 @@
      "item_zh": "妖火红狐进化石",
      "ability_en": "Levitate",
      "ability_zh": "飘浮",
-     "pre_mega_ability_en": "Magician",
-     "pre_mega_ability_zh": "魔术师",
      "moves_en": [
       "Protect",
       "Psychic",
@@ -422,7 +420,9 @@
       "替身"
      ],
      "nature_en": "Timid",
-     "nature_zh": "胆小"
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Magician",
+     "pre_mega_ability_zh": "魔术师"
     },
     {
      "identifier": "glimmora",
@@ -492,8 +492,6 @@
      "item_zh": "喷火龙进化石Ｙ",
      "ability_en": "Drought",
      "ability_zh": "日照",
-     "pre_mega_ability_en": "Blaze",
-     "pre_mega_ability_zh": "猛火",
      "moves_en": [
       "Weather Ball",
       "Protect",
@@ -507,7 +505,9 @@
       "热风"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
     },
     {
      "identifier": "toxapex",
@@ -604,8 +604,6 @@
      "item_zh": "花叶蒂进化石",
      "ability_en": "Fairy Aura",
      "ability_zh": "妖精气场",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕",
      "moves_en": [
       "Moonblast",
       "Light of Ruin",
@@ -619,7 +617,9 @@
       "魔法闪耀"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Flower Veil",
+     "pre_mega_ability_zh": "花幕"
     }
    ]
   },
@@ -645,8 +645,6 @@
      "item_zh": "火焰鸡进化石",
      "ability_en": "Speed Boost",
      "ability_zh": "加速",
-     "pre_mega_ability_en": "Speed Boost",
-     "pre_mega_ability_zh": "加速",
      "moves_en": [
       "Close Combat",
       "Flare Blitz",
@@ -660,7 +658,9 @@
       "看穿"
      ],
      "nature_en": "Adamant",
-     "nature_zh": "固执"
+     "nature_zh": "固执",
+     "pre_mega_ability_en": "Speed Boost",
+     "pre_mega_ability_zh": "加速"
     },
     {
      "identifier": "froslass-mega",
@@ -669,8 +669,6 @@
      "item_zh": "雪妖女进化石",
      "ability_en": "Snow Warning",
      "ability_zh": "降雪",
-     "pre_mega_ability_en": "Cursed Body",
-     "pre_mega_ability_zh": "诅咒之躯",
      "moves_en": [
       "Blizzard",
       "Shadow Ball",
@@ -684,7 +682,9 @@
       "守住"
      ],
      "nature_en": "Timid",
-     "nature_zh": "胆小"
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Cursed Body",
+     "pre_mega_ability_zh": "诅咒之躯"
     },
     {
      "identifier": "incineroar",
@@ -842,8 +842,6 @@
      "item_zh": "巨沼怪进化石",
      "ability_en": "Swift Swim",
      "ability_zh": "悠游自如",
-     "pre_mega_ability_en": "Torrent",
-     "pre_mega_ability_zh": "激流",
      "moves_en": [
       "Wave Crash",
       "Earthquake",
@@ -857,7 +855,9 @@
       "守住"
      ],
      "nature_en": "Adamant",
-     "nature_zh": "固执"
+     "nature_zh": "固执",
+     "pre_mega_ability_en": "Torrent",
+     "pre_mega_ability_zh": "激流"
     },
     {
      "identifier": "archaludon",
@@ -949,8 +949,6 @@
      "item_zh": "喷火龙进化石Ｙ",
      "ability_en": "Drought",
      "ability_zh": "日照",
-     "pre_mega_ability_en": "Solar Power",
-     "pre_mega_ability_zh": "太阳之力",
      "moves_en": [
       "Heat Wave",
       "Solar Beam",
@@ -964,7 +962,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Solar Power",
+     "pre_mega_ability_zh": "太阳之力"
     },
     {
      "identifier": "venusaur",
@@ -1061,8 +1061,6 @@
      "item_zh": "巨沼怪进化石",
      "ability_en": "Swift Swim",
      "ability_zh": "悠游自如",
-     "pre_mega_ability_en": "Torrent",
-     "pre_mega_ability_zh": "激流",
      "moves_en": [
       "Wave Crash",
       "Earthquake",
@@ -1076,7 +1074,9 @@
       "守住"
      ],
      "nature_en": "Adamant",
-     "nature_zh": "固执"
+     "nature_zh": "固执",
+     "pre_mega_ability_en": "Torrent",
+     "pre_mega_ability_zh": "激流"
     }
    ]
   },
@@ -1190,8 +1190,6 @@
      "item_zh": "水箭龟进化石",
      "ability_en": "Mega Launcher",
      "ability_zh": "超级发射器",
-     "pre_mega_ability_en": "Rain Dish",
-     "pre_mega_ability_zh": "雨盘",
      "moves_en": [
       "Water Spout",
       "Dark Pulse",
@@ -1205,7 +1203,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Rain Dish",
+     "pre_mega_ability_zh": "雨盘"
     },
     {
      "identifier": "delphox-mega",
@@ -1214,8 +1214,6 @@
      "item_zh": "妖火红狐进化石",
      "ability_en": "Levitate",
      "ability_zh": "飘浮",
-     "pre_mega_ability_en": "Blaze",
-     "pre_mega_ability_zh": "猛火",
      "moves_en": [
       "Heat Wave",
       "Psychic",
@@ -1229,7 +1227,9 @@
       "守住"
      ],
      "nature_en": "Timid",
-     "nature_zh": "胆小"
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
     }
    ]
   },
@@ -1255,8 +1255,6 @@
      "item_zh": "化石翼龙进化石",
      "ability_en": "Tough Claws",
      "ability_zh": "硬爪",
-     "pre_mega_ability_en": "Unnerve",
-     "pre_mega_ability_zh": "紧张感",
      "moves_en": [
       "Rock Slide",
       "Tailwind",
@@ -1270,7 +1268,9 @@
       "守住"
      ],
      "nature_en": "Jolly",
-     "nature_zh": "爽朗"
+     "nature_zh": "爽朗",
+     "pre_mega_ability_en": "Unnerve",
+     "pre_mega_ability_zh": "紧张感"
     },
     {
      "identifier": "basculegion-male",
@@ -1323,8 +1323,6 @@
      "item_zh": "快龙进化石",
      "ability_en": "Multiscale",
      "ability_zh": "多重鳞片",
-     "pre_mega_ability_en": "Multiscale",
-     "pre_mega_ability_zh": "多重鳞片",
      "moves_en": [
       "Protect",
       "Extreme Speed",
@@ -1338,7 +1336,9 @@
       "热风"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Multiscale",
+     "pre_mega_ability_zh": "多重鳞片"
     },
     {
      "identifier": "sneasler",
@@ -1408,8 +1408,6 @@
      "item_zh": "喷火龙进化石Ｙ",
      "ability_en": "Drought",
      "ability_zh": "日照",
-     "pre_mega_ability_en": "Blaze",
-     "pre_mega_ability_zh": "猛火",
      "moves_en": [
       "Heat Wave",
       "Weather Ball",
@@ -1423,7 +1421,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
     },
     {
      "identifier": "glimmora-mega",
@@ -1432,8 +1432,6 @@
      "item_zh": "晶光花进化石",
      "ability_en": "Adaptability",
      "ability_zh": "适应力",
-     "pre_mega_ability_en": "Toxic Debris",
-     "pre_mega_ability_zh": "毒满地",
      "moves_en": [
       "Sludge Bomb",
       "Power Gem",
@@ -1447,7 +1445,9 @@
       "尖刺防守"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Toxic Debris",
+     "pre_mega_ability_zh": "毒满地"
     },
     {
      "identifier": "whimsicott",
@@ -1561,8 +1561,6 @@
      "item_zh": "晶光花进化石",
      "ability_en": "Adaptability",
      "ability_zh": "适应力",
-     "pre_mega_ability_en": "Toxic Debris",
-     "pre_mega_ability_zh": "毒满地",
      "moves_en": [
       "Earth Power",
       "Spiky Shield",
@@ -1576,7 +1574,9 @@
       "污泥炸弹"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Toxic Debris",
+     "pre_mega_ability_zh": "毒满地"
     },
     {
      "identifier": "excadrill",
@@ -1607,8 +1607,6 @@
      "item_zh": "班基拉斯进化石",
      "ability_en": "Sand Stream",
      "ability_zh": "扬沙",
-     "pre_mega_ability_en": "Sand Stream",
-     "pre_mega_ability_zh": "扬沙",
      "moves_en": [
       "Rock Slide",
       "Knock Off",
@@ -1622,7 +1620,9 @@
       "龙之舞"
      ],
      "nature_en": "Adamant",
-     "nature_zh": "固执"
+     "nature_zh": "固执",
+     "pre_mega_ability_en": "Sand Stream",
+     "pre_mega_ability_zh": "扬沙"
     },
     {
      "identifier": "orthworm",
@@ -1714,8 +1714,6 @@
      "item_zh": "妙蛙花进化石",
      "ability_en": "Thick Fat",
      "ability_zh": "厚脂肪",
-     "pre_mega_ability_en": "Chlorophyll",
-     "pre_mega_ability_zh": "叶绿素",
      "moves_en": [
       "Giga Drain",
       "Sludge Bomb",
@@ -1729,7 +1727,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Chlorophyll",
+     "pre_mega_ability_zh": "叶绿素"
     },
     {
      "identifier": "pelipper",
@@ -1760,8 +1760,6 @@
      "item_zh": "快龙进化石",
      "ability_en": "Multiscale",
      "ability_zh": "多重鳞片",
-     "pre_mega_ability_en": "Multiscale",
-     "pre_mega_ability_zh": "多重鳞片",
      "moves_en": [
       "Dragon Pulse",
       "Hurricane",
@@ -1775,7 +1773,9 @@
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Multiscale",
+     "pre_mega_ability_zh": "多重鳞片"
     },
     {
      "identifier": "kingambit",

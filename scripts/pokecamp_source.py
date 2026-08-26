@@ -21,8 +21,11 @@ are cached locally; no site-wide crawling; robots.txt is respected
 (pokecamp.cc allows all). Only standard library is used.
 """
 
+import gzip
+import hashlib
 import json
 import os
+import sys
 import time
 import urllib.request
 from pathlib import Path
@@ -251,9 +254,262 @@ def distill_usage_snapshot(index_data: list[dict[str, Any]],
     }
 
 
+# ---------------------------------------------------------------------------
+# Full teams pack (bundled snapshot) + local index orchestration
+# ---------------------------------------------------------------------------
+
+
 def _sort_key_team(team: dict[str, Any]) -> tuple:
     date = ((team.get("tournament") or {}).get("date") or "")
     return (date, -(team.get("placing") or 9999))
+
+
+TEAM_DETAILS_CACHE_DIR = "team_details"
+REQUEST_DELAY = 0.15  # seconds between detail requests (crawler etiquette)
+
+
+def distill_teams_full(teams_data: list[dict[str, Any]],
+                       details_by_tournament: dict[str, dict[str, Any]],
+                       teams_page: dict[str, Any],
+                       fetched_at: str,
+                       missing_tournaments: list[dict[str, str]] | None = None
+                       ) -> dict[str, Any]:
+    """Distill the FULL teams list (all teams, all details) into the pack
+    document that teams_index.py consumes. Unlike distill_teams_snapshot this
+    keeps every team, the tournament id, tera types, and the EN->ZH name maps.
+    """
+    name_maps = build_name_maps(teams_page)
+    meta_page = (teams_page or {}).get("meta") or {}
+    out_teams = []
+    for team in teams_data:
+        tinfo = team.get("tournament") or {}
+        tid = tinfo.get("id")
+        detail_map = details_by_tournament.get(tid) or {}
+        detail_list = detail_map.get(team.get("id")) or []
+        detail_by_ident = {}
+        roster = team.get("pokemon") or []
+        for d, base in zip(detail_list, roster):
+            detail_by_ident[base.get("identifier")] = d
+        mons = []
+        for base in roster:
+            d = detail_by_ident.get(base.get("identifier")) or {}
+            mons.append({
+                "identifier": base.get("identifier"),
+                "name_zh": base.get("displayName") or "",
+                "item_en": base.get("item") or "",
+                "ability_en": d.get("ability") or "",
+                "pre_mega_ability_en": d.get("preMegaAbility") or "",
+                "nature_en": d.get("nature") or "",
+                "tera_type_en": d.get("teraType") or "",
+                "moves_en": d.get("moves") or [],
+            })
+        rec = team.get("record") or {}
+        out_teams.append({
+            "id": team.get("id"),
+            "tournament": {"id": tid, "name": tinfo.get("name"),
+                           "date": (tinfo.get("date") or "")[:10]},
+            "player": team.get("playerName"),
+            "country": team.get("country"),
+            "placing": team.get("placing"),
+            "record": {"wins": rec.get("wins"), "losses": rec.get("losses"),
+                       "ties": rec.get("ties")},
+            "pokemon": mons,
+        })
+    return {
+        "meta": {
+            "source": PokecampSource.display_name,
+            "source_url": "https://pokecamp.cc/zh/champions/teams",
+            "format": meta_page.get("format", "M-B"),
+            "date_range": meta_page.get("dateRange"),
+            "tournament_count": meta_page.get("tournamentCount"),
+            "team_count": meta_page.get("teamCount"),
+            "fetched_at": fetched_at,
+            "name_maps": name_maps,
+            "missing_detail_tournaments": list(missing_tournaments or []),
+        },
+        "teams": out_teams,
+    }
+
+
+def meta_snapshot_from_pack(pack: dict[str, Any], top: int) -> dict[str, Any]:
+    """Derive the light meta_teams.json document (top N by recency, zh names
+    resolved) from a full pack — no extra fetching needed."""
+    meta = dict(pack.get("meta") or {})
+    name_maps = meta.pop("name_maps", {}) or {}
+    meta.pop("missing_detail_tournaments", None)
+    meta["top"] = top
+    sorted_teams = sorted(pack.get("teams") or [], key=_sort_key_team, reverse=True)
+    out_teams = []
+    for team in sorted_teams[:top]:
+        mons = []
+        for mon in team.get("pokemon") or []:
+            item_en = mon.get("item_en") or ""
+            ability_en = mon.get("ability_en") or ""
+            pre_en = mon.get("pre_mega_ability_en") or ""
+            moves_en = mon.get("moves_en") or []
+            entry: dict[str, Any] = {
+                "identifier": mon.get("identifier"),
+                "name_zh": mon.get("name_zh"),
+                "item_en": item_en,
+                "item_zh": name_maps["item"].get(item_en, item_en),
+                "ability_en": ability_en,
+                "ability_zh": name_maps["ability"].get(ability_en, ability_en),
+                "moves_en": moves_en,
+                "moves_zh": [name_maps["move"].get(m, m) for m in moves_en],
+                "nature_en": mon.get("nature_en") or "",
+                "nature_zh": nature_zh(mon.get("nature_en") or ""),
+            }
+            if pre_en:
+                entry["pre_mega_ability_en"] = pre_en
+                entry["pre_mega_ability_zh"] = name_maps["ability"].get(pre_en, pre_en)
+            mons.append(entry)
+        out_teams.append({
+            "id": team.get("id"),
+            "tournament": {"name": (team.get("tournament") or {}).get("name"),
+                           "date": (team.get("tournament") or {}).get("date")},
+            "player": team.get("player"),
+            "country": team.get("country"),
+            "placing": team.get("placing"),
+            "record": team.get("record"),
+            "pokemon": mons,
+        })
+    return {"meta": meta, "teams": out_teams}
+
+
+def _team_detail_cache_file(cache_dir: Path, tournament_id: str) -> Path:
+    from urllib.parse import quote
+    return cache_dir / f"{quote(tournament_id, safe='')}.json"
+
+
+def fetch_team_details_cached(cache_dir: Path, source: PokecampSource,
+                              tournament_ids: list[str], online: bool = True,
+                              delay: float = REQUEST_DELAY,
+                              log=None) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """Load team-details per tournament with a permanent on-disk cache.
+
+    Tournament results are immutable once the event ends, so cached files
+    never expire; only uncached tournament ids are fetched (with `delay`
+    seconds between requests). Returns (details_by_tournament, missing_ids).
+    """
+    details: dict[str, dict[str, Any]] = {}
+    missing: list[str] = []
+    for i, tid in enumerate(tournament_ids):
+        path = _team_detail_cache_file(cache_dir, tid)
+        if path.exists():
+            try:
+                details[tid] = _read_json_file(path)
+                continue
+            except Exception:
+                pass  # corrupt cache file -> refetch
+        if not online:
+            missing.append(tid)
+            continue
+        try:
+            if delay:
+                time.sleep(delay)
+            data = source.fetch_team_details(tid)
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False)
+            details[tid] = data
+            if log:
+                log(f"  [{i + 1}/{len(tournament_ids)}] fetched team-details {tid}")
+        except Exception as e:
+            missing.append(tid)
+            if log:
+                log(f"  [{i + 1}/{len(tournament_ids)}] FAILED team-details {tid}: {e}")
+    return details, missing
+
+
+def _teams_sha256(teams_data: list[dict[str, Any]]) -> str:
+    blob = json.dumps(teams_data, ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+
+
+def get_teams_index(data_dir: Path, online: bool = False,
+                    source: PokecampSource | None = None) -> dict[str, Any]:
+    """Make the local teams index available and return {db_path, meta}.
+
+    offline: use the existing index DB, else build it from the bundled
+    teams_full.json.gz pack. db_path is None when neither exists (callers
+    fall back to the light meta_teams.json snapshot).
+
+    online: fetch teams.json once (gzip ~1.3 MB), skip the rebuild when the
+    content hash is unchanged, otherwise incrementally fetch team-details for
+    new tournaments only (per-tournament permanent cache) and rebuild.
+    Fallback chain on network failure: existing DB -> bundled pack -> raise.
+    meta.origin in {"online", "cache", "snapshot"}; meta.online_error carries
+    the failure reason when a fallback was used.
+    """
+    import teams_index as tix
+
+    db_path = tix.index_path(data_dir)
+
+    if not online:
+        if db_path.exists():
+            return {"db_path": db_path, "meta": tix.load_index_meta(db_path)}
+        built = tix.ensure_index(data_dir)
+        if built is None:
+            return {"db_path": None, "meta": {
+                "origin": "snapshot",
+                "note": "teams_full pack missing; only the light top-12 snapshot is available",
+            }}
+        return {"db_path": built, "meta": tix.load_index_meta(built)}
+
+    source = source or get_source()
+    try:
+        teams = source.fetch_teams()
+        sha = _teams_sha256(teams)
+        if db_path.exists():
+            cur = tix.load_index_meta(db_path)
+            if cur and _read_meta_value(db_path, "teams_sha256") == sha:
+                cur["origin"] = "online"
+                cur["note"] = "teams list unchanged since last fetch; index not rebuilt"
+                return {"db_path": db_path, "meta": cur}
+        teams_page = _get_raw(data_dir, "teams_page", source.fetch_teams_page,
+                              online=True) or {}
+        tournament_ids: list[str] = []
+        for t in teams:
+            tid = (t.get("tournament") or {}).get("id")
+            if tid and tid not in tournament_ids:
+                tournament_ids.append(tid)
+        details, missing = fetch_team_details_cached(
+            data_dir / "cache" / TEAM_DETAILS_CACHE_DIR, source, tournament_ids,
+            online=True, log=lambda m: print(m, file=sys.stderr))
+        missing_meta = []
+        for tid in missing:
+            tname = next(((t.get("tournament") or {}).get("name")
+                          for t in teams if (t.get("tournament") or {}).get("id") == tid), "")
+            missing_meta.append({"id": tid, "name": tname})
+        pack = distill_teams_full(teams, details, teams_page,
+                                  fetched_at=_now_iso(),
+                                  missing_tournaments=missing_meta)
+        tix.build_index(db_path, pack, source_origin="online", teams_sha256=sha)
+        meta = tix.load_index_meta(db_path)
+        meta["origin"] = "online"
+        return {"db_path": db_path, "meta": meta}
+    except Exception as e:
+        if db_path.exists():
+            meta = tix.load_index_meta(db_path)
+            meta["online_error"] = f"{type(e).__name__}: {e}"
+            return {"db_path": db_path, "meta": meta}
+        built = tix.ensure_index(data_dir)
+        if built is not None:
+            meta = tix.load_index_meta(built)
+            meta["online_error"] = f"{type(e).__name__}: {e}"
+            return {"db_path": built, "meta": meta}
+        raise
+
+
+def _read_meta_value(db_path: Path, key: str) -> str:
+    import sqlite3
+    try:
+        conn = sqlite3.connect(str(db_path))
+        row = conn.execute("SELECT value FROM meta WHERE key=?", (key,)).fetchone()
+        conn.close()
+        return row[0] if row else ""
+    except Exception:
+        return ""
 
 
 def distill_teams_snapshot(teams_data: list[dict[str, Any]],

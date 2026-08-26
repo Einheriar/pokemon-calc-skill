@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.7.01
+version: 4.8.00
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -67,12 +67,17 @@ usage [--top N] [--online]      # 当前环境使用率总排行（默认前 20�
 usage <name> [--online]         # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
 teams [--top N] [--online]      # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
 teams <N>                       # 第 N 支队伍的完整配置（道具/特性/招式/性格）
-teams <pokemon>                 # 筛选含有指定宝可梦的队伍
+teams --pokemon <名> [--top N]  # 全量检索：当前窗口哪些队伍用了这只宝可梦
+teams --player <名>             # 按选手名检索其全部队伍
+teams --tournament <名>         # 按赛事名检索（可与 --pokemon 组合）
+teams --stats [--placing-max N] [--tournament <名>]   # 全量队伍出现率排行（前 20；可加子集条件）
+teams --stats --pokemon <名>    # 该宝可梦在全量队伍中的道具/特性/招式/性格占比
+teams --teammates <名>          # 该宝可梦在全量队伍中的队友共现排行（前 12）
 ```
 
-> **数据性质说明**：`usage` / `teams` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），默认读取内置快照（`meta.origin = "snapshot"`）。回答中注明数据窗口（`meta.date_range`）与来源。
+> **数据性质说明**：`usage` / `teams` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口）。`teams` 的全量数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
 >
-> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才加 `--online`，其他情况一律使用内置快照。`teams --online` 会下载完整队伍列表（gzip 后约 1.3 MB），不要主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，在回答中原样告知用户失败原因，并说明已回退到快照/缓存数据及其日期。
+> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
 
 ### 参数覆盖 JSON 示例
 

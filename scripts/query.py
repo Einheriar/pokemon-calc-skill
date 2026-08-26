@@ -2701,51 +2701,129 @@ def cmd_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, 
     return result
 
 
-def cmd_teams(query: str = "", top: int = 12, online: bool = False) -> dict[str, Any]:
-    """Recent tournament teams: list, detail by number, or filter by pokemon."""
-    data = pcs.get_teams_data(DATA_DIR, online=online, top=max(top, 12))
-    meta = data.get("meta", {})
-    teams = data.get("teams", [])[:top]
+def cmd_teams(query: str = "", top: int = 12, online: bool = False,
+              pokemon: str = "", player: str = "", stats: bool = False,
+              teammates: str = "", placing_max: int | None = None,
+              tournament: str = "") -> dict[str, Any]:
+    """Tournament teams: snapshot list/detail (default) or full-index queries.
 
-    def _summary(i: int, t: dict[str, Any]) -> dict[str, Any]:
-        tinfo = t.get("tournament") or {}
-        return {
-            "no": i + 1,
-            "tournament": tinfo.get("name"),
-            "date": tinfo.get("date"),
-            "player": t.get("player"),
-            "country": t.get("country"),
-            "placing": t.get("placing"),
-            "record": t.get("record"),
-            "pokemon": [p.get("name_zh") for p in t.get("pokemon", [])],
-        }
+    The full index (all ~9k teams of the rolling 30-day window, derived from
+    the bundled teams_full pack or a fresh --online fetch) backs --pokemon /
+    --player / --tournament / --stats / --teammates queries. All outputs are
+    hard-capped at 50 rows.
+    """
+    advanced = bool(stats or teammates or player or tournament or pokemon
+                    or (query and not query.isdigit()))
 
-    if not query:
-        return {"meta": meta, "teams": [_summary(i, t) for i, t in enumerate(teams)]}
+    def _legacy_snapshot() -> dict[str, Any]:
+        data = pcs.get_teams_data(DATA_DIR, online=online, top=max(top, 12))
+        meta = data.get("meta", {})
+        teams = data.get("teams", [])[:top]
 
-    if query.isdigit():
+        def _summary(i: int, t: dict[str, Any]) -> dict[str, Any]:
+            tinfo = t.get("tournament") or {}
+            return {
+                "no": i + 1,
+                "tournament": tinfo.get("name"),
+                "date": tinfo.get("date"),
+                "player": t.get("player"),
+                "country": t.get("country"),
+                "placing": t.get("placing"),
+                "record": t.get("record"),
+                "pokemon": [p.get("name_zh") for p in t.get("pokemon", [])],
+            }
+
+        if not query:
+            return {"meta": meta, "teams": [_summary(i, t) for i, t in enumerate(teams)]}
         idx = int(query) - 1
         if 0 <= idx < len(teams):
             return {"meta": meta, "no": idx + 1, **teams[idx]}
         return {"error": f"Team number out of range: {query} (1-{len(teams)})", "meta": meta}
 
-    norm = normalize_name(query, "pokemon")
-    wanted = {c.strip().lower() for c in (query, norm) if c and c.strip()}
-    matched = []
-    for i, t in enumerate(teams):
-        names = set()
-        for p in t.get("pokemon", []):
-            names.add(str(p.get("name_zh", "")).lower())
-            names.add(str(p.get("identifier", "")).lower())
-        if names & wanted:
-            matched.append((i, t))
-    if not matched:
+    if not advanced:
+        # Plain list / detail-by-number. When the full index is available the
+        # number addresses the recency-sorted full list with complete details.
+        if query.isdigit():
+            idx = pcs.get_teams_index(DATA_DIR, online=online)
+            if idx.get("db_path") is not None:
+                import teams_index as tix
+                n = int(query)
+                rows = tix.find_teams(idx["db_path"], limit=min(n, 50))["teams"]
+                if 1 <= n <= len(rows):
+                    detail = tix.get_team_detail(idx["db_path"], rows[n - 1]["id"])
+                    if detail:
+                        return {"meta": idx["meta"], "no": n, **detail}
+                return {"error": f"Team number out of range: {query} (1-{len(rows)})",
+                        "meta": idx["meta"]}
+        return _legacy_snapshot()
+
+    # ---- full-index backed queries -------------------------------------
+    idx = pcs.get_teams_index(DATA_DIR, online=online)
+    meta = idx.get("meta", {})
+    db_path = idx.get("db_path")
+    if db_path is None:
         return {
-            "error": f"No team containing '{query}' in the current top {len(teams)} teams.",
+            "error": "Full teams index unavailable (bundled teams_full pack missing); "
+                     "only `teams` / `teams <number>` snapshot queries work.",
             "meta": meta,
         }
-    return {"meta": meta, "filter": query,
-            "teams": [_summary(i, t) for i, t in matched]}
+    import teams_index as tix
+
+    def _resolve_pokemon(name: str) -> tuple[str | None, str | None]:
+        """-> (identifier, name_zh) for index filtering; (None, norm) fallback."""
+        try:
+            usage = pcs.get_usage_data(DATA_DIR, online=False)
+            entry = _find_usage_entry(usage.get("pokemon", []), name)
+        except Exception:
+            entry = None
+        if entry:
+            return entry.get("identifier"), entry.get("name_zh")
+        return None, normalize_name(name, "pokemon")
+
+    if stats:
+        if pokemon:
+            ident, name_zh = _resolve_pokemon(pokemon)
+            if not ident:
+                return {"error": f"Pokemon '{pokemon}' not found in meta data; "
+                                 "cannot aggregate builds.", "meta": meta}
+            result = tix.aggregate_pokemon_builds(db_path, ident)
+            if not result.get("team_count"):
+                return {"error": f"No indexed team uses '{pokemon}' in the current "
+                                 f"{meta.get('date_range')} window.", "meta": meta}
+            result["name_zh"] = result.get("name_zh") or name_zh or pokemon
+            return {"meta": meta, **result}
+        limit = top if top != 12 else 20
+        return {"meta": meta, **tix.aggregate_pokemon_usage(
+            db_path, placing_max=placing_max, tournament=tournament or None, limit=limit)}
+
+    if teammates:
+        ident, name_zh = _resolve_pokemon(teammates)
+        if not ident:
+            return {"error": f"Pokemon '{teammates}' not found in meta data; "
+                             "cannot aggregate teammates.", "meta": meta}
+        result = tix.aggregate_teammates(db_path, ident, limit=top)
+        if not result.get("team_count"):
+            return {"error": f"No indexed team uses '{teammates}' in the current "
+                             f"{meta.get('date_range')} window.", "meta": meta}
+        result["name_zh"] = name_zh or teammates
+        return {"meta": meta, **result}
+
+    poke_filter = pokemon or (query if query and not query.isdigit() else "")
+    ident = name_zh = None
+    if poke_filter:
+        ident, name_zh = _resolve_pokemon(poke_filter)
+    result = tix.find_teams(db_path, pokemon_identifier=ident, pokemon_name_zh=name_zh,
+                            player=player or None, tournament=tournament or None,
+                            limit=top)
+    if not result["teams"]:
+        return {"error": "No team matches the given filter in the indexed "
+                         f"{meta.get('team_count', '?')} teams "
+                         f"({meta.get('date_range')}).", "meta": meta}
+    out: dict[str, Any] = {"meta": meta}
+    if poke_filter:
+        out["filter"] = poke_filter
+    out.update(result)
+    return out
 
 
 COMMANDS: dict[str, Any] = {
@@ -2872,10 +2950,16 @@ def main() -> int:
         usage_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (cached; falls back to bundled snapshot)")
 
         # teams
-        teams_parser = subparsers.add_parser("teams", help="Recent tournament teams (pokecamp.cc / Limitless)")
+        teams_parser = subparsers.add_parser("teams", help="Tournament teams (pokecamp.cc / Limitless; full local index)")
         teams_parser.add_argument("query", nargs="?", default="", help="Team number for full detail, or pokemon name to filter (empty = list)")
-        teams_parser.add_argument("--top", type=int, default=12, help="Number of teams (default 12)")
-        teams_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (downloads ~15 MB once; falls back to snapshot)")
+        teams_parser.add_argument("--top", type=int, default=12, help="Max rows to return (default 12, hard cap 50)")
+        teams_parser.add_argument("--pokemon", default="", help="Filter teams using this pokemon (full index)")
+        teams_parser.add_argument("--player", default="", help="Filter teams by player name (substring)")
+        teams_parser.add_argument("--tournament", default="", help="Filter by tournament name (substring)")
+        teams_parser.add_argument("--stats", action="store_true", help="Pokemon appearance share across all indexed teams; with --pokemon shows that pokemon's item/ability/move/nature shares")
+        teams_parser.add_argument("--teammates", default="", metavar="NAME", help="Most common teammates of this pokemon across all indexed teams")
+        teams_parser.add_argument("--placing-max", type=int, default=None, help="With --stats: only count teams placing <= N (e.g. 8 = top-cut)")
+        teams_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (incremental; falls back to cache/snapshot)")
 
         args = parser.parse_args()
 
@@ -2956,7 +3040,11 @@ def main() -> int:
             elif cmd == "usage":
                 result = cmd_usage(args.name, args.top, args.online)
             elif cmd == "teams":
-                result = cmd_teams(args.query, args.top, args.online)
+                result = cmd_teams(args.query, args.top, args.online,
+                                   pokemon=args.pokemon, player=args.player,
+                                   stats=args.stats, teammates=args.teammates,
+                                   placing_max=args.placing_max,
+                                   tournament=args.tournament)
             elif cmd == "filter-pokemon":
                 min_stats = {}
                 max_stats = {}
