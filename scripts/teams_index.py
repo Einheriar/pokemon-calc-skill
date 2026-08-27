@@ -230,6 +230,10 @@ def ensure_index(data_dir: Path) -> Path | None:
     pack_sig = _pack_sha256(data_dir)
     if db.exists():
         meta = load_index_meta(db)
+        if meta.get("origin") != "snapshot":
+            # Cache/online-derived DB (no pack_sha256 recorded): it is newer
+            # than any bundled snapshot, never downgrade it from the pack.
+            return db
         if pack_sig and meta.get("pack_sha256") == pack_sig \
                 and meta.get("schema_version") == SCHEMA_VERSION:
             return db

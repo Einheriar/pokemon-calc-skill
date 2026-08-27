@@ -444,9 +444,11 @@ def get_teams_index(data_dir: Path, online: bool = False,
                     source: PokecampSource | None = None) -> dict[str, Any]:
     """Make the local teams index available and return {db_path, meta}.
 
-    offline: use the existing index DB, else build it from the bundled
-    teams_full.json.gz pack. db_path is None when neither exists (callers
-    fall back to the light meta_teams.json snapshot).
+    offline: reuse the existing index DB; rebuild from the bundled
+    teams_full.json.gz pack when the DB is missing or the pack changed
+    (pack_sha256 mismatch). A cache/online-derived index is never
+    downgraded by the bundled pack. db_path is None when neither DB nor
+    pack exists (callers fall back to the light meta_teams.json snapshot).
 
     online: throttled — if the current index was built from a fetch less than
     ONLINE_MIN_INTERVAL_SEC (24h) ago, it is returned as-is with a note and
@@ -463,8 +465,8 @@ def get_teams_index(data_dir: Path, online: bool = False,
     db_path = tix.index_path(data_dir)
 
     if not online:
-        if db_path.exists():
-            return {"db_path": db_path, "meta": tix.load_index_meta(db_path)}
+        # ensure_index reuses a matching DB, rebuilds when the bundled pack
+        # changed, and never downgrades a cache/online-derived index.
         built = tix.ensure_index(data_dir)
         if built is None:
             return {"db_path": None, "meta": {
