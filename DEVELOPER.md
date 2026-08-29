@@ -447,18 +447,16 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 回归测试脚本位于 `../cache/` 目录：
 
 ```bash
-python cache/test_damage.py
-python cache/test_ko.py
-python cache/test_ev_optimizer.py
-python cache/test_calc_raw.py
-python cache/test_field_overrides.py
-python cache/test_normalization.py
-python cache/regression_test.py
-python cache/test_usage_stats.py   # usage 环境查询（离线快照 + 在线回退）
-python cache/test_teams_index.py   # 全量队伍索引（建库/筛选/聚合/增量抓取/回退，12 例）
-python cache/test_meta_command.py  # meta 统一命令（推断/alias/--source，16 例）
-python cache/test_ladder_source.py # 天梯数据源（ladder/showdown 排行、单双打、Mega 合并、蒸馏/节流，21 例）
+python cache/regression_test.py       # Preset / 形态 / setup_moves 等，36 例
+python cache/test_usage_stats.py      # usage 环境查询（离线快照 + 在线回退，14 例）
+python cache/test_teams_index.py      # 全量队伍索引（建库/筛选/聚合/增量抓取/回退，12 例）
+python cache/test_meta_command.py     # meta 统一命令（推断/alias/--source，16 例）
+python cache/test_ladder_source.py    # 天梯数据源（ladder/showdown 排行、单双打、Mega 合并、蒸馏/节流，23 例）
+python cache/test_field_overrides.py  # 场地参数覆盖专项（30 用例）
+python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 ```
+
+旧版专项测试已归档于 `cache/archive/`（15 个，仅作历史参考，不再维护）。
 
 ---
 
