@@ -2662,7 +2662,66 @@ def _find_usage_entry(pokemon_list: list[dict[str, Any]], name: str) -> dict[str
 
 
 def cmd_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, Any]:
-    """Meta usage stats: top ranking, or one pokemon's common builds/teammates."""
+    """Deprecated alias for `meta --usage`; kept for existing tests/callers."""
+    return cmd_meta(target=name, top=top, online=online, usage=True)
+
+
+def cmd_meta(target: str = "", top: int | None = None, online: bool = False,
+             source: str = "tournament",
+             usage: bool = False, teams: bool = False,
+             pokemon: str = "", player: str = "", stats: bool = False,
+             teammates: str = "", placing_max: int | None = None,
+             tournament: str = "") -> dict[str, Any]:
+    """Unified meta-environment query: usage stats + tournament teams.
+
+    Routes to usage or teams handlers based on explicit flags or target
+    inference. The --source flag is reserved for future ladder data;
+    currently only "tournament" (pokecamp.cc / Limitless) is supported.
+    ``top`` is resolved per mode when omitted: 20 for usage queries,
+    12 for team lists.
+    """
+    # ---- source validation (reserved for future ladder) ------------------
+    if source != "tournament":
+        return {
+            "error": f"Meta source '{source}' is not yet supported. "
+                     "Currently only 'tournament' (pokecamp.cc / Limitless "
+                     "public tournament data) is available.",
+            "meta": {"source_requested": source, "source_available": "tournament"},
+        }
+
+    # ---- mode resolution: explicit flags first, then inference ------------
+    if teams or stats or teammates or player or tournament:
+        mode = "teams"
+    elif usage:
+        # Explicit --usage wins over a bare --pokemon filter; the value
+        # doubles as the usage-detail subject (meta --usage --pokemon X
+        # is the same query as `meta X`).
+        mode = "usage"
+    elif pokemon or target.isdigit():
+        # Pure number -> team number (e.g. "meta 3" -> team #3)
+        mode = "teams"
+    elif target:
+        # Non-numeric target -> pokemon name for usage detail
+        mode = "usage"
+    else:
+        # No target -> usage ranking (most common query)
+        mode = "usage"
+
+    if top is None:
+        top = 12 if mode == "teams" else 20
+
+    # ---- dispatch ---------------------------------------------------------
+    if mode == "usage":
+        return _cmd_meta_usage(name=pokemon or target, top=top, online=online)
+    return _cmd_meta_teams(query=target, top=top, online=online,
+                           pokemon=pokemon, player=player,
+                           stats=stats, teammates=teammates,
+                           placing_max=placing_max,
+                           tournament=tournament)
+
+
+def _cmd_meta_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, Any]:
+    """Usage stats handler for cmd_meta."""
     data = pcs.get_usage_data(DATA_DIR, online=online)
     meta = data.get("meta", {})
     plist = data.get("pokemon", [])
@@ -2701,16 +2760,17 @@ def cmd_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, 
     return result
 
 
-def cmd_teams(query: str = "", top: int = 12, online: bool = False,
-              pokemon: str = "", player: str = "", stats: bool = False,
-              teammates: str = "", placing_max: int | None = None,
-              tournament: str = "") -> dict[str, Any]:
-    """Tournament teams: snapshot list/detail (default) or full-index queries.
+def _cmd_meta_teams(query: str = "", top: int = 12, online: bool = False,
+                    pokemon: str = "", player: str = "", stats: bool = False,
+                    teammates: str = "", placing_max: int | None = None,
+                    tournament: str = "") -> dict[str, Any]:
+    """Tournament teams handler for cmd_meta.
 
-    The full index (all ~9k teams of the rolling 30-day window, derived from
-    the bundled teams_full pack or a fresh --online fetch) backs --pokemon /
-    --player / --tournament / --stats / --teammates queries. All outputs are
-    hard-capped at 50 rows.
+    Plain list / detail-by-number queries are served from the full SQLite
+    index so the list and `meta --teams <N>` always share one source and
+    ordering; the light meta_teams.json snapshot is only a fallback when
+    the index is unavailable. Filter / aggregation queries always require
+    the index. All outputs are hard-capped at 50 rows.
     """
     advanced = bool(stats or teammates or player or tournament or pokemon
                     or (query and not query.isdigit()))
@@ -2741,12 +2801,14 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
         return {"error": f"Team number out of range: {query} (1-{len(teams)})", "meta": meta}
 
     if not advanced:
-        # Plain list / detail-by-number. When the full index is available the
-        # number addresses the recency-sorted full list with complete details.
-        if query.isdigit():
-            idx = pcs.get_teams_index(DATA_DIR, online=online)
-            if idx.get("db_path") is not None:
-                import teams_index as tix
+        # Plain list / detail-by-number: served from the full index so the
+        # list and `meta --teams <N>` always share one source and ordering.
+        # The light snapshot is only used when the index is unavailable
+        # (bundled teams_full pack missing on a broken install).
+        idx = pcs.get_teams_index(DATA_DIR, online=online)
+        if idx.get("db_path") is not None:
+            import teams_index as tix
+            if query.isdigit():
                 n = int(query)
                 rows = tix.find_teams(idx["db_path"], limit=min(n, 50))["teams"]
                 if 1 <= n <= len(rows):
@@ -2755,7 +2817,12 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
                         return {"meta": idx["meta"], "no": n, **detail}
                 return {"error": f"Team number out of range: {query} (1-{len(rows)})",
                         "meta": idx["meta"]}
-        return _legacy_snapshot()
+            result = tix.find_teams(idx["db_path"], limit=top)
+            return {"meta": idx["meta"], **result}
+        try:
+            return _legacy_snapshot()
+        except Exception as e:  # neither index nor snapshot available
+            return {"error": f"Teams data unavailable: {type(e).__name__}: {e}"}
 
     # ---- full-index backed queries -------------------------------------
     idx = pcs.get_teams_index(DATA_DIR, online=online)
@@ -2764,7 +2831,7 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
     if db_path is None:
         return {
             "error": "Full teams index unavailable (bundled teams_full pack missing); "
-                     "only `teams` / `teams <number>` snapshot queries work.",
+                     "only `meta --teams` / `meta --teams <number>` snapshot queries work.",
             "meta": meta,
         }
     import teams_index as tix
@@ -2826,6 +2893,17 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
     return out
 
 
+def cmd_teams(query: str = "", top: int = 12, online: bool = False,
+              pokemon: str = "", player: str = "", stats: bool = False,
+              teammates: str = "", placing_max: int | None = None,
+              tournament: str = "") -> dict[str, Any]:
+    """Deprecated alias for `meta --teams`; kept for existing tests/callers."""
+    return cmd_meta(target=query, top=top, online=online, teams=True,
+                    pokemon=pokemon, player=player, stats=stats,
+                    teammates=teammates, placing_max=placing_max,
+                    tournament=tournament)
+
+
 COMMANDS: dict[str, Any] = {
     "pokemon": cmd_pokemon,
     "move": cmd_move,
@@ -2847,6 +2925,7 @@ COMMANDS: dict[str, Any] = {
     "compute-stats": cmd_compute_stats,
     "optimize": cmd_optimize,
     "survivability": cmd_survivability,
+    "meta": cmd_meta,
 }
 
 
@@ -2858,7 +2937,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -2943,14 +3022,14 @@ def main() -> int:
         surv_parser.add_argument("--field_ov", default="{}", help="Field override JSON")
         surv_parser.add_argument("--field_ov_file", default=None, help="Path to field override JSON file (takes precedence over --field_ov)")
 
-        # usage
-        usage_parser = subparsers.add_parser("usage", help="Meta usage stats (pokecamp.cc / Limitless tournament data)")
+        # usage (deprecated alias for meta --usage)
+        usage_parser = subparsers.add_parser("usage", help="DEPRECATED: use 'meta --usage' instead")
         usage_parser.add_argument("name", nargs="?", default="", help="Pokemon name (optional; empty = top ranking)")
         usage_parser.add_argument("--top", type=int, default=20, help="Number of entries in the ranking (default 20)")
         usage_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (cached; falls back to bundled snapshot)")
 
-        # teams
-        teams_parser = subparsers.add_parser("teams", help="Tournament teams (pokecamp.cc / Limitless; full local index)")
+        # teams (deprecated alias for meta --teams)
+        teams_parser = subparsers.add_parser("teams", help="DEPRECATED: use 'meta --teams' instead")
         teams_parser.add_argument("query", nargs="?", default="", help="Team number for full detail, or pokemon name to filter (empty = list)")
         teams_parser.add_argument("--top", type=int, default=12, help="Max rows to return (default 12, hard cap 50)")
         teams_parser.add_argument("--pokemon", default="", help="Filter teams using this pokemon (full index)")
@@ -2960,6 +3039,21 @@ def main() -> int:
         teams_parser.add_argument("--teammates", default="", metavar="NAME", help="Most common teammates of this pokemon across all indexed teams")
         teams_parser.add_argument("--placing-max", type=int, default=None, help="With --stats: only count teams placing <= N (e.g. 8 = top-cut)")
         teams_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (incremental; falls back to cache/snapshot)")
+
+        # meta (unified environment data query)
+        meta_parser = subparsers.add_parser("meta", help="Unified meta-environment query (usage stats + tournament teams)")
+        meta_parser.add_argument("target", nargs="?", default="", help="Pokemon name for usage detail, or team number with --teams")
+        meta_parser.add_argument("--top", type=int, default=None, help="Max rows / ranking entries (default: 20 for usage, 12 for teams; hard cap 50)")
+        meta_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (cached; falls back to snapshot)")
+        meta_parser.add_argument("--source", default="tournament", help="Data source type: tournament (default) or ladder (reserved for future)")
+        meta_parser.add_argument("--usage", action="store_true", help="Query usage stats (default when no target or target is a pokemon name)")
+        meta_parser.add_argument("--teams", action="store_true", help="Query tournament teams")
+        meta_parser.add_argument("--pokemon", default="", help="Filter teams using this pokemon (with --teams)")
+        meta_parser.add_argument("--player", default="", help="Filter teams by player name (with --teams)")
+        meta_parser.add_argument("--tournament", default="", help="Filter by tournament name (with --teams)")
+        meta_parser.add_argument("--stats", action="store_true", help="Aggregate stats mode (with --teams)")
+        meta_parser.add_argument("--teammates", default="", metavar="NAME", help="Most common teammates of this pokemon (with --teams)")
+        meta_parser.add_argument("--placing-max", type=int, default=None, help="With --stats: only count teams placing <= N")
 
         args = parser.parse_args()
 
@@ -3038,13 +3132,31 @@ def main() -> int:
                     max_power=args.max_power,
                 )
             elif cmd == "usage":
-                result = cmd_usage(args.name, args.top, args.online)
+                print("DEPRECATION WARNING: 'usage' is deprecated, use 'meta --usage' instead.", file=sys.stderr)
+                result = cmd_meta(target=args.name, top=args.top, online=args.online,
+                                  usage=True)
             elif cmd == "teams":
-                result = cmd_teams(args.query, args.top, args.online,
-                                   pokemon=args.pokemon, player=args.player,
-                                   stats=args.stats, teammates=args.teammates,
-                                   placing_max=args.placing_max,
-                                   tournament=args.tournament)
+                print("DEPRECATION WARNING: 'teams' is deprecated, use 'meta --teams' instead.", file=sys.stderr)
+                result = cmd_meta(target=args.query, top=args.top, online=args.online,
+                                  teams=True, pokemon=args.pokemon, player=args.player,
+                                  stats=args.stats, teammates=args.teammates,
+                                  placing_max=args.placing_max,
+                                  tournament=args.tournament)
+            elif cmd == "meta":
+                result = cmd_meta(
+                    target=args.target,
+                    top=args.top,
+                    online=args.online,
+                    source=args.source,
+                    usage=args.usage,
+                    teams=args.teams,
+                    pokemon=args.pokemon,
+                    player=args.player,
+                    stats=args.stats,
+                    teammates=args.teammates,
+                    placing_max=args.placing_max,
+                    tournament=args.tournament,
+                )
             elif cmd == "filter-pokemon":
                 min_stats = {}
                 max_stats = {}

@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.8.02
+version: 4.8.04
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -9,7 +9,7 @@ description: >
   (3) 宝可梦伤害计算、KO 概率、努力值优化（Phase 2+）；
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
-  (6) 当前天梯/赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
+  (6) 当前赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
   仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。
 ---
 
@@ -21,7 +21,7 @@ description: >
 2. **能力值优先**。回答中使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
 3. **环境参数唯一入口**。环境条件（天气、场地、对战模式等）一律经 `field_override` 传入。`move_override` 仅用于行为参数（`is_crit`、`hits`、`fainted_allies`），不修改 `base_power` 或 `type`。
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
-5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。环境查询命令（`usage` / `teams`）默认读取内置快照（离线可用）；仅当用户显式要求最新数据时才加 `--online` 按需联网（pokecamp.cc，仅用标准库 `urllib`），网络失败自动回退快照，并在回答中注明数据来源与日期。
+5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。环境查询命令（`meta`）默认读取内置快照（离线可用）；仅当用户显式要求最新数据时才加 `--online` 按需联网（pokecamp.cc，仅用标准库 `urllib`），网络失败自动回退快照，并在回答中注明数据来源与日期。
 
 ## 2. 命令速查
 
@@ -30,7 +30,7 @@ description: >
 > **路径解析说明**：脚本通过 `__file__` 动态定位自身目录，并自动查找同级目录下的 `data/` 文件夹。若 Skill 被安装到其他位置，可通过设置环境变量 `POKEMON_CALC_DATA_DIR` 显式指定数据目录。
 
 > **参考文件使用规则**：本文件只含高频刚需内容。以下情况**先 Read 对应参考文件再执行**：
-> - 使用 `usage` / `teams` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move --source`，或需要更多命令示例、Windows 环境执行方式 → [`references/commands.md`](references/commands.md)
+> - 使用 `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move --source`，或需要更多命令示例、Windows 环境执行方式 → [`references/commands.md`](references/commands.md)
 > - 需要 SP/EV 换算公式与对照表、optimize 双模式返回字段、数据来源完整说明 → [`references/mechanics.md`](references/mechanics.md)
 
 ```bash
@@ -63,21 +63,24 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（详见 references/commands.md）
 
 # Phase 3 — 环境情报查询（pokecamp.cc / Limitless 赛事数据，详见 references/commands.md）
-usage [--top N] [--online]      # 当前环境使用率总排行（默认前 20）
-usage <name> [--online]         # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
-teams [--top N] [--online]      # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
-teams <N>                       # 第 N 支队伍的完整配置（道具/特性/招式/性格）
-teams --pokemon <名> [--top N]  # 全量检索：当前窗口哪些队伍用了这只宝可梦
-teams --player <名>             # 按选手名检索其全部队伍
-teams --tournament <名>         # 按赛事名检索（可与 --pokemon 组合）
-teams --stats [--placing-max N] [--tournament <名>]   # 全量队伍出现率排行（前 20；可加子集条件）
-teams --stats --pokemon <名>    # 该宝可梦在全量队伍中的道具/特性/招式/性格占比
-teams --teammates <名>          # 该宝可梦在全量队伍中的队友共现排行（前 12）
+meta [--top N] [--online]                    # 当前环境使用率总排行（默认前 20）
+meta <name> [--online]                       # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
+meta --teams [--top N] [--online]            # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
+meta --teams <N>                             # 第 N 支队伍的完整配置（道具/特性/招式/性格）
+meta --teams --pokemon <名> [--top N]        # 全量检索：当前窗口哪些队伍用了这只宝可梦
+meta --teams --player <名>                   # 按选手名检索其全部队伍
+meta --teams --tournament <名>               # 按赛事名检索（可与 --pokemon 组合）
+meta --teams --stats [--placing-max N] [--tournament <名>]  # 全量队伍出现率排行（前 20；可加子集条件）
+meta --teams --stats --pokemon <名>          # 该宝可梦在全量队伍中的道具/特性/招式/性格占比
+meta --teams --teammates <名>                # 该宝可梦在全量队伍中的队友共现排行（前 12）
+meta --source <tournament|ladder>            # 数据源类型：tournament=赛事数据（默认），ladder=天梯数据（预留，暂不支持）
 ```
 
-> **数据性质说明**：`usage` / `teams` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口）。`teams` 的全量数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
+> **数据性质说明**：`meta` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），属于**赛事数据**，不是游戏内天梯/排位数据。全量队伍数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
 >
-> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
+> **智能推断规则**：`meta` 不带任何标志时，按位置参数自动推断——纯数字 → 队伍详情；宝可梦名 → 单只使用率详情；空 → 使用率排行。带 `--teams` 强制走队伍查询，带 `--usage` 强制走使用率查询。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
+>
+> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`meta --teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
 
 ### 参数覆盖 JSON 示例
 
@@ -330,7 +333,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ### 5.1 数据来源与版本策略
 
-采用双层数据架构：《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新，361 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`usage` / `teams` 使用独立的 pokecamp.cc 赛事数据层。完整说明见 [`references/mechanics.md`](references/mechanics.md)。
+采用双层数据架构：《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新，361 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`meta` 使用独立的 pokecamp.cc 赛事数据层。完整说明见 [`references/mechanics.md`](references/mechanics.md)。
 
 ### 5.2 能力点数（SP）与努力值（EV）双视图
 

@@ -43,7 +43,7 @@ pokemon-calc/
 │   ├── meta_teams.json   # 近期赛事队伍快照（前 12 支，pokecamp.cc / Limitless 赛事数据）
 │   └── teams_full.json.gz # 全量赛事队伍内置包（当前窗口全部队伍 + 完整明细，gzip 压缩）
 └── scripts/
-    ├── query.py          # 主查询入口（百科 + calc + preset + optimize + usage/teams）
+    ├── query.py          # 主查询入口（百科 + calc + preset + optimize + meta）
     ├── damage.py         # 伤害计算引擎
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
@@ -86,8 +86,9 @@ pokemon-calc/
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
 | `survivability <defender> <attacker_stat> <category> [def_override] [field_override]` | 防御方 攻击方能力值 分类 | 等效威力反查（无加成最大可承受招式威力） | JSON 对象 |
-| `usage [name] [--top N] [--online]` | 宝可梦名（可选） | 环境使用率排行 / 单只宝可梦常用配置与队友（pokecamp.cc 赛事数据） | JSON 对象 |
-| `teams [query] [--top N] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名] [--online]` | 序号或宝可梦名（可选） | 赛事队伍：列表 / 完整配置 / 全量检索（宝可梦/选手/赛事）/ 出现率与子集聚合 / 队友共现（pokecamp.cc 赛事数据，全量索引） | JSON 对象 |
+| `meta [target] [--top N] [--online] [--source tournament\|ladder] [--usage] [--teams] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名]` | 宝可梦名 / 序号（可选） | 统一环境情报：使用率排行 / 单只详情 / 队伍列表 / 全量检索 / 出现率聚合 / 队友共现（pokecamp.cc 赛事数据） | JSON 对象 |
+| `usage [name] [--top N] [--online]` | （deprecated，自动转发到 `meta --usage`） | 环境使用率排行 / 单只详情 | JSON 对象 |
+| `teams [query] [--top N] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名] [--online]` | （deprecated，自动转发到 `meta --teams`） | 赛事队伍查询 | JSON 对象 |
 
 
 #### calc 命令 I/O
@@ -358,17 +359,18 @@ class DamageResult:
 
 ### 6. pokecamp_source.py（环境数据源模块）
 
-`usage` / `teams` 命令的数据访问层，可插拔设计：
+`meta` 命令的数据访问层，可插拔设计（旧命令 `usage` / `teams` 自动转发到 `meta`）：
 
 - **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则 M-B）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
-- **三层数据**：内置快照（`data/usage_stats.json` / `data/meta_teams.json` / `data/teams_full.json.gz`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
+- **三层数据**：内置快照（`data/usage_stats.json` / `data/teams_full.json.gz`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
+- **--source 参数**：`--source tournament`（默认）走 pokecamp.cc 赛事数据；`--source ladder` 预留用于未来接入天梯/排位数据，当前返回友好错误。
 - **蒸馏函数**：`distill_usage_snapshot()` / `distill_teams_snapshot()` / `distill_teams_full()` 同时被构建脚本（`cache/build_usage_stats.py`、`cache/build_teams_pack.py`）和在线模式复用，保证快照与在线结果结构一致；`meta_snapshot_from_pack()` 可从全量包直接派生前 12 支的轻量快照。
-- **在线查询成本**：`usage <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。
+- **在线查询成本**：`meta <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`meta --teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。
 - **爬虫礼仪**：仅在用户显式 `--online` 或维护者刷新快照时发起请求；结果本地缓存；不批量遍历站点；遵守 robots.txt。
 
 ### 7. teams_index.py（全量队伍本地索引）
 
-`teams` 全量查询的本地索引层（纯标准库 `sqlite3`，不 import pokecamp_source）：
+`meta --teams` 全量查询的本地索引层（纯标准库 `sqlite3`，不 import pokecamp_source）：
 
 - **派生自内置包**：`data/teams_full.json.gz`（维护者用 `cache/build_teams_pack.py` 构建，含当前窗口全部队伍与道具/特性/性格/招式明细、EN→ZH 名称映射）。首次全量查询时 `ensure_index()` 自动派生 `data/cache/teams_index.db`（gitignored，约 30 MB，可删可重建）；包内容哈希变化时自动重建。
 - **Schema**：`tournaments` / `teams` / `team_pokemon`（含道具、特性、Mega 前特性、性格、太晶属性）/ `team_pokemon_moves` 四表 + `meta` 表（构建时间、内容哈希、来源、名称映射）。
@@ -389,7 +391,7 @@ class DamageResult:
 | `data/setdex.json` | 189 只 / 264 预设 | `script_res/setdex_ncp-g9.js` | VGC 预设配置（性格、努力值、道具、特性、招式参考） |
 | `data/aliases.json` | 22 条 | 手工维护 | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等） |
 | `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
-| `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍轻量快照：`teams` 无参命令的快速路径与索引兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
+| `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍轻量快照：全量索引不可用时的兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
 | `data/teams_full.json.gz` | 9,250 支 / 150 赛事 | pokecamp.cc（Limitless 赛事统计） | 全量赛事队伍内置包（gzip，约 1.4 MB）：全部队伍 + 道具/特性/性格/招式明细 + EN→ZH 名称映射；首次查询派生本地 SQLite 索引（由 `cache/build_teams_pack.py` 构建，原始数据留存于 gitignored 的 `pokecamp_data/`） |
 
 
@@ -433,7 +435,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 - Python 3.10+
 - 仅使用标准库（`json`, `math`, `pathlib`, `typing`, `dataclasses` 等）
 - 无需 pip/uv 安装任何第三方包
-- 联网说明：默认完全离线。仅 `usage --online` / `teams --online` 使用标准库 `urllib.request` 按需访问 pokecamp.cc（尊重 `HTTP_PROXY`/`HTTPS_PROXY` 环境变量），失败自动回退内置快照
+- 联网说明：默认完全离线。仅 `meta --online`（含旧命令 `usage --online` / `teams --online`）使用标准库 `urllib.request` 按需访问 pokecamp.cc（尊重 `HTTP_PROXY`/`HTTPS_PROXY` 环境变量），失败自动回退内置快照
 
 ---
 
@@ -449,8 +451,9 @@ python cache/test_calc_raw.py
 python cache/test_field_overrides.py
 python cache/test_normalization.py
 python cache/regression_test.py
-python cache/test_usage_stats.py   # usage/teams 环境查询（离线快照 + 在线回退）
-python cache/test_teams_index.py   # 全量队伍索引（建库/筛选/聚合/增量抓取/回退，11 例）
+python cache/test_usage_stats.py   # usage 环境查询（离线快照 + 在线回退）
+python cache/test_teams_index.py   # 全量队伍索引（建库/筛选/聚合/增量抓取/回退，12 例）
+python cache/test_meta_command.py  # meta 统一命令（推断/alias/--source，12 例）
 ```
 
 ---
@@ -458,6 +461,17 @@ python cache/test_teams_index.py   # 全量队伍索引（建库/筛选/聚合/�
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 4.8.04（2026-08-29）
+
+合并 `usage` / `teams` 为统一的 `meta` 命令，消除"天梯 vs 赛事"术语歧义。核心变更：
+
+- **统一入口**：`meta [target] [--top N] [--online] [--source ...] [--usage|--teams] [--pokemon/--player/--tournament/--stats/--teammates ...]`。不带标志时按位置参数智能推断：空 → 使用率排行，宝可梦名 → 单只详情，纯数字 → 队伍详情。`--usage` / `--teams` 可强制指定模式；显式 `--usage` 优先于 `--pokemon` 等过滤标志。`--top` 缺省按模式取值（使用率 20 / 队伍列表 12，硬上限 50）。
+- **队伍列表与详情同源**：`meta --teams` 无参列表改走本地 SQLite 索引，与 `meta --teams <N>` 详情共享同一数据源与排序，消除 `--online` 增量更新后"列表编号 vs 详情编号"错位的隐患；轻量快照 `meta_teams.json` 降级为索引不可用时的兜底。旧 `cmd_usage` / `cmd_teams` 函数改为对 `cmd_meta` 的瘦委托包装（保留供既有测试直接调用）。
+- **`--source` 框架**：`--source tournament`（默认）走 pokecamp.cc 赛事数据；`--source ladder` 预留用于未来接入游戏内天梯/排位数据，当前返回友好错误（含 `source_requested` / `source_available` 字段）。数据访问层 `pokecamp_source.py` 的 `SOURCES` 注册表已支持按名称注册新数据源。
+- **向后兼容**：旧命令 `usage` / `teams` 仍可用，自动转发到 `meta` 并向 stderr 输出 deprecation 警告。
+- **术语澄清**：所有文档统一将 pokecamp.cc 数据标注为"赛事数据"（tournament data），明确区分于游戏内天梯/排位数据（ladder data）。
+- **测试**：新增 `cache/test_meta_command.py`（15 例：推断规则、alias 转发、--source 校验、deprecation 警告、默认条数、列表/详情同源一致性），全部通过；回归 36 例、usage 14 例、teams 索引 12 例无破坏。
 
 ### 4.8.02（2026-08-26）
 

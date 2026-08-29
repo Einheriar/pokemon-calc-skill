@@ -29,18 +29,18 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 
 ### Meta Environment (Pokémon Champions Regulation M-B)
 
-The full tournament-team dataset of the rolling 30-day window (9,000+ teams with moves/items/abilities) ships bundled, so every query below works offline out of the box.
+The full tournament-team dataset of the rolling 30-day window (9,000+ teams with moves/items/abilities) ships bundled, so every query below works offline out of the box. All queries go through the unified `meta` command.
 
 | Capability | Example question |
 |------------|------------------|
-| Usage ranking | "Which Pokémon has the highest usage rate right now?" |
-| Per-Pokémon meta detail | "What moves/items does Kingambit run? Who are its common teammates?" |
-| Recent tournament teams | "Show me the latest tournament-winning teams" |
-| Filter teams by Pokémon / player / tournament | "Which teams run Basculegion?" / "Show me all of Sooner's teams" |
-| Appearance stats on subsets | "What's the usage ranking among top-8 teams only?" |
-| Teammate co-occurrence | "Who partners Incineroar most often?" |
+| Usage ranking (`meta`) | "Which Pokémon has the highest usage rate right now?" |
+| Per-Pokémon meta detail (`meta <name>`) | "What moves/items does Kingambit run? Who are its common teammates?" |
+| Recent tournament teams (`meta --teams`) | "Show me the latest tournament-winning teams" |
+| Filter teams by Pokémon / player / tournament (`meta --teams --pokemon/--player/--tournament`) | "Which teams run Basculegion?" / "Show me all of Sooner's teams" |
+| Appearance stats on subsets (`meta --teams --stats`) | "What's the usage ranking among top-8 teams only?" |
+| Teammate co-occurrence (`meta --teams --teammates`) | "Who partners Incineroar most often?" |
 
-> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). Bundled data works offline; `--online` fetches fresh data incrementally on explicit request.
+> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). This is **tournament data**, not in-game ladder/ranked data. Bundled data works offline; `--online` fetches fresh data incrementally on explicit request. Legacy `usage` / `teams` commands still work as deprecated aliases.
 
 ### Damage Calculation & Optimization
 
@@ -405,7 +405,7 @@ If you want to integrate this engine into your own LLM application, refer to:
 - **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
 - ***Pokémon Champions* (M-B Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
 - **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
-- **Meta Environment Data (usage / tournament teams)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats) — with thanks
+- **Meta Environment Data (`meta` command)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats) — with thanks
 
 > **Crawling policy**: access to pokecamp.cc is restrained and on-demand, not bulk scraping — requests are made only when a user explicitly asks for fresh data (`--online`) or a maintainer periodically refreshes the bundled snapshot; results are always cached locally, no site-wide traversal, and robots.txt is respected. If the pokecamp.cc team has any concerns, please open an Issue and we will adjust promptly.
 
