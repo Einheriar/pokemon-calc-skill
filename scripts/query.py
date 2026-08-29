@@ -2666,28 +2666,49 @@ def cmd_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, 
     return cmd_meta(target=name, top=top, online=online, usage=True)
 
 
+_LADDER_SOURCE_ALIASES = {"ladder": "ingame", "ingame": "ingame", "showdown": "showdown"}
+
+
 def cmd_meta(target: str = "", top: int | None = None, online: bool = False,
-             source: str = "tournament",
+             source: str = "tournament", battle_format: str = "doubles",
              usage: bool = False, teams: bool = False,
              pokemon: str = "", player: str = "", stats: bool = False,
              teammates: str = "", placing_max: int | None = None,
              tournament: str = "") -> dict[str, Any]:
-    """Unified meta-environment query: usage stats + tournament teams.
+    """Unified meta-environment query: usage stats + tournament teams + ladder.
 
-    Routes to usage or teams handlers based on explicit flags or target
-    inference. The --source flag is reserved for future ladder data;
-    currently only "tournament" (pokecamp.cc / Limitless) is supported.
-    ``top`` is resolved per mode when omitted: 20 for usage queries,
-    12 for team lists.
+    Routes to usage / teams / ladder handlers based on --source, explicit
+    flags, or target inference. Sources: "tournament" (default, pokecamp.cc /
+    Limitless public tournament data), "ladder"/"ingame" (official in-game
+    ranked rankings, rank-only), "showdown" (Showdown ladder monthly report).
+    ``battle_format`` ("singles"/"doubles", default "doubles") only applies to
+    ladder sources. ``top`` is resolved per mode when omitted: 20 for
+    usage/ladder queries, 12 for team lists.
     """
-    # ---- source validation (reserved for future ladder) ------------------
+    # ---- source validation & ladder routing --------------------------------
     if source != "tournament":
-        return {
-            "error": f"Meta source '{source}' is not yet supported. "
-                     "Currently only 'tournament' (pokecamp.cc / Limitless "
-                     "public tournament data) is available.",
-            "meta": {"source_requested": source, "source_available": "tournament"},
-        }
+        kind = _LADDER_SOURCE_ALIASES.get(source)
+        if kind is None:
+            return {
+                "error": f"Unknown meta source '{source}'. Available: "
+                         "'tournament' (pokecamp.cc / Limitless public tournament "
+                         "data), 'ladder'/'ingame' (official in-game ranked data), "
+                         "'showdown' (Showdown ladder monthly report).",
+                "meta": {"source_requested": source,
+                         "source_available": ["tournament", "ladder", "ingame", "showdown"]},
+            }
+        if teams or stats or teammates or player or tournament:
+            return {
+                "error": "Ladder data has no tournament teams concept; team queries "
+                         "(--teams/--stats/--teammates/--player/--tournament) only "
+                         "work with --source tournament. "
+                         "天梯数据没有赛事队伍概念，队伍查询请用 --source tournament。",
+                "meta": {"source_requested": source, "source_available": "tournament"},
+            }
+        if top is None:
+            top = 20
+        return _cmd_meta_ladder(name=pokemon or target, top=top, online=online,
+                                source_kind=kind, battle_format=battle_format)
 
     # ---- mode resolution: explicit flags first, then inference ------------
     if teams or stats or teammates or player or tournament:
@@ -2757,6 +2778,110 @@ def _cmd_meta_usage(name: str = "", top: int = 20, online: bool = False) -> dict
 
     result: dict[str, Any] = {"meta": meta}
     result.update(entry)
+    return result
+
+
+def _cmd_meta_ladder(name: str = "", top: int = 20, online: bool = False,
+                     source_kind: str = "ingame",
+                     battle_format: str = "doubles") -> dict[str, Any]:
+    """Ladder handler for cmd_meta (ingame official ranked / showdown monthly).
+
+    ingame list data is rank-only (no usage % or win rate is published), so
+    the ranking output is a pure rank table. Single-pokemon queries are
+    enriched online with real-percentage build detail (moves/items/abilities/
+    natures/spreads) from the next-data detail route.
+    """
+    if battle_format not in ("singles", "doubles"):
+        battle_format = "doubles"
+    data = pcs.get_ladder_data(DATA_DIR, source_kind, online=online)
+    meta = dict(data.get("meta") or {})
+    meta["battle_format"] = battle_format
+    meta["format_note"] = (
+        "当前显示双打排行，加 --format singles 查看单打"
+        if battle_format == "doubles" else
+        "当前显示单打排行，加 --format doubles 查看双打")
+    plist = data.get("pokemon", [])
+    rank_key = f"{battle_format}_rank"
+    pct_key = f"{battle_format}_usage_percent"
+
+    def _rank(e: dict[str, Any]) -> int:
+        return e.get(rank_key) or 99999
+
+    if not name:
+        ordered = sorted(plist, key=_rank)[:top]
+        ranking = []
+        for e in ordered:
+            row: dict[str, Any] = {
+                "rank": e.get(rank_key),
+                "name_zh": e.get("name_zh"),
+                "name_en": e.get("name_en"),
+            }
+            if source_kind == "ingame":
+                if e.get("includes_mega"):
+                    row["includes_mega"] = True
+            else:
+                row["usage_percent"] = e.get(pct_key)
+                if e.get("is_mega"):
+                    row["is_mega"] = True
+            ranking.append(row)
+        return {"meta": meta, "ladder_top": ranking}
+
+    entry = None
+    if name.isdigit():
+        # Bare number under a ladder source = "who is rank N" (reverse lookup).
+        n = int(name)
+        entry = next((e for e in plist if e.get(rank_key) == n), None)
+        if entry is None:
+            return {
+                "error": f"No pokemon at {battle_format} rank {n} in ladder data "
+                         f"(source {source_kind}).",
+                "meta": meta,
+            }
+    else:
+        entry = _find_usage_entry(plist, name)
+    if not entry:
+        candidates = [e.get("name_zh", "") for e in plist] + [e.get("name_en", "") for e in plist]
+        suggestions = get_suggestions(name, candidates, n=3)
+        err: dict[str, Any] = {
+            "error": f"Pokemon '{name}' not found in ladder data "
+                     f"(source {source_kind}, regulation {meta.get('regulation')}).",
+            "meta": meta,
+        }
+        if suggestions:
+            err["suggestions"] = suggestions
+        return err
+
+    result: dict[str, Any] = {"meta": meta}
+    if name.isdigit():
+        result["rank_query"] = int(name)
+    out_entry: dict[str, Any] = {
+        "id": entry.get("id"),
+        "identifier": entry.get("identifier"),
+        "name_zh": entry.get("name_zh"),
+        "name_en": entry.get("name_en"),
+        "singles_rank": entry.get("singles_rank"),
+        "doubles_rank": entry.get("doubles_rank"),
+    }
+    if source_kind == "ingame":
+        out_entry["includes_mega"] = bool(entry.get("includes_mega"))
+        out_entry["rank_only"] = True
+    else:
+        out_entry["singles_usage_percent"] = entry.get("singles_usage_percent")
+        out_entry["doubles_usage_percent"] = entry.get("doubles_usage_percent")
+        if entry.get("is_mega"):
+            out_entry["is_mega"] = True
+    result.update(out_entry)
+
+    if online:
+        detail = pcs.get_ladder_entry_detail(DATA_DIR, entry.get("id"),
+                                             battle_format=battle_format,
+                                             source_kind=source_kind,
+                                             online=True)
+        if detail:
+            result.update(detail)
+    else:
+        result["detail_note"] = ("单只配招/道具/性格/努力详情需加 --online 获取 "
+                                 "(build detail requires --online)")
     return result
 
 
@@ -3045,7 +3170,8 @@ def main() -> int:
         meta_parser.add_argument("target", nargs="?", default="", help="Pokemon name for usage detail, or team number with --teams")
         meta_parser.add_argument("--top", type=int, default=None, help="Max rows / ranking entries (default: 20 for usage, 12 for teams; hard cap 50)")
         meta_parser.add_argument("--online", action="store_true", help="Fetch fresh data from pokecamp.cc (cached; falls back to snapshot)")
-        meta_parser.add_argument("--source", default="tournament", help="Data source type: tournament (default) or ladder (reserved for future)")
+        meta_parser.add_argument("--source", default="tournament", help="Data source: tournament (default, Limitless public events) | ladder/ingame (official in-game ranked, rank-only) | showdown (Showdown ladder monthly)")
+        meta_parser.add_argument("--format", dest="battle_format", default="doubles", choices=["singles", "doubles"], help="Battle format for ladder sources (default: doubles; ignored for tournament)")
         meta_parser.add_argument("--usage", action="store_true", help="Query usage stats (default when no target or target is a pokemon name)")
         meta_parser.add_argument("--teams", action="store_true", help="Query tournament teams")
         meta_parser.add_argument("--pokemon", default="", help="Filter teams using this pokemon (with --teams)")
@@ -3148,6 +3274,7 @@ def main() -> int:
                     top=args.top,
                     online=args.online,
                     source=args.source,
+                    battle_format=args.battle_format,
                     usage=args.usage,
                     teams=args.teams,
                     pokemon=args.pokemon,

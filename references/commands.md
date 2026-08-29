@@ -5,12 +5,13 @@
 ## meta 命令说明
 
 ```bash
-python scripts/query.py meta [target] [--top N] [--online] [--source tournament|ladder]
+python scripts/query.py meta [target] [--top N] [--online] [--source tournament|ladder|ingame|showdown]
+                           [--format singles|doubles]
                            [--usage] [--teams] [--pokemon 名] [--player 名]
                            [--tournament 名] [--stats [--placing-max N]] [--teammates 名]
 ```
 
-统一的环境情报查询入口，数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口）。
+统一的环境情报查询入口。默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口）；`--source ladder` / `showdown` 接入天梯数据（见下文「--source 参数」）。
 
 ### 智能推断规则
 
@@ -20,7 +21,7 @@ python scripts/query.py meta [target] [--top N] [--online] [--source tournament|
 |----------|---------|---------|
 | 空 | 使用率排行 | `meta --usage` |
 | 宝可梦名（中/英/别名） | 单只宝可梦使用率详情 | `meta --usage <名>` |
-| 纯数字 N | 第 N 支队伍详情 | `meta --teams <N>` |
+| 纯数字 N | 第 N 支队伍详情（天梯源下则为"天梯第 N 名是谁"的名次反查） | `meta --teams <N>` / `meta --source ladder <N>` |
 
 带 `--teams` 强制走队伍查询模式，带 `--usage` 强制走使用率查询模式。两者同时给出时 `--teams` 优先；显式 `--usage` 优先于 `--pokemon` 等过滤标志（此时 `--pokemon <名>` 的值作为使用率详情的查询对象，等价于 `meta <名>`）。`--top` 缺省按模式取值：使用率查询默认 20，队伍列表默认 12（硬上限 50）。
 
@@ -64,15 +65,25 @@ python scripts/query.py meta --teams --teammates <名>                  # 队友
 
 ```bash
 python scripts/query.py meta --source tournament   # 默认：赛事数据（pokecamp.cc / Limitless）
-python scripts/query.py meta --source ladder       # 预留：天梯/排位数据（暂不支持，返回友好错误）
+python scripts/query.py meta --source ladder       # 官方实机排位（等价 ingame，日更，仅名次）
+python scripts/query.py meta --source showdown     # Showdown 天梯月报（含使用率，滞后一个月）
 ```
 
-- `tournament`（默认）：pokecamp.cc 聚合的 Limitless 公开赛事统计。
-- `ladder`：预留用于未来接入游戏内天梯/排位数据，当前调用返回错误提示。
+| 源 | 性质 | 时效 | 使用率 | 单只详情 | 队伍查询 |
+|---|---|---|---|---|---|
+| `tournament`（默认） | Limitless 公开赛事统计 | 滚动 30 天，日更 | ✅ 含胜率 | ✅（`--online` 更全） | ✅ |
+| `ladder` / `ingame` | Pokémon Champions 官方实机排位 | 最新赛制，约 1~3 天 | ❌ **仅名次**（`rank_only: true`） | ✅ 配招/道具/特性/性格/努力为真实百分比（**需 `--online`**），队友仅名次 | ❌ |
+| `showdown` | Showdown 天梯月报（cutoff 1760） | 月更，滞后一个月 | ✅ 无胜率 | ✅（**需 `--online`**） | ❌ |
+
+- 天梯源用 `--format singles|doubles` 切换单打/双打排行（默认 `doubles`，输出 `meta.format_note` 会注明当前赛制与切换方法）；对 tournament 源无效（limitless 仅双打）。
+- 天梯源数据锁定最新赛制（当前 M-B），不随赛事 regulation 变化。
+- 天梯总榜为纯名次/使用率表；ingame 的名次按物种计（Mega 形态并入基础形态，行内 `includes_mega: true` 标注），showdown 的 Mega 形态为 Smogon 独立统计口径、保持分行。
+- 天梯源与 `--teams`/`--stats`/`--teammates`/`--player`/`--tournament` 组合会返回友好错误（天梯没有赛事队伍概念）。
+- `--online`：天梯总榜每次抓取约 230 KB（24 小时节流，复用缓存）；单只天梯详情约 127 KB（gzip），按宝可梦缓存 24 小时，失败回退缓存/内置快照（`meta.online_error` 会给出失败原因）。
 
 ### meta 字段
 
-所有返回值含 `meta` 字段：`origin`（snapshot/cache/online）、`date_range`（数据窗口）、`tournament_count` / `team_count`（样本量）。回答时必须引用 `date_range` 说明数据时效。
+所有返回值含 `meta` 字段：`origin`（snapshot/cache/online）、`date_range`（数据窗口）、`tournament_count` / `team_count`（样本量）。回答时必须引用 `date_range` 说明数据时效。天梯源额外含 `source_kind`（ingame/showdown）、`battle_format`（singles/doubles）、`format_note`（当前赛制提醒）；ingame 含 `rank_only: true`、`season`、`data_version`，showdown 含 `month`、`cutoff`、`raw_count`。
 
 ### 旧命令兼容
 
@@ -96,8 +107,28 @@ python scripts/query.py meta --teams --stats --placing-max 8  # 前八队伍的�
 python scripts/query.py meta --teams --stats --pokemon 烈咬陆鲨  # 烈咬陆鲨的道具/特性/招式占比
 python scripts/query.py meta --teams --teammates 炽焰咆哮虎     # 炽焰咆哮虎的常见队友
 python scripts/query.py meta 仆刀将军 --online                # 强制拉取最新数据
-python scripts/query.py meta --source ladder                  # 预留：天梯数据（当前返回错误）
+python scripts/query.py meta --source ladder                  # 官方实机排位名次榜（双打，前 20）
+python scripts/query.py meta --source ladder --format singles # 官方实机排位单打名次榜
+python scripts/query.py meta --source ladder 仆刀将军 --online  # 仆刀将军官方天梯配招/道具/性格/努力
+python scripts/query.py meta --source showdown                # Showdown 天梯使用率月报（滞后一个月）
+python scripts/query.py meta --source showdown 仆刀将军 --online  # Showdown 月报口径的单只详情
 ```
+
+### 双查模式（LLM 意图路由，非 CLI 参数）
+
+用户问"怎么配招 / 谁最热门"且不指明来源时，默认**连发两条查询**，天梯为主、赛事为辅，回答分【官方天梯】【赛事】两节组织：
+
+```bash
+# "仆刀将军怎么配招？"
+python scripts/query.py meta --source ladder 仆刀将军          # 天梯名次（--online 时含天梯配招）
+python scripts/query.py meta 仆刀将军                          # 赛事使用率/胜率/配招
+
+# "现在环境里谁最热门？"
+python scripts/query.py meta --source ladder                   # 天梯名次榜
+python scripts/query.py meta                                   # 赛事使用率榜
+```
+
+用户显式说"比赛/赛事"时只查 tournament，显式说"天梯/排位"时只查 ladder。离线双查时天梯侧只有名次（单只天梯配招需 `--online`）。
 
 ## filter-pokemon 命令说明
 

@@ -25,8 +25,10 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -114,6 +116,38 @@ class PokecampSource:
 
     def fetch_team_details(self, tournament_id: str) -> dict[str, Any]:
         return self.fetch_json(self.team_details_path(tournament_id))
+
+    # -- ladder endpoints (ingame / showdown) -----------------------------
+
+    def pokemon_page_path(self, source_kind: str) -> str:
+        """Per-source usage list: pokemon-page/{ingame|showdown|limitless}.json"""
+        return self._regulation_path(f"pokemon-page/{source_kind}.json")
+
+    def fetch_pokemon_page(self, source_kind: str) -> dict[str, Any]:
+        return self.fetch_json(self.pokemon_page_path(source_kind))
+
+    def fetch_text(self, path: str, timeout: int = 60) -> str:
+        """Fetch a non-JSON document (e.g. the page HTML for build-id discovery)."""
+        req = urllib.request.Request(
+            self.url(path),
+            headers={
+                "User-Agent": "pokemon-calc-skill (on-demand meta query; +https://github.com/)",
+                "Accept": "text/html,*/*",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.read().decode("utf-8", errors="replace")
+
+    def next_data_detail_path(self, build_id: str, pokemon_id: int) -> str:
+        """Next.js data route carrying detailBySource for all three sources.
+
+        ~1.34 MB raw / ~127 KB gzip per pokemon (mostly page furniture); always
+        fetch with gzip and cache per pokemon.
+        """
+        return f"/_next/data/{build_id}/{self.locale}/champions/pokemon/{pokemon_id}.json"
+
+    def fetch_next_data_detail(self, pokemon_id: int, build_id: str) -> dict[str, Any]:
+        return self.fetch_json(self.next_data_detail_path(build_id, pokemon_id))
 
 
 SOURCES: dict[str, type[PokecampSource]] = {"pokecamp": PokecampSource}
@@ -792,3 +826,330 @@ def get_teams_data(data_dir: Path, online: bool = False, top: int = 12,
         if snap is None:
             raise
         return _with_provenance(snap, "snapshot", online_error=e)
+
+
+# ---------------------------------------------------------------------------
+# Ladder sources (ingame = official ranked, showdown = Showdown monthly)
+#
+# Both are single lightweight JSON lists (~230 KB) on the same static host —
+# no teams concept, no index/SQLite needed. The ingame list is rank-only:
+# usagePercent/teamCount/winRate are placeholder constants (0/1/null) that
+# pokecamp fills to keep one record shape across sources; they are dropped at
+# distill time so downstream never sees fake numbers. Mega forms are merged
+# into their base species for ingame (the official ranking is per-species and
+# pokecamp expands it into identical-rank rows); showdown keeps mega rows
+# separate because Smogon counts them independently.
+# ---------------------------------------------------------------------------
+
+LADDER_REGULATION = "m-b"  # ladder data is published for the latest regulation only
+LADDER_SOURCE_KINDS = ("ingame", "showdown")
+LADDER_DISPLAY_NAMES = {
+    "ingame": "pokecamp.cc（Pokémon Champions 官方实机排位数据）",
+    "showdown": "pokecamp.cc（Pokémon Showdown 天梯月报）",
+}
+LADDER_SNAPSHOT_FILES = {"ingame": "ladder_ingame.json",
+                         "showdown": "ladder_showdown.json"}
+LADDER_CACHE_FILES = {"ingame": "ladder_ingame_online.json",
+                      "showdown": "ladder_showdown_online.json"}
+
+#: Ladder online queries within this window reuse the local cache without any
+#: network request (official ranked data refreshes every 1-3 days, showdown
+#: monthly, so 24h is already tighter than upstream).
+LADDER_ONLINE_MIN_INTERVAL_SEC = 24 * 3600
+
+_BUILD_ID_CACHE = "pokecamp_build_id.txt"
+_BUILD_ID_RE = re.compile(r"/_next/static/([^/\"']+)/_buildManifest\.js")
+
+
+def _ladder_source(source: PokecampSource | None) -> PokecampSource:
+    """Ladder data lives under the latest regulation, not the default one."""
+    if source is not None:
+        return source
+    return PokecampSource(regulation=LADDER_REGULATION)
+
+
+def _cache_fresh(payload: dict[str, Any] | None,
+                 max_age_sec: float = LADDER_ONLINE_MIN_INTERVAL_SEC) -> bool:
+    if not payload:
+        return False
+    fetched = _parse_iso_utc(str((payload.get("meta") or {}).get("fetched_at") or ""))
+    return fetched is not None and (time.time() - fetched) < max_age_sec
+
+
+def distill_ladder_page(source_kind: str, page: dict[str, Any],
+                        fetched_at: str) -> dict[str, Any]:
+    """Distill a pokemon-page/{kind}.json list into the ladder snapshot doc."""
+    meta_in = page.get("meta") or {}
+    plist = page.get("pokemonList") or []
+    meta: dict[str, Any] = {
+        "source": LADDER_DISPLAY_NAMES[source_kind],
+        "source_kind": source_kind,
+        "source_url": f"https://pokecamp.cc/zh/champions/pokemon",
+        "regulation": LADDER_REGULATION,
+        "format": meta_in.get("format"),
+        "date_range": meta_in.get("dateRange"),
+        "generated_at": meta_in.get("generatedAt"),
+        "fetched_at": fetched_at,
+        "rank_only": source_kind == "ingame",
+    }
+    if source_kind == "ingame":
+        meta["season"] = meta_in.get("sourceSeason")
+        meta["data_version"] = meta_in.get("dataVersion")
+    else:
+        meta["month"] = meta_in.get("month")
+        meta["cutoff"] = meta_in.get("cutoff")
+        meta["raw_count"] = meta_in.get("rawCount")
+
+    pokemon: list[dict[str, Any]] = []
+    if source_kind == "ingame":
+        # Merge mega rows into their base species (same speciesIdentifier,
+        # identical ranks by construction).
+        merged: dict[str, dict[str, Any]] = {}
+        for rec in plist:
+            u = rec.get("usage") or {}
+            sp = rec.get("speciesIdentifier") or rec.get("identifier") or ""
+            cur = merged.get(sp)
+            if cur is None or (cur.get("_is_mega") and not rec.get("isMega")):
+                merged[sp] = {
+                    "id": rec.get("id"),
+                    "identifier": rec.get("identifier"),
+                    "name_zh": rec.get("displayName") or rec.get("nameZh") or "",
+                    "name_en": rec.get("nameEn") or "",
+                    "singles_rank": u.get("singlesRank") or None,
+                    "doubles_rank": u.get("doublesRank") or None,
+                    "includes_mega": False,
+                    "_is_mega": bool(rec.get("isMega")),
+                }
+                if cur is not None:
+                    merged[sp]["includes_mega"] = True
+            else:
+                cur["includes_mega"] = True
+        pokemon = list(merged.values())
+        for e in pokemon:
+            e.pop("_is_mega", None)
+            # A species seen only as a mega row is not "base + mega".
+            if e["identifier"] and "-mega" in str(e["identifier"]):
+                e["includes_mega"] = False
+    else:
+        for rec in plist:
+            u = rec.get("usage") or {}
+            pokemon.append({
+                "id": rec.get("id"),
+                "identifier": rec.get("identifier"),
+                "name_zh": rec.get("displayName") or rec.get("nameZh") or "",
+                "name_en": rec.get("nameEn") or "",
+                "singles_rank": u.get("singlesRank") or None,
+                "doubles_rank": u.get("doublesRank") or None,
+                "singles_usage_percent": u.get("singlesUsagePercent") or 0,
+                "doubles_usage_percent": u.get("doublesUsagePercent") or 0,
+                "is_mega": bool(rec.get("isMega")),
+            })
+
+    rank_key = "doubles_rank"
+    pokemon.sort(key=lambda e: e.get(rank_key) or 99999)
+    return {"meta": meta, "pokemon": pokemon}
+
+
+def get_ladder_data(data_dir: Path, source_kind: str, online: bool = False,
+                    source: PokecampSource | None = None) -> dict[str, Any]:
+    """Load a ladder usage dataset (ingame / showdown).
+
+    offline: bundled snapshot ladder_{kind}.json.
+    online: throttled — a cache younger than LADDER_ONLINE_MIN_INTERVAL_SEC is
+    returned as-is; otherwise fetch pokemon-page/{kind}.json (~230 KB), distill
+    and cache. Fallback chain on network failure: online cache -> snapshot.
+    """
+    if source_kind not in LADDER_SOURCE_KINDS:
+        raise ValueError(f"Unknown ladder source: {source_kind!r} "
+                         f"(available: {list(LADDER_SOURCE_KINDS)})")
+
+    def _snap() -> dict[str, Any] | None:
+        path = data_dir / LADDER_SNAPSHOT_FILES[source_kind]
+        return _read_json_file(path) if path.exists() else None
+
+    if not online:
+        snap = _snap()
+        if snap is None:
+            raise FileNotFoundError(
+                f"{LADDER_SNAPSHOT_FILES[source_kind]} snapshot is missing")
+        return _with_provenance(snap, "snapshot")
+
+    source = _ladder_source(source)
+    cached = _read_cache(data_dir, LADDER_CACHE_FILES[source_kind])
+    if _cache_fresh(cached):
+        cached = _with_provenance(cached, "cache")
+        cached["meta"]["note"] = (
+            f"ladder data was fetched at {cached['meta'].get('fetched_at')} "
+            "(less than 24h ago); skipped re-download")
+        return cached
+    try:
+        page = source.fetch_pokemon_page(source_kind)
+        data = distill_ladder_page(source_kind, page, fetched_at=_now_iso())
+        _write_cache(data_dir, LADDER_CACHE_FILES[source_kind], data)
+        return _with_provenance(data, "online")
+    except Exception as e:
+        if cached is not None:
+            return _with_provenance(cached, "cache", online_error=e)
+        snap = _snap()
+        if snap is None:
+            raise
+        return _with_provenance(snap, "snapshot", online_error=e)
+
+
+# -- ladder single-pokemon detail (Next.js data route, all sources in one) ---
+
+
+def _discover_build_id(source: PokecampSource) -> str:
+    html = source.fetch_text(f"/{source.locale}/champions/pokemon")
+    m = _BUILD_ID_RE.search(html)
+    if not m:
+        raise RuntimeError("could not extract pokecamp build id from page HTML")
+    return m.group(1)
+
+
+def _get_build_id(data_dir: Path, source: PokecampSource,
+                  refresh: bool = False) -> str:
+    cache_path = data_dir / "cache" / _BUILD_ID_CACHE
+    if not refresh and cache_path.exists():
+        cached = cache_path.read_text(encoding="utf-8").strip()
+        if cached:
+            return cached
+    build_id = _discover_build_id(source)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(build_id, encoding="utf-8")
+    return build_id
+
+
+def _fetch_next_data(data_dir: Path, source: PokecampSource,
+                     pokemon_id: int) -> dict[str, Any]:
+    """Fetch the next-data detail; on 404 rediscover the build id once and retry."""
+    try:
+        return source.fetch_next_data_detail(pokemon_id, _get_build_id(data_dir, source))
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            raise
+        return source.fetch_next_data_detail(
+            pokemon_id, _get_build_id(data_dir, source, refresh=True))
+
+
+def _detail_name_maps(mb: dict[str, Any]) -> dict[str, dict[str, str]]:
+    """Build en->zh maps from the pageProps-level item/ability/move maps."""
+    maps: dict[str, dict[str, str]] = {"item": {}, "ability": {}, "move": {}, "teammate": {}}
+    for kind, key in (("item", "itemMap"), ("ability", "abilityMap"), ("move", "moveMap")):
+        for en, info in (mb.get(key) or {}).items():
+            zh = (info or {}).get("localName") or (info or {}).get("nameZh")
+            if zh:
+                maps[kind][en] = zh
+    # teammateMap keys are a mix of zh display names and identifiers
+    for key, info in (mb.get("teammateMap") or {}).items():
+        zh = (info or {}).get("displayName")
+        if zh:
+            maps["teammate"][key] = zh
+    return maps
+
+
+def _teammate_zh(name: str, tmap: dict[str, str]) -> str:
+    if name in tmap:
+        return tmap[name]
+    key = name.lower().replace(" ", "-").replace(".", "").replace("'", "")
+    return tmap.get(key, name)
+
+
+def _pct_entries(rows: list[dict[str, Any]], name_map: dict[str, str],
+                 limit: int) -> list[dict[str, Any]]:
+    """[{name, percentage}] -> distilled rows with zh translation."""
+    out = []
+    for row in (rows or [])[:limit]:
+        en = row.get("name", "")
+        out.append({"name_en": en, "name_zh": name_map.get(en, en),
+                    "percentage": row.get("percentage", 0)})
+    return out
+
+
+def distill_ladder_detail(page_props: dict[str, Any], source_kind: str,
+                          battle_format: str = "doubles") -> dict[str, Any]:
+    """Distill one pokemon's ladder detail from a next-data pageProps payload.
+
+    ingame:   detailBySource.ingame.inGameReferenceByFormat[format]
+              (real percentages for moves/items/abilities/natures/spreads;
+              teammates are rank-only)
+    showdown: detailBySource.showdown.smogonReferenceByFormat[format]
+    """
+    reg_key = LADDER_REGULATION.upper()
+    mb = ((page_props.get("dataByRegulation") or {}).get(reg_key)) or {}
+    dbs = mb.get("detailBySource") or {}
+    maps = _detail_name_maps(mb)
+    if source_kind == "ingame":
+        src = ((dbs.get("ingame") or {}).get("inGameReferenceByFormat") or {})
+    else:
+        src = ((dbs.get("showdown") or {}).get("smogonReferenceByFormat") or {})
+    rec = src.get(battle_format) or src.get("doubles") or {}
+    if not rec:
+        return {}
+
+    entry: dict[str, Any] = {
+        "detail_format": rec.get("format") or battle_format,
+        "abilities": _pct_entries(rec.get("abilities"), maps["ability"], 8),
+        "items": _pct_entries(rec.get("items"), maps["item"], 8),
+        "moves": _pct_entries(rec.get("moves"), maps["move"], 12),
+        "natures": [{"name_en": r.get("name", ""), "name_zh": nature_zh(r.get("name", "")),
+                     "percentage": r.get("percentage", 0)}
+                    for r in (rec.get("natures") or [])[:8]],
+        "spreads": [{
+            "nature_en": s.get("nature", "") or "",
+            "nature_zh": nature_zh(s.get("nature", "") or ""),
+            "hp": s.get("hp", 0), "attack": s.get("attack", 0),
+            "defense": s.get("defense", 0), "special_attack": s.get("specialAttack", 0),
+            "special_defense": s.get("specialDefense", 0), "speed": s.get("speed", 0),
+            "percentage": s.get("percentage", 0),
+        } for s in (rec.get("spreads") or [])[:8]],
+    }
+    teammates = []
+    for r in (rec.get("teammates") or [])[:12]:
+        en = r.get("name", "")
+        t: dict[str, Any] = {"name_en": en, "name_zh": _teammate_zh(en, maps["teammate"])}
+        if source_kind == "ingame":
+            t["rank"] = r.get("rank")  # official ranked data: teammates are rank-only
+        else:
+            t["percentage"] = r.get("percentage", 0)
+        teammates.append(t)
+    entry["teammates"] = teammates
+    if source_kind == "ingame":
+        entry["ladder_season"] = rec.get("season")
+    else:
+        entry["ladder_month"] = rec.get("month")
+        entry["ladder_cutoff"] = rec.get("cutoff")
+    return entry
+
+
+def get_ladder_entry_detail(data_dir: Path, pokemon_id: int,
+                            battle_format: str = "doubles",
+                            source_kind: str = "ingame",
+                            online: bool = False,
+                            source: PokecampSource | None = None
+                            ) -> dict[str, Any] | None:
+    """Fetch + distill one pokemon's ladder detail (online only).
+
+    One ~127 KB gzip request per pokemon, cached for 24h; the cached payload
+    covers both formats and both ladder sources.
+    """
+    if not online or pokemon_id is None:
+        return None
+    source = _ladder_source(source)
+    cache_file = f"ladder_detail_{pokemon_id}.json"
+    cached = _read_cache(data_dir, cache_file)
+    raw = None
+    if cached and _cache_fresh(cached):
+        raw = cached.get("payload")
+    if raw is None:
+        try:
+            raw = _fetch_next_data(data_dir, source, pokemon_id)
+            _write_cache(data_dir, cache_file,
+                         {"meta": {"fetched_at": _now_iso()},
+                          "payload": (raw or {}).get("pageProps") or {}})
+            raw = (raw or {}).get("pageProps") or {}
+        except Exception:
+            raw = (cached or {}).get("payload")
+    if not raw:
+        return None
+    return distill_ladder_detail(raw, source_kind, battle_format)

@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.8.04
+version: 4.8.09
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -62,7 +62,7 @@ compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <le
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
 survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（详见 references/commands.md）
 
-# Phase 3 — 环境情报查询（pokecamp.cc / Limitless 赛事数据，详见 references/commands.md）
+# Phase 3 — 环境情报查询（pokecamp.cc 赛事 + 天梯数据，详见 references/commands.md）
 meta [--top N] [--online]                    # 当前环境使用率总排行（默认前 20）
 meta <name> [--online]                       # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
 meta --teams [--top N] [--online]            # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
@@ -73,12 +73,23 @@ meta --teams --tournament <名>               # 按赛事名检索（可与 --po
 meta --teams --stats [--placing-max N] [--tournament <名>]  # 全量队伍出现率排行（前 20；可加子集条件）
 meta --teams --stats --pokemon <名>          # 该宝可梦在全量队伍中的道具/特性/招式/性格占比
 meta --teams --teammates <名>                # 该宝可梦在全量队伍中的队友共现排行（前 12）
-meta --source <tournament|ladder>            # 数据源类型：tournament=赛事数据（默认），ladder=天梯数据（预留，暂不支持）
+meta --source ladder [--format singles|doubles] [--top N] [--online]   # 官方实机排位名次（日更；仅有名次，无使用率/胜率）
+meta --source ladder <name> [--format ...] --online                    # 该宝可梦官方天梯配招/道具/特性/性格/努力（真实百分比，需 --online）
+meta --source showdown [--format ...]        # Showdown 天梯月报（含使用率，滞后一个月）
+meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛事（默认），ladder/ingame=官方排位，showdown=Showdown 天梯
 ```
 
-> **数据性质说明**：`meta` 的环境数据来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），属于**赛事数据**，不是游戏内天梯/排位数据。全量队伍数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
+> **数据性质说明**：`meta` 默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），属于**赛事数据**。`--source ladder`（等价 `ingame`）为 Pokémon Champions **官方实机排位**数据（最新赛制，约 1~3 天更新）：总榜**只有名次**（`rank_only: true`，官方不公布使用率/胜率），单只详情的配招/道具/特性/性格/努力分配为真实百分比（需 `--online`）；`--source showdown` 为 Showdown 天梯月报（含使用率，`meta.month` 注明月份，滞后一个月）。天梯源用 `--format singles|doubles` 切换单/双打（默认双打，输出 `meta.format_note` 会注明），不支持 `--teams` 等队伍查询。全量队伍数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
 >
-> **智能推断规则**：`meta` 不带任何标志时，按位置参数自动推断——纯数字 → 队伍详情；宝可梦名 → 单只使用率详情；空 → 使用率排行。带 `--teams` 强制走队伍查询，带 `--usage` 强制走使用率查询。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
+> **智能推断规则**：`meta` 不带任何标志时，按位置参数自动推断——纯数字 → 队伍详情（天梯源下为"第 N 名是谁"的名次反查）；宝可梦名 → 单只使用率详情；空 → 使用率排行。带 `--teams` 强制走队伍查询，带 `--usage` 强制走使用率查询。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
+>
+> **意图路由（默认双查，天梯为主、赛事为辅）**：用户问环境类问题且不指明来源时，**默认同时发两条查询**——天梯（`--source ladder`）为主、赛事（默认源）为辅，回答按【官方天梯】【赛事】分门别类组织：
+> - "某宝可梦怎么配招 / 带什么道具" → `meta --source ladder <名>` + `meta <名>`（用户要求最新时各加 `--online`）
+> - "环境里谁最热门 / 现在谁最强 / 大家都用什么" → `meta --source ladder` + `meta`
+> - "天梯/排位第 N 名是谁" → `meta --source ladder <N>`（名次反查）
+> - 用户**显式**说"比赛/赛事" → 只查 tournament（`meta` / `meta --teams` 系列）；显式说"天梯/排位" → 只查 ladder
+> - 需要天梯的**使用率数字**时改用 `--source showdown`（ladder 总榜只有名次），并注明 `meta.month` 滞后一个月
+> - 离线双查时天梯侧只有名次（单只天梯配招需 `--online`），话术注明"天梯配招需在线查询"；赛事侧配招离线齐全
 >
 > **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`meta --teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
 

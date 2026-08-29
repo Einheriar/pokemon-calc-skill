@@ -39,8 +39,11 @@ The full tournament-team dataset of the rolling 30-day window (9,000+ teams with
 | Filter teams by Pokémon / player / tournament (`meta --teams --pokemon/--player/--tournament`) | "Which teams run Basculegion?" / "Show me all of Sooner's teams" |
 | Appearance stats on subsets (`meta --teams --stats`) | "What's the usage ranking among top-8 teams only?" |
 | Teammate co-occurrence (`meta --teams --teammates`) | "Who partners Incineroar most often?" |
+| Official ranked ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What's the official in-game ranked leaderboard right now?" (rank-only) |
+| Ladder build detail (`meta --source ladder <name> --online`) | "What are Kingambit's top 4 moves on the official ladder?" |
+| Showdown ladder monthly report (`meta --source showdown`) | "Showdown usage stats with percentages?" (one month behind) |
 
-> Meta data comes from [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, rolling 30-day window). This is **tournament data**, not in-game ladder/ranked data. Bundled data works offline; `--online` fetches fresh data incrementally on explicit request. Legacy `usage` / `teams` commands still work as deprecated aliases.
+> Meta data comes from [pokecamp.cc](https://pokecamp.cc): the default source is Limitless public tournament stats (rolling 30-day window); `--source ladder`/`ingame` is **official in-game ranked data** (latest regulation, refreshed every 1–3 days, rank-only at the leaderboard level; per-Pokémon builds carry real percentages and require `--online`); `--source showdown` is the Showdown ladder monthly report (`meta.month` marks the month). Ladder sources support `--format singles|doubles` (default doubles) and have no team queries. Bundled data works offline; `--online` fetches fresh data incrementally on explicit request. Legacy `usage` / `teams` commands still work as deprecated aliases.
 
 ### Damage Calculation & Optimization
 

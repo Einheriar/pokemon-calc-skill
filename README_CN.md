@@ -39,8 +39,11 @@
 | 按宝可梦/选手/赛事筛队伍（`meta --teams --pokemon/--player/--tournament`） | "有哪些队伍带了幽尾玄鱼？" / "Sooner 最近都用什么队伍？" |
 | 子集出现率统计（`meta --teams --stats`） | "只看打进前八的队伍，谁最热门？" |
 | 队友共现（`meta --teams --teammates`） | "炽焰咆哮虎最常和谁组队？" |
+| 官方实机排位名次（`meta --source ladder [--format singles\|doubles]`） | "现在天梯排位榜上谁最强？"（仅名次） |
+| 天梯单只配招（`meta --source ladder <名> --online`） | "仆刀将军天梯最常带的 4 个招式是什么？" |
+| Showdown 天梯月报（`meta --source showdown`） | "Showdown 上天梯使用率是多少？"（滞后一个月） |
 
-> 环境数据来自 [pokecamp.cc](https://pokecamp.cc) 聚合的 Limitless 公开赛事统计（滚动 30 天），属于**赛事数据**，不是游戏内天梯/排位数据。内置数据离线可查，`--online` 可按需增量拉取最新数据。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
+> 环境数据来自 [pokecamp.cc](https://pokecamp.cc)：默认源为 Limitless 公开赛事统计（滚动 30 天），属于**赛事数据**；`--source ladder`/`ingame` 为**官方实机排位数据**（最新赛制，约 1~3 天更新，总榜仅名次；单只配招/道具/性格/努力为真实百分比，需 `--online`）；`--source showdown` 为 Showdown 天梯月报（`meta.month` 注明月份）。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍查询。内置数据离线可查，`--online` 可按需增量拉取最新数据。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
 
 ### 伤害计算与优化
 
