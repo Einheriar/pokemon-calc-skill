@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.8.09
+version: 4.8.15
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -167,7 +167,10 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 - `damage_range` / `damage_rolls` 为**单次打击**（多段招式）；`total_damage_range` / `total_damage_rolls` 为**多段合计**，判断秒杀时引用后者
 - `type_effectiveness` 反映**实际生效属性**经过属性相克后的原始倍率（已包含 Ate/Ize 特性、气象球、大地波动等导致的类型转换；如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
-- `attacker_auto_preset` / `defender_auto_preset`：当用户未指定配置或只给出部分配置（如性格、某项努力值）时，引擎自动从 setdex 匹配最相似的预设，用其 **evs / nature / ivs** 补全未指定字段；若用户完全未指定配置，还会同时采用该预设的 **特性**。道具**不参与**自动兜底。若该宝可梦不在 setdex 中（共 189 只），值为 `null`。回答中若该字段非 null，声明："未指定努力值按 VGC 热门预设 `{preset_name}` 补全"
+- `attacker_auto_preset` / `defender_auto_preset`：当用户未指定配置或只给出部分配置（如性格、道具、特性）时，引擎自动从 setdex 匹配预设，用其 **evs / nature / ivs** 补全未指定字段；若用户完全未指定配置，还会同时采用该预设的 **特性**。**形态永不切换**——问水箭龟就是水箭龟。若该宝可梦不在 setdex 中（共 207 只），值为 `null`。回答中若该字段非 null，声明："未指定努力值按热门预设 `{preset_name}` 补全"。
+- **部分指定努力值时不套预设**：override 中出现任一努力类字段（`evs` / `sps` / `raw_stats` / `stats`）时，预设完全跳过——用户给的分配就是完整分配，未指定项 = 0 努力、无修正性格。例："32 HP 能力点数的咆哮虎" 就是 HP32/其余 0，不补其余耐久。回答中无需声明预设假设。
+- `attacker_auto_item` / `defender_auto_item`：auto-preset 命中且预设道具为**纯增伤道具**（生命宝珠/讲究头带/讲究眼镜/达人带/力量头带/博识眼镜）时自动套用并在回答开头声明："假设携带 `{item}`（来自热门配置）"；其余道具（文柚果、披带、树果等判定触发类）一律不兜底，保持无道具基线。用户显式指定的道具永远优先。
+- 预设优先级：天梯热门套（`天梯双打热门配置`，官方实机排位双打 Top50 提炼）优先于旧 VGC 预设参与 auto 匹配；旧预设仍可经 `preset <名> <套名>` 显式引用。
 
 ### optimize 返回值关键字段
 
@@ -394,6 +397,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
    `- 能力点数：[推断值]`
    `- 道具：[推断值]`
    `若实际配置不同，伤害结果可能有变化。`
+   若 auto-preset 自动套用了增伤道具（`attacker_auto_item` 非 null），在声明中注明："道具 {item} 来自热门配置假设，实际配置不同则结果有变化"。
 
 避免：省略对战环境声明 / 省略数据来源声明 / 笼统写"使用了默认配置"而不列出具体参数 / 将推断参数作为绝对事实陈述。
 

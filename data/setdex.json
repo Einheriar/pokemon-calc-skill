@@ -40,6 +40,29 @@
         "U-turn"
       ],
       "tera_type": "Ghost"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Protean",
+      "item": "Choice Scarf",
+      "moves": [
+        "Flower Trick",
+        "Triple Axel",
+        "Knock Off",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 48,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Skeledirge": {
@@ -253,6 +276,29 @@
         "Protect"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Gale Wings",
+      "item": "Sharp Beak",
+      "moves": [
+        "Tailwind",
+        "Flare Blitz",
+        "Protect",
+        "Dual Wingbeat"
+      ],
+      "priority": 1,
+      "usage_pct": 51.7,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Pawmot": {
@@ -350,6 +396,29 @@
         "Iron Head"
       ],
       "tera_type": "Fire"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 36,
+        "sp_attack": 0,
+        "sp_defense": 204,
+        "speed": 20
+      },
+      "nature": "Impish",
+      "ability": "Mirror Armor",
+      "item": "Leftovers",
+      "moves": [
+        "Brave Bird",
+        "Tailwind",
+        "Iron Head",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 22.7,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Azumarill": {
@@ -528,6 +597,29 @@
         "Trick Room"
       ],
       "tera_type": "Grass"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级沙奈朵",
+      "item": "Gardevoirite",
+      "moves": [
+        "Hyper Voice",
+        "Protect",
+        "Psychic",
+        "Psyshock"
+      ],
+      "priority": 1,
+      "usage_pct": 29.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Gallade": {
@@ -582,6 +674,29 @@
         "Haze"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "form_name": "超级耿鬼",
+      "item": "Gengarite",
+      "moves": [
+        "Shadow Ball",
+        "Protect",
+        "Sludge Bomb",
+        "Perish Song"
+      ],
+      "priority": 1,
+      "usage_pct": 25.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Maushold": {
@@ -625,6 +740,29 @@
         "Protect",
         "Tidy Up"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Friend Guard",
+      "item": "Wide Lens",
+      "moves": [
+        "Follow Me",
+        "Protect",
+        "Population Bomb",
+        "Super Fang"
+      ],
+      "priority": 1,
+      "usage_pct": 28.8,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Maushold-Four": {
@@ -691,6 +829,29 @@
         "Helping Hand"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "form_name": "超级雷丘Ｙ",
+      "item": "Raichunite Y",
+      "moves": [
+        "Zap Cannon",
+        "Focus Blast",
+        "Fake Out",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 32.4,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Dachsbun": {
@@ -760,6 +921,29 @@
         "Tera Blast"
       ],
       "tera_type": "Rock"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Queenly Majesty",
+      "item": "Wide Lens",
+      "moves": [
+        "Triple Axel",
+        "Protect",
+        "Power Whip",
+        "Trop Kick"
+      ],
+      "priority": 1,
+      "usage_pct": 28.7,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Arboliva": {
@@ -890,6 +1074,29 @@
         "Close Combat"
       ],
       "tera_type": "Ghost"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "form_name": "超级姆克鹰",
+      "item": "Staraptite",
+      "moves": [
+        "Close Combat",
+        "Protect",
+        "Brave Bird",
+        "Roost"
+      ],
+      "priority": 1,
+      "usage_pct": 16.2,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Oricorio-Sensu": {
@@ -1132,6 +1339,29 @@
         "Stomping Tantrum"
       ],
       "tera_type": "Ground"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Rough Skin",
+      "item": "Life Orb",
+      "moves": [
+        "Rock Slide",
+        "Earthquake",
+        "Dragon Claw",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 38.5,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Garganacl": {
@@ -1236,6 +1466,29 @@
         "Hydro Pump"
       ],
       "tera_type": "Grass"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "ability": "Drizzle",
+      "item": "Focus Sash",
+      "moves": [
+        "Hurricane",
+        "Tailwind",
+        "Weather Ball",
+        "Wide Guard"
+      ],
+      "priority": 1,
+      "usage_pct": 24.5,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Gyarados": {
@@ -1394,6 +1647,29 @@
         "Earth Power",
         "Protect"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 12,
+        "speed": 0
+      },
+      "nature": "Quiet",
+      "ability": "Drought",
+      "item": "Charcoal",
+      "moves": [
+        "Eruption",
+        "Protect",
+        "Weather Ball",
+        "Heat Wave"
+      ],
+      "priority": 1,
+      "usage_pct": 42.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Bronzong": {
@@ -1468,6 +1744,29 @@
         "Protect"
       ],
       "tera_type": "Fire"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Leftovers",
+      "moves": [
+        "Rage Fist",
+        "Protect",
+        "Drain Punch",
+        "Bulk Up"
+      ],
+      "priority": 1,
+      "usage_pct": 20.2,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Armarouge": {
@@ -1680,6 +1979,29 @@
         "Protect"
       ],
       "tera_type": "Fire"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 100,
+        "attack": 0,
+        "defense": 172,
+        "sp_attack": 180,
+        "sp_defense": 0,
+        "speed": 60
+      },
+      "nature": "Modest",
+      "ability": "Pixilate",
+      "item": "Fairy Feather",
+      "moves": [
+        "Hyper Voice",
+        "Quick Attack",
+        "Hyper Beam",
+        "Detect"
+      ],
+      "priority": 1,
+      "usage_pct": 11.4,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Dudunsparce": {
@@ -1801,6 +2123,29 @@
         "Helping Hand",
         "Trick Room"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 228,
+        "attack": 0,
+        "defense": 164,
+        "sp_attack": 0,
+        "sp_defense": 124,
+        "speed": 0
+      },
+      "nature": "Bold",
+      "ability": "Armor Tail",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Trick Room",
+        "Psychic",
+        "Helping Hand",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 14.2,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Toxtricity": {
@@ -2003,6 +2348,30 @@
         "Snarl"
       ],
       "tera_type": "Fairy"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "form_name": "洗翠风速狗",
+      "ability": "Rock Head",
+      "item": "Focus Sash",
+      "moves": [
+        "Flare Blitz",
+        "Head Smash",
+        "Extreme Speed",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 68.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Tauros-Paldea-Blaze": {
@@ -2482,6 +2851,29 @@
         "Pollen Puff",
         "Spicy Extract"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 148,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 0
+      },
+      "nature": "Bold",
+      "form_name": "超级狠辣椒",
+      "item": "Scovillainite",
+      "moves": [
+        "Rage Powder",
+        "Protect",
+        "Giga Drain",
+        "Overheat"
+      ],
+      "priority": 1,
+      "usage_pct": 18.5,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Rabsca": {
@@ -2557,6 +2949,29 @@
         "U-turn"
       ],
       "tera_type": "Steel"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 236,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 20,
+        "speed": 4
+      },
+      "nature": "Adamant",
+      "ability": "Technician",
+      "item": "Life Orb",
+      "moves": [
+        "Bullet Punch",
+        "Protect",
+        "Bug Bite",
+        "Swords Dance"
+      ],
+      "priority": 1,
+      "usage_pct": 19.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Espathra": {
@@ -2865,6 +3280,29 @@
         "Taunt"
       ],
       "tera_type": "Ghost"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 148,
+        "sp_attack": 0,
+        "sp_defense": 116,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Prankster",
+      "item": "Light Clay",
+      "moves": [
+        "Parting Shot",
+        "Light Screen",
+        "Reflect",
+        "Spirit Break"
+      ],
+      "priority": 1,
+      "usage_pct": 16.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Bombirdier": {
@@ -3007,6 +3445,29 @@
         "Will-O-Wisp"
       ],
       "tera_type": "Poison"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 68,
+        "sp_attack": 0,
+        "sp_defense": 196,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Prankster",
+      "item": "Roseli Berry",
+      "moves": [
+        "Encore",
+        "Rain Dance",
+        "Light Screen",
+        "Will-O-Wisp"
+      ],
+      "priority": 1,
+      "usage_pct": 22.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Avalugg": {
@@ -3173,6 +3634,29 @@
         "Sludge Wave"
       ],
       "tera_type": "Grass"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 4,
+        "attack": 0,
+        "defense": 4,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "ability": "Toxic Debris",
+      "item": "Focus Sash",
+      "moves": [
+        "Power Gem",
+        "Spiky Shield",
+        "Earth Power",
+        "Sludge Bomb"
+      ],
+      "priority": 1,
+      "usage_pct": 30.8,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Rotom-Wash": {
@@ -3383,6 +3867,30 @@
         "Protect"
       ],
       "tera_type": "Ghost"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "form_name": "超级班基拉斯",
+      "ability": "Sand Stream",
+      "item": "Tyranitarite",
+      "moves": [
+        "Rock Slide",
+        "Knock Off",
+        "Protect",
+        "Ice Punch"
+      ],
+      "priority": 1,
+      "usage_pct": 25.4,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Slowbro": {
@@ -3593,6 +4101,30 @@
         "Tera Blast"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级快龙",
+      "ability": "Multiscale",
+      "item": "Dragoninite",
+      "moves": [
+        "Protect",
+        "Dragon Pulse",
+        "Extreme Speed",
+        "Tailwind"
+      ],
+      "priority": 1,
+      "usage_pct": 42.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Abomasnow": {
@@ -3743,6 +4275,29 @@
         "Tera Blast"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Chople Berry",
+      "moves": [
+        "Sucker Punch",
+        "Kowtow Cleave",
+        "Iron Head",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 14.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Hydreigon": {
@@ -4758,6 +5313,29 @@
         "Protect"
       ],
       "tera_type": "Steel"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "ability": "Good as Gold",
+      "item": "Life Orb",
+      "moves": [
+        "Shadow Ball",
+        "Make It Rain",
+        "Protect",
+        "Nasty Plot"
+      ],
+      "priority": 1,
+      "usage_pct": 25.2,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Wo-Chien": {
@@ -5280,6 +5858,29 @@
         "Phantom Force",
         "Aqua Jet"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Adaptability",
+      "item": "Choice Scarf",
+      "moves": [
+        "Last Respects",
+        "Aqua Jet",
+        "Wave Crash",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 32.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Sneasler": {
@@ -5302,6 +5903,29 @@
         "Fake Out"
       ],
       "tera_type": "Flying"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "ability": "Unburden",
+      "item": "White Herb",
+      "moves": [
+        "Close Combat",
+        "Fake Out",
+        "Dire Claw",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 52.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Carbink": {
@@ -5362,6 +5986,29 @@
         "Air Slash",
         "Solar Beam"
       ]
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级喷火龙Ｙ",
+      "item": "Charizardite Y",
+      "moves": [
+        "Protect",
+        "Heat Wave",
+        "Solar Beam",
+        "Weather Ball"
+      ],
+      "priority": 1,
+      "usage_pct": 24.6,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Typhlosion": {
@@ -6363,6 +7010,29 @@
         "Helping Hand"
       ],
       "tera_type": "Grass"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 244,
+        "attack": 0,
+        "defense": 180,
+        "sp_attack": 0,
+        "sp_defense": 92,
+        "speed": 0
+      },
+      "nature": "Calm",
+      "ability": "Drizzle",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Protect",
+        "Weather Ball",
+        "Perish Song",
+        "Ice Beam"
+      ],
+      "priority": 1,
+      "usage_pct": 19.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Mamoswine": {
@@ -6416,6 +7086,29 @@
         "Trick Room"
       ],
       "tera_type": "Water"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 28,
+        "sp_attack": 0,
+        "sp_defense": 236,
+        "speed": 0
+      },
+      "nature": "Bold",
+      "ability": "Hospitality",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Matcha Gotcha",
+        "Rage Powder",
+        "Trick Room",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 16.4,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Kommo-o": {
@@ -6468,6 +7161,29 @@
         "Protect"
       ],
       "tera_type": "Steel"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "ability": "Soundproof",
+      "item": "Life Orb",
+      "moves": [
+        "Clanging Scales",
+        "Aura Sphere",
+        "Protect",
+        "Vacuum Wave"
+      ],
+      "priority": 1,
+      "usage_pct": 24,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Weezing": {
@@ -6584,6 +7300,29 @@
         "Hydro Pump"
       ],
       "tera_type": "Dragon"
+    },
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 156,
+        "attack": 0,
+        "defense": 156,
+        "sp_attack": 28,
+        "sp_defense": 60,
+        "speed": 108
+      },
+      "nature": "Calm",
+      "ability": "Competitive",
+      "item": "Leftovers",
+      "moves": [
+        "Scald",
+        "Protect",
+        "Ice Beam",
+        "Icy Wind"
+      ],
+      "priority": 1,
+      "usage_pct": 9.8,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   },
   "Okidogi": {
@@ -6861,6 +7600,460 @@
         "Vacuum Wave"
       ],
       "tera_type": "Water"
+    }
+  },
+  "Whimsicott": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "ability": "Prankster",
+      "item": "Focus Sash",
+      "moves": [
+        "Tailwind",
+        "Moonblast",
+        "Encore",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 47.8,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Incineroar": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 108,
+        "sp_attack": 0,
+        "sp_defense": 156,
+        "speed": 0
+      },
+      "nature": "Careful",
+      "ability": "Intimidate",
+      "item": "Sitrus Berry",
+      "moves": [
+        "Fake Out",
+        "Parting Shot",
+        "Flare Blitz",
+        "Darkest Lariat"
+      ],
+      "priority": 1,
+      "usage_pct": 8.4,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Archaludon": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "ability": "Stamina",
+      "item": "Leftovers",
+      "moves": [
+        "Electro Shot",
+        "Flash Cannon",
+        "Protect",
+        "Dragon Pulse"
+      ],
+      "priority": 1,
+      "usage_pct": 5.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Aerodactyl": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Jolly",
+      "form_name": "超级化石翼龙",
+      "item": "Aerodactylite",
+      "moves": [
+        "Rock Slide",
+        "Tailwind",
+        "Dual Wingbeat",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 40.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Venusaur": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级妙蛙花",
+      "item": "Venusaurite",
+      "moves": [
+        "Sludge Bomb",
+        "Protect",
+        "Earth Power",
+        "Giga Drain"
+      ],
+      "priority": 1,
+      "usage_pct": 33.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Froslass": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级雪妖女",
+      "item": "Froslassite",
+      "moves": [
+        "Blizzard",
+        "Shadow Ball",
+        "Protect",
+        "Aurora Veil"
+      ],
+      "priority": 1,
+      "usage_pct": 25.9,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Delphox": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "form_name": "超级妖火红狐",
+      "item": "Delphoxite",
+      "moves": [
+        "Heat Wave",
+        "Protect",
+        "Psychic",
+        "Nasty Plot"
+      ],
+      "priority": 1,
+      "usage_pct": 23.6,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Swampert": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "form_name": "超级巨沼怪",
+      "item": "Swampertite",
+      "moves": [
+        "Protect",
+        "Wave Crash",
+        "Ice Punch",
+        "Earthquake"
+      ],
+      "priority": 1,
+      "usage_pct": 30,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Blastoise": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "超级水箭龟",
+      "item": "Blastoisinite",
+      "moves": [
+        "Water Spout",
+        "Dark Pulse",
+        "Protect",
+        "Shell Smash"
+      ],
+      "priority": 1,
+      "usage_pct": 22.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Floette": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "永恒之花",
+      "ability": "Flower Veil",
+      "item": "Floettite",
+      "moves": [
+        "Protect",
+        "Dazzling Gleam",
+        "Moonblast",
+        "Light of Ruin"
+      ],
+      "priority": 1,
+      "usage_pct": 26.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Ninetales": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Timid",
+      "form_name": "阿罗拉九尾",
+      "ability": "Snow Warning",
+      "item": "Never-Melt Ice",
+      "moves": [
+        "Blizzard",
+        "Freeze-Dry",
+        "Protect",
+        "Aurora Veil"
+      ],
+      "priority": 1,
+      "usage_pct": 32.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Excadrill": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "ability": "Sand Rush",
+      "item": "Focus Sash",
+      "moves": [
+        "Iron Head",
+        "Protect",
+        "Rock Slide",
+        "High Horsepower"
+      ],
+      "priority": 1,
+      "usage_pct": 49.2,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Metagross": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "form_name": "超级巨金怪",
+      "item": "Metagrossite",
+      "moves": [
+        "Psychic Fangs",
+        "Protect",
+        "Bullet Punch",
+        "Iron Head"
+      ],
+      "priority": 1,
+      "usage_pct": 24.7,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Mawile": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 12,
+        "speed": 0
+      },
+      "nature": "Brave",
+      "form_name": "超级大嘴娃",
+      "item": "Mawilite",
+      "moves": [
+        "Play Rough",
+        "Sucker Punch",
+        "Protect",
+        "Iron Head"
+      ],
+      "priority": 1,
+      "usage_pct": 41.5,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Rotom": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 0,
+        "defense": 0,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Modest",
+      "form_name": "清洗洛托姆",
+      "ability": "Levitate",
+      "item": "Leftovers",
+      "moves": [
+        "Hydro Pump",
+        "Thunderbolt",
+        "Will-O-Wisp",
+        "Protect"
+      ],
+      "priority": 1,
+      "usage_pct": 13.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Kangaskhan": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 252,
+        "defense": 12,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "nature": "Adamant",
+      "form_name": "超级袋兽",
+      "item": "Kangaskhanite",
+      "moves": [
+        "Fake Out",
+        "Double-Edge",
+        "Last Resort",
+        "Sucker Punch"
+      ],
+      "priority": 1,
+      "usage_pct": 26.1,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Primarina": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 252,
+        "attack": 0,
+        "defense": 12,
+        "sp_attack": 252,
+        "sp_defense": 0,
+        "speed": 0
+      },
+      "nature": "Modest",
+      "ability": "Liquid Voice",
+      "item": "Leftovers",
+      "moves": [
+        "Hyper Voice",
+        "Protect",
+        "Moonblast",
+        "Calm Mind"
+      ],
+      "priority": 1,
+      "usage_pct": 18.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
+    }
+  },
+  "Blaziken": {
+    "天梯双打热门配置": {
+      "level": 50,
+      "evs": {
+        "hp": 12,
+        "attack": 252,
+        "defense": 0,
+        "sp_attack": 0,
+        "sp_defense": 0,
+        "speed": 252
+      },
+      "nature": "Adamant",
+      "form_name": "超级火焰鸡",
+      "ability": "Speed Boost",
+      "item": "Blazikenite",
+      "moves": [
+        "Close Combat",
+        "Flare Blitz",
+        "Rock Slide",
+        "Detect"
+      ],
+      "priority": 1,
+      "usage_pct": 53.3,
+      "source": "ladder-ingame-doubles 2026-08-30"
     }
   }
 }

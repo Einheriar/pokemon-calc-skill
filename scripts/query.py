@@ -175,6 +175,7 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
         "is_terastalize", "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "raw_stats", "stats",
+        "form_name",
     }
 
     preset_config = {k: v for k, v in presets[preset_name].items() if k in _VALID_PK_FIELDS}
@@ -183,8 +184,27 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
     return preset_config
 
 
-# Fields allowed for auto-preset fallback (evs/nature/ivs only; item/ability excluded)
+# Fields allowed for auto-preset fallback (evs/nature/ivs only; ability only when
+# the override is completely empty; item only via _AUTO_ITEM_WHITELIST).
+# NOTE: form_name is deliberately NOT auto-filled — asking about 水箭龟 must stay
+# base Blastoise, never silently become 超级水箭龟. A preset's form_name only
+# applies when the user explicitly references that preset.
 _AUTO_PRESET_FIELDS = {"evs", "nature", "ivs"}
+
+# Pure damage-boosting items eligible for auto-preset fill. Judgment/trigger items
+# (Sitrus Berry, Focus Sash, resist berries, Weakness Policy, ...) and non-damage
+# items (Choice Scarf) are excluded on purpose: any auto-filled item is an
+# assumption the answer must declare (calc reports it as attacker_auto_item /
+# defender_auto_item).
+_AUTO_ITEM_WHITELIST = {
+    "Life Orb", "Choice Band", "Choice Specs",
+    "Expert Belt", "Muscle Band", "Wise Glasses",
+}
+
+# Stat-investment inputs. When the user supplies ANY of these, the given values
+# are treated as the complete EV plan: no preset fill (unspecified stats stay at
+# 0 EV / neutral nature), and no auto_preset is reported.
+_EV_SPEC_FIELDS = {"evs", "sps", "raw_stats", "stats"}
 
 
 # Direction scoring thresholds
@@ -284,38 +304,61 @@ def _score_preset(preset_config: dict[str, Any], user_override: dict[str, Any]) 
     return score
 
 
-def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) -> tuple[dict[str, Any], str | None]:
+def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) -> tuple[dict[str, Any], str | None, str | None]:
     """Auto-match best preset from setdex for the given pokemon.
 
-    Only evs/nature/ivs are filled from preset; item/ability/tera_type are excluded.
-    When the user provides no config at all (empty override), the matched preset's
-    ability is also used so the default form ability does not silently override the
+    Preset priority tiers first: only presets at the highest ``priority`` value
+    are candidates (ladder-meta presets carry priority 1; legacy sets default
+    to 0). Within the tier the usual EV/direction scoring picks the winner.
+
+    evs/nature/ivs are filled from the preset; item only when it is in
+    _AUTO_ITEM_WHITELIST (pure damage boosters — reported via the returned
+    auto_item so answers can declare the assumption). The preset's form_name is
+    never auto-applied: the form the user asked about always wins. When the user
+    provides no config at all (empty override), the matched preset's ability is
+    also used so the default form ability does not silently override the
     intended competitive ability.
-    Returns (updated_override, matched_preset_name_or_None).
+
+    If the user provides any stat-investment field (evs/sps/raw_stats/stats), the
+    preset is skipped entirely: partial EV specs mean "exactly these investments",
+    so unspecified stats stay at 0 EV and nature stays neutral.
+
+    Returns (updated_override, matched_preset_name_or_None, auto_item_en_or_None).
     """
     # Skip if user already provided "preset" key (explicit preset takes precedence)
     if "preset" in override:
-        return override, None
+        return override, None, None
+
+    # Partial stat specification = explicit build intent: never merge preset EVs
+    # into it (e.g. "32 HP SP Incineroar" must stay 32 HP / 0 everywhere else).
+    if any(k in _EV_SPEC_FIELDS for k in override):
+        return override, None, None
 
     setdex = _load_setdex()
     if pokemon_en not in setdex:
-        return override, None
+        return override, None, None
 
     presets = setdex[pokemon_en]
     if not presets:
-        return override, None
+        return override, None, None
 
     # For empty overrides, default to the most invested preset (highest total EVs).
     # If the user has specified any build-related field, do not force the preset's ability.
-    _BUILD_FIELDS = {"evs", "nature", "ivs", "ability", "ability_zh", "item", "item_zh",
-                     "tera_type", "is_terastalize", "boosts", "status", "level",
-                     "raw_stats", "stats", "current_hp", "max_hp"}
+    _BUILD_FIELDS = {"evs", "sps", "nature", "ivs", "ability", "ability_zh", "item",
+                     "item_zh", "tera_type", "is_terastalize", "boosts", "status",
+                     "level", "raw_stats", "stats", "current_hp", "max_hp"}
     is_empty_override = not any(k in _BUILD_FIELDS for k in override)
+
+    # Priority tier: only presets at the highest priority compete (newer
+    # ladder-meta sets outrank legacy sets regardless of direction score).
+    top_priority = max(p.get("priority", 0) for p in presets.values())
 
     best_preset_name: str | None = None
     best_score = -1
     best_total_evs = -1
     for preset_name, preset_config in presets.items():
+        if preset_config.get("priority", 0) != top_priority:
+            continue
         score = _score_preset(preset_config, override)
         total_evs = sum(preset_config.get("evs", {}).values())
         # Prefer higher score; tie-break by total EVs for empty overrides, else first
@@ -325,7 +368,7 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
             best_preset_name = preset_name
 
     if best_preset_name is None:
-        return override, None
+        return override, None, None
 
     preset_config = presets[best_preset_name]
     # Fill only missing fields from the allowed whitelist
@@ -343,7 +386,16 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
     if is_empty_override and "ability" not in override and preset_config.get("ability"):
         override["ability"] = preset_config["ability"]
 
-    return override, best_preset_name
+    # Item: auto-fill only whitelisted pure damage boosters; everything else
+    # (recovery berries, sashes, conditional items) keeps the no-item baseline.
+    auto_item: str | None = None
+    preset_item = preset_config.get("item")
+    if preset_item and "item" not in override and "item_zh" not in override \
+            and preset_item in _AUTO_ITEM_WHITELIST:
+        override["item"] = preset_item
+        auto_item = preset_item
+
+    return override, best_preset_name, auto_item
 
 
 def cmd_preset(pokemon_name: str, preset_name: str = "") -> dict[str, Any]:
@@ -377,26 +429,46 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
     patch = patches["pokemon"][stem]
     # Deep copy to avoid mutating original
     merged = json.loads(json.dumps(data))
-    # Merge forms: replace by index order, append if patch has more forms than original
+    # Merge forms BY NAME: the patch (built from champout) carries repo-standard
+    # form names, so name matching is equivalent to the historical index-based
+    # merge while staying correct even if form order ever changes between the
+    # repo data and a future patch rebuild. Unmatched patch forms are appended.
     if "forms" in patch:
         orig_forms = merged.get("forms", [])
-        for i, raw_pform in enumerate(patch["forms"]):
+        forms_by_name: dict[str, int] = {}
+        for idx, f in enumerate(orig_forms):
+            fname = f.get("name", "")
+            if fname and fname not in forms_by_name:
+                forms_by_name[fname] = idx
+        for raw_pform in patch["forms"]:
             pform = json.loads(json.dumps(raw_pform))  # deep copy
             # Normalize abilities from string list to object list
             abilities = pform.get("abilities")
             if isinstance(abilities, list) and abilities and isinstance(abilities[0], str):
                 pform["abilities"] = [{"name": a} for a in abilities]
-            if i < len(orig_forms):
-                orig_forms[i].update(pform)
+            idx = forms_by_name.get(pform.get("name", ""))
+            if idx is not None:
+                orig_forms[idx].update(pform)
             else:
                 orig_forms.append(pform)
         merged["forms"] = orig_forms
-    # Merge stats: replace by index order, append if patch has more stats than original
+    # Merge stats BY LABEL NAME (see forms note above). The reference stats list
+    # is generation-labelled ('一般', '第六世代起', ...), so most Champions
+    # entries are appended rather than updated in place; the consumer
+    # (_make_pokemon_from_data) matches stats by form name first, so appended
+    # form-labelled entries take precedence over the generation ones.
     if "stats" in patch:
         orig_stats = merged.get("stats", [])
-        for i, pstat in enumerate(patch["stats"]):
-            if i < len(orig_stats):
-                orig_stats[i].update(pstat)
+        stats_by_label: dict[str, int] = {}
+        for idx, s in enumerate(orig_stats):
+            lbl = s.get("form", "")
+            if lbl and lbl not in stats_by_label:
+                stats_by_label[lbl] = idx
+        for raw_pstat in patch["stats"]:
+            pstat = json.loads(json.dumps(raw_pstat))  # deep copy
+            idx = stats_by_label.get(pstat.get("form", ""))
+            if idx is not None:
+                orig_stats[idx].update(pstat)
             else:
                 orig_stats.append(pstat)
         merged["stats"] = orig_stats
@@ -1946,17 +2018,19 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
 
     # Auto-match preset for partially specified configs (evs/nature/ivs only)
     if not att_has_explicit_preset:
-        att_override, att_auto_preset = _apply_auto_preset_to_override(
+        att_override, att_auto_preset, att_auto_item = _apply_auto_preset_to_override(
             att_override, att_data.get("name_en", "")
         )
     else:
         att_auto_preset = None
+        att_auto_item = None
     if not def_has_explicit_preset:
-        def_override, def_auto_preset = _apply_auto_preset_to_override(
+        def_override, def_auto_preset, def_auto_item = _apply_auto_preset_to_override(
             def_override, def_data.get("name_en", "")
         )
     else:
         def_auto_preset = None
+        def_auto_item = None
 
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
@@ -2086,8 +2160,12 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     }
     if att_auto_preset:
         response["attacker_auto_preset"] = att_auto_preset
+    if att_auto_item:
+        response["attacker_auto_item"] = _resolve_item_to_zh(att_auto_item) or att_auto_item
     if def_auto_preset:
         response["defender_auto_preset"] = def_auto_preset
+    if def_auto_item:
+        response["defender_auto_item"] = _resolve_item_to_zh(def_auto_item) or def_auto_item
     if attacker_info.get("is_unobtainable") or defender_info.get("is_unobtainable"):
         response["warning"] = "该形态在当前对战环境中不可用，以下结果为理论计算"
     if move.hits > 1:

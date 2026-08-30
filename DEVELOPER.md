@@ -33,11 +33,11 @@ pokemon-calc/
 ├── DEVELOPER.md          # 本文件（技术文档）
 ├── data/
 │   ├── pokemon.json      # 宝可梦百科数据（1025 只）
-│   ├── moves.json        # 招式数据（782 个，含 SV 全世代）
+│   ├── moves.json        # 招式数据（781 个，含 SV 全世代）
 │   ├── abilities.json    # 特性数据
 │   ├── type_chart.json   # 18x18 属性相克表
 │   ├── name_index.json   # 中英文名称索引
-│   ├── setdex.json       # VGC 预设配置（189 只，264 个预设）
+│   ├── setdex.json       # VGC 预设配置（207 只，314 个预设：旧 VGC 预设 + 天梯双打 Top50 热门套）
 │   ├── aliases.json      # 玩家俗称 → 标准名称映射
 │   ├── usage_stats.json  # 环境使用率快照（pokecamp.cc / Limitless 赛事数据）
 │   ├── meta_teams.json   # 近期赛事队伍快照（前 12 支，pokecamp.cc / Limitless 赛事数据）
@@ -151,6 +151,27 @@ pokemon-calc/
   "burn_applied": false
 }
 ```
+
+**auto-preset 自动兜底语义（V4.8.15 起）**
+
+当宝可梦在 setdex 中且 override 未显式指定 `preset` 时，`calc` 自动匹配预设并返回额外字段：
+
+| 字段 | 说明 |
+|------|------|
+| `attacker_auto_preset` / `defender_auto_preset` | 命中的预设名；未命中则不出现 |
+| `attacker_auto_item` / `defender_auto_item` | 预设道具被自动套用时的道具中文名（仅白名单道具，见下）；未套用则不出现 |
+
+选择规则：
+
+1. **优先级分层**：只比较 `priority` 最高的预设层（天梯热门套 `priority: 1`，旧预设缺省 0），层内按 EV/方向相似度打分。
+2. **部分指定努力值 → 完全跳过**：override 含 `evs` / `sps` / `raw_stats` / `stats` 任一字段时不套预设（用户给的分配即完整分配，未指定项 = 0 努力 + 无修正性格）。
+3. **填充范围**：`evs` / `nature` / `ivs`（键级合并，用户值优先）；完全空配置时额外采用预设 `ability`。
+4. **道具白名单**：仅纯增伤道具自动套用（Life Orb、Choice Band、Choice Specs、Expert Belt、Muscle Band、Wise Glasses）并以 `*_auto_item` 上报；判定触发类（文柚果、气势披带、树果等）与不加伤道具（讲究围巾）不兜底。用户显式指定的道具永远优先。
+5. **形态永不切换**：预设中的 `form_name` 不参与 auto 填充（问水箭龟永远是水箭龟）；仅在用户显式引用 `preset` 时生效（如天梯套将 Mega 形态的 `form_name` 带入计算）。
+
+#### preset 命令
+
+setdex 预设条目字段：`level`、`evs`、`nature`、`ability`、`item`、`moves`、`ivs`（可选）及天梯套扩展字段 `priority`（int，auto 匹配分层用）、`usage_pct`（该套依据的天梯最高占比分配使用率）、`source`（数据来源与日期）、`form_name`（天梯特指形态，仅显式引用时生效）。扩展字段为透明度元数据，计算端忽略。
 
 #### optimize 命令 I/O
 
@@ -385,12 +406,13 @@ class DamageResult:
 | 文件 | 条目数 | 来源 | 说明 |
 |------|--------|------|------|
 | `data/pokemon.json` | 1025 | `pokemon-dataset-zh` | 宝可梦百科数据（含 profile、prototype、图鉴、技能池、进化链） |
-| `data/moves.json` | 782 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式 |
-| `data/abilities.json` | ~307 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
+| `data/moves.json` | 781 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式 |
+| `data/abilities.json` | 313 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
 | `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表 |
-| `data/name_index.json` | ~4000 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
-| `data/setdex.json` | 189 只 / 264 预设 | `script_res/setdex_ncp-g9.js` | VGC 预设配置（性格、努力值、道具、特性、招式参考） |
-| `data/aliases.json` | 22 条 | 手工维护 | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等） |
+| `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
+| `data/setdex.json` | 207 只 / 314 预设 | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧 VGC 预设（Reg D/E 时代）+ 50 个天梯热门套 `天梯双打热门配置`（官方实机排位双打 Top50，2026-08-30，`priority: 1`；性格取聚合排行榜首——数据源 spread 行不带性格） |
+| `data/aliases.json` | 118 条 | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等，dex<917 可自动生成） |
+| `data/champions_pokemon_patch.json` 等 4 件 | pokemon 208 / moves 778 / learnset 208 | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions（M-B）补丁层：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、learnset 键与 pokemon 键完全对齐（208/208）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
 | `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
 | `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍轻量快照：全量索引不可用时的兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
 | `data/teams_full.json.gz` | 9,250 支 / 150 赛事 | pokecamp.cc（Limitless 赛事统计） | 全量赛事队伍内置包（gzip，约 1.4 MB）：全部队伍 + 道具/特性/性格/招式明细 + EN→ZH 名称映射；首次查询派生本地 SQLite 索引（由 `cache/build_teams_pack.py` 构建，原始数据留存于 gitignored 的 `pokecamp_data/`） |
@@ -448,6 +470,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 
 ```bash
 python cache/regression_test.py       # Preset / 形态 / setup_moves 等，36 例
+python cache/test_auto_preset_partial_ev.py  # auto-preset 语义（部分努力跳过/优先级/道具白名单/形态稳定，23 例）
 python cache/test_usage_stats.py      # usage 环境查询（离线快照 + 在线回退，14 例）
 python cache/test_teams_index.py      # 全量队伍索引（建库/筛选/聚合/增量抓取/回退，12 例）
 python cache/test_meta_command.py     # meta 统一命令（推断/alias/--source，16 例）
@@ -456,6 +479,8 @@ python cache/test_field_overrides.py  # 场地参数覆盖专项（30 用例）
 python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 ```
 
+数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）。
+
 旧版专项测试已归档于 `cache/archive/`（15 个，仅作历史参考，不再维护）。
 
 ---
@@ -463,6 +488,28 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 4.8.15（2026-08-30）
+
+**champions 补丁名字污染根治**（设计文档：[`../plans/archive/PLAN_champions_name_pollution_fix_2026-08-30[已实施].md`](../plans/archive/PLAN_champions_name_pollution_fix_2026-08-30[已实施].md)）：
+
+- **根因**：`cache/build_champions_patch.py` 把 ROM 文本表 `monsname_syn.json` 的内部出场序号误当图鉴号（图鉴 917 起错位且偏移无规律），造成 15 只跨物种名污染（狠辣椒 forms[0]=米立龙 等）、9 只译名变体、80 处形态名体系差异、23 只 learnset 静默丢失。数值计算从未受影响（stats/types/abilities 来自 `personal.json`，与名字查询无关）。
+- **构建期修复**：物种匹配改纯 pokedex_id（本库 1025 stem 的图鉴号全唯一）；基础形态空名回退用本库 `forms[0].name`；形态名确定性规范化（直接命中 → 去中点 `帕底亚的样子・斗战种` → `X的样子` 前缀式 `阿罗拉雷丘`，`洛托姆的样子` 映射回基础形态）；learnset 循环复用 pokemon 侧匹配结果（`pokedex_id → stem`），learnset patch 185→208 键。无法规范化的纯外观形态按六维数值比对丢弃 48 个（彩粉蝶花纹/花洁夫人花朵/多丽米亚造型/怖思壶/霜奶仙奶香/来悲粗茶），新形态清单为空；6 只物种 patch 写空 forms（键保留以维持 learnset 对齐）。
+- **运行时纵深防御**：`query.py::_apply_champions_pokemon_patch` 的 forms/stats 合并由"按索引位置"改为"按形态名匹配、未命中 append"——本库元数据（category/height/catch_rate/egg_groups）回到正确形态归属，未来 champout 顺序变化不再产生字段错配。
+- **译名变体入 aliases.json**：新增 `cache/gen_rom_name_aliases.py` 自动生成（dex<917 且 ROM 名≠本库名且非另一物种名），+9 条（迭失棺→死神棺、谜拟丘→谜拟Ｑ、多边兽２型→多边兽Ⅱ 等），109→118 条；dex≥917 因索引错位不可反查（数据边界）。
+- **自动化校验**：新增 `cache/check_champions_patch.py`（9 断言：形态名归属/无跨物种名/stats-forms 对齐/learnset 全覆盖/译名别名覆盖/运行时抽查），重建后必跑；构建脚本同时产出 `cache/champions_build_report.json`。4 个旧 patch 备份于 `cache/patch_backup_before_name_fix_2026-08-30/`。
+- **验证**：8 套现行测试全绿 + check_data/check_index 通过；端到端（晶光花显示名/雷丘阿罗拉形态元数据/死神棺别名/狠辣椒 learnset 48 招式/天梯预设命中）全部通过。
+
+**天梯 Top50 预设 + auto-preset 语义修复**（设计文档：[`../plans/archive/PLAN_ladder_presets_2026-08-30[已实施].md`](../plans/archive/PLAN_ladder_presets_2026-08-30[已实施].md)）：
+
+- **auto-preset 部分指定努力值 bug 修复**：override 含 `evs`/`sps`/`raw_stats`/`stats` 任一字段时完全跳过预设——用户给的分配即完整分配，未指定项 = 0 努力 + 无修正性格；`sps` 补进构建字段白名单（此前 `{"sps":{"hp":32}}` 被误判为空配置、连特性都套预设）。
+- **预设优先级**：setdex 条目支持可选 `priority`（int，缺省 0）；auto 匹配先取最高优先级层、层内打分。天梯热门套 `priority: 1` 压过旧 Reg-E 套，旧套保留可显式引用。
+- **增伤道具白名单兜底**：预设道具属白名单（Life Orb / Choice Band / Choice Specs / Expert Belt / Muscle Band / Wise Glasses）时随 auto-preset 套用，返回 `attacker_auto_item` / `defender_auto_item`（中文名）；判定触发类（文柚果/披带/树果）与讲究围巾不兜底；用户显式道具永远优先。
+- **形态永不切换**（用户明确规则）：auto-preset 不消费预设的 `form_name`——问水箭龟永远是水箭龟；`form_name` 仅在显式 `preset` 引用时经 `_apply_preset_to_override` 生效（白名单已含 `form_name`）。
+- **天梯双打 Top50 热门套**：`cache/build_ladder_presets.py` 从官方实机排位双打 Top50（2026-08-30 数据）提炼 50 套 `天梯双打热门配置` 写入 setdex（最高占比努力分配 SP→EV + 性格（spread 行不带性格，回退聚合排行榜首）+ top 特性/道具/前4招式 + `usage_pct`/`source` 元数据），+22 只此前无预设的物种（炽焰咆哮虎、风妖精、铝钢桥龙、妙蛙花、全部 Mega 系等），setdex 189→207 只、264→314 套。Mega 形态经道具反查自动携带 `form_name`（含不规则英文名石的二层匹配），物种合并统计中的基础形态特性经形态特性表校验后丢弃（如喷火龙的 Blaze），引擎回退形态默认特性。合并前原始 setdex 备份于 `cache/setdex_backup_before_ladder_2026-08-30.json`。`--format singles` 可生成单打套 `天梯单打热门配置`（按 `singles_rank` 筛选）。
+- **测试**：新增 `cache/test_auto_preset_partial_ev.py`（23 例），全部现行套件（回归 36 / meta 16 / ladder 23 / teams 12 / usage 14 / field 30 / filter 14）通过。
+
+**文档准确性修正**：README 双语快速上手示例对齐实测值（`[111,132]`/12.5%，旧 `[130,154]/93.8%` 为历史遗留失真）并补 auto-preset 字段说明；本文件与 AGENTS 双语 / PROJECT_STATUS 的现状数据声明对齐实测（~39MB、781 招式、313 特性、name_index ~7500 条、207 只/314 预设、aliases 118 条）。
 
 ### 4.8.09（2026-08-29）
 

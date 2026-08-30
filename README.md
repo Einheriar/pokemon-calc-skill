@@ -71,7 +71,7 @@ Large language models excel at intent recognition and parameter extraction, but 
 
 No database configuration, no external API calls (avoiding network latency and token consumption). Truly out-of-the-box:
 
-- **Embedded Static Data**: ~38 MB of preprocessed JSON data (National Dex #1–1025, 782 moves, abilities, VGC sets, etc.) all bundled inside.
+- **Embedded Static Data**: ~39 MB of preprocessed JSON data (National Dex #1–1025, 781 moves, abilities, VGC sets, etc.) all bundled inside.
 - **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, **no** `pip install` of any kind. Clone and run — ideal as a lightweight submodule for any AI agent project.
 
 ---
@@ -172,12 +172,14 @@ Sample response (excerpt):
 
 ```json
 {
-  "damage_range": [130, 154],
-  "ko_chance": "Approx. 93.8% chance to OHKO",
+  "damage_range": [111, 132],
+  "ko_chance": "12.5% chance to OHKO",
   "type_effectiveness": 1.0,
   "stab_applied": true
 }
 ```
+
+> Note: the example above specifies EVs explicitly, so no preset fallback kicks in. When a config is left unspecified, the engine auto-applies a setdex preset (ladder-meta sets first) and reports it via `attacker_auto_preset` / `defender_auto_preset`; if the preset carries a pure damage-boosting item, it is also applied and reported via `attacker_auto_item` / `defender_auto_item` (declare that assumption in your answer). Once the override contains any stat-investment field (`evs`/`sps`/`raw_stats`/`stats`), presets are skipped entirely.
 
 ### 3. EV / SP Optimization
 
@@ -357,9 +359,9 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 Despite being a low-level engine, it makes no compromises on competitive rule coverage:
 
 - **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* M-B rules (updated 2026-06-24).
-- **VGC Battle Presets**: 264 pre-built sets across 189 Pokémon. When the LLM encounters a query without explicit EVs, it can fall back to a preset.
+- **VGC Battle Presets**: 314 pre-built sets across 207 Pokémon — 264 legacy community sets plus 50 ladder-meta sets distilled from the official in-game doubles Top 50 (auto-preset prefers them; a priority field keeps both tiers, and EV/nature-only fallback never switches forms). When the LLM encounters a query without explicit EVs, it can fall back to a preset.
 - **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
-- **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), lowering the burden on LLM entity extraction.
+- **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), plus ROM translation variants (e.g. "迭失棺" → 死神棺, "霸道熊猫" → 流氓熊猫), lowering the burden on LLM entity extraction.
 
 ---
 
