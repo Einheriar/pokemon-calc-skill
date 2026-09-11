@@ -76,7 +76,7 @@ python scripts/query.py meta --source showdown     # Showdown 天梯月报（含
 | `showdown` | Showdown 天梯月报（cutoff 1760） | 月更，滞后一个月 | ✅ 无胜率 | ✅（**需 `--online`**） | ❌ |
 
 - 天梯源用 `--format singles|doubles` 切换单打/双打排行（默认 `doubles`，输出 `meta.format_note` 会注明当前赛制与切换方法）；对 tournament 源无效（limitless 仅双打）。
-- 天梯源数据锁定最新赛制（当前 M-B），不随赛事 regulation 变化。
+- 天梯源各自锁定其发布的最新赛制（官方实机排位 `ingame` 随新规则即时切换；Showdown 月报可能滞后一个规则），按数据源在规则清单中声明。
 - 天梯总榜为纯名次/使用率表；ingame 的名次按物种计（Mega 形态并入基础形态，行内 `includes_mega: true` 标注），showdown 的 Mega 形态为 Smogon 独立统计口径、保持分行。
 - 天梯源与 `--teams`/`--stats`/`--teammates`/`--player`/`--tournament` 组合会返回友好错误（天梯没有赛事队伍概念）。
 - `--online`：天梯总榜每次抓取约 230 KB（24 小时节流，复用缓存）；单只天梯详情约 127 KB（gzip），按宝可梦缓存 24 小时，失败回退缓存/内置快照（`meta.online_error` 会给出失败原因）。

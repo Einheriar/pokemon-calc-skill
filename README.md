@@ -27,7 +27,7 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 | Pokédex entries | "What does Mew's Pokédex entry say?" |
 | VGC presets | "What are common Charizard VGC sets?" |
 
-### Meta Environment (Pokémon Champions Regulation M-B)
+### Meta Environment (Pokémon Champions Regulation M-C)
 
 The full tournament-team dataset of the rolling 30-day window (9,000+ teams with moves/items/abilities) ships bundled, so every query below works offline out of the box. All queries go through the unified `meta` command.
 
@@ -358,7 +358,7 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 
 Despite being a low-level engine, it makes no compromises on competitive rule coverage:
 
-- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* M-B rules (updated 2026-06-24).
+- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* rules data (currently M-C, champout v1.2.0 / 2026-09-11). Every Champions form is tagged with the regulation that introduced it (M-A/M-B/M-C), so cumulative regulation views stay possible as seasons advance.
 - **VGC Battle Presets**: 314 pre-built sets across 207 Pokémon — 264 legacy community sets plus 50 ladder-meta sets distilled from the official in-game doubles Top 50 (auto-preset prefers them; a priority field keeps both tiers, and EV/nature-only fallback never switches forms). When the LLM encounters a query without explicit EVs, it can fall back to a preset.
 - **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
 - **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), plus ROM translation variants (e.g. "迭失棺" → 死神棺, "霸道熊猫" → 流氓熊猫), lowering the burden on LLM entity extraction.
@@ -408,7 +408,7 @@ If you want to integrate this engine into your own LLM application, refer to:
 ## Data Sources & Credits
 
 - **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
-- ***Pokémon Champions* (M-B Rules) Data**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout)
+- ***Pokémon Champions* Rules Data (currently M-C)**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout) (v1.2.0)
 - **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
 - **Meta Environment Data (`meta` command)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats) — with thanks
 

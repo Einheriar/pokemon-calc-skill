@@ -1624,7 +1624,7 @@
     "name_en": "Slash",
     "type": "一般",
     "category": "物理",
-    "power": "70",
+    "power": "80",
     "accuracy": "100",
     "pp": "20 （最大 32）",
     "makes_contact": true
@@ -2726,7 +2726,7 @@
     "category": "变化",
     "power": "0",
     "accuracy": "101",
-    "pp": "12 （最大 19）",
+    "pp": "8 （最大 12）",
     "makes_contact": false
   },
   "借助": {
@@ -5856,7 +5856,7 @@
     "category": "变化",
     "power": "0",
     "accuracy": "100",
-    "pp": "12 （最大 19）",
+    "pp": "8 （最大 12）",
     "makes_contact": false
   },
   "日光刃": {
@@ -6594,7 +6594,7 @@
     "name_en": "Meteor Assault",
     "type": "格斗",
     "category": "物理",
-    "power": "150",
+    "power": "170",
     "accuracy": "100",
     "pp": "8 （最大 12）",
     "makes_contact": false

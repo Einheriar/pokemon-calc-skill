@@ -27,7 +27,7 @@
 | 查询图鉴描述 | "梦幻在各代图鉴里怎么描述的？" |
 | 查询热门配置 | "喷火龙有什么常用的 VGC 配置？" |
 
-### 环境情报（《宝可梦冠军》M-B 规则）
+### 环境情报（《宝可梦冠军》M-C 规则）
 
 滚动 30 天窗口的**全量赛事队伍**（9,000+ 支，含招式/道具/特性明细）已随仓库内置，以下查询全部开箱即用、无需联网。所有环境查询统一走 `meta` 命令。
 
@@ -356,7 +356,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 虽然是一个底层引擎，但在宝可梦对战的规则支持上毫不妥协：
 
-- **全图鉴与双层数据架构**：支持 1~1025 号宝可梦的所有形态（含 Mega、原始回归、地区形态）。底层整合 Gen9（朱紫）官方数据与《宝可梦冠军》M-B 规则（2026-06-24 更新）。
+- **全图鉴与双层数据架构**：支持 1~1025 号宝可梦的所有形态（含 Mega、原始回归、地区形态）。底层整合 Gen9（朱紫）官方数据与《宝可梦冠军》规则数据（当前 M-C，champout v1.2.0 / 2026-09-11）。每个 Champions 形态带"引入规则"标签（M-A/M-B/M-C），随赛季推进仍支持按规则累积查看。
 - **VGC 实战预设**：内置 207 只宝可梦共 314 个对战预设配置——264 个社区旧预设 + 50 个官方实机双打天梯 Top50 提炼的热门套（auto-preset 优先命中天梯套，priority 字段分层共存；部分指定努力值时不套预设，形态永不自动切换）。LLM 遇到未明确指定努力值的查询时，可直接调用预设。
 - **努力值逆向优化 (EV Optimizer)**：不仅能算伤害，还能"反推"努力值。自动搜索满足"确一 (OHKO)"或"确二生存"目标的最低努力值配置。
 - **人类语言容错 (Normalize 层)**：内置"老喷"、"命玉"、"抗斗果"等玩家俗称与官方标准译名的自动映射，另覆盖 ROM 官方译名变体（如"迭失棺"→死神棺、"霸道熊猫"→流氓熊猫），降低 LLM 实体提取的难度。
@@ -406,7 +406,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 ## 数据来源与致谢
 
 - **1~9 世代宝可梦百科数据**：爬虫数据来自 [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
-- **《宝可梦冠军》(Pokémon Champions) 数据**：游戏 ROM 抓取与解析来自 [projectpokemon/champout](https://github.com/projectpokemon/champout)（M-B 规则，2026-06-24 更新）
+- **《宝可梦冠军》(Pokémon Champions) 规则数据（当前 M-C）**：游戏 ROM 抓取与解析来自 [projectpokemon/champout](https://github.com/projectpokemon/champout)（v1.2.0）
 - **VGC 伤害计算器前端逻辑**：基于 [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) 的 JavaScript 引擎移植与重构
 - **环境情报数据（使用率 / 赛事队伍）**：来自 [pokecamp.cc](https://pokecamp.cc)（数据源于 Limitless 公开赛事统计），特此致谢
 

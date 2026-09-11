@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "current": "M-C",
+  "note": "Single source of truth for Champions regulation identity, ordering and per-source publication. Data records carry the regulation string as identity; ordering lives only here. Add new regulations by appending an entry with a higher 'order' (gaps of 10 leave room to insert).",
+  "regulations": [
+    { "id": "M-A", "order": 10 },
+    { "id": "M-B", "order": 20 },
+    { "id": "M-C", "order": 30 }
+  ],
+  "sources": {
+    "tournament": "M-C",
+    "ingame": "M-C",
+    "showdown": "M-B"
+  }
+}

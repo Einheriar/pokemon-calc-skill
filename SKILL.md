@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.8.15
+version: 4.9.0
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -10,7 +10,7 @@ description: >
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
   (6) 当前赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
-  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。
+  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-C 规则（champout v1.2.0，2026-09-11）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。数据层按规则累积保留（M-A/M-B/M-C 并集），默认取最新规则视图。
 ---
 
 # 宝可梦伤害计算器 Skill
@@ -273,7 +273,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
   > ⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。
 
 - 若 `_data_source == "champions"` 且 `is_unobtainable == true`：
-  > ⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。
+  > ⚠️ 该形态基于 Champions M-C 规则数据（champout v1.2.0，2026-09-11）。若您询问的是 Gen9 规则，结果可能不适用。
 
 - 若 `_data_source == "champions"` 且 `is_unobtainable == false`：
   > 无需警告
@@ -347,7 +347,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ### 5.1 数据来源与版本策略
 
-采用双层数据架构：《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新，361 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`meta` 使用独立的 pokecamp.cc 赛事数据层。完整说明见 [`references/mechanics.md`](references/mechanics.md)。
+采用双层数据架构：《宝可梦冠军》(Pokémon Champions) Champions 规则数据（最新为 M-C，champout v1.2.0 / 2026-09-11；231 物种 / 347 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。规则数据按引入规则累积保留（M-A 275 / M-B 38 / M-C 34 种形态），默认展示最新规则的完整并集。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`meta` 使用独立的 pokecamp.cc 赛事数据层。完整说明见 [`references/mechanics.md`](references/mechanics.md)。
 
 ### 5.2 能力点数（SP）与努力值（EV）双视图
 
@@ -390,7 +390,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 2. **数据来源声明**：`攻方数据来源：attacker_info._data_source | 守方数据来源：defender_info._data_source`
 3. **未过签形态警告**（若 `is_unobtainable == true`）：
    - Gen9 不可用 → `⚠️ 该形态在 Gen9 标准对战中不可用，以下结果为理论计算。`
-   - Champions 不可用 → `⚠️ 该形态基于 Champions M-B 规则数据（2026-06-24 更新）。若您询问的是 Gen9 规则，结果可能不适用。`
+   - Champions 不可用 → `⚠️ 该形态基于 Champions M-C 规则数据（champout v1.2.0，2026-09-11）。若您询问的是 Gen9 规则，结果可能不适用。`
 4. **默认配置推断清单**（当用户未指定性格/努力值/道具时）：
    `假设声明：以下参数未由用户明确指定，使用角色类型默认推断：`
    `- 性格：[推断值] — 推断依据：[角色类型]`

@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from damage import _NATURE_ALIASES
+import regulations
 
 # ---------------------------------------------------------------------------
 # Source registry (pluggable)
@@ -41,16 +42,18 @@ from damage import _NATURE_ALIASES
 
 
 class PokecampSource:
-    """pokecamp.cc static JSON endpoints (Champions regulation M-B)."""
+    """pokecamp.cc static JSON endpoints (Champions regulation, latest season)."""
 
     name = "pokecamp"
     display_name = "pokecamp.cc（基于 Limitless 公开赛事统计）"
 
     def __init__(self, base_url: str = "https://pokecamp.cc",
-                 locale: str = "zh", regulation: str = "m-b") -> None:
+                 locale: str = "zh", regulation: str | None = None) -> None:
         self.base_url = base_url.rstrip("/")
         self.locale = locale
-        self.regulation = regulation
+        # Default resolved from the manifest so a new season is declared once.
+        self.regulation = (regulation or
+                           regulations.source_regulation("tournament")).lower()
 
     # -- low level ------------------------------------------------------
 
@@ -154,13 +157,28 @@ SOURCES: dict[str, type[PokecampSource]] = {"pokecamp": PokecampSource}
 DEFAULT_SOURCE = "pokecamp"
 
 
-def get_source(name: str | None = None) -> PokecampSource:
-    """Return a data source instance. Defaults to pokecamp."""
+def current_regulation_label() -> str:
+    """Current tournament regulation as an uppercase label (e.g. 'M-C').
+
+    Used as the fallback when an upstream payload omits its own format field,
+    so we never silently stamp a stale season.
+    """
+    return regulations.source_regulation("tournament")
+
+
+def get_source(name: str | None = None, regulation: str | None = None) -> PokecampSource:
+    """Return a data source instance. Defaults to pokecamp.
+
+    The regulation defaults to whatever the manifest publishes for the
+    'tournament' data source (used by usage/teams), so the current season is
+    declared in exactly one place.
+    """
     key = name or DEFAULT_SOURCE
     cls = SOURCES.get(key)
     if cls is None:
         raise ValueError(f"Unknown meta data source: {key!r} (available: {sorted(SOURCES)})")
-    return cls()
+    reg = regulation or regulations.source_regulation("tournament")
+    return cls(regulation=reg.lower())
 
 
 # ---------------------------------------------------------------------------
@@ -278,7 +296,7 @@ def distill_usage_snapshot(index_data: list[dict[str, Any]],
         "meta": {
             "source": PokecampSource.display_name,
             "source_url": "https://pokecamp.cc/zh/champions/pokemon",
-            "format": meta_page.get("format", "M-B"),
+            "format": meta_page.get("format") or current_regulation_label(),
             "date_range": meta_page.get("dateRange"),
             "tournament_count": meta_page.get("tournamentCount"),
             "team_count": meta_page.get("teamCount"),
@@ -353,7 +371,7 @@ def distill_teams_full(teams_data: list[dict[str, Any]],
         "meta": {
             "source": PokecampSource.display_name,
             "source_url": "https://pokecamp.cc/zh/champions/teams",
-            "format": meta_page.get("format", "M-B"),
+            "format": meta_page.get("format") or current_regulation_label(),
             "date_range": meta_page.get("dateRange"),
             "tournament_count": meta_page.get("tournamentCount"),
             "team_count": meta_page.get("teamCount"),
@@ -627,7 +645,7 @@ def distill_teams_snapshot(teams_data: list[dict[str, Any]],
         "meta": {
             "source": PokecampSource.display_name,
             "source_url": "https://pokecamp.cc/zh/champions/teams",
-            "format": meta_page.get("format", "M-B"),
+            "format": meta_page.get("format") or current_regulation_label(),
             "date_range": meta_page.get("dateRange"),
             "tournament_count": meta_page.get("tournamentCount"),
             "team_count": meta_page.get("teamCount"),
@@ -841,8 +859,20 @@ def get_teams_data(data_dir: Path, online: bool = False, top: int = 12,
 # separate because Smogon counts them independently.
 # ---------------------------------------------------------------------------
 
-LADDER_REGULATION = "m-b"  # ladder data is published for the latest regulation only
 LADDER_SOURCE_KINDS = ("ingame", "showdown")
+
+
+def ladder_regulation(source_kind: str) -> str:
+    """Regulation a ladder source currently publishes, per the manifest.
+
+    Kept per-source because upstream sources lag independently: the official
+    in-game ladder moves to a new regulation immediately, while the
+    Smogon-based monthly report often still covers the previous one. A single
+    shared constant would either blank out the lagging source or hold back the
+    current one.
+    """
+    return regulations.source_regulation(source_kind)
+
 LADDER_DISPLAY_NAMES = {
     "ingame": "pokecamp.cc（Pokémon Champions 官方实机排位数据）",
     "showdown": "pokecamp.cc（Pokémon Showdown 天梯月报）",
@@ -861,11 +891,12 @@ _BUILD_ID_CACHE = "pokecamp_build_id.txt"
 _BUILD_ID_RE = re.compile(r"/_next/static/([^/\"']+)/_buildManifest\.js")
 
 
-def _ladder_source(source: PokecampSource | None) -> PokecampSource:
-    """Ladder data lives under the latest regulation, not the default one."""
+def _ladder_source(source: PokecampSource | None,
+                   source_kind: str = "ingame") -> PokecampSource:
+    """Ladder data lives under the regulation that source publishes."""
     if source is not None:
         return source
-    return PokecampSource(regulation=LADDER_REGULATION)
+    return PokecampSource(regulation=ladder_regulation(source_kind).lower())
 
 
 def _cache_fresh(payload: dict[str, Any] | None,
@@ -885,7 +916,7 @@ def distill_ladder_page(source_kind: str, page: dict[str, Any],
         "source": LADDER_DISPLAY_NAMES[source_kind],
         "source_kind": source_kind,
         "source_url": f"https://pokecamp.cc/zh/champions/pokemon",
-        "regulation": LADDER_REGULATION,
+        "regulation": ladder_regulation(source_kind).lower(),
         "format": meta_in.get("format"),
         "date_range": meta_in.get("dateRange"),
         "generated_at": meta_in.get("generatedAt"),
@@ -1075,7 +1106,7 @@ def distill_ladder_detail(page_props: dict[str, Any], source_kind: str,
               teammates are rank-only)
     showdown: detailBySource.showdown.smogonReferenceByFormat[format]
     """
-    reg_key = LADDER_REGULATION.upper()
+    reg_key = ladder_regulation(source_kind).upper()
     mb = ((page_props.get("dataByRegulation") or {}).get(reg_key)) or {}
     dbs = mb.get("detailBySource") or {}
     maps = _detail_name_maps(mb)

@@ -1,4 +1,5 @@
 {
+  "_schema_version": 2,
   "0003-妙蛙花": {
     "_data_source": "champions",
     "forms": [
@@ -13,7 +14,8 @@
           "茂盛",
           "叶绿素"
         ],
-        "weight": 100.0
+        "weight": 100.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级妙蛙花",
@@ -26,7 +28,8 @@
           "厚脂肪",
           "厚脂肪"
         ],
-        "weight": 155.5
+        "weight": 155.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -39,7 +42,8 @@
           "sp_attack": 100,
           "sp_defense": 100,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级妙蛙花",
@@ -50,7 +54,8 @@
           "sp_attack": 122,
           "sp_defense": 120,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -68,7 +73,8 @@
           "猛火",
           "太阳之力"
         ],
-        "weight": 90.5
+        "weight": 90.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级喷火龙Ｘ",
@@ -81,7 +87,8 @@
           "硬爪",
           "硬爪"
         ],
-        "weight": 110.5
+        "weight": 110.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级喷火龙Ｙ",
@@ -94,7 +101,8 @@
           "日照",
           "日照"
         ],
-        "weight": 100.5
+        "weight": 100.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -107,7 +115,8 @@
           "sp_attack": 109,
           "sp_defense": 85,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级喷火龙Ｘ",
@@ -118,7 +127,8 @@
           "sp_attack": 130,
           "sp_defense": 85,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级喷火龙Ｙ",
@@ -129,7 +139,8 @@
           "sp_attack": 159,
           "sp_defense": 115,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -146,7 +157,8 @@
           "激流",
           "雨盘"
         ],
-        "weight": 85.5
+        "weight": 85.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级水箭龟",
@@ -158,7 +170,8 @@
           "超级发射器",
           "超级发射器"
         ],
-        "weight": 101.1
+        "weight": 101.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -171,7 +184,8 @@
           "sp_attack": 85,
           "sp_defense": 105,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级水箭龟",
@@ -182,7 +196,8 @@
           "sp_attack": 135,
           "sp_defense": 115,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -200,7 +215,8 @@
           "虫之预感",
           "狙击手"
         ],
-        "weight": 29.5
+        "weight": 29.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级大针蜂",
@@ -213,7 +229,8 @@
           "适应力",
           "适应力"
         ],
-        "weight": 40.5
+        "weight": 40.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -226,7 +243,8 @@
           "sp_attack": 45,
           "sp_defense": 80,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大针蜂",
@@ -237,7 +255,8 @@
           "sp_attack": 15,
           "sp_defense": 80,
           "speed": 145
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -255,7 +274,8 @@
           "蹒跚",
           "健壮胸肌"
         ],
-        "weight": 39.5
+        "weight": 39.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级大比鸟",
@@ -268,7 +288,8 @@
           "无防守",
           "无防守"
         ],
-        "weight": 50.5
+        "weight": 50.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -281,7 +302,8 @@
           "sp_attack": 70,
           "sp_defense": 70,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大比鸟",
@@ -292,7 +314,8 @@
           "sp_attack": 135,
           "sp_defense": 80,
           "speed": 121
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -309,7 +332,8 @@
           "蜕皮",
           "紧张感"
         ],
-        "weight": 65.0
+        "weight": 65.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -322,7 +346,8 @@
           "sp_attack": 65,
           "sp_defense": 79,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -339,7 +364,8 @@
           "静电",
           "避雷针"
         ],
-        "weight": 6.0
+        "weight": 6.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -352,7 +378,8 @@
           "sp_attack": 50,
           "sp_defense": 50,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -369,7 +396,8 @@
           "静电",
           "避雷针"
         ],
-        "weight": 30.0
+        "weight": 30.0,
+        "regulation": "M-A"
       },
       {
         "name": "阿罗拉雷丘",
@@ -382,7 +410,8 @@
           "冲浪之尾",
           "冲浪之尾"
         ],
-        "weight": 21.0
+        "weight": 21.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级雷丘Ｘ",
@@ -394,7 +423,8 @@
           "电气制造者",
           "电气制造者"
         ],
-        "weight": 38.0
+        "weight": 38.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级雷丘Ｙ",
@@ -406,7 +436,8 @@
           "无防守",
           "无防守"
         ],
-        "weight": 26.0
+        "weight": 26.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -419,7 +450,8 @@
           "sp_attack": 90,
           "sp_defense": 80,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "阿罗拉雷丘",
@@ -430,7 +462,8 @@
           "sp_attack": 95,
           "sp_defense": 85,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级雷丘Ｘ",
@@ -441,7 +474,8 @@
           "sp_attack": 90,
           "sp_defense": 95,
           "speed": 110
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级雷丘Ｙ",
@@ -452,7 +486,8 @@
           "sp_attack": 160,
           "sp_defense": 80,
           "speed": 130
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -469,7 +504,8 @@
           "魔法防守",
           "纯朴"
         ],
-        "weight": 40.0
+        "weight": 40.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级皮可西",
@@ -482,7 +518,8 @@
           "魔法镜",
           "魔法镜"
         ],
-        "weight": 42.3
+        "weight": 42.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -495,7 +532,8 @@
           "sp_attack": 95,
           "sp_defense": 90,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级皮可西",
@@ -506,7 +544,8 @@
           "sp_attack": 135,
           "sp_defense": 110,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -523,7 +562,8 @@
           "引火",
           "日照"
         ],
-        "weight": 19.9
+        "weight": 19.9,
+        "regulation": "M-A"
       },
       {
         "name": "阿罗拉九尾",
@@ -536,7 +576,8 @@
           "雪隐",
           "降雪"
         ],
-        "weight": 19.9
+        "weight": 19.9,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -549,7 +590,8 @@
           "sp_attack": 81,
           "sp_defense": 100,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "阿罗拉九尾",
@@ -560,7 +602,41 @@
           "sp_attack": 81,
           "sp_defense": 100,
           "speed": 109
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0040-胖可丁": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "胖可丁",
+        "types": [
+          "一般",
+          "妖精"
+        ],
+        "abilities": [
+          "迷人之躯",
+          "好胜",
+          "察觉"
+        ],
+        "weight": 12.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "胖可丁",
+        "data": {
+          "hp": 140,
+          "attack": 70,
+          "defense": 45,
+          "sp_attack": 85,
+          "sp_defense": 50,
+          "speed": 45
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -578,7 +654,8 @@
           "叶绿素",
           "孢子"
         ],
-        "weight": 18.6
+        "weight": 18.6,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -591,7 +668,65 @@
           "sp_attack": 110,
           "sp_defense": 90,
           "speed": 50
-        }
+        },
+        "regulation": "M-B"
+      }
+    ]
+  },
+  "0053-猫老大": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "猫老大",
+        "types": [
+          "一般"
+        ],
+        "abilities": [
+          "柔软",
+          "技术高手",
+          "紧张感"
+        ],
+        "weight": 32.0,
+        "regulation": "M-C"
+      },
+      {
+        "name": "阿罗拉猫老大",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "毛皮大衣",
+          "技术高手",
+          "胆怯"
+        ],
+        "weight": 33.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "猫老大",
+        "data": {
+          "hp": 65,
+          "attack": 70,
+          "defense": 60,
+          "sp_attack": 65,
+          "sp_defense": 65,
+          "speed": 115
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "阿罗拉猫老大",
+        "data": {
+          "hp": 65,
+          "attack": 60,
+          "defense": 60,
+          "sp_attack": 75,
+          "sp_defense": 65,
+          "speed": 115
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -608,7 +743,8 @@
           "引火",
           "正义之心"
         ],
-        "weight": 155.0
+        "weight": 155.0,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠风速狗",
@@ -621,7 +757,8 @@
           "引火",
           "坚硬脑袋"
         ],
-        "weight": 168.0
+        "weight": 168.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -634,7 +771,8 @@
           "sp_attack": 100,
           "sp_defense": 80,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠风速狗",
@@ -645,7 +783,8 @@
           "sp_attack": 95,
           "sp_defense": 80,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -662,7 +801,8 @@
           "精神力",
           "魔法防守"
         ],
-        "weight": 48.0
+        "weight": 48.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级胡地",
@@ -674,7 +814,8 @@
           "复制",
           "复制"
         ],
-        "weight": 48.0
+        "weight": 48.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -687,7 +828,8 @@
           "sp_attack": 135,
           "sp_defense": 95,
           "speed": 120
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级胡地",
@@ -698,7 +840,8 @@
           "sp_attack": 175,
           "sp_defense": 105,
           "speed": 150
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -715,7 +858,8 @@
           "无防守",
           "不屈之心"
         ],
-        "weight": 130.0
+        "weight": 130.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -728,7 +872,8 @@
           "sp_attack": 65,
           "sp_defense": 85,
           "speed": 55
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -746,7 +891,8 @@
           "叶绿素",
           "贪吃鬼"
         ],
-        "weight": 15.5
+        "weight": 15.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级大食花",
@@ -759,7 +905,8 @@
           "飞出的内在物",
           "飞出的内在物"
         ],
-        "weight": 125.5
+        "weight": 125.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -772,7 +919,8 @@
           "sp_attack": 100,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大食花",
@@ -783,7 +931,8 @@
           "sp_attack": 135,
           "sp_defense": 95,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -801,7 +950,8 @@
           "我行我素",
           "再生力"
         ],
-        "weight": 78.5
+        "weight": 78.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级呆壳兽",
@@ -814,7 +964,8 @@
           "硬壳盔甲",
           "硬壳盔甲"
         ],
-        "weight": 120.0
+        "weight": 120.0,
+        "regulation": "M-A"
       },
       {
         "name": "伽勒尔呆壳兽",
@@ -827,7 +978,8 @@
           "我行我素",
           "再生力"
         ],
-        "weight": 70.5
+        "weight": 70.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -840,7 +992,8 @@
           "sp_attack": 100,
           "sp_defense": 80,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级呆壳兽",
@@ -851,7 +1004,8 @@
           "sp_attack": 130,
           "sp_defense": 80,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "伽勒尔呆壳兽",
@@ -862,7 +1016,41 @@
           "sp_attack": 100,
           "sp_defense": 70,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0083-大葱鸭": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "大葱鸭",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "锐利目光",
+          "精神力",
+          "不服输"
+        ],
+        "weight": 15.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "大葱鸭",
+        "data": {
+          "hp": 52,
+          "attack": 90,
+          "defense": 55,
+          "sp_attack": 58,
+          "sp_defense": 62,
+          "speed": 60
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -880,7 +1068,8 @@
           "咒术之躯",
           "咒术之躯"
         ],
-        "weight": 40.5
+        "weight": 40.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级耿鬼",
@@ -893,7 +1082,8 @@
           "踩影",
           "踩影"
         ],
-        "weight": 40.5
+        "weight": 40.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -906,7 +1096,8 @@
           "sp_attack": 130,
           "sp_defense": 75,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级耿鬼",
@@ -917,7 +1108,8 @@
           "sp_attack": 170,
           "sp_defense": 95,
           "speed": 130
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -934,7 +1126,8 @@
           "胆量",
           "精神力"
         ],
-        "weight": 80.0
+        "weight": 80.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级袋兽",
@@ -946,7 +1139,8 @@
           "亲子爱",
           "亲子爱"
         ],
-        "weight": 100.0
+        "weight": 100.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -959,7 +1153,8 @@
           "sp_attack": 40,
           "sp_defense": 80,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级袋兽",
@@ -970,7 +1165,8 @@
           "sp_attack": 60,
           "sp_defense": 100,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -988,7 +1184,8 @@
           "自然回复",
           "分析"
         ],
-        "weight": 80.0
+        "weight": 80.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级宝石海星",
@@ -1001,7 +1198,8 @@
           "大力士",
           "大力士"
         ],
-        "weight": 80.0
+        "weight": 80.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1014,7 +1212,8 @@
           "sp_attack": 100,
           "sp_defense": 85,
           "speed": 115
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级宝石海星",
@@ -1025,7 +1224,41 @@
           "sp_attack": 130,
           "sp_defense": 105,
           "speed": 120
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0122-魔墙人偶": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "魔墙人偶",
+        "types": [
+          "超能力",
+          "妖精"
+        ],
+        "abilities": [
+          "隔音",
+          "过滤",
+          "技术高手"
+        ],
+        "weight": 54.5,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "魔墙人偶",
+        "data": {
+          "hp": 40,
+          "attack": 45,
+          "defense": 65,
+          "sp_attack": 100,
+          "sp_defense": 120,
+          "speed": 90
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -1042,7 +1275,8 @@
           "破格",
           "自信过度"
         ],
-        "weight": 55.0
+        "weight": 55.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级凯罗斯",
@@ -1055,7 +1289,8 @@
           "飞行皮肤",
           "飞行皮肤"
         ],
-        "weight": 59.0
+        "weight": 59.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1068,7 +1303,8 @@
           "sp_attack": 55,
           "sp_defense": 70,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级凯罗斯",
@@ -1079,7 +1315,8 @@
           "sp_attack": 65,
           "sp_defense": 90,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1096,7 +1333,8 @@
           "愤怒穴位",
           "强行"
         ],
-        "weight": 88.4
+        "weight": 88.4,
+        "regulation": "M-A"
       },
       {
         "name": "帕底亚的样子斗战种",
@@ -1108,7 +1346,8 @@
           "愤怒穴位",
           "反刍"
         ],
-        "weight": 115.0
+        "weight": 115.0,
+        "regulation": "M-A"
       },
       {
         "name": "帕底亚的样子火炽种",
@@ -1121,7 +1360,8 @@
           "愤怒穴位",
           "反刍"
         ],
-        "weight": 85.0
+        "weight": 85.0,
+        "regulation": "M-A"
       },
       {
         "name": "帕底亚的样子水澜种",
@@ -1134,7 +1374,8 @@
           "愤怒穴位",
           "反刍"
         ],
-        "weight": 110.0
+        "weight": 110.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1147,7 +1388,8 @@
           "sp_attack": 40,
           "sp_defense": 70,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "帕底亚的样子斗战种",
@@ -1158,7 +1400,8 @@
           "sp_attack": 30,
           "sp_defense": 70,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "帕底亚的样子火炽种",
@@ -1169,7 +1412,8 @@
           "sp_attack": 30,
           "sp_defense": 70,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "帕底亚的样子水澜种",
@@ -1180,7 +1424,8 @@
           "sp_attack": 30,
           "sp_defense": 70,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1198,7 +1443,8 @@
           "威吓",
           "自信过度"
         ],
-        "weight": 235.0
+        "weight": 235.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级暴鲤龙",
@@ -1211,7 +1457,8 @@
           "破格",
           "破格"
         ],
-        "weight": 305.0
+        "weight": 305.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1224,7 +1471,8 @@
           "sp_attack": 60,
           "sp_defense": 100,
           "speed": 81
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级暴鲤龙",
@@ -1235,7 +1483,8 @@
           "sp_attack": 70,
           "sp_defense": 130,
           "speed": 81
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1252,7 +1501,8 @@
           "柔软",
           "变身者"
         ],
-        "weight": 4.0
+        "weight": 4.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1265,7 +1515,8 @@
           "sp_attack": 48,
           "sp_defense": 48,
           "speed": 48
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1282,7 +1533,8 @@
           "储水",
           "湿润之躯"
         ],
-        "weight": 29.0
+        "weight": 29.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1295,7 +1547,8 @@
           "sp_attack": 110,
           "sp_defense": 95,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1312,7 +1565,8 @@
           "蓄电",
           "飞毛腿"
         ],
-        "weight": 24.5
+        "weight": 24.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1325,7 +1579,8 @@
           "sp_attack": 110,
           "sp_defense": 95,
           "speed": 130
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1342,7 +1597,8 @@
           "引火",
           "毅力"
         ],
-        "weight": 25.0
+        "weight": 25.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1355,7 +1611,8 @@
           "sp_attack": 95,
           "sp_defense": 110,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1373,7 +1630,8 @@
           "压迫感",
           "紧张感"
         ],
-        "weight": 59.0
+        "weight": 59.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级化石翼龙",
@@ -1386,7 +1644,8 @@
           "硬爪",
           "硬爪"
         ],
-        "weight": 79.0
+        "weight": 79.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1399,7 +1658,8 @@
           "sp_attack": 60,
           "sp_defense": 75,
           "speed": 130
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级化石翼龙",
@@ -1410,7 +1670,8 @@
           "sp_attack": 70,
           "sp_defense": 95,
           "speed": 150
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1427,7 +1688,8 @@
           "厚脂肪",
           "贪吃鬼"
         ],
-        "weight": 460.0
+        "weight": 460.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1440,7 +1702,8 @@
           "sp_attack": 65,
           "sp_defense": 110,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1458,7 +1721,8 @@
           "精神力",
           "多重鳞片"
         ],
-        "weight": 210.0
+        "weight": 210.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级快龙",
@@ -1471,7 +1735,8 @@
           "多重鳞片",
           "多重鳞片"
         ],
-        "weight": 290.0
+        "weight": 290.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1484,7 +1749,8 @@
           "sp_attack": 100,
           "sp_defense": 100,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级快龙",
@@ -1495,7 +1761,8 @@
           "sp_attack": 145,
           "sp_defense": 125,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1512,7 +1779,8 @@
           "茂盛",
           "叶子防守"
         ],
-        "weight": 100.5
+        "weight": 100.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级大竺葵",
@@ -1525,7 +1793,8 @@
           "超级日光",
           "超级日光"
         ],
-        "weight": 201.0
+        "weight": 201.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1538,7 +1807,8 @@
           "sp_attack": 83,
           "sp_defense": 100,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大竺葵",
@@ -1549,7 +1819,8 @@
           "sp_attack": 143,
           "sp_defense": 115,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1566,7 +1837,8 @@
           "猛火",
           "引火"
         ],
-        "weight": 79.5
+        "weight": 79.5,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠火暴兽",
@@ -1579,7 +1851,8 @@
           "猛火",
           "察觉"
         ],
-        "weight": 69.8
+        "weight": 69.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1592,7 +1865,8 @@
           "sp_attack": 109,
           "sp_defense": 85,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠火暴兽",
@@ -1603,7 +1877,8 @@
           "sp_attack": 119,
           "sp_defense": 85,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1620,7 +1895,8 @@
           "激流",
           "强行"
         ],
-        "weight": 88.8
+        "weight": 88.8,
+        "regulation": "M-A"
       },
       {
         "name": "超级大力鳄",
@@ -1633,7 +1909,8 @@
           "龙皮肤",
           "龙皮肤"
         ],
-        "weight": 108.8
+        "weight": 108.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1646,7 +1923,8 @@
           "sp_attack": 79,
           "sp_defense": 83,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大力鳄",
@@ -1657,7 +1935,8 @@
           "sp_attack": 89,
           "sp_defense": 93,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1675,7 +1954,8 @@
           "不眠",
           "狙击手"
         ],
-        "weight": 33.5
+        "weight": 33.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1688,7 +1968,8 @@
           "sp_attack": 60,
           "sp_defense": 70,
           "speed": 40
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1705,7 +1986,8 @@
           "静电",
           "正电"
         ],
-        "weight": 61.5
+        "weight": 61.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级电龙",
@@ -1718,7 +2000,8 @@
           "破格",
           "破格"
         ],
-        "weight": 61.5
+        "weight": 61.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1731,7 +2014,8 @@
           "sp_attack": 115,
           "sp_defense": 90,
           "speed": 55
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级电龙",
@@ -1742,7 +2026,8 @@
           "sp_attack": 165,
           "sp_defense": 110,
           "speed": 45
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1760,7 +2045,8 @@
           "大力士",
           "食草"
         ],
-        "weight": 28.5
+        "weight": 28.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1773,7 +2059,8 @@
           "sp_attack": 60,
           "sp_defense": 80,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1790,7 +2077,8 @@
           "湿气",
           "降雨"
         ],
-        "weight": 33.9
+        "weight": 33.9,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1803,7 +2091,8 @@
           "sp_attack": 90,
           "sp_defense": 100,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1820,7 +2109,8 @@
           "同步",
           "魔法镜"
         ],
-        "weight": 26.5
+        "weight": 26.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1833,7 +2123,8 @@
           "sp_attack": 130,
           "sp_defense": 95,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1850,7 +2141,8 @@
           "同步",
           "精神力"
         ],
-        "weight": 27.0
+        "weight": 27.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1863,7 +2155,8 @@
           "sp_attack": 60,
           "sp_defense": 130,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1881,7 +2174,8 @@
           "我行我素",
           "再生力"
         ],
-        "weight": 79.5
+        "weight": 79.5,
+        "regulation": "M-A"
       },
       {
         "name": "伽勒尔呆呆王",
@@ -1894,7 +2188,8 @@
           "我行我素",
           "再生力"
         ],
-        "weight": 79.5
+        "weight": 79.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1907,7 +2202,8 @@
           "sp_attack": 100,
           "sp_defense": 110,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "伽勒尔呆呆王",
@@ -1918,7 +2214,8 @@
           "sp_attack": 110,
           "sp_defense": 110,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1936,7 +2233,8 @@
           "结实",
           "防尘"
         ],
-        "weight": 125.8
+        "weight": 125.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1949,7 +2247,8 @@
           "sp_attack": 60,
           "sp_defense": 60,
           "speed": 40
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -1967,7 +2266,8 @@
           "结实",
           "强行"
         ],
-        "weight": 400.0
+        "weight": 400.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级大钢蛇",
@@ -1980,7 +2280,8 @@
           "沙之力",
           "沙之力"
         ],
-        "weight": 740.0
+        "weight": 740.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -1993,7 +2294,8 @@
           "sp_attack": 55,
           "sp_defense": 65,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级大钢蛇",
@@ -2004,7 +2306,8 @@
           "sp_attack": 55,
           "sp_defense": 95,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2022,7 +2325,8 @@
           "悠游自如",
           "威吓"
         ],
-        "weight": 3.9
+        "weight": 3.9,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -2035,7 +2339,8 @@
           "sp_attack": 55,
           "sp_defense": 55,
           "speed": 85
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -2053,7 +2358,8 @@
           "技术高手",
           "轻金属"
         ],
-        "weight": 118.0
+        "weight": 118.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级巨钳螳螂",
@@ -2066,7 +2372,8 @@
           "技术高手",
           "技术高手"
         ],
-        "weight": 125.0
+        "weight": 125.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2079,7 +2386,8 @@
           "sp_attack": 55,
           "sp_defense": 80,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级巨钳螳螂",
@@ -2090,7 +2398,8 @@
           "sp_attack": 65,
           "sp_defense": 100,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2108,7 +2417,8 @@
           "毅力",
           "自信过度"
         ],
-        "weight": 54.0
+        "weight": 54.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级赫拉克罗斯",
@@ -2121,7 +2431,8 @@
           "连续攻击",
           "连续攻击"
         ],
-        "weight": 62.5
+        "weight": 62.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2134,7 +2445,8 @@
           "sp_attack": 40,
           "sp_defense": 95,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级赫拉克罗斯",
@@ -2145,7 +2457,8 @@
           "sp_attack": 40,
           "sp_defense": 105,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2163,7 +2476,8 @@
           "结实",
           "碎裂铠甲"
         ],
-        "weight": 50.5
+        "weight": 50.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级盔甲鸟",
@@ -2176,7 +2490,8 @@
           "坚毅",
           "坚毅"
         ],
-        "weight": 40.4
+        "weight": 40.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2189,7 +2504,8 @@
           "sp_attack": 40,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级盔甲鸟",
@@ -2200,7 +2516,8 @@
           "sp_attack": 40,
           "sp_defense": 100,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2218,7 +2535,8 @@
           "引火",
           "紧张感"
         ],
-        "weight": 35.0
+        "weight": 35.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级黑鲁加",
@@ -2231,7 +2549,8 @@
           "太阳之力",
           "太阳之力"
         ],
-        "weight": 49.5
+        "weight": 49.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2244,7 +2563,8 @@
           "sp_attack": 110,
           "sp_defense": 80,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级黑鲁加",
@@ -2255,7 +2575,8 @@
           "sp_attack": 140,
           "sp_defense": 90,
           "speed": 115
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2273,7 +2594,8 @@
           "扬沙",
           "紧张感"
         ],
-        "weight": 202.0
+        "weight": 202.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级班基拉斯",
@@ -2286,7 +2608,8 @@
           "扬沙",
           "扬沙"
         ],
-        "weight": 255.0
+        "weight": 255.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2299,7 +2622,8 @@
           "sp_attack": 95,
           "sp_defense": 100,
           "speed": 61
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级班基拉斯",
@@ -2310,7 +2634,8 @@
           "sp_attack": 95,
           "sp_defense": 120,
           "speed": 71
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2327,7 +2652,8 @@
           "茂盛",
           "轻装"
         ],
-        "weight": 52.2
+        "weight": 52.2,
+        "regulation": "M-B"
       },
       {
         "name": "超级蜥蜴王",
@@ -2340,7 +2666,8 @@
           "避雷针",
           "避雷针"
         ],
-        "weight": 55.2
+        "weight": 55.2,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -2353,7 +2680,8 @@
           "sp_attack": 105,
           "sp_defense": 85,
           "speed": 120
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级蜥蜴王",
@@ -2364,7 +2692,8 @@
           "sp_attack": 145,
           "sp_defense": 85,
           "speed": 145
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -2382,7 +2711,8 @@
           "猛火",
           "加速"
         ],
-        "weight": 52.0
+        "weight": 52.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级火焰鸡",
@@ -2395,7 +2725,8 @@
           "加速",
           "加速"
         ],
-        "weight": 52.0
+        "weight": 52.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -2408,7 +2739,8 @@
           "sp_attack": 110,
           "sp_defense": 70,
           "speed": 80
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级火焰鸡",
@@ -2419,7 +2751,8 @@
           "sp_attack": 130,
           "sp_defense": 80,
           "speed": 100
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -2437,7 +2770,8 @@
           "激流",
           "湿气"
         ],
-        "weight": 81.9
+        "weight": 81.9,
+        "regulation": "M-B"
       },
       {
         "name": "超级巨沼怪",
@@ -2450,7 +2784,8 @@
           "悠游自如",
           "悠游自如"
         ],
-        "weight": 102.0
+        "weight": 102.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -2463,7 +2798,8 @@
           "sp_attack": 85,
           "sp_defense": 90,
           "speed": 60
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级巨沼怪",
@@ -2474,7 +2810,8 @@
           "sp_attack": 95,
           "sp_defense": 110,
           "speed": 70
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -2492,7 +2829,8 @@
           "降雨",
           "雨盘"
         ],
-        "weight": 28.0
+        "weight": 28.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2505,7 +2843,8 @@
           "sp_attack": 95,
           "sp_defense": 70,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2523,7 +2862,8 @@
           "复制",
           "心灵感应"
         ],
-        "weight": 48.4
+        "weight": 48.4,
+        "regulation": "M-A"
       },
       {
         "name": "超级沙奈朵",
@@ -2536,7 +2876,8 @@
           "妖精皮肤",
           "妖精皮肤"
         ],
-        "weight": 48.4
+        "weight": 48.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2549,7 +2890,8 @@
           "sp_attack": 125,
           "sp_defense": 115,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级沙奈朵",
@@ -2560,7 +2902,8 @@
           "sp_attack": 165,
           "sp_defense": 135,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2578,7 +2921,8 @@
           "慢出",
           "恶作剧之心"
         ],
-        "weight": 11.0
+        "weight": 11.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级勾魂眼",
@@ -2591,7 +2935,8 @@
           "魔法镜",
           "魔法镜"
         ],
-        "weight": 161.0
+        "weight": 161.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2604,7 +2949,8 @@
           "sp_attack": 65,
           "sp_defense": 65,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级勾魂眼",
@@ -2615,7 +2961,8 @@
           "sp_attack": 85,
           "sp_defense": 115,
           "speed": 20
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2633,7 +2980,8 @@
           "威吓",
           "强行"
         ],
-        "weight": 11.5
+        "weight": 11.5,
+        "regulation": "M-B"
       },
       {
         "name": "超级大嘴娃",
@@ -2646,7 +2994,8 @@
           "大力士",
           "大力士"
         ],
-        "weight": 23.5
+        "weight": 23.5,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -2659,7 +3008,8 @@
           "sp_attack": 55,
           "sp_defense": 55,
           "speed": 50
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级大嘴娃",
@@ -2670,7 +3020,8 @@
           "sp_attack": 55,
           "sp_defense": 95,
           "speed": 50
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -2688,7 +3039,8 @@
           "坚硬脑袋",
           "重金属"
         ],
-        "weight": 360.0
+        "weight": 360.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级波士可多拉",
@@ -2700,7 +3052,8 @@
           "过滤",
           "过滤"
         ],
-        "weight": 395.0
+        "weight": 395.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2713,7 +3066,8 @@
           "sp_attack": 60,
           "sp_defense": 60,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级波士可多拉",
@@ -2724,7 +3078,8 @@
           "sp_attack": 60,
           "sp_defense": 80,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2742,7 +3097,8 @@
           "瑜伽之力",
           "心灵感应"
         ],
-        "weight": 31.5
+        "weight": 31.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级恰雷姆",
@@ -2755,7 +3111,8 @@
           "瑜伽之力",
           "瑜伽之力"
         ],
-        "weight": 31.5
+        "weight": 31.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2768,7 +3125,8 @@
           "sp_attack": 60,
           "sp_defense": 75,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级恰雷姆",
@@ -2779,7 +3137,8 @@
           "sp_attack": 80,
           "sp_defense": 85,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2796,7 +3155,8 @@
           "避雷针",
           "负电"
         ],
-        "weight": 40.2
+        "weight": 40.2,
+        "regulation": "M-A"
       },
       {
         "name": "超级雷电兽",
@@ -2808,7 +3168,8 @@
           "威吓",
           "威吓"
         ],
-        "weight": 44.0
+        "weight": 44.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2821,7 +3182,8 @@
           "sp_attack": 105,
           "sp_defense": 60,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级雷电兽",
@@ -2832,7 +3194,40 @@
           "sp_attack": 135,
           "sp_defense": 80,
           "speed": 135
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0317-吞食兽": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "吞食兽",
+        "types": [
+          "毒"
+        ],
+        "abilities": [
+          "污泥浆",
+          "黏着",
+          "贪吃鬼"
+        ],
+        "weight": 80.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "吞食兽",
+        "data": {
+          "hp": 100,
+          "attack": 73,
+          "defense": 83,
+          "sp_attack": 73,
+          "sp_defense": 83,
+          "speed": 55
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -2850,7 +3245,8 @@
           "粗糙皮肤",
           "加速"
         ],
-        "weight": 88.8
+        "weight": 88.8,
+        "regulation": "M-A"
       },
       {
         "name": "超级巨牙鲨",
@@ -2863,7 +3259,8 @@
           "强壮之颚",
           "强壮之颚"
         ],
-        "weight": 130.3
+        "weight": 130.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2876,7 +3273,8 @@
           "sp_attack": 95,
           "sp_defense": 40,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级巨牙鲨",
@@ -2887,7 +3285,8 @@
           "sp_attack": 110,
           "sp_defense": 65,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2905,7 +3304,8 @@
           "坚硬岩石",
           "愤怒穴位"
         ],
-        "weight": 220.0
+        "weight": 220.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级喷火驼",
@@ -2918,7 +3318,8 @@
           "强行",
           "强行"
         ],
-        "weight": 320.5
+        "weight": 320.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2931,7 +3332,8 @@
           "sp_attack": 105,
           "sp_defense": 75,
           "speed": 40
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级喷火驼",
@@ -2942,7 +3344,8 @@
           "sp_attack": 145,
           "sp_defense": 105,
           "speed": 20
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2959,7 +3362,8 @@
           "日照",
           "硬壳盔甲"
         ],
-        "weight": 80.4
+        "weight": 80.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -2972,7 +3376,8 @@
           "sp_attack": 85,
           "sp_defense": 70,
           "speed": 20
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -2990,7 +3395,8 @@
           "自然回复",
           "无关天气"
         ],
-        "weight": 20.6
+        "weight": 20.6,
+        "regulation": "M-A"
       },
       {
         "name": "超级七夕青鸟",
@@ -3003,7 +3409,8 @@
           "妖精皮肤",
           "妖精皮肤"
         ],
-        "weight": 20.6
+        "weight": 20.6,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3016,7 +3423,8 @@
           "sp_attack": 70,
           "sp_defense": 105,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级七夕青鸟",
@@ -3027,7 +3435,8 @@
           "sp_attack": 110,
           "sp_defense": 105,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3044,7 +3453,8 @@
           "好胜",
           "迷人之躯"
         ],
-        "weight": 162.0
+        "weight": 162.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3057,7 +3467,8 @@
           "sp_attack": 100,
           "sp_defense": 125,
           "speed": 81
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3074,7 +3485,8 @@
           "阴晴不定",
           "阴晴不定"
         ],
-        "weight": 0.8
+        "weight": 0.8,
+        "regulation": "M-A"
       },
       {
         "name": "太阳的样子",
@@ -3086,7 +3498,8 @@
           "阴晴不定",
           "阴晴不定"
         ],
-        "weight": 0.8
+        "weight": 0.8,
+        "regulation": "M-A"
       },
       {
         "name": "雨水的样子",
@@ -3098,7 +3511,8 @@
           "阴晴不定",
           "阴晴不定"
         ],
-        "weight": 0.8
+        "weight": 0.8,
+        "regulation": "M-A"
       },
       {
         "name": "雪云的样子",
@@ -3110,7 +3524,8 @@
           "阴晴不定",
           "阴晴不定"
         ],
-        "weight": 0.8
+        "weight": 0.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3123,7 +3538,8 @@
           "sp_attack": 70,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "太阳的样子",
@@ -3134,7 +3550,8 @@
           "sp_attack": 70,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "雨水的样子",
@@ -3145,7 +3562,8 @@
           "sp_attack": 70,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "雪云的样子",
@@ -3156,7 +3574,8 @@
           "sp_attack": 70,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3173,7 +3592,8 @@
           "察觉",
           "咒术之躯"
         ],
-        "weight": 12.5
+        "weight": 12.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级诅咒娃娃",
@@ -3185,7 +3605,8 @@
           "恶作剧之心",
           "恶作剧之心"
         ],
-        "weight": 13.0
+        "weight": 13.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3198,7 +3619,8 @@
           "sp_attack": 83,
           "sp_defense": 63,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级诅咒娃娃",
@@ -3209,7 +3631,8 @@
           "sp_attack": 93,
           "sp_defense": 83,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3226,7 +3649,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 1.0
+        "weight": 1.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级风铃铃",
@@ -3239,7 +3663,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 8.0
+        "weight": 8.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3252,7 +3677,8 @@
           "sp_attack": 95,
           "sp_defense": 90,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级风铃铃",
@@ -3263,7 +3689,8 @@
           "sp_attack": 135,
           "sp_defense": 120,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3280,7 +3707,8 @@
           "超幸运",
           "正义之心"
         ],
-        "weight": 47.0
+        "weight": 47.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级阿勃梭鲁",
@@ -3292,7 +3720,22 @@
           "魔法镜",
           "魔法镜"
         ],
-        "weight": 49.0
+        "weight": 49.0,
+        "regulation": "M-A"
+      },
+      {
+        "name": "超级阿勃梭鲁Ｚ",
+        "types": [
+          "恶",
+          "幽灵"
+        ],
+        "abilities": [
+          "锋锐",
+          "锋锐",
+          "锋锐"
+        ],
+        "weight": 49.0,
+        "regulation": "M-C"
       }
     ],
     "stats": [
@@ -3305,7 +3748,8 @@
           "sp_attack": 75,
           "sp_defense": 60,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级阿勃梭鲁",
@@ -3316,7 +3760,20 @@
           "sp_attack": 115,
           "sp_defense": 60,
           "speed": 115
-        }
+        },
+        "regulation": "M-A"
+      },
+      {
+        "form": "超级阿勃梭鲁Ｚ",
+        "data": {
+          "hp": 65,
+          "attack": 154,
+          "defense": 60,
+          "sp_attack": 75,
+          "sp_defense": 60,
+          "speed": 151
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -3333,7 +3790,8 @@
           "冰冻之躯",
           "心情不定"
         ],
-        "weight": 256.5
+        "weight": 256.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级冰鬼护",
@@ -3345,7 +3803,8 @@
           "冰冻皮肤",
           "冰冻皮肤"
         ],
-        "weight": 350.2
+        "weight": 350.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3358,7 +3817,8 @@
           "sp_attack": 80,
           "sp_defense": 80,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级冰鬼护",
@@ -3369,7 +3829,67 @@
           "sp_attack": 120,
           "sp_defense": 80,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0373-暴飞龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "暴飞龙",
+        "types": [
+          "龙",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "威吓",
+          "自信过度"
+        ],
+        "weight": 102.6,
+        "regulation": "M-C"
+      },
+      {
+        "name": "超级暴飞龙",
+        "types": [
+          "龙",
+          "飞行"
+        ],
+        "abilities": [
+          "飞行皮肤",
+          "飞行皮肤",
+          "飞行皮肤"
+        ],
+        "weight": 112.6,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "暴飞龙",
+        "data": {
+          "hp": 95,
+          "attack": 135,
+          "defense": 80,
+          "sp_attack": 110,
+          "sp_defense": 80,
+          "speed": 100
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "超级暴飞龙",
+        "data": {
+          "hp": 95,
+          "attack": 145,
+          "defense": 130,
+          "sp_attack": 120,
+          "sp_defense": 90,
+          "speed": 120
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -3387,7 +3907,8 @@
           "恒净之躯",
           "轻金属"
         ],
-        "weight": 550.0
+        "weight": 550.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级巨金怪",
@@ -3400,7 +3921,8 @@
           "硬爪",
           "硬爪"
         ],
-        "weight": 942.9
+        "weight": 942.9,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -3413,7 +3935,8 @@
           "sp_attack": 95,
           "sp_defense": 90,
           "speed": 70
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级巨金怪",
@@ -3424,7 +3947,8 @@
           "sp_attack": 105,
           "sp_defense": 110,
           "speed": 110
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -3442,7 +3966,8 @@
           "茂盛",
           "硬壳盔甲"
         ],
-        "weight": 310.0
+        "weight": 310.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3455,7 +3980,8 @@
           "sp_attack": 75,
           "sp_defense": 85,
           "speed": 56
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3473,7 +3999,8 @@
           "猛火",
           "铁拳"
         ],
-        "weight": 55.0
+        "weight": 55.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3486,7 +4013,8 @@
           "sp_attack": 104,
           "sp_defense": 71,
           "speed": 108
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3504,7 +4032,8 @@
           "激流",
           "好胜"
         ],
-        "weight": 84.5
+        "weight": 84.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3517,7 +4046,8 @@
           "sp_attack": 111,
           "sp_defense": 101,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3535,7 +4065,8 @@
           "威吓",
           "舍身"
         ],
-        "weight": 24.9
+        "weight": 24.9,
+        "regulation": "M-B"
       },
       {
         "name": "超级姆克鹰",
@@ -3548,7 +4079,8 @@
           "唱反调",
           "唱反调"
         ],
-        "weight": 50.0
+        "weight": 50.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -3561,7 +4093,8 @@
           "sp_attack": 50,
           "sp_defense": 60,
           "speed": 100
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级姆克鹰",
@@ -3572,7 +4105,8 @@
           "sp_attack": 60,
           "sp_defense": 90,
           "speed": 110
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -3589,7 +4123,8 @@
           "威吓",
           "毅力"
         ],
-        "weight": 42.0
+        "weight": 42.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3602,7 +4137,8 @@
           "sp_attack": 95,
           "sp_defense": 79,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3620,7 +4156,8 @@
           "毒刺",
           "技术高手"
         ],
-        "weight": 14.5
+        "weight": 14.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3633,7 +4170,8 @@
           "sp_attack": 125,
           "sp_defense": 105,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3650,7 +4188,8 @@
           "破格",
           "强行"
         ],
-        "weight": 102.5
+        "weight": 102.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3663,7 +4202,8 @@
           "sp_attack": 65,
           "sp_defense": 50,
           "speed": 58
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3681,7 +4221,8 @@
           "结实",
           "隔音"
         ],
-        "weight": 149.5
+        "weight": 149.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3694,7 +4235,8 @@
           "sp_attack": 47,
           "sp_defense": 138,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3711,7 +4253,8 @@
           "笨拙",
           "柔软"
         ],
-        "weight": 33.3
+        "weight": 33.3,
+        "regulation": "M-A"
       },
       {
         "name": "超级长耳兔",
@@ -3724,7 +4267,8 @@
           "胆量",
           "胆量"
         ],
-        "weight": 28.3
+        "weight": 28.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3737,7 +4281,8 @@
           "sp_attack": 54,
           "sp_defense": 96,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级长耳兔",
@@ -3748,7 +4293,8 @@
           "sp_attack": 54,
           "sp_defense": 96,
           "speed": 135
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3766,7 +4312,8 @@
           "压迫感",
           "穿透"
         ],
-        "weight": 108.0
+        "weight": 108.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3779,7 +4326,8 @@
           "sp_attack": 92,
           "sp_defense": 108,
           "speed": 35
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3797,7 +4345,8 @@
           "沙隐",
           "粗糙皮肤"
         ],
-        "weight": 95.0
+        "weight": 95.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级烈咬陆鲨",
@@ -3810,7 +4359,21 @@
           "沙之力",
           "沙之力"
         ],
-        "weight": 95.0
+        "weight": 95.0,
+        "regulation": "M-A"
+      },
+      {
+        "name": "超级烈咬陆鲨Ｚ",
+        "types": [
+          "龙"
+        ],
+        "abilities": [
+          "飘浮",
+          "飘浮",
+          "飘浮"
+        ],
+        "weight": 99.0,
+        "regulation": "M-C"
       }
     ],
     "stats": [
@@ -3823,7 +4386,8 @@
           "sp_attack": 80,
           "sp_defense": 85,
           "speed": 102
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级烈咬陆鲨",
@@ -3834,7 +4398,20 @@
           "sp_attack": 120,
           "sp_defense": 95,
           "speed": 92
-        }
+        },
+        "regulation": "M-A"
+      },
+      {
+        "form": "超级烈咬陆鲨Ｚ",
+        "data": {
+          "hp": 108,
+          "attack": 130,
+          "defense": 85,
+          "sp_attack": 141,
+          "sp_defense": 85,
+          "speed": 151
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -3852,7 +4429,8 @@
           "精神力",
           "正义之心"
         ],
-        "weight": 54.0
+        "weight": 54.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级路卡利欧",
@@ -3865,7 +4443,22 @@
           "适应力",
           "适应力"
         ],
-        "weight": 57.5
+        "weight": 57.5,
+        "regulation": "M-A"
+      },
+      {
+        "name": "超级路卡利欧Ｚ",
+        "types": [
+          "格斗",
+          "钢"
+        ],
+        "abilities": [
+          "波导防护",
+          "波导防护",
+          "波导防护"
+        ],
+        "weight": 49.4,
+        "regulation": "M-C"
       }
     ],
     "stats": [
@@ -3878,7 +4471,8 @@
           "sp_attack": 115,
           "sp_defense": 70,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级路卡利欧",
@@ -3889,7 +4483,20 @@
           "sp_attack": 140,
           "sp_defense": 70,
           "speed": 112
-        }
+        },
+        "regulation": "M-A"
+      },
+      {
+        "form": "超级路卡利欧Ｚ",
+        "data": {
+          "hp": 70,
+          "attack": 100,
+          "defense": 70,
+          "sp_attack": 164,
+          "sp_defense": 70,
+          "speed": 151
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -3906,7 +4513,8 @@
           "扬沙",
           "沙之力"
         ],
-        "weight": 300.0
+        "weight": 300.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3919,7 +4527,8 @@
           "sp_attack": 68,
           "sp_defense": 72,
           "speed": 47
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3937,7 +4546,8 @@
           "干燥皮肤",
           "毒手"
         ],
-        "weight": 44.4
+        "weight": 44.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3950,7 +4560,8 @@
           "sp_attack": 86,
           "sp_defense": 65,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -3968,7 +4579,8 @@
           "降雪",
           "隔音"
         ],
-        "weight": 135.5
+        "weight": 135.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级暴雪王",
@@ -3981,7 +4593,8 @@
           "降雪",
           "降雪"
         ],
-        "weight": 185.0
+        "weight": 185.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -3994,7 +4607,8 @@
           "sp_attack": 92,
           "sp_defense": 85,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级暴雪王",
@@ -4005,7 +4619,8 @@
           "sp_attack": 132,
           "sp_defense": 105,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4023,7 +4638,8 @@
           "压迫感",
           "顺手牵羊"
         ],
-        "weight": 34.0
+        "weight": 34.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4036,7 +4652,8 @@
           "sp_attack": 45,
           "sp_defense": 85,
           "speed": 125
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4054,7 +4671,8 @@
           "坚硬岩石",
           "舍身"
         ],
-        "weight": 282.8
+        "weight": 282.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4067,7 +4685,8 @@
           "sp_attack": 55,
           "sp_defense": 55,
           "speed": 40
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4084,7 +4703,8 @@
           "叶子防守",
           "叶绿素"
         ],
-        "weight": 25.5
+        "weight": 25.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4097,7 +4717,8 @@
           "sp_attack": 60,
           "sp_defense": 65,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4114,7 +4735,8 @@
           "雪隐",
           "冰冻之躯"
         ],
-        "weight": 25.9
+        "weight": 25.9,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4127,7 +4749,8 @@
           "sp_attack": 130,
           "sp_defense": 95,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4145,7 +4768,8 @@
           "沙隐",
           "毒疗"
         ],
-        "weight": 42.5
+        "weight": 42.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4158,7 +4782,8 @@
           "sp_attack": 45,
           "sp_defense": 75,
           "speed": 95
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4176,7 +4801,8 @@
           "雪隐",
           "厚脂肪"
         ],
-        "weight": 291.0
+        "weight": 291.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4189,7 +4815,8 @@
           "sp_attack": 70,
           "sp_defense": 60,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4207,7 +4834,8 @@
           "锋锐",
           "正义之心"
         ],
-        "weight": 52.0
+        "weight": 52.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级艾路雷朵",
@@ -4220,7 +4848,8 @@
           "精神力",
           "精神力"
         ],
-        "weight": 56.4
+        "weight": 56.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4233,7 +4862,8 @@
           "sp_attack": 65,
           "sp_defense": 115,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级艾路雷朵",
@@ -4244,7 +4874,8 @@
           "sp_attack": 65,
           "sp_defense": 115,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4262,7 +4893,8 @@
           "雪隐",
           "咒术之躯"
         ],
-        "weight": 26.6
+        "weight": 26.6,
+        "regulation": "M-A"
       },
       {
         "name": "超级雪妖女",
@@ -4275,7 +4907,8 @@
           "降雪",
           "降雪"
         ],
-        "weight": 29.6
+        "weight": 29.6,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4288,7 +4921,8 @@
           "sp_attack": 80,
           "sp_defense": 70,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级雪妖女",
@@ -4299,7 +4933,8 @@
           "sp_attack": 140,
           "sp_defense": 100,
           "speed": 120
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4317,7 +4952,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       },
       {
         "name": "加热洛托姆",
@@ -4330,7 +4966,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       },
       {
         "name": "清洗洛托姆",
@@ -4343,7 +4980,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       },
       {
         "name": "结冰洛托姆",
@@ -4356,7 +4994,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       },
       {
         "name": "旋转洛托姆",
@@ -4369,7 +5008,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       },
       {
         "name": "切割洛托姆",
@@ -4382,7 +5022,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 0.3
+        "weight": 0.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4395,7 +5036,8 @@
           "sp_attack": 95,
           "sp_defense": 77,
           "speed": 91
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "加热洛托姆",
@@ -4406,7 +5048,8 @@
           "sp_attack": 105,
           "sp_defense": 107,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "清洗洛托姆",
@@ -4417,7 +5060,8 @@
           "sp_attack": 105,
           "sp_defense": 107,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "结冰洛托姆",
@@ -4428,7 +5072,8 @@
           "sp_attack": 105,
           "sp_defense": 107,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "旋转洛托姆",
@@ -4439,7 +5084,8 @@
           "sp_attack": 105,
           "sp_defense": 107,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "切割洛托姆",
@@ -4450,7 +5096,8 @@
           "sp_attack": 105,
           "sp_defense": 107,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4467,7 +5114,8 @@
           "茂盛",
           "唱反调"
         ],
-        "weight": 63.0
+        "weight": 63.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4480,7 +5128,8 @@
           "sp_attack": 75,
           "sp_defense": 95,
           "speed": 113
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4498,7 +5147,8 @@
           "猛火",
           "舍身"
         ],
-        "weight": 150.0
+        "weight": 150.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级炎武王",
@@ -4511,7 +5161,8 @@
           "破格",
           "破格"
         ],
-        "weight": 180.3
+        "weight": 180.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4524,7 +5175,8 @@
           "sp_attack": 100,
           "sp_defense": 65,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级炎武王",
@@ -4535,7 +5187,8 @@
           "sp_attack": 110,
           "sp_defense": 110,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4552,7 +5205,8 @@
           "激流",
           "硬壳盔甲"
         ],
-        "weight": 94.6
+        "weight": 94.6,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠大剑鬼",
@@ -4565,7 +5219,8 @@
           "激流",
           "锋锐"
         ],
-        "weight": 58.2
+        "weight": 58.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4578,7 +5233,8 @@
           "sp_attack": 108,
           "sp_defense": 70,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠大剑鬼",
@@ -4589,7 +5245,8 @@
           "sp_attack": 100,
           "sp_defense": 65,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4606,7 +5263,8 @@
           "锐利目光",
           "分析"
         ],
-        "weight": 27.0
+        "weight": 27.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4619,7 +5277,8 @@
           "sp_attack": 60,
           "sp_defense": 69,
           "speed": 77
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4636,7 +5295,8 @@
           "轻装",
           "恶作剧之心"
         ],
-        "weight": 37.5
+        "weight": 37.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4649,7 +5309,8 @@
           "sp_attack": 88,
           "sp_defense": 50,
           "speed": 106
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4666,7 +5327,8 @@
           "贪吃鬼",
           "茂盛"
         ],
-        "weight": 30.5
+        "weight": 30.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4679,7 +5341,8 @@
           "sp_attack": 98,
           "sp_defense": 63,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4696,7 +5359,8 @@
           "贪吃鬼",
           "猛火"
         ],
-        "weight": 28.0
+        "weight": 28.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4709,7 +5373,8 @@
           "sp_attack": 98,
           "sp_defense": 63,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4726,7 +5391,8 @@
           "贪吃鬼",
           "激流"
         ],
-        "weight": 29.0
+        "weight": 29.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4739,7 +5405,8 @@
           "sp_attack": 98,
           "sp_defense": 63,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4756,7 +5423,8 @@
           "同步",
           "心灵感应"
         ],
-        "weight": 60.5
+        "weight": 60.5,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -4769,7 +5437,8 @@
           "sp_attack": 107,
           "sp_defense": 95,
           "speed": 29
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -4787,7 +5456,8 @@
           "沙之力",
           "破格"
         ],
-        "weight": 40.4
+        "weight": 40.4,
+        "regulation": "M-A"
       },
       {
         "name": "超级龙头地鼠",
@@ -4800,7 +5470,8 @@
           "贯穿钻",
           "贯穿钻"
         ],
-        "weight": 60.0
+        "weight": 60.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4813,7 +5484,8 @@
           "sp_attack": 50,
           "sp_defense": 65,
           "speed": 88
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级龙头地鼠",
@@ -4824,7 +5496,8 @@
           "sp_attack": 65,
           "sp_defense": 65,
           "speed": 103
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4841,7 +5514,8 @@
           "再生力",
           "笨拙"
         ],
-        "weight": 31.0
+        "weight": 31.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级差不多娃娃",
@@ -4854,7 +5528,8 @@
           "治愈之心",
           "治愈之心"
         ],
-        "weight": 32.0
+        "weight": 32.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4867,7 +5542,8 @@
           "sp_attack": 60,
           "sp_defense": 86,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级差不多娃娃",
@@ -4878,7 +5554,8 @@
           "sp_attack": 80,
           "sp_defense": 126,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4895,7 +5572,8 @@
           "强行",
           "铁拳"
         ],
-        "weight": 87.0
+        "weight": 87.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4908,7 +5586,8 @@
           "sp_attack": 55,
           "sp_defense": 65,
           "speed": 45
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -4926,7 +5605,8 @@
           "虫之预感",
           "加速"
         ],
-        "weight": 200.5
+        "weight": 200.5,
+        "regulation": "M-B"
       },
       {
         "name": "超级蜈蚣王",
@@ -4939,7 +5619,8 @@
           "硬壳盔甲",
           "硬壳盔甲"
         ],
-        "weight": 230.5
+        "weight": 230.5,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -4952,7 +5633,8 @@
           "sp_attack": 55,
           "sp_defense": 69,
           "speed": 112
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级蜈蚣王",
@@ -4963,7 +5645,8 @@
           "sp_attack": 75,
           "sp_defense": 99,
           "speed": 62
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -4981,7 +5664,8 @@
           "穿透",
           "叶绿素"
         ],
-        "weight": 6.6
+        "weight": 6.6,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -4994,7 +5678,8 @@
           "sp_attack": 77,
           "sp_defense": 75,
           "speed": 116
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5012,7 +5697,8 @@
           "自信过度",
           "愤怒穴位"
         ],
-        "weight": 96.3
+        "weight": 96.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5025,7 +5711,8 @@
           "sp_attack": 65,
           "sp_defense": 70,
           "speed": 92
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5043,7 +5730,8 @@
           "自信过度",
           "威吓"
         ],
-        "weight": 30.0
+        "weight": 30.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级头巾混混",
@@ -5056,7 +5744,8 @@
           "威吓",
           "威吓"
         ],
-        "weight": 31.0
+        "weight": 31.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -5069,7 +5758,8 @@
           "sp_attack": 45,
           "sp_defense": 115,
           "speed": 58
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级头巾混混",
@@ -5080,7 +5770,8 @@
           "sp_attack": 55,
           "sp_defense": 135,
           "speed": 68
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -5097,7 +5788,8 @@
           "木乃伊",
           "木乃伊"
         ],
-        "weight": 76.5
+        "weight": 76.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5110,7 +5802,8 @@
           "sp_attack": 95,
           "sp_defense": 105,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5127,7 +5820,8 @@
           "碎裂铠甲",
           "诱爆"
         ],
-        "weight": 107.3
+        "weight": 107.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5140,7 +5834,8 @@
           "sp_attack": 60,
           "sp_defense": 82,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5157,7 +5852,8 @@
           "幻觉",
           "幻觉"
         ],
-        "weight": 81.1
+        "weight": 81.1,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠索罗亚克",
@@ -5170,7 +5866,8 @@
           "幻觉",
           "幻觉"
         ],
-        "weight": 73.0
+        "weight": 73.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5183,7 +5880,8 @@
           "sp_attack": 120,
           "sp_defense": 60,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠索罗亚克",
@@ -5194,7 +5892,8 @@
           "sp_attack": 125,
           "sp_defense": 60,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5211,7 +5910,8 @@
           "魔法防守",
           "再生力"
         ],
-        "weight": 20.1
+        "weight": 20.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5224,7 +5924,8 @@
           "sp_attack": 125,
           "sp_defense": 85,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5241,7 +5942,8 @@
           "降雪",
           "碎裂铠甲"
         ],
-        "weight": 57.5
+        "weight": 57.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5254,7 +5956,8 @@
           "sp_attack": 110,
           "sp_defense": 95,
           "speed": 79
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5272,7 +5975,8 @@
           "静电",
           "电气引擎"
         ],
-        "weight": 5.0
+        "weight": 5.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5285,7 +5989,8 @@
           "sp_attack": 75,
           "sp_defense": 60,
           "speed": 103
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5302,7 +6007,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 80.5
+        "weight": 80.5,
+        "regulation": "M-B"
       },
       {
         "name": "超级麻麻鳗鱼王",
@@ -5314,7 +6020,8 @@
           "鳗鳗高升",
           "鳗鳗高升"
         ],
-        "weight": 180.0
+        "weight": 180.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -5327,7 +6034,8 @@
           "sp_attack": 105,
           "sp_defense": 80,
           "speed": 50
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级麻麻鳗鱼王",
@@ -5338,7 +6046,8 @@
           "sp_attack": 135,
           "sp_defense": 90,
           "speed": 80
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -5356,7 +6065,8 @@
           "火焰之躯",
           "穿透"
         ],
-        "weight": 34.3
+        "weight": 34.3,
+        "regulation": "M-A"
       },
       {
         "name": "超级水晶灯火灵",
@@ -5369,7 +6079,8 @@
           "穿透",
           "穿透"
         ],
-        "weight": 69.6
+        "weight": 69.6,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5382,7 +6093,8 @@
           "sp_attack": 145,
           "sp_defense": 90,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级水晶灯火灵",
@@ -5393,7 +6105,8 @@
           "sp_attack": 175,
           "sp_defense": 110,
           "speed": 90
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5410,7 +6123,8 @@
           "拨雪",
           "悠游自如"
         ],
-        "weight": 260.0
+        "weight": 260.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5423,7 +6137,8 @@
           "sp_attack": 70,
           "sp_defense": 80,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5441,7 +6156,8 @@
           "柔软",
           "沙隐"
         ],
-        "weight": 11.0
+        "weight": 11.0,
+        "regulation": "M-A"
       },
       {
         "name": "伽勒尔泥巴鱼",
@@ -5454,7 +6170,8 @@
           "拟态",
           "拟态"
         ],
-        "weight": 20.5
+        "weight": 20.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5467,7 +6184,8 @@
           "sp_attack": 81,
           "sp_defense": 99,
           "speed": 32
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "伽勒尔泥巴鱼",
@@ -5478,7 +6196,8 @@
           "sp_attack": 66,
           "sp_defense": 84,
           "speed": 32
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5496,7 +6215,8 @@
           "笨拙",
           "无防守"
         ],
-        "weight": 330.0
+        "weight": 330.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级泥偶巨人",
@@ -5509,7 +6229,8 @@
           "无形拳",
           "无形拳"
         ],
-        "weight": 330.0
+        "weight": 330.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5522,7 +6243,8 @@
           "sp_attack": 55,
           "sp_defense": 80,
           "speed": 55
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级泥偶巨人",
@@ -5533,7 +6255,8 @@
           "sp_attack": 70,
           "sp_defense": 105,
           "speed": 55
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5551,7 +6274,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 160.0
+        "weight": 160.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5564,7 +6288,8 @@
           "sp_attack": 125,
           "sp_defense": 90,
           "speed": 98
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5582,7 +6307,8 @@
           "火焰之躯",
           "虫之预感"
         ],
-        "weight": 46.0
+        "weight": 46.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5595,7 +6321,8 @@
           "sp_attack": 135,
           "sp_defense": 105,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5613,7 +6340,8 @@
           "茂盛",
           "防弹"
         ],
-        "weight": 90.0
+        "weight": 90.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级布里卡隆",
@@ -5626,7 +6354,8 @@
           "防弹",
           "防弹"
         ],
-        "weight": 90.0
+        "weight": 90.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5639,7 +6368,8 @@
           "sp_attack": 74,
           "sp_defense": 75,
           "speed": 64
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级布里卡隆",
@@ -5650,7 +6380,8 @@
           "sp_attack": 74,
           "sp_defense": 115,
           "speed": 44
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5668,7 +6399,8 @@
           "猛火",
           "魔术师"
         ],
-        "weight": 39.0
+        "weight": 39.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级妖火红狐",
@@ -5681,7 +6413,8 @@
           "飘浮",
           "飘浮"
         ],
-        "weight": 39.0
+        "weight": 39.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5694,7 +6427,8 @@
           "sp_attack": 114,
           "sp_defense": 100,
           "speed": 104
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级妖火红狐",
@@ -5705,7 +6439,8 @@
           "sp_attack": 159,
           "sp_defense": 125,
           "speed": 134
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5723,7 +6458,8 @@
           "激流",
           "变幻自如"
         ],
-        "weight": 40.0
+        "weight": 40.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级甲贺忍蛙",
@@ -5736,7 +6472,8 @@
           "变幻自如",
           "变幻自如"
         ],
-        "weight": 40.0
+        "weight": 40.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5749,7 +6486,8 @@
           "sp_attack": 103,
           "sp_defense": 71,
           "speed": 122
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级甲贺忍蛙",
@@ -5760,7 +6498,8 @@
           "sp_attack": 133,
           "sp_defense": 81,
           "speed": 142
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5778,7 +6517,8 @@
           "颊囊",
           "大力士"
         ],
-        "weight": 42.4
+        "weight": 42.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5791,7 +6531,8 @@
           "sp_attack": 50,
           "sp_defense": 77,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5809,7 +6550,8 @@
           "火焰之躯",
           "疾风之翼"
         ],
-        "weight": 24.5
+        "weight": 24.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5822,7 +6564,8 @@
           "sp_attack": 74,
           "sp_defense": 69,
           "speed": 126
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5845,7 +6588,8 @@
           "紧张感",
           "自信过度"
         ],
-        "weight": 81.5
+        "weight": 81.5,
+        "regulation": "M-B"
       },
       {
         "name": "超级火炎狮",
@@ -5858,7 +6602,8 @@
           "火焰鬃毛",
           "火焰鬃毛"
         ],
-        "weight": 93.3
+        "weight": 93.3,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -5871,7 +6616,8 @@
           "sp_attack": 109,
           "sp_defense": 66,
           "speed": 106
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级火炎狮",
@@ -5882,7 +6628,8 @@
           "sp_attack": 129,
           "sp_defense": 86,
           "speed": 126
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -5899,7 +6646,8 @@
           "花幕",
           "共生"
         ],
-        "weight": 0.9
+        "weight": 0.9,
+        "regulation": "M-A"
       },
       {
         "name": "超级花叶蒂",
@@ -5911,7 +6659,8 @@
           "妖精气场",
           "妖精气场"
         ],
-        "weight": 100.8
+        "weight": 100.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5924,7 +6673,8 @@
           "sp_attack": 125,
           "sp_defense": 128,
           "speed": 92
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级花叶蒂",
@@ -5935,7 +6685,8 @@
           "sp_attack": 155,
           "sp_defense": 148,
           "speed": 102
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5943,6 +6694,38 @@
     "_data_source": "champions",
     "forms": [],
     "stats": []
+  },
+  "0673-坐骑山羊": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "坐骑山羊",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "食草",
+          "食草",
+          "草之毛皮"
+        ],
+        "weight": 91.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "坐骑山羊",
+        "data": {
+          "hp": 123,
+          "attack": 100,
+          "defense": 62,
+          "sp_attack": 97,
+          "sp_defense": 81,
+          "speed": 68
+        },
+        "regulation": "M-C"
+      }
+    ]
   },
   "0675-流氓熊猫": {
     "_data_source": "champions",
@@ -5958,7 +6741,8 @@
           "破格",
           "胆量"
         ],
-        "weight": 136.0
+        "weight": 136.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -5971,7 +6755,8 @@
           "sp_attack": 69,
           "sp_defense": 71,
           "speed": 58
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -5993,7 +6778,8 @@
           "穿透",
           "恶作剧之心"
         ],
-        "weight": 8.5
+        "weight": 8.5,
+        "regulation": "M-A"
       },
       {
         "name": "雌性的样子",
@@ -6005,7 +6791,8 @@
           "穿透",
           "好胜"
         ],
-        "weight": 8.5
+        "weight": 8.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级超能妙喵",
@@ -6017,7 +6804,8 @@
           "复制",
           "复制"
         ],
-        "weight": 10.1
+        "weight": 10.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6030,7 +6818,8 @@
           "sp_attack": 83,
           "sp_defense": 81,
           "speed": 104
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "雌性的样子",
@@ -6041,7 +6830,8 @@
           "sp_attack": 83,
           "sp_defense": 81,
           "speed": 104
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级超能妙喵",
@@ -6052,7 +6842,8 @@
           "sp_attack": 143,
           "sp_defense": 101,
           "speed": 124
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6070,7 +6861,8 @@
           "战斗切换",
           "战斗切换"
         ],
-        "weight": 53.0
+        "weight": 53.0,
+        "regulation": "M-A"
       },
       {
         "name": "刀剑形态",
@@ -6083,7 +6875,8 @@
           "战斗切换",
           "战斗切换"
         ],
-        "weight": 53.0
+        "weight": 53.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6096,7 +6889,8 @@
           "sp_attack": 50,
           "sp_defense": 140,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "刀剑形态",
@@ -6107,7 +6901,8 @@
           "sp_attack": 140,
           "sp_defense": 50,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6124,7 +6919,8 @@
           "治愈之心",
           "芳香幕"
         ],
-        "weight": 15.5
+        "weight": 15.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6137,7 +6933,8 @@
           "sp_attack": 99,
           "sp_defense": 89,
           "speed": 29
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6154,7 +6951,8 @@
           "甜幕",
           "轻装"
         ],
-        "weight": 5.0
+        "weight": 5.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6167,7 +6965,8 @@
           "sp_attack": 85,
           "sp_defense": 75,
           "speed": 72
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6185,7 +6984,8 @@
           "吸盘",
           "穿透"
         ],
-        "weight": 47.0
+        "weight": 47.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级乌贼王",
@@ -6198,7 +6998,8 @@
           "唱反调",
           "唱反调"
         ],
-        "weight": 69.8
+        "weight": 69.8,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -6211,7 +7012,8 @@
           "sp_attack": 68,
           "sp_defense": 75,
           "speed": 73
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级乌贼王",
@@ -6222,7 +7024,8 @@
           "sp_attack": 98,
           "sp_defense": 120,
           "speed": 88
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -6240,7 +7043,8 @@
           "狙击手",
           "顺手牵羊"
         ],
-        "weight": 96.0
+        "weight": 96.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级龟足巨铠",
@@ -6253,7 +7057,8 @@
           "硬爪",
           "硬爪"
         ],
-        "weight": 100.0
+        "weight": 100.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -6266,7 +7071,8 @@
           "sp_attack": 54,
           "sp_defense": 86,
           "speed": 68
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级龟足巨铠",
@@ -6277,7 +7083,8 @@
           "sp_attack": 64,
           "sp_defense": 106,
           "speed": 88
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -6295,7 +7102,8 @@
           "毒手",
           "适应力"
         ],
-        "weight": 81.5
+        "weight": 81.5,
+        "regulation": "M-B"
       },
       {
         "name": "超级毒藻龙",
@@ -6308,7 +7116,8 @@
           "再生力",
           "再生力"
         ],
-        "weight": 100.3
+        "weight": 100.3,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -6321,7 +7130,8 @@
           "sp_attack": 97,
           "sp_defense": 123,
           "speed": 44
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级毒藻龙",
@@ -6332,7 +7142,8 @@
           "sp_attack": 132,
           "sp_defense": 163,
           "speed": 44
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -6349,7 +7160,8 @@
           "超级发射器",
           "超级发射器"
         ],
-        "weight": 35.3
+        "weight": 35.3,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6362,7 +7174,8 @@
           "sp_attack": 120,
           "sp_defense": 89,
           "speed": 59
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6380,7 +7193,8 @@
           "沙隐",
           "太阳之力"
         ],
-        "weight": 21.0
+        "weight": 21.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6393,7 +7207,8 @@
           "sp_attack": 109,
           "sp_defense": 94,
           "speed": 109
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6411,7 +7226,8 @@
           "强壮之颚",
           "坚硬脑袋"
         ],
-        "weight": 270.0
+        "weight": 270.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6424,7 +7240,8 @@
           "sp_attack": 69,
           "sp_defense": 59,
           "speed": 71
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6442,7 +7259,8 @@
           "冰冻皮肤",
           "降雪"
         ],
-        "weight": 225.0
+        "weight": 225.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6455,7 +7273,8 @@
           "sp_attack": 99,
           "sp_defense": 92,
           "speed": 58
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6472,7 +7291,8 @@
           "迷人之躯",
           "妖精皮肤"
         ],
-        "weight": 23.5
+        "weight": 23.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6485,7 +7305,8 @@
           "sp_attack": 110,
           "sp_defense": 130,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6503,7 +7324,8 @@
           "轻装",
           "破格"
         ],
-        "weight": 21.5
+        "weight": 21.5,
+        "regulation": "M-A"
       },
       {
         "name": "超级摔角鹰人",
@@ -6516,7 +7338,8 @@
           "无防守",
           "无防守"
         ],
-        "weight": 25.0
+        "weight": 25.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6529,7 +7352,8 @@
           "sp_attack": 74,
           "sp_defense": 63,
           "speed": 118
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级摔角鹰人",
@@ -6540,7 +7364,8 @@
           "sp_attack": 74,
           "sp_defense": 93,
           "speed": 118
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6558,7 +7383,8 @@
           "捡拾",
           "正电"
         ],
-        "weight": 2.2
+        "weight": 2.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6571,7 +7397,8 @@
           "sp_attack": 81,
           "sp_defense": 67,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6588,7 +7415,8 @@
           "湿润之躯",
           "黏滑"
         ],
-        "weight": 150.5
+        "weight": 150.5,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠黏美龙",
@@ -6601,7 +7429,8 @@
           "硬壳盔甲",
           "黏滑"
         ],
-        "weight": 334.1
+        "weight": 334.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6614,7 +7443,8 @@
           "sp_attack": 110,
           "sp_defense": 150,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠黏美龙",
@@ -6625,7 +7455,8 @@
           "sp_attack": 110,
           "sp_defense": 150,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6643,7 +7474,8 @@
           "恶作剧之心",
           "魔术师"
         ],
-        "weight": 3.0
+        "weight": 3.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6656,7 +7488,8 @@
           "sp_attack": 80,
           "sp_defense": 87,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6674,7 +7507,8 @@
           "察觉",
           "收获"
         ],
-        "weight": 71.0
+        "weight": 71.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6687,7 +7521,8 @@
           "sp_attack": 65,
           "sp_defense": 82,
           "speed": 56
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6705,7 +7540,8 @@
           "察觉",
           "不眠"
         ],
-        "weight": 12.5
+        "weight": 12.5,
+        "regulation": "M-A"
       },
       {
         "name": "小颗种",
@@ -6718,7 +7554,8 @@
           "察觉",
           "不眠"
         ],
-        "weight": 9.5
+        "weight": 9.5,
+        "regulation": "M-A"
       },
       {
         "name": "大颗种",
@@ -6731,7 +7568,8 @@
           "察觉",
           "不眠"
         ],
-        "weight": 14.0
+        "weight": 14.0,
+        "regulation": "M-A"
       },
       {
         "name": "巨颗种",
@@ -6744,7 +7582,8 @@
           "察觉",
           "不眠"
         ],
-        "weight": 39.0
+        "weight": 39.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6757,7 +7596,8 @@
           "sp_attack": 58,
           "sp_defense": 75,
           "speed": 84
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "小颗种",
@@ -6768,7 +7608,8 @@
           "sp_attack": 58,
           "sp_defense": 75,
           "speed": 99
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "大颗种",
@@ -6779,7 +7620,8 @@
           "sp_attack": 58,
           "sp_defense": 75,
           "speed": 69
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "巨颗种",
@@ -6790,7 +7632,8 @@
           "sp_attack": 58,
           "sp_defense": 75,
           "speed": 54
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6807,7 +7650,8 @@
           "冰冻之躯",
           "结实"
         ],
-        "weight": 505.0
+        "weight": 505.0,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠冰岩怪",
@@ -6820,7 +7664,8 @@
           "冰冻之躯",
           "结实"
         ],
-        "weight": 262.4
+        "weight": 262.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6833,7 +7678,8 @@
           "sp_attack": 44,
           "sp_defense": 46,
           "speed": 28
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠冰岩怪",
@@ -6844,7 +7690,8 @@
           "sp_attack": 34,
           "sp_defense": 36,
           "speed": 38
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6862,7 +7709,8 @@
           "穿透",
           "心灵感应"
         ],
-        "weight": 85.0
+        "weight": 85.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6875,7 +7723,8 @@
           "sp_attack": 97,
           "sp_defense": 80,
           "speed": 123
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6893,7 +7742,8 @@
           "茂盛",
           "远隔"
         ],
-        "weight": 36.6
+        "weight": 36.6,
+        "regulation": "M-A"
       },
       {
         "name": "洗翠狙射树枭",
@@ -6906,7 +7756,8 @@
           "茂盛",
           "胆量"
         ],
-        "weight": 37.0
+        "weight": 37.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6919,7 +7770,8 @@
           "sp_attack": 100,
           "sp_defense": 100,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "洗翠狙射树枭",
@@ -6930,7 +7782,8 @@
           "sp_attack": 95,
           "sp_defense": 95,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6948,7 +7801,8 @@
           "猛火",
           "威吓"
         ],
-        "weight": 83.0
+        "weight": 83.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6961,7 +7815,8 @@
           "sp_attack": 80,
           "sp_defense": 90,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -6979,7 +7834,8 @@
           "激流",
           "湿润之声"
         ],
-        "weight": 44.0
+        "weight": 44.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -6992,7 +7848,8 @@
           "sp_attack": 126,
           "sp_defense": 116,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7010,7 +7867,8 @@
           "连续攻击",
           "强行"
         ],
-        "weight": 26.0
+        "weight": 26.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7023,7 +7881,8 @@
           "sp_attack": 75,
           "sp_defense": 75,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7041,7 +7900,8 @@
           "铁拳",
           "愤怒穴位"
         ],
-        "weight": 180.0
+        "weight": 180.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级好胜毛蟹",
@@ -7054,7 +7914,8 @@
           "铁拳",
           "铁拳"
         ],
-        "weight": 252.8
+        "weight": 252.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7067,7 +7928,8 @@
           "sp_attack": 62,
           "sp_defense": 67,
           "speed": 43
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级好胜毛蟹",
@@ -7078,7 +7940,8 @@
           "sp_attack": 62,
           "sp_defense": 107,
           "speed": 33
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7095,7 +7958,8 @@
           "拨沙",
           "不屈之心"
         ],
-        "weight": 25.0
+        "weight": 25.0,
+        "regulation": "M-A"
       },
       {
         "name": "黑夜的样子",
@@ -7107,7 +7971,8 @@
           "干劲",
           "无防守"
         ],
-        "weight": 25.0
+        "weight": 25.0,
+        "regulation": "M-A"
       },
       {
         "name": "黄昏的样子",
@@ -7119,7 +7984,8 @@
           "硬爪",
           "硬爪"
         ],
-        "weight": 25.0
+        "weight": 25.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7132,7 +7998,8 @@
           "sp_attack": 55,
           "sp_defense": 65,
           "speed": 112
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "黑夜的样子",
@@ -7143,7 +8010,8 @@
           "sp_attack": 55,
           "sp_defense": 75,
           "speed": 82
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "黄昏的样子",
@@ -7154,7 +8022,8 @@
           "sp_attack": 55,
           "sp_defense": 65,
           "speed": 110
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7172,7 +8041,8 @@
           "柔软",
           "再生力"
         ],
-        "weight": 14.5
+        "weight": 14.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7185,7 +8055,8 @@
           "sp_attack": 53,
           "sp_defense": 142,
           "speed": 35
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7202,7 +8073,8 @@
           "持久力",
           "精神力"
         ],
-        "weight": 920.0
+        "weight": 920.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7215,7 +8087,8 @@
           "sp_attack": 55,
           "sp_defense": 85,
           "speed": 35
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7233,7 +8106,8 @@
           "水泡",
           "储水"
         ],
-        "weight": 82.0
+        "weight": 82.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7246,7 +8120,8 @@
           "sp_attack": 50,
           "sp_defense": 132,
           "speed": 42
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7264,7 +8139,8 @@
           "腐蚀",
           "迟钝"
         ],
-        "weight": 22.2
+        "weight": 22.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7277,7 +8153,8 @@
           "sp_attack": 111,
           "sp_defense": 60,
           "speed": 117
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7294,7 +8171,8 @@
           "女王的威严",
           "甜幕"
         ],
-        "weight": 21.4
+        "weight": 21.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7307,7 +8185,8 @@
           "sp_attack": 50,
           "sp_defense": 98,
           "speed": 72
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7325,7 +8204,8 @@
           "心灵感应",
           "共生"
         ],
-        "weight": 76.0
+        "weight": 76.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7338,7 +8218,8 @@
           "sp_attack": 90,
           "sp_defense": 110,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7355,7 +8236,8 @@
           "接球手",
           "不服输"
         ],
-        "weight": 82.8
+        "weight": 82.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7368,7 +8250,67 @@
           "sp_attack": 40,
           "sp_defense": 60,
           "speed": 80
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0768-具甲武者": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "具甲武者",
+        "types": [
+          "虫",
+          "水"
+        ],
+        "abilities": [
+          "危险回避",
+          "危险回避",
+          "危险回避"
+        ],
+        "weight": 108.0,
+        "regulation": "M-C"
+      },
+      {
+        "name": "超级具甲武者",
+        "types": [
+          "虫",
+          "钢"
+        ],
+        "abilities": [
+          "硬爪",
+          "硬爪",
+          "硬爪"
+        ],
+        "weight": 148.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "具甲武者",
+        "data": {
+          "hp": 75,
+          "attack": 125,
+          "defense": 140,
+          "sp_attack": 60,
+          "sp_defense": 90,
+          "speed": 40
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "超级具甲武者",
+        "data": {
+          "hp": 75,
+          "attack": 150,
+          "defense": 175,
+          "sp_attack": 70,
+          "sp_defense": 120,
+          "speed": 40
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7386,7 +8328,8 @@
           "画皮",
           "画皮"
         ],
-        "weight": 0.7
+        "weight": 0.7,
+        "regulation": "M-A"
       },
       {
         "name": "现形的样子",
@@ -7399,7 +8342,8 @@
           "画皮",
           "画皮"
         ],
-        "weight": 0.7
+        "weight": 0.7,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7412,7 +8356,8 @@
           "sp_attack": 50,
           "sp_defense": 105,
           "speed": 96
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "现形的样子",
@@ -7423,7 +8368,8 @@
           "sp_attack": 50,
           "sp_defense": 105,
           "speed": 96
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7441,7 +8387,8 @@
           "食草",
           "无关天气"
         ],
-        "weight": 185.0
+        "weight": 185.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级老翁龙",
@@ -7454,7 +8401,8 @@
           "怒火冲天",
           "怒火冲天"
         ],
-        "weight": 240.5
+        "weight": 240.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7467,7 +8415,8 @@
           "sp_attack": 135,
           "sp_defense": 91,
           "speed": 36
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级老翁龙",
@@ -7478,7 +8427,8 @@
           "sp_attack": 160,
           "sp_defense": 116,
           "speed": 36
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7496,7 +8446,8 @@
           "隔音",
           "防尘"
         ],
-        "weight": 78.2
+        "weight": 78.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7509,7 +8460,104 @@
           "sp_attack": 100,
           "sp_defense": 105,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0812-轰擂金刚猩": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "轰擂金刚猩",
+        "types": [
+          "草"
+        ],
+        "abilities": [
+          "茂盛",
+          "茂盛",
+          "青草制造者"
+        ],
+        "weight": 90.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "轰擂金刚猩",
+        "data": {
+          "hp": 100,
+          "attack": 125,
+          "defense": 90,
+          "sp_attack": 60,
+          "sp_defense": 70,
+          "speed": 85
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0815-闪焰王牌": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "闪焰王牌",
+        "types": [
+          "火"
+        ],
+        "abilities": [
+          "猛火",
+          "猛火",
+          "自由者"
+        ],
+        "weight": 33.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "闪焰王牌",
+        "data": {
+          "hp": 80,
+          "attack": 116,
+          "defense": 75,
+          "sp_attack": 65,
+          "sp_defense": 75,
+          "speed": 119
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0818-千面避役": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "千面避役",
+        "types": [
+          "水"
+        ],
+        "abilities": [
+          "激流",
+          "激流",
+          "狙击手"
+        ],
+        "weight": 45.2,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "千面避役",
+        "data": {
+          "hp": 70,
+          "attack": 85,
+          "defense": 65,
+          "sp_attack": 125,
+          "sp_defense": 65,
+          "speed": 120
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7527,7 +8575,8 @@
           "紧张感",
           "镜甲"
         ],
-        "weight": 75.0
+        "weight": 75.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7540,7 +8589,40 @@
           "sp_attack": 53,
           "sp_defense": 85,
           "speed": 67
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0828-狐大盗": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "猾大狐",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "逃跑",
+          "轻装",
+          "蹲守"
+        ],
+        "weight": 19.9,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "猾大狐",
+        "data": {
+          "hp": 70,
+          "attack": 58,
+          "defense": 58,
+          "sp_attack": 87,
+          "sp_defense": 92,
+          "speed": 90
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7558,7 +8640,8 @@
           "贪吃鬼",
           "活力"
         ],
-        "weight": 1.0
+        "weight": 1.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7571,7 +8654,8 @@
           "sp_attack": 95,
           "sp_defense": 60,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7589,7 +8673,8 @@
           "贪吃鬼",
           "厚脂肪"
         ],
-        "weight": 13.0
+        "weight": 13.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7602,7 +8687,8 @@
           "sp_attack": 100,
           "sp_defense": 80,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7619,7 +8705,8 @@
           "蜕皮",
           "沙隐"
         ],
-        "weight": 65.5
+        "weight": 65.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7632,7 +8719,99 @@
           "sp_attack": 65,
           "sp_defense": 70,
           "speed": 71
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0849-颤弦蝾螈": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "高调的样子",
+        "types": [
+          "电",
+          "毒"
+        ],
+        "abilities": [
+          "庞克摇滚",
+          "正电",
+          "技术高手"
+        ],
+        "weight": 40.0,
+        "regulation": "M-C"
+      },
+      {
+        "name": "低调的样子",
+        "types": [
+          "电",
+          "毒"
+        ],
+        "abilities": [
+          "庞克摇滚",
+          "负电",
+          "技术高手"
+        ],
+        "weight": 40.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "高调的样子",
+        "data": {
+          "hp": 75,
+          "attack": 98,
+          "defense": 70,
+          "sp_attack": 114,
+          "sp_defense": 70,
+          "speed": 75
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "低调的样子",
+        "data": {
+          "hp": 75,
+          "attack": 98,
+          "defense": 70,
+          "sp_attack": 114,
+          "sp_defense": 70,
+          "speed": 75
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0853-八爪武师": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "八爪武师",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "柔软",
+          "柔软",
+          "技术高手"
+        ],
+        "weight": 39.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "八爪武师",
+        "data": {
+          "hp": 80,
+          "attack": 118,
+          "defense": 90,
+          "sp_attack": 70,
+          "sp_defense": 80,
+          "speed": 42
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7655,7 +8834,8 @@
           "危险预知",
           "魔法镜"
         ],
-        "weight": 5.1
+        "weight": 5.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7668,7 +8848,8 @@
           "sp_attack": 136,
           "sp_defense": 103,
           "speed": 29
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7686,7 +8867,8 @@
           "察觉",
           "顺手牵羊"
         ],
-        "weight": 61.0
+        "weight": 61.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -7699,7 +8881,72 @@
           "sp_attack": 95,
           "sp_defense": 75,
           "speed": 60
-        }
+        },
+        "regulation": "M-B"
+      }
+    ]
+  },
+  "0863-喵头目": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "喵头目",
+        "types": [
+          "钢"
+        ],
+        "abilities": [
+          "战斗盔甲",
+          "硬爪",
+          "钢之意志"
+        ],
+        "weight": 28.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "喵头目",
+        "data": {
+          "hp": 70,
+          "attack": 110,
+          "defense": 100,
+          "sp_attack": 50,
+          "sp_defense": 60,
+          "speed": 50
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0865-葱游兵": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "葱游兵",
+        "types": [
+          "格斗"
+        ],
+        "abilities": [
+          "不屈之心",
+          "不屈之心",
+          "胆量"
+        ],
+        "weight": 117.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "葱游兵",
+        "data": {
+          "hp": 62,
+          "attack": 135,
+          "defense": 95,
+          "sp_attack": 68,
+          "sp_defense": 82,
+          "speed": 65
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7717,7 +8964,8 @@
           "除障",
           "冰冻之躯"
         ],
-        "weight": 58.2
+        "weight": 58.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7730,7 +8978,8 @@
           "sp_attack": 110,
           "sp_defense": 100,
           "speed": 70
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7748,7 +8997,8 @@
           "游魂",
           "游魂"
         ],
-        "weight": 66.6
+        "weight": 66.6,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7761,7 +9011,8 @@
           "sp_attack": 50,
           "sp_defense": 105,
           "speed": 30
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7783,7 +9034,8 @@
           "战斗盔甲",
           "不服输"
         ],
-        "weight": 62.0
+        "weight": 62.0,
+        "regulation": "M-B"
       },
       {
         "name": "超级列阵兵",
@@ -7795,7 +9047,8 @@
           "不服输",
           "不服输"
         ],
-        "weight": 99.0
+        "weight": 99.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -7808,7 +9061,8 @@
           "sp_attack": 70,
           "sp_defense": 60,
           "speed": 75
-        }
+        },
+        "regulation": "M-B"
       },
       {
         "form": "超级列阵兵",
@@ -7819,7 +9073,99 @@
           "sp_attack": 70,
           "sp_defense": 65,
           "speed": 100
-        }
+        },
+        "regulation": "M-B"
+      }
+    ]
+  },
+  "0871-啪嚓海胆": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "啪嚓海胆",
+        "types": [
+          "电"
+        ],
+        "abilities": [
+          "避雷针",
+          "避雷针",
+          "电气制造者"
+        ],
+        "weight": 1.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "啪嚓海胆",
+        "data": {
+          "hp": 48,
+          "attack": 101,
+          "defense": 95,
+          "sp_attack": 91,
+          "sp_defense": 85,
+          "speed": 15
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0876-爱管侍": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "雄性的样子",
+        "types": [
+          "超能力",
+          "一般"
+        ],
+        "abilities": [
+          "精神力",
+          "同步",
+          "精神制造者"
+        ],
+        "weight": 28.0,
+        "regulation": "M-C"
+      },
+      {
+        "name": "雌性的样子",
+        "types": [
+          "超能力",
+          "一般"
+        ],
+        "abilities": [
+          "我行我素",
+          "同步",
+          "精神制造者"
+        ],
+        "weight": 28.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "雄性的样子",
+        "data": {
+          "hp": 60,
+          "attack": 65,
+          "defense": 55,
+          "sp_attack": 105,
+          "sp_defense": 95,
+          "speed": 95
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "雌性的样子",
+        "data": {
+          "hp": 70,
+          "attack": 55,
+          "defense": 65,
+          "sp_attack": 95,
+          "sp_defense": 105,
+          "speed": 85
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -7837,7 +9183,8 @@
           "饱了又饿",
           "饱了又饿"
         ],
-        "weight": 3.0
+        "weight": 3.0,
+        "regulation": "M-A"
       },
       {
         "name": "空腹花纹",
@@ -7850,7 +9197,8 @@
           "饱了又饿",
           "饱了又饿"
         ],
-        "weight": 3.0
+        "weight": 3.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7863,7 +9211,8 @@
           "sp_attack": 70,
           "sp_defense": 58,
           "speed": 97
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "空腹花纹",
@@ -7874,7 +9223,8 @@
           "sp_attack": 70,
           "sp_defense": 58,
           "speed": 97
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7892,7 +9242,8 @@
           "穿透",
           "咒术之躯"
         ],
-        "weight": 50.0
+        "weight": 50.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7905,7 +9256,8 @@
           "sp_attack": 100,
           "sp_defense": 75,
           "speed": 142
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7923,7 +9275,8 @@
           "察觉",
           "食草"
         ],
-        "weight": 95.1
+        "weight": 95.1,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7936,7 +9289,8 @@
           "sp_attack": 105,
           "sp_defense": 75,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7954,7 +9308,8 @@
           "强行",
           "锋锐"
         ],
-        "weight": 89.0
+        "weight": 89.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -7967,7 +9322,8 @@
           "sp_attack": 45,
           "sp_defense": 70,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -7985,7 +9341,8 @@
           "适应力",
           "破格"
         ],
-        "weight": 110.0
+        "weight": 110.0,
+        "regulation": "M-A"
       },
       {
         "name": "雌性的样子",
@@ -7998,7 +9355,8 @@
           "适应力",
           "破格"
         ],
-        "weight": 110.0
+        "weight": 110.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8011,7 +9369,8 @@
           "sp_attack": 80,
           "sp_defense": 75,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "雌性的样子",
@@ -8022,7 +9381,8 @@
           "sp_attack": 100,
           "sp_defense": 75,
           "speed": 78
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8040,7 +9400,8 @@
           "轻装",
           "毒手"
         ],
-        "weight": 43.0
+        "weight": 43.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8053,7 +9414,8 @@
           "sp_attack": 40,
           "sp_defense": 80,
           "speed": 120
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8071,7 +9433,8 @@
           "悠游自如",
           "威吓"
         ],
-        "weight": 60.5
+        "weight": 60.5,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -8084,7 +9447,8 @@
           "sp_attack": 65,
           "sp_defense": 65,
           "speed": 85
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -8102,7 +9466,8 @@
           "茂盛",
           "变幻自如"
         ],
-        "weight": 31.2
+        "weight": 31.2,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8115,7 +9480,8 @@
           "sp_attack": 81,
           "sp_defense": 70,
           "speed": 123
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8133,7 +9499,8 @@
           "猛火",
           "纯朴"
         ],
-        "weight": 326.5
+        "weight": 326.5,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8146,7 +9513,8 @@
           "sp_attack": 110,
           "sp_defense": 75,
           "speed": 66
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8164,7 +9532,8 @@
           "激流",
           "自信过度"
         ],
-        "weight": 61.9
+        "weight": 61.9,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8177,7 +9546,41 @@
           "sp_attack": 85,
           "sp_defense": 75,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0923-巴布土拨": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "巴布土拨",
+        "types": [
+          "电",
+          "格斗"
+        ],
+        "abilities": [
+          "蓄电",
+          "自然回复",
+          "铁拳"
+        ],
+        "weight": 41.0,
+        "regulation": "M-A"
+      }
+    ],
+    "stats": [
+      {
+        "form": "巴布土拨",
+        "data": {
+          "hp": 70,
+          "attack": 115,
+          "defense": 70,
+          "sp_attack": 70,
+          "sp_defense": 60,
+          "speed": 105
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8194,7 +9597,8 @@
           "颊囊",
           "技术高手"
         ],
-        "weight": 2.3
+        "weight": 2.3,
+        "regulation": "M-A"
       },
       {
         "name": "四只家庭",
@@ -8206,7 +9610,8 @@
           "颊囊",
           "技术高手"
         ],
-        "weight": 2.8
+        "weight": 2.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8219,7 +9624,8 @@
           "sp_attack": 65,
           "sp_defense": 75,
           "speed": 111
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "四只家庭",
@@ -8230,7 +9636,152 @@
           "sp_attack": 65,
           "sp_defense": 75,
           "speed": 111
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0930-奥利瓦": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "奥利瓦",
+        "types": [
+          "草",
+          "一般"
+        ],
+        "abilities": [
+          "掉出种子",
+          "掉出种子",
+          "收获"
+        ],
+        "weight": 48.2,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "奥利瓦",
+        "data": {
+          "hp": 78,
+          "attack": 69,
+          "defense": 90,
+          "sp_attack": 125,
+          "sp_defense": 109,
+          "speed": 39
+        },
+        "regulation": "M-C"
+      }
+    ]
+  },
+  "0931-怒鹦哥": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "绿羽毛",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "活力",
+          "毅力"
+        ],
+        "weight": 2.4,
+        "regulation": "M-C"
+      },
+      {
+        "name": "蓝羽毛",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "活力",
+          "毅力"
+        ],
+        "weight": 2.4,
+        "regulation": "M-C"
+      },
+      {
+        "name": "黄羽毛",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "活力",
+          "强行"
+        ],
+        "weight": 2.4,
+        "regulation": "M-C"
+      },
+      {
+        "name": "白羽毛",
+        "types": [
+          "一般",
+          "飞行"
+        ],
+        "abilities": [
+          "威吓",
+          "活力",
+          "强行"
+        ],
+        "weight": 2.4,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "绿羽毛",
+        "data": {
+          "hp": 82,
+          "attack": 96,
+          "defense": 51,
+          "sp_attack": 45,
+          "sp_defense": 51,
+          "speed": 92
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "蓝羽毛",
+        "data": {
+          "hp": 82,
+          "attack": 96,
+          "defense": 51,
+          "sp_attack": 45,
+          "sp_defense": 51,
+          "speed": 92
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "黄羽毛",
+        "data": {
+          "hp": 82,
+          "attack": 96,
+          "defense": 51,
+          "sp_attack": 45,
+          "sp_defense": 51,
+          "speed": 92
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "白羽毛",
+        "data": {
+          "hp": 82,
+          "attack": 96,
+          "defense": 51,
+          "sp_attack": 45,
+          "sp_defense": 51,
+          "speed": 92
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -8247,7 +9798,8 @@
           "结实",
           "恒净之躯"
         ],
-        "weight": 240.0
+        "weight": 240.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8260,7 +9812,8 @@
           "sp_attack": 45,
           "sp_defense": 90,
           "speed": 35
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8278,7 +9831,8 @@
           "引火",
           "碎裂铠甲"
         ],
-        "weight": 85.0
+        "weight": 85.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8291,7 +9845,8 @@
           "sp_attack": 125,
           "sp_defense": 80,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8309,7 +9864,8 @@
           "引火",
           "碎裂铠甲"
         ],
-        "weight": 62.0
+        "weight": 62.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8322,7 +9878,8 @@
           "sp_attack": 60,
           "sp_defense": 100,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8339,7 +9896,8 @@
           "静电",
           "湿气"
         ],
-        "weight": 113.0
+        "weight": 113.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8352,7 +9910,40 @@
           "sp_attack": 103,
           "sp_defense": 83,
           "speed": 45
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0943-獒教父": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "獒教父",
+        "types": [
+          "恶"
+        ],
+        "abilities": [
+          "威吓",
+          "看门犬",
+          "蹲守"
+        ],
+        "weight": 61.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "獒教父",
+        "data": {
+          "hp": 80,
+          "attack": 120,
+          "defense": 90,
+          "sp_attack": 60,
+          "sp_defense": 70,
+          "speed": 85
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -8370,7 +9961,8 @@
           "不眠",
           "心情不定"
         ],
-        "weight": 15.0
+        "weight": 15.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级狠辣椒",
@@ -8383,7 +9975,8 @@
           "辣椒喷发",
           "辣椒喷发"
         ],
-        "weight": 22.0
+        "weight": 22.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8396,7 +9989,8 @@
           "sp_attack": 108,
           "sp_defense": 65,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级狠辣椒",
@@ -8407,7 +10001,8 @@
           "sp_attack": 138,
           "sp_defense": 85,
           "speed": 75
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8424,7 +10019,8 @@
           "察觉",
           "加速"
         ],
-        "weight": 90.0
+        "weight": 90.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8437,7 +10033,8 @@
           "sp_attack": 101,
           "sp_defense": 60,
           "speed": 105
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8455,7 +10052,8 @@
           "我行我素",
           "顺手牵羊"
         ],
-        "weight": 112.8
+        "weight": 112.8,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8468,7 +10066,8 @@
           "sp_attack": 70,
           "sp_defense": 105,
           "speed": 94
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8485,7 +10084,8 @@
           "全能变身",
           "全能变身"
         ],
-        "weight": 60.2
+        "weight": 60.2,
+        "regulation": "M-A"
       },
       {
         "name": "全能形态",
@@ -8497,7 +10097,8 @@
           "全能变身",
           "全能变身"
         ],
-        "weight": 97.4
+        "weight": 97.4,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8510,7 +10111,8 @@
           "sp_attack": 53,
           "sp_defense": 62,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "全能形态",
@@ -8521,7 +10123,8 @@
           "sp_attack": 106,
           "sp_defense": 87,
           "speed": 100
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8538,7 +10141,8 @@
           "食土",
           "沙隐"
         ],
-        "weight": 310.0
+        "weight": 310.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8551,7 +10155,8 @@
           "sp_attack": 60,
           "sp_defense": 55,
           "speed": 65
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8569,7 +10174,8 @@
           "毒满地",
           "腐蚀"
         ],
-        "weight": 45.0
+        "weight": 45.0,
+        "regulation": "M-A"
       },
       {
         "name": "超级晶光花",
@@ -8582,7 +10188,8 @@
           "适应力",
           "适应力"
         ],
-        "weight": 77.0
+        "weight": 77.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8595,7 +10202,8 @@
           "sp_attack": 130,
           "sp_defense": 81,
           "speed": 86
-        }
+        },
+        "regulation": "M-A"
       },
       {
         "form": "超级晶光花",
@@ -8606,7 +10214,8 @@
           "sp_attack": 150,
           "sp_defense": 96,
           "speed": 101
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8623,7 +10232,8 @@
           "拨沙",
           "毛茸茸"
         ],
-        "weight": 15.0
+        "weight": 15.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -8636,7 +10246,8 @@
           "sp_attack": 50,
           "sp_defense": 97,
           "speed": 68
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -8654,7 +10265,8 @@
           "精神力",
           "不服输"
         ],
-        "weight": 56.0
+        "weight": 56.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -8667,7 +10279,8 @@
           "sp_attack": 50,
           "sp_defense": 90,
           "speed": 90
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -8685,7 +10298,8 @@
           "尾甲",
           "食草"
         ],
-        "weight": 160.0
+        "weight": 160.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8698,7 +10312,8 @@
           "sp_attack": 110,
           "sp_defense": 70,
           "speed": 60
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8716,7 +10331,8 @@
           "大将",
           "压迫感"
         ],
-        "weight": 120.0
+        "weight": 120.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8729,7 +10345,67 @@
           "sp_attack": 60,
           "sp_defense": 85,
           "speed": 50
-        }
+        },
+        "regulation": "M-A"
+      }
+    ]
+  },
+  "0998-戟脊龙": {
+    "_data_source": "champions",
+    "forms": [
+      {
+        "name": "戟脊龙",
+        "types": [
+          "龙",
+          "冰"
+        ],
+        "abilities": [
+          "热交换",
+          "热交换",
+          "冰冻之躯"
+        ],
+        "weight": 210.0,
+        "regulation": "M-C"
+      },
+      {
+        "name": "超级戟脊龙",
+        "types": [
+          "龙",
+          "冰"
+        ],
+        "abilities": [
+          "热交换",
+          "热交换",
+          "热交换"
+        ],
+        "weight": 315.0,
+        "regulation": "M-C"
+      }
+    ],
+    "stats": [
+      {
+        "form": "戟脊龙",
+        "data": {
+          "hp": 115,
+          "attack": 145,
+          "defense": 92,
+          "sp_attack": 75,
+          "sp_defense": 86,
+          "speed": 87
+        },
+        "regulation": "M-C"
+      },
+      {
+        "form": "超级戟脊龙",
+        "data": {
+          "hp": 115,
+          "attack": 175,
+          "defense": 117,
+          "sp_attack": 105,
+          "sp_defense": 101,
+          "speed": 87
+        },
+        "regulation": "M-C"
       }
     ]
   },
@@ -8747,7 +10423,8 @@
           "黄金之躯",
           "黄金之躯"
         ],
-        "weight": 30.0
+        "weight": 30.0,
+        "regulation": "M-B"
       }
     ],
     "stats": [
@@ -8760,7 +10437,8 @@
           "sp_attack": 133,
           "sp_defense": 91,
           "speed": 84
-        }
+        },
+        "regulation": "M-B"
       }
     ]
   },
@@ -8783,7 +10461,8 @@
           "结实",
           "坚毅"
         ],
-        "weight": 60.0
+        "weight": 60.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8796,7 +10475,8 @@
           "sp_attack": 125,
           "sp_defense": 65,
           "speed": 85
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   },
@@ -8814,7 +10494,8 @@
           "再生力",
           "黏着"
         ],
-        "weight": 93.0
+        "weight": 93.0,
+        "regulation": "M-A"
       }
     ],
     "stats": [
@@ -8827,7 +10508,8 @@
           "sp_attack": 120,
           "sp_defense": 80,
           "speed": 44
-        }
+        },
+        "regulation": "M-A"
       }
     ]
   }

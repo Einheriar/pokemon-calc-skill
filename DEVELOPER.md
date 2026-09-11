@@ -382,10 +382,10 @@ class DamageResult:
 
 `meta` 命令的数据访问层，可插拔设计（旧命令 `usage` / `teams` 自动转发到 `meta`）：
 
-- **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则 M-B）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
+- **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则，当前 M-C）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
 - **三层数据**：内置快照（`data/usage_stats.json` / `data/teams_full.json.gz`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
 - **--source 参数**：`--source tournament`（默认）走 pokecamp.cc 赛事数据；`--source ladder`/`ingame` 走官方实机排位数据（仅名次，日更）；`--source showdown` 走 Showdown 天梯月报（含使用率，月更滞后）。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍类查询。
-- **天梯数据层**（V4.8.09 新增）：总榜走 `pokemon-page/{ingame|showdown}.json` 轻量端点（约 230 KB），蒸馏后内置快照 `data/ladder_ingame.json`（39 KB）/ `data/ladder_showdown.json`（72 KB），维护者脚本 `cache/build_ladder_stats.py`。ingame 蒸馏时按 `speciesIdentifier` 合并 Mega 展开行，并丢弃 pokecamp 为统一结构填充的占位字段（usagePercent=0/teamCount=1/winRate=null），快照只保留真实名次。单只天梯详情走 `_next/data/{buildId}/.../pokemon/{id}.json`（gzip 约 127 KB/只，按宝可梦缓存 24h；buildId 从页面 HTML 自动发现并缓存，404 时重新发现重试一次），ingame 读 `detailBySource.ingame.inGameReferenceByFormat[format]`（配招/道具/特性/性格/努力为真实百分比，队友仅名次），showdown 读 `smogonReferenceByFormat[format]`；名称翻译复用响应内嵌的 itemMap/abilityMap/moveMap/teammateMap。天梯源 regulation 锁定最新赛制常量 `LADDER_REGULATION`（当前 m-b）。已知上游：championsbattledata.com（官方排位数据的社区发布方，内容一致），仅作备选参考，不接入。
+- **天梯数据层**（V4.8.09 新增）：总榜走 `pokemon-page/{ingame|showdown}.json` 轻量端点（约 230 KB），蒸馏后内置快照 `data/ladder_ingame.json`（39 KB）/ `data/ladder_showdown.json`（72 KB），维护者脚本 `cache/build_ladder_stats.py`。ingame 蒸馏时按 `speciesIdentifier` 合并 Mega 展开行，并丢弃 pokecamp 为统一结构填充的占位字段（usagePercent=0/teamCount=1/winRate=null），快照只保留真实名次。单只天梯详情走 `_next/data/{buildId}/.../pokemon/{id}.json`（gzip 约 127 KB/只，按宝可梦缓存 24h；buildId 从页面 HTML 自动发现并缓存，404 时重新发现重试一次），ingame 读 `detailBySource.ingame.inGameReferenceByFormat[format]`（配招/道具/特性/性格/努力为真实百分比，队友仅名次），showdown 读 `smogonReferenceByFormat[format]`；名称翻译复用响应内嵌的 itemMap/abilityMap/moveMap/teammateMap。天梯源 regulation 按数据源解析自 `data/regulation_manifest.json`（`pokecamp_source.ladder_regulation(kind)`）：官方实机排位 `ingame` 随新规则即时切换（当前 M-C），Showdown 月报 `showdown` 可能滞后一个规则（当前 M-B），因此不共用一个常量。已知上游：championsbattledata.com（官方排位数据的社区发布方，内容一致），仅作备选参考，不接入。
 - **蒸馏函数**：`distill_usage_snapshot()` / `distill_teams_snapshot()` / `distill_teams_full()` 同时被构建脚本（`cache/build_usage_stats.py`、`cache/build_teams_pack.py`）和在线模式复用，保证快照与在线结果结构一致；`meta_snapshot_from_pack()` 可从全量包直接派生前 12 支的轻量快照。
 - **在线查询成本**：`meta <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`meta --teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。
 - **爬虫礼仪**：仅在用户显式 `--online` 或维护者刷新快照时发起请求；结果本地缓存；不批量遍历站点；遵守 robots.txt。
@@ -412,11 +412,12 @@ class DamageResult:
 | `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
 | `data/setdex.json` | 207 只 / 314 预设 | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧 VGC 预设（Reg D/E 时代）+ 50 个天梯热门套 `天梯双打热门配置`（官方实机排位双打 Top50，2026-08-30，`priority: 1`；性格取聚合排行榜首——数据源 spread 行不带性格） |
 | `data/aliases.json` | 118 条 | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等，dex<917 可自动生成） |
-| `data/champions_pokemon_patch.json` 等 4 件 | pokemon 208 / moves 778 / learnset 208 | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions（M-B）补丁层：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、learnset 键与 pokemon 键完全对齐（208/208）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
+| `data/champions_pokemon_patch.json` 等 4 件 | pokemon 231 / moves 778 / learnset 231 物种（含各形态） | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions 补丁层（当前 M-C）：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、每个形态带 `regulation` 引入规则标签（M-A/M-B/M-C）、learnset 为 `{stem: {form: [moves]}}` 嵌套结构（按形态隔离，231 物种全覆盖）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
+| `data/regulation_manifest.json` | 3 条规则 + 数据源映射 | 手工维护 | 规则身份与顺序的唯一来源：`current`（当前规则）、`regulations[].order`（顺序）、`sources`（各数据源发布的规则）。运行时经 `scripts/regulations.py` 读取；新增/插入规则只改此文件 |
 | `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
 | `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍轻量快照：全量索引不可用时的兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
 | `data/teams_full.json.gz` | 9,250 支 / 150 赛事 | pokecamp.cc（Limitless 赛事统计） | 全量赛事队伍内置包（gzip，约 1.4 MB）：全部队伍 + 道具/特性/性格/招式明细 + EN→ZH 名称映射；首次查询派生本地 SQLite 索引（由 `cache/build_teams_pack.py` 构建，原始数据留存于 gitignored 的 `pokecamp_data/`） |
-| `data/ladder_ingame.json` | 208 只 | pokecamp.cc（官方实机排位） | 天梯名次快照（39 KB）：单/双打名次，Mega 已并入基础物种，占位字段已丢弃（由 `cache/build_ladder_stats.py` 构建） |
+| `data/ladder_ingame.json` | 231 只 | pokecamp.cc（官方实机排位，M-C） | 天梯名次快照（43 KB）：单/双打名次，Mega 已并入基础物种，占位字段已丢弃（由 `cache/build_ladder_stats.py` 构建） |
 | `data/ladder_showdown.json` | 283 只 | pokecamp.cc（Showdown 天梯月报） | Showdown 使用率快照（72 KB）：单/双打名次 + 使用率，`meta.month` 注明月份（由 `cache/build_ladder_stats.py` 构建） |
 
 
@@ -488,6 +489,18 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 4.9.0（2026-09-11）
+
+Champions 规则模型（M-A/M-B/M-C）+ champout v1.2.0 数据重建。核心变更：
+
+- **规则模型**：新增 `data/regulation_manifest.json`（规则身份、顺序、各数据源发布规则）与 `scripts/regulations.py`（`current()` / `order_of()` / `rank_of()` / `source_regulation()` / `within()`，大小写不敏感）。规则**身份**以字符串标签（`"M-C"`）存于每条数据，**顺序**只在清单中声明，二者分离。
+- **数据重建（champout v1.2.0，d2885a8 → 50e7233）**：`personal.json` 361 → 396 条，新增 35 个形态（M-C 的 Z 系 Mega：超级阿勃梭鲁Ｚ / 超级烈咬陆鲨Ｚ / 超级路卡利欧Ｚ / 超级戟脊龙，及 Mega 暴飞龙/具甲武者、新入池物种等）。每个形态由 `reg_no` 经 ROM 标签表（`rental_poke_appear_reg_ma/mb/mc`）翻译为规则标签。产出 pokemon 231 物种 / 347 形态（M-A 275 / M-B 38 / M-C 34）。
+- **学习面 bug 修复（用户可见）**：学习面此前按物种作键、多形态 last-wins，导致关都九尾拿到阿罗拉九尾的冰系招式表。现改为 `{stem: {form: [moves]}}` 嵌套结构，按形态隔离；运行时 `_get_champions_learnset(stem, form_name)`、`cmd_learnset`、`_iter_moves`、`cmd_find_move` 均按形态取表。受影响 20 个物种（地区形态为主）。旧扁平结构仍兼容读取。
+- **补丁 schema v2**：patch 文件写入 `_schema_version`；`check_champions_patch.py` 拆分为 3a–3f（含形态键合法性、空招式表、规则标签完整性断言），去重到有形态的物种。
+- **天梯按源设规则**：移除单一 `LADDER_REGULATION` 常量，改由 `ladder_regulation(kind)` 从清单取值（`ingame` → M-C，`showdown` → M-B：Smogon 月报滞后一个规则）。`PokecampSource` 默认规则、蒸馏 fallback 亦改从清单取，消除多处硬编码。
+- **隐藏规则参数**：内部 `--regulation <ID>` 提供累积视图（rank ≤ 选中规则），默认 = 最新规则全量并集（等于既有行为）。**不写入任何文档**；作用域仅限形态/技能表可见性，不介入 `calc` 合法性判定。
+- **测试**：新增 `cache/test_regulation_and_forms.py`（19 例：清单/规则标签/形态隔离/累积上限/旧格式兼容）；适配 `test_ladder_source`（按快照与按源规则断言）、`test_usage_stats`。全部现行套件（回归 36 / auto-preset 23 / meta 16 / ladder 23 / teams 12 / usage 14 / field 30 / filter 14）通过。
 
 ### 4.8.15（2026-08-30）
 

@@ -71,10 +71,12 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 | 层级 | 来源 | 覆盖范围 | 优先级 |
 |------|------|----------|--------|
-| 第一层 | 《宝可梦冠军》(Pokémon Champions) M-B 规则（2026-06-24 更新） | 361 种形态 | **高** |
+| 第一层 | 《宝可梦冠军》(Pokémon Champions) Champions 规则数据（champout v1.2.0，2026-09-11） | 231 物种 / 347 种形态 | **高** |
 | 第二层 | Gen9（朱紫）正作数据 | 全国图鉴 1~1025 | 低 |
 
 当 Champions 数据与 Gen9 正作数据存在差异时，以 Champions 为准。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。
+
+Champions 数据按**引入规则累积保留**（M-A 275 / M-B 38 / M-C 34 种形态），每个形态带规则标签，规则顺序与当前规则由 `data/regulation_manifest.json` 统一声明。默认视图为最新规则的完整并集（不做过签过滤）；`calc` 不进行规则合法性判定。
 
 数据中覆盖全国图鉴 1~1025 号，**包含所有形态**（含 Mega、原始回归等），不区分世代过签状态。伤害计算时不过签过滤。
 
@@ -85,7 +87,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 | 项目 | 说明 |
 |------|------|
 | 来源 | pokecamp.cc（聚合 Limitless 公开赛事统计） |
-| 规则 | 《宝可梦冠军》VGC 2026 规则 M-B（双打） |
+| 规则 | 《宝可梦冠军》Champions 规则（当前 M-C；集合为滚动 30 天窗口，按双打统计） |
 | 样本 | 滚动 30 天窗口内的公开赛事队伍（样本量见 `meta.tournament_count` / `meta.team_count`） |
 | 更新 | 内置数据随版本更新；`--online` 可实时拉取（按需请求，结果本地缓存） |
 | 性质 | 赛事环境统计，非官方游戏内天梯数据，也非模拟器数据 |

@@ -36,6 +36,7 @@ from typing import Any
 from normalize import get_suggestions, normalize_name
 
 import pokecamp_source as pcs
+import regulations
 
 # Force UTF-8 stdout/stderr on Windows
 if sys.platform == "win32":
@@ -52,6 +53,40 @@ _abilities_data: dict[str, Any] | None = None
 _index_data: dict[str, Any] | None = None
 _type_chart: dict[str, dict[str, float]] | None = None
 _champions_patches: dict[str, Any] | None = None
+# Internal cumulative regulation cap (see _visible_form). None = newest
+# regulation in data/regulation_manifest.json, i.e. show every form.
+_regulation_cap: str | None = None
+
+
+def set_regulation_cap(reg_id: str | None) -> str:
+    """Set the cumulative regulation view for form/learnset visibility.
+
+    This is an internal switch: it only hides forms (and their learnsets) that
+    were introduced *after* the given regulation. It never affects damage
+    calculation or legality. Returns the normalized effective cap.
+    """
+    global _regulation_cap
+    _regulation_cap = regulations.normalize(reg_id) or None
+    return _regulation_cap or regulations.current(DATA_DIR)
+
+
+def get_regulation_cap() -> str:
+    """Effective regulation cap (explicit value or the manifest's current)."""
+    return _regulation_cap or regulations.current(DATA_DIR)
+
+
+def _visible_form(form: dict[str, Any]) -> bool:
+    """Whether a patch form is within the current (cumulative) regulation view.
+
+    Forms without a regulation tag are always visible, so older patch files
+    keep working unchanged.
+    """
+    reg = regulations.normalize(form.get("regulation"))
+    if not reg:
+        return True
+    if _regulation_cap is None:
+        return True
+    return regulations.within(reg, _regulation_cap, DATA_DIR)
 
 
 def _load_json(name: str) -> Any:
@@ -99,7 +134,12 @@ def _load_champions_patches() -> dict[str, Any]:
                     patches["name_index"]["pokemon"].update(data.get("pokemon", {}))
                     patches["name_index"]["moves"].update(data.get("moves", {}))
                 else:
-                    patches[key] = data
+                    # Metadata keys (leading underscore) carry the schema version
+                    # and are not data entries.
+                    patches[key] = {k: v for k, v in data.items()
+                                    if not str(k).startswith("_")}
+                    patches.setdefault("schema_version", {}).setdefault(
+                        key, data.get("_schema_version", 1))
             except Exception:
                 pass  # Silently ignore missing/corrupt patch files
     _champions_patches = patches
@@ -429,6 +469,13 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
     patch = patches["pokemon"][stem]
     # Deep copy to avoid mutating original
     merged = json.loads(json.dumps(data))
+    # Regulation tag per form, so the cumulative cap can also hide base-data
+    # forms that the patch knows were introduced later (e.g. a "Z" Mega that
+    # already exists in the reference data yet belongs to a newer regulation).
+    patch_form_regulation = {
+        f.get("name"): f.get("regulation")
+        for f in patch.get("forms", []) if f.get("name")
+    }
     # Merge forms BY NAME: the patch (built from champout) carries repo-standard
     # form names, so name matching is equivalent to the historical index-based
     # merge while staying correct even if form order ever changes between the
@@ -442,6 +489,10 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
                 forms_by_name[fname] = idx
         for raw_pform in patch["forms"]:
             pform = json.loads(json.dumps(raw_pform))  # deep copy
+            # Skip forms introduced after the cumulative regulation cap (the
+            # internal --regulation view). Untagged forms are always visible.
+            if not _visible_form(pform):
+                continue
             # Normalize abilities from string list to object list
             abilities = pform.get("abilities")
             if isinstance(abilities, list) and abilities and isinstance(abilities[0], str):
@@ -451,6 +502,15 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
                 orig_forms[idx].update(pform)
             else:
                 orig_forms.append(pform)
+        # Drop base-data forms the patch tags as outside the cap.
+        if _regulation_cap is not None:
+            kept = []
+            for f in orig_forms:
+                reg = regulations.normalize(patch_form_regulation.get(f.get("name", "")))
+                if reg and not regulations.within(reg, _regulation_cap, DATA_DIR):
+                    continue
+                kept.append(f)
+            orig_forms = kept
         merged["forms"] = orig_forms
     # Merge stats BY LABEL NAME (see forms note above). The reference stats list
     # is generation-labelled ('一般', '第六世代起', ...), so most Champions
@@ -466,6 +526,8 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
                 stats_by_label[lbl] = idx
         for raw_pstat in patch["stats"]:
             pstat = json.loads(json.dumps(raw_pstat))  # deep copy
+            if not _visible_form(pstat):
+                continue
             idx = stats_by_label.get(pstat.get("form", ""))
             if idx is not None:
                 orig_stats[idx].update(pstat)
@@ -801,11 +863,26 @@ def cmd_item(name: str) -> dict[str, Any]:
     return result
 
 
-def _get_champions_learnset(stem: str) -> list[str]:
-    """Get Champions learnset for a pokemon stem if available."""
+def _get_champions_learnset(stem: str, form_name: str | None = None) -> list[str]:
+    """Get the Champions learnset for a stem (optionally for one form).
+
+    Schema v2 stores learnsets nested per form, because regional/Mega forms
+    learn different moves. Schema v1 (flat list) is still accepted: it has no
+    form dimension, so every form of the species shares the one list.
+    """
     patches = _load_champions_patches()
-    if patches and stem in patches.get("learnset", {}):
-        return patches["learnset"][stem]
+    entry = patches.get("learnset", {}).get(stem) if patches else None
+    if not entry:
+        return []
+    if isinstance(entry, list):
+        return entry  # schema v1: form-blind
+    if form_name and form_name in entry:
+        return entry[form_name]
+    if form_name is None:
+        # No form requested: fall back to the species' base form (first key),
+        # which is the entry the pokemon patch lists first.
+        first = next(iter(entry.values()), [])
+        return first
     return []
 
 
@@ -1059,15 +1136,17 @@ def cmd_learnset(name: str) -> dict[str, Any]:
     resolved = resolve_pokemon(name)
     if not resolved:
         return {"error": f"Pokemon '{name}' not found."}
-    stem, data, _form_idx = resolved
-    champions_moves = _get_champions_learnset(stem)
+    stem, data, form_idx = resolved
+    forms = data.get("forms", [])
+    form_name = forms[form_idx].get("name") if forms and form_idx < len(forms) else None
+    champions_moves = _get_champions_learnset(stem, form_name)
     if champions_moves:
-        # Champions patch provides a flat list of move names
+        # Champions patch provides the move list for the requested form.
         formatted = [{"name": m} for m in champions_moves]
         return {
             "name_zh": data.get("name_zh"),
             "name_en": data.get("name_en"),
-            "learnable_moves": [{"form": "", "data": formatted}],
+            "learnable_moves": [{"form": form_name or "", "data": formatted}],
             "machine_moves": [],
             "egg_moves": [],
             "tutor_moves": [],
@@ -1125,20 +1204,30 @@ def cmd_profile(name: str) -> dict[str, Any]:
 
 
 def _iter_moves(pdata: dict[str, Any], stem: str = ""):
-    """Yield (move_dict, source_category) for all moves in a pokemon entry.
-    If Champions learnset patch exists for stem, yield from patch instead.
+    """Yield (move_dict, source_category, form_name) for all moves.
+
+    If a Champions learnset patch exists for stem, yield from it per form
+    (schema v2 nested; schema v1 flat yields form_name=None). Otherwise fall
+    back to the reference data, whose entries are already form-labelled.
     """
-    champions_moves = _get_champions_learnset(stem)
-    if champions_moves:
-        for move_name in champions_moves:
-            yield {"name": move_name}, "learnable_moves"
+    patches = _load_champions_patches()
+    entry = patches.get("learnset", {}).get(stem) if patches else None
+    if entry:
+        if isinstance(entry, list):
+            for move_name in entry:
+                yield {"name": move_name}, "learnable_moves", None
+            return
+        for form_name, moves in entry.items():
+            for move_name in moves:
+                yield {"name": move_name}, "learnable_moves", form_name
         return
     for category in ("learnable_moves", "machine_moves", "egg_moves", "tutor_moves"):
         for form_block in pdata.get(category, []):
             if isinstance(form_block, dict) and "data" in form_block:
+                form_label = form_block.get("form") or None
                 for move in form_block["data"]:
                     if isinstance(move, dict):
-                        yield move, category
+                        yield move, category, form_label
 
 
 def cmd_find_move(move_name: str, source: str = "") -> dict[str, Any]:
@@ -1170,16 +1259,25 @@ def cmd_find_move(move_name: str, source: str = "") -> dict[str, Any]:
         if source == "gen9" and data_source == "champions":
             continue
 
-        for move, category in _iter_moves(pdata, stem=stem):
+        for move, category, form_name in _iter_moves(pdata, stem=stem):
             if move.get("name") == move_zh:
                 forms = merged_pdata.get("forms", [{}])
-                first_form_types = forms[0].get("types", []) if forms else []
+                # Report the types of the form that actually learns the move,
+                # not always the base form's.
+                matched_types = []
+                for f in forms:
+                    if form_name and f.get("name") == form_name:
+                        matched_types = f.get("types", [])
+                        break
+                if not matched_types and forms:
+                    matched_types = forms[0].get("types", [])
                 result.append({
                     "name_zh": pdata.get("name_zh"),
                     "name_en": pdata.get("name_en"),
                     "pokedex_id": pdata.get("pokedex_id"),
+                    "form_name": form_name or "",
                     "method": _get_method_name(move, category),
-                    "types": first_form_types,
+                    "types": matched_types,
                 })
                 break
     return {"move": move_zh, "count": len(result), "pokemon": result}
@@ -3132,10 +3230,39 @@ COMMANDS: dict[str, Any] = {
 }
 
 
+def _extract_regulation_flag(argv: list[str]) -> tuple[list[str], str | None]:
+    """Pull the internal (undocumented) --regulation cap out of argv.
+
+    Accepts ``--regulation ID`` and ``--regulation=ID``. It is handled here
+    rather than per-subcommand so every command gets the same behavior, and it
+    is deliberately absent from help text and all user-facing docs.
+    """
+    out: list[str] = []
+    value: str | None = None
+    i = 0
+    while i < len(argv):
+        arg = argv[i]
+        if arg == "--regulation" and i + 1 < len(argv):
+            value = argv[i + 1]
+            i += 2
+            continue
+        if arg.startswith("--regulation="):
+            value = arg.split("=", 1)[1]
+            i += 1
+            continue
+        out.append(arg)
+        i += 1
+    return out, value
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         print(__doc__)
         return 1
+
+    sys.argv, _reg_arg = _extract_regulation_flag(sys.argv)
+    if _reg_arg is not None:
+        set_regulation_cap(_reg_arg)
 
     cmd = sys.argv[1]
 
