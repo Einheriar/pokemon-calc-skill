@@ -497,6 +497,16 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
+### 4.9.2（2026-09-12）
+
+第二轮系统性审核修复（见 `plans/PLAN_2026-09-12_round2_audit_fix.md`，V4.9.1 已先期复测通过）：
+
+- **数据层**：type_chart.json 修正 2 处克制表错误（毒→岩石、妖精→火均误记 1.0，应为 0.5——calc/type 命令对这两组对局伤害多算一倍）；`check_data.py` 新增官方 18×18 克制表全量对账与 is_sound/is_bullet/is_wind/hits 标志对账；moves.json 补 龙箭 hits=2 与 16 个漏标标志（Eerie Spell/Barrage/Egg Bomb/Ice Ball/Octazooka/Aeroblast/Tailwind/Whirlwind 等）。
+- **引擎（damage.py）**：Protosynthesis/Quark Drive 改按全能力最高项判定（原只比较攻/特攻，速度/防御最高的悖谬种特攻被虚加 30%）；Knock Off 不可摘除清单修正（Eviolite/White Herb 等 "ite" 启发式误伤，改例外集；补 Rusted Sword/Shield）；Solar Beam/Solar Blade 非晴天天气减半；电气上升/广域战力/薄雾爆炸补接地判定；亲子爱双打+扩散招式不再二段；清醒/唤醒巴掌条件翻倍；拳击手套（威力+接触豁免）；厄诡椪面具 1.2x；Fling 不可投掷道具；飘浮+铁球接地；灾祸四特性受中性气体压制；大晴天伞中文名修正为"万能伞"（原中文名为误记，英文死分支随之修复）；Flail/Reversal 精确阈值；场地种子增益不再跨调用累积（try/finally 回滚 + PB 递归 _skip_seeds）。
+- **CLI 层（query.py / ev_optimizer.py）**：`_finalize_calc_pokemon` 派生 stats 并尊重显式 max_hp/current_hp（原 raw_stats+boosts 组合下 stats 为空、伤害 1-1；显式 max_hp 被 compute_raw_stats 覆盖）；`_apply_setup_moves` 同步重算 stats；calc 与 calc-raw 响应新增 `move_info`/`field_info`/`modifiers` 透明度键（SKILL.md 输出模板的招式/环境表自此有真实数据来源），accuracy 改读数据层；calc-raw 的 hits 字符串容错；survivability 的 stats/raw_stats 分离（boost 回写不再污染 raw）与 category 校验；2-5 段变段招式按期望 3 段估算并 warning；`_set_sp` 统一为 AGENTS.md 的 8×SP−4 换算；optimize 失败路径字段统一 0 + `max_invested_*`；champions 来源 find-move method 输出 "Champions"。
+- **清理**：ko_chance.py 39 长度 squash 表删除（不可达）；query.py setup_moves 死代码与 resolve_move 不可达分支删除；normalize.py 重复 import 删除；`_AURA_MAP`/`_RESIST_BERRIES`/`_BERRY_ALIASES`/天气/场地映射表提模块级；`_check_seeds` 提出为模块级函数。
+- **测试**：新增 `cache/test_round2_fixes.py`（32 例）；`test_regulation_and_forms.py` 的 form-key-miss 断言更新为 B4 回退语义（V4.9.1 变更未同步导致的失败，本轮修正并勘误）。
+
 ### 4.9.1（2026-09-12）
 
 系统性代码审核修复（P0/P1 全量，见 `plans/PLAN_2026-09-11_systematic_audit_fix.md`）：
@@ -525,7 +535,7 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
   修系统性高估）；`optimize_bulk_evs` 统一走 `_set_ev/_set_sp`；多击招式判定补乘 `move.hits`
   （单攻/单防/联合搜索三处）；`--goal survive` 传 ko 型 target 时归一化（原直接 KeyError）。
 - **KO 概率（ko_chance.py）**：`squash_multihit` 按 ko_chance.js:324-431 原文补齐 16 点表
-  hits=4/6/7/8/9/10 与 39 长度表 hits=2/3/4/5。
+  hits=4/6/7/8/9/10（V4.9.2 移除了 39 长度表——Python 伤害管线只产出 1/16/256 长度数组，该分支不可达）。
 - **CLI 层（query.py）**：
   - `move_override` 白名单（`_MOVE_OVERRIDE_WHITELIST`）强制执行，非法字段进响应 `warning`，
     `hits` 夹紧 1-10；`calc-raw` 不受影响。
@@ -581,7 +591,7 @@ Champions 规则模型（M-A/M-B/M-C）+ champout v1.2.0 数据重建。核心�
 - **天梯双打 Top50 热门套**：`cache/build_ladder_presets.py` 从官方实机排位双打 Top50（2026-08-30 数据）提炼 50 套 `天梯双打热门配置` 写入 setdex（最高占比努力分配 SP→EV + 性格（spread 行不带性格，回退聚合排行榜首）+ top 特性/道具/前4招式 + `usage_pct`/`source` 元数据），+22 只此前无预设的物种（炽焰咆哮虎、风妖精、铝钢桥龙、妙蛙花、全部 Mega 系等），setdex 189→207 只、264→314 套。Mega 形态经道具反查自动携带 `form_name`（含不规则英文名石的二层匹配），物种合并统计中的基础形态特性经形态特性表校验后丢弃（如喷火龙的 Blaze），引擎回退形态默认特性。合并前原始 setdex 备份于 `cache/setdex_backup_before_ladder_2026-08-30.json`。`--format singles` 可生成单打套 `天梯单打热门配置`（按 `singles_rank` 筛选）。
 - **测试**：新增 `cache/test_auto_preset_partial_ev.py`（23 例），全部现行套件（回归 36 / meta 16 / ladder 23 / teams 12 / usage 14 / field 30 / filter 14）通过。
 
-**文档准确性修正**：README 双语快速上手示例对齐实测值（`[111,132]`/12.5%，旧 `[130,154]/93.8%` 为历史遗留失真）并补 auto-preset 字段说明；本文件与 AGENTS 双语 / PROJECT_STATUS 的现状数据声明对齐实测（~39MB、781 招式、313 特性、name_index ~7500 条、207 只/314 预设、aliases 118 条）。
+**文档准确性修正**：README 双语快速上手示例对齐实测值（`[111,132]`/12.5%，旧 `[130,154]/93.8%` 为历史遗留失真）并补 auto-preset 字段说明；本文件与 AGENTS 双语 / PROJECT_STATUS 的现状数据声明对齐实测（~39MB、781 招式、313 特性、name_index ~7500 条、207 只/314 预设、aliases 194 条：宝可梦 118 / 招式 3 / 道具 73）。
 
 ### 4.8.09（2026-08-29）
 
@@ -703,7 +713,7 @@ SKILL.md 漏斗形重构：1305 行压缩至 618 行，输出模板移至文档�
 
 ### 2.0（2026-04-30）
 
-moves.json 从 349 条补充至 782 条（从 MOVES_SV 提取），补全 78 个分散招式 is_spread 标记。
+moves.json 从 349 条补充至 781 条（从 MOVES_SV 提取；实测 781，旧文误记 782），补全 78 个分散招式 is_spread 标记。
 
 ### 1.0（2026-04-30）
 

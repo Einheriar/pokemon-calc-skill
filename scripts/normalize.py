@@ -156,7 +156,6 @@ def normalize_type_name(name: str) -> str:
     if canonical:
         return canonical
     # Fuzzy match for Chinese abbreviations (e.g. "超能" -> "超能力")
-    import difflib
     close = difflib.get_close_matches(name, _TYPE_ZH_SET, n=1, cutoff=0.6)
     if close:
         return close[0]

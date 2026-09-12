@@ -202,6 +202,109 @@ _ITEM_BOOST_MAP: dict[str, str] = {
 }
 
 
+# Aura abilities: move type (zh) -> the matching aura ability name.
+_AURA_MAP: dict[str, str] = {"妖精": "Fairy Aura", "恶": "Dark Aura"}
+
+# Ogerpon masks boost the matching move type 1.2x (JS damage_MASTER.js:1477).
+# The attribute match implies the matching form (each form holds its own mask).
+_OGERPON_MASKS: dict[str, str] = {
+    "Wellspring Mask": "水", "水井面具": "水",
+    "Hearthflame Mask": "火", "火灶面具": "火",
+    "Cornerstone Mask": "岩石", "础石面具": "岩石",
+    "Teal Mask": "草", "碧草面具": "草",
+}
+
+# Weather Ball / Terrain Pulse type changes (module-level: rebuilt per call
+# was pure overhead).
+_WEATHER_BALL_TYPE: dict[str, str] = {
+    "Sun": "火", "Harsh Sun": "火",
+    "Rain": "水", "Heavy Rain": "水",
+    "Sand": "岩石",
+    "Hail": "冰", "Snow": "冰",
+}
+_TERRAIN_PULSE_TYPE: dict[str, str] = {
+    "Electric": "电",
+    "Grassy": "草",
+    "Misty": "妖精",
+    "Psychic": "超能力",
+}
+
+# Resist berries (halve super-effective moves of the corresponding type).
+_RESIST_BERRIES: dict[str, list[str]] = {
+    "Normal": ["Chilan Berry"],
+    "Fire": ["Occa Berry"],
+    "Water": ["Passho Berry"],
+    "Electric": ["Wacan Berry"],
+    "Grass": ["Rindo Berry"],
+    "Ice": ["Yache Berry"],
+    "Fighting": ["Chople Berry"],
+    "Poison": ["Kebia Berry"],
+    "Ground": ["Shuca Berry"],
+    "Flying": ["Coba Berry"],
+    "Psychic": ["Payapa Berry"],
+    "Bug": ["Tanga Berry"],
+    "Rock": ["Charti Berry"],
+    "Ghost": ["Kasib Berry"],
+    "Dragon": ["Haban Berry"],
+    "Dark": ["Colbur Berry"],
+    "Steel": ["Babiri Berry"],
+    "Fairy": ["Roseli Berry"],
+}
+
+# Berry aliases: zh official names + slang -> en canonical name
+_BERRY_ALIASES: dict[str, str] = {
+    # Slang (most commonly used by players)
+    "抗火果": "Occa Berry",
+    "抗水果": "Passho Berry",
+    "抗电果": "Wacan Berry",
+    "抗草果": "Rindo Berry",
+    "抗冰果": "Yache Berry",
+    "抗斗果": "Chople Berry",
+    "抗毒果": "Kebia Berry",
+    "抗地果": "Shuca Berry",
+    "抗飞果": "Coba Berry",
+    "抗超果": "Payapa Berry",
+    "抗虫果": "Tanga Berry",
+    "抗岩果": "Charti Berry",
+    "抗鬼果": "Kasib Berry",
+    "抗龙果": "Haban Berry",
+    "抗恶果": "Colbur Berry",
+    "抗钢果": "Babiri Berry",
+    "抗仙果": "Roseli Berry",
+    "抗一般果": "Chilan Berry",
+    # Chinese official names (Gen 7+)
+    "千香果": "Occa Berry",
+    "烛木果": "Passho Berry",
+    "罗子果": "Wacan Berry",
+    "番荔果": "Rindo Berry",
+    "腰木果": "Yache Berry",
+    "巧可果": "Chople Berry",
+    "棱瓜果": "Kebia Berry",
+    "葫苏果": "Shuca Berry",
+    "乐芭果": "Coba Berry",
+    "芭亚果": "Payapa Berry",
+    "莲蒲果": "Tanga Berry",
+    "霹霹果": "Charti Berry",
+    "烛龙果": "Haban Berry",
+    "佛柑果": "Kasib Berry",
+    "罗望果": "Colbur Berry",
+    "投鲜果": "Chilan Berry",
+    "刺耳果": "Colbur Berry",
+    "穹犀果": "Babiri Berry",
+    "香罗果": "Roseli Berry",
+}
+
+
+def _canonical_berry(item_name: str) -> str:
+    """Resolve zh/slang berry name to canonical English name."""
+    if not item_name:
+        return ""
+    # Already English
+    if item_name.endswith("Berry"):
+        return item_name
+    return _BERRY_ALIASES.get(item_name, item_name)
+
+
 def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
     """
     Apply Ate/Ize ability type changes (Aerilate, Pixilate, Refrigerate,
@@ -488,8 +591,11 @@ def _immunity_check(
         return _reason(def_ability)
     if move_type == "电" and def_ability in ("Lightning Rod", "Motor Drive", "Volt Absorb"):
         return _reason(def_ability)
-    if move_type == "地面" and ((not field.is_gravity and def_ability == "Levitate")
-                                or def_ability in ("Earth Eater", "Eelevate")):
+    if move_type == "地面" and not field.is_gravity and (
+            (def_ability == "Levitate" and defender.item != "Iron Ball")
+            or def_ability in ("Earth Eater", "Eelevate")):
+        # Iron Ball grounds its holder, negating Levitate (game truth; the JS
+        # source misses this — round 2 audit 2k).
         return _reason(def_ability)
     if getattr(move, "is_bullet", False) and def_ability == "Bulletproof":
         return _reason(def_ability)
@@ -511,8 +617,8 @@ def _immunity_check(
     if ((def_ability == "Damp" or attacker.ability == "Damp")
             and name in ("Self-Destruct", "Explosion", "Mind Blown", "Misty Explosion")):
         return _reason("Damp")
-    if name == "Fling" and (not attacker.item or attacker.item == "无"):
-        return "（无道具可投掷）"
+    if name == "Fling" and _cant_fling_item(attacker.item, attacker):
+        return "（该道具无法投掷或未持有道具）"
     if name == "Natural Gift" and not (attacker.item.endswith("果") or "Berry" in attacker.item):
         return "（天然礼物需要携带树果）"
     if def_ability in ("Queenly Majesty", "Dazzling", "Armor Tail") and is_priority:
@@ -561,6 +667,17 @@ _SPECIES_LOCKED_ITEMS = {
     "Ogerpon-Hearthflame": "Hearthflame Mask",
     "Ogerpon-Cornerstone": "Cornerstone Mask",
     "Giratina-Origin": "Griseous Orb",
+    "Zacian-Crowned": "Rusted Sword",
+    "Zamazenta-Crowned": "Rusted Shield",
+}
+
+# English names that match the "ite"/"ite " Mega Stone heuristic but are NOT
+# Mega Stones (full scan of the items index, round 2 audit E2). Eviolite and
+# White Herb are battle-relevant; the rest are non-holdables kept for safety.
+_ITE_HEURISTIC_EXCEPTIONS = {
+    "Eviolite", "White Herb", "White Flute", "White Apricorn", "White Dish",
+    "White Mane Hair", "Meteorite", "Meteorite Shard", "Suite Key",
+    "Armorite Ore", "Dynite Ore", "Black Augurite",
 }
 
 
@@ -577,7 +694,8 @@ def _cant_remove_item(item: str, defender: Pokemon) -> bool:
     if item.endswith("种子") or item.endswith(" Seed"):
         return True
     # Mega Stones: "Charizardite X", "Gyaradosite", 喷火龙进化石Ｘ ...
-    if "ite " in item or item.endswith("ite") or "进化石" in item:
+    if (("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS) \
+            or "进化石" in item:
         return True
     if item in ("Red Orb", "Blue Orb", "红玉", "蓝玉", "Griseous Orb"):
         return True
@@ -591,6 +709,57 @@ def _cant_remove_item(item: str, defender: Pokemon) -> bool:
     if name_en == "Silvally" and " Memory" in item:
         return True
     return False
+
+
+def _cant_fling_item(item: str, attacker: Pokemon) -> bool:
+    """Whether the attacker's item cannot be thrown with Fling.
+
+    Port of item_data.js cantFlingItem():876. Terrain seeds ARE flingable, so
+    this deliberately does not reuse _cant_remove_item's seed rule.
+    """
+    if not item or item == "无":
+        return True
+    if " Gem" in item or "宝石" in item:
+        return True
+    if "ium Z" in item or item.endswith("Ｚ"):
+        return True
+    if item in ("Red Orb", "Blue Orb", "红玉", "蓝玉",
+                "Griseous Orb", "Rusted Sword", "Rusted Shield"):
+        return True
+    if _SPECIES_LOCKED_ITEMS.get(attacker.name_en) == item:
+        return True
+    if (("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS) \
+            or "进化石" in item:
+        return True
+    name_en = attacker.name_en or ""
+    if name_en == "Arceus" and " Plate" in item:
+        return True
+    if name_en == "Genesect" and " Drive" in item:
+        return True
+    if name_en == "Silvally" and " Memory" in item:
+        return True
+    return False
+
+
+# Stat keys in JS allStats order (AT, DF, SA, SD, SP): ties resolve to the
+# earliest stat, matching damage_MASTER.js:334 allStats.indexOf(Math.max(...)).
+_HIGHEST_STAT_ORDER = ("attack", "defense", "sp_attack", "sp_defense", "speed")
+
+
+def _highest_stat(pokemon: Pokemon) -> str:
+    """The pokemon's highest non-HP stat from unboosted stats.
+
+    Protosynthesis / Quark Drive boost exactly this stat (JS
+    damage_MASTER.js:332-341). Comparing only attack vs sp_attack wrongly
+    boosts offense for mons whose top stat is defense/speed (round 2 audit E1).
+    """
+    raw = pokemon.raw_stats or pokemon.stats
+    best, best_val = _HIGHEST_STAT_ORDER[0], None
+    for key in _HIGHEST_STAT_ORDER:
+        val = raw.get(key, 0)
+        if best_val is None or val > best_val:
+            best, best_val = key, val
+    return best
 
 
 def base_power_func(
@@ -620,8 +789,9 @@ def base_power_func(
     elif name in ("Eruption", "Water Spout", "Dragon Energy"):
         bp = max(1, math.floor(150 * attacker.current_hp / max(1, attacker.max_hp)))
     elif name in ("Flail", "Reversal"):
-        ratio = attacker.current_hp / max(1, attacker.max_hp)
-        bp = 200 if ratio <= 0.0417 else 150 if ratio <= 0.104 else 100 if ratio <= 0.208 else 80 if ratio <= 0.354 else 40 if ratio <= 0.688 else 20
+        # Exact JS form (damage_MASTER.js:1188): p = floor(48 * curHP / maxHP).
+        p = math.floor(48 * attacker.current_hp / max(1, attacker.max_hp))
+        bp = 200 if p <= 1 else 150 if p <= 4 else 100 if p <= 9 else 80 if p <= 16 else 40 if p <= 32 else 20
     elif name in ("Crush Grip", "Wring Out"):
         # Game mechanic scales with the TARGET's remaining HP. The local JS
         # copy (damage_MASTER.js:1192) reads attacker.curHP, which is a port
@@ -636,6 +806,10 @@ def base_power_func(
     elif name in ("Hex", "Infernal Parade"):
         if defender.status not in (None, "Healthy"):
             bp *= 2
+    elif name == "Smelling Salts" and defender.status == "Paralyzed":
+        bp *= 2
+    elif name == "Wake-Up Slap" and defender.status == "Asleep":
+        bp *= 2
     elif name == "Acrobatics":
         item = attacker.item or ""
         boosted = (
@@ -661,11 +835,13 @@ def base_power_func(
         bp = math.floor(bp * 1.5)
     elif name == "Grav Apple" and field.is_gravity:
         bp = 120
-    elif name == "Expanding Force" and field.terrain == "Psychic":
+    elif name == "Expanding Force" and field.terrain == "Psychic" and is_grounded(attacker, field):
+        # Terrain boosts only reach grounded users (JS:1521-1525, audit E6)
         bp = 120
-    elif name == "Misty Explosion" and field.terrain == "Misty":
+    elif name == "Misty Explosion" and field.terrain == "Misty" and is_grounded(attacker, field):
         bp = 150
-    elif name == "Rising Voltage" and field.terrain == "Electric":
+    elif name == "Rising Voltage" and field.terrain == "Electric" and is_grounded(defender, field):
+        # Surges through the terrain into the grounded *target* (JS:1273-1275)
         bp = 140
     elif name == "Weather Ball" and field.weather and field.weather not in ("", "Strong Winds"):
         bp *= 2
@@ -716,7 +892,6 @@ def calc_bp_mods(
         bp_mods.append(0x1333)  # Gen 7+
 
     # c. Aura abilities (Fairy Aura, Dark Aura, Aura Break)
-    _AURA_MAP = {"妖精": "Fairy Aura", "恶": "Dark Aura"}
     expected_aura = _AURA_MAP.get(move.type)
     if expected_aura and not field.is_neutralizing_gas:
         aura_active = (attacker.ability == expected_aura or def_ability == expected_aura)
@@ -785,6 +960,20 @@ def calc_bp_mods(
     boost_type = _ITEM_BOOST_MAP.get(attacker.item)
     if boost_type and boost_type == move.type:
         bp_mods.append(0x1333)
+
+    # i2. Ogerpon masks: matching type 1.2x (JS:1477-1481)
+    if attacker.name_en == "Ogerpon" and _OGERPON_MASKS.get(attacker.item) == move.type:
+        bp_mods.append(0x1333)
+
+    # i3. Punching Glove: punch moves 1.1x (JS:1581-1584)
+    if attacker.item in ("Punching Glove", "拳击手套") and move.is_punch:
+        bp_mods.append(0x119A)
+
+    # i4. Solar Beam / Solar Blade halve in non-sun weather (JS:1491-1495)
+    if (move.name in ("Solar Beam", "SolarBeam", "Solar Blade")
+            and field.weather not in (None, "", "None", "Sun", "Harsh Sun", "Strong Winds")
+            and attacker.item not in ("万能伞", "Utility Umbrella")):
+        bp_mods.append(0x800)
 
     # v. Offensive Terrain (Gen9: 0x14CD = ~1.3x)
     if att_is_grounded:
@@ -858,10 +1047,12 @@ def calc_at_mods(
     """Calculate attack stat modifiers."""
     at_mods: list[int] = []
 
-    # Ruin abilities
-    if field.is_tablets_of_ruin and move.category == "Physical" and attacker.ability != "Tablets of Ruin":
+    # Ruin abilities (suppressed by Neutralizing Gas, JS:1813-1818)
+    if (field.is_tablets_of_ruin and move.category == "Physical"
+            and attacker.ability != "Tablets of Ruin" and not field.is_neutralizing_gas):
         at_mods.append(0x0C00)
-    elif field.is_vessel_of_ruin and move.category == "Special" and attacker.ability != "Vessel of Ruin":
+    elif (field.is_vessel_of_ruin and move.category == "Special"
+          and attacker.ability != "Vessel of Ruin" and not field.is_neutralizing_gas):
         at_mods.append(0x0C00)
 
     # Slow Start / Defeatist
@@ -872,7 +1063,8 @@ def calc_at_mods(
     # Flower Gift
     if (attacker.ability == "Flower Gift" and attacker.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
-            and move.category == "Physical" and attacker.item != "大晴天伞"):
+            and move.category == "Physical"
+            and attacker.item not in ("万能伞", "Utility Umbrella")):
         at_mods.append(0x1800)
     elif field.is_flower_gift_atk and field.weather and "Sun" in field.weather and move.category == "Physical":
         at_mods.append(0x1800)
@@ -895,14 +1087,17 @@ def calc_at_mods(
             or (attacker.ability == "Rocky Payload" and move.type == "岩石")):
         at_mods.append(0x1800)
     elif (attacker.ability == "Solar Power" and field.weather and "Sun" in field.weather
-          and move.category == "Special" and attacker.item != "大晴天伞"):
+          and move.category == "Special" and attacker.item not in ("万能伞", "Utility Umbrella")):
         at_mods.append(0x1800)
 
-    # 1.3x abilities (Protosynthesis / Quark Drive / Transistor Gen9)
+    # 1.3x abilities (Protosynthesis / Quark Drive / Transistor Gen9).
+    # Proto/Quark boosts the mon's HIGHEST stat (all five, from unboosted
+    # values) — only that stat's offense gets the 1.3x (JS:1714-1716, audit E1).
+    proto_quark_stat = _highest_stat(attacker)
     if (((attacker.ability == "Protosynthesis" and (attacker.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
          or (attacker.ability == "Quark Drive" and (attacker.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
-            and ((attacker.stats.get("attack", 0) >= attacker.stats.get("sp_attack", 0) and move.category == "Physical")
-                 or (attacker.stats.get("sp_attack", 0) > attacker.stats.get("attack", 0) and move.category == "Special"))):
+            and ((proto_quark_stat == "attack" and move.category == "Physical")
+                 or (proto_quark_stat == "sp_attack" and move.category == "Special"))):
         at_mods.append(0x14CD)
     elif attacker.ability == "Transistor" and move.type == "电":
         at_mods.append(0x14CD)
@@ -998,16 +1193,19 @@ def calc_def_mods(
     """Calculate defense stat modifiers."""
     df_mods: list[int] = []
 
-    # Ruin abilities
-    if field.is_sword_of_ruin and hits_physical and def_ability != "Sword of Ruin":
+    # Ruin abilities (suppressed by Neutralizing Gas, JS:1813-1818)
+    if (field.is_sword_of_ruin and hits_physical
+            and def_ability != "Sword of Ruin" and not field.is_neutralizing_gas):
         df_mods.append(0x0C00)
-    elif field.is_beads_of_ruin and not hits_physical and def_ability != "Beads of Ruin":
+    elif (field.is_beads_of_ruin and not hits_physical
+          and def_ability != "Beads of Ruin" and not field.is_neutralizing_gas):
         df_mods.append(0x0C00)
 
     # Flower Gift
     if (def_ability == "Flower Gift" and defender.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
-            and not hits_physical and defender.item != "大晴天伞"):
+            and not hits_physical
+            and defender.item not in ("万能伞", "Utility Umbrella")):
         df_mods.append(0x1800)
     elif field.is_flower_gift_spd and field.weather and "Sun" in field.weather and not hits_physical:
         df_mods.append(0x1800)
@@ -1017,11 +1215,14 @@ def calc_def_mods(
             or (def_ability == "Grass Pelt" and field.terrain == "Grassy" and hits_physical)):
         df_mods.append(0x1800)
 
-    # 1.3x abilities (Protosynthesis / Quark Drive on defense)
+    # 1.3x abilities (Protosynthesis / Quark Drive on defense): boosts the
+    # mon's HIGHEST stat only (JS:1845-1847, audit E1 — defense/speed-highest
+    # mons must not get the offense-side boost).
+    proto_quark_stat = _highest_stat(defender)
     if (((def_ability == "Protosynthesis" and (defender.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
          or (def_ability == "Quark Drive" and (defender.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
-            and ((defender.stats.get("defense", 0) >= defender.stats.get("sp_defense", 0) and hits_physical)
-                 or (defender.stats.get("sp_defense", 0) > defender.stats.get("defense", 0) and not hits_physical))):
+            and ((proto_quark_stat == "defense" and hits_physical)
+                 or (proto_quark_stat == "sp_defense" and not hits_physical))):
         df_mods.append(0x14CD)
 
     # 2.0x abilities
@@ -1099,8 +1300,10 @@ def calc_final_mods(
     if def_ability in ("Multiscale", "Shadow Shield") and defender.current_hp == defender.max_hp:
         final_mods.append(0x800)
 
-    # Fluffy (contact) - Long Reach ignores contact effects
-    is_contact = move.makes_contact and attacker.ability != "Long Reach"
+    # Fluffy (contact) - Long Reach ignores contact effects; Punching Glove
+    # keeps punch moves contact-free (audit E13)
+    is_contact = (move.makes_contact and attacker.ability != "Long Reach"
+                  and not (move.is_punch and attacker.item in ("Punching Glove", "拳击手套")))
     if def_ability == "Fluffy" and is_contact:
         final_mods.append(0x800)
 
@@ -1136,79 +1339,6 @@ def calc_final_mods(
         final_mods.append(0x14CC)
 
     # Resist berries (halve super-effective moves of the corresponding type)
-    _RESIST_BERRIES: dict[str, list[str]] = {
-        "Normal": ["Chilan Berry"],
-        "Fire": ["Occa Berry"],
-        "Water": ["Passho Berry"],
-        "Electric": ["Wacan Berry"],
-        "Grass": ["Rindo Berry"],
-        "Ice": ["Yache Berry"],
-        "Fighting": ["Chople Berry"],
-        "Poison": ["Kebia Berry"],
-        "Ground": ["Shuca Berry"],
-        "Flying": ["Coba Berry"],
-        "Psychic": ["Payapa Berry"],
-        "Bug": ["Tanga Berry"],
-        "Rock": ["Charti Berry"],
-        "Ghost": ["Kasib Berry"],
-        "Dragon": ["Haban Berry"],
-        "Dark": ["Colbur Berry"],
-        "Steel": ["Babiri Berry"],
-        "Fairy": ["Roseli Berry"],
-    }
-
-    # Berry aliases: zh official names + slang -> en canonical name
-    _BERRY_ALIASES: dict[str, str] = {
-        # Slang (most commonly used by players)
-        "抗火果": "Occa Berry",
-        "抗水果": "Passho Berry",
-        "抗电果": "Wacan Berry",
-        "抗草果": "Rindo Berry",
-        "抗冰果": "Yache Berry",
-        "抗斗果": "Chople Berry",
-        "抗毒果": "Kebia Berry",
-        "抗地果": "Shuca Berry",
-        "抗飞果": "Coba Berry",
-        "抗超果": "Payapa Berry",
-        "抗虫果": "Tanga Berry",
-        "抗岩果": "Charti Berry",
-        "抗鬼果": "Kasib Berry",
-        "抗龙果": "Haban Berry",
-        "抗恶果": "Colbur Berry",
-        "抗钢果": "Babiri Berry",
-        "抗仙果": "Roseli Berry",
-        "抗一般果": "Chilan Berry",
-        # Chinese official names (Gen 7+)
-        "千香果": "Occa Berry",
-        "烛木果": "Passho Berry",
-        "罗子果": "Wacan Berry",
-        "番荔果": "Rindo Berry",
-        "腰木果": "Yache Berry",
-        "巧可果": "Chople Berry",
-        "棱瓜果": "Kebia Berry",
-        "葫苏果": "Shuca Berry",
-        "乐芭果": "Coba Berry",
-        "芭亚果": "Payapa Berry",
-        "莲蒲果": "Tanga Berry",
-        "霹霹果": "Charti Berry",
-        "烛龙果": "Haban Berry",
-        "佛柑果": "Kasib Berry",
-        "罗望果": "Colbur Berry",
-        "投鲜果": "Chilan Berry",
-        "刺耳果": "Colbur Berry",
-        "穹犀果": "Babiri Berry",
-        "香罗果": "Roseli Berry",
-    }
-
-    def _canonical_berry(item_name: str) -> str:
-        """Resolve zh/slang berry name to canonical English name."""
-        if not item_name:
-            return ""
-        # Already English
-        if item_name.endswith("Berry"):
-            return item_name
-        return _BERRY_ALIASES.get(item_name, item_name)
-
     move_type_en = _TYPE_ZH_TO_EN.get(move.type, move.type)
     resist_berries = _RESIST_BERRIES.get(move_type_en, [])
     canonical_item = _canonical_berry(defender.item)
@@ -1222,12 +1352,36 @@ def calc_final_mods(
 # Main calculation entry point
 # ---------------------------------------------------------------------------
 
+def _check_seeds(defender: Pokemon, field: Field) -> None:
+    """Apply terrain seed boosts to the defender's defensive stats.
+
+    Mirrors the front-end checkSeeds behaviour: when the defender holds
+    a seed and the corresponding terrain is active, raise the matching
+    defensive stat by one stage.  Seeds are consumed in-game, but the
+    calculator treats them as a one-time boost for the current calculation.
+    """
+    stat = ""
+    if field.terrain == "Psychic" and defender.item == "Psychic Seed":
+        stat = "sp_defense"
+    elif field.terrain == "Misty" and defender.item == "Misty Seed":
+        stat = "sp_defense"
+    elif field.terrain == "Electric" and defender.item == "Electric Seed":
+        stat = "defense"
+    elif field.terrain == "Grassy" and defender.item == "Grassy Seed":
+        stat = "defense"
+    if stat:
+        new_boost = min(6, defender.boosts.get(stat, 0) + 1)
+        defender.boosts[stat] = new_boost
+        defender.stats[stat] = get_modified_stat(defender.raw_stats.get(stat, 0), new_boost)
+
+
 def calculate_damage(
     attacker: Pokemon,
     defender: Pokemon,
     move: Move,
     field: Field,
     gen: int = 9,
+    _skip_seeds: bool = False,
 ) -> DamageResult:
     """
     Calculate damage for a single move.
@@ -1237,7 +1391,33 @@ def calculate_damage(
       - min_damage / max_damage
       - description: human-readable summary
       - is_critical, type_effectiveness, stab_applied, burn_applied
+
+    Terrain Seed boosts are applied on throwaway copies of the defender's
+    boosts/stats and rolled back on exit, so repeated calls on the same
+    Pokemon objects (EV optimizer loops, repeated calcs) never accumulate
+    stages. ``_skip_seeds`` is an internal flag used by the Parental Bond
+    recursion: the seed boost persists across both hits in-game, so the
+    second hit must not apply it a second time.
     """
+    original_boosts = defender.boosts
+    original_stats = defender.stats
+    defender.boosts = dict(original_boosts)
+    defender.stats = dict(original_stats)
+    try:
+        return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds)
+    finally:
+        defender.boosts = original_boosts
+        defender.stats = original_stats
+
+
+def _calculate_damage_core(
+    attacker: Pokemon,
+    defender: Pokemon,
+    move: Move,
+    field: Field,
+    gen: int,
+    _skip_seeds: bool,
+) -> DamageResult:
     # Work on a copy of the move so type/category/is_spread mutations below do not
     # leak back to a Move object reused across multiple calls (e.g. EV optimizer loop).
     move = copy(move)
@@ -1266,34 +1446,10 @@ def calculate_damage(
     if attacker.ability in ("Mold Breaker", "Teravolt", "Turboblaze"):
         def_ability = "[ignored]"
 
-    # Terrain Seed items apply a one-time defensive boost.  Copy boosts so the
-    # original Pokemon object is not mutated across multiple calculate_damage calls.
-    original_boosts = defender.boosts
-    defender.boosts = dict(original_boosts)
-
-    def _check_seeds(defender: Pokemon, field: Field) -> None:
-        """Apply terrain seed boosts to the defender's defensive stats.
-
-        Mirrors the front-end checkSeeds behaviour: when the defender holds
-        a seed and the corresponding terrain is active, raise the matching
-        defensive stat by one stage.  Seeds are consumed in-game, but the
-        calculator treats them as a one-time boost for the current calculation.
-        """
-        stat = ""
-        if field.terrain == "Psychic" and defender.item == "Psychic Seed":
-            stat = "sp_defense"
-        elif field.terrain == "Misty" and defender.item == "Misty Seed":
-            stat = "sp_defense"
-        elif field.terrain == "Electric" and defender.item == "Electric Seed":
-            stat = "defense"
-        elif field.terrain == "Grassy" and defender.item == "Grassy Seed":
-            stat = "defense"
-        if stat:
-            new_boost = min(6, defender.boosts.get(stat, 0) + 1)
-            defender.boosts[stat] = new_boost
-            defender.stats[stat] = get_modified_stat(defender.raw_stats.get(stat, 0), new_boost)
-
-    _check_seeds(defender, field)
+    # Terrain Seed one-time defensive boost (public wrapper already
+    # copy-protected boosts/stats and rolls the mutation back on exit).
+    if not _skip_seeds:
+        _check_seeds(defender, field)
 
     # Critical hit
     is_critical = move.is_crit and def_ability not in ("Battle Armor", "Shell Armor")
@@ -1307,22 +1463,10 @@ def calculate_damage(
         effective_weather = "Sun"
 
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
-    if move.name == "Weather Ball" and effective_weather and attacker.item not in ("Utility Umbrella", "大晴天伞"):
-        weather_type_map = {
-            "Sun": "火", "Harsh Sun": "火",
-            "Rain": "水", "Heavy Rain": "水",
-            "Sand": "岩石",
-            "Hail": "冰", "Snow": "冰",
-        }
-        move.type = weather_type_map.get(effective_weather, move.type)
+    if move.name == "Weather Ball" and effective_weather and attacker.item not in ("万能伞", "Utility Umbrella"):
+        move.type = _WEATHER_BALL_TYPE.get(effective_weather, move.type)
     elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
-        terrain_type_map = {
-            "Electric": "电",
-            "Grassy": "草",
-            "Misty": "妖精",
-            "Psychic": "超能力",
-        }
-        move.type = terrain_type_map.get(field.terrain, move.type)
+        move.type = _TERRAIN_PULSE_TYPE.get(field.terrain, move.type)
 
     # Turn order (for speed-based moves)
     turn_order = "FIRST" if attacker.stats.get("speed", 0) > defender.stats.get("speed", 0) else "LAST"
@@ -1396,15 +1540,15 @@ def calculate_damage(
     # b. Weather (Hydro Steam gets the sun boost instead of the sun nerf;
     #    damage_MASTER.js:1885-1892. Umbrella checks cover both languages)
     if effective_weather:
-        att_no_umbrella = attacker.item not in ("大晴天伞", "Utility Umbrella")
+        att_no_umbrella = attacker.item not in ("万能伞", "Utility Umbrella")
         if (("Sun" in effective_weather and move.type == "火")
                 or ("Rain" in effective_weather and move.type == "水")
                 or ("Sun" in effective_weather and move.name == "Hydro Steam" and att_no_umbrella)):
-            if defender.item not in ("大晴天伞", "Utility Umbrella"):
+            if defender.item not in ("万能伞", "Utility Umbrella"):
                 base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
         elif ((effective_weather == "Sun" and move.type == "水")
               or (effective_weather == "Rain" and move.type == "火")) \
-                and defender.item not in ("大晴天伞", "Utility Umbrella"):
+                and defender.item not in ("万能伞", "Utility Umbrella"):
             base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
 
     # c. Critical hit
@@ -1458,17 +1602,23 @@ def calculate_damage(
 
     damage_rolls.sort()
 
-    # Parental Bond: second hit at 25% base power (Gen 6+)
-    if (attacker.ability == "Parental Bond"
-            and move.name not in _PARENTAL_BOND_IGNORED_MOVES
-            and move.hits == 1):
+    # Parental Bond: second hit at 25% base power (Gen 6+). In doubles the
+    # second hit only applies to non-spread moves (JS:1980, audit E5).
+    _pb_active = (attacker.ability == "Parental Bond"
+                 and move.name not in _PARENTAL_BOND_IGNORED_MOVES
+                 and move.hits == 1
+                 and (field.format == "Singles" or not move.is_spread))
+    if _pb_active:
         second_move = copy(move)
         second_move.base_power = max(1, math.floor(second_move.base_power * 0.25))
         second_move.fainted_allies = 0  # Prevent dynamic BP boosts from reapplying
+        second_move.times_affected = 0  # Same for Rage Fist counters
         # Temporarily disable Parental Bond to prevent infinite recursion
         original_ability = attacker.ability
         attacker.ability = ""
-        second_result = calculate_damage(attacker, defender, second_move, field, gen)
+        # _skip_seeds: the seed boost persists across both hits, so the
+        # second hit keeps the stage already applied above (audit E4).
+        second_result = calculate_damage(attacker, defender, second_move, field, gen, _skip_seeds=True)
         attacker.ability = original_ability
 
         # Merge damage rolls: all combinations of first + second hit
@@ -1488,9 +1638,7 @@ def calculate_damage(
 
     crit_desc = " 击中要害" if is_critical else ""
     burn_desc = "（烧伤减半）" if apply_burn else ""
-    pb_desc = "（亲子爱：两段攻击）" if (attacker.ability == "Parental Bond"
-                                         and move.name not in _PARENTAL_BOND_IGNORED_MOVES
-                                         and move.hits == 1) else ""
+    pb_desc = "（亲子爱：两段攻击）" if _pb_active else ""
 
     description = (
         f"Lv.{attacker.level} {attacker.name} 的 {move.name} "

@@ -685,12 +685,10 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
     data = _moves_data.get(stem)
     if data is None:
         return None
-    patched = _apply_champions_move_patch(stem, data)
-    if patched is data:
-        zh_name = data.get("name_zh", "")
-        if zh_name:
-            patched = _apply_champions_move_patch(zh_name, data)
-    return stem, patched
+    # moves.json (and the champions moves patch) are keyed by the Chinese
+    # name, which IS the stem, so a second patch lookup by name_zh could
+    # never hit — removed (round 2 audit D8).
+    return stem, _apply_champions_move_patch(stem, data)
 
 
 def resolve_ability(name: str) -> tuple[str, Any] | None:
@@ -1368,7 +1366,8 @@ def cmd_find_move(move_name: str, source: str = "") -> dict[str, Any]:
                     "name_en": pdata.get("name_en"),
                     "pokedex_id": pdata.get("pokedex_id"),
                     "form_name": form_name or "",
-                    "method": _get_method_name(move, category),
+                    # Champions learnsets carry no level info (round 2 audit D11)
+                    "method": "Champions" if data_source == "champions" else _get_method_name(move, category),
                     "types": matched_types,
                 })
                 break
@@ -1685,8 +1684,17 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
     """Apply stat_changes from setup moves to attacker state and field.
 
     Reads moves.json for each setup move and applies structured stat changes.
-    This eliminates LLM dependency on move effect knowledge.
+    This eliminates LLM dependency on move effect knowledge. Whenever boosts
+    change, the corresponding effective stats are re-derived so they stay in
+    sync (round 2 audit E3 follow-up: stats were derived before setup_moves).
     """
+    from damage import get_modified_stat
+
+    def _sync_stats(pk) -> None:
+        if pk.raw_stats:
+            pk.stats = {k: get_modified_stat(v, pk.boosts.get(k, 0))
+                        for k, v in pk.raw_stats.items()}
+
     for move_name in setup_moves:
         move_data = _moves_data.get(move_name)
         if not move_data:
@@ -1699,6 +1707,7 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
         if "self" in stat_changes:
             for stat, change in stat_changes["self"].items():
                 attacker.boosts[stat] = attacker.boosts.get(stat, 0) + change
+            _sync_stats(attacker)
 
         # Apply weather
         if "weather" in stat_changes:
@@ -1712,6 +1721,7 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
         if "opponent" in stat_changes:
             for stat, change in stat_changes["opponent"].items():
                 defender.boosts[stat] = defender.boosts.get(stat, 0) + change
+            _sync_stats(defender)
 
         # Apply heal
         if "heal" in stat_changes:
@@ -1993,6 +2003,35 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     return pk
 
 
+def _finalize_calc_pokemon(pk, overrides: dict[str, Any] | None) -> None:
+    """Normalize a Pokemon built by _make_pokemon_from_data before a calc.
+
+    Round 2 audit fixes (E3/E8):
+    - raw_stats-only inputs left ``stats`` empty, so the engine's boosted-stat
+      path read 0 (damage 1-1); always derive stats from raw_stats + boosts.
+    - compute_raw_stats unconditionally overwrites max_hp, silently discarding
+      an explicit override; re-apply user max_hp/current_hp AFTER derivation.
+    """
+    from damage import compute_raw_stats, get_modified_stat
+
+    overrides = overrides or {}
+    # stats-only input: treat as raw (same semantics as calc-raw)
+    if pk.stats and not pk.raw_stats:
+        pk.raw_stats = dict(pk.stats)
+    if not pk.raw_stats:
+        compute_raw_stats(pk)
+    pk.stats = {k: get_modified_stat(v, pk.boosts.get(k, 0))
+                for k, v in pk.raw_stats.items()}
+    if "max_hp" in overrides:
+        pk.max_hp = overrides["max_hp"]
+    elif pk.max_hp == 0:
+        pk.max_hp = pk.raw_stats.get("hp", pk.stats.get("hp", 0))
+    if "current_hp" in overrides:
+        pk.current_hp = overrides["current_hp"]
+    elif pk.current_hp == 0:
+        pk.current_hp = pk.max_hp
+
+
 # Move field normalization constants (module-level for reuse).
 _MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
     "物理": "Physical",
@@ -2037,17 +2076,29 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         power = 0
     # Parse hits: can be int or string like "multi"
     hits_raw = data.get("hits", 1)
+    if hits_raw == "multi":
+        # 2-5 hit variable moves: approximate with the expected count (3).
+        # cmd_calc surfaces a warning when the data layer says "multi".
+        hits = 3
+    else:
+        try:
+            hits = int(hits_raw)
+        except (ValueError, TypeError):
+            hits = 1
+    # Accuracy comes from the data layer ("100", "90", or "—" for
+    # unmissable/NA) — fall back to the raw string rather than a fake 100.
+    acc_raw = data.get("accuracy", 100)
     try:
-        hits = int(hits_raw)
-    except (ValueError, TypeError):
-        hits = 1
+        accuracy: Any = int(acc_raw)
+    except (TypeError, ValueError):
+        accuracy = acc_raw
     move = {
         "name": data.get("name_en", ""),
         "name_zh": data.get("name_zh", ""),
         "base_power": power,
         "type": data.get("type", "一般"),
         "category": data.get("category", ""),
-        "accuracy": 100,
+        "accuracy": accuracy,
         "hits": hits,
         "is_crit": False,
         "makes_contact": data.get("makes_contact", False),
@@ -2169,6 +2220,10 @@ def cmd_optimize(
     move = Move(**move_dict)
     field = Field()
     _apply_field_overrides(field, field_override)
+    # Same normalization as cmd_calc: derive stats/HP so optimizer judgements
+    # read the computed HP pool instead of zeros (round 2 audit E3/E8).
+    _finalize_calc_pokemon(attacker, att_override)
+    _finalize_calc_pokemon(defender, def_override)
 
     return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
 
@@ -2290,8 +2345,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
 
-    # Extract setup_moves and extra metadata before passing to model constructors
-    setup_moves = att_dict.pop("setup_moves", [])
+    # Extract extra metadata before passing to model constructors
+    # (setup_moves never survives _make_pokemon_from_data's field whitelist;
+    # the live read below comes from att_override directly)
     att_extra = {
         "_data_source": att_dict.pop("_data_source", "gen9"),
         "is_unobtainable": att_dict.pop("is_unobtainable", False),
@@ -2311,23 +2367,24 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     field = Field()
     _apply_field_overrides(field, field_override)
 
+    # Derive stats from raw_stats+boosts and honour explicit HP overrides
+    # (round 2 audit E3/E8; compute_raw_stats inside the engine would
+    # otherwise clobber an explicit max_hp and leave stats empty).
+    _finalize_calc_pokemon(attacker, att_override)
+    _finalize_calc_pokemon(defender, def_override)
+
     # Surface SP input warnings (e.g. sp > 32) collected during override merge
     for _extra in (att_extra, def_extra):
         _sp_meta = _extra.get("_sp_meta") or {}
         for _w in _sp_meta.pop("warnings", []):
             calc_warnings.append(_w)
 
-    # Ensure max_hp/current_hp are derived from stats when not explicitly overridden.
-    # Users may pass stats/raw_stats without current_hp/max_hp, so derive from hp stat.
-    if attacker.max_hp == 0:
-        attacker.max_hp = attacker.raw_stats.get("hp", attacker.stats.get("hp", 0))
-    if attacker.current_hp == 0:
-        attacker.current_hp = attacker.max_hp
-
-    if defender.max_hp == 0:
-        defender.max_hp = defender.raw_stats.get("hp", defender.stats.get("hp", 0))
-    if defender.current_hp == 0:
-        defender.current_hp = defender.max_hp
+    # 2-5 hit variable moves (data layer hits == "multi") are approximated
+    # with the expected hit count of 3 — say so instead of staying silent.
+    if move_data.get("hits") == "multi":
+        calc_warnings.append(
+            f"{move_data.get('name_zh', move.name)} 为 2-5 段变段招式，"
+            "total_damage 按 3 段（期望段数）估算")
 
     # Apply setup moves (e.g., Nasty Plot, Swords Dance) if specified in att_override
     setup_moves = att_override.get("setup_moves", [])
@@ -2404,6 +2461,50 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "is_mega": def_extra.get("is_mega", False),
     }
 
+    # Transparency block (round 2 audit C1): the SKILL.md output template
+    # references move/field/modifier data that used to exist nowhere in the
+    # response, forcing the LLM to fill gaps from memory.
+    def _desc_power(desc: str) -> int | None:
+        m = re.search(r"威力 (\d+)", desc)
+        return int(m.group(1)) if m else None
+
+    move_info: dict[str, Any] = {
+        "name": move_data.get("name_zh") or move.name,
+        "name_en": move.name,
+        "type": move.type,
+        "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
+        "base_power": move_dict.get("base_power"),
+        "effective_power": _desc_power(result.description),
+        "accuracy": move_dict.get("accuracy"),
+        "hits": move.hits,
+        "is_spread": bool(move.is_spread),
+    }
+    field_info: dict[str, Any] = {
+        "weather": field.weather,
+        "terrain": field.terrain,
+        "format": field.format,
+        "is_gravity": field.is_gravity,
+        "is_reflect": field.is_reflect,
+        "is_light_screen": field.is_light_screen,
+        "is_aurora_veil": field.is_aurora_veil,
+        "is_stealth_rock": field.is_stealth_rock,
+        "spikes": field.spikes,
+        "is_helping_hand": field.is_helping_hand,
+        "is_friend_guard": field.is_friend_guard,
+        "is_battery": field.is_battery,
+        "is_power_spot": field.is_power_spot,
+    }
+    modifiers: dict[str, Any] = {
+        "attacker_boosts": attacker.boosts,
+        "attacker_status": attacker.status,
+        "attacker_is_tera": attacker.is_terastalize,
+        "attacker_tera_type": attacker.tera_type,
+        "defender_boosts": defender.boosts,
+        "defender_status": defender.status,
+        "defender_is_tera": defender.is_terastalize,
+        "defender_tera_type": defender.tera_type,
+    }
+
     response: dict[str, Any] = {
         "attacker": attacker_name,
         "move": move_name,
@@ -2418,6 +2519,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "ko_chance": ko_text,
         "attacker_info": attacker_info,
         "defender_info": defender_info,
+        "move_info": move_info,
+        "field_info": field_info,
+        "modifiers": modifiers,
         "_data_source": attacker_info.get("_data_source", "gen9"),
     }
     if att_auto_preset:
@@ -2548,6 +2652,17 @@ def cmd_calc_raw(
     # Normalize move fields for the damage engine (Chinese category/type -> English category / Chinese type)
     _normalize_move_fields(move_dict)
 
+    # hits may arrive as the data layer's "multi" string or other junk;
+    # coerce like _make_move_from_data instead of crashing on str>int later.
+    if "hits" in move_dict:
+        if move_dict["hits"] == "multi":
+            move_dict["hits"] = 3
+        else:
+            try:
+                move_dict["hits"] = int(move_dict["hits"])
+            except (TypeError, ValueError):
+                move_dict["hits"] = 1
+
     # Normalize Pokemon types: English type names should be converted to Chinese for the engine.
     # This keeps calc-raw aligned with the intermediate-layer philosophy of bilingual input.
     if att_dict.get("types"):
@@ -2662,6 +2777,37 @@ def cmd_calc_raw(
         "max_hp": defender.max_hp,
     }
 
+    # Transparency block (round 2 audit C1): parity with cmd_calc. For
+    # calc-raw the user-supplied move JSON is the "data layer", so base_power
+    # echoes the input value and effective_power comes from the description.
+    _m = re.search(r"威力 (\d+)", result.description)
+    move_info: dict[str, Any] = {
+        "name": move.name_zh or move.name,
+        "name_en": move.name,
+        "type": move.type,
+        "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
+        "base_power": move_dict.get("base_power"),
+        "effective_power": int(_m.group(1)) if _m else None,
+        "accuracy": move_dict.get("accuracy"),
+        "hits": move.hits,
+        "is_spread": bool(move.is_spread),
+    }
+    field_info: dict[str, Any] = {
+        "weather": field.weather,
+        "terrain": field.terrain,
+        "format": field.format,
+        "is_gravity": field.is_gravity,
+        "is_reflect": field.is_reflect,
+        "is_light_screen": field.is_light_screen,
+        "is_aurora_veil": field.is_aurora_veil,
+        "is_stealth_rock": field.is_stealth_rock,
+        "spikes": field.spikes,
+        "is_helping_hand": field.is_helping_hand,
+        "is_friend_guard": field.is_friend_guard,
+        "is_battery": field.is_battery,
+        "is_power_spot": field.is_power_spot,
+    }
+
     response: dict[str, Any] = {
         "attacker": attacker.name,
         "move": move.name,
@@ -2676,6 +2822,8 @@ def cmd_calc_raw(
         "ko_chance": ko_text,
         "attacker_info": attacker_info,
         "defender_info": defender_info,
+        "move_info": move_info,
+        "field_info": field_info,
     }
     if move.hits > 1:
         response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
@@ -2828,6 +2976,11 @@ def cmd_survivability(
     import json
 
 
+    # Category validation (round 2 audit C12: bogus values silently fell
+    # into the Special branch)
+    if category not in ("Physical", "Special"):
+        return {"error": f"category 必须是 Physical 或 Special，收到 '{category}'"}
+
     # Parse overrides
     try:
         def_override = json.loads(def_ov) if def_ov else {}
@@ -2849,12 +3002,13 @@ def cmd_survivability(
     else:
         raw_stats["sp_attack"] = attacker_stat
 
-    # Use Fire type to avoid STAB with Normal-type move (ensuring "no boost" calculation)
+    # Use Fire type to avoid STAB with Normal-type move (ensuring "no boost" calculation).
+    # Engine-layer types are Chinese strings.
     attacker = Pokemon(
         name="VirtualAttacker",
         name_en="VirtualAttacker",
         level=50,
-        types=["Fire"],
+        types=["火"],
         stats=raw_stats,
         raw_stats=raw_stats,
         ability="",
@@ -2922,16 +3076,18 @@ def cmd_survivability(
 
     stats = defender_data.get("raw_stats") or defender_data.get("stats", {})
     hp = stats.get("hp", 0)
+    # Separate copies: _find_survivability_bp writes boosted values back into
+    # defender.stats, which must not alias raw_stats (round 2 audit E10).
     defender = Pokemon(
         name=defender_data.get("name", defender_name),
         name_en=defender_data.get("name_en", "Defender"),
         level=50,
-        types=defender_data.get("types", ["Normal"]),
-        stats=stats,
-        raw_stats=stats,
+        types=defender_data.get("types", ["一般"]),
+        stats=dict(stats),
+        raw_stats=dict(stats),
         ability="",
         ability_zh="",
-        nature="Hardy",
+        nature="勤奋",
         item="",
         current_hp=hp,
         max_hp=hp,

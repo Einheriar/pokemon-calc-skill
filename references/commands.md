@@ -179,7 +179,11 @@ python scripts/query.py survivability <defender> <attacker_stat> <category> [def
 **返回值**：
 - `safe_bp`：防御方能稳定承受的最大基础威力（不触发要害）
 - `absolute_safe_bp`：即使触发要害也能承受的最大基础威力
-- `reference_damage`：临界威力下的伤害范围
+- `safe_damage_range`：临界威力（safe_bp）下的伤害范围
+- `absolute_safe_damage_range`：绝对安全威力下的伤害范围
+- `defender_boosts`：实际应用的防御方强化（回显）
+
+> V4.9.2：`category` 强制校验（非法值返回 error，原先静默按特殊处理）。
 
 **示例**：
 

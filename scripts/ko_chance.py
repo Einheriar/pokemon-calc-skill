@@ -317,7 +317,13 @@ def _predict_total(
 
 
 def squash_multihit(d: list[int], hits: int) -> list[int]:
-    """Approximate multi-hit damage distribution."""
+    """Approximate multi-hit damage distribution.
+
+    The JS original also has 39-length tables for Triple Kick/Axel-style
+    escalating hits; Python's damage pipeline only ever produces 1/16/256
+    length arrays, so those tables were unreachable and have been removed
+    (round 2 audit S1).
+    """
     if len(d) == 1:
         return [d[0] * hits]
     if len(d) == 16:
@@ -384,36 +390,6 @@ def squash_multihit(d: list[int], hits: int) -> list[int]:
                 9*d[7]+d[8], 8*d[7]+2*d[8], 7*d[7]+3*d[8], 6*d[7]+4*d[8],
                 4*d[7]+6*d[8], 3*d[7]+7*d[8], 2*d[7]+8*d[8], d[7]+9*d[8],
                 10*d[8], 5*d[8]+5*d[9], 10*d[9], 10*d[15]
-            ]
-    elif len(d) == 39:
-        # Triple Kick / Triple Axel-style escalating-hit distributions
-        if hits == 2:
-            return [
-                2*d[0], 2*d[7], 2*d[10], 2*d[12],
-                2*d[14], d[15]+d[16], 2*d[17], d[18]+d[19],
-                d[19]+d[20], 2*d[21], d[22]+d[23], 2*d[24],
-                2*d[26], 2*d[28], 2*d[31], 2*d[38]
-            ]
-        elif hits == 3:
-            return [
-                3*d[0], 3*d[9], 3*d[12], 3*d[13],
-                3*d[15], 3*d[16], 3*d[17], 3*d[18],
-                3*d[20], 3*d[21], 3*d[22], 3*d[23],
-                3*d[25], 3*d[26], 3*d[29], 3*d[38]
-            ]
-        elif hits == 4:
-            return [
-                4*d[0], 2*d[10]+2*d[11], 4*d[13], 4*d[14],
-                2*d[15]+2*d[16], 2*d[16]+2*d[17], 2*d[17]+2*d[18], 2*d[18]+2*d[19],
-                2*d[19]+2*d[20], 2*d[20]+2*d[21], 2*d[21]+2*d[22], 2*d[22]+2*d[23],
-                4*d[24], 4*d[25], 2*d[27]+2*d[28], 4*d[38]
-            ]
-        elif hits == 5:
-            return [
-                5*d[0], 5*d[11], 5*d[13], 5*d[15],
-                5*d[16], 5*d[17], 5*d[18], 5*d[19],
-                5*d[19], 5*d[20], 5*d[21], 5*d[22],
-                5*d[23], 5*d[25], 5*d[27], 5*d[38]
             ]
     # Default fallback
     return [d[0] * hits, d[len(d)//2] * hits, d[-1] * hits]

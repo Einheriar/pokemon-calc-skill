@@ -42,7 +42,7 @@ class Pokemon:
     weight: float = 0.0
     is_dynamax: bool = False
     can_evolve: bool = False           # For Eviolite item
-    ability_on: bool = False           # Flash Fire / Slow Start / Plus / Minus / Stakeout activation
+    ability_on: bool = False           # Flash Fire / Slow Start / Plus / Minus / Stakeout / Retaliate activation
     fainted_allies: int = 0            # For Supreme Overlord AT boost
     gender: str = ""                   # "M" / "F" / "" (unknown/genderless, for Rivalry)
     is_mega: bool = False              # Mega Evolution or Primal Reversion form

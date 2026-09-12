@@ -52,9 +52,9 @@ def _set_ev(pokemon: Pokemon, stat: str, ev: int) -> Pokemon:
 def _set_sp(pokemon: Pokemon, stat: str, sp: int) -> Pokemon:
     """Return a copy of pokemon with the given stat's SP converted to equivalent EV.
 
-    Champions SP mode: 1 SP = +1 stat at Lv.50 with IV=31.
-    Conversion: ev = sp * 8, because in Gen9 formula at Lv.50/IV=31,
-    each 8 EV increases raw stat by 1 (for non-HP) or 1 (for HP, since floor(8/4)/2=1).
+    Champions SP mode: SP is an input/view layer; the engine stores EVs
+    (AGENTS.md invariant: EV = 8*SP - 4, SP=0 maps to 0 EV, SP=32 -> 252 EV).
+    At Lv.50/IV=31 this yields exactly +1 stat point per SP.
 
     After setting ev, we invalidate cached stats so compute_raw_stats()
     in the damage engine will recalculate them correctly.
@@ -63,7 +63,7 @@ def _set_sp(pokemon: Pokemon, stat: str, sp: int) -> Pokemon:
     if not pk.evs:
         pk.evs = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
     pk.evs = dict(pk.evs)
-    pk.evs[stat] = sp * 8
+    pk.evs[stat] = 0 if sp <= 0 else 8 * sp - 4
     # Invalidate cached stats and HP pool so compute_raw_stats recalculates
     pk.raw_stats = {}
     pk.stats = {}
@@ -182,8 +182,10 @@ def optimize_attack_ev(
         return {
             "success": False,
             "reason": f"即使满 {max_single} {stat} {val_label}也无法达成 {target}",
-            "optimal_ev": max_single if mode == "ev" else 0,
-            "optimal_sp": max_single if mode == "sp" else 0,
+            "optimal_ev": 0,
+            "optimal_sp": 0,
+            "max_invested_ev": max_single if mode == "ev" else 0,
+            "max_invested_sp": max_single if mode == "sp" else 0,
             "damage_at_optimal": result_max.min_damage,
             "damage_range": [result_max.min_damage, result_max.max_damage],
         }
@@ -273,8 +275,10 @@ def optimize_defense_ev(
         return {
             "success": False,
             "reason": f"即使满 {max_single} {stat} {val_label}也无法{target}",
-            "optimal_ev": max_single if mode == "ev" else 0,
-            "optimal_sp": max_single if mode == "sp" else 0,
+            "optimal_ev": 0,
+            "optimal_sp": 0,
+            "max_invested_ev": max_single if mode == "ev" else 0,
+            "max_invested_sp": max_single if mode == "sp" else 0,
             "damage_range": [result_max.min_damage, result_max.max_damage],
             "suggestion": "尝试同时投资 HP 和防御",
         }
