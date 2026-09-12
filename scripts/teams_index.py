@@ -28,6 +28,12 @@ from typing import Any
 
 from damage import _NATURE_ALIASES
 
+# Windows consoles default to a legacy code page (cp936 etc.); upstream data
+# may carry Japanese tournament/player names that would raise
+# UnicodeEncodeError on stderr prints. Reconfigure once at import.
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 SCHEMA_VERSION = "1"
 PACK_FILENAME = "teams_full.json.gz"
 INDEX_FILENAME = "teams_index.db"
@@ -166,19 +172,27 @@ def build_index(db_path: Path, pack: dict[str, Any], source_origin: str = "snaps
             list(tournaments.values()),
         )
 
+        # Guard the PRIMARY KEY: a dirty record without id must not abort the
+        # whole executemany (one IntegrityError rolls back every row). Skip
+        # and report such records instead of failing the build.
+        dirty = [t for t in teams if t.get("id") is None]
+        if dirty:
+            print(f"warning: build_index skipped {len(dirty)} team record(s) with missing id",
+                  file=sys.stderr)
+        team_rows = [{
+            "id": t.get("id"),
+            "tournament_id": (t.get("tournament") or {}).get("id"),
+            "player": t.get("player"),
+            "country": t.get("country"),
+            "placing": t.get("placing"),
+            "wins": (t.get("record") or {}).get("wins"),
+            "losses": (t.get("record") or {}).get("losses"),
+            "ties": (t.get("record") or {}).get("ties"),
+        } for t in teams if t.get("id") is not None]
         conn.executemany(
             "INSERT INTO teams VALUES (:id, :tournament_id, :player, :country,"
             " :placing, :wins, :losses, :ties)",
-            [{
-                "id": t.get("id"),
-                "tournament_id": (t.get("tournament") or {}).get("id"),
-                "player": t.get("player"),
-                "country": t.get("country"),
-                "placing": t.get("placing"),
-                "wins": (t.get("record") or {}).get("wins"),
-                "losses": (t.get("record") or {}).get("losses"),
-                "ties": (t.get("record") or {}).get("ties"),
-            } for t in teams],
+            team_rows,
         )
 
         mon_rows, move_rows = [], []

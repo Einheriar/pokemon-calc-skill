@@ -350,6 +350,43 @@ def compute_raw_stats(pokemon: Pokemon) -> None:
 # Type effectiveness
 # ---------------------------------------------------------------------------
 
+def _type_effectiveness_for(
+    move_en: str,
+    def_type_en: str,
+    other_type_en: Optional[str],
+    is_ghost_revealed: bool,
+    is_gravity: bool,
+    def_item: str,
+    is_strong_winds: bool,
+    move_name: str,
+) -> float:
+    """Effectiveness against a single defending type.
+
+    Mirrors one getMoveEffectiveness() call in damage_SV.js: the special-case
+    chain is evaluated per defending type (JS calls it once for type1 and once
+    for type2, damage_SV.js:122-123). `other_type_en` corresponds to the JS
+    `otherType` parameter used by the Thousand Arrows / Iron Ball rule.
+    """
+    chart = _load_type_chart()
+    if is_ghost_revealed and def_type_en == "Ghost" and move_en in ("Normal", "Fighting"):
+        return 1.0
+    if ((is_gravity or def_item == "Iron Ball" or move_name == "Thousand Arrows")
+            and def_type_en == "Flying" and move_en == "Ground"):
+        return 1.0
+    if (other_type_en == "Flying" and move_en == "Ground"
+            and (move_name == "Thousand Arrows" or def_item == "Iron Ball") and not is_gravity):
+        return 1.0
+    if move_name == "Freeze-Dry" and def_type_en == "Water":
+        return 2.0
+    if move_name == "Flying Press":
+        return chart["Fighting"].get(def_type_en, 1) * chart["Flying"].get(def_type_en, 1)
+    if is_strong_winds and def_type_en == "Flying" and chart[move_en].get(def_type_en, 1) > 1:
+        return 1.0
+    if def_item == "Ring Target" and chart[move_en].get(def_type_en, 1) == 0:
+        return 1.0
+    return chart[move_en].get(def_type_en, 1)
+
+
 def get_move_effectiveness(
     move_type: str,
     def_type1: str,
@@ -362,7 +399,12 @@ def get_move_effectiveness(
     def_is_tera: bool = False,
     move_name: str = "",
 ) -> float:
-    """Calculate type effectiveness multiplier."""
+    """Calculate type effectiveness multiplier.
+
+    Dual-type defenders evaluate the special-case chain once per defending
+    type (matching damage_SV.js), so e.g. Scrappy hits Ghost/X even when Ghost
+    is the secondary type.
+    """
     chart = _load_type_chart()
     move_en = _TYPE_ZH_TO_EN.get(move_type, move_type)
     type1_en = _TYPE_ZH_TO_EN.get(def_type1, def_type1)
@@ -372,29 +414,117 @@ def get_move_effectiveness(
         return 0.5
     if move_en == "Stellar" and def_is_tera:
         return 2.0
-    if is_ghost_revealed and type1_en == "Ghost" and move_en in ("Normal", "Fighting"):
-        return 1.0
-    if ((is_gravity or def_item == "Iron Ball" or move_name == "Thousand Arrows")
-            and type1_en == "Flying" and move_en == "Ground"):
-        return 1.0
-    if (type2_en == "Flying" and move_en == "Ground"
-            and (move_name == "Thousand Arrows" or def_item == "Iron Ball") and not is_gravity):
-        return 1.0
-    if move_name == "Freeze-Dry" and type1_en == "Water":
-        return 2.0
-    if move_name == "Flying Press":
-        return chart["Fighting"].get(type1_en, 1) * chart["Flying"].get(type1_en, 1)
-    if is_strong_winds and type1_en == "Flying" and chart[move_en].get(type1_en, 1) > 1:
-        return 1.0
-    if def_item == "Ring Target" and chart[move_en].get(type1_en, 1) == 0:
-        return 1.0
 
-    eff1 = chart[move_en].get(type1_en, 1)
+    eff1 = _type_effectiveness_for(
+        move_en, type1_en, type2_en,
+        is_ghost_revealed, is_gravity, def_item, is_strong_winds, move_name,
+    )
     if type2_en and type2_en != type1_en and move_en != "Stellar":
-        eff2 = chart[move_en].get(type2_en, 1)
+        eff2 = _type_effectiveness_for(
+            move_en, type2_en, type1_en,
+            is_ghost_revealed, is_gravity, def_item, is_strong_winds, move_name,
+        )
     else:
         eff2 = 1
     return eff1 * eff2
+
+
+# ---------------------------------------------------------------------------
+# Immunity checks (port of damage_MASTER.js immunityChecks)
+# ---------------------------------------------------------------------------
+
+# Data layer carries no priority field, so priority moves are enumerated here
+# (same precedent as _SECONDARY_EFFECT_MOVES). Used by Dazzling / Queenly
+# Majesty / Armor Tail and Psychic Terrain immunity checks.
+_PRIORITY_MOVES = frozenset({
+    "Fake Out", "First Impression", "Extreme Speed", "Sucker Punch",
+    "Quick Attack", "Aqua Jet", "Bullet Punch", "Mach Punch", "Ice Shard",
+    "Shadow Sneak", "Vacuum Wave", "Water Shuriken", "Grassy Glide",
+    "Jet Punch", "Thunderclap", "Accelerock", "Pursuit",
+})
+
+# Chinese display names for immunity reasons of the ported abilities.
+_IMMUNITY_ABILITY_ZH = {
+    "Sap Sipper": "食草", "Flash Fire": "引火", "Well-Baked Body": "焦香之躯",
+    "Dry Skin": "干燥皮肤", "Storm Drain": "引水", "Water Absorb": "储水",
+    "Lightning Rod": "避雷针", "Motor Drive": "引擎", "Volt Absorb": "蓄电",
+    "Levitate": "飘浮", "Earth Eater": "大地吞噬", "Eelevate": "鳗鳗高升",
+    "Bulletproof": "防弹", "Soundproof": "隔音", "Wind Rider": "乘风",
+    "Wonder Guard": "奇妙守护", "Damp": "湿气", "Dazzling": "万众瞩目",
+    "Queenly Majesty": "女王的威严", "Armor Tail": "铠甲尾巴",
+}
+
+
+def _immunity_check(
+    move: Move,
+    attacker: Pokemon,
+    defender: Pokemon,
+    field: Field,
+    type_effectiveness: float,
+    def_ability: str,
+    is_ghost_revealed: bool = False,
+) -> Optional[str]:
+    """Return an immunity reason suffix when the move cannot deal damage.
+
+    Port of damage_MASTER.js immunityChecks():905. Returns ``None`` when the
+    move should proceed, ``""`` for a generic type immunity, or a non-empty
+    Chinese reason string for ability / item / weather immunities.
+    """
+    def _reason(ability: str) -> str:
+        zh = _IMMUNITY_ABILITY_ZH.get(ability, ability)
+        return f"（{zh}特性免疫）"
+
+    move_type = move.type
+    name = move.name
+    is_priority = getattr(move, "is_priority", False) or name in _PRIORITY_MOVES
+
+    if (def_ability == "Wonder Guard" and type_effectiveness <= 1 and name != "Struggle"):
+        return _reason(def_ability)
+    if move_type == "草" and def_ability == "Sap Sipper":
+        return _reason(def_ability)
+    if move_type == "火" and def_ability in ("Flash Fire", "Well-Baked Body"):
+        return _reason(def_ability)
+    if move_type == "水" and def_ability in ("Dry Skin", "Storm Drain", "Water Absorb"):
+        return _reason(def_ability)
+    if move_type == "电" and def_ability in ("Lightning Rod", "Motor Drive", "Volt Absorb"):
+        return _reason(def_ability)
+    if move_type == "地面" and ((not field.is_gravity and def_ability == "Levitate")
+                                or def_ability in ("Earth Eater", "Eelevate")):
+        return _reason(def_ability)
+    if getattr(move, "is_bullet", False) and def_ability == "Bulletproof":
+        return _reason(def_ability)
+    if getattr(move, "is_sound", False) and def_ability == "Soundproof":
+        return _reason(def_ability)
+    if getattr(move, "is_wind", False) and def_ability == "Wind Rider":
+        return _reason(def_ability)
+    if (move_type == "地面" and not field.is_gravity
+            and defender.item in ("Air Balloon", "气球") and name != "Thousand Arrows"):
+        return "（气球道具免疫地面招式）"
+    if (field.weather == "Harsh Sun" and move_type == "水") or (field.weather == "Heavy Rain" and move_type == "火"):
+        return "（大日照/下大雨天气下无法使用该属性招式）"
+    if name == "Sky Drop" and ("飞行" in defender.types or defender.weight >= 200.0 or field.is_gravity):
+        return "（该目标无法被 Sky Drop 抓起）"
+    if name == "Synchronoise" and not (set(attacker.types) & set(defender.types)):
+        return "（同步喧闹仅对与自身属性相同的宝可梦生效）"
+    if defender.is_dynamax and name in ("Grass Knot", "Low Kick", "Heat Crash", "Heavy Slam"):
+        return "（极巨化宝可梦免疫体重类招式）"
+    if ((def_ability == "Damp" or attacker.ability == "Damp")
+            and name in ("Self-Destruct", "Explosion", "Mind Blown", "Misty Explosion")):
+        return _reason("Damp")
+    if name == "Fling" and (not attacker.item or attacker.item == "无"):
+        return "（无道具可投掷）"
+    if name == "Natural Gift" and not (attacker.item.endswith("果") or "Berry" in attacker.item):
+        return "（天然礼物需要携带树果）"
+    if def_ability in ("Queenly Majesty", "Dazzling", "Armor Tail") and is_priority:
+        return _reason(def_ability)
+    if field.terrain == "Psychic" and is_priority and is_grounded(defender, field):
+        return "（精神场地使先制招式无效）"
+    if name == "Dream Eater" and defender.status != "Asleep":
+        return "（食梦仅对睡眠状态的宝可梦生效）"
+
+    if type_effectiveness == 0:
+        return ""
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -418,14 +548,61 @@ def uses_physical_attack(attacker: Pokemon, defender: Pokemon, move: Move) -> bo
 # Base Power
 # ---------------------------------------------------------------------------
 
+def _count_positive_boosts(boosts: dict) -> int:
+    """Sum of positive stat stages (JS countBoosts in damage_MASTER.js:575)."""
+    return sum(v for v in boosts.values() if isinstance(v, (int, float)) and v > 0)
+
+
+# Items that cannot be removed by Knock Off (item_data.js cantRemoveItem:867).
+_SPECIES_LOCKED_ITEMS = {
+    "Dialga-Origin": "Adamant Crystal",
+    "Palkia-Origin": "Lustrous Globe",
+    "Ogerpon-Wellspring": "Wellspring Mask",
+    "Ogerpon-Hearthflame": "Hearthflame Mask",
+    "Ogerpon-Cornerstone": "Cornerstone Mask",
+    "Giratina-Origin": "Griseous Orb",
+}
+
+
+def _cant_remove_item(item: str, defender: Pokemon) -> bool:
+    """Whether the defender's item is immune to Knock Off.
+
+    Port of item_data.js cantRemoveItem():867, extended with Mega Stones and
+    the weather orbs (removable in no game; Champions M-C carries Mega forms).
+    """
+    if not item or item == "无":
+        return True
+    if "ium Z" in item or item.endswith("Ｚ"):
+        return True
+    if item.endswith("种子") or item.endswith(" Seed"):
+        return True
+    # Mega Stones: "Charizardite X", "Gyaradosite", 喷火龙进化石Ｘ ...
+    if "ite " in item or item.endswith("ite") or "进化石" in item:
+        return True
+    if item in ("Red Orb", "Blue Orb", "红玉", "蓝玉", "Griseous Orb"):
+        return True
+    if _SPECIES_LOCKED_ITEMS.get(defender.name_en) == item:
+        return True
+    name_en = defender.name_en or ""
+    if name_en == "Arceus" and " Plate" in item:
+        return True
+    if name_en == "Genesect" and " Drive" in item:
+        return True
+    if name_en == "Silvally" and " Memory" in item:
+        return True
+    return False
+
+
 def base_power_func(
     move: Move,
     attacker: Pokemon,
     defender: Pokemon,
     field: Field,
-    turn_order: str,
 ) -> int:
-    """Calculate custom base power for variable-power moves."""
+    """Calculate custom base power for variable-power moves.
+
+    Port of the basePowerFunc switch in damage_MASTER.js:1130-1355.
+    """
     bp = move.base_power
     name = move.name
 
@@ -445,19 +622,42 @@ def base_power_func(
     elif name in ("Flail", "Reversal"):
         ratio = attacker.current_hp / max(1, attacker.max_hp)
         bp = 200 if ratio <= 0.0417 else 150 if ratio <= 0.104 else 100 if ratio <= 0.208 else 80 if ratio <= 0.354 else 40 if ratio <= 0.688 else 20
-    elif name == "Water Shuriken" and attacker.name_en == "Greninja-Ash":
-        bp = 20
-    elif name == "Facade" and attacker.status not in (None, "Healthy"):
-        bp = 70
-    elif name in ("Brine", "Venoshock") and attacker.current_hp <= attacker.max_hp // 2:
+    elif name in ("Crush Grip", "Wring Out"):
+        # Game mechanic scales with the TARGET's remaining HP. The local JS
+        # copy (damage_MASTER.js:1192) reads attacker.curHP, which is a port
+        # bug; see PLAN_2026-09-11 A7 for the recorded divergence.
+        bp = max(1, math.floor(120 * defender.current_hp / max(1, defender.max_hp)))
+    elif name == "Hard Press":
+        bp = max(1, math.floor(100 * defender.current_hp / max(1, defender.max_hp)))
+    elif name in ("Stored Power", "Power Trip"):
+        bp = 20 + 20 * _count_positive_boosts(attacker.boosts)
+    elif name == "Punishment":
+        bp = min(200, 60 + 20 * _count_positive_boosts(defender.boosts))
+    elif name in ("Hex", "Infernal Parade"):
+        if defender.status not in (None, "Healthy"):
+            bp *= 2
+    elif name == "Acrobatics":
+        item = attacker.item or ""
+        boosted = (
+            item == "" or item == "无"
+            or item in ("飞行宝石", "Flying Gem")
+            or item.endswith("种子") or item.endswith(" Seed")
+            or (item in ("驱劲能量", "Booster Energy")
+                and attacker.ability in ("Protosynthesis", "Quark Drive"))
+        )
+        bp = 110 if boosted else 55
+    elif name == "Water Shuriken":
+        bp = 20 if attacker.ability == "Battle Bond" else 15
+    elif name == "Facade":
+        if attacker.status in ("Burned", "Paralyzed", "Poisoned", "Badly Poisoned"):
+            bp *= 2
+    elif name == "Brine" and defender.current_hp <= defender.max_hp // 2:
+        bp *= 2
+    elif name in ("Venoshock", "Barb Barrage") and defender.status in ("Poisoned", "Badly Poisoned"):
         bp *= 2
     elif name == "Retaliate" and getattr(attacker, "ability_on", False):
         bp *= 2
-    elif name == "Earthquake" and defender.item == "Float Stone":
-        pass  # No BP change, handled elsewhere
-    elif name == "Bulldoze" and defender.item == "Float Stone":
-        pass
-    elif name in ("Knock Off",) and defender.item != "":
+    elif name == "Knock Off" and defender.item and not _cant_remove_item(defender.item, defender):
         bp = math.floor(bp * 1.5)
     elif name == "Grav Apple" and field.is_gravity:
         bp = 120
@@ -471,8 +671,16 @@ def base_power_func(
         bp *= 2
     elif name == "Terrain Pulse" and field.terrain:
         bp *= 2
+    elif name in ("Triple Kick", "Triple Axel") and move.hits > 1:
+        # Per-hit powers escalate (e.g. 20/40/60). The engine rolls one damage
+        # value per hit, so scale each roll to the per-hit average.
+        bp = math.floor(bp * (move.hits + 1) / 2)
+    elif name == "Tera Blast" and attacker.is_terastalize and attacker.tera_type in ("Stellar", "星愿"):
+        bp = 100
     elif name == "Last Respects":
         bp += 50 * move.fainted_allies
+    elif name == "Rage Fist":
+        bp += 50 * getattr(move, "times_affected", 0)
 
     return bp
 
@@ -544,6 +752,10 @@ def calc_bp_mods(
     elif attacker.ability == "Fire Mane" and move.type == "火":
         bp_mods.append(0x1800)
     elif attacker.ability == "Technician" and temp_bp <= 60:
+        bp_mods.append(0x1800)
+    elif attacker.ability == "Punk Rock" and getattr(move, "is_sound", False):
+        bp_mods.append(0x14CD)
+    elif attacker.ability == "Steely Spirit" and move.type == "钢":
         bp_mods.append(0x1800)
 
     # d. Field abilities
@@ -1116,7 +1328,7 @@ def calculate_damage(
     turn_order = "FIRST" if attacker.stats.get("speed", 0) > defender.stats.get("speed", 0) else "LAST"
 
     # Base power
-    base_power = base_power_func(move, attacker, defender, field, turn_order)
+    base_power = base_power_func(move, attacker, defender, field)
     base_power = max(1, base_power)
 
     # Ate/Ize type change (Pixilate, Aerilate, etc.)
@@ -1135,26 +1347,14 @@ def calculate_damage(
         move_name=move.name,
     )
 
-    # Ability-based immunities: Wind Rider (wind), Well-Baked Body (fire), Eelevate (ground), etc.
-    # Use defender.ability directly since def_ability (Mold Breaker-aware) is set later.
-    if defender.ability == "Wind Rider" and getattr(move, "is_wind", False):
-        type_effectiveness = 0.0
-    if defender.ability == "Well-Baked Body" and move.type == "火":
-        type_effectiveness = 0.0
-    if defender.ability == "Eelevate" and move.type == "地面":
-        type_effectiveness = 0.0
-
-    # Immunity check
-    if type_effectiveness == 0:
-        immunity_reason = ""
-        if defender.ability == "Wind Rider":
-            immunity_reason = "（乘风特性免疫风系招式）"
-        elif defender.ability == "Well-Baked Body":
-            immunity_reason = "（焦香之躯特性免疫火系招式）"
-        elif defender.ability == "Eelevate":
-            immunity_reason = "（鳗鳗高升特性免疫地面招式）"
-        else:
-            immunity_reason = "（属性免疫）"
+    # Ability / item / weather immunities — port of damage_MASTER.js
+    # immunityChecks():905. Uses def_ability (Mold Breaker-aware) so abilities
+    # ignored by Mold Breaker / Teravolt / Turboblaze no longer grant immunity.
+    immunity_reason = _immunity_check(
+        move, attacker, defender, field, type_effectiveness, def_ability,
+        is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
+    )
+    if immunity_reason is not None:
         return DamageResult(
             damage=[0],
             min_damage=0,
@@ -1193,11 +1393,18 @@ def calculate_damage(
     if field.format != "Singles" and move.is_spread:
         base_dmg = poke_round(base_dmg * 0xC00 / 0x1000)
 
-    # b. Weather
+    # b. Weather (Hydro Steam gets the sun boost instead of the sun nerf;
+    #    damage_MASTER.js:1885-1892. Umbrella checks cover both languages)
     if effective_weather:
-        if (("Sun" in effective_weather and move.type == "火") or ("Rain" in effective_weather and move.type == "水")) and defender.item != "大晴天伞":
-            base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
-        elif ((effective_weather == "Sun" and move.type == "水") or (effective_weather == "Rain" and move.type == "火")) and defender.item != "大晴天伞":
+        att_no_umbrella = attacker.item not in ("大晴天伞", "Utility Umbrella")
+        if (("Sun" in effective_weather and move.type == "火")
+                or ("Rain" in effective_weather and move.type == "水")
+                or ("Sun" in effective_weather and move.name == "Hydro Steam" and att_no_umbrella)):
+            if defender.item not in ("大晴天伞", "Utility Umbrella"):
+                base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
+        elif ((effective_weather == "Sun" and move.type == "水")
+              or (effective_weather == "Rain" and move.type == "火")) \
+                and defender.item not in ("大晴天伞", "Utility Umbrella"):
             base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
 
     # c. Critical hit

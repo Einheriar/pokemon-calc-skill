@@ -77,6 +77,7 @@ class Move:
     is_wind: bool = False              # For Wind Rider ability
     is_bullet: bool = False            # For Bulletproof ability
     fainted_allies: int = 0            # For Last Respects base power boost
+    times_affected: int = 0            # For Rage Fist base power (times hit this battle)
 
 
 @dataclass
@@ -96,8 +97,6 @@ class Field:
     is_steely_spirit: bool = False
     is_flower_gift_atk: bool = False
     is_flower_gift_spd: bool = False
-    is_tailwind_atk: bool = False
-    is_tailwind_def: bool = False
     is_neutralizing_gas: bool = False
     # Ruin abilities
     is_sword_of_ruin: bool = False

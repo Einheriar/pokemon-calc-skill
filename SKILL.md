@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.9.0
+version: 4.9.1
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -19,7 +19,7 @@ description: >
 
 1. **LLM 只做理解，不做计算**。所有伤害数值、KO 概率、能力值、属性相克倍率、招式效果、特性分析、道具增伤等必须通过 `query.py` 命令获取并原样引用。引擎返回的有效威力即为权威结果。禁止凭 LLM 内部知识补充任何数值类信息。不确定时，优先查询而非猜测。
 2. **能力值优先**。回答中使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
-3. **环境参数唯一入口**。环境条件（天气、场地、对战模式等）一律经 `field_override` 传入。`move_override` 仅用于行为参数（`is_crit`、`hits`、`fainted_allies`），不修改 `base_power` 或 `type`。
+3. **环境参数唯一入口**。环境条件（天气、场地、对战模式等）一律经 `field_override` 传入。`move_override` 仅用于行为参数（`is_crit`、`hits`、`fainted_allies`、`times_affected`），不修改 `base_power` 或 `type`——引擎已强制校验（白名单之外的字段被忽略并在响应 `warning` 中列出，`hits` 夹紧 1-10）。原始参数输入请用 `calc-raw`。
 4. **中文优先**。数据以中文名为主索引，同时支持英文名称。
 5. **零外部依赖**。核心数据已静态化为 JSON，查询脚本仅使用 Python 标准库。环境查询命令（`meta`）默认读取内置快照（离线可用）；仅当用户显式要求最新数据时才加 `--online` 按需联网（pokecamp.cc，仅用标准库 `urllib`），网络失败自动回退快照，并在回答中注明数据来源与日期。
 
@@ -110,8 +110,8 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
   "setup_moves": ["诡计", "求雨"]  // 由引擎自动解析招式效果并应用（替代手动构造 boosts/weather）
 }
 
-// move_override — 仅限行为参数，不改 base_power / type
-{"is_crit": false, "hits": 1, "fainted_allies": 0}
+// move_override — 仅限行为参数，不改 base_power / type（引擎已强制校验，非法字段进 warning）
+{"is_crit": false, "hits": 1, "fainted_allies": 0, "times_affected": 0}
 
 // 需要激活 abilityOn 类特性时，在 att_override / def_override 中传入
 {"ability": "Flash Fire", "ability_on": true}
@@ -160,8 +160,9 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 以下招式的威力/属性会随天气/场地/阵亡数自动变化。**LLM 只需在 `field_override` / `move_override` 中传入对应参数，威力变化由引擎自动计算，回答中不写中间计算式。**
 
-- 天气联动：气象球（需确认 weather）；场地联动：大地波动、电气上升、精神强念、薄雾爆炸（需确认 terrain）；重力联动：重力苹果
+- 天气联动：气象球（需确认 weather）；场地联动：大地波动、电气上升、精神强念、薄雾爆炸（需确认 terrain）；重力联动：重力苹果。**以上为常见示例，非穷举**——引擎 `base_power_func` 覆盖更多动态威力招式（陀螺球、重磅冲撞、喷火、辅助力量、祸不单行、杂技、愤怒之拳、水蒸气等），直接 `calc` 即可
 - 扫墓 / Last Respects：每有 1 名队友阵亡威力 +50，通过 `move_override` 传入阵亡数，如 `--move_ov '{"fainted_allies": 1}'` → 威力 100
+- 愤怒之拳 / Rage Fist：每被击中 1 次威力 +50，通过 `move_override` 传入 `--move_ov '{"times_affected": 2}'`
 
 ### calc 返回值关键字段
 

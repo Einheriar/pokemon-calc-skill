@@ -123,17 +123,24 @@ pokemon-calc/
 }
 ```
 
-**move_override 可覆盖字段**
+**move_override 可覆盖字段（白名单，V4.9.1 起引擎强制校验）**
+
+`calc` 命令仅接受行为参数；白名单之外的字段（如 `base_power`/`type`/`category`）会被
+**忽略**并在响应 `warning` 中列出（不静默）。`hits` 夹紧到 1-10 并告警。
+需要直接改威力/属性/分类时使用 `calc-raw`（设计使然，不做白名单校验）。
 
 ```json
 {
-  "base_power": 80,
-  "type": "飞行",
-  "category": "Physical",
   "is_crit": false,
-  "hits": 1
+  "hits": 1,
+  "fainted_allies": 0,
+  "times_affected": 0
 }
 ```
+
+- `times_affected`：Rage Fist（愤怒之拳）已受击次数，威力 = 50 × (times_affected + 1)。
+- 响应 `warning` 字段还可能包含：SP 超限提示（`sps` > 32 或负数）、
+  不可用形态提示（is_unobtainable）。
 
 **返回值 JSON Schema**
 
@@ -411,7 +418,7 @@ class DamageResult:
 | `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表 |
 | `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
 | `data/setdex.json` | 207 只 / 314 预设 | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧 VGC 预设（Reg D/E 时代）+ 50 个天梯热门套 `天梯双打热门配置`（官方实机排位双打 Top50，2026-08-30，`priority: 1`；性格取聚合排行榜首——数据源 spread 行不带性格） |
-| `data/aliases.json` | 118 条 | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等，dex<917 可自动生成） |
+| `data/aliases.json` | 194 条（pokemon 118 / moves 3 / items 73） | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等，dex<917 可自动生成） |
 | `data/champions_pokemon_patch.json` 等 4 件 | pokemon 231 / moves 778 / learnset 231 物种（含各形态） | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions 补丁层（当前 M-C）：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、每个形态带 `regulation` 引入规则标签（M-A/M-B/M-C）、learnset 为 `{stem: {form: [moves]}}` 嵌套结构（按形态隔离，231 物种全覆盖）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
 | `data/regulation_manifest.json` | 3 条规则 + 数据源映射 | 手工维护 | 规则身份与顺序的唯一来源：`current`（当前规则）、`regulations[].order`（顺序）、`sources`（各数据源发布的规则）。运行时经 `scripts/regulations.py` 读取；新增/插入规则只改此文件 |
 | `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
@@ -423,7 +430,7 @@ class DamageResult:
 
 ### 数据修复记录
 
-- **2026-04-30**: `moves.json` 从 349 条补充至 **782 条**。关键修复：从 `script_res/move_data.js` 的 `MOVES_SV` 提取全部 712 个招式，与现有数据合并，解决了"双翼"（Dual Wingbeat）等大量 SV 世代招式缺失的问题。
+- **2026-04-30**: `moves.json` 从 349 条补充至 **781 条**。关键修复：从 `script_res/move_data.js` 的 `MOVES_SV` 提取全部 712 个招式，与现有数据合并，解决了"双翼"（Dual Wingbeat）等大量 SV 世代招式缺失的问题。
 
 ---
 
@@ -490,6 +497,58 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
+### 4.9.1（2026-09-12）
+
+系统性代码审核修复（P0/P1 全量，见 `plans/PLAN_2026-09-11_systematic_audit_fix.md`）：
+
+- **引擎正确性（damage.py）**：
+  - 移植 JS `immunityChecks` 全量免疫检查（Wonder Guard / 食草 / 引火 / 蓄电 / 飘浮 /
+    大地吞噬 / 防弹 / 隔音 / 乘风 / 气球 / 大日照·下大雨绝对免疫 / Dazzling 类先制封锁 /
+    精神场地先制封锁 / 食梦等），优先招式集合内置为 `_PRIORITY_MOVES`（数据层无 priority 字段）。
+    免疫判定改用 Mold Breaker 感知的 `def_ability`（破格特性可正确穿透免疫）。
+  - `Brine`（对手半血翻倍）与 `Venoshock`/`Barb Barrage`（对手中毒翻倍）判定拆分修正——
+    原实现错误地判"攻击方自己半血"。
+  - `base_power_func` 补全 JS 缺失分支：Stored Power/Power Trip（20+20×强化）、Punishment、
+    Hex/Infernal Parade（对手异常 ×2）、Acrobatics（无道具 110）、Crush Grip/Wring Out/Hard Press
+    （按**目标** HP 比例——JS 原文用攻击方 HP 属源码笔误，实施按游戏机制）、Triple Kick/Triple Axel
+    （三段递增，按 hits 取平均每击威力）、Rage Fist（×(times_affected+1)，新增 `Move.times_affected`）、
+    Tera Blast 星愿形态威力 100、Facade 状态集收紧（Burned/Paralyzed/Poisoned/Badly Poisoned）、
+    Knock Off 排除不可摘除道具（Mega 石/Z 晶石/宝珠/种子等，`_cant_remove_item`）、
+    Water Shuriken 改判 Battle Bond 特性。
+  - Hydro Steam 晴天 1.5× 补入天气最终修正（原先反被晴天水招削弱规则砍半）；晴天伞排除改双语。
+  - Punk Rock 攻击侧 1.3× 与 Steely Spirit 自身钢系 1.5× 补入 BP 修正组。
+  - 双属性 effectiveness 重构（`_type_effectiveness_for` 每属性一次调用，对齐 damage_SV.js:122-123）：
+    Scrappy/Ring Target/Freeze-Dry/Strong Winds 等特例此前只对第一属性生效——胆量打钢/幽灵的
+    坚盾剑怪由错误 0× 修正为 0.5×。
+  - 删除 Float Stone 死分支与 `base_power_func` 死参数 `turn_order`。
+- **努力值优化器（ev_optimizer.py）**：`_set_ev/_set_sp` 同步清 `current_hp`（HP 池用新 max_hp，
+  修系统性高估）；`optimize_bulk_evs` 统一走 `_set_ev/_set_sp`；多击招式判定补乘 `move.hits`
+  （单攻/单防/联合搜索三处）；`--goal survive` 传 ko 型 target 时归一化（原直接 KeyError）。
+- **KO 概率（ko_chance.py）**：`squash_multihit` 按 ko_chance.js:324-431 原文补齐 16 点表
+  hits=4/6/7/8/9/10 与 39 长度表 hits=2/3/4/5。
+- **CLI 层（query.py）**：
+  - `move_override` 白名单（`_MOVE_OVERRIDE_WHITELIST`）强制执行，非法字段进响应 `warning`，
+    `hits` 夹紧 1-10；`calc-raw` 不受影响。
+  - `main()` 两分支加 `except Exception` 兜底（输出 `{"error": ...}` 不再裸 traceback）；
+    evs/ivs 等字典字段结构校验；filter-pokemon 非整数参数友好报错。
+  - Champions 补丁加载区分"文件不存在"与"解析失败"（stderr 告警 + `_patch_load_error` 标记）；
+    `learnset` 形态键未命中时回退基础形态键，仍失败则输出 `_data_source: gen9` +
+    `_champions_patch_note`（花叶蒂案例不再静默降级）。
+  - meta 四处外部数据调用 try 包裹，失败返回友好 `{"error", "meta"}` 结构。
+  - SP 输入校验（>32/负数告警）；EV/SP 显示加 `sp_approx` 标记（249-251 EV → 31 SP 往返差 5-7 EV）。
+- **名称归一化（normalize.py）**：清理零宽字符与空白；全角化仅用于含中文字符串（纯英文输入不再
+  被误全角化）；`resolve_pokemon` 增加英文形态后缀兜底（`Charizard X` → 超级喷火龙Ｘ，含
+  `_find_form_index` 半角 XYZ → 全角形态匹配）。中文裸后缀（"喷火龙Ｙ"）按设计**不**静默解析为
+  Mega 形态，维持"未找到 + 建议"路径。
+- **数据层（pokecamp_source.py / teams_index.py）**：详情/名单位置配对加长度失配告警
+  （上游详情记录无 identity 字段，按键匹配不可行，已注明顺序假设）；teams 索引构建过滤缺 id
+  脏记录；两模块 stderr 统一 UTF-8 reconfigure（GBK 控制台不崩溃）。
+- **数据修复**：moves.json 为 Triple Kick/Triple Axel 补 `hits: 3`。
+- **测试**：新增 `cache/test_audit_fixes.py`（25 例：白名单/免疫/威力分支/双属性/优化器/
+  squash 表/学习面溯源/归一化/SP 标记/长度告警）。全部现行套件（回归 36 / auto-preset 23 /
+  meta 16 / ladder 23 / teams 12 / usage 14 / field 30 / filter 14 / audit 25）通过，
+  check_data / check_index 通过。
+
 ### 4.9.0（2026-09-11）
 
 Champions 规则模型（M-A/M-B/M-C）+ champout v1.2.0 数据重建。核心变更：
@@ -499,7 +558,7 @@ Champions 规则模型（M-A/M-B/M-C）+ champout v1.2.0 数据重建。核心�
 - **学习面 bug 修复（用户可见）**：学习面此前按物种作键、多形态 last-wins，导致关都九尾拿到阿罗拉九尾的冰系招式表。现改为 `{stem: {form: [moves]}}` 嵌套结构，按形态隔离；运行时 `_get_champions_learnset(stem, form_name)`、`cmd_learnset`、`_iter_moves`、`cmd_find_move` 均按形态取表。受影响 20 个物种（地区形态为主）。旧扁平结构仍兼容读取。
 - **补丁 schema v2**：patch 文件写入 `_schema_version`；`check_champions_patch.py` 拆分为 3a–3f（含形态键合法性、空招式表、规则标签完整性断言），去重到有形态的物种。
 - **天梯按源设规则**：移除单一 `LADDER_REGULATION` 常量，改由 `ladder_regulation(kind)` 从清单取值（`ingame` → M-C，`showdown` → M-B：Smogon 月报滞后一个规则）。`PokecampSource` 默认规则、蒸馏 fallback 亦改从清单取，消除多处硬编码。
-- **隐藏规则参数**：内部 `--regulation <ID>` 提供累积视图（rank ≤ 选中规则），默认 = 最新规则全量并集（等于既有行为）。**不写入任何文档**；作用域仅限形态/技能表可见性，不介入 `calc` 合法性判定。
+- **隐藏规则参数**：内部 `--regulation <ID>` 提供累积视图（rank ≤ 选中规则），默认 = 最新规则全量并集（等于既有行为）。**不暴露给 LLM 查询层**（仅在 CLI 内部可用，见本文档）；作用域仅限形态/技能表可见性，不介入 `calc` 合法性判定。
 - **测试**：新增 `cache/test_regulation_and_forms.py`（19 例：清单/规则标签/形态隔离/累积上限/旧格式兼容）；适配 `test_ladder_source`（按快照与按源规则断言）、`test_usage_stats`。全部现行套件（回归 36 / auto-preset 23 / meta 16 / ladder 23 / teams 12 / usage 14 / field 30 / filter 14）通过。
 
 ### 4.8.15（2026-08-30）

@@ -27,6 +27,7 @@ Usage:
 
 import io
 import json
+import re
 from models import Pokemon, Move, Field
 import os
 import sys
@@ -124,6 +125,7 @@ def _load_champions_patches() -> dict[str, Any]:
         "learnset": "champions_learnset_patch.json",
         "name_index": "champions_name_index_patch.json",
     }
+    load_errors = False
     for key, filename in patch_files.items():
         path = DATA_DIR / filename
         if path.exists():
@@ -140,10 +142,25 @@ def _load_champions_patches() -> dict[str, Any]:
                                     if not str(k).startswith("_")}
                     patches.setdefault("schema_version", {}).setdefault(
                         key, data.get("_schema_version", 1))
-            except Exception:
-                pass  # Silently ignore missing/corrupt patch files
+            except json.JSONDecodeError as e:
+                # Corrupt patch must be distinguishable from "no patch":
+                # warn loudly and flag, never silently degrade the layer.
+                print(f"warning: champions patch {filename} JSON 解析失败，已跳过: {e}",
+                      file=sys.stderr)
+                load_errors = True
+            except OSError as e:
+                print(f"warning: champions patch {filename} 读取失败，已跳过: {e}",
+                      file=sys.stderr)
+                load_errors = True
+    if load_errors:
+        patches["_load_error"] = True
     _champions_patches = patches
     return _champions_patches
+
+
+def _champions_patch_load_error() -> bool:
+    """True when any champions patch file existed but failed to parse/read."""
+    return bool(_load_champions_patches().get("_load_error"))
 
 
 _setdex_data: dict[str, Any] | None = None
@@ -577,6 +594,16 @@ def _find_form_index(name: str, data: dict[str, Any]) -> int:
         if form_name and len(form_name) > 1 and name.endswith(form_name):
             return idx
 
+    # Halfwidth/English form suffix: "Mega Charizard X" ends with X — match
+    # forms whose (Chinese) name carries the fullwidth letter Ｘ/Ｙ/Ｚ.
+    suffix_m = re.search(r"([XYZxyz])$", name.strip())
+    if suffix_m:
+        suffix_full = chr(ord(suffix_m.group(1).upper()) + 0xFEE0)
+        for idx, form in enumerate(forms):
+            form_name = form.get("name", "")
+            if form_name.endswith(suffix_full):
+                return idx
+
     return 0
 
 
@@ -604,6 +631,32 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
             if k.lower() == name.lower():
                 stem = v
                 break
+
+    # English form-suffix fallback: "Charizard X" -> "Mega Charizard X".
+    # Only succeeds when the constructed name is a real form index key, so
+    # there is no false-positive risk for names that merely end in X/Y.
+    if not stem:
+        m = re.match(r"^(mega\s+)?(.+?)\s+([xy])$", name.strip(), re.IGNORECASE)
+        if m:
+            base, suffix = m.group(2).strip(), m.group(3).upper()
+            candidates = [f"{base} {suffix}"]
+            if not m.group(1):
+                candidates.insert(0, f"Mega {base} {suffix}")
+            forms_lower = {k.lower(): k for k in _index_data.get("pokemon_forms", {})}
+            for cand in candidates:
+                matched_key = forms_lower.get(cand.lower())
+                if matched_key:
+                    stem = _index_data["pokemon_forms"].get(matched_key)
+                    # Re-resolve against the canonical key so _find_form_index
+                    # picks the right form entry.
+                    name = matched_key
+                    break
+
+    # NOTE: bare fullwidth suffix without the species prefix ("喷火龙Ｙ") is
+    # deliberately NOT resolved — the canonical form name is "超级喷火龙Ｙ",
+    # and silently guessing a Mega form from a name the caller never wrote
+    # breaks explicitness. The not-found + suggestions path lets the caller
+    # self-correct.
 
     if not stem:
         return None
@@ -869,6 +922,9 @@ def _get_champions_learnset(stem: str, form_name: str | None = None) -> list[str
     Schema v2 stores learnsets nested per form, because regional/Mega forms
     learn different moves. Schema v1 (flat list) is still accepted: it has no
     form dimension, so every form of the species shares the one list.
+
+    Form-key miss falls back to the species base-form key (the display name,
+    e.g. '花叶蒂' under stem '0670-花叶蒂') before giving up.
     """
     patches = _load_champions_patches()
     entry = patches.get("learnset", {}).get(stem) if patches else None
@@ -883,7 +939,29 @@ def _get_champions_learnset(stem: str, form_name: str | None = None) -> list[str
         # which is the entry the pokemon patch lists first.
         first = next(iter(entry.values()), [])
         return first
+    # Form key miss: try the species base-form key before giving up.
+    base_key = stem.split("-", 1)[-1]
+    if base_key and base_key in entry:
+        return entry[base_key]
     return []
+
+
+def _champions_learnset_coverage(stem: str, form_name: str | None) -> dict[str, Any] | None:
+    """Report Champions learnset patch coverage for one species/form.
+
+    Returns None when the species has no patch at all (plain Gen9 species);
+    otherwise {"form_covered": bool, "available_forms": [...]}.
+    """
+    patches = _load_champions_patches()
+    entry = patches.get("learnset", {}).get(stem) if patches else None
+    if not entry:
+        return None
+    if isinstance(entry, list):
+        return {"form_covered": True, "available_forms": []}
+    available = list(entry.keys())
+    base_key = stem.split("-", 1)[-1]
+    covered = form_name is None or form_name in available or base_key in available
+    return {"form_covered": covered, "available_forms": available}
 
 
 def _find_pokemon_by_types(type_filters: list[str]) -> dict[str, Any]:
@@ -974,6 +1052,8 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
         "_data_source": data_source,
         "is_unobtainable": is_unobtainable,
     }
+    if _champions_patch_load_error():
+        result["_patch_load_error"] = True
     # Prompt LLM to disambiguate when multiple forms exist
     if len(forms) > 1:
         form_names = [f.get("name", "") for f in forms]
@@ -1152,7 +1232,7 @@ def cmd_learnset(name: str) -> dict[str, Any]:
             "tutor_moves": [],
             "_data_source": "champions",
         }
-    return {
+    result: dict[str, Any] = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
         "learnable_moves": data.get("learnable_moves", []),
@@ -1160,6 +1240,18 @@ def cmd_learnset(name: str) -> dict[str, Any]:
         "egg_moves": data.get("egg_moves", []),
         "tutor_moves": data.get("tutor_moves", []),
     }
+    # Species is covered by a Champions patch but the requested form is not:
+    # say so explicitly instead of silently falling back to Gen9.
+    coverage = _champions_learnset_coverage(stem, form_name)
+    if coverage and not coverage["form_covered"]:
+        result["_data_source"] = "gen9"
+        result["_champions_patch_note"] = (
+            f"Champions 补丁存在但未覆盖形态「{form_name}」"
+            f"（可用形态: {', '.join(coverage['available_forms'])}），已回落 Gen9 学习面"
+        )
+    if _champions_patch_load_error():
+        result["_patch_load_error"] = True
+    return result
 
 
 def cmd_evo(name: str) -> dict[str, Any]:
@@ -1690,7 +1782,7 @@ def _parse_weight(raw: Any) -> float:
     if isinstance(raw, (int, float)):
         return float(raw)
     if isinstance(raw, str):
-        num = raw.rstrip("kg").strip()
+        num = raw.removesuffix("kg").strip()
         try:
             return float(num)
         except ValueError:
@@ -1725,6 +1817,16 @@ def _ev_to_sp(ev: int) -> int:
 def _evs_to_sps(evs: dict[str, int]) -> dict[str, int]:
     """Convert an EV dict to an SP dict for display (does not mutate input)."""
     return {k: _ev_to_sp(v) for k, v in evs.items()}
+
+
+def _sp_approx_keys(evs: dict[str, int]) -> list[str]:
+    """Stats whose EV value is not exactly representable in SP (8-EV grid).
+
+    SP display rounds EVs up to the next point (EV = 8*SP - 4), so values
+    off-grid (e.g. 249-251 EV) lose up to 7 EV when a reader converts the
+    displayed SP back. Callers surface these keys as an "sp_approx" marker.
+    """
+    return [k for k, v in evs.items() if isinstance(v, int) and v > 0 and (v + 4) % 8 != 0]
 
 
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
@@ -1817,14 +1919,31 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_mega": is_mega,
     }
     if overrides:
+        # Structural validation for dict-typed fields: fail loudly (main()
+        # converts to {"error": ...}) instead of AttributeError deep inside.
+        for _k in ("evs", "ivs", "raw_stats", "stats", "boosts", "sps"):
+            if _k in overrides and not isinstance(overrides[_k], dict):
+                raise ValueError(
+                    f"override 字段 {_k} 必须是 JSON 对象，收到 {type(overrides[_k]).__name__}"
+                )
         pk.update(overrides)
+    sp_warnings: list[str] = []
     # Merge SP (Stat Points) override into EVs. The engine stores EVs (keeping
     # full 4-EV granularity); `sps` is only an input/view layer. sps takes
     # precedence over evs for the same stat key when both are supplied.
     if overrides and isinstance(overrides.get("sps"), dict):
         base_evs = dict(pk.get("evs", {}))
         for stat, sp_val in overrides["sps"].items():
-            base_evs[stat] = _sp_to_ev(sp_val)
+            try:
+                sp_int = int(sp_val)
+            except (TypeError, ValueError):
+                sp_int = 0
+                sp_warnings.append(f"{stat} SP={sp_val!r} 非整数，已按 0 处理")
+            if sp_int > 32:
+                sp_warnings.append(f"{stat} SP={sp_int} 超出 Champions 上限 32")
+            elif sp_int < 0:
+                sp_warnings.append(f"{stat} SP={sp_int} 为负数")
+            base_evs[stat] = _sp_to_ev(sp_int)
         pk["evs"] = base_evs
     # Post-override: ensure ability is in English for the damage engine
     overridden_ability = pk.get("ability", "")
@@ -1863,7 +1982,14 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     pk = {k: v for k, v in pk.items() if k in _VALID_PK_FIELDS}
     # Stash the SP display view under a single meta key so callers can pop it
     # before Pokemon(**pk); evs themselves stay as raw EVs (no flooring).
-    pk["_sp_meta"] = {"sps": _evs_to_sps(pk.get("evs", {}))}
+    # Keys whose EV value cannot round-trip through SP carry an "approx" list.
+    sp_meta: dict[str, Any] = {
+        "sps": _evs_to_sps(pk.get("evs", {})),
+        "approx": _sp_approx_keys(pk.get("evs", {})),
+    }
+    if sp_warnings:
+        sp_meta["warnings"] = sp_warnings
+    pk["_sp_meta"] = sp_meta
     return pk
 
 
@@ -1893,6 +2019,13 @@ def _normalize_move_fields(move: dict[str, Any]) -> None:
         move["type"] = _MOVE_TYPE_EN_TO_ZH.get(move["type"], move["type"])
     if "category" in move:
         move["category"] = _MOVE_CATEGORY_ZH_TO_EN.get(move["category"], move["category"])
+
+
+# Behavior-only fields that cmd_calc accepts in move_override (AGENTS.md
+# invariant: move_override must never modify base_power/type/category —
+# use the calc-raw command for raw parameter input instead).
+_MOVE_OVERRIDE_WHITELIST = frozenset({"is_crit", "hits", "fainted_allies", "times_affected"})
+_MOVE_OVERRIDE_HITS_MAX = 10
 
 
 def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -2088,6 +2221,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     def _strip_quotes(s: str) -> str:
         return s.strip().strip("'\"'")
 
+    # Collected input warnings surfaced in the response "warning" field
+    calc_warnings: list[str] = []
+
     # Parse optional overrides from extra args
     try:
         att_override = json.loads(_strip_quotes(extra_args[0])) if len(extra_args) > 0 and extra_args[0] else {}
@@ -2097,6 +2233,26 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         move_override = json.loads(_strip_quotes(extra_args[1])) if len(extra_args) > 1 and extra_args[1] else {}
     except json.JSONDecodeError:
         move_override = {}
+    # Whitelist behavior-only fields; never let move_override touch
+    # base_power/type/category. Surface dropped keys instead of swallowing.
+    if not isinstance(move_override, dict):
+        move_override = {}
+        calc_warnings.append("move_override 必须是 JSON 对象，已忽略")
+    else:
+        dropped = sorted(set(move_override) - _MOVE_OVERRIDE_WHITELIST)
+        if dropped:
+            calc_warnings.append("move_override 忽略非法字段: " + ", ".join(dropped))
+            move_override = {k: v for k, v in move_override.items() if k in _MOVE_OVERRIDE_WHITELIST}
+        if "hits" in move_override:
+            try:
+                hits_val = int(move_override["hits"])
+            except (TypeError, ValueError):
+                hits_val = 1
+                calc_warnings.append(f"move_override hits={move_override['hits']!r} 非整数，已按 1 处理")
+            clamped = max(1, min(_MOVE_OVERRIDE_HITS_MAX, hits_val))
+            if clamped != hits_val:
+                calc_warnings.append(f"move_override hits={hits_val} 超出 1-{_MOVE_OVERRIDE_HITS_MAX}，已夹紧为 {clamped}")
+            move_override["hits"] = clamped
     try:
         def_override = json.loads(_strip_quotes(extra_args[2])) if len(extra_args) > 2 and extra_args[2] else {}
     except json.JSONDecodeError:
@@ -2155,6 +2311,12 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     field = Field()
     _apply_field_overrides(field, field_override)
 
+    # Surface SP input warnings (e.g. sp > 32) collected during override merge
+    for _extra in (att_extra, def_extra):
+        _sp_meta = _extra.get("_sp_meta") or {}
+        for _w in _sp_meta.pop("warnings", []):
+            calc_warnings.append(_w)
+
     # Ensure max_hp/current_hp are derived from stats when not explicitly overridden.
     # Users may pass stats/raw_stats without current_hp/max_hp, so derive from hp stat.
     if attacker.max_hp == 0:
@@ -2211,6 +2373,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "item": attacker.item_zh or attacker.item,
         "evs": attacker.evs,
         "sps": att_extra.get("_sp_meta", {}).get("sps", _evs_to_sps(attacker.evs)),
+        "sp_approx": att_extra.get("_sp_meta", {}).get("approx", []),
         "ivs": attacker.ivs,
         "level": attacker.level,
         "current_hp": attacker.current_hp,
@@ -2231,6 +2394,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "item": defender.item_zh or defender.item,
         "evs": defender.evs,
         "sps": def_extra.get("_sp_meta", {}).get("sps", _evs_to_sps(defender.evs)),
+        "sp_approx": def_extra.get("_sp_meta", {}).get("approx", []),
         "ivs": defender.ivs,
         "level": defender.level,
         "current_hp": defender.current_hp,
@@ -2265,7 +2429,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     if def_auto_item:
         response["defender_auto_item"] = _resolve_item_to_zh(def_auto_item) or def_auto_item
     if attacker_info.get("is_unobtainable") or defender_info.get("is_unobtainable"):
-        response["warning"] = "该形态在当前对战环境中不可用，以下结果为理论计算"
+        calc_warnings.append("该形态在当前对战环境中不可用，以下结果为理论计算")
+    if calc_warnings:
+        response["warning"] = "；".join(calc_warnings)
     if move.hits > 1:
         response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
         response["total_damage_rolls"] = total_damage_rolls
@@ -2919,7 +3085,12 @@ def cmd_meta(target: str = "", top: int | None = None, online: bool = False,
 
 def _cmd_meta_usage(name: str = "", top: int = 20, online: bool = False) -> dict[str, Any]:
     """Usage stats handler for cmd_meta."""
-    data = pcs.get_usage_data(DATA_DIR, online=online)
+    try:
+        data = pcs.get_usage_data(DATA_DIR, online=online)
+    except Exception as e:
+        # Missing/corrupt snapshot or failed online fetch must not leak a
+        # traceback; align with the friendly error shapes used elsewhere.
+        return {"error": f"使用率数据不可用: {type(e).__name__}: {e}", "meta": {}}
     meta = data.get("meta", {})
     plist = data.get("pokemon", [])
 
@@ -2969,7 +3140,10 @@ def _cmd_meta_ladder(name: str = "", top: int = 20, online: bool = False,
     """
     if battle_format not in ("singles", "doubles"):
         battle_format = "doubles"
-    data = pcs.get_ladder_data(DATA_DIR, source_kind, online=online)
+    try:
+        data = pcs.get_ladder_data(DATA_DIR, source_kind, online=online)
+    except Exception as e:
+        return {"error": f"天梯数据不可用: {type(e).__name__}: {e}", "meta": {}}
     meta = dict(data.get("meta") or {})
     meta["battle_format"] = battle_format
     meta["format_note"] = (
@@ -3106,7 +3280,10 @@ def _cmd_meta_teams(query: str = "", top: int = 12, online: bool = False,
         # list and `meta --teams <N>` always share one source and ordering.
         # The light snapshot is only used when the index is unavailable
         # (bundled teams_full pack missing on a broken install).
-        idx = pcs.get_teams_index(DATA_DIR, online=online)
+        try:
+            idx = pcs.get_teams_index(DATA_DIR, online=online)
+        except Exception as e:
+            return {"error": f"Teams data unavailable: {type(e).__name__}: {e}", "meta": {}}
         if idx.get("db_path") is not None:
             import teams_index as tix
             if query.isdigit():
@@ -3126,7 +3303,10 @@ def _cmd_meta_teams(query: str = "", top: int = 12, online: bool = False,
             return {"error": f"Teams data unavailable: {type(e).__name__}: {e}"}
 
     # ---- full-index backed queries -------------------------------------
-    idx = pcs.get_teams_index(DATA_DIR, online=online)
+    try:
+        idx = pcs.get_teams_index(DATA_DIR, online=online)
+    except Exception as e:
+        return {"error": f"Teams data unavailable: {type(e).__name__}: {e}", "meta": {}}
     meta = idx.get("meta", {})
     db_path = idx.get("db_path")
     if db_path is None:
@@ -3494,10 +3674,20 @@ def main() -> int:
                 max_stats = {}
                 for pair in args.min_stat_pairs:
                     stat, val = pair
-                    min_stats[stat] = int(val)
+                    try:
+                        min_stats[stat] = int(val)
+                    except ValueError:
+                        print(json.dumps({"error": f"filter-pokemon --min-stat {stat} 需要整数，收到 '{val}'"},
+                                         ensure_ascii=False))
+                        return 1
                 for pair in args.max_stat_pairs:
                     stat, val = pair
-                    max_stats[stat] = int(val)
+                    try:
+                        max_stats[stat] = int(val)
+                    except ValueError:
+                        print(json.dumps({"error": f"filter-pokemon --max-stat {stat} 需要整数，收到 '{val}'"},
+                                         ensure_ascii=False))
+                        return 1
                 result = cmd_filter_pokemon(
                     type_filters=args.type_filters or None,
                     min_stats=min_stats or None,
@@ -3513,6 +3703,11 @@ def main() -> int:
                 )
         except TypeError as e:
             print(f"Argument error for '{cmd}': {e}")
+            return 1
+        except Exception as e:
+            # Last-resort guard: never leak a raw traceback to the LLM caller.
+            print(json.dumps({"error": f"{cmd} failed: {type(e).__name__}: {e}"},
+                             ensure_ascii=False))
             return 1
 
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -3530,6 +3725,11 @@ def main() -> int:
         result = func(*args)
     except TypeError as e:
         print(f"Argument error for '{cmd}': {e}")
+        return 1
+    except Exception as e:
+        # Last-resort guard: never leak a raw traceback to the LLM caller.
+        print(json.dumps({"error": f"{cmd} failed: {type(e).__name__}: {e}"},
+                         ensure_ascii=False))
         return 1
 
     print(json.dumps(result, ensure_ascii=False, indent=2))

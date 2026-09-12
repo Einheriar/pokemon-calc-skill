@@ -36,6 +36,10 @@ from typing import Any
 from damage import _NATURE_ALIASES
 import regulations
 
+# GBK/cp936 consoles crash on Japanese tournament names in stderr logs.
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # ---------------------------------------------------------------------------
 # Source registry (pluggable)
 # ---------------------------------------------------------------------------
@@ -340,6 +344,15 @@ def distill_teams_full(teams_data: list[dict[str, Any]],
         detail_list = detail_map.get(team.get("id")) or []
         detail_by_ident = {}
         roster = team.get("pokemon") or []
+        # NOTE: upstream detail records carry NO identity field (only
+        # item/ability/moves/nature/teraType), so positional pairing against
+        # the roster order is the only option; it is correct as long as the
+        # API returns details in roster order. Guard the one failure mode we
+        # can detect (length drift) loudly instead of silently shifting rows.
+        if len(detail_list) != len(roster):
+            print(f"warning: distill_teams_full team {team.get('id')} "
+                  f"detail/roster length mismatch {len(detail_list)} vs {len(roster)}; "
+                  f"positional pairing may be misaligned", file=sys.stderr)
         for d, base in zip(detail_list, roster):
             detail_by_ident[base.get("identifier")] = d
         mons = []
@@ -608,6 +621,13 @@ def distill_teams_snapshot(teams_data: list[dict[str, Any]],
         detail_list = detail_map.get(team.get("id")) or []
         detail_by_ident = {}
         roster = team.get("pokemon") or []
+        # Same ordering caveat as distill_teams_full: upstream details have no
+        # identity field, so positional pairing relies on roster order; warn
+        # on length drift instead of silently shifting rows.
+        if len(detail_list) != len(roster):
+            print(f"warning: distill_teams_snapshot team {team.get('id')} "
+                  f"detail/roster length mismatch {len(detail_list)} vs {len(roster)}; "
+                  f"positional pairing may be misaligned", file=sys.stderr)
         for d, base in zip(detail_list, roster):
             detail_by_ident[base.get("identifier")] = d
         mons = []

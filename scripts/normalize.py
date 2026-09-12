@@ -7,6 +7,7 @@ Only depends on Python standard library (difflib).
 """
 
 import json
+import unicodedata
 from pathlib import Path
 from typing import Any
 import difflib
@@ -81,6 +82,17 @@ def _contains_chinese(s: str) -> bool:
     return False
 
 
+def _strip_invisible(name: str) -> str:
+    """Trim whitespace and drop format characters (zero-width spaces, BOM etc.).
+
+    LLM-generated JSON sometimes carries U+200B/U+200C/U+FEFF residues that
+    would make otherwise valid names fail alias lookup.
+    """
+    return "".join(
+        ch for ch in name.strip() if unicodedata.category(ch) != "Cf"
+    )
+
+
 def normalize_name(name: str, entity_type: str) -> str:
     """Normalize a user-provided name to its canonical form.
 
@@ -95,13 +107,16 @@ def normalize_name(name: str, entity_type: str) -> str:
         characters, the name is returned in fullwidth form so that form
         suffixes like Y/X match the canonical fullwidth index keys.
     """
+    name = _strip_invisible(name)
     aliases = _load_aliases()
     alias_map = aliases.get(entity_type, {})
 
-    # For pokemon, apply fullwidth normalization before alias lookup, but also
-    # fall back to the original form (halfwidth) so aliases like "超梦X" work.
+    # For pokemon, apply fullwidth normalization before alias lookup ONLY when
+    # the input carries Chinese characters: fullwidth-izing a pure-ASCII name
+    # (e.g. "Mega Charizard X") would mangle it so no index key can match.
+    # The halfwidth original is always tried as a fallback too.
     lookup_names = [name]
-    if entity_type == "pokemon":
+    if entity_type == "pokemon" and _contains_chinese(name):
         lookup_names.insert(0, _to_fullwidth(name))
 
     for lookup_name in lookup_names:

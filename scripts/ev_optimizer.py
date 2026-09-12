@@ -41,9 +41,11 @@ def _set_ev(pokemon: Pokemon, stat: str, ev: int) -> Pokemon:
     pk = copy.copy(pokemon)
     pk.evs = dict(pokemon.evs)
     pk.evs[stat] = ev
-    # Invalidate cached stats
+    # Invalidate cached stats and HP pool: optimizers evaluate from a fresh
+    # full-HP state, so current_hp must be recomputed from the new max_hp.
     pk.raw_stats = {}
     pk.stats = {}
+    pk.current_hp = 0
     return pk
 
 
@@ -62,9 +64,10 @@ def _set_sp(pokemon: Pokemon, stat: str, sp: int) -> Pokemon:
         pk.evs = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
     pk.evs = dict(pk.evs)
     pk.evs[stat] = sp * 8
-    # Invalidate cached stats so compute_raw_stats recalculates
+    # Invalidate cached stats and HP pool so compute_raw_stats recalculates
     pk.raw_stats = {}
     pk.stats = {}
+    pk.current_hp = 0
     return pk
 
 
@@ -165,7 +168,9 @@ def optimize_attack_ev(
     for val in range(0, max_single + 1, step):
         result = _evaluate_attack(attacker, defender, move, field, stat, val, mode=mode)
         dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
-        total = dmg * hits_needed
+        # Damage rolls are per-hit; multi-hit moves deal hits × per-hit damage.
+        move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+        total = dmg * hits_needed * move_hits
 
         if total >= defender.current_hp:
             best_val = val
@@ -253,7 +258,10 @@ def optimize_defense_ev(
     for val in range(0, max_single + 1, step):
         result = _evaluate_defense(attacker, defender, move, field, stat, val, mode=mode)
         dmg = result.max_damage if use_max else sum(result.damage) // len(result.damage)
-        total = dmg * hits_to_survive
+        # Damage rolls are per-hit; surviving a multi-hit move means
+        # surviving hits × hits_to_survive total damage.
+        move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+        total = dmg * hits_to_survive * move_hits
 
         if total < defender.current_hp:
             best_val = val
@@ -328,6 +336,8 @@ def optimize_bulk_evs(
     best_combo = (0, 0)
     best_result = None
 
+    move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+
     # Grid search — at most (33 * 33) = 1089 iterations in SP mode
     for hp_val in range(0, max_single + 1, step):
         for def_val in range(0, max_single + 1, step):
@@ -336,19 +346,17 @@ def optimize_bulk_evs(
             if hp_val + def_val >= best_total:
                 continue
 
-            dfn = copy.copy(defender)
+            # Route through _set_ev/_set_sp so cached stats AND the HP pool
+            # (current_hp) are invalidated for both EV and SP modes.
             if mode == "sp":
-                dfn = _set_sp(dfn, "hp", hp_val)
+                dfn = _set_sp(defender, "hp", hp_val)
                 dfn = _set_sp(dfn, def_stat, def_val)
             else:
-                dfn.evs = dict(defender.evs)
-                dfn.evs["hp"] = hp_val
-                dfn.evs[def_stat] = def_val
-                dfn.raw_stats = {}
-                dfn.stats = {}
+                dfn = _set_ev(defender, "hp", hp_val)
+                dfn = _set_ev(dfn, def_stat, def_val)
 
             result = calculate_damage(attacker, dfn, move, field, gen=9)
-            if result.max_damage * hits_to_survive < dfn.current_hp:
+            if result.max_damage * hits_to_survive * move_hits < dfn.current_hp:
                 best_total = hp_val + def_val
                 best_combo = (hp_val, def_val)
                 best_result = result
@@ -424,6 +432,11 @@ def optimize_evs(
     if goal == "ko":
         return optimize_attack_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
     elif goal == "survive":
+        # Coerce ko-style targets (e.g. the CLI default "ohko") to survive goals
+        if target not in ("survive", "survive_2hko"):
+            target = "survive"
         return optimize_defense_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
     else:
+        if target not in ("survive", "survive_2hko"):
+            target = "survive"
         return optimize_bulk_evs(attacker, defender, move, field, target=target, mode=mode)  # type: ignore[arg-type]
