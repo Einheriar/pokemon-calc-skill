@@ -43,11 +43,13 @@ pokemon-calc/
 │   ├── meta_teams.json   # 近期赛事队伍快照（前 12 支，pokecamp.cc / Limitless 赛事数据）
 │   └── teams_full.json.gz # 全量赛事队伍内置包（当前窗口全部队伍 + 完整明细，gzip 压缩）
 └── scripts/
-    ├── query.py          # 主查询入口（百科 + calc + preset + optimize + meta）
-    ├── damage.py         # 伤害计算引擎
+    ├── query.py          # 主查询入口（百科 + calc + lookup + preset + optimize + meta）
+    ├── damage.py         # 伤害计算引擎（内部全英文枚举，经 engine_enums）
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
+    ├── engine_enums.py   # 引擎枚举单一来源（属性/性格/状态中英映射 + 纯解析函数）
+    ├── display_zh.py     # 中文渲染层（全部面向用户的中文文案集中于此）
     ├── normalize.py      # 输入标准化层（别名/拼写纠正）
     ├── pokecamp_source.py # 环境数据源模块（可插拔；快照/缓存/在线三层）
     └── teams_index.py    # 全量队伍本地 SQLite 索引（从内置包派生，gitignored）
@@ -67,6 +69,7 @@ pokemon-calc/
 | 命令 | 参数 | 用途 | 返回值 |
 |------|------|------|--------|
 | `pokemon <name>` | 宝可梦中文/英文名 | 基础信息、形态、特性、种族值、进化链 | JSON 对象 |
+| `lookup <name>` | 宝可梦/招式/特性/道具 中英日名 | 轻量解析：返回 `{input, canonical_en, entity_type}`；未命中返回 error + suggestions | JSON 对象 |
 | `move <name>` | 招式中文/英文名 | 威力、命中、PP、属性、分类、效果描述 | JSON 对象 |
 | `ability <name>` | 特性中文/英文名 | 效果描述、元信息 | JSON 对象 |
 | `item <name>` | 道具中文/英文名 | 效果描述、分类、持有效果 | JSON 对象 |
@@ -477,6 +480,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive surviv
 回归测试脚本位于 `../cache/` 目录：
 
 ```bash
+python cache/golden_baseline.py --check # 黄金快照（60 场景逐字节比对，重构/改引擎前后必跑）
 python cache/regression_test.py       # Preset / 形态 / setup_moves 等，36 例
 python cache/test_auto_preset_partial_ev.py  # auto-preset 语义（部分努力跳过/优先级/道具白名单/形态稳定，23 例）
 python cache/test_usage_stats.py      # usage 环境查询（离线快照 + 在线回退，14 例）
@@ -485,9 +489,12 @@ python cache/test_meta_command.py     # meta 统一命令（推断/alias/--sourc
 python cache/test_ladder_source.py    # 天梯数据源（ladder/showdown 排行、单双打、Mega 合并、蒸馏/节流，23 例）
 python cache/test_field_overrides.py  # 场地参数覆盖专项（30 用例）
 python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
+python cache/test_regulation_and_forms.py  # 规则模型与形态（20 例）
+python cache/test_audit_fixes.py      # V4.9.1 审核修复回归（25 例）
+python cache/test_round2_fixes.py     # V4.9.2 第二轮修复回归（32 例）
 ```
 
-数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）。
+数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（引擎四文件不得含中文字符串字面量，注释除外）。
 
 旧版专项测试已归档于 `cache/archive/`（15 个，仅作历史参考，不再维护）。
 
@@ -497,9 +504,20 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
+### 4.9.3（2026-09-12）
+
+引擎英文化 + 多语言转换层重构（Phase 1，见 `plans/archive/PLAN_2026-09-12_engine_english_multilang_EXECUTION[已实施].md`）。行为保持重构：60 场景黄金快照逐字节比对驱动（`cache/golden_baseline.py --check`）。
+
+- **架构**：数据层（中文主键）→ 适配层（唯一翻译点：query.py/normalize.py + engine_enums/display_zh）→ 引擎（全英文枚举，与 damage_SV.js 同构）→ 输出（JSON 主体回显数据层语言 + 中文 description）。
+- **新增模块**：`engine_enums.py`（18 属性 `T.*` 常量与中英映射、25 性格英文名表与别名容错、状态常量、`resolve_type_en`/`resolve_nature_en` 纯解析函数，全引擎唯一映射来源）；`display_zh.py`（引擎全部面向用户的中文文案集中于此，含 description 模板与 KO 过程文案）。
+- **引擎**：damage.py/ko_chance.py/models.py 内部表示全面英文化（136+8 处类型字面量 → `T.*`；性格表/别名表/类型表迁至 engine_enums；`calculate_damage` 入口统一规范化 types/move.type/tera 输入）；`_ITEM_BOOST_MAP`/`_BERRY_ALIASES` 与全部双语道具比较的 zh 分支清除（道具输入由适配层 `_normalize_item_input` 统一规范化为英文，calc 与 calc-raw 双路径）。
+- **适配层**：`query.py` 类型显示映射改由 engine_enums 派生；`calc` 在进引擎前对 types/nature/status 做白名单校验，非法值返回 `{"error", "suggestions"}`（不再静默穿透）；新增 `lookup <name>` 轻量解析命令（多语名 → 规范英文标识符）。
+- **契约**：中文输入全部照旧合法；输出回显保持数据层语言（attacker_info.types/move_info.type 等）。SKILL.md 仅新增输入指引段（优先规范英文标识符 + lookup），输出模板未动。
+- **测试**：新增 `cache/golden_baseline.py`（60 场景快照 + `--check`）与 `cache/check_engine_enums.py`（引擎四文件禁中文串字面量守卫）；test_round2_fixes 一用例的引擎层字面量随新契约改英文。
+
 ### 4.9.2（2026-09-12）
 
-第二轮系统性审核修复（见 `plans/PLAN_2026-09-12_round2_audit_fix.md`，V4.9.1 已先期复测通过）：
+第二轮系统性审核修复（见 `plans/archive/PLAN_2026-09-12_round2_audit_fix[已实施].md`，V4.9.1 已先期复测通过）：
 
 - **数据层**：type_chart.json 修正 2 处克制表错误（毒→岩石、妖精→火均误记 1.0，应为 0.5——calc/type 命令对这两组对局伤害多算一倍）；`check_data.py` 新增官方 18×18 克制表全量对账与 is_sound/is_bullet/is_wind/hits 标志对账；moves.json 补 龙箭 hits=2 与 16 个漏标标志（Eerie Spell/Barrage/Egg Bomb/Ice Ball/Octazooka/Aeroblast/Tailwind/Whirlwind 等）。
 - **引擎（damage.py）**：Protosynthesis/Quark Drive 改按全能力最高项判定（原只比较攻/特攻，速度/防御最高的悖谬种特攻被虚加 30%）；Knock Off 不可摘除清单修正（Eviolite/White Herb 等 "ite" 启发式误伤，改例外集；补 Rusted Sword/Shield）；Solar Beam/Solar Blade 非晴天天气减半；电气上升/广域战力/薄雾爆炸补接地判定；亲子爱双打+扩散招式不再二段；清醒/唤醒巴掌条件翻倍；拳击手套（威力+接触豁免）；厄诡椪面具 1.2x；Fling 不可投掷道具；飘浮+铁球接地；灾祸四特性受中性气体压制；大晴天伞中文名修正为"万能伞"（原中文名为误记，英文死分支随之修复）；Flail/Reversal 精确阈值；场地种子增益不再跨调用累积（try/finally 回滚 + PB 递归 _skip_seeds）。
@@ -509,7 +527,7 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 
 ### 4.9.1（2026-09-12）
 
-系统性代码审核修复（P0/P1 全量，见 `plans/PLAN_2026-09-11_systematic_audit_fix.md`）：
+系统性代码审核修复（P0/P1 全量，见 `plans/archive/PLAN_2026-09-11_systematic_audit_fix[已实施].md`）：
 
 - **引擎正确性（damage.py）**：
   - 移植 JS `immunityChecks` 全量免疫检查（Wonder Guard / 食草 / 引火 / 蓄电 / 飘浮 /

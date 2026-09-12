@@ -26,7 +26,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from damage import _NATURE_ALIASES
+from engine_enums import NATURE_ALIASES_TO_ZH
 
 # Windows consoles default to a legacy code page (cp936 etc.); upstream data
 # may carry Japanese tournament/player names that would raise
@@ -308,7 +308,7 @@ def _load_name_maps(conn: sqlite3.Connection) -> dict[str, dict[str, str]]:
 def nature_zh(en_name: str) -> str:
     if not en_name:
         return ""
-    return _NATURE_ALIASES.get(en_name.lower(), en_name)
+    return NATURE_ALIASES_TO_ZH.get(en_name.lower(), en_name)
 
 
 # ---------------------------------------------------------------------------

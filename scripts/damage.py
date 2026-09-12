@@ -18,6 +18,16 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
+import display_zh
+from engine_enums import (
+    NATURES_EN,
+    T,
+    TYPE_ZH_TO_EN,
+    resolve_nature_en,
+    resolve_tera_type_en,
+    resolve_type_en,
+    STELLAR_TERA_INPUTS,
+)
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -27,55 +37,6 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 DATA_DIR = SCRIPT_DIR.parent / "data"
 
 _TYPE_CHART: dict[str, dict[str, float]] | None = None
-
-# Chinese <-> English type mapping (aligned with data files and JS engine)
-_TYPE_ZH_TO_EN: dict[str, str] = {
-    "一般": "Normal", "格斗": "Fighting", "飞行": "Flying", "毒": "Poison",
-    "地面": "Ground", "岩石": "Rock", "虫": "Bug", "幽灵": "Ghost",
-    "钢": "Steel", "火": "Fire", "水": "Water", "草": "Grass",
-    "电": "Electric", "超能力": "Psychic", "冰": "Ice", "龙": "Dragon",
-    "恶": "Dark", "妖精": "Fairy",
-}
-_TYPE_EN_TO_ZH = {v: k for k, v in _TYPE_ZH_TO_EN.items()}
-
-# Nature modifiers (zh name -> (boosted stat, lowered stat))
-# Stats use English keys to match JS internals.
-# Table follows the official nature chart (zh names). Empty strings = neutral nature.
-NATURES: dict[str, tuple[str, str]] = {
-    # Neutral natures (no stat change)
-    "勤奋": ("", ""), "坦率": ("", ""), "害羞": ("", ""), "浮躁": ("", ""), "认真": ("", ""),
-    # +Attack
-    "怕寂寞": ("attack", "defense"), "固执": ("attack", "sp_attack"),
-    "顽皮": ("attack", "sp_defense"), "勇敢": ("attack", "speed"),
-    # +Defense
-    "大胆": ("defense", "attack"), "淘气": ("defense", "sp_attack"),
-    "乐天": ("defense", "sp_defense"), "悠闲": ("defense", "speed"),
-    # +Sp. Attack
-    "内敛": ("sp_attack", "attack"), "慢吞吞": ("sp_attack", "defense"),
-    "马虎": ("sp_attack", "sp_defense"), "冷静": ("sp_attack", "speed"),
-    # +Sp. Defense
-    "温和": ("sp_defense", "attack"), "温顺": ("sp_defense", "defense"),
-    "慎重": ("sp_defense", "sp_attack"), "自大": ("sp_defense", "speed"),
-    # +Speed
-    "胆小": ("speed", "attack"), "急躁": ("speed", "defense"),
-    "爽朗": ("speed", "sp_attack"), "天真": ("speed", "sp_defense"),
-}
-
-# Common Chinese nature aliases (English -> Chinese)
-# Note: setdex presets use capitalized English names (e.g. "Adamant", "Jolly"),
-# so these keys must match the lowercase form exactly.
-_NATURE_ALIASES: dict[str, str] = {
-    "adamant": "固执", "modest": "内敛", "jolly": "爽朗", "timid": "胆小",
-    "brave": "勇敢", "bold": "大胆", "impish": "淘气", "careful": "慎重",
-    "calm": "温和", "quiet": "冷静", "sassy": "自大", "relaxed": "悠闲",
-    "lonely": "怕寂寞", "mild": "慢吞吞", "gentle": "温顺", "hasty": "急躁",
-    "naive": "天真", "rash": "马虎", "naughty": "顽皮", "lax": "乐天",
-    "hardy": "勤奋",
-    # Chinese-name aliases (fault tolerance): alternate zh name -> canonical zh name
-    "孤独": "怕寂寞",
-    # Neutral-nature English names -> canonical zh names
-    "docile": "坦率", "bashful": "害羞", "quirky": "浮躁", "serious": "认真",
-}
 
 ATE_IZE_ABILITIES = [
     "Aerilate", "Pixilate", "Refrigerate", "Galvanize", "Normalize", "Dragonize"
@@ -147,86 +108,86 @@ _SECONDARY_EFFECT_MOVES = {
 # for comparison with move.type in the engine layer.
 _ITEM_BOOST_MAP: dict[str, str] = {
     # Water
-    "Mystic Water": "水", "神秘水滴": "水",
-    "Sea Incense": "水", "Wave Incense": "水", "Splash Plate": "水",
+    "Mystic Water": T.WATER,
+    "Sea Incense": T.WATER, "Wave Incense": T.WATER, "Splash Plate": T.WATER,
     # Fire
-    "Charcoal": "火", "木炭": "火",
-    "Flame Plate": "火",
+    "Charcoal": T.FIRE,
+    "Flame Plate": T.FIRE,
     # Grass
-    "Miracle Seed": "草", "奇迹种子": "草",
-    "Rose Incense": "草", "Meadow Plate": "草",
+    "Miracle Seed": T.GRASS,
+    "Rose Incense": T.GRASS, "Meadow Plate": T.GRASS,
     # Electric
-    "Magnet": "电", "磁铁": "电",
-    "Zap Plate": "电",
+    "Magnet": T.ELECTRIC,
+    "Zap Plate": T.ELECTRIC,
     # Ice
-    "Never-Melt Ice": "冰", "NeverMeltIce": "冰", "不融冰": "冰",
-    "Icicle Plate": "冰",
+    "Never-Melt Ice": T.ICE, "NeverMeltIce": T.ICE,
+    "Icicle Plate": T.ICE,
     # Fighting
-    "Black Belt": "格斗", "黑带": "格斗",
-    "Fist Plate": "格斗",
+    "Black Belt": T.FIGHTING,
+    "Fist Plate": T.FIGHTING,
     # Poison
-    "Poison Barb": "毒", "毒针": "毒",
-    "Toxic Plate": "毒",
+    "Poison Barb": T.POISON,
+    "Toxic Plate": T.POISON,
     # Ground
-    "Soft Sand": "地面", "柔软沙子": "地面",
-    "Earth Plate": "地面",
+    "Soft Sand": T.GROUND,
+    "Earth Plate": T.GROUND,
     # Flying
-    "Sharp Beak": "飞行", "锐利鸟嘴": "飞行",
-    "Sky Plate": "飞行",
+    "Sharp Beak": T.FLYING,
+    "Sky Plate": T.FLYING,
     # Psychic
-    "Twisted Spoon": "超能力", "TwistedSpoon": "超能力", "弯曲的汤匙": "超能力",
-    "Odd Incense": "超能力", "Mind Plate": "超能力",
+    "Twisted Spoon": T.PSYCHIC, "TwistedSpoon": T.PSYCHIC,
+    "Odd Incense": T.PSYCHIC, "Mind Plate": T.PSYCHIC,
     # Bug
-    "Silver Powder": "虫", "SilverPowder": "虫", "银色粉": "虫",
-    "Insect Plate": "虫",
+    "Silver Powder": T.BUG, "SilverPowder": T.BUG,
+    "Insect Plate": T.BUG,
     # Rock
-    "Hard Stone": "岩石", "硬石头": "岩石",
-    "Rock Incense": "岩石", "Stone Plate": "岩石",
+    "Hard Stone": T.ROCK,
+    "Rock Incense": T.ROCK, "Stone Plate": T.ROCK,
     # Ghost
-    "Spell Tag": "幽灵", "诅咒之符": "幽灵",
-    "Spooky Plate": "幽灵",
+    "Spell Tag": T.GHOST,
+    "Spooky Plate": T.GHOST,
     # Dragon
-    "Dragon Fang": "龙", "龙之牙": "龙",
-    "Draco Plate": "龙",
+    "Dragon Fang": T.DRAGON,
+    "Draco Plate": T.DRAGON,
     # Dark
-    "Black Glasses": "恶", "BlackGlasses": "恶", "黑色眼镜": "恶",
-    "Dread Plate": "恶",
+    "Black Glasses": T.DARK, "BlackGlasses": T.DARK,
+    "Dread Plate": T.DARK,
     # Steel
-    "Metal Coat": "钢", "金属膜": "钢",
-    "Iron Plate": "钢",
+    "Metal Coat": T.STEEL,
+    "Iron Plate": T.STEEL,
     # Fairy
-    "Fairy Feather": "妖精", "Pixie Plate": "妖精",
+    "Fairy Feather": T.FAIRY, "Pixie Plate": T.FAIRY,
     # Normal
-    "Silk Scarf": "一般", "丝绸围巾": "一般",
-    "Pink Bow": "一般", "Polkadot Bow": "一般",
+    "Silk Scarf": T.NORMAL,
+    "Pink Bow": T.NORMAL, "Polkadot Bow": T.NORMAL,
 }
 
 
 # Aura abilities: move type (zh) -> the matching aura ability name.
-_AURA_MAP: dict[str, str] = {"妖精": "Fairy Aura", "恶": "Dark Aura"}
+_AURA_MAP: dict[str, str] = {T.FAIRY: "Fairy Aura", T.DARK: "Dark Aura"}
 
 # Ogerpon masks boost the matching move type 1.2x (JS damage_MASTER.js:1477).
 # The attribute match implies the matching form (each form holds its own mask).
 _OGERPON_MASKS: dict[str, str] = {
-    "Wellspring Mask": "水", "水井面具": "水",
-    "Hearthflame Mask": "火", "火灶面具": "火",
-    "Cornerstone Mask": "岩石", "础石面具": "岩石",
-    "Teal Mask": "草", "碧草面具": "草",
+    "Wellspring Mask": T.WATER,
+    "Hearthflame Mask": T.FIRE,
+    "Cornerstone Mask": T.ROCK,
+    "Teal Mask": T.GRASS,
 }
 
 # Weather Ball / Terrain Pulse type changes (module-level: rebuilt per call
 # was pure overhead).
 _WEATHER_BALL_TYPE: dict[str, str] = {
-    "Sun": "火", "Harsh Sun": "火",
-    "Rain": "水", "Heavy Rain": "水",
-    "Sand": "岩石",
-    "Hail": "冰", "Snow": "冰",
+    "Sun": T.FIRE, "Harsh Sun": T.FIRE,
+    "Rain": T.WATER, "Heavy Rain": T.WATER,
+    "Sand": T.ROCK,
+    "Hail": T.ICE, "Snow": T.ICE,
 }
 _TERRAIN_PULSE_TYPE: dict[str, str] = {
-    "Electric": "电",
-    "Grassy": "草",
-    "Misty": "妖精",
-    "Psychic": "超能力",
+    "Electric": T.ELECTRIC,
+    "Grassy": T.GRASS,
+    "Misty": T.FAIRY,
+    "Psychic": T.PSYCHIC,
 }
 
 # Resist berries (halve super-effective moves of the corresponding type).
@@ -251,58 +212,14 @@ _RESIST_BERRIES: dict[str, list[str]] = {
     "Fairy": ["Roseli Berry"],
 }
 
-# Berry aliases: zh official names + slang -> en canonical name
-_BERRY_ALIASES: dict[str, str] = {
-    # Slang (most commonly used by players)
-    "抗火果": "Occa Berry",
-    "抗水果": "Passho Berry",
-    "抗电果": "Wacan Berry",
-    "抗草果": "Rindo Berry",
-    "抗冰果": "Yache Berry",
-    "抗斗果": "Chople Berry",
-    "抗毒果": "Kebia Berry",
-    "抗地果": "Shuca Berry",
-    "抗飞果": "Coba Berry",
-    "抗超果": "Payapa Berry",
-    "抗虫果": "Tanga Berry",
-    "抗岩果": "Charti Berry",
-    "抗鬼果": "Kasib Berry",
-    "抗龙果": "Haban Berry",
-    "抗恶果": "Colbur Berry",
-    "抗钢果": "Babiri Berry",
-    "抗仙果": "Roseli Berry",
-    "抗一般果": "Chilan Berry",
-    # Chinese official names (Gen 7+)
-    "千香果": "Occa Berry",
-    "烛木果": "Passho Berry",
-    "罗子果": "Wacan Berry",
-    "番荔果": "Rindo Berry",
-    "腰木果": "Yache Berry",
-    "巧可果": "Chople Berry",
-    "棱瓜果": "Kebia Berry",
-    "葫苏果": "Shuca Berry",
-    "乐芭果": "Coba Berry",
-    "芭亚果": "Payapa Berry",
-    "莲蒲果": "Tanga Berry",
-    "霹霹果": "Charti Berry",
-    "烛龙果": "Haban Berry",
-    "佛柑果": "Kasib Berry",
-    "罗望果": "Colbur Berry",
-    "投鲜果": "Chilan Berry",
-    "刺耳果": "Colbur Berry",
-    "穹犀果": "Babiri Berry",
-    "香罗果": "Roseli Berry",
-}
-
-
 def _canonical_berry(item_name: str) -> str:
-    """Resolve zh/slang berry name to canonical English name."""
-    if not item_name:
-        return ""
-    # Already English
-    if item_name.endswith("Berry"):
-        return item_name
-    return _BERRY_ALIASES.get(item_name, item_name)
+    """Canonicalize the defender item for resist-berry matching.
+
+    Item inputs are normalized to canonical English at the adapter boundary
+    (_normalize_item_input), so the legacy zh/slang alias table no longer
+    lives in the engine.
+    """
+    return item_name or ""
 
 
 def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
@@ -315,20 +232,20 @@ def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
 
     is_boosted = False
     if attacker.ability == "Liquid Voice" and getattr(move, "is_sound", False):
-        move.type = "水"
+        move.type = T.WATER
     elif attacker.ability in ATE_IZE_ABILITIES:
-        if attacker.ability != "Normalize" and move.type == "一般":
+        if attacker.ability != "Normalize" and move.type == T.NORMAL:
             type_map = {
-                "Aerilate": "飞行",
-                "Pixilate": "妖精",
-                "Refrigerate": "冰",
-                "Galvanize": "电",
-                "Dragonize": "龙",
+                "Aerilate": T.FLYING,
+                "Pixilate": T.FAIRY,
+                "Refrigerate": T.ICE,
+                "Galvanize": T.ELECTRIC,
+                "Dragonize": T.DRAGON,
             }
             move.type = type_map.get(attacker.ability, move.type)
             is_boosted = True
         elif attacker.ability == "Normalize":
-            move.type = "一般"
+            move.type = T.NORMAL
             is_boosted = True
     return move, is_boosted
 
@@ -347,10 +264,10 @@ def _load_type_chart() -> dict[str, dict[str, float]]:
         # Convert to English keys for internal consistency with JS logic
         chart: dict[str, dict[str, float]] = {}
         for atk_zh, row in raw.items():
-            atk_en = _TYPE_ZH_TO_EN.get(atk_zh) or atk_zh
+            atk_en = TYPE_ZH_TO_EN.get(atk_zh) or atk_zh
             chart[atk_en] = {}
             for def_zh, val in row.items():
-                def_en = _TYPE_ZH_TO_EN.get(def_zh) or def_zh
+                def_en = TYPE_ZH_TO_EN.get(def_zh) or def_zh
                 chart[atk_en][def_en] = val
         _TYPE_CHART = chart
     return _TYPE_CHART
@@ -377,7 +294,7 @@ def is_grounded(pokemon: Pokemon, field: Field) -> bool:
     """Check if a Pokemon is grounded (affected by terrain effects)."""
     if pokemon.item == "Iron Ball" or field.is_gravity:
         return True
-    if "飞行" in pokemon.types:
+    if T.FLYING in pokemon.types:
         return False
     if pokemon.item == "Air Balloon":
         return False
@@ -406,9 +323,13 @@ def get_modified_stat(stat: int, mod: int) -> int:
 
 
 def get_nature_modifier(nature: str, stat: str) -> float:
-    """Return nature multiplier for a given stat key."""
-    nature_zh = _NATURE_ALIASES.get(nature.lower(), nature)
-    boosted, lowered = NATURES.get(nature_zh, ("", ""))
+    """Return nature multiplier for a given stat key.
+
+    Accepts zh / English / alias / any-case nature input via
+    engine_enums.resolve_nature_en; unknown values are neutral.
+    """
+    nature_en = resolve_nature_en(nature)
+    boosted, lowered = NATURES_EN.get(nature_en, ("", "")) if nature_en else ("", "")
     if boosted == stat:
         return 1.1
     if lowered == stat:
@@ -509,9 +430,9 @@ def get_move_effectiveness(
     is the secondary type.
     """
     chart = _load_type_chart()
-    move_en = _TYPE_ZH_TO_EN.get(move_type, move_type)
-    type1_en = _TYPE_ZH_TO_EN.get(def_type1, def_type1)
-    type2_en = _TYPE_ZH_TO_EN.get(def_type2, def_type2) if def_type2 else None
+    move_en = TYPE_ZH_TO_EN.get(move_type, move_type)
+    type1_en = TYPE_ZH_TO_EN.get(def_type1, def_type1)
+    type2_en = TYPE_ZH_TO_EN.get(def_type2, def_type2) if def_type2 else None
 
     if is_tera_shell and chart[move_en].get(type1_en, 1) >= 0.5:
         return 0.5
@@ -546,18 +467,6 @@ _PRIORITY_MOVES = frozenset({
     "Jet Punch", "Thunderclap", "Accelerock", "Pursuit",
 })
 
-# Chinese display names for immunity reasons of the ported abilities.
-_IMMUNITY_ABILITY_ZH = {
-    "Sap Sipper": "食草", "Flash Fire": "引火", "Well-Baked Body": "焦香之躯",
-    "Dry Skin": "干燥皮肤", "Storm Drain": "引水", "Water Absorb": "储水",
-    "Lightning Rod": "避雷针", "Motor Drive": "引擎", "Volt Absorb": "蓄电",
-    "Levitate": "飘浮", "Earth Eater": "大地吞噬", "Eelevate": "鳗鳗高升",
-    "Bulletproof": "防弹", "Soundproof": "隔音", "Wind Rider": "乘风",
-    "Wonder Guard": "奇妙守护", "Damp": "湿气", "Dazzling": "万众瞩目",
-    "Queenly Majesty": "女王的威严", "Armor Tail": "铠甲尾巴",
-}
-
-
 def _immunity_check(
     move: Move,
     attacker: Pokemon,
@@ -573,9 +482,7 @@ def _immunity_check(
     move should proceed, ``""`` for a generic type immunity, or a non-empty
     Chinese reason string for ability / item / weather immunities.
     """
-    def _reason(ability: str) -> str:
-        zh = _IMMUNITY_ABILITY_ZH.get(ability, ability)
-        return f"（{zh}特性免疫）"
+    _reason = display_zh.immunity_reason
 
     move_type = move.type
     name = move.name
@@ -583,15 +490,15 @@ def _immunity_check(
 
     if (def_ability == "Wonder Guard" and type_effectiveness <= 1 and name != "Struggle"):
         return _reason(def_ability)
-    if move_type == "草" and def_ability == "Sap Sipper":
+    if move_type == T.GRASS and def_ability == "Sap Sipper":
         return _reason(def_ability)
-    if move_type == "火" and def_ability in ("Flash Fire", "Well-Baked Body"):
+    if move_type == T.FIRE and def_ability in ("Flash Fire", "Well-Baked Body"):
         return _reason(def_ability)
-    if move_type == "水" and def_ability in ("Dry Skin", "Storm Drain", "Water Absorb"):
+    if move_type == T.WATER and def_ability in ("Dry Skin", "Storm Drain", "Water Absorb"):
         return _reason(def_ability)
-    if move_type == "电" and def_ability in ("Lightning Rod", "Motor Drive", "Volt Absorb"):
+    if move_type == T.ELECTRIC and def_ability in ("Lightning Rod", "Motor Drive", "Volt Absorb"):
         return _reason(def_ability)
-    if move_type == "地面" and not field.is_gravity and (
+    if move_type == T.GROUND and not field.is_gravity and (
             (def_ability == "Levitate" and defender.item != "Iron Ball")
             or def_ability in ("Earth Eater", "Eelevate")):
         # Iron Ball grounds its holder, negating Levitate (game truth; the JS
@@ -603,30 +510,30 @@ def _immunity_check(
         return _reason(def_ability)
     if getattr(move, "is_wind", False) and def_ability == "Wind Rider":
         return _reason(def_ability)
-    if (move_type == "地面" and not field.is_gravity
-            and defender.item in ("Air Balloon", "气球") and name != "Thousand Arrows"):
-        return "（气球道具免疫地面招式）"
-    if (field.weather == "Harsh Sun" and move_type == "水") or (field.weather == "Heavy Rain" and move_type == "火"):
-        return "（大日照/下大雨天气下无法使用该属性招式）"
-    if name == "Sky Drop" and ("飞行" in defender.types or defender.weight >= 200.0 or field.is_gravity):
-        return "（该目标无法被 Sky Drop 抓起）"
+    if (move_type == T.GROUND and not field.is_gravity
+            and defender.item in ("Air Balloon",) and name != "Thousand Arrows"):
+        return display_zh.REASON_AIR_BALLOON
+    if (field.weather == "Harsh Sun" and move_type == T.WATER) or (field.weather == "Heavy Rain" and move_type == T.FIRE):
+        return display_zh.REASON_WEATHER_LOCK
+    if name == "Sky Drop" and (T.FLYING in defender.types or defender.weight >= 200.0 or field.is_gravity):
+        return display_zh.REASON_SKY_DROP
     if name == "Synchronoise" and not (set(attacker.types) & set(defender.types)):
-        return "（同步喧闹仅对与自身属性相同的宝可梦生效）"
+        return display_zh.REASON_SYNCHRONOISE
     if defender.is_dynamax and name in ("Grass Knot", "Low Kick", "Heat Crash", "Heavy Slam"):
-        return "（极巨化宝可梦免疫体重类招式）"
+        return display_zh.REASON_DYNAMAX_WEIGHT
     if ((def_ability == "Damp" or attacker.ability == "Damp")
             and name in ("Self-Destruct", "Explosion", "Mind Blown", "Misty Explosion")):
         return _reason("Damp")
     if name == "Fling" and _cant_fling_item(attacker.item, attacker):
-        return "（该道具无法投掷或未持有道具）"
-    if name == "Natural Gift" and not (attacker.item.endswith("果") or "Berry" in attacker.item):
-        return "（天然礼物需要携带树果）"
+        return display_zh.REASON_UNFLINGABLE
+    if name == "Natural Gift" and "Berry" not in attacker.item:
+        return display_zh.REASON_NATURAL_GIFT
     if def_ability in ("Queenly Majesty", "Dazzling", "Armor Tail") and is_priority:
         return _reason(def_ability)
     if field.terrain == "Psychic" and is_priority and is_grounded(defender, field):
-        return "（精神场地使先制招式无效）"
+        return display_zh.REASON_PSYCHIC_TERRAIN
     if name == "Dream Eater" and defender.status != "Asleep":
-        return "（食梦仅对睡眠状态的宝可梦生效）"
+        return display_zh.REASON_DREAM_EATER
 
     if type_effectiveness == 0:
         return ""
@@ -687,17 +594,16 @@ def _cant_remove_item(item: str, defender: Pokemon) -> bool:
     Port of item_data.js cantRemoveItem():867, extended with Mega Stones and
     the weather orbs (removable in no game; Champions M-C carries Mega forms).
     """
-    if not item or item == "无":
+    if not item:
         return True
     if "ium Z" in item or item.endswith("Ｚ"):
         return True
-    if item.endswith("种子") or item.endswith(" Seed"):
+    if item.endswith(" Seed"):
         return True
-    # Mega Stones: "Charizardite X", "Gyaradosite", 喷火龙进化石Ｘ ...
-    if (("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS) \
-            or "进化石" in item:
+    # Mega Stones: "Charizardite X", "Gyaradosite", ...
+    if ("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS:
         return True
-    if item in ("Red Orb", "Blue Orb", "红玉", "蓝玉", "Griseous Orb"):
+    if item in ("Red Orb", "Blue Orb", "Griseous Orb"):
         return True
     if _SPECIES_LOCKED_ITEMS.get(defender.name_en) == item:
         return True
@@ -717,19 +623,18 @@ def _cant_fling_item(item: str, attacker: Pokemon) -> bool:
     Port of item_data.js cantFlingItem():876. Terrain seeds ARE flingable, so
     this deliberately does not reuse _cant_remove_item's seed rule.
     """
-    if not item or item == "无":
+    if not item:
         return True
-    if " Gem" in item or "宝石" in item:
+    if " Gem" in item:
         return True
     if "ium Z" in item or item.endswith("Ｚ"):
         return True
-    if item in ("Red Orb", "Blue Orb", "红玉", "蓝玉",
+    if item in ("Red Orb", "Blue Orb",
                 "Griseous Orb", "Rusted Sword", "Rusted Shield"):
         return True
     if _SPECIES_LOCKED_ITEMS.get(attacker.name_en) == item:
         return True
-    if (("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS) \
-            or "进化石" in item:
+    if ("ite " in item or item.endswith("ite")) and item not in _ITE_HEURISTIC_EXCEPTIONS:
         return True
     name_en = attacker.name_en or ""
     if name_en == "Arceus" and " Plate" in item:
@@ -813,10 +718,10 @@ def base_power_func(
     elif name == "Acrobatics":
         item = attacker.item or ""
         boosted = (
-            item == "" or item == "无"
-            or item in ("飞行宝石", "Flying Gem")
-            or item.endswith("种子") or item.endswith(" Seed")
-            or (item in ("驱劲能量", "Booster Energy")
+            item == ""
+            or item in ("Flying Gem",)
+            or item.endswith(" Seed")
+            or (item in ("Booster Energy",)
                 and attacker.ability in ("Protosynthesis", "Quark Drive"))
         )
         bp = 110 if boosted else 55
@@ -851,7 +756,7 @@ def base_power_func(
         # Per-hit powers escalate (e.g. 20/40/60). The engine rolls one damage
         # value per hit, so scale each roll to the per-hit average.
         bp = math.floor(bp * (move.hits + 1) / 2)
-    elif name == "Tera Blast" and attacker.is_terastalize and attacker.tera_type in ("Stellar", "星愿"):
+    elif name == "Tera Blast" and attacker.is_terastalize and attacker.tera_type in STELLAR_TERA_INPUTS:
         bp = 100
     elif name == "Last Respects":
         bp += 50 * move.fainted_allies
@@ -910,7 +815,7 @@ def calc_bp_mods(
     # d. 1.3x BP abilities (Sheer Force, Sand Force, Analytic, Tough Claws)
     if attacker.ability == "Sheer Force" and move.name in _SECONDARY_EFFECT_MOVES:
         bp_mods.append(0x14CD)
-    elif attacker.ability == "Sand Force" and field.weather == "Sand" and move.type in ("岩石", "钢", "地面"):
+    elif attacker.ability == "Sand Force" and field.weather == "Sand" and move.type in (T.ROCK, T.STEEL, T.GROUND):
         bp_mods.append(0x14CD)
     elif attacker.ability == "Analytic" and turn_order == "LAST":
         bp_mods.append(0x14CD)
@@ -924,13 +829,13 @@ def calc_bp_mods(
         bp_mods.append(0x1800)
     elif attacker.ability == "Strong Jaw" and move.name in _BITE_MOVES:
         bp_mods.append(0x1800)
-    elif attacker.ability == "Fire Mane" and move.type == "火":
+    elif attacker.ability == "Fire Mane" and move.type == T.FIRE:
         bp_mods.append(0x1800)
     elif attacker.ability == "Technician" and temp_bp <= 60:
         bp_mods.append(0x1800)
     elif attacker.ability == "Punk Rock" and getattr(move, "is_sound", False):
         bp_mods.append(0x14CD)
-    elif attacker.ability == "Steely Spirit" and move.type == "钢":
+    elif attacker.ability == "Steely Spirit" and move.type == T.STEEL:
         bp_mods.append(0x1800)
 
     # d. Field abilities
@@ -938,7 +843,7 @@ def calc_bp_mods(
         bp_mods.append(0x14CD)
     if field.is_power_spot:
         bp_mods.append(0x14CD)
-    if field.is_steely_spirit and move.type == "钢":
+    if field.is_steely_spirit and move.type == T.STEEL:
         bp_mods.append(0x1800)
 
     # e. Helping Hand (1.5x)
@@ -951,9 +856,9 @@ def calc_bp_mods(
         bp_mods.append(0x1800)
 
     # h. Muscle Band / Wise Glasses (1.1x)
-    if attacker.item in ("Muscle Band", "力量头带") and move.category == "Physical":
+    if attacker.item in ("Muscle Band",) and move.category == "Physical":
         bp_mods.append(0x1199)
-    elif attacker.item in ("Wise Glasses", "博识眼镜") and move.category == "Special":
+    elif attacker.item in ("Wise Glasses",) and move.category == "Special":
         bp_mods.append(0x1199)
 
     # i. Elemental boost items (1.2x) — Plates, Incenses, type gems, etc.
@@ -966,28 +871,28 @@ def calc_bp_mods(
         bp_mods.append(0x1333)
 
     # i3. Punching Glove: punch moves 1.1x (JS:1581-1584)
-    if attacker.item in ("Punching Glove", "拳击手套") and move.is_punch:
+    if attacker.item in ("Punching Glove",) and move.is_punch:
         bp_mods.append(0x119A)
 
     # i4. Solar Beam / Solar Blade halve in non-sun weather (JS:1491-1495)
     if (move.name in ("Solar Beam", "SolarBeam", "Solar Blade")
             and field.weather not in (None, "", "None", "Sun", "Harsh Sun", "Strong Winds")
-            and attacker.item not in ("万能伞", "Utility Umbrella")):
+            and attacker.item not in ("Utility Umbrella",)):
         bp_mods.append(0x800)
 
     # v. Offensive Terrain (Gen9: 0x14CD = ~1.3x)
     if att_is_grounded:
         terrain_multiplier = 0x14CD  # Gen9
-        if field.terrain == "Electric" and move.type == "电":
+        if field.terrain == "Electric" and move.type == T.ELECTRIC:
             bp_mods.append(terrain_multiplier)
-        elif field.terrain == "Grassy" and move.type == "草":
+        elif field.terrain == "Grassy" and move.type == T.GRASS:
             bp_mods.append(terrain_multiplier)
-        elif field.terrain == "Psychic" and move.type == "超能力":
+        elif field.terrain == "Psychic" and move.type == T.PSYCHIC:
             bp_mods.append(terrain_multiplier)
 
     # w. Defensive Terrain
     if def_is_grounded:
-        if field.terrain == "Misty" and move.type == "龙":
+        if field.terrain == "Misty" and move.type == T.DRAGON:
             bp_mods.append(0x800)
         elif field.terrain == "Grassy" and move.name in ("Earthquake", "Bulldoze"):
             bp_mods.append(0x800)
@@ -1064,7 +969,7 @@ def calc_at_mods(
     if (attacker.ability == "Flower Gift" and attacker.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
             and move.category == "Physical"
-            and attacker.item not in ("万能伞", "Utility Umbrella")):
+            and attacker.item not in ("Utility Umbrella",)):
         at_mods.append(0x1800)
     elif field.is_flower_gift_atk and field.weather and "Sun" in field.weather and move.category == "Physical":
         at_mods.append(0x1800)
@@ -1074,32 +979,32 @@ def calc_at_mods(
     if ((attacker.ability == "Guts" and attacker.status not in (None, "Healthy") and move.category == "Physical")
             or (attacker.ability == "Toxic Boost" and attacker.status in ("Poisoned", "Badly Poisoned") and move.category == "Physical")
             or (attacker.ability == "Flare Boost" and attacker.status == "Burned" and move.category == "Special")
-            or (attacker.ability == "Overgrow" and attacker.current_hp <= hp_third and move.type == "草")
-            or (attacker.ability == "Blaze" and attacker.current_hp <= hp_third and move.type == "火")
-            or (attacker.ability == "Torrent" and attacker.current_hp <= hp_third and move.type == "水")
-            or (attacker.ability == "Swarm" and attacker.current_hp <= hp_third and move.type == "虫")
-            or (attacker.ability == "Dragon's Maw" and move.type == "龙")
-            or (attacker.ability == "Flash Fire" and attacker.ability_on and move.type == "火")
-            or (attacker.ability == "Steelworker" and move.type == "钢")
+            or (attacker.ability == "Overgrow" and attacker.current_hp <= hp_third and move.type == T.GRASS)
+            or (attacker.ability == "Blaze" and attacker.current_hp <= hp_third and move.type == T.FIRE)
+            or (attacker.ability == "Torrent" and attacker.current_hp <= hp_third and move.type == T.WATER)
+            or (attacker.ability == "Swarm" and attacker.current_hp <= hp_third and move.type == T.BUG)
+            or (attacker.ability == "Dragon's Maw" and move.type == T.DRAGON)
+            or (attacker.ability == "Flash Fire" and attacker.ability_on and move.type == T.FIRE)
+            or (attacker.ability == "Steelworker" and move.type == T.STEEL)
             or (attacker.ability == "Gorilla Tactics" and move.category == "Physical" and not attacker.is_dynamax)
             or (attacker.ability in ("Plus", "Minus") and attacker.ability_on)
             or (attacker.ability == "Sharpness" and move.is_slice)
-            or (attacker.ability == "Rocky Payload" and move.type == "岩石")):
+            or (attacker.ability == "Rocky Payload" and move.type == T.ROCK)):
         at_mods.append(0x1800)
     elif (attacker.ability == "Solar Power" and field.weather and "Sun" in field.weather
-          and move.category == "Special" and attacker.item not in ("万能伞", "Utility Umbrella")):
+          and move.category == "Special" and attacker.item not in ("Utility Umbrella",)):
         at_mods.append(0x1800)
 
     # 1.3x abilities (Protosynthesis / Quark Drive / Transistor Gen9).
     # Proto/Quark boosts the mon's HIGHEST stat (all five, from unboosted
     # values) — only that stat's offense gets the 1.3x (JS:1714-1716, audit E1).
     proto_quark_stat = _highest_stat(attacker)
-    if (((attacker.ability == "Protosynthesis" and (attacker.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
-         or (attacker.ability == "Quark Drive" and (attacker.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
+    if (((attacker.ability == "Protosynthesis" and (attacker.item in ("Booster Energy",) or (field.weather and "Sun" in field.weather)))
+         or (attacker.ability == "Quark Drive" and (attacker.item in ("Booster Energy",) or field.terrain == "Electric")))
             and ((proto_quark_stat == "attack" and move.category == "Physical")
                  or (proto_quark_stat == "sp_attack" and move.category == "Special"))):
         at_mods.append(0x14CD)
-    elif attacker.ability == "Transistor" and move.type == "电":
+    elif attacker.ability == "Transistor" and move.type == T.ELECTRIC:
         at_mods.append(0x14CD)
 
     # Orichalcum Pulse / Hadron Engine
@@ -1108,7 +1013,7 @@ def calc_at_mods(
         at_mods.append(0x1555)
 
     # 2.0x abilities
-    if ((attacker.ability == "Water Bubble" and move.type == "水")
+    if ((attacker.ability == "Water Bubble" and move.type == T.WATER)
             or (attacker.ability in ("Huge Power", "Pure Power") and move.category == "Physical")
             or (attacker.ability == "Stakeout" and attacker.ability_on)):
         at_mods.append(0x2000)
@@ -1120,10 +1025,10 @@ def calc_at_mods(
         at_mods.append(overlord_boost[idx])
 
     # 0.5x defensive abilities
-    if ((def_ability == "Thick Fat" and move.type in ("火", "冰"))
-            or (def_ability == "Water Bubble" and move.type == "火")
-            or (def_ability == "Purifying Salt" and move.type == "幽灵")
-            or (def_ability == "Heatproof" and move.type == "火")):
+    if ((def_ability == "Thick Fat" and move.type in (T.FIRE, T.ICE))
+            or (def_ability == "Water Bubble" and move.type == T.FIRE)
+            or (def_ability == "Purifying Salt" and move.type == T.GHOST)
+            or (def_ability == "Heatproof" and move.type == T.FIRE)):
         at_mods.append(0x800)
 
     # 2.0x items
@@ -1132,8 +1037,8 @@ def calc_at_mods(
             or (attacker.item == "Light Ball" and attacker.name_en.startswith("Pikachu"))):
         at_mods.append(0x2000)
     # 1.5x items
-    elif ((attacker.item in ("讲究头带", "Choice Band") and move.category == "Physical" and not attacker.is_dynamax)
-          or (attacker.item in ("讲究眼镜", "Choice Specs") and move.category == "Special" and not attacker.is_dynamax)):
+    elif ((attacker.item in ("Choice Band",) and move.category == "Physical" and not attacker.is_dynamax)
+          or (attacker.item in ("Choice Specs",) and move.category == "Special" and not attacker.is_dynamax)):
         at_mods.append(0x1800)
 
     return at_mods
@@ -1169,10 +1074,10 @@ def calc_defense(
 
     # Weather defense mods (applied directly)
     # Sand boosts Sp. Defense of Rock-types by 1.5x; Snow boosts Defense of Ice-types.
-    if (field.weather == "Sand" and "岩石" in defender.types
+    if (field.weather == "Sand" and T.ROCK in defender.types
             and not hits_physical):
         defense = poke_round(defense * 3 / 2)
-    elif (field.weather == "Snow" and "冰" in defender.types
+    elif (field.weather == "Snow" and T.ICE in defender.types
             and hits_physical):
         defense = poke_round(defense * 3 / 2)
 
@@ -1205,7 +1110,7 @@ def calc_def_mods(
     if (def_ability == "Flower Gift" and defender.name_en == "Cherrim"
             and field.weather and "Sun" in field.weather
             and not hits_physical
-            and defender.item not in ("万能伞", "Utility Umbrella")):
+            and defender.item not in ("Utility Umbrella",)):
         df_mods.append(0x1800)
     elif field.is_flower_gift_spd and field.weather and "Sun" in field.weather and not hits_physical:
         df_mods.append(0x1800)
@@ -1219,8 +1124,8 @@ def calc_def_mods(
     # mon's HIGHEST stat only (JS:1845-1847, audit E1 — defense/speed-highest
     # mons must not get the offense-side boost).
     proto_quark_stat = _highest_stat(defender)
-    if (((def_ability == "Protosynthesis" and (defender.item in ("Booster Energy", "驱劲能量") or (field.weather and "Sun" in field.weather)))
-         or (def_ability == "Quark Drive" and (defender.item in ("Booster Energy", "驱劲能量") or field.terrain == "Electric")))
+    if (((def_ability == "Protosynthesis" and (defender.item in ("Booster Energy",) or (field.weather and "Sun" in field.weather)))
+         or (def_ability == "Quark Drive" and (defender.item in ("Booster Energy",) or field.terrain == "Electric")))
             and ((proto_quark_stat == "defense" and hits_physical)
                  or (proto_quark_stat == "sp_defense" and not hits_physical))):
         df_mods.append(0x14CD)
@@ -1230,8 +1135,8 @@ def calc_def_mods(
         df_mods.append(0x2000)
 
     # 1.5x items
-    if ((defender.item in ("突击背心", "Assault Vest") and not hits_physical)
-            or (defender.item in ("进化奇石", "Eviolite") and defender.can_evolve)
+    if ((defender.item in ("Assault Vest",) and not hits_physical)
+            or (defender.item in ("Eviolite",) and defender.can_evolve)
             ):
         df_mods.append(0x1800)
     # 2.0x items
@@ -1303,7 +1208,7 @@ def calc_final_mods(
     # Fluffy (contact) - Long Reach ignores contact effects; Punching Glove
     # keeps punch moves contact-free (audit E13)
     is_contact = (move.makes_contact and attacker.ability != "Long Reach"
-                  and not (move.is_punch and attacker.item in ("Punching Glove", "拳击手套")))
+                  and not (move.is_punch and attacker.item in ("Punching Glove",)))
     if def_ability == "Fluffy" and is_contact:
         final_mods.append(0x800)
 
@@ -1324,22 +1229,22 @@ def calc_final_mods(
         final_mods.append(0xC00)
 
     # Fluffy (fire moves)
-    if def_ability == "Fluffy" and move.type == "火":
+    if def_ability == "Fluffy" and move.type == T.FIRE:
         final_mods.append(0x2000)
 
     # Dry Skin: fire moves deal 1.25x damage
-    if def_ability == "Dry Skin" and move.type == "火":
+    if def_ability == "Dry Skin" and move.type == T.FIRE:
         final_mods.append(0x1400)
 
     # Expert Belt
-    if attacker.item in ("达人带", "Expert Belt") and type_effectiveness > 1:
+    if attacker.item in ("Expert Belt",) and type_effectiveness > 1:
         final_mods.append(0x1333)
     # Life Orb
-    elif attacker.item in ("生命宝珠", "Life Orb"):
+    elif attacker.item in ("Life Orb",):
         final_mods.append(0x14CC)
 
     # Resist berries (halve super-effective moves of the corresponding type)
-    move_type_en = _TYPE_ZH_TO_EN.get(move.type, move.type)
+    move_type_en = move.type
     resist_berries = _RESIST_BERRIES.get(move_type_en, [])
     canonical_item = _canonical_berry(defender.item)
     if canonical_item in resist_berries and type_effectiveness > 1:
@@ -1399,6 +1304,16 @@ def calculate_damage(
     recursion: the seed boost persists across both hits in-game, so the
     second hit must not apply it a second time.
     """
+
+    # Engine speaks English (engine-English refactor): normalize type and
+    # tera inputs once at entry. zh data-layer values and en/any-case input
+    # canonicalize here; unknown strings pass through unchanged. Rebinds the
+    # lists (not in-place) so adapter-held pre-engine copies stay untouched.
+    attacker.types = [resolve_type_en(t) or t for t in attacker.types]
+    defender.types = [resolve_type_en(t) or t for t in defender.types]
+    move.type = resolve_type_en(move.type) or move.type
+    if attacker.tera_type:
+        attacker.tera_type = resolve_tera_type_en(attacker.tera_type)
     original_boosts = defender.boosts
     original_stats = defender.stats
     defender.boosts = dict(original_boosts)
@@ -1434,7 +1349,7 @@ def _calculate_damage_core(
             damage=[0],
             min_damage=0,
             max_damage=0,
-            description=f"{move.name} 是变化招式，不造成伤害",
+            description=display_zh.status_move_description(move.name),
         )
 
     # Determine physical vs special
@@ -1463,7 +1378,7 @@ def _calculate_damage_core(
         effective_weather = "Sun"
 
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
-    if move.name == "Weather Ball" and effective_weather and attacker.item not in ("万能伞", "Utility Umbrella"):
+    if move.name == "Weather Ball" and effective_weather and attacker.item not in ("Utility Umbrella",):
         move.type = _WEATHER_BALL_TYPE.get(effective_weather, move.type)
     elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
         move.type = _TERRAIN_PULSE_TYPE.get(field.terrain, move.type)
@@ -1478,7 +1393,7 @@ def _calculate_damage_core(
     # Ate/Ize type change (Pixilate, Aerilate, etc.)
     move, ate_ize_boosted = _ate_ize_type_change(move, attacker)
     # Type effectiveness
-    def_type1 = defender.types[0] if defender.types else "一般"
+    def_type1 = defender.types[0] if defender.types else T.NORMAL
     def_type2 = defender.types[1] if len(defender.types) > 1 else None
     type_effectiveness = get_move_effectiveness(
         move.type, def_type1, def_type2,
@@ -1503,7 +1418,7 @@ def _calculate_damage_core(
             damage=[0],
             min_damage=0,
             max_damage=0,
-            description=f"{move.name} 对 {defender.name} 无效{immunity_reason}",
+            description=display_zh.immune_description(move.name, defender.name, immunity_reason),
             type_effectiveness=0.0,
         )
 
@@ -1540,15 +1455,15 @@ def _calculate_damage_core(
     # b. Weather (Hydro Steam gets the sun boost instead of the sun nerf;
     #    damage_MASTER.js:1885-1892. Umbrella checks cover both languages)
     if effective_weather:
-        att_no_umbrella = attacker.item not in ("万能伞", "Utility Umbrella")
-        if (("Sun" in effective_weather and move.type == "火")
-                or ("Rain" in effective_weather and move.type == "水")
+        att_no_umbrella = attacker.item not in ("Utility Umbrella",)
+        if (("Sun" in effective_weather and move.type == T.FIRE)
+                or ("Rain" in effective_weather and move.type == T.WATER)
                 or ("Sun" in effective_weather and move.name == "Hydro Steam" and att_no_umbrella)):
-            if defender.item not in ("万能伞", "Utility Umbrella"):
+            if defender.item not in ("Utility Umbrella",):
                 base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
-        elif ((effective_weather == "Sun" and move.type == "水")
-              or (effective_weather == "Rain" and move.type == "火")) \
-                and defender.item not in ("万能伞", "Utility Umbrella"):
+        elif ((effective_weather == "Sun" and move.type == T.WATER)
+              or (effective_weather == "Rain" and move.type == T.FIRE)) \
+                and defender.item not in ("Utility Umbrella",):
             base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
 
     # c. Critical hit
@@ -1557,10 +1472,10 @@ def _calculate_damage_core(
 
     # STAB
     stab_mod = 0x1000
-    move_type_en = _TYPE_ZH_TO_EN.get(move.type, move.type)
-    atk_type1_en = _TYPE_ZH_TO_EN.get(attacker.types[0], attacker.types[0]) if attacker.types else ""
-    atk_type2_en = _TYPE_ZH_TO_EN.get(attacker.types[1], attacker.types[1]) if len(attacker.types) > 1 else ""
-    tera_type_en = _TYPE_ZH_TO_EN.get(attacker.tera_type, attacker.tera_type) if attacker.tera_type else ""
+    move_type_en = move.type
+    atk_type1_en = attacker.types[0] if attacker.types else ""
+    atk_type2_en = attacker.types[1] if len(attacker.types) > 1 else ""
+    tera_type_en = attacker.tera_type or ""
 
     if attacker.is_terastalize and tera_type_en != "Stellar":
         if move_type_en == tera_type_en and (atk_type1_en == tera_type_en or atk_type2_en == tera_type_en):
@@ -1629,22 +1544,14 @@ def _calculate_damage_core(
         merged_rolls.sort()
         damage_rolls = merged_rolls
 
-    # Build description
-    eff_desc = ""
-    if type_effectiveness > 1:
-        eff_desc = f" 效果拔群（{int(type_effectiveness)}倍）"
-    elif type_effectiveness < 1:
-        eff_desc = f" 效果不佳（{type_effectiveness}倍）"
-
-    crit_desc = " 击中要害" if is_critical else ""
-    burn_desc = "（烧伤减半）" if apply_burn else ""
-    pb_desc = "（亲子爱：两段攻击）" if _pb_active else ""
-
-    description = (
-        f"Lv.{attacker.level} {attacker.name} 的 {move.name} "
-        f"vs Lv.{defender.level} {defender.name}{eff_desc}{crit_desc}{burn_desc}{pb_desc} | "
-        f"威力 {base_power} | 攻击 {attack} | 防御 {defense} | "
-        f"伤害范围 {damage_rolls[0]} ~ {damage_rolls[-1]}"
+    # Build description — copy assembly lives in display_zh; the
+    # {eff}{crit}{burn}{pb} segments stay an atomic ordered unit.
+    description = display_zh.main_description(
+        attacker.level, attacker.name, move.name,
+        defender.level, defender.name,
+        type_effectiveness, is_critical, apply_burn, _pb_active,
+        base_power, attack, defense,
+        damage_rolls[0], damage_rolls[-1],
     )
 
     return DamageResult(

@@ -24,7 +24,7 @@ class Pokemon:
         "hp": 31, "attack": 31, "defense": 31,
         "sp_attack": 31, "sp_defense": 31, "speed": 31
     })
-    nature: str = "勤奋"               # Chinese nature name
+    nature: str = "Hardy"              # English canonical (engine layer)
     ability: str = ""                # English (engine layer)
     ability_zh: str = ""             # Chinese (display layer)
     item: str = ""                   # English canonical (engine layer)
@@ -57,7 +57,7 @@ class Move:
     name: str
     name_zh: str = ""
     base_power: int = 0
-    type: str = "一般"
+    type: str = "Normal"
     category: str = "Physical"         # Physical / Special / Status
     accuracy: int = 100
     hits: int = 1

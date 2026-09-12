@@ -15,6 +15,7 @@ from typing import Literal, Optional
 
 from damage import calculate_damage
 from models import DamageResult, Field, Move, Pokemon
+import display_zh
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -141,7 +142,7 @@ def optimize_attack_ev(
     if result.min_damage == 0:
         return {
             "success": False,
-            "reason": "该招式不造成伤害或免疫",
+            "reason": display_zh.OPT_NO_DAMAGE,
             "optimal_ev": 0,
             "damage_at_optimal": result.min_damage,
         }
@@ -158,12 +159,12 @@ def optimize_attack_ev(
         max_single = MAX_SINGLE_SP
         step = SP_STEP
         max_total = MAX_TOTAL_SP
-        val_label = "能力点数"
+        val_label = display_zh.VAL_LABEL_SP
     else:
         max_single = MAX_SINGLE_EVS
         step = EV_STEP
         max_total = MAX_TOTAL_EVS
-        val_label = "努力值"
+        val_label = display_zh.VAL_LABEL_EV
 
     for val in range(0, max_single + 1, step):
         result = _evaluate_attack(attacker, defender, move, field, stat, val, mode=mode)
@@ -181,7 +182,7 @@ def optimize_attack_ev(
         result_max = _evaluate_attack(attacker, defender, move, field, stat, max_single, mode=mode)
         return {
             "success": False,
-            "reason": f"即使满 {max_single} {stat} {val_label}也无法达成 {target}",
+            "reason": display_zh.opt_fail_attack(max_single, stat, val_label, target),
             "optimal_ev": 0,
             "optimal_sp": 0,
             "max_invested_ev": max_single if mode == "ev" else 0,
@@ -238,7 +239,7 @@ def optimize_defense_ev(
     if result.max_damage == 0:
         return {
             "success": True,
-            "reason": "该招式不造成伤害或免疫，无需防御努力值",
+            "reason": display_zh.OPT_NO_DAMAGE_DEFENSE,
             "optimal_ev": 0,
             "damage_range": [0, 0],
         }
@@ -250,12 +251,12 @@ def optimize_defense_ev(
         max_single = MAX_SINGLE_SP
         step = SP_STEP
         max_total = MAX_TOTAL_SP
-        val_label = "能力点数"
+        val_label = display_zh.VAL_LABEL_SP
     else:
         max_single = MAX_SINGLE_EVS
         step = EV_STEP
         max_total = MAX_TOTAL_EVS
-        val_label = "努力值"
+        val_label = display_zh.VAL_LABEL_EV
 
     for val in range(0, max_single + 1, step):
         result = _evaluate_defense(attacker, defender, move, field, stat, val, mode=mode)
@@ -274,13 +275,13 @@ def optimize_defense_ev(
         result_max = _evaluate_defense(attacker, defender, move, field, stat, max_single, mode=mode)
         return {
             "success": False,
-            "reason": f"即使满 {max_single} {stat} {val_label}也无法{target}",
+            "reason": display_zh.opt_fail_defense(max_single, stat, val_label, target),
             "optimal_ev": 0,
             "optimal_sp": 0,
             "max_invested_ev": max_single if mode == "ev" else 0,
             "max_invested_sp": max_single if mode == "sp" else 0,
             "damage_range": [result_max.min_damage, result_max.max_damage],
-            "suggestion": "尝试同时投资 HP 和防御",
+            "suggestion": display_zh.SUGGEST_HP_DEFENSE,
         }
 
     return {
@@ -329,12 +330,12 @@ def optimize_bulk_evs(
         max_single = MAX_SINGLE_SP
         step = SP_STEP
         max_total = MAX_TOTAL_SP
-        val_label = "能力点数"
+        val_label = display_zh.VAL_LABEL_SP
     else:
         max_single = MAX_SINGLE_EVS
         step = EV_STEP
         max_total = MAX_TOTAL_EVS
-        val_label = "努力值"
+        val_label = display_zh.VAL_LABEL_EV
 
     best_total = max_total + 1
     best_combo = (0, 0)
@@ -370,7 +371,7 @@ def optimize_bulk_evs(
     if best_result is None:
         return {
             "success": False,
-            "reason": f"即使满{val_label}分配也无法{target}",
+            "reason": display_zh.opt_fail_dual(val_label, target),
             "optimal_hp_ev": 0,
             "optimal_def_ev": 0,
             "optimal_hp_sp": 0,

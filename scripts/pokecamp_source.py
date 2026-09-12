@@ -33,7 +33,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from damage import _NATURE_ALIASES
+from engine_enums import NATURE_ALIASES_TO_ZH
 import regulations
 
 # GBK/cp936 consoles crash on Japanese tournament names in stderr logs.
@@ -194,7 +194,7 @@ def nature_zh(en_name: str) -> str:
     """English nature name -> Chinese canonical name (empty-safe)."""
     if not en_name:
         return ""
-    return _NATURE_ALIASES.get(en_name.lower(), en_name)
+    return NATURE_ALIASES_TO_ZH.get(en_name.lower(), en_name)
 
 
 def build_name_maps(teams_page: dict[str, Any]) -> dict[str, dict[str, str]]:

@@ -35,6 +35,16 @@ from pathlib import Path
 from typing import Any
 
 from normalize import get_suggestions, normalize_name
+from engine_enums import (
+    NATURE_ZH_TO_EN,
+    TYPE_EN_TO_ZH,
+    TYPE_ZH_TO_EN,
+    VALID_NATURES_EN,
+    VALID_STATUS_EN,
+    VALID_TYPES_EN,
+    resolve_nature_en,
+    resolve_type_en,
+)
 
 import pokecamp_source as pcs
 import regulations
@@ -876,6 +886,36 @@ def resolve_item(name: str) -> str | None:
                 en = v
                 break
     return en
+
+
+# Item-name inputs the items index cannot resolve (moved out of the engine
+# by the engine-English refactor so the engine stays English-only).
+_ITEM_INPUT_FALLBACK: dict[str, str] = {
+    "无": "",  # explicit "no item"
+    "红玉": "Red Orb", "蓝玉": "Blue Orb",
+    "银色粉": "Silver Powder",
+    # berry aliases absent from the items index
+    "烛龙果": "Haban Berry", "罗望果": "Colbur Berry",
+    "投鲜果": "Chilan Berry", "穹犀果": "Babiri Berry",
+    # figy-family zh names absent from the items index (pairing per the
+    # legacy ko_chance recovery table)
+    "岳母果": "Aguav Berry", "爸爸果": "Iapapa Berry", "芒果": "Mago Berry",
+}
+
+
+def _normalize_item_input(name: str) -> str:
+    """Resolve an item input (zh/ja/en/alias) to its canonical English name.
+
+    Unknown names pass through unchanged; returns "" for explicit no-item
+    inputs (e.g. "无").
+    """
+    if not name:
+        return ""
+    name = str(name)
+    en = resolve_item(name)
+    if en:
+        return en
+    return _ITEM_INPUT_FALLBACK.get(name, name)
 
 
 def _resolve_item_to_zh(en_name: str) -> str | None:
@@ -1966,7 +2006,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     overridden_item = pk.get("item", "")
     overridden_item_zh = pk.get("item_zh", "")
     if overridden_item:
-        resolved_item = resolve_item(overridden_item)
+        resolved_item = _normalize_item_input(overridden_item)
         if resolved_item:
             pk["item"] = resolved_item
             # If the user explicitly passed an item override, keep that original
@@ -1976,6 +2016,11 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
                 pk["item_zh"] = overridden_item
             else:
                 pk["item_zh"] = overridden_item_zh or _resolve_item_to_zh(resolved_item) or overridden_item
+        elif overridden_item in _ITEM_INPUT_FALLBACK:
+            # Explicit no-item inputs (e.g. "无") normalize to the empty item.
+            pk["item"] = ""
+            if overrides and "item" in overrides:
+                pk["item_zh"] = overridden_item
     # Filter out fields not supported by the Pokemon dataclass.
     # _data_source and is_unobtainable are kept so callers (cmd_calc etc.) can
     # report provenance and availability; they are popped before Pokemon construction.
@@ -2038,24 +2083,18 @@ _MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
     "特殊": "Special",
     "变化": "Status",
 }
-# English → Chinese type mapping: damage.py compares against Chinese strings (e.g. "火", not "Fire").
-_MOVE_TYPE_EN_TO_ZH: dict[str, str] = {
-    "Normal": "一般", "Fire": "火", "Water": "水", "Electric": "电",
-    "Grass": "草", "Ice": "冰", "Fighting": "格斗", "Poison": "毒",
-    "Ground": "地面", "Flying": "飞行", "Psychic": "超能力", "Bug": "虫",
-    "Rock": "岩石", "Ghost": "幽灵", "Dragon": "龙", "Dark": "恶",
-    "Steel": "钢", "Fairy": "妖精",
-}
+# English → Chinese type mapping (display layer; the engine canonicalizes
+# zh/en type inputs at its entry). Single source: engine_enums.TYPE_EN_TO_ZH.
+_MOVE_TYPE_EN_TO_ZH: dict[str, str] = dict(TYPE_EN_TO_ZH)
 
 
 def _normalize_move_fields(move: dict[str, Any]) -> None:
-    """Normalize move type/category for the damage engine.
+    """Normalize move category for the damage engine.
 
-    Mutates the dict in place: English type names are converted to Chinese,
-    and Chinese category names are converted to English.
+    Mutates the dict in place: Chinese category names are converted to
+    English. Move type is NOT converted here — the engine normalizes both
+    zh and en type inputs at its entry (engine-English refactor).
     """
-    if "type" in move:
-        move["type"] = _MOVE_TYPE_EN_TO_ZH.get(move["type"], move["type"])
     if "category" in move:
         move["category"] = _MOVE_CATEGORY_ZH_TO_EN.get(move["category"], move["category"])
 
@@ -2228,6 +2267,32 @@ def cmd_optimize(
     return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
 
 
+def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] | None:
+    """Whitelist-validate enum-ish override fields before they reach the engine.
+
+    Returns an {"error": ..., "suggestions": [...]} payload on the first
+    invalid field, or None when everything resolves.
+    """
+    types = ov.get("types")
+    if types is not None:
+        if (not isinstance(types, list)
+                or not all(isinstance(t, str) and resolve_type_en(t) for t in types)):
+            cands = list(TYPE_ZH_TO_EN) + sorted(VALID_TYPES_EN)
+            bad = types if isinstance(types, str) else ", ".join(map(repr, types))
+            return {"error": f"{label} types invalid: {bad}",
+                    "suggestions": get_suggestions(bad, cands, n=3)}
+    nature = ov.get("nature")
+    if isinstance(nature, str) and nature and resolve_nature_en(nature) is None:
+        cands = list(NATURE_ZH_TO_EN) + sorted(VALID_NATURES_EN)
+        return {"error": f"{label} nature invalid: {nature!r}",
+                "suggestions": get_suggestions(nature, cands, n=3)}
+    status = ov.get("status")
+    if isinstance(status, str) and status and status not in VALID_STATUS_EN:
+        return {"error": f"{label} status invalid: {status!r}",
+                "suggestions": get_suggestions(status, sorted(VALID_STATUS_EN), n=3)}
+    return None
+
+
 def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args: str) -> dict[str, Any]:
     """Quick damage calculation using default Lv50 stats.
 
@@ -2316,6 +2381,13 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         field_override = json.loads(_strip_quotes(extra_args[3])) if len(extra_args) > 3 and extra_args[3] else {}
     except json.JSONDecodeError:
         field_override = {}
+
+    # Boundary enum validation: invalid type/nature/status inputs are rejected
+    # here with suggestions instead of passing through (or exploding) in the engine.
+    for _side, _ov in (("attacker", att_override), ("defender", def_override)):
+        _enum_err = _validate_override_enums(_side, _ov)
+        if _enum_err is not None:
+            return _enum_err
 
     # Remember if user explicitly specified a preset before _apply_preset_to_override pops it
     att_has_explicit_preset = "preset" in att_override
@@ -2421,7 +2493,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     attacker_info = {
         "name_zh": attacker.name,
         "name_en": att_data.get("name_en", ""),
-        "types": attacker.types,
+        # Raw input types (pre-engine copy): the engine normalizes its copy to
+        # English internally; display keeps the caller-facing language.
+        "types": att_dict["types"],
         "base_stats": attacker.base_stats,
         "stats": attacker.raw_stats,
         "ability": attacker.ability_zh,
@@ -2442,7 +2516,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     defender_info = {
         "name_zh": defender.name,
         "name_en": def_data.get("name_en", ""),
-        "types": defender.types,
+        "types": def_dict["types"],
         "base_stats": defender.base_stats,
         "stats": defender.raw_stats,
         "ability": defender.ability_zh,
@@ -2471,7 +2545,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     move_info: dict[str, Any] = {
         "name": move_data.get("name_zh") or move.name,
         "name_en": move.name,
-        "type": move.type,
+        # Engine-side final type (post weather/ability mutation) shown in the
+        # data-layer language, as before the engine-English refactor.
+        "type": _MOVE_TYPE_EN_TO_ZH.get(move.type, move.type),
         "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
         "base_power": move_dict.get("base_power"),
         "effective_power": _desc_power(result.description),
@@ -2498,11 +2574,11 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "attacker_boosts": attacker.boosts,
         "attacker_status": attacker.status,
         "attacker_is_tera": attacker.is_terastalize,
-        "attacker_tera_type": attacker.tera_type,
+        "attacker_tera_type": att_dict.get("tera_type"),
         "defender_boosts": defender.boosts,
         "defender_status": defender.status,
         "defender_is_tera": defender.is_terastalize,
-        "defender_tera_type": defender.tera_type,
+        "defender_tera_type": def_dict.get("tera_type"),
     }
 
     response: dict[str, Any] = {
@@ -2663,12 +2739,12 @@ def cmd_calc_raw(
             except (TypeError, ValueError):
                 move_dict["hits"] = 1
 
-    # Normalize Pokemon types: English type names should be converted to Chinese for the engine.
-    # This keeps calc-raw aligned with the intermediate-layer philosophy of bilingual input.
-    if att_dict.get("types"):
-        att_dict["types"] = [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in att_dict["types"]]
-    if def_dict.get("types"):
-        def_dict["types"] = [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in def_dict["types"]]
+    # Pokemon types pass through as provided: the engine normalizes zh/en
+    # type inputs at its entry (engine-English refactor), and the response
+    # displays the final type in the data-layer language below.
+    for _side in (att_dict, def_dict):
+        if _side.get("item"):
+            _side["item"] = _normalize_item_input(_side["item"])
 
     # Set raw_stats from the provided stats (bypasses compute_raw_stats in calculate_damage)
     att_dict["raw_stats"] = att_dict["stats"]
@@ -2749,7 +2825,7 @@ def cmd_calc_raw(
     attacker_info = {
         "name_zh": attacker.name,
         "name_en": attacker.name_en,
-        "types": attacker.types,
+        "types": [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in attacker.types],
         "ability": attacker.ability_zh,
         "nature": attacker.nature,
         "item": attacker.item,
@@ -2764,7 +2840,7 @@ def cmd_calc_raw(
     defender_info = {
         "name_zh": defender.name,
         "name_en": defender.name_en,
-        "types": defender.types,
+        "types": [_MOVE_TYPE_EN_TO_ZH.get(t, t) for t in defender.types],
         "ability": defender.ability_zh,
         "nature": defender.nature,
         "item": defender.item,
@@ -2784,7 +2860,8 @@ def cmd_calc_raw(
     move_info: dict[str, Any] = {
         "name": move.name_zh or move.name,
         "name_en": move.name,
-        "type": move.type,
+        # Final engine-side type shown in the data-layer language.
+        "type": _MOVE_TYPE_EN_TO_ZH.get(move.type, move.type),
         "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
         "base_power": move_dict.get("base_power"),
         "effective_power": int(_m.group(1)) if _m else None,
@@ -3541,6 +3618,33 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
                     tournament=tournament)
 
 
+def cmd_lookup(name: str) -> dict[str, Any]:
+    """Resolve a multi-language name to its canonical English identifier.
+
+    Lightweight intent disambiguation (pokemon -> move -> ability -> item);
+    the first match wins. Not a new query surface.
+    """
+    if not name:
+        return {"error": "usage: lookup <name>"}
+    p = resolve_pokemon(name)
+    if p:
+        return {"input": name, "canonical_en": p[1].get("name_en", ""), "entity_type": "pokemon"}
+    mv = resolve_move(name)
+    if mv:
+        return {"input": name, "canonical_en": mv[1].get("name_en", ""), "entity_type": "move"}
+    ab = resolve_ability(name)
+    if ab:
+        return {"input": name, "canonical_en": ab[1].get("name_en", ""), "entity_type": "ability"}
+    it = resolve_item(name)
+    if it:
+        return {"input": name, "canonical_en": it, "entity_type": "item"}
+    load_data()
+    cands = (list(_index_data.get("pokemon", {}).keys())
+             + list(_index_data.get("pokemon_forms", {}).keys())
+             + list(_index_data.get("moves", {}).keys()))
+    return {"error": f"'{name}' not found.", "suggestions": get_suggestions(name, cands, n=3)}
+
+
 COMMANDS: dict[str, Any] = {
     "pokemon": cmd_pokemon,
     "move": cmd_move,
@@ -3563,6 +3667,7 @@ COMMANDS: dict[str, Any] = {
     "optimize": cmd_optimize,
     "survivability": cmd_survivability,
     "meta": cmd_meta,
+    "lookup": cmd_lookup,
 }
 
 
@@ -3603,7 +3708,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta", "lookup"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -3613,6 +3718,10 @@ def main() -> int:
         pokemon_parser = subparsers.add_parser("pokemon", help="Pokemon info or type-filtered search")
         pokemon_parser.add_argument("name", nargs="?", default="", help="Pokemon name (optional if --type is used)")
         pokemon_parser.add_argument("--type", dest="type_filters", action="append", default=[], help="Filter by type (can specify multiple, e.g. --type 超能 --type 恶)")
+
+        # lookup
+        lookup_parser = subparsers.add_parser("lookup", help="Resolve a multi-language name to canonical English")
+        lookup_parser.add_argument("name", help="Pokemon / move / ability / item name")
 
         # calc
         calc_parser = subparsers.add_parser("calc", help="Quick damage calculation")
@@ -3850,6 +3959,8 @@ def main() -> int:
                     max_stats=max_stats or None,
                     ability_filters=args.ability_filters or None,
                 )
+            elif cmd == "lookup":
+                result = cmd_lookup(args.name)
             else:  # calc-raw
                 result = cmd_calc_raw(
                     args.att,

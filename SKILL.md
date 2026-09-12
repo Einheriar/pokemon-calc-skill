@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.9.2
+version: 4.9.3
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -34,6 +34,8 @@ description: >
 > - 需要 SP/EV 换算公式与对照表、optimize 双模式返回字段、数据来源完整说明 → [`references/mechanics.md`](references/mechanics.md)
 
 ```bash
+# Phase 0 — 名称解析（不确定规范英文名时先用它）
+lookup <name>         # 多语名 → 规范英文标识符（宝可梦/招式/特性/道具），返回 {input, canonical_en, entity_type}
 # Phase 1 — 百科查询（纯数据查询，无计算）
 pokemon <name> [--type <type> ...]  # 基础信息查询；或按属性筛选（如 `pokemon --type 超能 --type 恶` 列出所有超能+恶属性宝可梦）
 move <name>           # 威力、命中、PP、属性、分类、效果
@@ -221,6 +223,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 确认标准中文名/英文名，确定形态（未指定则默认"一般"形态）。
 
 **别名处理规则**：`data/aliases.json` 已收录常见俗称（如"钢兵"→"仆刀将军"、"抗斗果"→"巧可果"），`normalize.py` 在所有查询命令的底层自动完成映射。**Agent 无需预先转换别名，直接使用用户提供的原始名称作为参数传入即可，以查询的结果为准。**
+
+**多语言输入规则**：中英输入均合法（如 `nature:"内敛"` 与 `nature:"Modest"`、`types:["火","飞行"]` 与 `["Fire","Flying"]` 等价；天气/场地用英文枚举 `Sun`/`Rain`/`Electric`/`Grassy`…）。**优先直接输出规范英文标识符**（招式/特性/道具英文名、性格英文名、属性英文名）；不确定某个名称的规范英文写法时，先执行 `lookup <名称>` 获取 `{canonical_en, entity_type}` 再用于参数。引擎内部已统一英文枚举；非法的属性/性格/状态 override 值会被入口校验拒绝并返回 `suggestions`。
 
 **形态查询与消歧规则**：
 

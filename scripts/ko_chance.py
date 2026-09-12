@@ -9,6 +9,8 @@ import math
 from typing import Optional
 
 from models import Field, Move, Pokemon
+import display_zh
+from engine_enums import T
 
 
 def get_ko_chance_text(
@@ -24,26 +26,23 @@ def get_ko_chance_text(
     damage: sorted list of possible damage values (from calculate_damage)
     """
     if not damage or math.isnan(damage[0]):
-        return "计算出错"
+        return display_zh.KO_ERROR
 
     if move.name == "Pain Split" and not getattr(move, "pain_max", False):
-        return "双方平分了体力！"
+        return display_zh.KO_PAIN_SPLIT
 
     if move.category == "Status" and move.name not in ("Me First", "(No Move)"):
-        return "这是变化招式，不造成伤害。"
+        return display_zh.KO_STATUS_MOVE
 
     if damage[-1] == 0:
-        if field.weather == "Harsh Sun" and move.type == "水":
-            return "水属性招式在大日照下蒸发了！"
-        elif field.weather == "Heavy Rain" and move.type == "火":
-            return "火属性招式在大雨中熄灭了！"
-        return "没有造成伤害"
+        if field.weather == "Harsh Sun" and move.type == T.WATER:
+            return display_zh.KO_SUN_EVAPORATED
+        elif field.weather == "Heavy Rain" and move.type == T.FIRE:
+            return display_zh.KO_RAIN_EXTINGUISHED
+        return display_zh.KO_NO_DAMAGE
 
-    has_sitrus = defender.item in ("Sitrus Berry", "文柚果")
-    has_figy = defender.item in (
-        "Figy Berry", "亚开果", "Aguav Berry", "岳母果", "Iapapa Berry", "爸爸果",
-        "Mago Berry", "芒果", "Wiki Berry", "木子果"
-    )
+    has_sitrus = defender.item in ("Sitrus Berry",)
+    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
     gluttony = defender.ability == "Gluttony"
     ripen = 2 if defender.ability == "Ripen" else 1
 
@@ -51,7 +50,7 @@ def get_ko_chance_text(
     if (damage[0] >= defender.current_hp
             or (len(damage) == 256 and has_sitrus and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 4))
             or (len(damage) == 256 and has_figy and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 3))):
-        return "确定一击必杀"
+        return display_zh.KO_OHKO
 
     # Hazards
     hazards = 0
@@ -60,18 +59,18 @@ def get_ko_chance_text(
         # Simplified: type effectiveness for Rock
         eff = _get_rock_effectiveness(defender)
         hazards += math.floor(eff * defender.max_hp / 8)
-        hazard_texts.append("隐形岩")
+        hazard_texts.append(display_zh.HAZARD_STEALTH_ROCK)
 
-    if "飞行" not in defender.types and defender.ability not in ("Magic Guard", "Levitate", "Eelevate") and defender.item not in ("Air Balloon", "Heavy-Duty Boots"):
+    if T.FLYING not in defender.types and defender.ability not in ("Magic Guard", "Levitate", "Eelevate") and defender.item not in ("Air Balloon", "Heavy-Duty Boots"):
         if field.spikes == 1:
             hazards += math.floor(defender.max_hp / 8)
-            hazard_texts.append("1层撒菱")
+            hazard_texts.append(display_zh.HAZARD_SPIKES_1)
         elif field.spikes == 2:
             hazards += math.floor(defender.max_hp / 6)
-            hazard_texts.append("2层撒菱")
+            hazard_texts.append(display_zh.HAZARD_SPIKES_2)
         elif field.spikes == 3:
             hazards += math.floor(defender.max_hp / 4)
-            hazard_texts.append("3层撒菱")
+            hazard_texts.append(display_zh.HAZARD_SPIKES_3)
 
     # End-of-turn effects
     eot = 0
@@ -81,131 +80,131 @@ def get_ko_chance_text(
     if field.weather == "Sun":
         if defender.ability in ("Dry Skin", "Solar Power"):
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(defender.ability + " 伤害")
+            eot_texts.append(display_zh.ability_damage(defender.ability))
     elif field.weather == "Rain":
         if defender.ability == "Dry Skin":
             eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("干燥皮肤 回复")
+            eot_texts.append(display_zh.EOT_DRY_SKIN_HEAL)
         elif defender.ability == "Rain Dish":
             eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append("雨盘 回复")
+            eot_texts.append(display_zh.EOT_RAIN_DISH_HEAL)
     elif field.weather == "Sand":
         if "Rock" not in defender.types and "Ground" not in defender.types and "Steel" not in defender.types:
             if defender.ability not in ("Magic Guard", "Overcoat", "Sand Force", "Sand Rush", "Sand Veil") and defender.item != "Safety Goggles":
                 eot -= math.floor(math.floor(defender.max_hp / 16) * max_chip)
-                eot_texts.append("沙暴伤害")
+                eot_texts.append(display_zh.EOT_SAND_DAMAGE)
     elif field.weather == "Hail":
         if defender.ability == "Ice Body":
             eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append("寒冰之躯 回复")
-        elif "冰" not in defender.types and defender.ability not in ("Magic Guard", "Overcoat", "Snow Cloak") and defender.item != "Safety Goggles":
+            eot_texts.append(display_zh.EOT_ICE_BODY_HEAL)
+        elif T.ICE not in defender.types and defender.ability not in ("Magic Guard", "Overcoat", "Snow Cloak") and defender.item != "Safety Goggles":
             eot -= math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append("冰雹伤害")
+            eot_texts.append(display_zh.EOT_HAIL_DAMAGE)
     elif field.weather == "Snow" and defender.ability == "Ice Body":
         eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-        eot_texts.append("寒冰之躯 回复")
+        eot_texts.append(display_zh.EOT_ICE_BODY_HEAL)
 
     if defender.item == "Leftovers":
         eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-        eot_texts.append("剩饭 回复")
+        eot_texts.append(display_zh.EOT_LEFTOVERS_HEAL)
     elif defender.item == "Black Sludge":
-        if "毒" in defender.types:
+        if T.POISON in defender.types:
             eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append("黑色污泥 回复")
+            eot_texts.append(display_zh.EOT_BLACK_SLUDGE_HEAL)
         elif defender.ability not in ("Magic Guard", "Klutz"):
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("黑色污泥 伤害")
+            eot_texts.append(display_zh.EOT_BLACK_SLUDGE_DAMAGE)
 
     if field.terrain == "Grassy":
-        if field.is_gravity or ("飞行" not in defender.types and defender.item != "Air Balloon" and defender.ability != "Levitate"):
+        if field.is_gravity or (T.FLYING not in defender.types and defender.item != "Air Balloon" and defender.ability != "Levitate"):
             eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append("青草场地 回复")
+            eot_texts.append(display_zh.EOT_GRASSY_HEAL)
 
     toxic_counter = 0
     if defender.status == "Poisoned":
         if defender.ability == "Poison Heal":
             eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("毒疗 回复")
+            eot_texts.append(display_zh.EOT_POISON_HEAL_HEAL)
         elif defender.ability != "Magic Guard":
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("中毒伤害")
+            eot_texts.append(display_zh.EOT_POISON_DAMAGE)
     elif defender.status == "Badly Poisoned":
         if defender.ability == "Poison Heal":
             eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("毒疗 回复")
+            eot_texts.append(display_zh.EOT_POISON_HEAL_HEAL)
         elif defender.ability != "Magic Guard":
-            eot_texts.append("剧毒伤害")
+            eot_texts.append(display_zh.EOT_TOXIC_DAMAGE)
             toxic_counter = getattr(defender, "toxic_counter", 0)
     elif defender.status == "Burned":
         burn_div = 16  # gen >= 7
         if defender.ability == "Heatproof":
             eot -= math.floor(math.floor(defender.max_hp / burn_div / 2) * max_chip)
-            eot_texts.append("减半烧伤伤害")
+            eot_texts.append(display_zh.EOT_HALVED_BURN_DAMAGE)
         elif defender.ability != "Magic Guard":
             eot -= math.floor(math.floor(defender.max_hp / burn_div) * max_chip)
-            eot_texts.append("烧伤伤害")
+            eot_texts.append(display_zh.EOT_BURN_DAMAGE)
     elif defender.status == "Asleep" and is_bad_dreams and defender.ability != "Magic Guard":
         eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-        eot_texts.append("噩梦")
+        eot_texts.append(display_zh.EOT_BAD_DREAMS)
 
     if field.is_salt_cure and defender.ability != "Magic Guard":
-        if "水" not in defender.types and "钢" not in defender.types:
+        if T.WATER not in defender.types and T.STEEL not in defender.types:
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append("盐腌伤害")
+            eot_texts.append(display_zh.EOT_SALT_CURE_DAMAGE)
         else:
             eot -= math.floor(math.floor(defender.max_hp / 4) * max_chip)
-            eot_texts.append("盐腌额外伤害")
+            eot_texts.append(display_zh.EOT_SALT_CURE_EXTRA)
 
     # Multi-hit squash
     qualifier = ""
     multihit = len(damage) == 256 or move.hits > 1
     if move.hits > 1 and not getattr(move, "is_triple_hit", False):
-        qualifier = "约 "
+        qualifier = display_zh.MULTI_HIT_QUALIFIER
         damage = squash_multihit(damage, move.hits)
         multihit = True
 
     # Calculate KO chance
     c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, 0, 1, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
-    after_text = f"（计入{', '.join(hazard_texts)}后）" if hazard_texts else ""
+    after_text = display_zh.condition_suffix(hazard_texts)
 
     if c == 1:
-        return f"确定一击必杀{after_text}"
+        return display_zh.ko_ohko_with(after_text)
     elif c > 0:
         pct = round(c * 1000) / 10
-        return f"{qualifier}{pct}% 概率一击必杀{after_text}"
+        return display_zh.ko_prob_with(qualifier, pct, after_text)
 
     # Berry recovery text
     if has_sitrus and move.name != "Knock Off":
-        eot_texts.append("文柚果 回复")
+        eot_texts.append(display_zh.EOT_SITRUS_HEAL)
     if has_figy and move.name != "Knock Off":
-        eot_texts.append("树果 回复")
+        eot_texts.append(display_zh.EOT_BERRY_HEAL)
 
     c = _get_ko_chance(damage, multihit, defender.current_hp - hazards + eot, eot, 1, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
-    after_text2 = f"（计入{', '.join(hazard_texts + eot_texts)}后）" if (hazard_texts or eot_texts) else ""
+    after_text2 = display_zh.condition_suffix(hazard_texts + eot_texts)
 
     if c == 1:
-        return f"确定一击必杀{after_text2}"
+        return display_zh.ko_ohko_with(after_text2)
     elif c > 0:
         pct = round(c * 1000) / 10
-        return f"{qualifier}{pct}% 概率一击必杀{after_text2}"
+        return display_zh.ko_prob_with(qualifier, pct, after_text2)
 
     # 2HKO to 4HKO
     for i in range(2, 5):
         c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, 0, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
         if c == 1:
-            return f"确定{i}击必杀{after_text}"
+            return display_zh.ko_n_guaranteed(i, after_text)
         elif c > 0:
             pct = round(c * 1000) / 10
-            return f"{qualifier}{pct}% 概率{i}击必杀{after_text}"
+            return display_zh.ko_n_prob(qualifier, pct, i, after_text)
 
     # 5HKO to 9HKO prediction
     for i in range(5, 10):
         if _predict_total(damage[0], 0, i, toxic_counter, defender.current_hp - hazards, defender.max_hp, has_sitrus, has_figy, gluttony, ripen) >= defender.current_hp - hazards:
-            return f"确定{i}击必杀{after_text}"
+            return display_zh.ko_n_guaranteed(i, after_text)
         elif _predict_total(damage[-1], 0, i, toxic_counter, defender.current_hp - hazards, defender.max_hp, has_sitrus, has_figy, gluttony, ripen) >= defender.current_hp - hazards:
-            return f"可能{i}击必杀{after_text}"
+            return display_zh.ko_n_possible(i, after_text)
 
-    return "可能需要更多回合"
+    return display_zh.KO_MORE_ROUNDS
 
 
 def _get_rock_effectiveness(defender: Pokemon) -> float:
@@ -219,8 +218,8 @@ def _get_rock_effectiveness(defender: Pokemon) -> float:
 
 
 def _type_zh_to_en(t: str) -> str:
-    from damage import _TYPE_ZH_TO_EN
-    return _TYPE_ZH_TO_EN.get(t, t)
+    from engine_enums import resolve_type_en
+    return resolve_type_en(t) or t
 
 
 def _get_ko_chance(
