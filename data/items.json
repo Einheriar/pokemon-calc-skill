@@ -1,0 +1,7042 @@
+{
+ "Repel": {
+  "name_zh": "除虫喷雾",
+  "name_ja": "むしよけスプレー",
+  "name_en": "Repel"
+ },
+ "Super Repel": {
+  "name_zh": "白银喷雾",
+  "name_ja": "シルバースプレー",
+  "name_en": "Super Repel"
+ },
+ "Max Repel": {
+  "name_zh": "黄金喷雾",
+  "name_ja": "ゴールドスプレー",
+  "name_en": "Max Repel"
+ },
+ "Normal Box": {
+  "name_zh": "木箱",
+  "name_ja": "きのはこ",
+  "name_en": "Normal Box"
+ },
+ "Gorgeous Box": {
+  "name_zh": "桐木箱",
+  "name_ja": "きりのはこ",
+  "name_en": "Gorgeous Box"
+ },
+ "Blue Flute": {
+  "name_zh": "蓝色玻璃哨",
+  "name_ja": "あおいビードロ",
+  "name_en": "Blue Flute"
+ },
+ "Yellow Flute": {
+  "name_zh": "黄色玻璃哨",
+  "name_ja": "きいろビードロ",
+  "name_en": "Yellow Flute"
+ },
+ "Red Flute": {
+  "name_zh": "红色玻璃哨",
+  "name_ja": "あかいビードロ",
+  "name_en": "Red Flute"
+ },
+ "Black Flute": {
+  "name_zh": "黑色玻璃哨",
+  "name_ja": "くろいビードロ",
+  "name_en": "Black Flute"
+ },
+ "White Flute": {
+  "name_zh": "白色玻璃哨",
+  "name_ja": "しろいビードロ",
+  "name_en": "White Flute"
+ },
+ "Growth Mulch": {
+  "name_zh": "速速肥",
+  "name_ja": "すくすくこやし",
+  "name_en": "Growth Mulch"
+ },
+ "Damp Mulch": {
+  "name_zh": "湿湿肥",
+  "name_ja": "じめじめこやし",
+  "name_en": "Damp Mulch"
+ },
+ "Stable Mulch": {
+  "name_zh": "久久肥",
+  "name_ja": "ながながこやし",
+  "name_en": "Stable Mulch"
+ },
+ "Gooey Mulch": {
+  "name_zh": "粘粘肥",
+  "name_ja": "ねばねばこやし",
+  "name_en": "Gooey Mulch"
+ },
+ "Rich Mulch": {
+  "name_zh": "硕果肥",
+  "name_ja": "たわわこやし",
+  "name_en": "Rich Mulch"
+ },
+ "Surprise Mulch": {
+  "name_zh": "吃惊肥",
+  "name_ja": "びっくりこやし",
+  "name_en": "Surprise Mulch"
+ },
+ "Boost Mulch": {
+  "name_zh": "劲劲肥",
+  "name_ja": "ぐんぐんこやし",
+  "name_en": "Boost Mulch"
+ },
+ "Amaze Mulch": {
+  "name_zh": "超效肥",
+  "name_ja": "とんでもこやし",
+  "name_en": "Amaze Mulch"
+ },
+ "Red Nectar": {
+  "name_zh": "朱红色花蜜",
+  "name_ja": "くれないのミツ",
+  "name_en": "Red Nectar"
+ },
+ "Yellow Nectar": {
+  "name_zh": "金黄色花蜜",
+  "name_ja": "やまぶきのミツ",
+  "name_en": "Yellow Nectar"
+ },
+ "Pink Nectar": {
+  "name_zh": "桃粉色花蜜",
+  "name_ja": "うすもものミツ",
+  "name_en": "Pink Nectar"
+ },
+ "Purple Nectar": {
+  "name_zh": "兰紫色花蜜",
+  "name_ja": "むらさきのミツ",
+  "name_en": "Purple Nectar"
+ },
+ "Leaf Letter": {
+  "name_zh": "树叶信",
+  "name_ja": "このはのおてがみ",
+  "name_en": "Leaf Letter"
+ },
+ "Small Bouquet": {
+  "name_zh": "小小花束",
+  "name_ja": "ちいさなはなたば",
+  "name_en": "Small Bouquet"
+ },
+ "Lure": {
+  "name_zh": "引虫香水",
+  "name_ja": "むしよせコロン",
+  "name_en": "Lure"
+ },
+ "Super Lure": {
+  "name_zh": "白银香水",
+  "name_ja": "シルバーコロン",
+  "name_en": "Super Lure"
+ },
+ "Max Lure": {
+  "name_zh": "黄金香水",
+  "name_ja": "ゴールドコロン",
+  "name_en": "Max Lure"
+ },
+ "Wishing Pieces": {
+  "name_zh": "许愿星块",
+  "name_ja": "ねがいのかたまり",
+  "name_en": "Wishing Pieces"
+ },
+ "Odd Keystone": {
+  "name_zh": "楔石",
+  "name_ja": "かなめいし",
+  "name_en": "Odd Keystone"
+ },
+ "Data Card": {
+  "name_zh": "数据卡",
+  "name_ja": "データカード",
+  "name_en": "Data Card"
+ },
+ "Discount Coupon": {
+  "name_zh": "折价券",
+  "name_ja": "バーゲンチケット",
+  "name_en": "Discount Coupon"
+ },
+ "Dynamax Crystal": {
+  "name_zh": "极巨结晶",
+  "name_ja": "ダイクリスタル",
+  "name_en": "Dynamax Crystal"
+ },
+ "Stealth Spray": {
+  "name_zh": "匿声喷雾",
+  "name_ja": "ひそやかスプレー",
+  "name_en": "Stealth Spray"
+ },
+ "Dazzling Honey": {
+  "name_zh": "晶晶蜜",
+  "name_ja": "きらきらミツ",
+  "name_en": "Dazzling Honey"
+ },
+ "Hearty Grains": {
+  "name_zh": "旺旺谷",
+  "name_ja": "いきいきイナホ",
+  "name_en": "Hearty Grains"
+ },
+ "Plump Beans": {
+  "name_zh": "滚滚豆",
+  "name_ja": "ころころマメ",
+  "name_en": "Plump Beans"
+ },
+ "Springy Mushroom": {
+  "name_zh": "糯糯菇",
+  "name_ja": "もちもちキノコ",
+  "name_en": "Springy Mushroom"
+ },
+ "Crunchy Salt": {
+  "name_zh": "坚坚矿",
+  "name_ja": "ごりごりミネラル",
+  "name_en": "Crunchy Salt"
+ },
+ "Ball of Mud": {
+  "name_zh": "泥丸",
+  "name_ja": "どろだんご",
+  "name_en": "Ball of Mud"
+ },
+ "Spoiled Apricorn": {
+  "name_zh": "蛀球果",
+  "name_ja": "むしくいぼんぐり",
+  "name_en": "Spoiled Apricorn"
+ },
+ "Snowball": {
+  "name_zh": "雪丸",
+  "name_ja": "ゆきだま",
+  "name_en": "Snowball"
+ },
+ "Sticky Glob": {
+  "name_zh": "黏丸",
+  "name_ja": "ねばりだま",
+  "name_en": "Sticky Glob"
+ },
+ "Scatter Bang": {
+  "name_zh": "声弹",
+  "name_ja": "ばりばりだま",
+  "name_en": "Scatter Bang"
+ },
+ "Smoke Bomb": {
+  "name_zh": "烟弹",
+  "name_ja": "めかくしだま",
+  "name_en": "Smoke Bomb"
+ },
+ "Honey Cake": {
+  "name_zh": "蜜诱团",
+  "name_ja": "ミツよせだま",
+  "name_en": "Honey Cake"
+ },
+ "Grain Cake": {
+  "name_zh": "谷诱团",
+  "name_ja": "イナホよせだま",
+  "name_en": "Grain Cake"
+ },
+ "Bean Cake": {
+  "name_zh": "豆诱团",
+  "name_ja": "マメよせだま",
+  "name_en": "Bean Cake"
+ },
+ "Mushroom Cake": {
+  "name_zh": "菇诱团",
+  "name_ja": "キノコよせだま",
+  "name_en": "Mushroom Cake"
+ },
+ "Salt Cake": {
+  "name_zh": "矿诱团",
+  "name_ja": "ミネラルよせだま",
+  "name_en": "Salt Cake"
+ },
+ "PP Up": {
+  "name_zh": "ＰＰ提升剂",
+  "name_ja": "ポイントアップ",
+  "name_en": "PP Up"
+ },
+ "PP Max": {
+  "name_zh": "ＰＰ极限提升剂",
+  "name_ja": "ポイントマックス",
+  "name_en": "PP Max"
+ },
+ "HP Up": {
+  "name_zh": "ＨＰ增强剂",
+  "name_ja": "マックスアップ",
+  "name_en": "HP Up"
+ },
+ "Protein": {
+  "name_zh": "攻击增强剂",
+  "name_ja": "タウリン",
+  "name_en": "Protein"
+ },
+ "Iron": {
+  "name_zh": "防御增强剂",
+  "name_ja": "ブロムヘキシン",
+  "name_en": "Iron"
+ },
+ "Calcium": {
+  "name_zh": "特攻增强剂",
+  "name_ja": "リゾチウム",
+  "name_en": "Calcium"
+ },
+ "Zinc": {
+  "name_zh": "特防增强剂",
+  "name_ja": "キトサン",
+  "name_en": "Zinc"
+ },
+ "Carbos": {
+  "name_zh": "速度增强剂",
+  "name_ja": "インドメタシン",
+  "name_en": "Carbos"
+ },
+ "Health Wing": {
+  "name_zh": "体力之羽",
+  "name_ja": "たいりょくのハネ",
+  "name_en": "Health Wing"
+ },
+ "Muscle Wing": {
+  "name_zh": "肌力之羽",
+  "name_ja": "きんりょくのハネ",
+  "name_en": "Muscle Wing"
+ },
+ "Resist Wing": {
+  "name_zh": "抵抗之羽",
+  "name_ja": "ていこうのハネ",
+  "name_en": "Resist Wing"
+ },
+ "Genius Wing": {
+  "name_zh": "智力之羽",
+  "name_ja": "ちりょくのハネ",
+  "name_en": "Genius Wing"
+ },
+ "Clever Wing": {
+  "name_zh": "精神之羽",
+  "name_ja": "せいしんのハネ",
+  "name_en": "Clever Wing"
+ },
+ "Swift Wing": {
+  "name_zh": "瞬发之羽",
+  "name_ja": "しゅんぱつのハネ",
+  "name_en": "Swift Wing"
+ },
+ "Ability Capsule": {
+  "name_zh": "特性胶囊",
+  "name_ja": "とくせいカプセル",
+  "name_en": "Ability Capsule"
+ },
+ "Ability Patch": {
+  "name_zh": "特性膏药",
+  "name_ja": "とくせいパッチ",
+  "name_en": "Ability Patch"
+ },
+ "Lonely Mint": {
+  "name_zh": "怕寂寞薄荷",
+  "name_ja": "さみしがりミント",
+  "name_en": "Lonely Mint"
+ },
+ "Adamant Mint": {
+  "name_zh": "固执薄荷",
+  "name_ja": "いじっぱりミント",
+  "name_en": "Adamant Mint"
+ },
+ "Naughty Mint": {
+  "name_zh": "顽皮薄荷",
+  "name_ja": "やんちゃミント",
+  "name_en": "Naughty Mint"
+ },
+ "Brave Mint": {
+  "name_zh": "勇敢薄荷",
+  "name_ja": "ゆうかんミント",
+  "name_en": "Brave Mint"
+ },
+ "Bold Mint": {
+  "name_zh": "大胆薄荷",
+  "name_ja": "ずぶといミント",
+  "name_en": "Bold Mint"
+ },
+ "Impish Mint": {
+  "name_zh": "淘气薄荷",
+  "name_ja": "わんぱくミント",
+  "name_en": "Impish Mint"
+ },
+ "Lax Mint": {
+  "name_zh": "乐天薄荷",
+  "name_ja": "のうてんきミント",
+  "name_en": "Lax Mint"
+ },
+ "Relaxed Mint": {
+  "name_zh": "悠闲薄荷",
+  "name_ja": "のんきミント",
+  "name_en": "Relaxed Mint"
+ },
+ "Modest Mint": {
+  "name_zh": "内敛薄荷",
+  "name_ja": "ひかえめミント",
+  "name_en": "Modest Mint"
+ },
+ "Mild Mint": {
+  "name_zh": "慢吞吞薄荷",
+  "name_ja": "おっとりミント",
+  "name_en": "Mild Mint"
+ },
+ "Rash Mint": {
+  "name_zh": "马虎薄荷",
+  "name_ja": "うっかりやミント",
+  "name_en": "Rash Mint"
+ },
+ "Quiet Mint": {
+  "name_zh": "冷静薄荷",
+  "name_ja": "れいせいミント",
+  "name_en": "Quiet Mint"
+ },
+ "Calm Mint": {
+  "name_zh": "温和薄荷",
+  "name_ja": "おだやかミント",
+  "name_en": "Calm Mint"
+ },
+ "Gentle Mint": {
+  "name_zh": "温顺薄荷",
+  "name_ja": "おとなしいミント",
+  "name_en": "Gentle Mint"
+ },
+ "Careful Mint": {
+  "name_zh": "慎重薄荷",
+  "name_ja": "しんちょうミント",
+  "name_en": "Careful Mint"
+ },
+ "Sassy Mint": {
+  "name_zh": "自大薄荷",
+  "name_ja": "なまいきミント",
+  "name_en": "Sassy Mint"
+ },
+ "Timid Mint": {
+  "name_zh": "胆小薄荷",
+  "name_ja": "おくびょうミント",
+  "name_en": "Timid Mint"
+ },
+ "Hasty Mint": {
+  "name_zh": "急躁薄荷",
+  "name_ja": "せっかちミント",
+  "name_en": "Hasty Mint"
+ },
+ "Jolly Mint": {
+  "name_zh": "爽朗薄荷",
+  "name_ja": "ようきミント",
+  "name_en": "Jolly Mint"
+ },
+ "Naive Mint": {
+  "name_zh": "天真薄荷",
+  "name_ja": "むじゃきミント",
+  "name_en": "Naive Mint"
+ },
+ "Serious Mint": {
+  "name_zh": "认真薄荷",
+  "name_ja": "まじめミント",
+  "name_en": "Serious Mint"
+ },
+ "Grit Dust": {
+  "name_zh": "奋斗沙",
+  "name_ja": "ガンバリのすな",
+  "name_en": "Grit Dust"
+ },
+ "Grit Gravel": {
+  "name_zh": "奋斗砾",
+  "name_ja": "ガンバリのじゃり",
+  "name_en": "Grit Gravel"
+ },
+ "Grit Pebble": {
+  "name_zh": "奋斗石",
+  "name_ja": "ガンバリのいし",
+  "name_en": "Grit Pebble"
+ },
+ "Grit Rock": {
+  "name_zh": "奋斗岩",
+  "name_ja": "ガンバリのいわ",
+  "name_en": "Grit Rock"
+ },
+ "Health Mochi": {
+  "name_zh": "体力粘糕",
+  "name_ja": "たいりょくのもち",
+  "name_en": "Health Mochi"
+ },
+ "Muscle Mochi": {
+  "name_zh": "肌力粘糕",
+  "name_ja": "きんりょくのもち",
+  "name_en": "Muscle Mochi"
+ },
+ "Resist Mochi": {
+  "name_zh": "抵抗粘糕",
+  "name_ja": "ていこうのもち",
+  "name_en": "Resist Mochi"
+ },
+ "Genius Mochi": {
+  "name_zh": "智力粘糕",
+  "name_ja": "ちりょくのもち",
+  "name_en": "Genius Mochi"
+ },
+ "Clever Mochi": {
+  "name_zh": "精神粘糕",
+  "name_ja": "せいしんのもち",
+  "name_en": "Clever Mochi"
+ },
+ "Swift Mochi": {
+  "name_zh": "瞬发粘糕",
+  "name_ja": "しゅんぱつのもち",
+  "name_en": "Swift Mochi"
+ },
+ "Fresh-Start Mochi": {
+  "name_zh": "净空粘糕",
+  "name_ja": "まっさらもち",
+  "name_en": "Fresh-Start Mochi"
+ },
+ "Fire Stone": {
+  "name_zh": "火之石",
+  "name_ja": "ほのおのいし",
+  "name_en": "Fire Stone"
+ },
+ "Thunder Stone": {
+  "name_zh": "雷之石",
+  "name_ja": "かみなりのいし",
+  "name_en": "Thunder Stone"
+ },
+ "Water Stone": {
+  "name_zh": "水之石",
+  "name_ja": "みずのいし",
+  "name_en": "Water Stone"
+ },
+ "Leaf Stone": {
+  "name_zh": "叶之石",
+  "name_ja": "リーフのいし",
+  "name_en": "Leaf Stone"
+ },
+ "Moon Stone": {
+  "name_zh": "月之石",
+  "name_ja": "つきのいし",
+  "name_en": "Moon Stone"
+ },
+ "Sun Stone": {
+  "name_zh": "日之石",
+  "name_ja": "たいようのいし",
+  "name_en": "Sun Stone"
+ },
+ "Shiny Stone": {
+  "name_zh": "光之石",
+  "name_ja": "ひかりのいし",
+  "name_en": "Shiny Stone"
+ },
+ "Dusk Stone": {
+  "name_zh": "暗之石",
+  "name_ja": "やみのいし",
+  "name_en": "Dusk Stone"
+ },
+ "Dawn Stone": {
+  "name_zh": "觉醒之石",
+  "name_ja": "めざめいし",
+  "name_en": "Dawn Stone"
+ },
+ "Ice Stone": {
+  "name_zh": "冰之石",
+  "name_ja": "こおりのいし",
+  "name_en": "Ice Stone"
+ },
+ "Sweet Apple": {
+  "name_zh": "甜甜苹果",
+  "name_ja": "あまーいりんご",
+  "name_en": "Sweet Apple"
+ },
+ "Tart Apple": {
+  "name_zh": "酸酸苹果",
+  "name_ja": "すっぱいりんご",
+  "name_en": "Tart Apple"
+ },
+ "Cracked Pot": {
+  "name_zh": "破裂的茶壶",
+  "name_ja": "われたポット",
+  "name_en": "Cracked Pot"
+ },
+ "Chipped Pot": {
+  "name_zh": "缺损的茶壶",
+  "name_ja": "かけたポット",
+  "name_en": "Chipped Pot"
+ },
+ "Galarica Cuff": {
+  "name_zh": "伽勒豆蔻手环",
+  "name_ja": "ガラナツブレス",
+  "name_en": "Galarica Cuff"
+ },
+ "Galarica Wreath": {
+  "name_zh": "伽勒豆蔻花圈",
+  "name_ja": "ガラナツリース",
+  "name_en": "Galarica Wreath"
+ },
+ "Linking Cord": {
+  "name_zh": "联系绳",
+  "name_ja": "つながりのヒモ",
+  "name_en": "Linking Cord"
+ },
+ "Black Augurite": {
+  "name_zh": "黑奇石",
+  "name_ja": "くろのきせき",
+  "name_en": "Black Augurite"
+ },
+ "Peat Block": {
+  "name_zh": "泥炭块",
+  "name_ja": "ピートブロック",
+  "name_en": "Peat Block"
+ },
+ "Auspicious Armor": {
+  "name_zh": "庆祝之铠",
+  "name_ja": "イワイノヨロイ",
+  "name_en": "Auspicious Armor"
+ },
+ "Malicious Armor": {
+  "name_zh": "咒术之铠",
+  "name_ja": "ノロイノヨロイ",
+  "name_en": "Malicious Armor"
+ },
+ "Syrupy Apple": {
+  "name_zh": "蜜汁苹果",
+  "name_ja": "みついりりんご",
+  "name_en": "Syrupy Apple"
+ },
+ "Unremarkable Teacup": {
+  "name_zh": "凡作茶碗",
+  "name_ja": "ボンサクのちゃわん",
+  "name_en": "Unremarkable Teacup"
+ },
+ "Masterpiece Teacup": {
+  "name_zh": "杰作茶碗",
+  "name_ja": "ケッサクのちゃわん",
+  "name_en": "Masterpiece Teacup"
+ },
+ "Metal Alloy": {
+  "name_zh": "复合金属",
+  "name_ja": "ふくごうきんぞく",
+  "name_en": "Metal Alloy"
+ },
+ "Red Shard": {
+  "name_zh": "红色碎片",
+  "name_ja": "あかいかけら",
+  "name_en": "Red Shard"
+ },
+ "Green Shard": {
+  "name_zh": "绿色碎片",
+  "name_ja": "みどりのかけら",
+  "name_en": "Green Shard"
+ },
+ "Blue Shard": {
+  "name_zh": "蓝色碎片",
+  "name_ja": "あおいかけら",
+  "name_en": "Blue Shard"
+ },
+ "Yellow Shard": {
+  "name_zh": "黄色碎片",
+  "name_ja": "きいろいかけら",
+  "name_en": "Yellow Shard"
+ },
+ "Shoal Salt": {
+  "name_zh": "浅滩海盐",
+  "name_ja": "あさせのしお",
+  "name_en": "Shoal Salt"
+ },
+ "Shoal Shell": {
+  "name_zh": "浅滩贝壳",
+  "name_ja": "あさせのかいがら",
+  "name_en": "Shoal Shell"
+ },
+ "Heart Scale": {
+  "name_zh": "心之鳞片",
+  "name_ja": "ハートのウロコ",
+  "name_en": "Heart Scale"
+ },
+ "Pass Orb": {
+  "name_zh": "释出之玉",
+  "name_ja": "デルダマ",
+  "name_en": "Pass Orb"
+ },
+ "Festival Ticket": {
+  "name_zh": "圆庆票",
+  "name_ja": "フェスチケット",
+  "name_en": "Festival Ticket"
+ },
+ "Bottle Cap": {
+  "name_zh": "银色王冠",
+  "name_ja": "ぎんのおうかん",
+  "name_en": "Bottle Cap"
+ },
+ "Gold Bottle Cap": {
+  "name_zh": "金色王冠",
+  "name_ja": "きんのおうかん",
+  "name_en": "Gold Bottle Cap"
+ },
+ "Galarica Twig": {
+  "name_zh": "伽勒豆蔻枝",
+  "name_ja": "ガラナツのえだ",
+  "name_en": "Galarica Twig"
+ },
+ "Armorite Ore": {
+  "name_zh": "铠甲矿石",
+  "name_ja": "ヨロイこうせき",
+  "name_en": "Armorite Ore"
+ },
+ "Dynite Ore": {
+  "name_zh": "极矿石",
+  "name_ja": "マックスこうせき",
+  "name_en": "Dynite Ore"
+ },
+ "Mysterious Shard S": {
+  "name_zh": "谜之碎片Ｓ",
+  "name_ja": "なぞのかけらＳ",
+  "name_en": "Mysterious Shard S"
+ },
+ "Mysterious Shard L": {
+  "name_zh": "谜之碎片Ｌ",
+  "name_ja": "なぞのかけらＬ",
+  "name_en": "Mysterious Shard L"
+ },
+ "Seed of Mastery": {
+  "name_zh": "精通种子",
+  "name_ja": "かいでんのタネ",
+  "name_en": "Seed of Mastery"
+ },
+ "Mega Shard": {
+  "name_zh": "超级碎片",
+  "name_ja": "メガカケラ",
+  "name_en": "Mega Shard"
+ },
+ "Colorful Screw": {
+  "name_zh": "彩色螺丝",
+  "name_ja": "カラフルなネジ",
+  "name_en": "Colorful Screw"
+ },
+ "Red Apricorn": {
+  "name_zh": "红球果",
+  "name_ja": "あかぼんぐり",
+  "name_en": "Red Apricorn"
+ },
+ "Blue Apricorn": {
+  "name_zh": "蓝球果",
+  "name_ja": "あおぼんぐり",
+  "name_en": "Blue Apricorn"
+ },
+ "Yellow Apricorn": {
+  "name_zh": "黄球果",
+  "name_ja": "きぼんぐり",
+  "name_en": "Yellow Apricorn"
+ },
+ "Green Apricorn": {
+  "name_zh": "绿球果",
+  "name_ja": "みどぼんぐり",
+  "name_en": "Green Apricorn"
+ },
+ "Pink Apricorn": {
+  "name_zh": "粉球果",
+  "name_ja": "ももぼんぐり",
+  "name_en": "Pink Apricorn"
+ },
+ "White Apricorn": {
+  "name_zh": "白球果",
+  "name_ja": "しろぼんぐり",
+  "name_en": "White Apricorn"
+ },
+ "Black Apricorn": {
+  "name_zh": "黑球果",
+  "name_ja": "くろぼんぐり",
+  "name_en": "Black Apricorn"
+ },
+ "Normal Tera Shard": {
+  "name_zh": "一般太晶碎块",
+  "name_ja": "テラピースノーマル",
+  "name_en": "Normal Tera Shard"
+ },
+ "Fire Tera Shard": {
+  "name_zh": "火太晶碎块",
+  "name_ja": "テラピースほのお",
+  "name_en": "Fire Tera Shard"
+ },
+ "Water Tera Shard": {
+  "name_zh": "水太晶碎块",
+  "name_ja": "テラピースみず",
+  "name_en": "Water Tera Shard"
+ },
+ "Electric Tera Shard": {
+  "name_zh": "电太晶碎块",
+  "name_ja": "テラピースでんき",
+  "name_en": "Electric Tera Shard"
+ },
+ "Grass Tera Shard": {
+  "name_zh": "草太晶碎块",
+  "name_ja": "テラピースくさ",
+  "name_en": "Grass Tera Shard"
+ },
+ "Ice Tera Shard": {
+  "name_zh": "冰太晶碎块",
+  "name_ja": "テラピースこおり",
+  "name_en": "Ice Tera Shard"
+ },
+ "Fighting Tera Shard": {
+  "name_zh": "格斗太晶碎块",
+  "name_ja": "テラピースかくとう",
+  "name_en": "Fighting Tera Shard"
+ },
+ "Poison Tera Shard": {
+  "name_zh": "毒太晶碎块",
+  "name_ja": "テラピースどく",
+  "name_en": "Poison Tera Shard"
+ },
+ "Ground Tera Shard": {
+  "name_zh": "地面太晶碎块",
+  "name_ja": "テラピースじめん",
+  "name_en": "Ground Tera Shard"
+ },
+ "Flying Tera Shard": {
+  "name_zh": "飞行太晶碎块",
+  "name_ja": "テラピースひこう",
+  "name_en": "Flying Tera Shard"
+ },
+ "Psychic Tera Shard": {
+  "name_zh": "超能力太晶碎块",
+  "name_ja": "テラピースエスパー",
+  "name_en": "Psychic Tera Shard"
+ },
+ "Bug Tera Shard": {
+  "name_zh": "虫太晶碎块",
+  "name_ja": "テラピースむし",
+  "name_en": "Bug Tera Shard"
+ },
+ "Rock Tera Shard": {
+  "name_zh": "岩石太晶碎块",
+  "name_ja": "テラピースいわ",
+  "name_en": "Rock Tera Shard"
+ },
+ "Ghost Tera Shard": {
+  "name_zh": "幽灵太晶碎块",
+  "name_ja": "テラピースゴースト",
+  "name_en": "Ghost Tera Shard"
+ },
+ "Dragon Tera Shard": {
+  "name_zh": "龙太晶碎块",
+  "name_ja": "テラピースドラゴン",
+  "name_en": "Dragon Tera Shard"
+ },
+ "Dark Tera Shard": {
+  "name_zh": "恶太晶碎块",
+  "name_ja": "テラピースあく",
+  "name_en": "Dark Tera Shard"
+ },
+ "Steel Tera Shard": {
+  "name_zh": "钢太晶碎块",
+  "name_ja": "テラピースはがね",
+  "name_en": "Steel Tera Shard"
+ },
+ "Fairy Tera Shard": {
+  "name_zh": "妖精太晶碎块",
+  "name_ja": "テラピースフェアリー",
+  "name_en": "Fairy Tera Shard"
+ },
+ "Stellar Tera Shard": {
+  "name_zh": "星晶太晶碎块",
+  "name_ja": "テラピースステラ",
+  "name_en": "Stellar Tera Shard"
+ },
+ "Bright Powder": {
+  "name_zh": "光粉",
+  "name_ja": "ひかりのこな",
+  "name_en": "Bright Powder"
+ },
+ "Quick Claw": {
+  "name_zh": "先制之爪",
+  "name_ja": "せんせいのツメ",
+  "name_en": "Quick Claw"
+ },
+ "King's Rock": {
+  "name_zh": "王者之证",
+  "name_ja": "おうじゃのしるし",
+  "name_en": "King's Rock"
+ },
+ "Silver Powder": {
+  "name_zh": "银粉",
+  "name_ja": "ぎんのこな",
+  "name_en": "Silver Powder",
+  "effect": "携带后，虫属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Amulet Coin": {
+  "name_zh": "护符金币",
+  "name_ja": "おまもりこばん",
+  "name_en": "Amulet Coin"
+ },
+ "Cleanse Tag": {
+  "name_zh": "洁净之符",
+  "name_ja": "きよめのおふだ",
+  "name_en": "Cleanse Tag"
+ },
+ "Smoke Ball": {
+  "name_zh": "烟雾球",
+  "name_ja": "けむりだま",
+  "name_en": "Smoke Ball"
+ },
+ "Everstone": {
+  "name_zh": "不变之石",
+  "name_ja": "かわらずのいし",
+  "name_en": "Everstone"
+ },
+ "Focus Band": {
+  "name_zh": "气势头带",
+  "name_ja": "きあいのハチマキ",
+  "name_en": "Focus Band",
+  "effect": "携带后，受到濒死攻击时有10%概率保留1HP",
+  "category": "保命道具"
+ },
+ "Lucky Egg": {
+  "name_zh": "幸运蛋",
+  "name_ja": "しあわせタマゴ",
+  "name_en": "Lucky Egg"
+ },
+ "Scope Lens": {
+  "name_zh": "焦点镜",
+  "name_ja": "ピントレンズ",
+  "name_en": "Scope Lens"
+ },
+ "Metal Coat": {
+  "name_zh": "金属膜",
+  "name_ja": "メタルコート",
+  "name_en": "Metal Coat",
+  "effect": "携带后，钢属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Leftovers": {
+  "name_zh": "吃剩的东西",
+  "name_ja": "たべのこし",
+  "name_en": "Leftovers",
+  "effect": "携带后，每回合结束时回复少量HP",
+  "category": "回复道具"
+ },
+ "Dragon Scale": {
+  "name_zh": "龙之鳞片",
+  "name_ja": "りゅうのウロコ",
+  "name_en": "Dragon Scale"
+ },
+ "Light Ball": {
+  "name_zh": "电气球",
+  "name_ja": "でんきだま",
+  "name_en": "Light Ball"
+ },
+ "Soft Sand": {
+  "name_zh": "柔软沙子",
+  "name_ja": "やわらかいすな",
+  "name_en": "Soft Sand",
+  "effect": "携带后，地面属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Hard Stone": {
+  "name_zh": "硬石头",
+  "name_ja": "かたいいし",
+  "name_en": "Hard Stone",
+  "effect": "携带后，岩石属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Miracle Seed": {
+  "name_zh": "奇迹种子",
+  "name_ja": "きせきのタネ",
+  "name_en": "Miracle Seed",
+  "effect": "携带后，草属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Black Glasses": {
+  "name_zh": "黑色眼镜",
+  "name_ja": "くろいメガネ",
+  "name_en": "Black Glasses",
+  "effect": "携带后，恶属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Black Belt": {
+  "name_zh": "黑带",
+  "name_ja": "くろおび",
+  "name_en": "Black Belt",
+  "effect": "携带后，格斗属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Magnet": {
+  "name_zh": "磁铁",
+  "name_ja": "じしゃく",
+  "name_en": "Magnet",
+  "effect": "携带后，电属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Mystic Water": {
+  "name_zh": "神秘水滴",
+  "name_ja": "しんぴのしずく",
+  "name_en": "Mystic Water",
+  "effect": "携带后，水属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Sharp Beak": {
+  "name_zh": "锐利鸟嘴",
+  "name_ja": "するどいくちばし",
+  "name_en": "Sharp Beak",
+  "effect": "携带后，飞行属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Poison Barb": {
+  "name_zh": "毒针",
+  "name_ja": "どくバリ",
+  "name_en": "Poison Barb",
+  "effect": "携带后，毒属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Never-Melt Ice": {
+  "name_zh": "不融冰",
+  "name_ja": "とけないこおり",
+  "name_en": "Never-Melt Ice",
+  "effect": "携带后，冰属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Spell Tag": {
+  "name_zh": "诅咒之符",
+  "name_ja": "のろいのおふだ",
+  "name_en": "Spell Tag",
+  "effect": "携带后，幽灵属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Twisted Spoon": {
+  "name_zh": "弯曲的汤匙",
+  "name_ja": "まがったスプーン",
+  "name_en": "Twisted Spoon",
+  "effect": "携带后，超能力属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Charcoal": {
+  "name_zh": "木炭",
+  "name_ja": "もくたん",
+  "name_en": "Charcoal",
+  "effect": "携带后，火属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Dragon Fang": {
+  "name_zh": "龙之牙",
+  "name_ja": "りゅうのキバ",
+  "name_en": "Dragon Fang",
+  "effect": "携带后，龙属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Pink Bow": {
+  "name_zh": "粉红色丝带",
+  "name_ja": "ピンクのリボン",
+  "name_en": "Pink Bow"
+ },
+ "Polkadot Bow": {
+  "name_zh": "水玉色之带",
+  "name_ja": "みずたまりボン",
+  "name_en": "Polkadot Bow"
+ },
+ "Silk Scarf": {
+  "name_zh": "丝绸围巾",
+  "name_ja": "シルクのスカーフ",
+  "name_en": "Silk Scarf",
+  "effect": "携带后，一般属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Berserk Gene": {
+  "name_zh": "破坏基因",
+  "name_ja": "はかいのいでんし",
+  "name_en": "Berserk Gene"
+ },
+ "Up-Grade": {
+  "name_zh": "升级数据",
+  "name_ja": "アップグレード",
+  "name_en": "Up-Grade"
+ },
+ "Lucky Punch": {
+  "name_zh": "吉利拳",
+  "name_ja": "ラッキーパンチ",
+  "name_en": "Lucky Punch"
+ },
+ "Metal Powder": {
+  "name_zh": "金属粉",
+  "name_ja": "メタルパウダー",
+  "name_en": "Metal Powder"
+ },
+ "Quick Powder": {
+  "name_zh": "速度粉",
+  "name_ja": "スピードパウダー",
+  "name_en": "Quick Powder"
+ },
+ "Thick Club": {
+  "name_zh": "粗骨头",
+  "name_ja": "ふといホネ",
+  "name_en": "Thick Club"
+ },
+ "Stick": {
+  "name_zh": "大葱",
+  "name_ja": "ながねぎ",
+  "name_en": "Stick"
+ },
+ "Berry": {
+  "name_zh": "果实",
+  "name_ja": "きのみ",
+  "name_en": "Berry"
+ },
+ "Gold Berry": {
+  "name_zh": "黄金的果实",
+  "name_ja": "おうごんのみ",
+  "name_en": "Gold Berry"
+ },
+ "PRZCureBerry": {
+  "name_zh": "消除麻痹的果实",
+  "name_ja": "まひなおしのみ",
+  "name_en": "PRZCureBerry"
+ },
+ "PSNCureBerry": {
+  "name_zh": "解毒的果实",
+  "name_ja": "どくけしのみ",
+  "name_en": "PSNCureBerry"
+ },
+ "Bitter Berry": {
+  "name_zh": "苦涩的果实",
+  "name_ja": "にがいきのみ",
+  "name_en": "Bitter Berry"
+ },
+ "Burnt Berry": {
+  "name_zh": "烧烤的果实",
+  "name_ja": "やけたきのみ",
+  "name_en": "Burnt Berry"
+ },
+ "Ice Berry": {
+  "name_zh": "冰冻的果实",
+  "name_ja": "こおったきのみ",
+  "name_en": "Ice Berry"
+ },
+ "Mint Berry": {
+  "name_zh": "薄荷的果实",
+  "name_ja": "はっかのみ",
+  "name_en": "Mint Berry"
+ },
+ "MiracleBerry": {
+  "name_zh": "奇迹的果实",
+  "name_ja": "きせきのみ",
+  "name_en": "MiracleBerry"
+ },
+ "MysteryBerry": {
+  "name_zh": "神奇的果实",
+  "name_ja": "ふしぎなきのみ",
+  "name_en": "MysteryBerry"
+ },
+ "White Herb": {
+  "name_zh": "白色香草",
+  "name_ja": "しろいハーブ",
+  "name_en": "White Herb"
+ },
+ "Mental Herb": {
+  "name_zh": "心灵香草",
+  "name_ja": "メンタルハーブ",
+  "name_en": "Mental Herb"
+ },
+ "Power Herb": {
+  "name_zh": "强力香草",
+  "name_ja": "パワフルハーブ",
+  "name_en": "Power Herb"
+ },
+ "Macho Brace": {
+  "name_zh": "强制锻炼器",
+  "name_ja": "きょうせいギプス",
+  "name_en": "Macho Brace"
+ },
+ "Soothe Bell": {
+  "name_zh": "安抚之铃",
+  "name_ja": "やすらぎのすず",
+  "name_en": "Soothe Bell"
+ },
+ "Choice Band": {
+  "name_zh": "讲究头带",
+  "name_ja": "こだわりハチマキ",
+  "name_en": "Choice Band",
+  "effect": "携带后，物理攻击提升50%，但只能使用上场后使出的第一个招式",
+  "category": "讲究道具"
+ },
+ "Choice Specs": {
+  "name_zh": "讲究眼镜",
+  "name_ja": "こだわりメガネ",
+  "name_en": "Choice Specs",
+  "effect": "携带后，特殊攻击提升50%，但只能使用上场后使出的第一个招式",
+  "category": "讲究道具"
+ },
+ "Choice Scarf": {
+  "name_zh": "讲究围巾",
+  "name_ja": "こだわりスカーフ",
+  "name_en": "Choice Scarf",
+  "effect": "携带后，速度提升50%，但只能使用上场后使出的第一个招式",
+  "category": "讲究道具"
+ },
+ "Soul Dew": {
+  "name_zh": "心之水滴",
+  "name_ja": "こころのしずく",
+  "name_en": "Soul Dew"
+ },
+ "Deep Sea Tooth": {
+  "name_zh": "深海之牙",
+  "name_ja": "しんかいのキバ",
+  "name_en": "Deep Sea Tooth"
+ },
+ "Deep Sea Scale": {
+  "name_zh": "深海鳞片",
+  "name_ja": "しんかいのウロコ",
+  "name_en": "Deep Sea Scale"
+ },
+ "Shell Bell": {
+  "name_zh": "贝壳之铃",
+  "name_ja": "かいがらのすず",
+  "name_en": "Shell Bell"
+ },
+ "Sea Incense": {
+  "name_zh": "海潮薰香",
+  "name_ja": "うしおのおこう",
+  "name_en": "Sea Incense"
+ },
+ "Lax Incense": {
+  "name_zh": "悠闲薰香",
+  "name_ja": "のんきのおこう",
+  "name_en": "Lax Incense"
+ },
+ "Odd Incense": {
+  "name_zh": "奇异薰香",
+  "name_ja": "あやしいおこう",
+  "name_en": "Odd Incense"
+ },
+ "Rock Incense": {
+  "name_zh": "岩石薰香",
+  "name_ja": "がんせきおこう",
+  "name_en": "Rock Incense"
+ },
+ "Full Incense": {
+  "name_zh": "饱腹薰香",
+  "name_ja": "まんぷくおこう",
+  "name_en": "Full Incense"
+ },
+ "Wave Incense": {
+  "name_zh": "涟漪薰香",
+  "name_ja": "さざなみのおこう",
+  "name_en": "Wave Incense"
+ },
+ "Rose Incense": {
+  "name_zh": "花朵薰香",
+  "name_ja": "おはなのおこう",
+  "name_en": "Rose Incense"
+ },
+ "Luck Incense": {
+  "name_zh": "幸运薰香",
+  "name_ja": "こううんのおこう",
+  "name_en": "Luck Incense"
+ },
+ "Pure Incense": {
+  "name_zh": "洁净薰香",
+  "name_ja": "きよめのおこう",
+  "name_en": "Pure Incense"
+ },
+ "Red Scarf": {
+  "name_zh": "红色头巾",
+  "name_ja": "あかいバンダナ",
+  "name_en": "Red Scarf"
+ },
+ "Blue Scarf": {
+  "name_zh": "蓝色头巾",
+  "name_ja": "あおいバンダナ",
+  "name_en": "Blue Scarf"
+ },
+ "Pink Scarf": {
+  "name_zh": "粉红头巾",
+  "name_ja": "ピンクのバンダナ",
+  "name_en": "Pink Scarf"
+ },
+ "Green Scarf": {
+  "name_zh": "绿色头巾",
+  "name_ja": "みどりのバンダナ",
+  "name_en": "Green Scarf"
+ },
+ "Yellow Scarf": {
+  "name_zh": "黄色头巾",
+  "name_ja": "きいろのバンダナ",
+  "name_en": "Yellow Scarf"
+ },
+ "Red Orb": {
+  "name_zh": "朱红色宝珠",
+  "name_ja": "べにいろのたま",
+  "name_en": "Red Orb"
+ },
+ "Blue Orb": {
+  "name_zh": "靛蓝色宝珠",
+  "name_ja": "あいいろのたま",
+  "name_en": "Blue Orb"
+ },
+ "Flame Plate": {
+  "name_zh": "火球石板",
+  "name_ja": "ひのたまプレート",
+  "name_en": "Flame Plate"
+ },
+ "Splash Plate": {
+  "name_zh": "水滴石板",
+  "name_ja": "しずくプレート",
+  "name_en": "Splash Plate"
+ },
+ "Zap Plate": {
+  "name_zh": "雷电石板",
+  "name_ja": "いかずちプレート",
+  "name_en": "Zap Plate"
+ },
+ "Meadow Plate": {
+  "name_zh": "碧绿石板",
+  "name_ja": "みどりのプレート",
+  "name_en": "Meadow Plate"
+ },
+ "Icicle Plate": {
+  "name_zh": "冰柱石板",
+  "name_ja": "つららのプレート",
+  "name_en": "Icicle Plate"
+ },
+ "Fist Plate": {
+  "name_zh": "拳头石板",
+  "name_ja": "こぶしのプレート",
+  "name_en": "Fist Plate"
+ },
+ "Toxic Plate": {
+  "name_zh": "剧毒石板",
+  "name_ja": "もうどくプレート",
+  "name_en": "Toxic Plate"
+ },
+ "Earth Plate": {
+  "name_zh": "大地石板",
+  "name_ja": "だいちのプレート",
+  "name_en": "Earth Plate"
+ },
+ "Sky Plate": {
+  "name_zh": "蓝天石板",
+  "name_ja": "あおぞらプレート",
+  "name_en": "Sky Plate"
+ },
+ "Mind Plate": {
+  "name_zh": "神奇石板",
+  "name_ja": "ふしぎのプレート",
+  "name_en": "Mind Plate"
+ },
+ "Insect Plate": {
+  "name_zh": "玉虫石板",
+  "name_ja": "たまむしプレート",
+  "name_en": "Insect Plate"
+ },
+ "Stone Plate": {
+  "name_zh": "岩石石板",
+  "name_ja": "がんせきプレート",
+  "name_en": "Stone Plate"
+ },
+ "Spooky Plate": {
+  "name_zh": "妖怪石板",
+  "name_ja": "もののけプレート",
+  "name_en": "Spooky Plate"
+ },
+ "Draco Plate": {
+  "name_zh": "龙之石板",
+  "name_ja": "りゅうのプレート",
+  "name_en": "Draco Plate"
+ },
+ "Dread Plate": {
+  "name_zh": "恶颜石板",
+  "name_ja": "こわもてプレート",
+  "name_en": "Dread Plate"
+ },
+ "Iron Plate": {
+  "name_zh": "钢铁石板",
+  "name_ja": "こうてつプレート",
+  "name_en": "Iron Plate"
+ },
+ "Pixie Plate": {
+  "name_zh": "妖精石板",
+  "name_ja": "せいれいプレート",
+  "name_en": "Pixie Plate"
+ },
+ "Oval Stone": {
+  "name_zh": "浑圆之石",
+  "name_ja": "まんまるいし",
+  "name_en": "Oval Stone"
+ },
+ "Adamant Orb": {
+  "name_zh": "金刚宝珠",
+  "name_ja": "こんごうだま",
+  "name_en": "Adamant Orb"
+ },
+ "Lustrous Orb": {
+  "name_zh": "白玉宝珠",
+  "name_ja": "しらたま",
+  "name_en": "Lustrous Orb"
+ },
+ "Griseous Orb": {
+  "name_zh": "白金宝珠",
+  "name_ja": "はっきんだま",
+  "name_en": "Griseous Orb"
+ },
+ "Protector": {
+  "name_zh": "护具",
+  "name_ja": "プロテクター",
+  "name_en": "Protector"
+ },
+ "Electirizer": {
+  "name_zh": "电力增幅器",
+  "name_ja": "エレキブースター",
+  "name_en": "Electirizer"
+ },
+ "Magmarizer": {
+  "name_zh": "熔岩增幅器",
+  "name_ja": "マグマブースター",
+  "name_en": "Magmarizer"
+ },
+ "Dubious Disc": {
+  "name_zh": "可疑补丁",
+  "name_ja": "あやしいパッチ",
+  "name_en": "Dubious Disc"
+ },
+ "Reaper Cloth": {
+  "name_zh": "灵界之布",
+  "name_ja": "れいかいのぬの",
+  "name_en": "Reaper Cloth"
+ },
+ "Razor Claw": {
+  "name_zh": "锐利之爪",
+  "name_ja": "するどいツメ",
+  "name_en": "Razor Claw"
+ },
+ "Razor Fang": {
+  "name_zh": "锐利之牙",
+  "name_ja": "するどいキバ",
+  "name_en": "Razor Fang"
+ },
+ "Wide Lens": {
+  "name_zh": "广角镜",
+  "name_ja": "こうかくレンズ",
+  "name_en": "Wide Lens"
+ },
+ "Muscle Band": {
+  "name_zh": "力量头带",
+  "name_ja": "ちからのハチマキ",
+  "name_en": "Muscle Band",
+  "effect": "携带后，物理招式威力提升10%",
+  "category": "分类增强道具"
+ },
+ "Wise Glasses": {
+  "name_zh": "博识眼镜",
+  "name_ja": "ものしりメガネ",
+  "name_en": "Wise Glasses",
+  "effect": "携带后，特殊招式威力提升10%",
+  "category": "分类增强道具"
+ },
+ "Expert Belt": {
+  "name_zh": "达人带",
+  "name_ja": "たつじんのおび",
+  "name_en": "Expert Belt",
+  "effect": "携带后，效果拔群的招式威力额外提升20%",
+  "category": "威力增强道具"
+ },
+ "Light Clay": {
+  "name_zh": "光之黏土",
+  "name_ja": "ひかりのねんど",
+  "name_en": "Light Clay"
+ },
+ "Life Orb": {
+  "name_zh": "生命宝珠",
+  "name_ja": "いのちのたま",
+  "name_en": "Life Orb",
+  "effect": "携带后，招式威力提升30%，但攻击时会损失少量HP",
+  "category": "威力增强道具"
+ },
+ "Toxic Orb": {
+  "name_zh": "剧毒宝珠",
+  "name_ja": "どくどくだま",
+  "name_en": "Toxic Orb"
+ },
+ "Flame Orb": {
+  "name_zh": "火焰宝珠",
+  "name_ja": "かえんだま",
+  "name_en": "Flame Orb"
+ },
+ "Focus Sash": {
+  "name_zh": "气势披带",
+  "name_ja": "きあいのタスキ",
+  "name_en": "Focus Sash",
+  "effect": "携带后，满HP时受到一击濒死的攻击可以保留1HP（一次性）",
+  "category": "保命道具"
+ },
+ "Zoom Lens": {
+  "name_zh": "对焦镜",
+  "name_ja": "フォーカスレンズ",
+  "name_en": "Zoom Lens"
+ },
+ "Metronome": {
+  "name_zh": "节拍器",
+  "name_ja": "メトロノーム",
+  "name_en": "Metronome"
+ },
+ "Iron Ball": {
+  "name_zh": "黑色铁球",
+  "name_ja": "くろいてっきゅう",
+  "name_en": "Iron Ball"
+ },
+ "Lagging Tail": {
+  "name_zh": "后攻之尾",
+  "name_ja": "こうこうのしっぽ",
+  "name_en": "Lagging Tail"
+ },
+ "Destiny Knot": {
+  "name_zh": "红线",
+  "name_ja": "あかいいと",
+  "name_en": "Destiny Knot"
+ },
+ "Black Sludge": {
+  "name_zh": "黑色污泥",
+  "name_ja": "くろいヘドロ",
+  "name_en": "Black Sludge"
+ },
+ "Icy Rock": {
+  "name_zh": "冰冷岩石",
+  "name_ja": "つめたいいわ",
+  "name_en": "Icy Rock"
+ },
+ "Smooth Rock": {
+  "name_zh": "沙沙岩石",
+  "name_ja": "さらさらいわ",
+  "name_en": "Smooth Rock"
+ },
+ "Heat Rock": {
+  "name_zh": "炽热岩石",
+  "name_ja": "あついいわ",
+  "name_en": "Heat Rock"
+ },
+ "Damp Rock": {
+  "name_zh": "潮湿岩石",
+  "name_ja": "しめったいわ",
+  "name_en": "Damp Rock"
+ },
+ "Grip Claw": {
+  "name_zh": "紧缠钩爪",
+  "name_ja": "ねばりのかぎづめ",
+  "name_en": "Grip Claw"
+ },
+ "Sticky Barb": {
+  "name_zh": "附着针",
+  "name_ja": "くっつきバリ",
+  "name_en": "Sticky Barb"
+ },
+ "Power Bracer": {
+  "name_zh": "力量护腕",
+  "name_ja": "パワーリスト",
+  "name_en": "Power Bracer"
+ },
+ "Power Belt": {
+  "name_zh": "力量腰带",
+  "name_ja": "パワーベルト",
+  "name_en": "Power Belt"
+ },
+ "Power Lens": {
+  "name_zh": "力量镜",
+  "name_ja": "パワーレンズ",
+  "name_en": "Power Lens"
+ },
+ "Power Band": {
+  "name_zh": "力量束带",
+  "name_ja": "パワーバンド",
+  "name_en": "Power Band"
+ },
+ "Power Anklet": {
+  "name_zh": "力量护踝",
+  "name_ja": "パワーアンクル",
+  "name_en": "Power Anklet"
+ },
+ "Power Weight": {
+  "name_zh": "力量负重",
+  "name_ja": "パワーウエイト",
+  "name_en": "Power Weight"
+ },
+ "Shed Shell": {
+  "name_zh": "美丽空壳",
+  "name_ja": "きれいなぬけがら",
+  "name_en": "Shed Shell"
+ },
+ "Big Root": {
+  "name_zh": "大根茎",
+  "name_ja": "おおきなねっこ",
+  "name_en": "Big Root"
+ },
+ "Douse Drive": {
+  "name_zh": "水流卡带",
+  "name_ja": "アクアカセット",
+  "name_en": "Douse Drive"
+ },
+ "Shock Drive": {
+  "name_zh": "闪电卡带",
+  "name_ja": "イナズマカセット",
+  "name_en": "Shock Drive"
+ },
+ "Burn Drive": {
+  "name_zh": "火焰卡带",
+  "name_ja": "ブレイズカセット",
+  "name_en": "Burn Drive"
+ },
+ "Chill Drive": {
+  "name_zh": "冰冻卡带",
+  "name_ja": "フリーズカセット",
+  "name_en": "Chill Drive"
+ },
+ "Prism Scale": {
+  "name_zh": "美丽鳞片",
+  "name_ja": "きれいなウロコ",
+  "name_en": "Prism Scale"
+ },
+ "Eviolite": {
+  "name_zh": "进化奇石",
+  "name_ja": "しんかのきせき",
+  "name_en": "Eviolite",
+  "effect": "携带后，可以进化的宝可梦的防御和特殊防御提升50%",
+  "category": "防御道具"
+ },
+ "Float Stone": {
+  "name_zh": "轻石",
+  "name_ja": "かるいし",
+  "name_en": "Float Stone"
+ },
+ "Rocky Helmet": {
+  "name_zh": "凸凸头盔",
+  "name_ja": "ゴツゴツメット",
+  "name_en": "Rocky Helmet",
+  "effect": "携带后，受到接触类招式攻击时，攻击方会受到少量伤害",
+  "category": "反伤道具"
+ },
+ "Air Balloon": {
+  "name_zh": "气球",
+  "name_ja": "ふうせん",
+  "name_en": "Air Balloon"
+ },
+ "Red Card": {
+  "name_zh": "红牌",
+  "name_ja": "レッドカード",
+  "name_en": "Red Card"
+ },
+ "Ring Target": {
+  "name_zh": "标靶",
+  "name_ja": "ねらいのまと",
+  "name_en": "Ring Target"
+ },
+ "Binding Band": {
+  "name_zh": "紧绑束带",
+  "name_ja": "しめつけバンド",
+  "name_en": "Binding Band"
+ },
+ "Absorb Bulb": {
+  "name_zh": "球根",
+  "name_ja": "きゅうこん",
+  "name_en": "Absorb Bulb"
+ },
+ "Cell Battery": {
+  "name_zh": "充电电池",
+  "name_ja": "じゅうでんち",
+  "name_en": "Cell Battery"
+ },
+ "Eject Button": {
+  "name_zh": "逃脱按键",
+  "name_ja": "だっしゅつボタン",
+  "name_en": "Eject Button"
+ },
+ "Fire Gem": {
+  "name_zh": "火之宝石",
+  "name_ja": "ほのおのジュエル",
+  "name_en": "Fire Gem"
+ },
+ "Water Gem": {
+  "name_zh": "水之宝石",
+  "name_ja": "みずのジュエル",
+  "name_en": "Water Gem"
+ },
+ "Electric Gem": {
+  "name_zh": "电之宝石",
+  "name_ja": "でんきのジュエル",
+  "name_en": "Electric Gem"
+ },
+ "Grass Gem": {
+  "name_zh": "草之宝石",
+  "name_ja": "くさのジュエル",
+  "name_en": "Grass Gem"
+ },
+ "Ice Gem": {
+  "name_zh": "冰之宝石",
+  "name_ja": "こおりのジュエル",
+  "name_en": "Ice Gem"
+ },
+ "Fighting Gem": {
+  "name_zh": "格斗宝石",
+  "name_ja": "かくとうジュエル",
+  "name_en": "Fighting Gem"
+ },
+ "Poison Gem": {
+  "name_zh": "毒之宝石",
+  "name_ja": "どくのジュエル",
+  "name_en": "Poison Gem"
+ },
+ "Ground Gem": {
+  "name_zh": "地面宝石",
+  "name_ja": "じめんのジュエル",
+  "name_en": "Ground Gem"
+ },
+ "Flying Gem": {
+  "name_zh": "飞行宝石",
+  "name_ja": "ひこうのジュエル",
+  "name_en": "Flying Gem"
+ },
+ "Psychic Gem": {
+  "name_zh": "超能力宝石",
+  "name_ja": "エスパージュエル",
+  "name_en": "Psychic Gem"
+ },
+ "Bug Gem": {
+  "name_zh": "虫之宝石",
+  "name_ja": "むしのジュエル",
+  "name_en": "Bug Gem"
+ },
+ "Rock Gem": {
+  "name_zh": "岩石宝石",
+  "name_ja": "いわのジュエル",
+  "name_en": "Rock Gem"
+ },
+ "Ghost Gem": {
+  "name_zh": "幽灵宝石",
+  "name_ja": "ゴーストジュエル",
+  "name_en": "Ghost Gem"
+ },
+ "Dragon Gem": {
+  "name_zh": "龙之宝石",
+  "name_ja": "ドラゴンジュエル",
+  "name_en": "Dragon Gem"
+ },
+ "Dark Gem": {
+  "name_zh": "恶之宝石",
+  "name_ja": "あくのジュエル",
+  "name_en": "Dark Gem"
+ },
+ "Steel Gem": {
+  "name_zh": "钢之宝石",
+  "name_ja": "はがねのジュエル",
+  "name_en": "Steel Gem"
+ },
+ "Normal Gem": {
+  "name_zh": "一般宝石",
+  "name_ja": "ノーマルジュエル",
+  "name_en": "Normal Gem"
+ },
+ "Fairy Gem": {
+  "name_zh": "妖精宝石",
+  "name_ja": "ようせいジュエル",
+  "name_en": "Fairy Gem"
+ },
+ "Weakness Policy": {
+  "name_zh": "弱点保险",
+  "name_ja": "じゃくてんほけん",
+  "name_en": "Weakness Policy",
+  "effect": "携带后，受到效果拔群攻击时，攻击和特殊攻击提升",
+  "category": "强化道具"
+ },
+ "Blunder Policy": {
+  "name_zh": "打空保险",
+  "name_ja": "からぶりほけん",
+  "name_en": "Blunder Policy"
+ },
+ "Assault Vest": {
+  "name_zh": "突击背心",
+  "name_ja": "とつげきチョッキ",
+  "name_en": "Assault Vest",
+  "effect": "携带后，特殊防御提升50%，但无法使用变化招式",
+  "category": "防御道具"
+ },
+ "Whipped Dream": {
+  "name_zh": "泡沫奶油",
+  "name_ja": "ホイップポップ",
+  "name_en": "Whipped Dream"
+ },
+ "Sachet": {
+  "name_zh": "香袋",
+  "name_ja": "においぶくろ",
+  "name_en": "Sachet"
+ },
+ "Luminous Moss": {
+  "name_zh": "光苔",
+  "name_ja": "ひかりごけ",
+  "name_en": "Luminous Moss"
+ },
+ "Safety Goggles": {
+  "name_zh": "防尘护目镜",
+  "name_ja": "ぼうじんゴーグル",
+  "name_en": "Safety Goggles",
+  "effect": "携带后，不受粉末类招式和天气伤害影响",
+  "category": "防御道具"
+ },
+ "Adrenaline Orb": {
+  "name_zh": "胆怯球",
+  "name_ja": "ビビリだま",
+  "name_en": "Adrenaline Orb"
+ },
+ "Terrain Extender": {
+  "name_zh": "大地膜",
+  "name_ja": "グランドコート",
+  "name_en": "Terrain Extender"
+ },
+ "Protective Pads": {
+  "name_zh": "部位护具",
+  "name_ja": "ぼうごパット",
+  "name_en": "Protective Pads"
+ },
+ "Electric Seed": {
+  "name_zh": "电气种子",
+  "name_ja": "エレキシード",
+  "name_en": "Electric Seed"
+ },
+ "Psychic Seed": {
+  "name_zh": "精神种子",
+  "name_ja": "サイコシード",
+  "name_en": "Psychic Seed"
+ },
+ "Misty Seed": {
+  "name_zh": "薄雾种子",
+  "name_ja": "ミストシード",
+  "name_en": "Misty Seed"
+ },
+ "Grassy Seed": {
+  "name_zh": "青草种子",
+  "name_ja": "グラスシード",
+  "name_en": "Grassy Seed"
+ },
+ "Fighting Memory": {
+  "name_zh": "战斗存储碟",
+  "name_ja": "ファイトメモリ",
+  "name_en": "Fighting Memory"
+ },
+ "Flying Memory": {
+  "name_zh": "飞翔存储碟",
+  "name_ja": "フライングメモリ",
+  "name_en": "Flying Memory"
+ },
+ "Poison Memory": {
+  "name_zh": "毒存储碟",
+  "name_ja": "ポイズンメモリ",
+  "name_en": "Poison Memory"
+ },
+ "Ground Memory": {
+  "name_zh": "大地存储碟",
+  "name_ja": "グラウンドメモリ",
+  "name_en": "Ground Memory"
+ },
+ "Rock Memory": {
+  "name_zh": "岩石存储碟",
+  "name_ja": "ロックメモリ",
+  "name_en": "Rock Memory"
+ },
+ "Bug Memory": {
+  "name_zh": "虫子存储碟",
+  "name_ja": "バグメモリ",
+  "name_en": "Bug Memory"
+ },
+ "Ghost Memory": {
+  "name_zh": "幽灵存储碟",
+  "name_ja": "ゴーストメモリ",
+  "name_en": "Ghost Memory"
+ },
+ "Steel Memory": {
+  "name_zh": "钢铁存储碟",
+  "name_ja": "スチールメモリ",
+  "name_en": "Steel Memory"
+ },
+ "Fire Memory": {
+  "name_zh": "火焰存储碟",
+  "name_ja": "ファイヤーメモリ",
+  "name_en": "Fire Memory"
+ },
+ "Water Memory": {
+  "name_zh": "清水存储碟",
+  "name_ja": "ウオーターメモリ",
+  "name_en": "Water Memory"
+ },
+ "Grass Memory": {
+  "name_zh": "青草存储碟",
+  "name_ja": "グラスメモリ",
+  "name_en": "Grass Memory"
+ },
+ "Electric Memory": {
+  "name_zh": "电子存储碟",
+  "name_ja": "エレクトロメモリ",
+  "name_en": "Electric Memory"
+ },
+ "Psychic Memory": {
+  "name_zh": "精神存储碟",
+  "name_ja": "サイキックメモリ",
+  "name_en": "Psychic Memory"
+ },
+ "Ice Memory": {
+  "name_zh": "冰雪存储碟",
+  "name_ja": "アイスメモリ",
+  "name_en": "Ice Memory"
+ },
+ "Dragon Memory": {
+  "name_zh": "龙存储碟",
+  "name_ja": "ドラゴンメモリ",
+  "name_en": "Dragon Memory"
+ },
+ "Dark Memory": {
+  "name_zh": "黑暗存储碟",
+  "name_ja": "ダークメモリ",
+  "name_en": "Dark Memory"
+ },
+ "Fairy Memory": {
+  "name_zh": "妖精存储碟",
+  "name_ja": "フェアリーメモリ",
+  "name_en": "Fairy Memory"
+ },
+ "Rusted Sword": {
+  "name_zh": "腐朽的剑",
+  "name_ja": "くちたけん",
+  "name_en": "Rusted Sword"
+ },
+ "Rusted Shield": {
+  "name_zh": "腐朽的盾",
+  "name_ja": "くちたたて",
+  "name_en": "Rusted Shield"
+ },
+ "Strawberry Sweet": {
+  "name_zh": "草莓糖饰",
+  "name_ja": "いちごアメざいく",
+  "name_en": "Strawberry Sweet"
+ },
+ "Love Sweet": {
+  "name_zh": "爱心糖饰",
+  "name_ja": "ハートアメざいく",
+  "name_en": "Love Sweet"
+ },
+ "Berry Sweet": {
+  "name_zh": "野莓糖饰",
+  "name_ja": "ベリーアメざいく",
+  "name_en": "Berry Sweet"
+ },
+ "Clover Sweet": {
+  "name_zh": "幸运草糖饰",
+  "name_ja": "よつばアメざいく",
+  "name_en": "Clover Sweet"
+ },
+ "Flower Sweet": {
+  "name_zh": "花朵糖饰",
+  "name_ja": "おはなアメざいく",
+  "name_en": "Flower Sweet"
+ },
+ "Star Sweet": {
+  "name_zh": "星星糖饰",
+  "name_ja": "スターアメざいく",
+  "name_en": "Star Sweet"
+ },
+ "Ribbon Sweet": {
+  "name_zh": "蝴蝶结糖饰",
+  "name_ja": "リボンアメざいく",
+  "name_en": "Ribbon Sweet"
+ },
+ "Throat Spray": {
+  "name_zh": "爽喉喷雾",
+  "name_ja": "のどスプレー",
+  "name_en": "Throat Spray"
+ },
+ "Eject Pack": {
+  "name_zh": "避难背包",
+  "name_ja": "だっしゅつパック",
+  "name_en": "Eject Pack"
+ },
+ "Heavy-Duty Boots": {
+  "name_zh": "厚底靴",
+  "name_ja": "あつぞこブーツ",
+  "name_en": "Heavy-Duty Boots",
+  "effect": "携带后，不受撒菱、毒菱和隐形岩等场地伤害",
+  "category": "防御道具"
+ },
+ "Room Service": {
+  "name_zh": "客房服务",
+  "name_ja": "ルームサービス",
+  "name_en": "Room Service"
+ },
+ "Utility Umbrella": {
+  "name_zh": "万能伞",
+  "name_ja": "ばんのうがさ",
+  "name_en": "Utility Umbrella"
+ },
+ "Adamant Crystal": {
+  "name_zh": "大金刚宝玉",
+  "name_ja": "だいこんごうだま",
+  "name_en": "Adamant Crystal"
+ },
+ "Lustrous Globe": {
+  "name_zh": "大白宝玉",
+  "name_ja": "だいしらたま",
+  "name_en": "Lustrous Globe"
+ },
+ "Griseous Core": {
+  "name_zh": "大白金宝玉",
+  "name_ja": "だいはっきんだま",
+  "name_en": "Griseous Core"
+ },
+ "Booster Energy": {
+  "name_zh": "驱劲能量",
+  "name_ja": "ブーストエナジー",
+  "name_en": "Booster Energy",
+  "effect": "携带后，携带驱劲能量特性（古代活性/夸克充能）的宝可梦首次出场时会提升最高能力",
+  "category": "特性联动道具"
+ },
+ "Ability Shield": {
+  "name_zh": "特性护具",
+  "name_ja": "とくせいガード",
+  "name_en": "Ability Shield"
+ },
+ "Clear Amulet": {
+  "name_zh": "清净坠饰",
+  "name_ja": "クリアチャーム",
+  "name_en": "Clear Amulet",
+  "effect": "携带后，能力不会被对手降低",
+  "category": "能力保护道具"
+ },
+ "Mirror Herb": {
+  "name_zh": "模仿香草",
+  "name_ja": "ものまねハーブ",
+  "name_en": "Mirror Herb"
+ },
+ "Punching Glove": {
+  "name_zh": "拳击手套",
+  "name_ja": "パンチグローブ",
+  "name_en": "Punching Glove"
+ },
+ "Covert Cloak": {
+  "name_zh": "密探斗篷",
+  "name_ja": "おんみつマント",
+  "name_en": "Covert Cloak",
+  "effect": "携带后，不会受到招式的追加效果影响",
+  "category": "能力保护道具"
+ },
+ "Loaded Dice": {
+  "name_zh": "机变骰子",
+  "name_ja": "いかさまダイス",
+  "name_en": "Loaded Dice"
+ },
+ "Leader's Crest": {
+  "name_zh": "头领凭证",
+  "name_ja": "かしらのしるし",
+  "name_en": "Leader's Crest"
+ },
+ "Fairy Feather": {
+  "name_zh": "妖精之羽",
+  "name_ja": "ようせいのハネ",
+  "name_en": "Fairy Feather",
+  "effect": "携带后，妖精属性招式威力提升20%",
+  "category": "属性增强道具"
+ },
+ "Cornerstone Mask": {
+  "name_zh": "础石面具",
+  "name_ja": "いしずえのめん",
+  "name_en": "Cornerstone Mask"
+ },
+ "Wellspring Mask": {
+  "name_zh": "水井面具",
+  "name_ja": "いどのめん",
+  "name_en": "Wellspring Mask"
+ },
+ "Hearthflame Mask": {
+  "name_zh": "火灶面具",
+  "name_ja": "かまどのめん",
+  "name_en": "Hearthflame Mask"
+ },
+ "Orange Mail": {
+  "name_zh": "橙色邮件",
+  "name_ja": "オレンジメール",
+  "name_en": "Orange Mail"
+ },
+ "Harbor Mail": {
+  "name_zh": "港口邮件",
+  "name_ja": "ハーバーメール",
+  "name_en": "Harbor Mail"
+ },
+ "Glitter Mail": {
+  "name_zh": "闪亮邮件",
+  "name_ja": "キラキラメール",
+  "name_en": "Glitter Mail"
+ },
+ "Mech Mail": {
+  "name_zh": "机械邮件",
+  "name_ja": "メカニカルメール",
+  "name_en": "Mech Mail"
+ },
+ "Wood Mail": {
+  "name_zh": "木纹邮件",
+  "name_ja": "ウッディメール",
+  "name_en": "Wood Mail"
+ },
+ "Wave Mail": {
+  "name_zh": "波涛邮件",
+  "name_ja": "クロスメール",
+  "name_en": "Wave Mail"
+ },
+ "Bead Mail": {
+  "name_zh": "珠宝邮件",
+  "name_ja": "トレジャーメール",
+  "name_en": "Bead Mail"
+ },
+ "Shadow Mail": {
+  "name_zh": "影子邮件",
+  "name_ja": "シャドーメール",
+  "name_en": "Shadow Mail"
+ },
+ "Tropic Mail": {
+  "name_zh": "热带邮件",
+  "name_ja": "トロピカルメール",
+  "name_en": "Tropic Mail"
+ },
+ "Dream Mail": {
+  "name_zh": "梦境邮件",
+  "name_ja": "ドリームメール",
+  "name_en": "Dream Mail"
+ },
+ "Fab Mail": {
+  "name_zh": "奇迹邮件",
+  "name_ja": "ミラクルメール",
+  "name_en": "Fab Mail"
+ },
+ "Retro Mail": {
+  "name_zh": "复古邮件",
+  "name_ja": "レトロメール",
+  "name_en": "Retro Mail"
+ },
+ "Grass Mail": {
+  "name_zh": "青草邮件",
+  "name_ja": "グラスメール",
+  "name_en": "Grass Mail"
+ },
+ "Flame Mail": {
+  "name_zh": "火焰邮件",
+  "name_ja": "フレイムメール",
+  "name_en": "Flame Mail"
+ },
+ "Bubble Mail": {
+  "name_zh": "水蓝邮件",
+  "name_ja": "ブルーメール",
+  "name_en": "Bubble Mail"
+ },
+ "Bloom Mail": {
+  "name_zh": "绽放邮件",
+  "name_ja": "ブルームメール",
+  "name_en": "Bloom Mail"
+ },
+ "Tunnel Mail": {
+  "name_zh": "隧道邮件",
+  "name_ja": "トンネルメール",
+  "name_en": "Tunnel Mail"
+ },
+ "Steel Mail": {
+  "name_zh": "钢铁邮件",
+  "name_ja": "スチールメール",
+  "name_en": "Steel Mail"
+ },
+ "Heart Mail": {
+  "name_zh": "甜蜜邮件",
+  "name_ja": "ラブラブメール",
+  "name_en": "Heart Mail"
+ },
+ "Snow Mail": {
+  "name_zh": "暴雪邮件",
+  "name_ja": "ブリザードメール",
+  "name_en": "Snow Mail"
+ },
+ "Space Mail": {
+  "name_zh": "空间邮件",
+  "name_ja": "スペースメール",
+  "name_en": "Space Mail"
+ },
+ "Air Mail": {
+  "name_zh": "天空邮件",
+  "name_ja": "エアメール",
+  "name_en": "Air Mail"
+ },
+ "Mosaic Mail": {
+  "name_zh": "彩嵌邮件",
+  "name_ja": "モザイクメール",
+  "name_en": "Mosaic Mail"
+ },
+ "Brick Mail": {
+  "name_zh": "砖块邮件",
+  "name_ja": "ブリックメール",
+  "name_en": "Brick Mail"
+ },
+ "Greet Mail": {
+  "name_zh": "初次邮件",
+  "name_ja": "はじめてメール",
+  "name_en": "Greet Mail"
+ },
+ "Favored Mail": {
+  "name_zh": "喜爱邮件",
+  "name_ja": "だいすきメール",
+  "name_en": "Favored Mail"
+ },
+ "RSVP Mail": {
+  "name_zh": "邀请邮件",
+  "name_ja": "おさそいメール",
+  "name_en": "RSVP Mail"
+ },
+ "Thanks Mail": {
+  "name_zh": "感谢邮件",
+  "name_ja": "かんしゃメール",
+  "name_en": "Thanks Mail"
+ },
+ "Inquiry Mail": {
+  "name_zh": "询问邮件",
+  "name_ja": "しつもんメール",
+  "name_en": "Inquiry Mail"
+ },
+ "Like Mail": {
+  "name_zh": "推荐邮件",
+  "name_ja": "おすすめメール",
+  "name_en": "Like Mail"
+ },
+ "Reply Mail": {
+  "name_zh": "回复邮件",
+  "name_ja": "おかえしメール",
+  "name_en": "Reply Mail"
+ },
+ "Bridge Mail S": {
+  "name_zh": "桥梁邮件Ｓ",
+  "name_ja": "ブリッジメールＳ",
+  "name_en": "Bridge Mail S"
+ },
+ "Bridge Mail D": {
+  "name_zh": "桥梁邮件Ｈ",
+  "name_ja": "ブリッジメールＨ",
+  "name_en": "Bridge Mail D"
+ },
+ "Bridge Mail T": {
+  "name_zh": "桥梁邮件Ｃ",
+  "name_ja": "ブリッジメールＣ",
+  "name_en": "Bridge Mail T"
+ },
+ "Bridge Mail V": {
+  "name_zh": "桥梁邮件Ｖ",
+  "name_ja": "ブリッジメールＶ",
+  "name_en": "Bridge Mail V"
+ },
+ "Bridge Mail M": {
+  "name_zh": "桥梁邮件Ｗ",
+  "name_ja": "ブリッジメールＷ",
+  "name_en": "Bridge Mail M"
+ },
+ "Rare Candy": {
+  "name_zh": "神奇糖果",
+  "name_ja": "ふしぎなアメ",
+  "name_en": "Rare Candy"
+ },
+ "Health Candy": {
+  "name_zh": "元气糖果",
+  "name_ja": "げんきのアメ",
+  "name_en": "Health Candy"
+ },
+ "Mighty Candy": {
+  "name_zh": "力量糖果",
+  "name_ja": "ちからのアメ",
+  "name_en": "Mighty Candy"
+ },
+ "Tough Candy": {
+  "name_zh": "守护糖果",
+  "name_ja": "まもりのアメ",
+  "name_en": "Tough Candy"
+ },
+ "Smart Candy": {
+  "name_zh": "知识糖果",
+  "name_ja": "ちしきのアメ",
+  "name_en": "Smart Candy"
+ },
+ "Courage Candy": {
+  "name_zh": "心灵糖果",
+  "name_ja": "こころのアメ",
+  "name_en": "Courage Candy"
+ },
+ "Quick Candy": {
+  "name_zh": "敏捷糖果",
+  "name_ja": "はやさのアメ",
+  "name_en": "Quick Candy"
+ },
+ "Health Candy L": {
+  "name_zh": "元气糖果L",
+  "name_ja": "げんきのアメＬ",
+  "name_en": "Health Candy L"
+ },
+ "Mighty Candy L": {
+  "name_zh": "力量糖果L",
+  "name_ja": "ちからのアメＬ",
+  "name_en": "Mighty Candy L"
+ },
+ "Tough Candy L": {
+  "name_zh": "守护糖果L",
+  "name_ja": "まもりのアメＬ",
+  "name_en": "Tough Candy L"
+ },
+ "Smart Candy L": {
+  "name_zh": "知识糖果L",
+  "name_ja": "ちしきのアメＬ",
+  "name_en": "Smart Candy L"
+ },
+ "Courage Candy L": {
+  "name_zh": "心灵糖果L",
+  "name_ja": "こころのアメＬ",
+  "name_en": "Courage Candy L"
+ },
+ "Quick Candy L": {
+  "name_zh": "敏捷糖果L",
+  "name_ja": "はやさのアメＬ",
+  "name_en": "Quick Candy L"
+ },
+ "Health Candy XL": {
+  "name_zh": "元气糖果XL",
+  "name_ja": "げんきのアメＸＬ",
+  "name_en": "Health Candy XL"
+ },
+ "Mighty Candy XL": {
+  "name_zh": "力量糖果XL",
+  "name_ja": "ちからのアメＸＬ",
+  "name_en": "Mighty Candy XL"
+ },
+ "Tough Candy XL": {
+  "name_zh": "守护糖果XL",
+  "name_ja": "まもりのアメＸＬ",
+  "name_en": "Tough Candy XL"
+ },
+ "Smart Candy XL": {
+  "name_zh": "知识糖果XL",
+  "name_ja": "ちしきのアメＸＬ",
+  "name_en": "Smart Candy XL"
+ },
+ "Courage Candy XL": {
+  "name_zh": "心灵糖果XL",
+  "name_ja": "こころのアメＸＬ",
+  "name_en": "Courage Candy XL"
+ },
+ "Quick Candy XL": {
+  "name_zh": "敏捷糖果XL",
+  "name_ja": "はやさのアメＸＬ",
+  "name_en": "Quick Candy XL"
+ },
+ "Pokémon Candy": {
+  "name_zh": "宝可梦的糖果*",
+  "name_ja": "ポケモンのアメ",
+  "name_en": "Pokémon Candy"
+ },
+ "Exp. Candy XS": {
+  "name_zh": "经验糖果ＸＳ",
+  "name_ja": "けいけんアメＸＳ",
+  "name_en": "Exp. Candy XS"
+ },
+ "Exp. Candy S": {
+  "name_zh": "经验糖果Ｓ",
+  "name_ja": "けいけんアメＳ",
+  "name_en": "Exp. Candy S"
+ },
+ "Exp. Candy M": {
+  "name_zh": "经验糖果Ｍ",
+  "name_ja": "けいけんアメＭ",
+  "name_en": "Exp. Candy M"
+ },
+ "Exp. Candy L": {
+  "name_zh": "经验糖果Ｌ",
+  "name_ja": "けいけんアメＬ",
+  "name_en": "Exp. Candy L"
+ },
+ "Exp. Candy XL": {
+  "name_zh": "经验糖果ＸＬ",
+  "name_ja": "けいけんアメＸＬ",
+  "name_en": "Exp. Candy XL"
+ },
+ "Dynamax Candy": {
+  "name_zh": "极巨糖果",
+  "name_ja": "ダイマックスアメ",
+  "name_en": "Dynamax Candy"
+ },
+ "Tempting Charm R": {
+  "name_zh": "替身护符１",
+  "name_ja": "みがわりおまもり１",
+  "name_en": "Tempting Charm R"
+ },
+ "Tempting Charm B": {
+  "name_zh": "替身护符２",
+  "name_ja": "みがわりおまもり２",
+  "name_en": "Tempting Charm B"
+ },
+ "Tempting Charm P": {
+  "name_zh": "替身护符３",
+  "name_ja": "みがわりおまもり３",
+  "name_en": "Tempting Charm P"
+ },
+ "Tempting Charm T": {
+  "name_zh": "替身护符４",
+  "name_ja": "みがわりおまもり４",
+  "name_en": "Tempting Charm T"
+ },
+ "Tempting Charm Y": {
+  "name_zh": "替身护符５",
+  "name_ja": "みがわりおまもり５",
+  "name_en": "Tempting Charm Y"
+ },
+ "Survival Charm R": {
+  "name_zh": "安全护符１",
+  "name_ja": "あんぜんおまもり１",
+  "name_en": "Survival Charm R"
+ },
+ "Survival Charm B": {
+  "name_zh": "安全护符２",
+  "name_ja": "あんぜんおまもり２",
+  "name_en": "Survival Charm B"
+ },
+ "Survival Charm P": {
+  "name_zh": "安全护符３",
+  "name_ja": "あんぜんおまもり３",
+  "name_en": "Survival Charm P"
+ },
+ "Survival Charm T": {
+  "name_zh": "安全护符４",
+  "name_ja": "あんぜんおまもり４",
+  "name_en": "Survival Charm T"
+ },
+ "Survival Charm Y": {
+  "name_zh": "安全护符５",
+  "name_ja": "あんぜんおまもり５",
+  "name_en": "Survival Charm Y"
+ },
+ "Warding Charm R": {
+  "name_zh": "健康护符１",
+  "name_ja": "けんこうおまもり１",
+  "name_en": "Warding Charm R"
+ },
+ "Warding Charm B": {
+  "name_zh": "健康护符２",
+  "name_ja": "けんこうおまもり２",
+  "name_en": "Warding Charm B"
+ },
+ "Warding Charm P": {
+  "name_zh": "健康护符３",
+  "name_ja": "けんこうおまもり３",
+  "name_en": "Warding Charm P"
+ },
+ "Warding Charm T": {
+  "name_zh": "健康护符４",
+  "name_ja": "けんこうおまもり４",
+  "name_en": "Warding Charm T"
+ },
+ "Warding Charm Y": {
+  "name_zh": "健康护符５",
+  "name_ja": "けんこうおまもり５",
+  "name_en": "Warding Charm Y"
+ },
+ "Apricorn": {
+  "name_zh": "球果果",
+  "name_ja": "ぼんぐりのみ",
+  "name_en": "Apricorn"
+ },
+ "Caster Fern": {
+  "name_zh": "弹子萁",
+  "name_ja": "タマゼンマイ",
+  "name_en": "Caster Fern"
+ },
+ "Tumblestone": {
+  "name_zh": "玉石",
+  "name_ja": "たまいし",
+  "name_en": "Tumblestone"
+ },
+ "Wood": {
+  "name_zh": "木材",
+  "name_ja": "もくざい",
+  "name_en": "Wood"
+ },
+ "King's Leaf": {
+  "name_zh": "皇叶",
+  "name_ja": "キングリーフ",
+  "name_en": "King's Leaf"
+ },
+ "Bugwort": {
+  "name_zh": "除虫草",
+  "name_ja": "ムシヨケソウ",
+  "name_en": "Bugwort"
+ },
+ "Iron Chunk": {
+  "name_zh": "碎铁",
+  "name_ja": "てつのかけら",
+  "name_en": "Iron Chunk"
+ },
+ "Black Tumblestone": {
+  "name_zh": "黑玉石",
+  "name_ja": "くろいろたまいし",
+  "name_en": "Black Tumblestone"
+ },
+ "Sky Tumblestone": {
+  "name_zh": "天蓝玉石",
+  "name_ja": "そらいろたまいし",
+  "name_en": "Sky Tumblestone"
+ },
+ "Pop Pod": {
+  "name_zh": "惊声藻",
+  "name_ja": "バリバリモ",
+  "name_en": "Pop Pod"
+ },
+ "Sootfoot Root": {
+  "name_zh": "烟芋",
+  "name_ja": "ケムリイモ",
+  "name_en": "Sootfoot Root"
+ },
+ "Medicinal Leek": {
+  "name_zh": "疗草",
+  "name_ja": "クスリソウ",
+  "name_en": "Medicinal Leek"
+ },
+ "Vivichoke": {
+  "name_zh": "活力蕾",
+  "name_ja": "ゲンキノツボミ",
+  "name_en": "Vivichoke"
+ },
+ "Pep-Up Plant": {
+  "name_zh": "ＰＰ草",
+  "name_ja": "ピーピーグサ",
+  "name_en": "Pep-Up Plant"
+ },
+ "Swordcap": {
+  "name_zh": "剑舞菇",
+  "name_ja": "ツルギマイタケ",
+  "name_en": "Swordcap"
+ },
+ "Iron Barktongue": {
+  "name_zh": "铁壁木耳",
+  "name_ja": "テッペキクラゲ",
+  "name_en": "Iron Barktongue"
+ },
+ "Doppel Bonnets": {
+  "name_zh": "影分菇",
+  "name_ja": "カゲブンシメジ",
+  "name_en": "Doppel Bonnets"
+ },
+ "Direshroom": {
+  "name_zh": "要害松露",
+  "name_ja": "キュウショウロ",
+  "name_en": "Direshroom"
+ },
+ "Sand Radish": {
+  "name_zh": "沙滩萝卜",
+  "name_ja": "スナハマダイコン",
+  "name_en": "Sand Radish"
+ },
+ "Candy Truffle": {
+  "name_zh": "甜松露",
+  "name_ja": "スイートトリュフ",
+  "name_en": "Candy Truffle"
+ },
+ "Cake-Lure Base": {
+  "name_zh": "诱团原料",
+  "name_ja": "よせだまのもと",
+  "name_en": "Cake-Lure Base"
+ },
+ "Poké Ball": {
+  "name_zh": "精灵球",
+  "name_ja": "モンスターボール",
+  "name_en": "Poké Ball"
+ },
+ "Great Ball": {
+  "name_zh": "超级球",
+  "name_ja": "スーパーボール",
+  "name_en": "Great Ball"
+ },
+ "Ultra Ball": {
+  "name_zh": "高级球",
+  "name_ja": "ハイパーボール",
+  "name_en": "Ultra Ball"
+ },
+ "Safari Ball": {
+  "name_zh": "狩猎球",
+  "name_ja": "サファリボール",
+  "name_en": "Safari Ball"
+ },
+ "Master Ball": {
+  "name_zh": "大师球",
+  "name_ja": "マスターボール",
+  "name_en": "Master Ball"
+ },
+ "Fast Ball": {
+  "name_zh": "速度球",
+  "name_ja": "スピードボール",
+  "name_en": "Fast Ball"
+ },
+ "Level Ball": {
+  "name_zh": "等级球",
+  "name_ja": "レベルボール",
+  "name_en": "Level Ball"
+ },
+ "Lure Ball": {
+  "name_zh": "诱饵球",
+  "name_ja": "ルアーボール",
+  "name_en": "Lure Ball"
+ },
+ "Love Ball": {
+  "name_zh": "甜蜜球",
+  "name_ja": "ラブラブボール",
+  "name_en": "Love Ball"
+ },
+ "Friend Ball": {
+  "name_zh": "友友球",
+  "name_ja": "フレンドボール",
+  "name_en": "Friend Ball"
+ },
+ "Moon Ball": {
+  "name_zh": "月亮球",
+  "name_ja": "ムーンボール",
+  "name_en": "Moon Ball"
+ },
+ "Heavy Ball": {
+  "name_zh": "沉重球",
+  "name_ja": "ヘビーボール",
+  "name_en": "Heavy Ball"
+ },
+ "Leaden Ball": {
+  "name_zh": "超重球",
+  "name_ja": "メガトンボール",
+  "name_en": "Leaden Ball"
+ },
+ "Gigaton Ball": {
+  "name_zh": "巨重球",
+  "name_ja": "ギガトンボール",
+  "name_en": "Gigaton Ball"
+ },
+ "Sport Ball": {
+  "name_zh": "竞赛球",
+  "name_ja": "コンペボール",
+  "name_en": "Sport Ball"
+ },
+ "Park Ball": {
+  "name_zh": "公园球",
+  "name_ja": "パークボール",
+  "name_en": "Park Ball"
+ },
+ "Net Ball": {
+  "name_zh": "捕网球",
+  "name_ja": "ネットボール",
+  "name_en": "Net Ball"
+ },
+ "Dive Ball": {
+  "name_zh": "潜水球",
+  "name_ja": "ダイブボール",
+  "name_en": "Dive Ball"
+ },
+ "Nest Ball": {
+  "name_zh": "巢穴球",
+  "name_ja": "ネストボール",
+  "name_en": "Nest Ball"
+ },
+ "Repeat Ball": {
+  "name_zh": "重复球",
+  "name_ja": "リピートボール",
+  "name_en": "Repeat Ball"
+ },
+ "Timer Ball": {
+  "name_zh": "计时球",
+  "name_ja": "タイマーボール",
+  "name_en": "Timer Ball"
+ },
+ "Luxury Ball": {
+  "name_zh": "豪华球",
+  "name_ja": "ゴージャスボール",
+  "name_en": "Luxury Ball"
+ },
+ "Premier Ball": {
+  "name_zh": "纪念球",
+  "name_ja": "プレミアボール",
+  "name_en": "Premier Ball"
+ },
+ "Dusk Ball": {
+  "name_zh": "黑暗球",
+  "name_ja": "ダークボール",
+  "name_en": "Dusk Ball"
+ },
+ "Heal Ball": {
+  "name_zh": "治愈球",
+  "name_ja": "ヒールボール",
+  "name_en": "Heal Ball"
+ },
+ "Quick Ball": {
+  "name_zh": "先机球",
+  "name_ja": "クイックボール",
+  "name_en": "Quick Ball"
+ },
+ "Cherish Ball": {
+  "name_zh": "贵重球",
+  "name_ja": "プレシャスボール",
+  "name_en": "Cherish Ball"
+ },
+ "Dream Ball": {
+  "name_zh": "梦境球",
+  "name_ja": "ドリームボール",
+  "name_en": "Dream Ball"
+ },
+ "Beast Ball": {
+  "name_zh": "究极球",
+  "name_ja": "ウルトラボール",
+  "name_en": "Beast Ball"
+ },
+ "Feather Ball": {
+  "name_zh": "飞羽球",
+  "name_ja": "フェザーボール",
+  "name_en": "Feather Ball"
+ },
+ "Wing Ball": {
+  "name_zh": "飞翼球",
+  "name_ja": "ウイングボール",
+  "name_en": "Wing Ball"
+ },
+ "Jet Ball": {
+  "name_zh": "飞梭球",
+  "name_ja": "ジェットボール",
+  "name_en": "Jet Ball"
+ },
+ "Strange Ball": {
+  "name_zh": "奇异球",
+  "name_ja": "ストレンジボール",
+  "name_en": "Strange Ball"
+ },
+ "Digger Drill": {
+  "name_zh": "挖洞钻",
+  "name_ja": "あなほりドリル",
+  "name_en": "Digger Drill"
+ },
+ "Kanto Slate": {
+  "name_zh": "关都石板",
+  "name_ja": "カントーのせきばん",
+  "name_en": "Kanto Slate"
+ },
+ "Johto Slate": {
+  "name_zh": "城都石板",
+  "name_ja": "ジョウトのせきばん",
+  "name_en": "Johto Slate"
+ },
+ "Soul Slate": {
+  "name_zh": "心之石板",
+  "name_ja": "こころのせきばん",
+  "name_en": "Soul Slate"
+ },
+ "Rainbow Slate": {
+  "name_zh": "彩虹石板",
+  "name_ja": "にじのせきばん",
+  "name_en": "Rainbow Slate"
+ },
+ "Squall Slate": {
+  "name_zh": "暴风石板",
+  "name_ja": "あらしのせきばん",
+  "name_en": "Squall Slate"
+ },
+ "Oceanic Slate": {
+  "name_zh": "大海石板",
+  "name_ja": "たいかいのせきばん",
+  "name_en": "Oceanic Slate"
+ },
+ "Tectonic Slate": {
+  "name_zh": "大陆石板",
+  "name_ja": "たいりくのせきばん",
+  "name_en": "Tectonic Slate"
+ },
+ "Stratospheric Slate": {
+  "name_zh": "天空石板",
+  "name_ja": "てんくうのせきばん",
+  "name_en": "Stratospheric Slate"
+ },
+ "Genome Slate": {
+  "name_zh": "基因石板",
+  "name_ja": "いでんしのせきばん",
+  "name_en": "Genome Slate"
+ },
+ "Discovery Slate": {
+  "name_zh": "引导石板",
+  "name_ja": "みちびきのせきばん",
+  "name_en": "Discovery Slate"
+ },
+ "Distortion Slate": {
+  "name_zh": "毁坏石板",
+  "name_ja": "やぶれたせきばん",
+  "name_en": "Distortion Slate"
+ },
+ "Tiny Mushroom": {
+  "name_zh": "小蘑菇",
+  "name_ja": "ちいさなキノコ",
+  "name_en": "Tiny Mushroom"
+ },
+ "Big Mushroom": {
+  "name_zh": "大蘑菇",
+  "name_ja": "おおきなキノコ",
+  "name_en": "Big Mushroom"
+ },
+ "Balm Mushroom": {
+  "name_zh": "芳香蘑菇",
+  "name_ja": "かおるキノコ",
+  "name_en": "Balm Mushroom"
+ },
+ "Pearl": {
+  "name_zh": "珍珠",
+  "name_ja": "しんじゅ",
+  "name_en": "Pearl"
+ },
+ "Big Pearl": {
+  "name_zh": "大珍珠",
+  "name_ja": "おおきなしんじゅ",
+  "name_en": "Big Pearl"
+ },
+ "Pearl String": {
+  "name_zh": "丸子珍珠",
+  "name_ja": "おだんごしんじゅ",
+  "name_en": "Pearl String"
+ },
+ "Stardust": {
+  "name_zh": "星星沙子",
+  "name_ja": "ほしのすな",
+  "name_en": "Stardust"
+ },
+ "Star Piece": {
+  "name_zh": "星星碎片",
+  "name_ja": "ほしのかけら",
+  "name_en": "Star Piece"
+ },
+ "Comet Shard": {
+  "name_zh": "彗星碎片",
+  "name_ja": "すいせいのかけら",
+  "name_en": "Comet Shard"
+ },
+ "Silver Leaf": {
+  "name_zh": "银色叶子",
+  "name_ja": "ぎんのはっぱ",
+  "name_en": "Silver Leaf"
+ },
+ "Gold Leaf": {
+  "name_zh": "金色叶子",
+  "name_ja": "きんのはっぱ",
+  "name_en": "Gold Leaf"
+ },
+ "Nugget": {
+  "name_zh": "金珠",
+  "name_ja": "きんのたま",
+  "name_en": "Nugget"
+ },
+ "Big Nugget": {
+  "name_zh": "巨大金珠",
+  "name_ja": "でかいきんのたま",
+  "name_en": "Big Nugget"
+ },
+ "Relic Copper": {
+  "name_zh": "古代铜币",
+  "name_ja": "こだいのどうか",
+  "name_en": "Relic Copper"
+ },
+ "Relic Silver": {
+  "name_zh": "古代银币",
+  "name_ja": "こだいのぎんか",
+  "name_en": "Relic Silver"
+ },
+ "Relic Gold": {
+  "name_zh": "古代金币",
+  "name_ja": "こだいのきんか",
+  "name_en": "Relic Gold"
+ },
+ "Relic Vase": {
+  "name_zh": "古代之壶",
+  "name_ja": "こだいのツボ",
+  "name_en": "Relic Vase"
+ },
+ "Relic Band": {
+  "name_zh": "古代手镯",
+  "name_ja": "こだいのうでわ",
+  "name_en": "Relic Band"
+ },
+ "Relic Statue": {
+  "name_zh": "古代石像",
+  "name_ja": "こだいのせきぞう",
+  "name_en": "Relic Statue"
+ },
+ "Relic Crown": {
+  "name_zh": "古代王冠",
+  "name_ja": "こだいのおうかん",
+  "name_en": "Relic Crown"
+ },
+ "Tiny Bamboo Shoot": {
+  "name_zh": "小竹笋",
+  "name_ja": "ちいさなタケノコ",
+  "name_en": "Tiny Bamboo Shoot"
+ },
+ "Big Bamboo Shoot": {
+  "name_zh": "大竹笋",
+  "name_ja": "おおきなタケノコ",
+  "name_en": "Big Bamboo Shoot"
+ },
+ "Brick Piece": {
+  "name_zh": "碎瓦片",
+  "name_ja": "かわらのかけら",
+  "name_en": "Brick Piece"
+ },
+ "Rare Bone": {
+  "name_zh": "贵重骨头",
+  "name_ja": "きちょうなホネ",
+  "name_en": "Rare Bone"
+ },
+ "Honey": {
+  "name_zh": "甜甜蜜",
+  "name_ja": "あまいミツ",
+  "name_en": "Honey"
+ },
+ "Pretty Wing": {
+  "name_zh": "美丽之羽",
+  "name_ja": "きれいなハネ",
+  "name_en": "Pretty Wing"
+ },
+ "Strange Souvenir": {
+  "name_zh": "神秘摆设",
+  "name_ja": "ふしぎなおきもの",
+  "name_en": "Strange Souvenir"
+ },
+ "Stretchy Spring": {
+  "name_zh": "松掉的弹簧",
+  "name_ja": "のびたバネ",
+  "name_en": "Stretchy Spring"
+ },
+ "Chalky Stone": {
+  "name_zh": "粉笔石",
+  "name_ja": "チョークいし",
+  "name_en": "Chalky Stone"
+ },
+ "Marble": {
+  "name_zh": "弹珠",
+  "name_ja": "ビーだま",
+  "name_en": "Marble"
+ },
+ "Lone Earring": {
+  "name_zh": "一边的耳环",
+  "name_ja": "かたっぽピアス",
+  "name_en": "Lone Earring"
+ },
+ "Beach Glass": {
+  "name_zh": "海边的玻璃",
+  "name_ja": "うみべのガラス",
+  "name_en": "Beach Glass"
+ },
+ "Polished Mud Ball": {
+  "name_zh": "光滑泥球",
+  "name_ja": "ピカピカだんご",
+  "name_en": "Polished Mud Ball"
+ },
+ "Tropical Shell": {
+  "name_zh": "南国贝壳",
+  "name_ja": "なんごくかいがら",
+  "name_en": "Tropical Shell"
+ },
+ "Pokéshi Doll": {
+  "name_zh": "宝可梦木娃娃",
+  "name_ja": "ポケモンこけし",
+  "name_en": "Pokéshi Doll"
+ },
+ "Helix Fossil": {
+  "name_zh": "贝壳化石",
+  "name_ja": "かいのカセキ",
+  "name_en": "Helix Fossil"
+ },
+ "Dome Fossil": {
+  "name_zh": "甲壳化石",
+  "name_ja": "こうらのカセキ",
+  "name_en": "Dome Fossil"
+ },
+ "Old Amber": {
+  "name_zh": "秘密琥珀",
+  "name_ja": "ひみつのコハク",
+  "name_en": "Old Amber"
+ },
+ "Root Fossil": {
+  "name_zh": "根状化石",
+  "name_ja": "ねっこのカセキ",
+  "name_en": "Root Fossil"
+ },
+ "Claw Fossil": {
+  "name_zh": "爪子化石",
+  "name_ja": "ツメのカセキ",
+  "name_en": "Claw Fossil"
+ },
+ "Skull Fossil": {
+  "name_zh": "头盖化石",
+  "name_ja": "ずがいのカセキ",
+  "name_en": "Skull Fossil"
+ },
+ "Armor Fossil": {
+  "name_zh": "盾甲化石",
+  "name_ja": "たてのカセキ",
+  "name_en": "Armor Fossil"
+ },
+ "Cover Fossil": {
+  "name_zh": "背盖化石",
+  "name_ja": "ふたのカセキ",
+  "name_en": "Cover Fossil"
+ },
+ "Plume Fossil": {
+  "name_zh": "羽毛化石",
+  "name_ja": "はねのカセキ",
+  "name_en": "Plume Fossil"
+ },
+ "Jaw Fossil": {
+  "name_zh": "颚之化石",
+  "name_ja": "アゴのカセキ",
+  "name_en": "Jaw Fossil"
+ },
+ "Sail Fossil": {
+  "name_zh": "鳍之化石",
+  "name_ja": "ヒレのカセキ",
+  "name_en": "Sail Fossil"
+ },
+ "Fossilized Bird": {
+  "name_zh": "化石鸟",
+  "name_ja": "カセキのトリ",
+  "name_en": "Fossilized Bird"
+ },
+ "Fossilized Fish": {
+  "name_zh": "化石鱼",
+  "name_ja": "カセキのサカナ",
+  "name_en": "Fossilized Fish"
+ },
+ "Fossilized Drake": {
+  "name_zh": "化石龙",
+  "name_ja": "カセキのリュウ",
+  "name_en": "Fossilized Drake"
+ },
+ "Fossilized Dino": {
+  "name_zh": "化石海兽",
+  "name_ja": "カセキのクビナガ",
+  "name_en": "Fossilized Dino"
+ },
+ "Guard Spec.": {
+  "name_zh": "能力防守",
+  "name_ja": "エフェクトガード",
+  "name_en": "Guard Spec."
+ },
+ "Dire Hit": {
+  "name_zh": "要害攻击",
+  "name_ja": "クリティカット",
+  "name_en": "Dire Hit"
+ },
+ "X Attack": {
+  "name_zh": "力量强化",
+  "name_ja": "プラスパワー",
+  "name_en": "X Attack"
+ },
+ "X Defense": {
+  "name_zh": "防御强化",
+  "name_ja": "ディフェンダー",
+  "name_en": "X Defense"
+ },
+ "X Sp. Atk": {
+  "name_zh": "特攻强化",
+  "name_ja": "スペシャルアップ",
+  "name_en": "X Sp. Atk"
+ },
+ "X Sp. Def": {
+  "name_zh": "特防强化",
+  "name_ja": "スペシャルガード",
+  "name_en": "X Sp. Def"
+ },
+ "X Speed": {
+  "name_zh": "速度强化",
+  "name_ja": "スピーダー",
+  "name_en": "X Speed"
+ },
+ "X Accuracy": {
+  "name_zh": "命中强化",
+  "name_ja": "ヨクアタール",
+  "name_en": "X Accuracy"
+ },
+ "Poké Doll": {
+  "name_zh": "皮皮玩偶",
+  "name_ja": "ピッピにんぎょう",
+  "name_en": "Poké Doll"
+ },
+ "Fluffy Tail": {
+  "name_zh": "向尾喵的尾巴",
+  "name_ja": "エネコのシッポ",
+  "name_en": "Fluffy Tail"
+ },
+ "Poké Toy": {
+  "name_zh": "宝可尾草",
+  "name_ja": "ポケじゃらし",
+  "name_en": "Poké Toy"
+ },
+ "Max Mushrooms": {
+  "name_zh": "极巨菇菇",
+  "name_ja": "ダイキノコ",
+  "name_en": "Max Mushrooms"
+ },
+ "Aux Power": {
+  "name_zh": "进攻药丸",
+  "name_ja": "せめのがんやく",
+  "name_en": "Aux Power"
+ },
+ "Aux Guard": {
+  "name_zh": "防守药丸",
+  "name_ja": "まもりのがんやく",
+  "name_en": "Aux Guard"
+ },
+ "Aux Powerguard": {
+  "name_zh": "多重强化",
+  "name_ja": "マルチアップ",
+  "name_en": "Aux Powerguard"
+ },
+ "Aux Evasion": {
+  "name_zh": "闪避强化",
+  "name_ja": "ヨクアタラーヌ",
+  "name_en": "Aux Evasion"
+ },
+ "Choice Dumpling": {
+  "name_zh": "讲究粽",
+  "name_ja": "こだわりちまき",
+  "name_en": "Choice Dumpling"
+ },
+ "Twice-Spiced Radish": {
+  "name_zh": "双倍腌菜",
+  "name_ja": "にばいづけ",
+  "name_en": "Twice-Spiced Radish"
+ },
+ "Swap Snack": {
+  "name_zh": "颠倒烧",
+  "name_ja": "あべこべやき",
+  "name_en": "Swap Snack"
+ },
+ "Potion": {
+  "name_zh": "伤药",
+  "name_ja": "キズぐすり",
+  "name_en": "Potion"
+ },
+ "Super Potion": {
+  "name_zh": "好伤药",
+  "name_ja": "いいキズぐすり",
+  "name_en": "Super Potion"
+ },
+ "Hyper Potion": {
+  "name_zh": "厉害伤药",
+  "name_ja": "すごいキズぐすり",
+  "name_en": "Hyper Potion"
+ },
+ "Max Potion": {
+  "name_zh": "全满药",
+  "name_ja": "まんたんのくすり",
+  "name_en": "Max Potion"
+ },
+ "Full Restore": {
+  "name_zh": "全复药",
+  "name_ja": "かいふくのくすり",
+  "name_en": "Full Restore"
+ },
+ "Antidote": {
+  "name_zh": "解毒药",
+  "name_ja": "どくけし",
+  "name_en": "Antidote"
+ },
+ "Burn Heal": {
+  "name_zh": "灼伤药",
+  "name_ja": "やけどなおし",
+  "name_en": "Burn Heal"
+ },
+ "Ice Heal": {
+  "name_zh": "解冻药",
+  "name_ja": "こおりなおし",
+  "name_en": "Ice Heal"
+ },
+ "Awakening": {
+  "name_zh": "解眠药",
+  "name_ja": "ねむけざまし",
+  "name_en": "Awakening"
+ },
+ "Paralyze Heal": {
+  "name_zh": "解麻药",
+  "name_ja": "まひなおし",
+  "name_en": "Paralyze Heal"
+ },
+ "Full Heal": {
+  "name_zh": "万灵药",
+  "name_ja": "なんでもなおし",
+  "name_en": "Full Heal"
+ },
+ "Revive": {
+  "name_zh": "活力碎片",
+  "name_ja": "げんきのかけら",
+  "name_en": "Revive"
+ },
+ "Max Revive": {
+  "name_zh": "活力块",
+  "name_ja": "げんきのかたまり",
+  "name_en": "Max Revive"
+ },
+ "Fresh Water": {
+  "name_zh": "美味之水",
+  "name_ja": "おいしいみず",
+  "name_en": "Fresh Water"
+ },
+ "Soda Pop": {
+  "name_zh": "劲爽汽水",
+  "name_ja": "サイコソーダ",
+  "name_en": "Soda Pop"
+ },
+ "Lemonade": {
+  "name_zh": "果汁牛奶",
+  "name_ja": "ミックスオレ",
+  "name_en": "Lemonade"
+ },
+ "Moomoo Milk": {
+  "name_zh": "哞哞鲜奶",
+  "name_ja": "モーモーミルク",
+  "name_en": "Moomoo Milk"
+ },
+ "Energy Powder": {
+  "name_zh": "元气粉",
+  "name_ja": "ちからのこな",
+  "name_en": "Energy Powder"
+ },
+ "Energy Root": {
+  "name_zh": "元气根",
+  "name_ja": "ちからのねっこ",
+  "name_en": "Energy Root"
+ },
+ "Heal Powder": {
+  "name_zh": "万能粉",
+  "name_ja": "ばんのうごな",
+  "name_en": "Heal Powder"
+ },
+ "Revival Herb": {
+  "name_zh": "复活草",
+  "name_ja": "ふっかつそう",
+  "name_en": "Revival Herb"
+ },
+ "Ether": {
+  "name_zh": "ＰＰ单项小补剂",
+  "name_ja": "ピーピーエイド",
+  "name_en": "Ether"
+ },
+ "Max Ether": {
+  "name_zh": "ＰＰ单项全补剂",
+  "name_ja": "ピーピーリカバー",
+  "name_en": "Max Ether"
+ },
+ "Elixir": {
+  "name_zh": "ＰＰ多项小补剂",
+  "name_ja": "ピーピーエイダー",
+  "name_en": "Elixir"
+ },
+ "Max Elixir": {
+  "name_zh": "ＰＰ多项全补剂",
+  "name_ja": "ピーピーマックス",
+  "name_en": "Max Elixir"
+ },
+ "Rage Candy Bar": {
+  "name_zh": "愤怒馒头",
+  "name_ja": "いかりまんじゅう",
+  "name_en": "Rage Candy Bar"
+ },
+ "Lava Cookie": {
+  "name_zh": "釜炎仙贝",
+  "name_ja": "フエンせんべい",
+  "name_en": "Lava Cookie"
+ },
+ "Old Gateau": {
+  "name_zh": "森之羊羹",
+  "name_ja": "もりのヨウカン",
+  "name_en": "Old Gateau"
+ },
+ "Casteliacone": {
+  "name_zh": "飞云冰淇淋",
+  "name_ja": "ヒウンアイス",
+  "name_en": "Casteliacone"
+ },
+ "Lumiose Galette": {
+  "name_zh": "密阿雷格雷派饼",
+  "name_ja": "ミアレガレット",
+  "name_en": "Lumiose Galette"
+ },
+ "Shalour Sable": {
+  "name_zh": "娑罗沙布蕾",
+  "name_ja": "シャラサブレ",
+  "name_en": "Shalour Sable"
+ },
+ "Big Malasada": {
+  "name_zh": "大马拉萨达",
+  "name_ja": "おおきいマラサダ",
+  "name_en": "Big Malasada"
+ },
+ "Pewter Crunchies": {
+  "name_zh": "深灰米果",
+  "name_ja": "ニビあられ",
+  "name_en": "Pewter Crunchies"
+ },
+ "Jubilife Muffin": {
+  "name_zh": "祝庆玛芬",
+  "name_ja": "コトブキマフィン",
+  "name_en": "Jubilife Muffin"
+ },
+ "Berry Juice": {
+  "name_zh": "树果汁",
+  "name_ja": "きのみジュース",
+  "name_en": "Berry Juice"
+ },
+ "Sweet Heart": {
+  "name_zh": "心形甜点",
+  "name_ja": "ハートスイーツ",
+  "name_en": "Sweet Heart"
+ },
+ "Sacred Ash": {
+  "name_zh": "圣灰",
+  "name_ja": "せいなるはい",
+  "name_en": "Sacred Ash"
+ },
+ "Max Honey": {
+  "name_zh": "极巨甜蜜",
+  "name_ja": "ダイミツ",
+  "name_en": "Max Honey"
+ },
+ "Remedy": {
+  "name_zh": "中药",
+  "name_ja": "カンポーやく",
+  "name_en": "Remedy"
+ },
+ "Fine Remedy": {
+  "name_zh": "好中药",
+  "name_ja": "いいカンポーやく",
+  "name_en": "Fine Remedy"
+ },
+ "Superb Remedy": {
+  "name_zh": "厉害中药",
+  "name_ja": "すごいカンポーやく",
+  "name_en": "Superb Remedy"
+ },
+ "Venusaurite": {
+  "name_zh": "妙蛙花进化石",
+  "name_ja": "フシギバナイト",
+  "name_en": "Venusaurite"
+ },
+ "Charizardite X": {
+  "name_zh": "喷火龙进化石Ｘ",
+  "name_ja": "リザードナイトX",
+  "name_en": "Charizardite X"
+ },
+ "Charizardite Y": {
+  "name_zh": "喷火龙进化石Ｙ",
+  "name_ja": "リザードナイトY",
+  "name_en": "Charizardite Y"
+ },
+ "Blastoisinite": {
+  "name_zh": "水箭龟进化石",
+  "name_ja": "カメックスナイト",
+  "name_en": "Blastoisinite"
+ },
+ "Beedrillite": {
+  "name_zh": "大针蜂进化石",
+  "name_ja": "スピアナイト",
+  "name_en": "Beedrillite"
+ },
+ "Pidgeotite": {
+  "name_zh": "大比鸟进化石",
+  "name_ja": "ピジョットナイト",
+  "name_en": "Pidgeotite"
+ },
+ "Clefablite": {
+  "name_zh": "皮可西进化石",
+  "name_ja": "ピクシナイト",
+  "name_en": "Clefablite"
+ },
+ "Alakazite": {
+  "name_zh": "胡地进化石",
+  "name_ja": "フーディナイト",
+  "name_en": "Alakazite"
+ },
+ "Victreebelite": {
+  "name_zh": "大食花进化石",
+  "name_ja": "ウツボットナイト",
+  "name_en": "Victreebelite"
+ },
+ "Slowbronite": {
+  "name_zh": "呆壳兽进化石",
+  "name_ja": "ヤドランナイト",
+  "name_en": "Slowbronite"
+ },
+ "Gengarite": {
+  "name_zh": "耿鬼进化石",
+  "name_ja": "ゲンガナイト",
+  "name_en": "Gengarite"
+ },
+ "Kangaskhanite": {
+  "name_zh": "袋兽进化石",
+  "name_ja": "ガルーラナイト",
+  "name_en": "Kangaskhanite"
+ },
+ "Starminite": {
+  "name_zh": "宝石海星进化石",
+  "name_ja": "スターミナイト",
+  "name_en": "Starminite"
+ },
+ "Pinsirite": {
+  "name_zh": "凯罗斯进化石",
+  "name_ja": "カイロスナイト",
+  "name_en": "Pinsirite"
+ },
+ "Gyaradosite": {
+  "name_zh": "暴鲤龙进化石",
+  "name_ja": "ギャラドスナイト",
+  "name_en": "Gyaradosite"
+ },
+ "Aerodactylite": {
+  "name_zh": "化石翼龙进化石",
+  "name_ja": "リプテラナイト",
+  "name_en": "Aerodactylite"
+ },
+ "Dragoninite": {
+  "name_zh": "快龙进化石",
+  "name_ja": "カイリューナイト",
+  "name_en": "Dragoninite"
+ },
+ "Mewtwonite X": {
+  "name_zh": "超梦进化石Ｘ",
+  "name_ja": "ミュウツナイトX",
+  "name_en": "Mewtwonite X"
+ },
+ "Mewtwonite Y": {
+  "name_zh": "超梦进化石Ｙ",
+  "name_ja": "ミュウツナイトY",
+  "name_en": "Mewtwonite Y"
+ },
+ "Meganiumite": {
+  "name_zh": "大竺葵进化石",
+  "name_ja": "メガニウムナイト",
+  "name_en": "Meganiumite"
+ },
+ "Feraligite": {
+  "name_zh": "大力鳄进化石",
+  "name_ja": "オーダイルナイト",
+  "name_en": "Feraligite"
+ },
+ "Ampharosite": {
+  "name_zh": "电龙进化石",
+  "name_ja": "デンリュウナイト",
+  "name_en": "Ampharosite"
+ },
+ "Steelixite": {
+  "name_zh": "大钢蛇进化石",
+  "name_ja": "ハガネールナイト",
+  "name_en": "Steelixite"
+ },
+ "Scizorite": {
+  "name_zh": "巨钳螳螂进化石",
+  "name_ja": "ハッサムナイト",
+  "name_en": "Scizorite"
+ },
+ "Heracronite": {
+  "name_zh": "赫拉克罗斯进化石",
+  "name_ja": "ヘラクロスナイト",
+  "name_en": "Heracronite"
+ },
+ "Skarmorite": {
+  "name_zh": "盔甲鸟进化石",
+  "name_ja": "エアームドナイト",
+  "name_en": "Skarmorite"
+ },
+ "Houndoominite": {
+  "name_zh": "黑鲁加进化石",
+  "name_ja": "ヘルガナイト",
+  "name_en": "Houndoominite"
+ },
+ "Tyranitarite": {
+  "name_zh": "班基拉斯进化石",
+  "name_ja": "バンギラスナイト",
+  "name_en": "Tyranitarite"
+ },
+ "Sceptilite": {
+  "name_zh": "蜥蜴王进化石",
+  "name_ja": "ジュカインナイト",
+  "name_en": "Sceptilite"
+ },
+ "Blazikenite": {
+  "name_zh": "火焰鸡进化石",
+  "name_ja": "バシャーモナイト",
+  "name_en": "Blazikenite"
+ },
+ "Swampertite": {
+  "name_zh": "巨沼怪进化石",
+  "name_ja": "ラグラージナイト",
+  "name_en": "Swampertite"
+ },
+ "Gardevoirite": {
+  "name_zh": "沙奈朵进化石",
+  "name_ja": "サーナイトナイト",
+  "name_en": "Gardevoirite"
+ },
+ "Sablenite": {
+  "name_zh": "勾魂眼进化石",
+  "name_ja": "ヤミラミナイト",
+  "name_en": "Sablenite"
+ },
+ "Mawilite": {
+  "name_zh": "大嘴娃进化石",
+  "name_ja": "クチートナイト",
+  "name_en": "Mawilite"
+ },
+ "Aggronite": {
+  "name_zh": "波士可多拉进化石",
+  "name_ja": "ボスゴドラナイト",
+  "name_en": "Aggronite"
+ },
+ "Medichamite": {
+  "name_zh": "恰雷姆进化石",
+  "name_ja": "チャーレムナイト",
+  "name_en": "Medichamite"
+ },
+ "Manectite": {
+  "name_zh": "雷电兽进化石",
+  "name_ja": "ライボルトナイト",
+  "name_en": "Manectite"
+ },
+ "Sharpedonite": {
+  "name_zh": "巨牙鲨进化石",
+  "name_ja": "サメハダナイト",
+  "name_en": "Sharpedonite"
+ },
+ "Cameruptite": {
+  "name_zh": "喷火驼进化石",
+  "name_ja": "バクーダナイト",
+  "name_en": "Cameruptite"
+ },
+ "Altarianite": {
+  "name_zh": "七夕青鸟进化石",
+  "name_ja": "チルタリスナイト",
+  "name_en": "Altarianite"
+ },
+ "Banettite": {
+  "name_zh": "诅咒娃娃进化石",
+  "name_ja": "ジュペッタナイト",
+  "name_en": "Banettite"
+ },
+ "Absolite": {
+  "name_zh": "阿勃梭鲁进化石",
+  "name_ja": "アブソルナイト",
+  "name_en": "Absolite"
+ },
+ "Glalitite": {
+  "name_zh": "冰鬼护进化石",
+  "name_ja": "オニゴーリナイト",
+  "name_en": "Glalitite"
+ },
+ "Salamencite": {
+  "name_zh": "暴飞龙进化石",
+  "name_ja": "ボーマンダナイト",
+  "name_en": "Salamencite"
+ },
+ "Metagrossite": {
+  "name_zh": "巨金怪进化石",
+  "name_ja": "メタグロスナイト",
+  "name_en": "Metagrossite"
+ },
+ "Latiasite": {
+  "name_zh": "拉帝亚斯进化石",
+  "name_ja": "ラティアスナイト",
+  "name_en": "Latiasite"
+ },
+ "Latiosite": {
+  "name_zh": "拉帝欧斯进化石",
+  "name_ja": "ラティオスナイト",
+  "name_en": "Latiosite"
+ },
+ "Lopunnite": {
+  "name_zh": "长耳兔进化石",
+  "name_ja": "ミミロップナイト",
+  "name_en": "Lopunnite"
+ },
+ "Garchompite": {
+  "name_zh": "烈咬陆鲨进化石",
+  "name_ja": "ガブリアスナイト",
+  "name_en": "Garchompite"
+ },
+ "Lucarionite": {
+  "name_zh": "路卡利欧进化石",
+  "name_ja": "ルカリオナイト",
+  "name_en": "Lucarionite"
+ },
+ "Abomasite": {
+  "name_zh": "暴雪王进化石",
+  "name_ja": "ユキノオナイト",
+  "name_en": "Abomasite"
+ },
+ "Galladite": {
+  "name_zh": "艾路雷朵进化石",
+  "name_ja": "エルレイドナイト",
+  "name_en": "Galladite"
+ },
+ "Froslassite": {
+  "name_zh": "雪妖女进化石",
+  "name_ja": "ユキメノコナイト",
+  "name_en": "Froslassite"
+ },
+ "Emboarite": {
+  "name_zh": "炎武王进化石",
+  "name_ja": "エンブオナイト",
+  "name_en": "Emboarite"
+ },
+ "Excadrite": {
+  "name_zh": "龙头地鼠进化石",
+  "name_ja": "ドリュウズナイト",
+  "name_en": "Excadrite"
+ },
+ "Audinite": {
+  "name_zh": "差不多娃娃进化石",
+  "name_ja": "タブンネナイト",
+  "name_en": "Audinite"
+ },
+ "Scolipite": {
+  "name_zh": "蜈蚣王进化石",
+  "name_ja": "ペンドラナイト",
+  "name_en": "Scolipite"
+ },
+ "Scraftinite": {
+  "name_zh": "头巾混混进化石",
+  "name_ja": "ズルズキナイト",
+  "name_en": "Scraftinite"
+ },
+ "Eelektrossite": {
+  "name_zh": "麻麻鳗鱼王进化石",
+  "name_ja": "シビルドナイト",
+  "name_en": "Eelektrossite"
+ },
+ "Chandelurite": {
+  "name_zh": "水晶灯火灵进化石",
+  "name_ja": "シャンデラナイト",
+  "name_en": "Chandelurite"
+ },
+ "Chesnaughtite": {
+  "name_zh": "布里卡隆进化石",
+  "name_ja": "ブリガロナイト",
+  "name_en": "Chesnaughtite"
+ },
+ "Delphoxite": {
+  "name_zh": "妖火红狐进化石",
+  "name_ja": "マフォクシナイト",
+  "name_en": "Delphoxite"
+ },
+ "Greninjite": {
+  "name_zh": "甲贺忍蛙进化石",
+  "name_ja": "ゲッコウガナイト",
+  "name_en": "Greninjite"
+ },
+ "Pyroarite": {
+  "name_zh": "火炎狮进化石",
+  "name_ja": "カエンジシナイト",
+  "name_en": "Pyroarite"
+ },
+ "Floettite": {
+  "name_zh": "花叶蒂进化石",
+  "name_ja": "フラエッテナイト",
+  "name_en": "Floettite"
+ },
+ "Malamarite": {
+  "name_zh": "乌贼王进化石",
+  "name_ja": "カラマネロ‎ナイト",
+  "name_en": "Malamarite"
+ },
+ "Barbaracite": {
+  "name_zh": "龟足巨铠进化石",
+  "name_ja": "ガメノデスナイト",
+  "name_en": "Barbaracite"
+ },
+ "Dragalgite": {
+  "name_zh": "毒藻龙进化石",
+  "name_ja": "ドラミドナイト",
+  "name_en": "Dragalgite"
+ },
+ "Hawluchanite": {
+  "name_zh": "摔角鹰人进化石",
+  "name_ja": "ルチャブルナイト",
+  "name_en": "Hawluchanite"
+ },
+ "Zygardite": {
+  "name_zh": "基格尔德进化石",
+  "name_ja": "ジガルデナイト",
+  "name_en": "Zygardite"
+ },
+ "Diancite": {
+  "name_zh": "蒂安希进化石",
+  "name_ja": "ディアンシナイト",
+  "name_en": "Diancite"
+ },
+ "Drampanite": {
+  "name_zh": "老翁龙进化石",
+  "name_ja": "ジジーロナイト",
+  "name_en": "Drampanite"
+ },
+ "Falinksite": {
+  "name_zh": "列阵兵进化石",
+  "name_ja": "タイレーツナイト",
+  "name_en": "Falinksite"
+ },
+ "Normalium Z": {
+  "name_zh": "一般Ｚ",
+  "name_ja": "ノーマルＺ",
+  "name_en": "Normalium Z"
+ },
+ "Firium Z": {
+  "name_zh": "火Ｚ",
+  "name_ja": "ホノオＺ",
+  "name_en": "Firium Z"
+ },
+ "Waterium Z": {
+  "name_zh": "水Ｚ",
+  "name_ja": "ミズＺ",
+  "name_en": "Waterium Z"
+ },
+ "Electrium Z": {
+  "name_zh": "电Ｚ",
+  "name_ja": "デンキＺ",
+  "name_en": "Electrium Z"
+ },
+ "Grassium Z": {
+  "name_zh": "草Ｚ",
+  "name_ja": "クサＺ",
+  "name_en": "Grassium Z"
+ },
+ "Icium Z": {
+  "name_zh": "冰Ｚ",
+  "name_ja": "コオリＺ",
+  "name_en": "Icium Z"
+ },
+ "Fightinium Z": {
+  "name_zh": "格斗Ｚ",
+  "name_ja": "カクトウＺ",
+  "name_en": "Fightinium Z"
+ },
+ "Poisonium Z": {
+  "name_zh": "毒Ｚ",
+  "name_ja": "ドクＺ",
+  "name_en": "Poisonium Z"
+ },
+ "Groundium Z": {
+  "name_zh": "地面Ｚ",
+  "name_ja": "ジメンＺ",
+  "name_en": "Groundium Z"
+ },
+ "Flyinium Z": {
+  "name_zh": "飞行Ｚ",
+  "name_ja": "ヒコウＺ",
+  "name_en": "Flyinium Z"
+ },
+ "Psychium Z": {
+  "name_zh": "超能力Ｚ",
+  "name_ja": "エスパーＺ",
+  "name_en": "Psychium Z"
+ },
+ "Buginium Z": {
+  "name_zh": "虫Ｚ",
+  "name_ja": "ムシＺ",
+  "name_en": "Buginium Z"
+ },
+ "Rockium Z": {
+  "name_zh": "岩石Ｚ",
+  "name_ja": "イワＺ",
+  "name_en": "Rockium Z"
+ },
+ "Ghostium Z": {
+  "name_zh": "幽灵Ｚ",
+  "name_ja": "ゴーストＺ",
+  "name_en": "Ghostium Z"
+ },
+ "Dragonium Z": {
+  "name_zh": "龙Ｚ",
+  "name_ja": "ドラゴンＺ",
+  "name_en": "Dragonium Z"
+ },
+ "Darkinium Z": {
+  "name_zh": "恶Ｚ",
+  "name_ja": "アクＺ",
+  "name_en": "Darkinium Z"
+ },
+ "Steelium Z": {
+  "name_zh": "钢Ｚ",
+  "name_ja": "ハガネＺ",
+  "name_en": "Steelium Z"
+ },
+ "Fairium Z": {
+  "name_zh": "妖精Ｚ",
+  "name_ja": "フェアリーＺ",
+  "name_en": "Fairium Z"
+ },
+ "Pikanium Z": {
+  "name_zh": "皮卡丘Ｚ",
+  "name_ja": "ピカチュウＺ",
+  "name_en": "Pikanium Z"
+ },
+ "Decidium Z": {
+  "name_zh": "狙射树枭Ｚ",
+  "name_ja": "ジュナイパーＺ",
+  "name_en": "Decidium Z"
+ },
+ "Incinium Z": {
+  "name_zh": "炽焰咆哮虎Ｚ",
+  "name_ja": "ガオガエンＺ",
+  "name_en": "Incinium Z"
+ },
+ "Primarium Z": {
+  "name_zh": "西狮海壬Ｚ",
+  "name_ja": "アシレーヌＺ",
+  "name_en": "Primarium Z"
+ },
+ "Tapunium Z": {
+  "name_zh": "卡璞Ｚ",
+  "name_ja": "カプＺ",
+  "name_en": "Tapunium Z"
+ },
+ "Marshadium Z": {
+  "name_zh": "玛夏多Ｚ",
+  "name_ja": "マーシャドーＺ",
+  "name_en": "Marshadium Z"
+ },
+ "Aloraichium Z": {
+  "name_zh": "阿罗雷Ｚ",
+  "name_ja": "アロライＺ",
+  "name_en": "Aloraichium Z"
+ },
+ "Snorlium Z": {
+  "name_zh": "卡比兽Ｚ",
+  "name_ja": "カビゴンＺ",
+  "name_en": "Snorlium Z"
+ },
+ "Eevium Z": {
+  "name_zh": "伊布Ｚ",
+  "name_ja": "イーブイＺ",
+  "name_en": "Eevium Z"
+ },
+ "Mewnium Z": {
+  "name_zh": "梦幻Ｚ",
+  "name_ja": "ミュウＺ",
+  "name_en": "Mewnium Z"
+ },
+ "Pikashunium Z": {
+  "name_zh": "智皮卡Ｚ",
+  "name_ja": "サトピカＺ",
+  "name_en": "Pikashunium Z"
+ },
+ "Solganium Z": {
+  "name_zh": "索尔迦雷欧Ｚ",
+  "name_ja": "ソルガレオＺ",
+  "name_en": "Solganium Z"
+ },
+ "Lunalium Z": {
+  "name_zh": "露奈雅拉Ｚ",
+  "name_ja": "ルナアーラＺ",
+  "name_en": "Lunalium Z"
+ },
+ "Ultranecrozium Z": {
+  "name_zh": "究极奈克洛Ｚ",
+  "name_ja": "ウルトラネクロＺ",
+  "name_en": "Ultranecrozium Z"
+ },
+ "Mimikium Z": {
+  "name_zh": "谜拟ＱＺ",
+  "name_ja": "ミミッキュＺ",
+  "name_en": "Mimikium Z"
+ },
+ "Lycanium Z": {
+  "name_zh": "鬃岩狼人Ｚ",
+  "name_ja": "ルガルガンＺ",
+  "name_en": "Lycanium Z"
+ },
+ "Kommonium Z": {
+  "name_zh": "杖尾鳞甲龙Ｚ",
+  "name_ja": "ジャラランガＺ",
+  "name_en": "Kommonium Z"
+ },
+ "Recipe": {
+  "name_zh": "材料单*",
+  "name_ja": "レシピ",
+  "name_en": "Recipe"
+ },
+ "TM Materials": {
+  "name_zh": "掉落物*",
+  "name_ja": "おとしもの",
+  "name_en": "TM Materials"
+ },
+ "Gimmighoul Coin": {
+  "name_zh": "索财灵的硬币",
+  "name_ja": "コレクレーのコイン",
+  "name_en": "Gimmighoul Coin"
+ },
+ "Baguette": {
+  "name_zh": "长棍面包",
+  "name_ja": "バゲット",
+  "name_en": "Baguette"
+ },
+ "Mayonnaise": {
+  "name_zh": "蛋黄酱",
+  "name_ja": "マヨネーズ",
+  "name_en": "Mayonnaise"
+ },
+ "Ketchup": {
+  "name_zh": "番茄酱",
+  "name_ja": "ケチャップ",
+  "name_en": "Ketchup"
+ },
+ "Mustard": {
+  "name_zh": "黄芥末酱",
+  "name_ja": "マスタード",
+  "name_en": "Mustard"
+ },
+ "Butter": {
+  "name_zh": "黄油",
+  "name_ja": "バター",
+  "name_en": "Butter"
+ },
+ "Peanut Butter": {
+  "name_zh": "花生酱",
+  "name_ja": "ピーナッツバター",
+  "name_en": "Peanut Butter"
+ },
+ "Chili Sauce": {
+  "name_zh": "辣酱",
+  "name_ja": "チリソース",
+  "name_en": "Chili Sauce"
+ },
+ "Salt": {
+  "name_zh": "盐",
+  "name_ja": "ソルト",
+  "name_en": "Salt"
+ },
+ "Pepper": {
+  "name_zh": "胡椒",
+  "name_ja": "ペッパー",
+  "name_en": "Pepper"
+ },
+ "Yogurt": {
+  "name_zh": "酸奶",
+  "name_ja": "ヨーグルト",
+  "name_en": "Yogurt"
+ },
+ "Whipped Cream": {
+  "name_zh": "鲜奶油",
+  "name_ja": "ホイップクリーム",
+  "name_en": "Whipped Cream"
+ },
+ "Cream Cheese": {
+  "name_zh": "奶油芝士",
+  "name_ja": "クリームチーズ",
+  "name_en": "Cream Cheese"
+ },
+ "Jam": {
+  "name_zh": "莓果酱",
+  "name_ja": "ベリージャム",
+  "name_en": "Jam"
+ },
+ "Marmalade": {
+  "name_zh": "橘子酱",
+  "name_ja": "マーマレード",
+  "name_en": "Marmalade"
+ },
+ "Olive Oil": {
+  "name_zh": "橄榄油",
+  "name_ja": "オリーブオイル",
+  "name_en": "Olive Oil"
+ },
+ "Vinegar": {
+  "name_zh": "醋",
+  "name_ja": "ビネガー",
+  "name_en": "Vinegar"
+ },
+ "Horseradish": {
+  "name_zh": "辣根",
+  "name_ja": "ホースラディッシュ",
+  "name_en": "Horseradish"
+ },
+ "Curry Powder": {
+  "name_zh": "咖喱粉",
+  "name_ja": "カレーパウダー",
+  "name_en": "Curry Powder"
+ },
+ "Wasabi": {
+  "name_zh": "芥末酱",
+  "name_ja": "ワサビソース",
+  "name_en": "Wasabi"
+ },
+ "Sweet Herba Mystica": {
+  "name_zh": "秘传：甜味料",
+  "name_ja": "ひでん：あまスパイス",
+  "name_en": "Sweet Herba Mystica"
+ },
+ "Salty Herba Mystica": {
+  "name_zh": "秘传：咸味料",
+  "name_ja": "ひでん：しおスパイス",
+  "name_en": "Salty Herba Mystica"
+ },
+ "Sour Herba Mystica": {
+  "name_zh": "秘传：酸味料",
+  "name_ja": "ひでん：すぱスパイス",
+  "name_en": "Sour Herba Mystica"
+ },
+ "Bitter Herba Mystica": {
+  "name_zh": "秘传：苦味料",
+  "name_ja": "ひでん：にがスパイス",
+  "name_en": "Bitter Herba Mystica"
+ },
+ "Spicy Herba Mystica": {
+  "name_zh": "秘传：辣味料",
+  "name_ja": "ひでん：からスパイス",
+  "name_en": "Spicy Herba Mystica"
+ },
+ "Picnic Set": {
+  "name_zh": "野餐组合",
+  "name_ja": "ピクニックセット",
+  "name_en": "Picnic Set"
+ },
+ "Academy Bottle": {
+  "name_zh": "校园水壶",
+  "name_ja": "スクールボトル",
+  "name_en": "Academy Bottle"
+ },
+ "Polka-Dot Bottle": {
+  "name_zh": "圆点水壶",
+  "name_ja": "みずたまボトル",
+  "name_en": "Polka-Dot Bottle"
+ },
+ "Striped Bottle": {
+  "name_zh": "条纹水壶",
+  "name_ja": "ストライプボトル",
+  "name_en": "Striped Bottle"
+ },
+ "Diamond Bottle": {
+  "name_zh": "菱纹水壶",
+  "name_ja": "ダイヤボトル",
+  "name_en": "Diamond Bottle"
+ },
+ "Academy Cup": {
+  "name_zh": "校园水杯",
+  "name_ja": "スクールカップ",
+  "name_en": "Academy Cup"
+ },
+ "Striped Cup": {
+  "name_zh": "直条纹水杯",
+  "name_ja": "たてストライプカップ",
+  "name_en": "Striped Cup"
+ },
+ "Polka-Dot Cup": {
+  "name_zh": "圆点水杯",
+  "name_ja": "みずたまカップ",
+  "name_en": "Polka-Dot Cup"
+ },
+ "Flower Pattern Cup": {
+  "name_zh": "花朵水杯",
+  "name_ja": "フラワーカップ",
+  "name_en": "Flower Pattern Cup"
+ },
+ "Academy Tablecloth": {
+  "name_zh": "校园桌巾",
+  "name_ja": "スクールクロス",
+  "name_en": "Academy Tablecloth"
+ },
+ "Whimsical Tablecloth": {
+  "name_zh": "幻彩桌巾",
+  "name_ja": "ファンシークロス",
+  "name_en": "Whimsical Tablecloth"
+ },
+ "Leafy Tablecloth": {
+  "name_zh": "大自然桌巾",
+  "name_ja": "ネイチャークロス",
+  "name_en": "Leafy Tablecloth"
+ },
+ "Spooky Tablecloth": {
+  "name_zh": "鬼祟桌巾",
+  "name_ja": "うらめしクロス",
+  "name_en": "Spooky Tablecloth"
+ },
+ "Academy Ball": {
+  "name_zh": "校园球",
+  "name_ja": "スクールボール",
+  "name_en": "Academy Ball"
+ },
+ "Marill Ball": {
+  "name_zh": "玛力露球",
+  "name_ja": "マリルボール",
+  "name_en": "Marill Ball"
+ },
+ "Yarn Ball": {
+  "name_zh": "毛线球",
+  "name_ja": "けいとボール",
+  "name_en": "Yarn Ball"
+ },
+ "Cyber Ball": {
+  "name_zh": "电竞球",
+  "name_ja": "ゲーミングボール",
+  "name_en": "Cyber Ball"
+ },
+ "Gold Pick": {
+  "name_zh": "金色三明治签",
+  "name_ja": "ゴールドピック",
+  "name_en": "Gold Pick"
+ },
+ "Silver Pick": {
+  "name_zh": "银色三明治签",
+  "name_ja": "シルバーピック",
+  "name_en": "Silver Pick"
+ },
+ "Red-Flag Pick": {
+  "name_zh": "红旗子三明治签",
+  "name_ja": "あかいはたピック",
+  "name_en": "Red-Flag Pick"
+ },
+ "Blue-Flag Pick": {
+  "name_zh": "蓝旗子三明治签",
+  "name_ja": "あおいはたピック",
+  "name_en": "Blue-Flag Pick"
+ },
+ "Pika-Pika Pick": {
+  "name_zh": "皮卡丘三明治签",
+  "name_ja": "ピカピカピック",
+  "name_en": "Pika-Pika Pick"
+ },
+ "Winking Pika Pick": {
+  "name_zh": "眨眼皮卡丘三明治签",
+  "name_ja": "パチピカピック",
+  "name_en": "Winking Pika Pick"
+ },
+ "Vee-Vee Pick": {
+  "name_zh": "伊布三明治签",
+  "name_ja": "ブイブイピック",
+  "name_en": "Vee-Vee Pick"
+ },
+ "Smiling Vee Pick": {
+  "name_zh": "笑脸伊布三明治签",
+  "name_ja": "ニコブイピック",
+  "name_en": "Smiling Vee Pick"
+ },
+ "Blue Poké Ball Pick": {
+  "name_zh": "蓝珠珠三明治签",
+  "name_ja": "あおボールピック",
+  "name_en": "Blue Poké Ball Pick"
+ },
+ "Pink Bottle": {
+  "name_zh": "粉红水壶",
+  "name_ja": "ピンクボトル",
+  "name_en": "Pink Bottle"
+ },
+ "Blue Bottle": {
+  "name_zh": "蓝色水壶",
+  "name_ja": "ブルーボトル",
+  "name_en": "Blue Bottle"
+ },
+ "Yellow Bottle": {
+  "name_zh": "黄色水壶",
+  "name_ja": "イエローボトル",
+  "name_en": "Yellow Bottle"
+ },
+ "Steel Bottle (R)": {
+  "name_zh": "红纹不锈钢水壶",
+  "name_ja": "Rステンレスボトル",
+  "name_en": "Steel Bottle (R)"
+ },
+ "Steel Bottle (Y)": {
+  "name_zh": "黄纹不锈钢水壶",
+  "name_ja": "Yステンレスボトル",
+  "name_en": "Steel Bottle (Y)"
+ },
+ "Steel Bottle (B)": {
+  "name_zh": "蓝纹不锈钢水壶",
+  "name_ja": "Bステンレスボトル",
+  "name_en": "Steel Bottle (B)"
+ },
+ "Silver Bottle": {
+  "name_zh": "银钛水壶",
+  "name_ja": "シルバーチタンボトル",
+  "name_en": "Silver Bottle"
+ },
+ "Barred Cup": {
+  "name_zh": "横条纹水杯",
+  "name_ja": "よこストライプカップ",
+  "name_en": "Barred Cup"
+ },
+ "Diamond Pattern Cup": {
+  "name_zh": "菱纹水杯",
+  "name_ja": "ダイヤカップ",
+  "name_en": "Diamond Pattern Cup"
+ },
+ "Fire Pattern Cup": {
+  "name_zh": "火焰水杯",
+  "name_ja": "ファイヤーカップ",
+  "name_en": "Fire Pattern Cup"
+ },
+ "Pink Cup": {
+  "name_zh": "粉红水杯",
+  "name_ja": "ピンクカップ",
+  "name_en": "Pink Cup"
+ },
+ "Blue Cup": {
+  "name_zh": "蓝色水杯",
+  "name_ja": "ブルーカップ",
+  "name_en": "Blue Cup"
+ },
+ "Yellow Cup": {
+  "name_zh": "黄色水杯",
+  "name_ja": "イエローカップ",
+  "name_en": "Yellow Cup"
+ },
+ "Pikachu Cup": {
+  "name_zh": "皮卡丘水杯",
+  "name_ja": "ピカチュウカップ",
+  "name_en": "Pikachu Cup"
+ },
+ "Eevee Cup": {
+  "name_zh": "伊布水杯",
+  "name_ja": "イーブイカップ",
+  "name_en": "Eevee Cup"
+ },
+ "Slowpoke Cup": {
+  "name_zh": "呆呆兽水杯",
+  "name_ja": "ヤドンカップ",
+  "name_en": "Slowpoke Cup"
+ },
+ "Silver Cup": {
+  "name_zh": "银钛水杯",
+  "name_ja": "シルバーチタンカップ",
+  "name_en": "Silver Cup"
+ },
+ "Exercise Ball": {
+  "name_zh": "瑜珈球",
+  "name_ja": "バランスボール",
+  "name_en": "Exercise Ball"
+ },
+ "Plaid Tablecloth (Y)": {
+  "name_zh": "黄色格子桌巾",
+  "name_ja": "きいろチェッククロス",
+  "name_en": "Plaid Tablecloth (Y)"
+ },
+ "Plaid Tablecloth (B)": {
+  "name_zh": "蓝色格子桌巾",
+  "name_ja": "あおチェッククロス",
+  "name_en": "Plaid Tablecloth (B)"
+ },
+ "Plaid Tablecloth (R)": {
+  "name_zh": "红色格子桌巾",
+  "name_ja": "あかチェッククロス",
+  "name_en": "Plaid Tablecloth (R)"
+ },
+ "B&W Grass Tablecloth": {
+  "name_zh": "黑白草丛桌巾",
+  "name_ja": "くさむらモノクロス",
+  "name_en": "B&W Grass Tablecloth"
+ },
+ "Battle Tablecloth": {
+  "name_zh": "对决桌巾",
+  "name_ja": "しょうぶクロス",
+  "name_en": "Battle Tablecloth"
+ },
+ "Monstrous Tablecloth": {
+  "name_zh": "怪兽桌巾",
+  "name_ja": "かいじゅうクロス",
+  "name_en": "Monstrous Tablecloth"
+ },
+ "Striped Tablecloth": {
+  "name_zh": "条纹桌巾",
+  "name_ja": "ストライプクロス",
+  "name_en": "Striped Tablecloth"
+ },
+ "Diamond Tablecloth": {
+  "name_zh": "菱纹桌巾",
+  "name_ja": "ダイヤクロス",
+  "name_en": "Diamond Tablecloth"
+ },
+ "Polka-Dot Tablecloth": {
+  "name_zh": "圆点桌巾",
+  "name_ja": "みずたまクロス",
+  "name_en": "Polka-Dot Tablecloth"
+ },
+ "Lilac Tablecloth": {
+  "name_zh": "紫色桌巾",
+  "name_ja": "パープルクロス",
+  "name_en": "Lilac Tablecloth"
+ },
+ "Mint Tablecloth": {
+  "name_zh": "浅绿桌巾",
+  "name_ja": "ミントクロス",
+  "name_en": "Mint Tablecloth"
+ },
+ "Peach Tablecloth": {
+  "name_zh": "米色桌巾",
+  "name_ja": "ベージュクロス",
+  "name_en": "Peach Tablecloth"
+ },
+ "Yellow Tablecloth": {
+  "name_zh": "黄色桌巾",
+  "name_ja": "イエロークロス",
+  "name_en": "Yellow Tablecloth"
+ },
+ "Blue Tablecloth": {
+  "name_zh": "蓝色桌巾",
+  "name_ja": "ブルークロス",
+  "name_en": "Blue Tablecloth"
+ },
+ "Pink Tablecloth": {
+  "name_zh": "粉红桌巾",
+  "name_ja": "ピンククロス",
+  "name_en": "Pink Tablecloth"
+ },
+ "Gold Bottle": {
+  "name_zh": "金钛水壶",
+  "name_ja": "ゴールドチタンボトル",
+  "name_en": "Gold Bottle"
+ },
+ "Bronze Bottle": {
+  "name_zh": "铜钛水壶",
+  "name_ja": "ブロンズチタンボトル",
+  "name_en": "Bronze Bottle"
+ },
+ "Gold Cup": {
+  "name_zh": "金钛水杯",
+  "name_ja": "ゴールドチタンカップ",
+  "name_en": "Gold Cup"
+ },
+ "Bronze Cup": {
+  "name_zh": "铜钛水杯",
+  "name_ja": "ブロンズチタンカップ",
+  "name_en": "Bronze Cup"
+ },
+ "Green Poké Ball Pick": {
+  "name_zh": "绿珠珠三明治签",
+  "name_ja": "みどりボールピック",
+  "name_en": "Green Poké Ball Pick"
+ },
+ "Red Poké Ball Pick": {
+  "name_zh": "红珠珠三明治签",
+  "name_ja": "あかボールピック",
+  "name_en": "Red Poké Ball Pick"
+ },
+ "Party Sparkler Pick": {
+  "name_zh": "烟花祝庆三明治签",
+  "name_ja": "おいわいはなびピック",
+  "name_en": "Party Sparkler Pick"
+ },
+ "Heroic Sword Pick": {
+  "name_zh": "勇者之剑三明治签",
+  "name_ja": "ゆうしゃのけんピック",
+  "name_en": "Heroic Sword Pick"
+ },
+ "Magical Star Pick": {
+  "name_zh": "魔法星星三明治签",
+  "name_ja": "マジカルスターピック",
+  "name_en": "Magical Star Pick"
+ },
+ "Magical Heart Pick": {
+  "name_zh": "魔法甜心三明治签",
+  "name_ja": "マジカルハートピック",
+  "name_en": "Magical Heart Pick"
+ },
+ "Parasol Pick": {
+  "name_zh": "阳伞三明治签",
+  "name_ja": "パラソルピック",
+  "name_en": "Parasol Pick"
+ },
+ "Blue-Sky Flower Pick": {
+  "name_zh": "晴空花三明治签",
+  "name_ja": "あおぞらおはなピック",
+  "name_en": "Blue-Sky Flower Pick"
+ },
+ "Sunset Flower Pick": {
+  "name_zh": "夕阳花三明治签",
+  "name_ja": "ゆうやけおはなピック",
+  "name_en": "Sunset Flower Pick"
+ },
+ "Sunrise Flower Pick": {
+  "name_zh": "朝霞花三明治签",
+  "name_ja": "あさやけおはなピック",
+  "name_en": "Sunrise Flower Pick"
+ },
+ "Blue Dish": {
+  "name_zh": "蓝色盘子",
+  "name_ja": "ブループレート",
+  "name_en": "Blue Dish"
+ },
+ "Green Dish": {
+  "name_zh": "绿色盘子",
+  "name_ja": "グリーンプレート",
+  "name_en": "Green Dish"
+ },
+ "Orange Dish": {
+  "name_zh": "橘色盘子",
+  "name_ja": "オレンジプレート",
+  "name_en": "Orange Dish"
+ },
+ "Red Dish": {
+  "name_zh": "红色盘子",
+  "name_ja": "レッドプレート",
+  "name_en": "Red Dish"
+ },
+ "White Dish": {
+  "name_zh": "白色盘子",
+  "name_ja": "ホワイトプレート",
+  "name_en": "White Dish"
+ },
+ "Yellow Dish": {
+  "name_zh": "黄色盘子",
+  "name_ja": "イエロープレート",
+  "name_en": "Yellow Dish"
+ },
+ "Simple Chairs": {
+  "name_zh": "简约椅子",
+  "name_ja": "シンプルチェア",
+  "name_en": "Simple Chairs"
+ },
+ "Academy Chairs": {
+  "name_zh": "校园椅子",
+  "name_ja": "スクールチェア",
+  "name_en": "Academy Chairs"
+ },
+ "Whimsical Chairs": {
+  "name_zh": "幻彩椅子",
+  "name_ja": "ファンシーチェア",
+  "name_en": "Whimsical Chairs"
+ },
+ "Leafy Chairs": {
+  "name_zh": "大自然椅子",
+  "name_ja": "ネイチャーチェア",
+  "name_en": "Leafy Chairs"
+ },
+ "Spooky Chairs": {
+  "name_zh": "鬼祟椅子",
+  "name_ja": "うらめしチェア",
+  "name_en": "Spooky Chairs"
+ },
+ "Plaid Chairs (Y)": {
+  "name_zh": "黄色格子椅子",
+  "name_ja": "きいろチェックチェア",
+  "name_en": "Plaid Chairs (Y)"
+ },
+ "Plaid Chairs (B)": {
+  "name_zh": "蓝色格子椅子",
+  "name_ja": "あおチェックチェア",
+  "name_en": "Plaid Chairs (B)"
+ },
+ "Plaid Chairs (R)": {
+  "name_zh": "红色格子椅子",
+  "name_ja": "あかチェックチェア",
+  "name_en": "Plaid Chairs (R)"
+ },
+ "B&W Grass Chairs": {
+  "name_zh": "草丛椅子",
+  "name_ja": "くさむらチェア",
+  "name_en": "B&W Grass Chairs"
+ },
+ "Battle Chairs": {
+  "name_zh": "对决椅子",
+  "name_ja": "しょうぶチェア",
+  "name_en": "Battle Chairs"
+ },
+ "Monstrous Chairs": {
+  "name_zh": "怪兽椅子",
+  "name_ja": "かいじゅうチェア",
+  "name_en": "Monstrous Chairs"
+ },
+ "Striped Chairs": {
+  "name_zh": "条纹椅子",
+  "name_ja": "ストライプチェア",
+  "name_en": "Striped Chairs"
+ },
+ "Diamond Chairs": {
+  "name_zh": "菱纹椅子",
+  "name_ja": "ダイヤチェア",
+  "name_en": "Diamond Chairs"
+ },
+ "Polka-Dot Chairs": {
+  "name_zh": "圆点椅子",
+  "name_ja": "みずたまチェア",
+  "name_en": "Polka-Dot Chairs"
+ },
+ "Lilac Chairs": {
+  "name_zh": "紫色椅子",
+  "name_ja": "パープルチェア",
+  "name_en": "Lilac Chairs"
+ },
+ "Mint Chairs": {
+  "name_zh": "浅绿椅子",
+  "name_ja": "ミントチェア",
+  "name_en": "Mint Chairs"
+ },
+ "Peach Chairs": {
+  "name_zh": "米色椅子",
+  "name_ja": "ベージュチェア",
+  "name_en": "Peach Chairs"
+ },
+ "Yellow Chairs": {
+  "name_zh": "黄色椅子",
+  "name_ja": "イエローチェア",
+  "name_en": "Yellow Chairs"
+ },
+ "Blue Chairs": {
+  "name_zh": "蓝色椅子",
+  "name_ja": "ブルーチェア",
+  "name_en": "Blue Chairs"
+ },
+ "Pink Chairs": {
+  "name_zh": "粉红椅子",
+  "name_ja": "ピンクチェア",
+  "name_en": "Pink Chairs"
+ },
+ "Fiery Pick": {
+  "name_zh": "鸭嘴炎兽三明治签",
+  "name_ja": "メラメラピック",
+  "name_en": "Fiery Pick"
+ },
+ "Blueberry Tablecloth": {
+  "name_zh": "蓝莓桌巾",
+  "name_ja": "ブルーベリークロス",
+  "name_en": "Blueberry Tablecloth"
+ },
+ "Blueberry Chairs": {
+  "name_zh": "蓝莓椅子",
+  "name_ja": "ブルーベリーチェア",
+  "name_en": "Blueberry Chairs"
+ },
+ "Sausages": {
+  "name_zh": "粗绞肉香肠",
+  "name_ja": "あらびきヴルスト",
+  "name_en": "Sausages"
+ },
+ "Bob's Food Tins": {
+  "name_zh": "饱伯罐头",
+  "name_ja": "ボブのかんづめ",
+  "name_en": "Bob's Food Tins"
+ },
+ "Bach's Food Tins": {
+  "name_zh": "巴哈罐头",
+  "name_ja": "バックのかんづめ",
+  "name_en": "Bach's Food Tins"
+ },
+ "Tins of Beans": {
+  "name_zh": "豆子罐头",
+  "name_ja": "マメかん",
+  "name_en": "Tins of Beans"
+ },
+ "Bread": {
+  "name_zh": "吐司面包",
+  "name_ja": "しょくパン",
+  "name_en": "Bread"
+ },
+ "Pasta": {
+  "name_zh": "通心粉",
+  "name_ja": "パスタ",
+  "name_en": "Pasta"
+ },
+ "Mixed Mushrooms": {
+  "name_zh": "袋装蕈菇",
+  "name_ja": "キノコパック",
+  "name_en": "Mixed Mushrooms"
+ },
+ "Smoke-Poke Tails": {
+  "name_zh": "烟熏尾巴",
+  "name_ja": "しっぽのくんせい",
+  "name_en": "Smoke-Poke Tails"
+ },
+ "Large Leeks": {
+  "name_zh": "粗枝大葱",
+  "name_ja": "ふといながねぎ",
+  "name_en": "Large Leeks"
+ },
+ "Fancy Apples": {
+  "name_zh": "特选苹果",
+  "name_ja": "とくせんリンゴ",
+  "name_en": "Fancy Apples"
+ },
+ "Brittle Bones": {
+  "name_zh": "细骨",
+  "name_ja": "かぼそいホネ",
+  "name_en": "Brittle Bones"
+ },
+ "Packs of Potatoes": {
+  "name_zh": "袋装土豆",
+  "name_ja": "ポテトパック",
+  "name_en": "Packs of Potatoes"
+ },
+ "Pungent Roots": {
+  "name_zh": "水边香草",
+  "name_ja": "みずべのハーブ",
+  "name_en": "Pungent Roots"
+ },
+ "Salad Mixes": {
+  "name_zh": "袋装蔬菜",
+  "name_ja": "やさいパック",
+  "name_en": "Salad Mixes"
+ },
+ "Fried Foods": {
+  "name_zh": "炸物拼盘",
+  "name_ja": "フライもりあわせ",
+  "name_en": "Fried Foods"
+ },
+ "Boiled Eggs": {
+  "name_zh": "水煮蛋",
+  "name_ja": "ゆでタマゴ",
+  "name_en": "Boiled Eggs"
+ },
+ "Fruit Bunches": {
+  "name_zh": "袋装果实",
+  "name_ja": "フサパック",
+  "name_en": "Fruit Bunches"
+ },
+ "Moomoo Cheese": {
+  "name_zh": "哞哞乳酪",
+  "name_ja": "モーモーチーズ",
+  "name_en": "Moomoo Cheese"
+ },
+ "Spice Mix": {
+  "name_zh": "香料组合",
+  "name_ja": "スパイスセット",
+  "name_en": "Spice Mix"
+ },
+ "Fresh Cream": {
+  "name_zh": "鲜鲜奶油",
+  "name_ja": "しんせんクリーム",
+  "name_en": "Fresh Cream"
+ },
+ "Packaged Curry": {
+  "name_zh": "即食咖喱",
+  "name_ja": "レトルトカレー",
+  "name_en": "Packaged Curry"
+ },
+ "Coconut Milk": {
+  "name_zh": "椰奶",
+  "name_ja": "ヤシのミルク",
+  "name_en": "Coconut Milk"
+ },
+ "Instant Noodles": {
+  "name_zh": "即食面",
+  "name_ja": "レトルトめん",
+  "name_en": "Instant Noodles"
+ },
+ "Precooked Burgers": {
+  "name_zh": "即食肉排",
+  "name_ja": "レトルトバーグ",
+  "name_en": "Precooked Burgers"
+ },
+ "Gigantamixes": {
+  "name_zh": "超极粉",
+  "name_ja": "キョダイパウダー",
+  "name_en": "Gigantamixes"
+ },
+ "Lettuce": {
+  "name_zh": "生菜",
+  "name_ja": "レタス",
+  "name_en": "Lettuce"
+ },
+ "Tomato": {
+  "name_zh": "番茄片",
+  "name_ja": "トマトスライス",
+  "name_en": "Tomato"
+ },
+ "Cherry Tomatoes": {
+  "name_zh": "小番茄块",
+  "name_ja": "カットミニトマト",
+  "name_en": "Cherry Tomatoes"
+ },
+ "Cucumber": {
+  "name_zh": "小黄瓜片",
+  "name_ja": "キュウリスライス",
+  "name_en": "Cucumber"
+ },
+ "Pickle": {
+  "name_zh": "酸黄瓜片",
+  "name_ja": "ピクルススライス",
+  "name_en": "Pickle"
+ },
+ "Onion": {
+  "name_zh": "洋葱片",
+  "name_ja": "たまねぎスライス",
+  "name_en": "Onion"
+ },
+ "Red Onion": {
+  "name_zh": "红洋葱",
+  "name_ja": "アーリーレッド",
+  "name_en": "Red Onion"
+ },
+ "Green Bell Pepper": {
+  "name_zh": "青椒片",
+  "name_ja": "ピーマンスライス",
+  "name_en": "Green Bell Pepper"
+ },
+ "Red Bell Pepper": {
+  "name_zh": "红椒片",
+  "name_ja": "あかパプリカスライス",
+  "name_en": "Red Bell Pepper"
+ },
+ "Yellow Bell Pepper": {
+  "name_zh": "黄椒片",
+  "name_ja": "きパプリカスライス",
+  "name_en": "Yellow Bell Pepper"
+ },
+ "Avocado": {
+  "name_zh": "牛油果",
+  "name_ja": "アボカド",
+  "name_en": "Avocado"
+ },
+ "Bacon": {
+  "name_zh": "煎培根",
+  "name_ja": "やきベーコン",
+  "name_en": "Bacon"
+ },
+ "Ham": {
+  "name_zh": "火腿片",
+  "name_ja": "ハムスライス",
+  "name_en": "Ham"
+ },
+ "Prosciutto": {
+  "name_zh": "生火腿",
+  "name_ja": "なまハム",
+  "name_en": "Prosciutto"
+ },
+ "Chorizo": {
+  "name_zh": "煎辣香肠",
+  "name_ja": "やきチョリソー",
+  "name_en": "Chorizo"
+ },
+ "Herbed Sausage": {
+  "name_zh": "香草香肠",
+  "name_ja": "ハーブソーセージ",
+  "name_en": "Herbed Sausage"
+ },
+ "Hamburger": {
+  "name_zh": "汉堡排",
+  "name_ja": "ハンバーグ",
+  "name_en": "Hamburger"
+ },
+ "Klawf Stick": {
+  "name_zh": "毛崖蟹棒",
+  "name_ja": "ガケガニスティック",
+  "name_en": "Klawf Stick"
+ },
+ "Smoked Fillet": {
+  "name_zh": "烟熏鱼片",
+  "name_ja": "スモークきりみ",
+  "name_en": "Smoked Fillet"
+ },
+ "Fried Fillet": {
+  "name_zh": "炸鱼片",
+  "name_ja": "きりみフライ",
+  "name_en": "Fried Fillet"
+ },
+ "Egg": {
+  "name_zh": "水煮蛋片",
+  "name_ja": "スライスエッグ",
+  "name_en": "Egg"
+ },
+ "Potato Tortilla": {
+  "name_zh": "烘蛋",
+  "name_ja": "トルティージャ",
+  "name_en": "Potato Tortilla"
+ },
+ "Tofu": {
+  "name_zh": "豆腐",
+  "name_ja": "トーフ",
+  "name_en": "Tofu"
+ },
+ "Rice": {
+  "name_zh": "米饭",
+  "name_ja": "ライス",
+  "name_en": "Rice"
+ },
+ "Noodles": {
+  "name_zh": "面条",
+  "name_ja": "ヌードル",
+  "name_en": "Noodles"
+ },
+ "Potato Salad": {
+  "name_zh": "土豆沙拉",
+  "name_ja": "ポテトサラダ",
+  "name_en": "Potato Salad"
+ },
+ "Cheese": {
+  "name_zh": "芝士片",
+  "name_ja": "スライスチーズ",
+  "name_en": "Cheese"
+ },
+ "Banana": {
+  "name_zh": "香蕉片",
+  "name_ja": "バナナスライス",
+  "name_en": "Banana"
+ },
+ "Strawberry": {
+  "name_zh": "草莓片",
+  "name_ja": "いちごスライス",
+  "name_en": "Strawberry"
+ },
+ "Apple": {
+  "name_zh": "苹果片",
+  "name_ja": "わぎりリンゴ",
+  "name_en": "Apple"
+ },
+ "Kiwi": {
+  "name_zh": "奇异果片",
+  "name_ja": "わぎりキウイ",
+  "name_en": "Kiwi"
+ },
+ "Pineapple": {
+  "name_zh": "凤梨片",
+  "name_ja": "カットパイン",
+  "name_en": "Pineapple"
+ },
+ "Jalapeño": {
+  "name_zh": "小辣椒",
+  "name_ja": "ハラペーニョ",
+  "name_en": "Jalapeño"
+ },
+ "Watercress": {
+  "name_zh": "豆瓣菜",
+  "name_ja": "クレソン",
+  "name_en": "Watercress"
+ },
+ "Basil": {
+  "name_zh": "罗勒",
+  "name_ja": "バジル",
+  "name_en": "Basil"
+ },
+ "Cheri Berry": {
+  "name_zh": "樱子果",
+  "name_ja": "クラボのみ",
+  "name_en": "Cheri Berry"
+ },
+ "Chesto Berry": {
+  "name_zh": "零余果",
+  "name_ja": "カゴのみ",
+  "name_en": "Chesto Berry"
+ },
+ "Pecha Berry": {
+  "name_zh": "桃桃果",
+  "name_ja": "モモンのみ",
+  "name_en": "Pecha Berry"
+ },
+ "Rawst Berry": {
+  "name_zh": "莓莓果",
+  "name_ja": "チーゴのみ",
+  "name_en": "Rawst Berry"
+ },
+ "Aspear Berry": {
+  "name_zh": "利木果",
+  "name_ja": "ナナシのみ",
+  "name_en": "Aspear Berry"
+ },
+ "Leppa Berry": {
+  "name_zh": "苹野果",
+  "name_ja": "ヒメリのみ",
+  "name_en": "Leppa Berry"
+ },
+ "Oran Berry": {
+  "name_zh": "橙橙果",
+  "name_ja": "オレンのみ",
+  "name_en": "Oran Berry"
+ },
+ "Persim Berry": {
+  "name_zh": "柿仔果",
+  "name_ja": "キーのみ",
+  "name_en": "Persim Berry"
+ },
+ "Lum Berry": {
+  "name_zh": "木子果",
+  "name_ja": "ラムのみ",
+  "name_en": "Lum Berry"
+ },
+ "Sitrus Berry": {
+  "name_zh": "文柚果",
+  "name_ja": "オボンのみ",
+  "name_en": "Sitrus Berry"
+ },
+ "Figy Berry": {
+  "name_zh": "勿花果",
+  "name_ja": "フィラのみ",
+  "name_en": "Figy Berry"
+ },
+ "Wiki Berry": {
+  "name_zh": "异奇果",
+  "name_ja": "ウイのみ",
+  "name_en": "Wiki Berry"
+ },
+ "Mago Berry": {
+  "name_zh": "芒芒果",
+  "name_ja": "マゴのみ",
+  "name_en": "Mago Berry"
+ },
+ "Aguav Berry": {
+  "name_zh": "乐芭果",
+  "name_ja": "バンジのみ",
+  "name_en": "Aguav Berry"
+ },
+ "Iapapa Berry": {
+  "name_zh": "芭亚果",
+  "name_ja": "イアのみ",
+  "name_en": "Iapapa Berry"
+ },
+ "Razz Berry": {
+  "name_zh": "蔓莓果",
+  "name_ja": "ズリのみ",
+  "name_en": "Razz Berry"
+ },
+ "Silver Razz Berry": {
+  "name_zh": "银色蔓莓果",
+  "name_ja": "ぎんのズリのみ",
+  "name_en": "Silver Razz Berry"
+ },
+ "Golden Razz Berry": {
+  "name_zh": "金色蔓莓果",
+  "name_ja": "きんのズリのみ",
+  "name_en": "Golden Razz Berry"
+ },
+ "Bluk Berry": {
+  "name_zh": "墨莓果",
+  "name_ja": "ブリーのみ",
+  "name_en": "Bluk Berry"
+ },
+ "Nanab Berry": {
+  "name_zh": "蕉香果",
+  "name_ja": "ナナのみ",
+  "name_en": "Nanab Berry"
+ },
+ "Silver Nanab Berry": {
+  "name_zh": "银色蕉香果",
+  "name_ja": "ぎんのナナのみ",
+  "name_en": "Silver Nanab Berry"
+ },
+ "Golden Nanab Berry": {
+  "name_zh": "金色蕉香果",
+  "name_ja": "きんのナナのみ",
+  "name_en": "Golden Nanab Berry"
+ },
+ "Wepear Berry": {
+  "name_zh": "西梨果",
+  "name_ja": "セシナのみ",
+  "name_en": "Wepear Berry"
+ },
+ "Pinap Berry": {
+  "name_zh": "凰梨果",
+  "name_ja": "パイルのみ",
+  "name_en": "Pinap Berry"
+ },
+ "Silver Pinap Berry": {
+  "name_zh": "银色凰梨果",
+  "name_ja": "ぎんのパイルのみ",
+  "name_en": "Silver Pinap Berry"
+ },
+ "Golden Pinap Berry": {
+  "name_zh": "金色凰梨果",
+  "name_ja": "きんのパイルのみ",
+  "name_en": "Golden Pinap Berry"
+ },
+ "Pomeg Berry": {
+  "name_zh": "榴石果",
+  "name_ja": "ザロクのみ",
+  "name_en": "Pomeg Berry"
+ },
+ "Kelpsy Berry": {
+  "name_zh": "藻根果",
+  "name_ja": "ネコブのみ",
+  "name_en": "Kelpsy Berry"
+ },
+ "Qualot Berry": {
+  "name_zh": "比巴果",
+  "name_ja": "タポルのみ",
+  "name_en": "Qualot Berry"
+ },
+ "Hondew Berry": {
+  "name_zh": "哈密果",
+  "name_ja": "ロメのみ",
+  "name_en": "Hondew Berry"
+ },
+ "Grepa Berry": {
+  "name_zh": "萄葡果",
+  "name_ja": "ウブのみ",
+  "name_en": "Grepa Berry"
+ },
+ "Tamato Berry": {
+  "name_zh": "茄番果",
+  "name_ja": "マトマのみ",
+  "name_en": "Tamato Berry"
+ },
+ "Cornn Berry": {
+  "name_zh": "玉黍果",
+  "name_ja": "モコシのみ",
+  "name_en": "Cornn Berry"
+ },
+ "Magost Berry": {
+  "name_zh": "岳竹果",
+  "name_ja": "ゴスのみ",
+  "name_en": "Magost Berry"
+ },
+ "Rabuta Berry": {
+  "name_zh": "茸丹果",
+  "name_ja": "ラブタのみ",
+  "name_en": "Rabuta Berry"
+ },
+ "Nomel Berry": {
+  "name_zh": "檬柠果",
+  "name_ja": "ノメルのみ",
+  "name_en": "Nomel Berry"
+ },
+ "Spelon Berry": {
+  "name_zh": "刺角果",
+  "name_ja": "ノワキのみ",
+  "name_en": "Spelon Berry"
+ },
+ "Pamtre Berry": {
+  "name_zh": "椰木果",
+  "name_ja": "シーヤのみ",
+  "name_en": "Pamtre Berry"
+ },
+ "Watmel Berry": {
+  "name_zh": "瓜西果",
+  "name_ja": "カイスのみ",
+  "name_en": "Watmel Berry"
+ },
+ "Durin Berry": {
+  "name_zh": "金枕果",
+  "name_ja": "ドリのみ",
+  "name_en": "Durin Berry"
+ },
+ "Belue Berry": {
+  "name_zh": "靛莓果",
+  "name_ja": "ベリブのみ",
+  "name_en": "Belue Berry"
+ },
+ "Occa Berry": {
+  "name_zh": "巧可果",
+  "name_ja": "オッカのみ",
+  "name_en": "Occa Berry",
+  "effect": "携带后，受到效果拔群的火属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Passho Berry": {
+  "name_zh": "千香果",
+  "name_ja": "イトケのみ",
+  "name_en": "Passho Berry",
+  "effect": "携带后，受到效果拔群的水属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Wacan Berry": {
+  "name_zh": "烛木果",
+  "name_ja": "ソクノのみ",
+  "name_en": "Wacan Berry",
+  "effect": "携带后，受到效果拔群的电属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Rindo Berry": {
+  "name_zh": "罗子果",
+  "name_ja": "リンドのみ",
+  "name_en": "Rindo Berry",
+  "effect": "携带后，受到效果拔群的草属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Yache Berry": {
+  "name_zh": "番荔果",
+  "name_ja": "ヤチェのみ",
+  "name_en": "Yache Berry",
+  "effect": "携带后，受到效果拔群的冰属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Chople Berry": {
+  "name_zh": "莲蒲果",
+  "name_ja": "ヨプのみ",
+  "name_en": "Chople Berry",
+  "effect": "携带后，受到效果拔群的格斗属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Kebia Berry": {
+  "name_zh": "通通果",
+  "name_ja": "ビアーのみ",
+  "name_en": "Kebia Berry",
+  "effect": "携带后，受到效果拔群的毒属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Shuca Berry": {
+  "name_zh": "腰木果",
+  "name_ja": "シュカのみ",
+  "name_en": "Shuca Berry",
+  "effect": "携带后，受到效果拔群的地面属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Coba Berry": {
+  "name_zh": "棱瓜果",
+  "name_ja": "バコウのみ",
+  "name_en": "Coba Berry",
+  "effect": "携带后，受到效果拔群的飞行属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Payapa Berry": {
+  "name_zh": "福禄果",
+  "name_ja": "ウタンのみ",
+  "name_en": "Payapa Berry",
+  "effect": "携带后，受到效果拔群的超能力属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Tanga Berry": {
+  "name_zh": "扁樱果",
+  "name_ja": "タンガのみ",
+  "name_en": "Tanga Berry",
+  "effect": "携带后，受到效果拔群的虫属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Charti Berry": {
+  "name_zh": "草蚕果",
+  "name_ja": "ヨロギのみ",
+  "name_en": "Charti Berry",
+  "effect": "携带后，受到效果拔群的岩石属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Kasib Berry": {
+  "name_zh": "佛柑果",
+  "name_ja": "カシブのみ",
+  "name_en": "Kasib Berry",
+  "effect": "携带后，受到效果拔群的幽灵属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Haban Berry": {
+  "name_zh": "莓榴果",
+  "name_ja": "ハバンのみ",
+  "name_en": "Haban Berry",
+  "effect": "携带后，受到效果拔群的龙属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Colbur Berry": {
+  "name_zh": "刺耳果",
+  "name_ja": "ナモのみ",
+  "name_en": "Colbur Berry",
+  "effect": "携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Babiri Berry": {
+  "name_zh": "霹霹果",
+  "name_ja": "リリバのみ",
+  "name_en": "Babiri Berry",
+  "effect": "携带后，受到效果拔群的钢属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Chilan Berry": {
+  "name_zh": "灯浆果",
+  "name_ja": "ホズのみ",
+  "name_en": "Chilan Berry",
+  "effect": "携带后，受到效果拔群的一般属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Liechi Berry": {
+  "name_zh": "枝荔果",
+  "name_ja": "チイラのみ",
+  "name_en": "Liechi Berry"
+ },
+ "Ganlon Berry": {
+  "name_zh": "龙睛果",
+  "name_ja": "リュガのみ",
+  "name_en": "Ganlon Berry"
+ },
+ "Salac Berry": {
+  "name_zh": "沙鳞果",
+  "name_ja": "カムラのみ",
+  "name_en": "Salac Berry"
+ },
+ "Petaya Berry": {
+  "name_zh": "龙火果",
+  "name_ja": "ヤタピのみ",
+  "name_en": "Petaya Berry"
+ },
+ "Apicot Berry": {
+  "name_zh": "杏仔果",
+  "name_ja": "ズアのみ",
+  "name_en": "Apicot Berry"
+ },
+ "Lansat Berry": {
+  "name_zh": "兰萨果",
+  "name_ja": "サンのみ",
+  "name_en": "Lansat Berry"
+ },
+ "Starf Berry": {
+  "name_zh": "星桃果",
+  "name_ja": "スターのみ",
+  "name_en": "Starf Berry"
+ },
+ "Enigma Berry": {
+  "name_zh": "谜芝果",
+  "name_ja": "ナゾのみ",
+  "name_en": "Enigma Berry"
+ },
+ "Pumkin Berry": {
+  "name_zh": "金南果",
+  "name_ja": "カチャのみ",
+  "name_en": "Pumkin Berry"
+ },
+ "Drash Berry": {
+  "name_zh": "无青果",
+  "name_ja": "ブーカのみ",
+  "name_en": "Drash Berry"
+ },
+ "Eggant Berry": {
+  "name_zh": "子茄果",
+  "name_ja": "ビスナのみ",
+  "name_en": "Eggant Berry"
+ },
+ "Strib Berry": {
+  "name_zh": "青豌果",
+  "name_ja": "エドマのみ",
+  "name_en": "Strib Berry"
+ },
+ "Nutpea Berry": {
+  "name_zh": "生花果",
+  "name_ja": "ラッカのみ",
+  "name_en": "Nutpea Berry"
+ },
+ "Ginema Berry": {
+  "name_zh": "葱首果",
+  "name_ja": "ギネマのみ",
+  "name_en": "Ginema Berry"
+ },
+ "Kuo Berry": {
+  "name_zh": "葵秋果",
+  "name_ja": "クオのみ",
+  "name_en": "Kuo Berry"
+ },
+ "Yago Berry": {
+  "name_zh": "苦凉果",
+  "name_ja": "ヤゴのみ",
+  "name_en": "Yago Berry"
+ },
+ "Touga Berry": {
+  "name_zh": "热椒果",
+  "name_ja": "トウガのみ",
+  "name_en": "Touga Berry"
+ },
+ "Niniku Berry": {
+  "name_zh": "蒜蒜果",
+  "name_ja": "ニニクのみ",
+  "name_en": "Niniku Berry"
+ },
+ "Topo Berry": {
+  "name_zh": "铃薯果",
+  "name_ja": "トポのみ",
+  "name_en": "Topo Berry"
+ },
+ "Micle Berry": {
+  "name_zh": "奇秘果",
+  "name_ja": "ミクルのみ",
+  "name_en": "Micle Berry"
+ },
+ "Custap Berry": {
+  "name_zh": "释陀果",
+  "name_ja": "イバンのみ",
+  "name_en": "Custap Berry"
+ },
+ "Jaboca Berry": {
+  "name_zh": "嘉珍果",
+  "name_ja": "ジャポのみ",
+  "name_en": "Jaboca Berry"
+ },
+ "Rowap Berry": {
+  "name_zh": "雾莲果",
+  "name_ja": "レンブのみ",
+  "name_en": "Rowap Berry"
+ },
+ "Roseli Berry": {
+  "name_zh": "洛玫果",
+  "name_ja": "ロゼルのみ",
+  "name_en": "Roseli Berry",
+  "effect": "携带后，受到效果拔群的妖精属性招式攻击时，伤害减半（一次性）",
+  "category": "抗性树果"
+ },
+ "Kee Berry": {
+  "name_zh": "亚开果",
+  "name_ja": "アッキのみ",
+  "name_en": "Kee Berry"
+ },
+ "Maranga Berry": {
+  "name_zh": "香罗果",
+  "name_ja": "タラプのみ",
+  "name_en": "Maranga Berry"
+ },
+ "Hopo Berry": {
+  "name_zh": "花啤果",
+  "name_ja": "ポフのみ",
+  "name_en": "Hopo Berry"
+ },
+ "Coin Case": {
+  "name_zh": "代币盒",
+  "name_ja": "コインケース",
+  "name_en": "Coin Case"
+ },
+ "Dowsing Machine": {
+  "name_zh": "探宝器",
+  "name_ja": "ダウジングマシン",
+  "name_en": "Dowsing Machine"
+ },
+ "Old Rod": {
+  "name_zh": "破旧钓竿",
+  "name_ja": "ボロのつりざお",
+  "name_en": "Old Rod"
+ },
+ "Good Rod": {
+  "name_zh": "好钓竿",
+  "name_ja": "いいつりざお",
+  "name_en": "Good Rod"
+ },
+ "Super Rod": {
+  "name_zh": "厉害钓竿",
+  "name_ja": "すごいつりざお",
+  "name_en": "Super Rod"
+ },
+ "S.S. Ticket": {
+  "name_zh": "船票",
+  "name_ja": "ふねのチケット",
+  "name_en": "S.S. Ticket"
+ },
+ "Parcel": {
+  "name_zh": "包裹",
+  "name_ja": "おとどけもの",
+  "name_en": "Parcel"
+ },
+ "Poké Flute": {
+  "name_zh": "宝可梦之笛",
+  "name_ja": "ポケモンのふえ",
+  "name_en": "Poké Flute"
+ },
+ "Secret Key": {
+  "name_zh": "秘密钥匙",
+  "name_ja": "ひみつのカギ",
+  "name_en": "Secret Key"
+ },
+ "Bike Voucher": {
+  "name_zh": "兌換券",
+  "name_ja": "ひきかえけん",
+  "name_en": "Bike Voucher"
+ },
+ "Gold Teeth": {
+  "name_zh": "金假牙",
+  "name_ja": "きんのいれば",
+  "name_en": "Gold Teeth"
+ },
+ "Lift Key": {
+  "name_zh": "电梯钥匙",
+  "name_ja": "エレベータのカギ",
+  "name_en": "Lift Key"
+ },
+ "Bicycle": {
+  "name_zh": "自行车",
+  "name_ja": "じてんしゃ",
+  "name_en": "Bicycle"
+ },
+ "Town Map": {
+  "name_zh": "城镇地图",
+  "name_ja": "タウンマップ",
+  "name_en": "Town Map"
+ },
+ "Silph Scope": {
+  "name_zh": "西尔佛检视镜",
+  "name_ja": "シルフスコープ",
+  "name_en": "Silph Scope"
+ },
+ "Card Key": {
+  "name_zh": "钥匙卡",
+  "name_ja": "カードキー",
+  "name_en": "Card Key"
+ },
+ "Exp. Share": {
+  "name_zh": "学习装置",
+  "name_ja": "がくしゅうそうち",
+  "name_en": "Exp. Share"
+ },
+ "Escape Rope": {
+  "name_zh": "离洞绳",
+  "name_ja": "あなぬけのヒモ",
+  "name_en": "Escape Rope"
+ },
+ "Pokédex": {
+  "name_zh": "宝可梦图鉴",
+  "name_ja": "ポケモンずかん",
+  "name_en": "Pokédex"
+ },
+ "BoulderBadge": {
+  "name_zh": "灰色徽章",
+  "name_ja": "グレーバッジ",
+  "name_en": "BoulderBadge"
+ },
+ "CascadeBadge": {
+  "name_zh": "蓝色徽章",
+  "name_ja": "ブルーバッジ",
+  "name_en": "CascadeBadge"
+ },
+ "ThunderBadge": {
+  "name_zh": "橙色徽章",
+  "name_ja": "オレンジバッジ",
+  "name_en": "ThunderBadge"
+ },
+ "RainbowBadge": {
+  "name_zh": "彩虹徽章",
+  "name_ja": "レインボーバッジ",
+  "name_en": "RainbowBadge"
+ },
+ "SoulBadge": {
+  "name_zh": "粉红徽章",
+  "name_ja": "ピンクバッジ",
+  "name_en": "SoulBadge"
+ },
+ "MarshBadge": {
+  "name_zh": "金色徽章",
+  "name_ja": "ゴールドバッジ",
+  "name_en": "MarshBadge"
+ },
+ "VolcanoBadge": {
+  "name_zh": "深红徽章",
+  "name_ja": "クリムゾンバッジ",
+  "name_en": "VolcanoBadge"
+ },
+ "EarthBadge": {
+  "name_zh": "绿色徽章",
+  "name_ja": "グリーンバッジ",
+  "name_en": "EarthBadge"
+ },
+ "Pass": {
+  "name_zh": "定期月票",
+  "name_ja": "ていきけん",
+  "name_en": "Pass"
+ },
+ "Squirt Bottle": {
+  "name_zh": "杰尼龟喷壶",
+  "name_ja": "ゼニガメじょうろ",
+  "name_en": "Squirt Bottle"
+ },
+ "Red Scale": {
+  "name_zh": "红色鳞片",
+  "name_ja": "あかいウロコ",
+  "name_en": "Red Scale"
+ },
+ "Lost Item": {
+  "name_zh": "遗失物",
+  "name_ja": "おとしもの",
+  "name_en": "Lost Item"
+ },
+ "Machine Part": {
+  "name_zh": "机械零件",
+  "name_ja": "きかいのぶひん",
+  "name_en": "Machine Part"
+ },
+ "Basement Key": {
+  "name_zh": "地下钥匙",
+  "name_ja": "ちかのカギ",
+  "name_en": "Basement Key"
+ },
+ "Silver Wing": {
+  "name_zh": "银色之羽",
+  "name_ja": "ぎんいろのはね",
+  "name_en": "Silver Wing"
+ },
+ "Rainbow Wing": {
+  "name_zh": "虹色之羽",
+  "name_ja": "にじいろのはね",
+  "name_en": "Rainbow Wing"
+ },
+ "Mystery Egg": {
+  "name_zh": "神奇蛋",
+  "name_ja": "ふしぎなタマゴ",
+  "name_en": "Mystery Egg"
+ },
+ "Secret Potion": {
+  "name_zh": "秘传之药",
+  "name_ja": "ひでんのくすり",
+  "name_en": "Secret Potion"
+ },
+ "GS Ball": {
+  "name_zh": "ＧＳ球",
+  "name_ja": "ジーエスボール",
+  "name_en": "GS Ball"
+ },
+ "Egg Ticket": {
+  "name_zh": "宝可梦的蛋兑换券",
+  "name_ja": "タマゴけん",
+  "name_en": "Egg Ticket"
+ },
+ "Clear Bell": {
+  "name_zh": "透明铃铛",
+  "name_ja": "とうめいなスズ",
+  "name_en": "Clear Bell"
+ },
+ "Blue Card": {
+  "name_zh": "蓝卡",
+  "name_ja": "ブルーカード",
+  "name_en": "Blue Card"
+ },
+ "Mach Bike": {
+  "name_zh": "音速自行车",
+  "name_ja": "マッハじてんしゃ",
+  "name_en": "Mach Bike"
+ },
+ "Acro Bike": {
+  "name_zh": "越野自行车",
+  "name_ja": "ダートじてんしゃ",
+  "name_en": "Acro Bike"
+ },
+ "Contest Pass": {
+  "name_zh": "华丽大赛参加证",
+  "name_ja": "コンテストパス",
+  "name_en": "Contest Pass"
+ },
+ "Wailmer Pail": {
+  "name_zh": "吼吼鲸喷壶",
+  "name_ja": "ホエルコじょうろ",
+  "name_en": "Wailmer Pail"
+ },
+ "Devon Goods": {
+  "name_zh": "得文的物品",
+  "name_ja": "デボンのにもつ",
+  "name_en": "Devon Goods"
+ },
+ "Soot Sack": {
+  "name_zh": "集灰袋",
+  "name_ja": "はいぶくろ",
+  "name_en": "Soot Sack"
+ },
+ "Pokéblock Case": {
+  "name_zh": "宝可方块盒",
+  "name_ja": "ポロックケース",
+  "name_en": "Pokéblock Case"
+ },
+ "Letter": {
+  "name_zh": "给大吾的信",
+  "name_ja": "ダイゴへのてがみ",
+  "name_en": "Letter"
+ },
+ "Eon Ticket": {
+  "name_zh": "无限船票",
+  "name_ja": "むげんのチケット",
+  "name_en": "Eon Ticket"
+ },
+ "Scanner": {
+  "name_zh": "探测器",
+  "name_ja": "たんちき",
+  "name_en": "Scanner"
+ },
+ "Go-Goggles": {
+  "name_zh": "ＧＯＧＯ护目镜",
+  "name_ja": "ゴーゴーゴーグル",
+  "name_en": "Go-Goggles"
+ },
+ "Meteorite": {
+  "name_zh": "陨石",
+  "name_ja": "いんせき",
+  "name_en": "Meteorite"
+ },
+ "Rm. 1 Key": {
+  "name_zh": "１号客房的钥匙",
+  "name_ja": "１ごうしつのカギ",
+  "name_en": "Rm. 1 Key"
+ },
+ "Rm. 2 Key": {
+  "name_zh": "２号客房的钥匙",
+  "name_ja": "２ごうしつのカギ",
+  "name_en": "Rm. 2 Key"
+ },
+ "Rm. 4 Key": {
+  "name_zh": "４号客房的钥匙",
+  "name_ja": "４ごうしつのカギ",
+  "name_en": "Rm. 4 Key"
+ },
+ "Rm. 6 Key": {
+  "name_zh": "６号客房的钥匙",
+  "name_ja": "６ごうしつのカギ",
+  "name_en": "Rm. 6 Key"
+ },
+ "Storage Key": {
+  "name_zh": "仓库钥匙",
+  "name_ja": "そうこのカギ",
+  "name_en": "Storage Key"
+ },
+ "Devon Scope": {
+  "name_zh": "得文侦测镜",
+  "name_ja": "デボンスコープ",
+  "name_en": "Devon Scope"
+ },
+ "Vs. Seeker": {
+  "name_zh": "对战搜寻器",
+  "name_ja": "バトルサーチャー",
+  "name_en": "Vs. Seeker"
+ },
+ "Fame Checker": {
+  "name_zh": "声音记录器",
+  "name_ja": "ボイスチェッカー",
+  "name_en": "Fame Checker"
+ },
+ "TM Case": {
+  "name_zh": "招式学习器盒",
+  "name_ja": "わざマシンケース",
+  "name_en": "TM Case"
+ },
+ "Berry Pouch": {
+  "name_zh": "树果袋",
+  "name_ja": "きのみぶくろ",
+  "name_en": "Berry Pouch"
+ },
+ "Teachy TV": {
+  "name_zh": "教学电视",
+  "name_ja": "おしえテレビ",
+  "name_en": "Teachy TV"
+ },
+ "Tri-Pass": {
+  "name_zh": "三岛通行船券",
+  "name_ja": "トライパス",
+  "name_en": "Tri-Pass"
+ },
+ "Rainbow Pass": {
+  "name_zh": "七彩通行船券",
+  "name_ja": "レインボーパス",
+  "name_en": "Rainbow Pass"
+ },
+ "Tea": {
+  "name_zh": "茶",
+  "name_ja": "おちゃ",
+  "name_en": "Tea"
+ },
+ "MysticTicket": {
+  "name_zh": "神秘船票",
+  "name_ja": "しんぴのチケット",
+  "name_en": "MysticTicket"
+ },
+ "AuroraTicket": {
+  "name_zh": "极光船票",
+  "name_ja": "オーロラチケット",
+  "name_en": "AuroraTicket"
+ },
+ "Powder Jar": {
+  "name_zh": "粉末瓶",
+  "name_ja": "こないれ",
+  "name_en": "Powder Jar"
+ },
+ "Ruby": {
+  "name_zh": "红宝石",
+  "name_ja": "ルビー",
+  "name_en": "Ruby"
+ },
+ "Sapphire": {
+  "name_zh": "蓝宝石",
+  "name_ja": "サファイア",
+  "name_en": "Sapphire"
+ },
+ "Magma Emblem": {
+  "name_zh": "熔岩标志",
+  "name_ja": "マグマのしるし",
+  "name_en": "Magma Emblem"
+ },
+ "Old Sea Map": {
+  "name_zh": "古航海图",
+  "name_ja": "ふるびたかいず",
+  "name_en": "Old Sea Map"
+ },
+ "Explorer Kit": {
+  "name_zh": "探险套装",
+  "name_ja": "たんけんセット",
+  "name_en": "Explorer Kit"
+ },
+ "Loot Sack": {
+  "name_zh": "宝物袋",
+  "name_ja": "たからぶくろ",
+  "name_en": "Loot Sack"
+ },
+ "Rule Book": {
+  "name_zh": "规则书",
+  "name_ja": "ルールブック",
+  "name_en": "Rule Book"
+ },
+ "Poké Radar": {
+  "name_zh": "宝可追踪",
+  "name_ja": "ポケトレ",
+  "name_en": "Poké Radar"
+ },
+ "Point Card": {
+  "name_zh": "点数卡",
+  "name_ja": "ポイントカード",
+  "name_en": "Point Card"
+ },
+ "Journal": {
+  "name_zh": "冒险笔记",
+  "name_ja": "ぼうけんノート",
+  "name_en": "Journal"
+ },
+ "Seal Case": {
+  "name_zh": "贴纸盒",
+  "name_ja": "シールいれ",
+  "name_en": "Seal Case"
+ },
+ "Fashion Case": {
+  "name_zh": "饰品盒",
+  "name_ja": "アクセサリーいれ",
+  "name_en": "Fashion Case"
+ },
+ "Seal Bag": {
+  "name_zh": "贴纸袋",
+  "name_ja": "シールぶくろ",
+  "name_en": "Seal Bag"
+ },
+ "Pal Pad": {
+  "name_zh": "朋友手册",
+  "name_ja": "ともだちてちょう",
+  "name_en": "Pal Pad"
+ },
+ "Works Key": {
+  "name_zh": "发电厂钥匙",
+  "name_ja": "はつでんしょキー",
+  "name_en": "Works Key"
+ },
+ "Old Charm": {
+  "name_zh": "古代护符",
+  "name_ja": "こだいのおまもり",
+  "name_en": "Old Charm"
+ },
+ "Galactic Key": {
+  "name_zh": "银河队钥匙",
+  "name_ja": "ギンガだんのカギ",
+  "name_en": "Galactic Key"
+ },
+ "Red Chain": {
+  "name_zh": "红色锁链",
+  "name_ja": "あかいくさり",
+  "name_en": "Red Chain"
+ },
+ "Sprayduck": {
+  "name_zh": "可达鸭喷壶",
+  "name_ja": "コダックじょうろ",
+  "name_en": "Sprayduck"
+ },
+ "Poffin Case": {
+  "name_zh": "宝芬盒",
+  "name_ja": "ポフィンケース",
+  "name_en": "Poffin Case"
+ },
+ "Suite Key": {
+  "name_zh": "房间钥匙",
+  "name_ja": "ルームキー",
+  "name_en": "Suite Key"
+ },
+ "Oak's Letter": {
+  "name_zh": "大木的信",
+  "name_ja": "オーキドのてがみ",
+  "name_en": "Oak's Letter"
+ },
+ "Lunar Wing": {
+  "name_zh": "新月之羽",
+  "name_ja": "みかづきのはね",
+  "name_en": "Lunar Wing"
+ },
+ "Member Card": {
+  "name_zh": "会员卡",
+  "name_ja": "メンバーズカード",
+  "name_en": "Member Card"
+ },
+ "Azure Flute": {
+  "name_zh": "天界之笛",
+  "name_ja": "てんかいのふえ",
+  "name_en": "Azure Flute"
+ },
+ "Magma Stone": {
+  "name_zh": "火山镇石",
+  "name_ja": "かざんのおきいし",
+  "name_en": "Magma Stone"
+ },
+ "Coupon 1": {
+  "name_zh": "兑换券１",
+  "name_ja": "ひきかえけん１",
+  "name_en": "Coupon 1"
+ },
+ "Coupon 2": {
+  "name_zh": "兑换券２",
+  "name_ja": "ひきかえけん２",
+  "name_en": "Coupon 2"
+ },
+ "Coupon 3": {
+  "name_zh": "兑换券３",
+  "name_ja": "ひきかえけん３",
+  "name_en": "Coupon 3"
+ },
+ "Vs. Recorder": {
+  "name_zh": "对战记录器",
+  "name_ja": "バトルレコーダー",
+  "name_en": "Vs. Recorder"
+ },
+ "Gracidea": {
+  "name_zh": "葛拉西蒂亚花",
+  "name_ja": "グラシデアのはな",
+  "name_en": "Gracidea"
+ },
+ "Apricorn Box": {
+  "name_zh": "球果盒",
+  "name_ja": "ぼんぐりケース",
+  "name_en": "Apricorn Box"
+ },
+ "Unown Report": {
+  "name_zh": "未知图腾笔记",
+  "name_ja": "アンノーンノート",
+  "name_en": "Unown Report"
+ },
+ "Berry Pots": {
+  "name_zh": "树果种植盆",
+  "name_ja": "きのみプランター",
+  "name_en": "Berry Pots"
+ },
+ "Slowpoke Tail": {
+  "name_zh": "美味尾巴",
+  "name_ja": "おいしいシッポ",
+  "name_en": "Slowpoke Tail"
+ },
+ "Photo Album": {
+  "name_zh": "相册",
+  "name_ja": "フォトアルバム",
+  "name_en": "Photo Album"
+ },
+ "GB Sounds": {
+  "name_zh": "ＧＢ播放器",
+  "name_ja": "ＧＢプレイヤー",
+  "name_en": "GB Sounds"
+ },
+ "Tidal Bell": {
+  "name_zh": "海声铃铛",
+  "name_ja": "うみなりのスズ",
+  "name_en": "Tidal Bell"
+ },
+ "Jade Orb": {
+  "name_zh": "草绿色宝珠",
+  "name_ja": "もえぎいろのたま",
+  "name_en": "Jade Orb"
+ },
+ "Lock Capsule": {
+  "name_zh": "上锁的容器",
+  "name_ja": "ロックカプセル",
+  "name_en": "Lock Capsule"
+ },
+ "Enigma Stone": {
+  "name_zh": "谜之水晶",
+  "name_ja": "なぞのすいしょう",
+  "name_en": "Enigma Stone"
+ },
+ "Xtransceiver": {
+  "name_zh": "即时通讯器",
+  "name_ja": "ライブキャスター",
+  "name_en": "Xtransceiver"
+ },
+ "Dragon Skull": {
+  "name_zh": "龙之骨",
+  "name_ja": "ドラゴンのホネ",
+  "name_en": "Dragon Skull"
+ },
+ "Prop Case": {
+  "name_zh": "物品箱",
+  "name_ja": "グッズケース",
+  "name_en": "Prop Case"
+ },
+ "Liberty Pass": {
+  "name_zh": "自由船票",
+  "name_ja": "リバティチケット",
+  "name_en": "Liberty Pass"
+ },
+ "Light Stone": {
+  "name_zh": "光明石",
+  "name_ja": "ライトストーン",
+  "name_en": "Light Stone"
+ },
+ "Dark Stone": {
+  "name_zh": "黑暗石",
+  "name_ja": "ダークストーン",
+  "name_en": "Dark Stone"
+ },
+ "God Stone": {
+  "name_zh": "神石",
+  "name_ja": "ゴッドストーン",
+  "name_en": "God Stone"
+ },
+ "Gram 1": {
+  "name_zh": "配送物品１",
+  "name_ja": "はいたつぶつ１",
+  "name_en": "Gram 1"
+ },
+ "Gram 2": {
+  "name_zh": "配送物品２",
+  "name_ja": "はいたつぶつ２",
+  "name_en": "Gram 2"
+ },
+ "Gram 3": {
+  "name_zh": "配送物品３",
+  "name_ja": "はいたつぶつ３",
+  "name_en": "Gram 3"
+ },
+ "Medal Box": {
+  "name_zh": "奖牌盒",
+  "name_ja": "メダルボックス",
+  "name_en": "Medal Box"
+ },
+ "DNA Splicers": {
+  "name_zh": "基因之楔",
+  "name_ja": "いでんしのくさび",
+  "name_en": "DNA Splicers"
+ },
+ "Permit": {
+  "name_zh": "许可证",
+  "name_ja": "きょかしょう",
+  "name_en": "Permit"
+ },
+ "Oval Charm": {
+  "name_zh": "圆形护符",
+  "name_ja": "まるいおまもり",
+  "name_en": "Oval Charm"
+ },
+ "Shiny Charm": {
+  "name_zh": "闪耀护符",
+  "name_ja": "ひかるおまもり",
+  "name_en": "Shiny Charm"
+ },
+ "Plasma Card": {
+  "name_zh": "等离子卡",
+  "name_ja": "プラズマカード",
+  "name_en": "Plasma Card"
+ },
+ "Grubby Hanky": {
+  "name_zh": "脏手帕",
+  "name_ja": "よごれたハンカチ",
+  "name_en": "Grubby Hanky"
+ },
+ "Colress Machine": {
+  "name_zh": "阿克罗玛机器",
+  "name_ja": "アクロママシーン",
+  "name_en": "Colress Machine"
+ },
+ "Dropped Item": {
+  "name_zh": "遗忘物",
+  "name_ja": "わすれもの",
+  "name_en": "Dropped Item"
+ },
+ "Reveal Glass": {
+  "name_zh": "现形镜",
+  "name_ja": "うつしかがみ",
+  "name_en": "Reveal Glass"
+ },
+ "Holo Caster": {
+  "name_zh": "全息影像通讯器",
+  "name_ja": "ホロキャスター",
+  "name_en": "Holo Caster"
+ },
+ "Prof's Letter": {
+  "name_zh": "博士的信",
+  "name_ja": "はかせのてがみ",
+  "name_en": "Prof's Letter"
+ },
+ "Roller Skates": {
+  "name_zh": "轮滑鞋",
+  "name_ja": "ローラースケート",
+  "name_en": "Roller Skates"
+ },
+ "Sprinklotad": {
+  "name_zh": "莲叶童子喷壶",
+  "name_ja": "ハスボーじょうろ",
+  "name_en": "Sprinklotad"
+ },
+ "Power Plant Pass": {
+  "name_zh": "发电厂通行证",
+  "name_ja": "はつでんしょパス",
+  "name_en": "Power Plant Pass"
+ },
+ "Mega Ring": {
+  "name_zh": "超级环",
+  "name_ja": "メガリング",
+  "name_en": "Mega Ring"
+ },
+ "Intriguing Stone": {
+  "name_zh": "似珍石",
+  "name_ja": "すごそうないし",
+  "name_en": "Intriguing Stone"
+ },
+ "Common Stone": {
+  "name_zh": "常见石",
+  "name_ja": "ありふれたいし",
+  "name_en": "Common Stone"
+ },
+ "TMV Pass": {
+  "name_zh": "ＴＭＶ自由票",
+  "name_ja": "ＴＭＶパス",
+  "name_en": "TMV Pass"
+ },
+ "Honor of Kalos": {
+  "name_zh": "卡洛斯勋章",
+  "name_ja": "カロスエンブレム",
+  "name_en": "Honor of Kalos"
+ },
+ "Adventure Rules": {
+  "name_zh": "探险心得",
+  "name_ja": "たんけんこころえ",
+  "name_en": "Adventure Rules"
+ },
+ "Lens Case": {
+  "name_zh": "隐形眼镜盒",
+  "name_ja": "レンズケース",
+  "name_en": "Lens Case"
+ },
+ "Travel Trunk": {
+  "name_zh": "衣物箱",
+  "name_ja": "いしょうトランク",
+  "name_en": "Travel Trunk"
+ },
+ "Looker Ticket": {
+  "name_zh": "帅哥券",
+  "name_ja": "ハンサムチケット",
+  "name_en": "Looker Ticket"
+ },
+ "Mega Charm": {
+  "name_zh": "超级坠饰",
+  "name_ja": "メガチャーム",
+  "name_en": "Mega Charm"
+ },
+ "Mega Glove": {
+  "name_zh": "超级手套",
+  "name_ja": "メガグローブ",
+  "name_en": "Mega Glove"
+ },
+ "Pokéblock Kit": {
+  "name_zh": "宝可方块套装",
+  "name_ja": "ポロックキット",
+  "name_en": "Pokéblock Kit"
+ },
+ "Devon Scuba Gear": {
+  "name_zh": "得文潜水装备",
+  "name_ja": "デボンボンベ",
+  "name_en": "Devon Scuba Gear"
+ },
+ "Contest Costume": {
+  "name_zh": "演出礼服",
+  "name_ja": "ライブスーツ",
+  "name_en": "Contest Costume"
+ },
+ "Magma Suit": {
+  "name_zh": "熔岩装",
+  "name_ja": "マグマスーツ",
+  "name_en": "Magma Suit"
+ },
+ "Aqua Suit": {
+  "name_zh": "海洋装",
+  "name_ja": "アクアスーツ",
+  "name_en": "Aqua Suit"
+ },
+ "Pair of Tickets": {
+  "name_zh": "双人票",
+  "name_ja": "ペアチケット",
+  "name_en": "Pair of Tickets"
+ },
+ "Mega Bracelet": {
+  "name_zh": "超级手镯",
+  "name_ja": "メガバングル",
+  "name_en": "Mega Bracelet"
+ },
+ "Mega Cuff": {
+  "name_zh": "超级护腕",
+  "name_ja": "メガブレス",
+  "name_en": "Mega Cuff"
+ },
+ "Mega Pendant": {
+  "name_zh": "超级吊坠",
+  "name_ja": "メガペンダント",
+  "name_en": "Mega Pendant"
+ },
+ "Mega Glasses": {
+  "name_zh": "超级眼镜",
+  "name_ja": "メガメガネ",
+  "name_en": "Mega Glasses"
+ },
+ "Mega Anchor": {
+  "name_zh": "超级船锚",
+  "name_ja": "メガイカリ",
+  "name_en": "Mega Anchor"
+ },
+ "Mega Stickpin": {
+  "name_zh": "超级领针",
+  "name_ja": "メガラペルピン",
+  "name_en": "Mega Stickpin"
+ },
+ "Mega Tiara": {
+  "name_zh": "超级头冠",
+  "name_ja": "メガティアラ",
+  "name_en": "Mega Tiara"
+ },
+ "Mega Anklet": {
+  "name_zh": "超级脚镯",
+  "name_ja": "メガアンクレット",
+  "name_en": "Mega Anklet"
+ },
+ "Key Stone": {
+  "name_zh": "钥石",
+  "name_ja": "キーストーン",
+  "name_en": "Key Stone"
+ },
+ "Meteorite Shard": {
+  "name_zh": "陨石碎片",
+  "name_ja": "いんせきのかけら",
+  "name_en": "Meteorite Shard"
+ },
+ "Eon Flute": {
+  "name_zh": "无限之笛",
+  "name_ja": "むげんのふえ",
+  "name_en": "Eon Flute"
+ },
+ "Prison Bottle": {
+  "name_zh": "惩戒之壶",
+  "name_ja": "いましめのつぼ",
+  "name_en": "Prison Bottle"
+ },
+ "Makeup Bag": {
+  "name_zh": "化妆包",
+  "name_ja": "コスメポーチ",
+  "name_en": "Makeup Bag"
+ },
+ "Z-Ring": {
+  "name_zh": "Ｚ手环",
+  "name_ja": "Ｚリング",
+  "name_en": "Z-Ring"
+ },
+ "Forage Bag": {
+  "name_zh": "材料袋",
+  "name_ja": "ざいりょうぶくろ",
+  "name_en": "Forage Bag"
+ },
+ "Fishing Rod": {
+  "name_zh": "钓竿",
+  "name_ja": "つりざお",
+  "name_en": "Fishing Rod"
+ },
+ "Professor's Mask": {
+  "name_zh": "博士的面罩",
+  "name_ja": "はかせのふくめん",
+  "name_en": "Professor's Mask"
+ },
+ "Sparkling Stone": {
+  "name_zh": "光辉石",
+  "name_ja": "かがやくいし",
+  "name_en": "Sparkling Stone"
+ },
+ "Zygarde Cube": {
+  "name_zh": "基格尔德多面体",
+  "name_ja": "ジガルデキューブ",
+  "name_en": "Zygarde Cube"
+ },
+ "Ride Pager": {
+  "name_zh": "骑行装置",
+  "name_ja": "ライドギア",
+  "name_en": "Ride Pager"
+ },
+ "Sun Flute": {
+  "name_zh": "太阳之笛",
+  "name_ja": "たいようのふえ",
+  "name_en": "Sun Flute"
+ },
+ "Moon Flute": {
+  "name_zh": "月亮之笛",
+  "name_ja": "つきのふえ",
+  "name_en": "Moon Flute"
+ },
+ "Enigmatic Card": {
+  "name_zh": "奇异卡片",
+  "name_ja": "あやしいカード",
+  "name_en": "Enigmatic Card"
+ },
+ "Z-Power Ring": {
+  "name_zh": "Ｚ强力手环",
+  "name_ja": "Ｚパワーリング",
+  "name_en": "Z-Power Ring"
+ },
+ "Pink Petal": {
+  "name_zh": "粉红花瓣",
+  "name_ja": "ももいろはなびら",
+  "name_en": "Pink Petal"
+ },
+ "Orange Petal": {
+  "name_zh": "橙色花瓣",
+  "name_ja": "だいだいはなびら",
+  "name_en": "Orange Petal"
+ },
+ "Blue Petal": {
+  "name_zh": "蓝色花瓣",
+  "name_ja": "あおのはなびら",
+  "name_en": "Blue Petal"
+ },
+ "Red Petal": {
+  "name_zh": "红色花瓣",
+  "name_ja": "あかのはなびら",
+  "name_en": "Red Petal"
+ },
+ "Green Petal": {
+  "name_zh": "绿色花瓣",
+  "name_ja": "みどりのはなびら",
+  "name_en": "Green Petal"
+ },
+ "Yellow Petal": {
+  "name_zh": "黄色花瓣",
+  "name_ja": "きいろのはなびら",
+  "name_en": "Yellow Petal"
+ },
+ "Purple Petal": {
+  "name_zh": "紫色花瓣",
+  "name_ja": "むらさきはなびら",
+  "name_en": "Purple Petal"
+ },
+ "Rainbow Flower": {
+  "name_zh": "虹色之花",
+  "name_ja": "にじいろのはな",
+  "name_en": "Rainbow Flower"
+ },
+ "Surge Badge": {
+  "name_zh": "桔色徽章",
+  "name_ja": "だいだいバッジ",
+  "name_en": "Surge Badge"
+ },
+ "N-Solarizer": {
+  "name_zh": "奈克洛索尔合体器",
+  "name_ja": "ネクロプラスソル",
+  "name_en": "N-Solarizer"
+ },
+ "N-Lunarizer": {
+  "name_zh": "奈克洛露奈合体器",
+  "name_ja": "ネクロプラスルナ",
+  "name_en": "N-Lunarizer"
+ },
+ "Ilima's Normalium Z": {
+  "name_zh": "伊利马的一般Ｚ",
+  "name_ja": "イリマのノーマルＺ",
+  "name_en": "Ilima's Normalium Z"
+ },
+ "Left Poké Ball": {
+  "name_zh": "留下的精灵球",
+  "name_ja": "のこされたボール",
+  "name_en": "Left Poké Ball"
+ },
+ "Autograph": {
+  "name_zh": "马志士的签名",
+  "name_ja": "マチスのサイン",
+  "name_en": "Autograph"
+ },
+ "Pokémon Box": {
+  "name_zh": "宝可梦盒",
+  "name_ja": "ポケモンボックス",
+  "name_en": "Pokémon Box"
+ },
+ "Medicine Pocket": {
+  "name_zh": "回复口袋",
+  "name_ja": "かいふくポケット",
+  "name_en": "Medicine Pocket"
+ },
+ "Candy Jar": {
+  "name_zh": "糖果罐",
+  "name_ja": "アメボトル",
+  "name_en": "Candy Jar"
+ },
+ "Power-Up Pocket": {
+  "name_zh": "强化口袋",
+  "name_ja": "きょうかポケット",
+  "name_en": "Power-Up Pocket"
+ },
+ "Clothing Trunk": {
+  "name_zh": "换装箱",
+  "name_ja": "おきがえトランク",
+  "name_en": "Clothing Trunk"
+ },
+ "Catching Pocket": {
+  "name_zh": "捕捉口袋",
+  "name_ja": "ほかくポケット",
+  "name_en": "Catching Pocket"
+ },
+ "Battle Pocket": {
+  "name_zh": "对战口袋",
+  "name_ja": "バトルポケット",
+  "name_en": "Battle Pocket"
+ },
+ "Endorsement": {
+  "name_zh": "推荐函",
+  "name_ja": "すいせんじょう",
+  "name_en": "Endorsement"
+ },
+ "Wishing Star": {
+  "name_zh": "许愿星",
+  "name_ja": "ねがいぼし",
+  "name_en": "Wishing Star"
+ },
+ "Dynamax Band": {
+  "name_zh": "极巨腕带",
+  "name_ja": "ダイマックスバンド",
+  "name_en": "Dynamax Band"
+ },
+ "Rotom Bike": {
+  "name_zh": "洛托姆自行车",
+  "name_ja": "ロトムじてんしゃ",
+  "name_en": "Rotom Bike"
+ },
+ "Camping Gear": {
+  "name_zh": "露营组合",
+  "name_ja": "キャンプセット",
+  "name_en": "Camping Gear"
+ },
+ "Hi-tech Earbuds": {
+  "name_zh": "厉害耳塞",
+  "name_ja": "すごいみみせん",
+  "name_en": "Hi-tech Earbuds"
+ },
+ "Old Letter": {
+  "name_zh": "陈旧的信",
+  "name_ja": "ふるびたてがみ",
+  "name_en": "Old Letter"
+ },
+ "Band Autograph": {
+  "name_zh": "乐队的签名",
+  "name_ja": "バンドのサイン",
+  "name_en": "Band Autograph"
+ },
+ "Sonia's Book": {
+  "name_zh": "索妮亚的书",
+  "name_ja": "ソニアのほん",
+  "name_en": "Sonia's Book"
+ },
+ "Rotom Catalog": {
+  "name_zh": "洛托姆型录",
+  "name_ja": "ロトムのカタログ",
+  "name_en": "Rotom Catalog"
+ },
+ "Catching Charm": {
+  "name_zh": "防晃护符",
+  "name_ja": "ゆれないおまもり",
+  "name_en": "Catching Charm"
+ },
+ "Armor Pass": {
+  "name_zh": "铠甲车票",
+  "name_ja": "ヨロイパス",
+  "name_en": "Armor Pass"
+ },
+ "Style Card": {
+  "name_zh": "时尚名人卡",
+  "name_ja": "おしゃれカード",
+  "name_en": "Style Card"
+ },
+ "Exp. Charm": {
+  "name_zh": "经验护符",
+  "name_ja": "けいけんおまもり",
+  "name_en": "Exp. Charm"
+ },
+ "Mark Charm": {
+  "name_zh": "证章护符",
+  "name_ja": "あかしのおまもり",
+  "name_en": "Mark Charm"
+ },
+ "Crown Pass": {
+  "name_zh": "王冠车票",
+  "name_ja": "カンムリパス",
+  "name_en": "Crown Pass"
+ },
+ "Legendary Clue 1": {
+  "name_zh": "传说笔记１",
+  "name_ja": "でんせつのメモ1",
+  "name_en": "Legendary Clue 1"
+ },
+ "Legendary Clue 2": {
+  "name_zh": "传说笔记２",
+  "name_ja": "でんせつのメモ2",
+  "name_en": "Legendary Clue 2"
+ },
+ "Legendary Clue 3": {
+  "name_zh": "传说笔记３",
+  "name_ja": "でんせつのメモ3",
+  "name_en": "Legendary Clue 3"
+ },
+ "Legendary Clue?": {
+  "name_zh": "传说笔记？",
+  "name_ja": "でんせつのメモ?",
+  "name_en": "Legendary Clue?"
+ },
+ "Carrot Seeds": {
+  "name_zh": "萝卜种子",
+  "name_ja": "にんじんのダネ",
+  "name_en": "Carrot Seeds"
+ },
+ "Iceroot Carrot": {
+  "name_zh": "冰萝卜",
+  "name_ja": "つめたいにんじん",
+  "name_en": "Iceroot Carrot"
+ },
+ "Shaderoot Carrot": {
+  "name_zh": "黑萝卜",
+  "name_ja": "くろいにんじん",
+  "name_en": "Shaderoot Carrot"
+ },
+ "White Mane Hair": {
+  "name_zh": "白色鬃毛",
+  "name_ja": "しろいたてがみ",
+  "name_en": "White Mane Hair"
+ },
+ "Black Mane Hair": {
+  "name_zh": "黑色鬃毛",
+  "name_ja": "くろいたてがみ",
+  "name_en": "Black Mane Hair"
+ },
+ "Wooden Crown": {
+  "name_zh": "木雕王冠",
+  "name_ja": "きぼりのかんむり",
+  "name_en": "Wooden Crown"
+ },
+ "Radiant Petal": {
+  "name_zh": "光辉花瓣",
+  "name_ja": "かがやくはなびら",
+  "name_en": "Radiant Petal"
+ },
+ "Reins of Unity": {
+  "name_zh": "牵绊缰绳",
+  "name_ja": "キズナのタヅナ",
+  "name_en": "Reins of Unity"
+ },
+ "DS Sounds": {
+  "name_zh": "ＤＳ播放器",
+  "name_ja": "ＤＳプレイヤー",
+  "name_en": "DS Sounds"
+ },
+ "Time Balm": {
+  "name_zh": "时之镇宝",
+  "name_ja": "ときのシズメダマ",
+  "name_en": "Time Balm"
+ },
+ "Space Balm": {
+  "name_zh": "空之镇宝",
+  "name_ja": "そらのシズメダマ",
+  "name_en": "Space Balm"
+ },
+ "Mysterious Balm": {
+  "name_zh": "镇宝",
+  "name_ja": "しずめだま",
+  "name_en": "Mysterious Balm"
+ },
+ "Hometown Muffin": {
+  "name_zh": "家乡玛芬",
+  "name_ja": "ふるさとマフィン",
+  "name_en": "Hometown Muffin"
+ },
+ "Eternal Ice": {
+  "name_zh": "永恒之冰",
+  "name_ja": "えいえんのこおり",
+  "name_en": "Eternal Ice"
+ },
+ "Uxie's Claw": {
+  "name_zh": "由克希之爪",
+  "name_ja": "ユクシーのつめ",
+  "name_en": "Uxie's Claw"
+ },
+ "Azelf's Fang": {
+  "name_zh": "亚克诺姆之牙",
+  "name_ja": "アグノムのきば",
+  "name_en": "Azelf's Fang"
+ },
+ "Mesprit's Plume": {
+  "name_zh": "艾姆利多之翅",
+  "name_ja": "エムリットのはね",
+  "name_en": "Mesprit's Plume"
+ },
+ "Celestica Flute": {
+  "name_zh": "神阖之笛",
+  "name_ja": "カミナギのふえ",
+  "name_en": "Celestica Flute"
+ },
+ "Marsh Balm": {
+  "name_zh": "沼之镇宝",
+  "name_ja": "ぬまのシズメダマ",
+  "name_en": "Marsh Balm"
+ },
+ "Forest Balm": {
+  "name_zh": "森之镇宝",
+  "name_ja": "もりのシズメダマ",
+  "name_en": "Forest Balm"
+ },
+ "Volcano Balm": {
+  "name_zh": "火山镇宝",
+  "name_ja": "かざんのシズメダマ",
+  "name_en": "Volcano Balm"
+ },
+ "Mountain Balm": {
+  "name_zh": "山之镇宝",
+  "name_ja": "やまのシズメダマ",
+  "name_en": "Mountain Balm"
+ },
+ "Snow Balm": {
+  "name_zh": "雪之镇宝",
+  "name_ja": "ゆきのシズメダマ",
+  "name_en": "Snow Balm"
+ },
+ "Torn Journal": {
+  "name_zh": "破损日记",
+  "name_ja": "やぶれたにっき",
+  "name_en": "Torn Journal"
+ },
+ "Wall Fragment": {
+  "name_zh": "石板碎块",
+  "name_ja": "せきばんのかけら",
+  "name_en": "Wall Fragment"
+ },
+ "Basculegion Food": {
+  "name_zh": "幽尾玄鱼丸",
+  "name_ja": "イダイトウだんご",
+  "name_en": "Basculegion Food"
+ },
+ "Old Journal": {
+  "name_zh": "古老日记",
+  "name_ja": "ふるいにっき",
+  "name_en": "Old Journal"
+ },
+ "Lost Satchel": {
+  "name_zh": "他人的遗失物",
+  "name_ja": "だれかのおとしもの",
+  "name_en": "Lost Satchel"
+ },
+ "Origin Ball": {
+  "name_zh": "起源球",
+  "name_ja": "オリジンボール",
+  "name_en": "Origin Ball"
+ },
+ "Origin Ore": {
+  "name_zh": "起源矿石",
+  "name_ja": "オリジンこうせき",
+  "name_en": "Origin Ore"
+ },
+ "Blank Plate": {
+  "name_zh": "净空石板",
+  "name_ja": "まっさらプレート",
+  "name_en": "Blank Plate"
+ },
+ "Crafting Kit": {
+  "name_zh": "工艺套组",
+  "name_ja": "クラフトキット",
+  "name_en": "Crafting Kit"
+ },
+ "Old Verse 1": {
+  "name_zh": "古老诗文１",
+  "name_ja": "ふるいポエム１",
+  "name_en": "Old Verse 1"
+ },
+ "Old Verse 2": {
+  "name_zh": "古老诗文２",
+  "name_ja": "ふるいポエム２",
+  "name_en": "Old Verse 2"
+ },
+ "Old Verse 3": {
+  "name_zh": "古老诗文３",
+  "name_ja": "ふるいポエム３",
+  "name_en": "Old Verse 3"
+ },
+ "Old Verse 4": {
+  "name_zh": "古老诗文４",
+  "name_ja": "ふるいポエム４",
+  "name_en": "Old Verse 4"
+ },
+ "Old Verse 5": {
+  "name_zh": "古老诗文５",
+  "name_ja": "ふるいポエム５",
+  "name_en": "Old Verse 5"
+ },
+ "Old Verse 6": {
+  "name_zh": "古老诗文６",
+  "name_ja": "ふるいポエム６",
+  "name_en": "Old Verse 6"
+ },
+ "Old Verse 7": {
+  "name_zh": "古老诗文７",
+  "name_ja": "ふるいポエム７",
+  "name_en": "Old Verse 7"
+ },
+ "Old Verse 8": {
+  "name_zh": "古老诗文８",
+  "name_ja": "ふるいポエム８",
+  "name_en": "Old Verse 8"
+ },
+ "Old Verse 9": {
+  "name_zh": "古老诗文９",
+  "name_ja": "ふるいポエム９",
+  "name_en": "Old Verse 9"
+ },
+ "Old Verse 10": {
+  "name_zh": "古老诗文１０",
+  "name_ja": "ふるいポエム１０",
+  "name_en": "Old Verse 10"
+ },
+ "Old Verse 11": {
+  "name_zh": "古老诗文１１",
+  "name_ja": "ふるいポエム１１",
+  "name_en": "Old Verse 11"
+ },
+ "Old Verse 12": {
+  "name_zh": "古老诗文１２",
+  "name_ja": "ふるいポエム１２",
+  "name_en": "Old Verse 12"
+ },
+ "Old Verse 13": {
+  "name_zh": "古老诗文１３",
+  "name_ja": "ふるいポエム１３",
+  "name_en": "Old Verse 13"
+ },
+ "Old Verse 14": {
+  "name_zh": "古老诗文１４",
+  "name_ja": "ふるいポエム１４",
+  "name_en": "Old Verse 14"
+ },
+ "Old Verse 15": {
+  "name_zh": "古老诗文１５",
+  "name_ja": "ふるいポエム１５",
+  "name_en": "Old Verse 15"
+ },
+ "Old Verse 16": {
+  "name_zh": "古老诗文１６",
+  "name_ja": "ふるいポエム１６",
+  "name_en": "Old Verse 16"
+ },
+ "Old Verse 17": {
+  "name_zh": "古老诗文１７",
+  "name_ja": "ふるいポエム１７",
+  "name_en": "Old Verse 17"
+ },
+ "Old Verse 18": {
+  "name_zh": "古老诗文１８",
+  "name_ja": "ふるいポエム１８",
+  "name_en": "Old Verse 18"
+ },
+ "Old Verse 19": {
+  "name_zh": "古老诗文１９",
+  "name_ja": "ふるいポエム１９",
+  "name_en": "Old Verse 19"
+ },
+ "Old Verse 20": {
+  "name_zh": "古老诗文２０",
+  "name_ja": "ふるいポエム２０",
+  "name_en": "Old Verse 20"
+ },
+ "Legend Plate": {
+  "name_zh": "传说石板",
+  "name_ja": "レジェンドプレート",
+  "name_en": "Legend Plate"
+ },
+ "Rotom Phone": {
+  "name_zh": "手机洛托姆",
+  "name_ja": "スマホロトム",
+  "name_en": "Rotom Phone"
+ },
+ "Sandwich": {
+  "name_zh": "三明治",
+  "name_ja": "サンドウィッチ",
+  "name_en": "Sandwich"
+ },
+ "Koraidon's Poké Ball": {
+  "name_zh": "故勒顿的球",
+  "name_ja": "コライドンのボール",
+  "name_en": "Koraidon's Poké Ball"
+ },
+ "Miraidon's Poké Ball": {
+  "name_zh": "密勒顿的球",
+  "name_ja": "ミライドンのボール",
+  "name_en": "Miraidon's Poké Ball"
+ },
+ "Tera Orb": {
+  "name_zh": "太晶珠",
+  "name_ja": "テラスタルオーブ",
+  "name_en": "Tera Orb"
+ },
+ "Scarlet Book": {
+  "name_zh": "朱之书",
+  "name_ja": "スカーレットブック",
+  "name_en": "Scarlet Book"
+ },
+ "Violet Book": {
+  "name_zh": "紫之书",
+  "name_ja": "バイオレットブック",
+  "name_en": "Violet Book"
+ },
+ "Kofu's Wallet": {
+  "name_zh": "海岱的钱包",
+  "name_ja": "ハイダイのサイフ",
+  "name_en": "Kofu's Wallet"
+ },
+ "Scroll of Darkness": {
+  "name_zh": "恶之挂轴",
+  "name_ja": "あくのかけじく",
+  "name_en": "Scroll of Darkness"
+ },
+ "Scroll of Waters": {
+  "name_zh": "水之挂轴",
+  "name_ja": "みずのかけじく",
+  "name_en": "Scroll of Waters"
+ },
+ "Roto-Stick": {
+  "name_zh": "洛拍棒",
+  "name_ja": "ロトりぼう",
+  "name_en": "Roto-Stick"
+ },
+ "Teal Style Card": {
+  "name_zh": "碧之时尚名人卡",
+  "name_ja": "おしゃれカードみどり",
+  "name_en": "Teal Style Card"
+ },
+ "Crystal Cluster": {
+  "name_zh": "结晶碎片",
+  "name_ja": "けっしょうのかけら",
+  "name_en": "Crystal Cluster"
+ },
+ "Teal Mask": {
+  "name_zh": "碧草面具",
+  "name_ja": "みどりのめん",
+  "name_en": "Teal Mask"
+ },
+ "Glimmering Charm": {
+  "name_zh": "晶耀护符",
+  "name_ja": "きらめくおまもり",
+  "name_en": "Glimmering Charm"
+ },
+ "Indigo Style Card": {
+  "name_zh": "蓝之时尚名人卡",
+  "name_ja": "おしゃれカードあお",
+  "name_en": "Indigo Style Card"
+ },
+ "Indigo Disk": {
+  "name_zh": "蓝之光碟",
+  "name_ja": "あおのディスク",
+  "name_en": "Indigo Disk"
+ },
+ "Mythical Pecha Berry": {
+  "name_zh": "幻之桃桃果",
+  "name_ja": "まぼろしモモン",
+  "name_en": "Mythical Pecha Berry"
+ },
+ "Synchro Machine": {
+  "name_zh": "同步器",
+  "name_ja": "シンクロマシン",
+  "name_en": "Synchro Machine"
+ },
+ "Briar's Book": {
+  "name_zh": "零之秘宝",
+  "name_ja": "ゼロの秘宝",
+  "name_en": "Briar's Book"
+ },
+ "Articuno Treat": {
+  "name_zh": "急冻鸟的点心",
+  "name_ja": "フリーザーのおやつ",
+  "name_en": "Articuno Treat"
+ },
+ "Zapdos Treat": {
+  "name_zh": "闪电鸟的点心",
+  "name_ja": "サンダーのおやつ",
+  "name_en": "Zapdos Treat"
+ },
+ "Moltres Treat": {
+  "name_zh": "火焰鸟的点心",
+  "name_ja": "ファイヤーのおやつ",
+  "name_en": "Moltres Treat"
+ },
+ "Raikou Treat": {
+  "name_zh": "雷公的点心",
+  "name_ja": "ライコウのおやつ",
+  "name_en": "Raikou Treat"
+ },
+ "Entei Treat": {
+  "name_zh": "炎帝的点心",
+  "name_ja": "エンテイのおやつ",
+  "name_en": "Entei Treat"
+ },
+ "Suicune Treat": {
+  "name_zh": "水君的点心",
+  "name_ja": "スイクンのおやつ",
+  "name_en": "Suicune Treat"
+ },
+ "Lugia Treat": {
+  "name_zh": "洛奇亚的点心",
+  "name_ja": "ルギアのおやつ",
+  "name_en": "Lugia Treat"
+ },
+ "Ho-Oh Treat": {
+  "name_zh": "凤王的点心",
+  "name_ja": "ホウオウのおやつ",
+  "name_en": "Ho-Oh Treat"
+ },
+ "Latias Treat": {
+  "name_zh": "拉帝亚斯的点心",
+  "name_ja": "ラティアスのおやつ",
+  "name_en": "Latias Treat"
+ },
+ "Latios Treat": {
+  "name_zh": "拉帝欧斯的点心",
+  "name_ja": "ラティオスのおやつ",
+  "name_en": "Latios Treat"
+ },
+ "Kyogre Treat": {
+  "name_zh": "盖欧卡的点心",
+  "name_ja": "カイオーガのおやつ",
+  "name_en": "Kyogre Treat"
+ },
+ "Groudon Treat": {
+  "name_zh": "固拉多的点心",
+  "name_ja": "グラードンのおやつ",
+  "name_en": "Groudon Treat"
+ },
+ "Rayquaza Treat": {
+  "name_zh": "烈空坐的点心",
+  "name_ja": "レックウザのおやつ",
+  "name_en": "Rayquaza Treat"
+ },
+ "Cobalion Treat": {
+  "name_zh": "勾帕路翁的点心",
+  "name_ja": "コバルオンのおやつ",
+  "name_en": "Cobalion Treat"
+ },
+ "Terrakion Treat": {
+  "name_zh": "代拉基翁的点心",
+  "name_ja": "テラキオンのおやつ",
+  "name_en": "Terrakion Treat"
+ },
+ "Virizion Treat": {
+  "name_zh": "毕力吉翁的点心",
+  "name_ja": "ビリジオンのおやつ",
+  "name_en": "Virizion Treat"
+ },
+ "Reshiram Treat": {
+  "name_zh": "莱希拉姆的点心",
+  "name_ja": "レシラムのおやつ",
+  "name_en": "Reshiram Treat"
+ },
+ "Zekrom Treat": {
+  "name_zh": "捷克罗姆的点心",
+  "name_ja": "ゼクロムのおやつ",
+  "name_en": "Zekrom Treat"
+ },
+ "Kyurem Treat": {
+  "name_zh": "酋雷姆的点心",
+  "name_ja": "キュレムのおやつ",
+  "name_en": "Kyurem Treat"
+ },
+ "Solgaleo Treat": {
+  "name_zh": "索尔迦雷欧的点心",
+  "name_ja": "ソルガレオのおやつ",
+  "name_en": "Solgaleo Treat"
+ },
+ "Lunala Treat": {
+  "name_zh": "露奈雅拉的点心",
+  "name_ja": "ルナアーラのおやつ",
+  "name_en": "Lunala Treat"
+ },
+ "Necrozma Treat": {
+  "name_zh": "奈克洛兹玛的点心",
+  "name_ja": "ネクロズマのおやつ",
+  "name_en": "Necrozma Treat"
+ },
+ "Kubfu Treat": {
+  "name_zh": "熊徒弟的点心",
+  "name_ja": "ダクマのおやつ",
+  "name_en": "Kubfu Treat"
+ },
+ "Glastrier Treat": {
+  "name_zh": "雪暴马的点心",
+  "name_ja": "ブリザポスのおやつ",
+  "name_en": "Glastrier Treat"
+ },
+ "Spectrier Treat": {
+  "name_zh": "灵幽马的点心",
+  "name_ja": "レイスポスのおやつ",
+  "name_en": "Spectrier Treat"
+ },
+ "Key to Room 202": {
+  "name_zh": "２０２号客房的钥匙",
+  "name_ja": "２０２ごうしつのカギ",
+  "name_en": "Key to Room 202"
+ },
+ "Tasty Trash": {
+  "name_zh": "美味垃圾",
+  "name_ja": "おいしいゴミ",
+  "name_en": "Tasty Trash"
+ },
+ "Super Lumiose Galette": {
+  "name_zh": "厉害密阿雷格雷派饼",
+  "name_ja": "すごいミアレガレット",
+  "name_en": "Super Lumiose Galette"
+ },
+ "Revitalizing Twig": {
+  "name_zh": "活力小树枝",
+  "name_ja": "げんきのこえだ",
+  "name_en": "Revitalizing Twig"
+ },
+ "Lida's Things": {
+  "name_zh": "玳萝的遗忘物",
+  "name_ja": "デウロのわすれもの",
+  "name_en": "Lida's Things"
+ },
+ "Cherished Ring": {
+  "name_zh": "纪念戒指",
+  "name_ja": "おもいでのゆびわ",
+  "name_en": "Cherished Ring"
+ },
+ "Pebble": {
+  "name_zh": "小石头",
+  "name_ja": "いしころ",
+  "name_en": "Pebble"
+ },
+ "Lab Key Card A": {
+  "name_zh": "研究所的钥匙卡Ａ",
+  "name_ja": "ラボのカードキーＡ",
+  "name_en": "Lab Key Card A"
+ },
+ "Lab Key Card B": {
+  "name_zh": "研究所的钥匙卡Ｂ",
+  "name_ja": "ラボのカードキーＢ",
+  "name_en": "Lab Key Card B"
+ },
+ "Lab Key Card C": {
+  "name_zh": "研究所的钥匙卡Ｃ",
+  "name_ja": "ラボのカードキーＣ",
+  "name_en": "Lab Key Card C"
+ },
+ "Lab Key Card M": {
+  "name_zh": "研究所的钥匙卡Ｍ",
+  "name_ja": "ラボのカードキーM",
+  "name_en": "Lab Key Card M"
+ },
+ "Lab Key Card X": {
+  "name_zh": "研究所的钥匙卡Ｘ",
+  "name_ja": "ラボのカードキーX",
+  "name_en": "Lab Key Card X"
+ },
+ "Autographed Plush": {
+  "name_zh": "签名玩偶",
+  "name_ja": "サインいりのぬい",
+  "name_en": "Autographed Plush"
+ },
+ "Red Canari Plush": {
+  "name_zh": "红色卡娜莉玩偶",
+  "name_ja": "あかのカナリィぬい",
+  "name_en": "Red Canari Plush"
+ },
+ "Gold Canari Plush": {
+  "name_zh": "金色卡娜莉玩偶",
+  "name_ja": "きんのカナリィぬい",
+  "name_en": "Gold Canari Plush"
+ },
+ "Pink Canari Plush": {
+  "name_zh": "粉红色卡娜莉玩偶",
+  "name_ja": "ピンクのカナリィぬい",
+  "name_en": "Pink Canari Plush"
+ },
+ "Green Canari Plush": {
+  "name_zh": "绿色卡娜莉玩偶",
+  "name_ja": "みどりのカナリィぬい",
+  "name_en": "Green Canari Plush"
+ },
+ "Blue Canari Plush": {
+  "name_zh": "蓝色卡娜莉玩偶",
+  "name_ja": "あおのカナリィぬい",
+  "name_en": "Blue Canari Plush"
+ },
+ "Lumiosian Butter": {
+  "name_zh": "密阿雷黄油",
+  "name_ja": "ミアレバター",
+  "name_en": "Lumiosian Butter"
+ },
+ "Nice Butter": {
+  "name_zh": "超级黄油",
+  "name_ja": "スーパーバター",
+  "name_en": "Nice Butter"
+ },
+ "Great Butter": {
+  "name_zh": "高级黄油",
+  "name_ja": "ハイパーバター",
+  "name_en": "Great Butter"
+ },
+ "Amazing Butter": {
+  "name_zh": "究极黄油",
+  "name_ja": "ウルトラバター",
+  "name_en": "Amazing Butter"
+ },
+ "Supreme Butter": {
+  "name_zh": "大师黄油",
+  "name_ja": "マスターバター",
+  "name_en": "Supreme Butter"
+ },
+ "Hyperspace Butter": {
+  "name_zh": "异次元黄油",
+  "name_ja": "いじげんバター",
+  "name_en": "Hyperspace Butter"
+ },
+ "Épice Noire": {
+  "name_zh": "黑香料",
+  "name_ja": "スパイスブラック",
+  "name_en": "Épice Noire"
+ },
+ "Hoennian Salt": {
+  "name_zh": "丰缘的粗盐",
+  "name_ja": "ホウエンのあらじお",
+  "name_en": "Hoennian Salt"
+ },
+ "Arboliva Oil": {
+  "name_zh": "奥利瓦油",
+  "name_ja": "オリーヴァオイル",
+  "name_en": "Arboliva Oil"
+ },
+ "Popping Candy": {
+  "name_zh": "噼里啪啦糖果",
+  "name_ja": "パチパチキャンディ",
+  "name_en": "Popping Candy"
+ },
+ "Important Letter": {
+  "name_zh": "重要信件",
+  "name_ja": "たいせつなてがみ",
+  "name_en": "Important Letter"
+ },
+ "Dirty Scarf": {
+  "name_zh": "脏围巾",
+  "name_ja": "よごれたスカーフ",
+  "name_en": "Dirty Scarf"
+ },
+ "Roto Hatch": {
+  "name_zh": "孵蛋碰碰",
+  "name_ja": "タマゴふかポン",
+  "name_en": "Roto Hatch"
+ },
+ "Roto Bargain": {
+  "name_zh": "优惠碰碰",
+  "name_ja": "やすうりポン",
+  "name_en": "Roto Bargain"
+ },
+ "Roto Prize Money": {
+  "name_zh": "零花钱碰碰",
+  "name_ja": "おこづかいポン",
+  "name_en": "Roto Prize Money"
+ },
+ "Roto Exp. Points": {
+  "name_zh": "经验碰碰",
+  "name_ja": "けいけんポン",
+  "name_en": "Roto Exp. Points"
+ },
+ "Roto Friendship": {
+  "name_zh": "亲密碰碰",
+  "name_ja": "なつきポン",
+  "name_en": "Roto Friendship"
+ },
+ "Roto Encounter": {
+  "name_zh": "相遇碰碰",
+  "name_ja": "みっけポン",
+  "name_en": "Roto Encounter"
+ },
+ "Roto Stealth": {
+  "name_zh": "隐身碰碰",
+  "name_ja": "かくれポン",
+  "name_en": "Roto Stealth"
+ },
+ "Roto HP Restore": {
+  "name_zh": "ＨＰ回复碰碰",
+  "name_ja": "ＨＰかいふくポン",
+  "name_en": "Roto HP Restore"
+ },
+ "Roto PP Restore": {
+  "name_zh": "ＰＰ回复碰碰",
+  "name_ja": "ＰＰかいふくポン",
+  "name_en": "Roto PP Restore"
+ },
+ "Roto Boost": {
+  "name_zh": "加油碰碰",
+  "name_ja": "おうえんポン",
+  "name_en": "Roto Boost"
+ },
+ "Roto Catch": {
+  "name_zh": "捕捉碰碰",
+  "name_ja": "つかまえポン",
+  "name_en": "Roto Catch"
+ }
+}

@@ -60,6 +60,30 @@ def _to_fullwidth(s: str) -> str:
     return "".join(result)
 
 
+def normalize_ja(s: str) -> str:
+    """Deterministic ja input normalization (phase3 Step 1 审核补充).
+
+    数据层 name_ja 含全角数字与中间号变体（`１０まんボルト`、`カプ・コケコ`）。
+    只做确定性规则、不做任何模糊匹配：
+      - 半角数字 -> 全角（0-9 -> ０-９）
+      - 半角中点 U+FF65 ･ -> 全角中点 U+30FB ・
+      - 半角长音符 U+FF70 ｰ -> 全角长音符 U+30FC ー
+    ja 查找路径统一对输入与索引键两侧先过此函数后再精确匹配。
+    """
+    out = []
+    for ch in s:
+        code = ord(ch)
+        if 0x30 <= code <= 0x39:
+            out.append(chr(code + 0xFEE0))
+        elif ch == "\uff65":
+            out.append("\u30fb")
+        elif ch == "\uff70":
+            out.append("\u30fc")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def _load_aliases() -> dict[str, dict[str, str]]:
     """Load alias mappings from aliases.json with global caching."""
     global _aliases_data

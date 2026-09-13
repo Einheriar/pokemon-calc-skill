@@ -34,7 +34,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from normalize import get_suggestions, normalize_name
+from normalize import get_suggestions, normalize_ja, normalize_name
 from engine_enums import (
     NATURE_ZH_TO_EN,
     TYPE_EN_TO_ZH,
@@ -63,6 +63,8 @@ _moves_data: dict[str, Any] | None = None
 _abilities_data: dict[str, Any] | None = None
 _index_data: dict[str, Any] | None = None
 _type_chart: dict[str, dict[str, float]] | None = None
+_items_data: dict[str, Any] | None = None
+_ja_index: dict[str, dict[str, Any]] | None = None
 _champions_patches: dict[str, Any] | None = None
 # Internal cumulative regulation cap (see _visible_form). None = newest
 # regulation in data/regulation_manifest.json, i.e. show every form.
@@ -107,7 +109,7 @@ def _load_json(name: str) -> Any:
 
 
 def load_data() -> None:
-    global _pokemon_data, _moves_data, _abilities_data, _index_data, _type_chart
+    global _pokemon_data, _moves_data, _abilities_data, _index_data, _type_chart, _items_data
     if _pokemon_data is not None:
         return
     _pokemon_data = _load_json("pokemon.json")
@@ -115,12 +117,61 @@ def load_data() -> None:
     _abilities_data = _load_json("abilities.json")
     _index_data = _load_json("name_index.json")
     _type_chart = _load_json("type_chart.json")
+    _items_data = _load_json("items.json")
     # Merge Champions name_index patch
     patches = _load_champions_patches()
     if patches and "name_index" in patches:
         for category in ("pokemon", "moves"):
             if category in _index_data and category in patches["name_index"]:
                 _index_data[category].update(patches["name_index"][category])
+
+
+def _build_ja_index() -> dict[str, dict[str, Any]]:
+    """Lazy ja -> entity mapping built at runtime from data files (phase3 Step 0 方案 b).
+
+    不引入第三份名字数据源：pokemon 取 pokemon.json 的 name_ja -> 主键 stem，
+    abilities 取 abilities.json 的 name_ja -> 规范中文名；items 复用 name_index
+    items 段既有的日文键（resolve_item 原生支持）。键与查找输入两侧统一过
+    normalize_ja 后精确匹配。ja 名撞车时值为 list（同名多实体），resolve 视为
+    歧义 MISS，由 cmd 层走 error+候选路径，不静默择一。
+    """
+    global _ja_index
+    if _ja_index is not None:
+        return _ja_index
+    ja: dict[str, dict[str, Any]] = {"pokemon": {}, "abilities": {}, "items": {}}
+
+    def put(section: str, name: str, target: Any) -> None:
+        key = normalize_ja(name)
+        if not key:
+            return
+        existing = ja[section].get(key)
+        if existing is None:
+            ja[section][key] = target
+        elif isinstance(existing, list):
+            if target not in existing:
+                existing.append(target)
+        elif existing != target:
+            ja[section][key] = [existing, target]
+
+    for stem, data in _pokemon_data.items():
+        name_ja = data.get("name_ja")
+        if name_ja:
+            put("pokemon", name_ja, stem)
+    for zh, data in _abilities_data.items():
+        name_ja = data.get("name_ja")
+        if name_ja:
+            put("abilities", name_ja, zh)
+    _ja_index = ja
+    return _ja_index
+
+
+def _ja_lookup(section: str, name: str) -> Any | None:
+    """Exact ja match after deterministic normalization; list values are ambiguous."""
+    idx = _build_ja_index()[section]
+    hit = idx.get(normalize_ja(name))
+    if isinstance(hit, list):
+        return None  # ambiguous ja name -> miss with candidates at cmd layer
+    return hit
 
 
 def _load_champions_patches() -> dict[str, Any]:
@@ -662,6 +713,14 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
                     name = matched_key
                     break
 
+    # Japanese input (phase3 first batch): species-level name_ja -> stem.
+    # Ambiguous ja names (list values) are treated as a miss so the caller
+    # gets the error+suggestions path instead of a silent pick.
+    if not stem:
+        ja_stem = _ja_lookup("pokemon", name)
+        if ja_stem:
+            stem = ja_stem
+
     # NOTE: bare fullwidth suffix without the species prefix ("喷火龙Ｙ") is
     # deliberately NOT resolved — the canonical form name is "超级喷火龙Ｙ",
     # and silently guessing a Mega form from a name the caller never wrote
@@ -702,7 +761,7 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
 
 
 def resolve_ability(name: str) -> tuple[str, Any] | None:
-    """Return (stem, data) for an ability by zh or en name."""
+    """Return (stem, data) for an ability by zh, en, or ja name."""
     load_data()
     name = normalize_name(name, "abilities")
     stem = _index_data["abilities"].get(name)
@@ -712,6 +771,10 @@ def resolve_ability(name: str) -> tuple[str, Any] | None:
                 stem = v
                 break
     if not stem:
+        ja_zh = _ja_lookup("abilities", name)
+        if ja_zh:
+            stem = _index_data["abilities"].get(ja_zh) or ja_zh
+    if not stem:
         return None
     return stem, _abilities_data.get(stem)
 
@@ -720,158 +783,8 @@ def resolve_ability(name: str) -> tuple[str, Any] | None:
 # Item effects lookup
 # ---------------------------------------------------------------------------
 
-# Maps English and Chinese item names to their effect descriptions.
-# Used by cmd_item() to return human-readable effect info.
-_ITEM_EFFECTS: dict[str, tuple[str, str]] = {
-    # Elemental boost items (1.2x)
-    "Mystic Water": ("携带后，水属性招式威力提升20%", "属性增强道具"),
-    "神秘水滴": ("携带后，水属性招式威力提升20%", "属性增强道具"),
-    "Charcoal": ("携带后，火属性招式威力提升20%", "属性增强道具"),
-    "木炭": ("携带后，火属性招式威力提升20%", "属性增强道具"),
-    "Miracle Seed": ("携带后，草属性招式威力提升20%", "属性增强道具"),
-    "奇迹种子": ("携带后，草属性招式威力提升20%", "属性增强道具"),
-    "Magnet": ("携带后，电属性招式威力提升20%", "属性增强道具"),
-    "磁铁": ("携带后，电属性招式威力提升20%", "属性增强道具"),
-    "Never-Melt Ice": ("携带后，冰属性招式威力提升20%", "属性增强道具"),
-    "NeverMeltIce": ("携带后，冰属性招式威力提升20%", "属性增强道具"),
-    "不融冰": ("携带后，冰属性招式威力提升20%", "属性增强道具"),
-    "Black Belt": ("携带后，格斗属性招式威力提升20%", "属性增强道具"),
-    "黑带": ("携带后，格斗属性招式威力提升20%", "属性增强道具"),
-    "Poison Barb": ("携带后，毒属性招式威力提升20%", "属性增强道具"),
-    "毒针": ("携带后，毒属性招式威力提升20%", "属性增强道具"),
-    "Soft Sand": ("携带后，地面属性招式威力提升20%", "属性增强道具"),
-    "柔软沙子": ("携带后，地面属性招式威力提升20%", "属性增强道具"),
-    "Sharp Beak": ("携带后，飞行属性招式威力提升20%", "属性增强道具"),
-    "锐利鸟嘴": ("携带后，飞行属性招式威力提升20%", "属性增强道具"),
-    "Twisted Spoon": ("携带后，超能力属性招式威力提升20%", "属性增强道具"),
-    "TwistedSpoon": ("携带后，超能力属性招式威力提升20%", "属性增强道具"),
-    "弯曲的汤匙": ("携带后，超能力属性招式威力提升20%", "属性增强道具"),
-    "Silver Powder": ("携带后，虫属性招式威力提升20%", "属性增强道具"),
-    "SilverPowder": ("携带后，虫属性招式威力提升20%", "属性增强道具"),
-    "银色粉": ("携带后，虫属性招式威力提升20%", "属性增强道具"),
-    "Hard Stone": ("携带后，岩石属性招式威力提升20%", "属性增强道具"),
-    "硬石头": ("携带后，岩石属性招式威力提升20%", "属性增强道具"),
-    "Spell Tag": ("携带后，幽灵属性招式威力提升20%", "属性增强道具"),
-    "诅咒之符": ("携带后，幽灵属性招式威力提升20%", "属性增强道具"),
-    "Dragon Fang": ("携带后，龙属性招式威力提升20%", "属性增强道具"),
-    "龙之牙": ("携带后，龙属性招式威力提升20%", "属性增强道具"),
-    "Black Glasses": ("携带后，恶属性招式威力提升20%", "属性增强道具"),
-    "BlackGlasses": ("携带后，恶属性招式威力提升20%", "属性增强道具"),
-    "黑色眼镜": ("携带后，恶属性招式威力提升20%", "属性增强道具"),
-    "Metal Coat": ("携带后，钢属性招式威力提升20%", "属性增强道具"),
-    "金属膜": ("携带后，钢属性招式威力提升20%", "属性增强道具"),
-    "Silk Scarf": ("携带后，一般属性招式威力提升20%", "属性增强道具"),
-    "丝绸围巾": ("携带后，一般属性招式威力提升20%", "属性增强道具"),
-    "Fairy Feather": ("携带后，妖精属性招式威力提升20%", "属性增强道具"),
-
-    # Category boost items (1.1x)
-    "Muscle Band": ("携带后，物理招式威力提升10%", "分类增强道具"),
-    "力量头带": ("携带后，物理招式威力提升10%", "分类增强道具"),
-    "Wise Glasses": ("携带后，特殊招式威力提升10%", "分类增强道具"),
-    "博识眼镜": ("携带后，特殊招式威力提升10%", "分类增强道具"),
-
-    # Choice items (1.5x)
-    "Choice Band": ("携带后，物理攻击提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-    "讲究头带": ("携带后，物理攻击提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-    "Choice Specs": ("携带后，特殊攻击提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-    "讲究眼镜": ("携带后，特殊攻击提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-    "Choice Scarf": ("携带后，速度提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-    "讲究围巾": ("携带后，速度提升50%，但只能使用上场后使出的第一个招式", "讲究道具"),
-
-    # Life Orb / Expert Belt
-    "Life Orb": ("携带后，招式威力提升30%，但攻击时会损失少量HP", "威力增强道具"),
-    "生命宝珠": ("携带后，招式威力提升30%，但攻击时会损失少量HP", "威力增强道具"),
-    "Expert Belt": ("携带后，效果拔群的招式威力额外提升20%", "威力增强道具"),
-    "达人带": ("携带后，效果拔群的招式威力额外提升20%", "威力增强道具"),
-
-    # Survival items
-    "Focus Sash": ("携带后，满HP时受到一击濒死的攻击可以保留1HP（一次性）", "保命道具"),
-    "气势披带": ("携带后，满HP时受到一击濒死的攻击可以保留1HP（一次性）", "保命道具"),
-    "Focus Band": ("携带后，受到濒死攻击时有10%概率保留1HP", "保命道具"),
-    "气势头带": ("携带后，受到濒死攻击时有10%概率保留1HP", "保命道具"),
-
-    # Recovery items
-    "Leftovers": ("携带后，每回合结束时回复少量HP", "回复道具"),
-    "吃剩的东西": ("携带后，每回合结束时回复少量HP", "回复道具"),
-
-    # Defensive items
-    "Assault Vest": ("携带后，特殊防御提升50%，但无法使用变化招式", "防御道具"),
-    "突击背心": ("携带后，特殊防御提升50%，但无法使用变化招式", "防御道具"),
-    "Eviolite": ("携带后，可以进化的宝可梦的防御和特殊防御提升50%", "防御道具"),
-    "进化奇石": ("携带后，可以进化的宝可梦的防御和特殊防御提升50%", "防御道具"),
-    "Heavy-Duty Boots": ("携带后，不受撒菱、毒菱和隐形岩等场地伤害", "防御道具"),
-    "厚底靴": ("携带后，不受撒菱、毒菱和隐形岩等场地伤害", "防御道具"),
-
-    # Type-resist berries (halve super-effective moves)
-    "Occa Berry": ("携带后，受到效果拔群的火属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "巧可果": ("携带后，受到效果拔群的火属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗火果": ("携带后，受到效果拔群的火属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Passho Berry": ("携带后，受到效果拔群的水属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "烛木果": ("携带后，受到效果拔群的水属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗水果": ("携带后，受到效果拔群的水属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Wacan Berry": ("携带后，受到效果拔群的电属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "罗子果": ("携带后，受到效果拔群的电属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗电果": ("携带后，受到效果拔群的电属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Rindo Berry": ("携带后，受到效果拔群的草属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "番荔果": ("携带后，受到效果拔群的草属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗草果": ("携带后，受到效果拔群的草属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Yache Berry": ("携带后，受到效果拔群的冰属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "腰木果": ("携带后，受到效果拔群的冰属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗冰果": ("携带后，受到效果拔群的冰属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Chople Berry": ("携带后，受到效果拔群的格斗属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "棱瓜果": ("携带后，受到效果拔群的格斗属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗斗果": ("携带后，受到效果拔群的格斗属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Kebia Berry": ("携带后，受到效果拔群的毒属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗毒果": ("携带后，受到效果拔群的毒属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Shuca Berry": ("携带后，受到效果拔群的地面属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "葫苏果": ("携带后，受到效果拔群的地面属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗地果": ("携带后，受到效果拔群的地面属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Coba Berry": ("携带后，受到效果拔群的飞行属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "乐芭果": ("携带后，受到效果拔群的飞行属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗飞果": ("携带后，受到效果拔群的飞行属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Payapa Berry": ("携带后，受到效果拔群的超能力属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "芭亚果": ("携带后，受到效果拔群的超能力属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗超果": ("携带后，受到效果拔群的超能力属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Tanga Berry": ("携带后，受到效果拔群的虫属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "莲蒲果": ("携带后，受到效果拔群的虫属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗虫果": ("携带后，受到效果拔群的虫属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Charti Berry": ("携带后，受到效果拔群的岩石属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "霹霹果": ("携带后，受到效果拔群的岩石属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗岩果": ("携带后，受到效果拔群的岩石属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Kasib Berry": ("携带后，受到效果拔群的幽灵属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "佛柑果": ("携带后，受到效果拔群的幽灵属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗鬼果": ("携带后，受到效果拔群的幽灵属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Haban Berry": ("携带后，受到效果拔群的龙属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "烛龙果": ("携带后，受到效果拔群的龙属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗龙果": ("携带后，受到效果拔群的龙属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Colbur Berry": ("携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "罗望果": ("携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "刺耳果": ("携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗恶果": ("携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Babiri Berry": ("携带后，受到效果拔群的钢属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "穹犀果": ("携带后，受到效果拔群的钢属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗钢果": ("携带后，受到效果拔群的钢属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Roseli Berry": ("携带后，受到效果拔群的妖精属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "香罗果": ("携带后，受到效果拔群的妖精属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗仙果": ("携带后，受到效果拔群的妖精属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "Chilan Berry": ("携带后，受到效果拔群的一般属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "投鲜果": ("携带后，受到效果拔群的一般属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-    "抗一般果": ("携带后，受到效果拔群的一般属性招式攻击时，伤害减半（一次性）", "抗性树果"),
-
-    # Other notable items
-    "Clear Amulet": ("携带后，能力不会被对手降低", "能力保护道具"),
-    "清净坠饰": ("携带后，能力不会被对手降低", "能力保护道具"),
-    "Covert Cloak": ("携带后，不会受到招式的追加效果影响", "能力保护道具"),
-    "密探斗篷": ("携带后，不会受到招式的追加效果影响", "能力保护道具"),
-    "Rocky Helmet": ("携带后，受到接触类招式攻击时，攻击方会受到少量伤害", "反伤道具"),
-    "凸凸头盔": ("携带后，受到接触类招式攻击时，攻击方会受到少量伤害", "反伤道具"),
-    "Safety Goggles": ("携带后，不受粉末类招式和天气伤害影响", "防御道具"),
-    "防尘护目镜": ("携带后，不受粉末类招式和天气伤害影响", "防御道具"),
-    "Weakness Policy": ("携带后，受到效果拔群攻击时，攻击和特殊攻击提升", "强化道具"),
-    "弱点保险": ("携带后，受到效果拔群攻击时，攻击和特殊攻击提升", "强化道具"),
-    "Booster Energy": ("携带后，携带驱劲能量特性（古代活性/夸克充能）的宝可梦首次出场时会提升最高能力", "特性联动道具"),
-    "驱劲能量": ("携带后，携带驱劲能量特性（古代活性/夸克充能）的宝可梦首次出场时会提升最高能力", "特性联动道具"),
-}
+# Item effect descriptions live in data/items.json (generated by
+# cache/build_item_index.py). cmd_item() reads them from the data layer.
 
 
 def resolve_item(name: str) -> str | None:
@@ -885,6 +798,15 @@ def resolve_item(name: str) -> str | None:
             if k.lower() == name.lower():
                 en = v
                 break
+    if not en:
+        # ja retry: normalize both sides (halfwidth digits/middle dot/prolonged
+        # mark) and rescan — items index ja keys come from upstream as-is.
+        ja_name = normalize_ja(name)
+        if ja_name != name:
+            for k, v in items.items():
+                if normalize_ja(k) == ja_name:
+                    en = v
+                    break
     return en
 
 
@@ -941,13 +863,14 @@ def cmd_item(name: str) -> dict[str, Any]:
             err["suggestions"] = suggestions
         return err
     result: dict[str, Any] = {"name_en": en}
-    # Try English name first, then the original input name
-    effect_info = _ITEM_EFFECTS.get(en)
-    if not effect_info:
-        effect_info = _ITEM_EFFECTS.get(name)
+    # Effect text comes from the data layer (data/items.json), keyed by the
+    # canonical English name resolve_item() returns. The former zh-key
+    # fallback in the inline effect table is provably dead: every zh key had
+    # an en twin with an identical tuple (asserted by cache/test_items_data.py).
+    effect_info = _items_data.get(en) if _items_data else None
     if effect_info:
-        result["effect"] = effect_info[0]
-        result["category"] = effect_info[1]
+        result["effect"] = effect_info.get("effect", "")
+        result["category"] = effect_info.get("category", "")
     else:
         result["effect"] = ""
         result["category"] = ""
