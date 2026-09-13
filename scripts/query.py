@@ -138,7 +138,7 @@ def _build_ja_index() -> dict[str, dict[str, Any]]:
     global _ja_index
     if _ja_index is not None:
         return _ja_index
-    ja: dict[str, dict[str, Any]] = {"pokemon": {}, "abilities": {}, "items": {}}
+    ja: dict[str, dict[str, Any]] = {"pokemon": {}, "abilities": {}, "items": {}, "moves": {}}
 
     def put(section: str, name: str, target: Any) -> None:
         key = normalize_ja(name)
@@ -161,6 +161,11 @@ def _build_ja_index() -> dict[str, dict[str, Any]]:
         name_ja = data.get("name_ja")
         if name_ja:
             put("abilities", name_ja, zh)
+    # 招式第二批（moves name_ja 经 phase2 Step 1 补完 + 交叉验证后接入）
+    for stem, mv in _moves_data.items():
+        name_ja = mv.get("name_ja")
+        if name_ja:
+            put("moves", name_ja, stem)
     _ja_index = ja
     return _ja_index
 
@@ -740,7 +745,7 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
 
 
 def resolve_move(name: str) -> tuple[str, Any] | None:
-    """Return (stem, data) for a move by zh or en name."""
+    """Return (stem, data) for a move by zh, en, or ja name."""
     load_data()
     name = normalize_name(name, "moves")
     stem = _index_data["moves"].get(name)
@@ -749,6 +754,10 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
             if k.lower() == name.lower():
                 stem = v
                 break
+    if not stem:
+        ja_zh = _ja_lookup("moves", name)
+        if ja_zh:
+            stem = _index_data["moves"].get(ja_zh) or ja_zh
     if not stem:
         return None
     data = _moves_data.get(stem)

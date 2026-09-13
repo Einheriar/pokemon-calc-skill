@@ -10,7 +10,7 @@ description: >
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
   (6) 当前赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
-  仅支持中文和英文名称查询。数据来源为《宝可梦冠军》(Pokémon Champions) M-C 规则（champout v1.2.0，2026-09-11）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。数据层按规则累积保留（M-A/M-B/M-C 并集），默认取最新规则视图。
+  支持简体中文、英文与日文名称查询（历史译名/俗称别名层自动容错；未收录名称会返回 suggestions）。数据来源为《宝可梦冠军》(Pokémon Champions) M-C 规则（champout v1.2.0，2026-09-11）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。数据层按规则累积保留（M-A/M-B/M-C 并集），默认取最新规则视图。
 ---
 
 # 宝可梦伤害计算器 Skill
@@ -224,7 +224,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 **别名处理规则**：`data/aliases.json` 已收录常见俗称（如"钢兵"→"仆刀将军"、"抗斗果"→"巧可果"），`normalize.py` 在所有查询命令的底层自动完成映射。**Agent 无需预先转换别名，直接使用用户提供的原始名称作为参数传入即可，以查询的结果为准。**
 
-**多语言输入规则**：中英输入均合法（如 `nature:"内敛"` 与 `nature:"Modest"`、`types:["火","飞行"]` 与 `["Fire","Flying"]` 等价；天气/场地用英文枚举 `Sun`/`Rain`/`Electric`/`Grassy`…）。**优先直接输出规范英文标识符**（招式/特性/道具英文名、性格英文名、属性英文名）；不确定某个名称的规范英文写法时，先执行 `lookup <名称>` 获取 `{canonical_en, entity_type}` 再用于参数。引擎内部已统一英文枚举；非法的属性/性格/状态 override 值会被入口校验拒绝并返回 `suggestions`。
+**多语言输入规则**：中文（简体）、英文、日文输入均合法（如 `nature:"内敛"` 与 `nature:"Modest"`、`types:["火","飞行"]` 与 `["Fire","Flying"]` 等价；日语实体名如 `カプ・コケコ`、`もうか`、`１０まんボルト` 直接解析到简体规范实体，输出仍为简体）。**优先直接输出规范英文标识符**（招式/特性/道具英文名、性格英文名、属性英文名）；不确定某个名称的规范英文写法时，先执行 `lookup <名称>` 获取 `{canonical_en, entity_type}` 再用于参数。引擎内部已统一英文枚举；非法的属性/性格/状态 override 值会被入口校验拒绝并返回 `suggestions`。
 
 **形态查询与消歧规则**：
 
@@ -332,6 +332,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 ### 4.2 伤害计算标准回答结构
 
 执行 `calc` 后，按文档末尾的「最终输出模板」组织回答：包含六个二级标题（结论摘要 / 攻击方详细信息 / 防御方详细信息 / 招式信息 / 环境条件 / 伤害计算结果），按顺序输出，不遗漏。若用户询问能力点数/努力值优化，追加「能力点数优化结果」。
+
+**结构化字段优先**：模板中的每一项都标注了它来自 calc 响应的哪个字段（如 `move_info.type`、`field_info.weather`、`type_effectiveness`）——**直接引用这些字段的真实值**填表，不要凭记忆或从 description 转述改写；`description` 是引擎给的人类可读附注，用于核对与战术判断行文，不作为数字来源。
 
 回答中使用**能力值描述**，不直接输出努力值。
 
@@ -447,51 +449,51 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ### 招式信息
 
-使用 `calc` 返回的招式数据构建完整表格。
+使用 `calc` 返回的 `move_info` 构建完整表格，每项直接引用响应字段。
 
-| 项目 | 数值 |
+| 项目 | 数值（响应字段） |
 |------|------|
-| 属性 | {type} |
-| 分类 | {物理/特殊/变化} |
-| 基础威力 | {base_power} |
-| 计算威力 | {effective_power} |
-| 命中 | {accuracy} |
-| 打击次数 | {hits} |
-| 引擎修正链简述 | {description} |
-| 广域招式 | {是/否} |
+| 属性 | {move_info.type} |
+| 分类 | {move_info.category} |
+| 基础威力 | {move_info.base_power} |
+| 计算威力 | {move_info.effective_power} |
+| 命中 | {move_info.accuracy} |
+| 打击次数 | {move_info.hits} |
+| 广域招式 | {move_info.is_spread}（是/否） |
+| 引擎修正链简述 | {description——人类可读附注，引用原文不转述} |
 
 > **计算威力说明**：引擎根据传入的环境条件自动计算最终威力。直接引用引擎返回的 `effective_power` 或 `description` 中的威力值，不推导中间步骤。
 
 ### 环境条件
 
-使用 `calc` 返回的 `field` 信息构建完整表格。
+使用 `calc` 返回的 `field_info` 构建完整表格，每项直接引用响应字段（布尔/枚举值转为"是/否/无"表述）。
 
-| 项目 | 数值 |
+| 项目 | 数值（响应字段） |
 |------|------|
-| 天气 | {weather} |
-| 场地 | {terrain} |
-| 对战模式 | {Singles / Doubles} |
-| 光墙/反射壁/极光幕 | {是/否} |
-| 隐形岩 | {是/否} |
-| 撒菱层数 | {0~3} |
-| 其他效果 | {帮助、友情防守、蓄电池、能量点等} |
+| 天气 | {field_info.weather}（null = 无） |
+| 场地 | {field_info.terrain}（null = 无） |
+| 对战模式 | {field_info.format} |
+| 光墙/反射壁/极光幕 | {field_info.is_light_screen / is_reflect / is_aurora_veil} |
+| 隐形岩 | {field_info.is_stealth_rock} |
+| 撒菱层数 | {field_info.spikes} |
+| 其他效果 | {field_info.is_helping_hand / is_friend_guard / is_battery / is_power_spot——按"帮助/友情防守/蓄电池/能量点"表述，null/False 略过} |
 
 ### 伤害计算结果
 
-使用 `calc` 返回的伤害数据构建完整表格。
+使用 `calc` 返回的顶层字段构建完整表格，每项直接引用响应字段。
 
-| 项目 | 数值 |
+| 项目 | 数值（响应字段） |
 |------|------|
-| 伤害范围（单次） | {min} ～ {max} |
+| 伤害范围（单次） | {damage_range[0]} ～ {damage_range[1]} |
 | 全部 16 个乱数 roll | {damage_rolls} |
 | 属性相克倍率 | {type_effectiveness}x |
-| 是否触发 STAB | {是/否} |
-| 是否触发要害 | {是/否} |
-| 天气加成 | {是/否} |
-| 场地加成 | {是/否} |
-| 道具加成 | {是/否} |
+| 是否触发 STAB | {stab_applied}（是/否） |
+| 是否触发要害 | {is_critical}（是/否） |
+| 天气加成 | {从 description 判断——响应无独立字段} |
+| 场地加成 | {从 description 判断——响应无独立字段} |
+| 道具加成 | {从 description 判断——响应无独立字段} |
 | 引擎报告的计算威力 | {description 中引擎返回的威力值} |
-| 烧伤减半 | {是/否} |
+| 烧伤减半 | {burn_applied}（是/否） |
 | KO 概率 | {ko_chance} |
 
 **综合判断**：

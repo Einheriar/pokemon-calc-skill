@@ -415,13 +415,14 @@ class DamageResult:
 
 | 文件 | 条目数 | 来源 | 说明 |
 |------|--------|------|------|
-| `data/pokemon.json` | 1025 | `pokemon-dataset-zh` | 宝可梦百科数据（含 profile、prototype、图鉴、技能池、进化链） |
-| `data/moves.json` | 781 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式 |
+| `data/pokemon.json` | 1025 | `pokemon-dataset-zh` | 宝可梦百科数据（含 profile、prototype、图鉴、技能池、进化链）。forms 共 1320 个，其中 1131 个带规则推导并经 PokeAPI varieties 验证的 `name_en`（phase2 Step 2，报告 `cache/audit/form_name_en_report.md`） |
+| `data/moves.json` | 781 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式；`name_ja` 780/781（phase2 Step 1 经共享快照补全，唯一缺口 超极巨百火焚野 登记于 `cache/audit/name_ja_gaps.md`） |
 | `data/abilities.json` | 313 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
-| `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表 |
-| `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items） |
+| `data/items.json` | 1386 | `pokemon-dataset-zh/item_list.json`（`cache/build_item_index.py` 生成） | 消费侧道具数据（phase2 Step 3）：英文规范名主键，`{name_zh, name_ja, name_en, effect, category}`，55 条带中文效果文本（自 query.py `_ITEM_EFFECTS` 逐字迁入）；`cmd_item` 读此文件。解析侧仍走 name_index items 段，两者职责分离。迁移完整性由 `cache/test_items_data.py` 守护 |
+| `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表。**决策登记（phase2 Step 4，2026-09-13）**：不加英文键——引擎加载时已经 `engine_enums.TYPE_ZH_TO_EN` 转为英文键，数据文件加英文键属双键冗余，反增一致性维护负担且零行为收益；官方克制表对账（check_data）已守护其正确性 |
+| `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items）；items 段含日文键 1387 个（ja 解析复用）。与 items.json 同源不同职责：解析侧索引 vs 消费侧数据 |
 | `data/setdex.json` | 207 只 / 314 预设 | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧 VGC 预设（Reg D/E 时代）+ 50 个天梯热门套 `天梯双打热门配置`（官方实机排位双打 Top50，2026-08-30，`priority: 1`；性格取聚合排行榜首——数据源 spread 行不带性格） |
-| `data/aliases.json` | 194 条（pokemon 118 / moves 3 / items 73） | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等，dex<917 可自动生成） |
+| `data/aliases.json` | 195 条（pokemon 118 / moves 4 / items 73 / abilities 0 / natures 0） | 手工维护 + `cache/gen_rom_name_aliases.py` | 玩家俗称 → 标准名称映射（"老喷"→"喷火龙" 等），含 9 条 ROM 官方译名变体（迭失棺→死神棺、谜拟丘→谜拟Ｑ 等）。守卫 `cache/check_aliases.py`（目标存在/键唯一/自指/别名≠活规范名）；2026-09-13 按 PokeAPI 证据翻正 4 条反向别名（多边兽Ｚ→多边兽乙型等，官方名输入恢复直达）；来源注记 `cache/alias_sources.md` |
 | `data/champions_pokemon_patch.json` 等 4 件 | pokemon 231 / moves 778 / learnset 231 物种（含各形态） | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions 补丁层（当前 M-C）：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、每个形态带 `regulation` 引入规则标签（M-A/M-B/M-C）、learnset 为 `{stem: {form: [moves]}}` 嵌套结构（按形态隔离，231 物种全覆盖）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
 | `data/regulation_manifest.json` | 3 条规则 + 数据源映射 | 手工维护 | 规则身份与顺序的唯一来源：`current`（当前规则）、`regulations[].order`（顺序）、`sources`（各数据源发布的规则）。运行时经 `scripts/regulations.py` 读取；新增/插入规则只改此文件 |
 | `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
@@ -505,6 +506,29 @@ python cache/test_ja_query.py         # 日语查询首批 pokemon/ability/item�
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 2026-09-13（计划族 Wave 0-3：多语言输入侧补齐，无版本号临时批次）
+
+执行 `plans/EXECUTION_PLAYBOOK_2026-09-12.md`（alias_layer / phase2 / phase3 主计划族；zh_hant 与 abilities 别名回填产出候选清单待人工批准后另行入库）。详见 `plans/CHANGELOG_2026-09-13.md`。
+
+- **解析语言支持矩阵（query 语言矩阵）**：
+
+  | 实体 | 简体中文 | 英文 | 日文 | 备注 |
+  |---|---|---|---|---|
+  | 宝可梦（物种级） | ✓ | ✓ | ✓（1025/1025 name_ja） | ja 走运行时 `_build_ja_index()`（方案 b），`normalize_ja` 确定性归一（半角数字/中点/长音符），歧义 MISS 不静默择一 |
+  | 招式 | ✓ | ✓ | ✓（780/781，缺口 超极巨百火焚野） | 第二批，随 phase2 name_ja 补完接入 |
+  | 特性 | ✓ | ✓ | ✓（313/313） | 同上机制 |
+  | 道具 | ✓ | ✓ | ✓（复用 name_index items 日文键 + 归一化重扫） | 1387 日文键原生可用 |
+  | 属性/性格/状态 | ✓（+别名） | ✓ | ✗ | 状态枚举英文本就是唯一输入契约；繁体候选已产出待批准 |
+
+  解析优先级不变：zh/en 规范名 > ja > 别名/模糊；输出永远简体。黄金快照 60/60 逐字节不变。
+
+- **数据层增补**（只加不改）：`data/items.json` 新建（1386 条，`_ITEM_EFFECTS` 131 键自 query.py 逐字迁出，`cmd_item` 改读数据层）；moves `name_ja` 补 431 条（交叉验证 349/349 一致后经共享快照补全）；forms `name_en` 1131 条（规则推导 + PokeAPI varieties slug 机械验证）。
+- **共享基准**：`cache/pokeapi_names.json` 四语快照入库（物种 1025/1025、特性 312/313、招式 780/781、道具 1071/1386；miss 清单留档 `cache/_meta.miss`）。`cache/fetch_pokeapi_names.py` 断点续抓可复现。
+- **SKILL.md 行为契约变更（phase3 Step 2）**：frontmatter 语言声明改为"简体中文、英文与日文"；输出模板三表（招式/环境/伤害结果）逐项标注响应字段路径（move_info.* / field_info.* / 顶层字段），结构化字段优先、description 降为核对用附注。命令与响应结构零改动。
+- **别名层**：守卫 `cache/check_aliases.py` 常驻（DEVELOPER 数据校验清单登记）；种子 `地狱突刺→深渊突刺`；4 条反向别名按 PokeAPI 证据翻正。
+- **新测试**：`test_items_data.py`（4 例）、`test_ja_query.py`（11 例）；`check_data.py` 增 name_ja 两态检查。
+- **登记未处理（转 name_audit / 数据批次）**：更名物种 pokemon.json name_zh 为旧名（name_index 键为官方名，正确一侧）；上游 item_list 与 name_index 树果段漂移（10 键配对 + 2 缺键，索引重建改 `--with-index` opt-in）；moves.json 泡沫光线/BubbleBeam 重复条目（ja 歧义 MISS 防御已拦）；Will-O-Wisp 我方译名"磷火"vs 官方"鬼火"。
 
 ### 4.9.3（2026-09-12）
 
