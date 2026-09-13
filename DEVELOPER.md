@@ -498,7 +498,7 @@ python cache/test_ja_query.py         # 日语查询（四实体类正例/归一
 python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + Tier 2 属性/性格枚举全量，14 例）
 ```
 
-数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（引擎四文件不得含中文字符串字面量，注释除外）；别名更新后还需 `python cache/check_aliases.py`（别名层常驻守卫：目标存在/段内键唯一/空值自指/别名≠活规范名，任何违规非零退出；别名悬空检查的权威输出，name_audit 只消费不重复实现）。
+数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（引擎四文件不得含中文字符串字面量，注释除外）；别名更新后还需 `python cache/check_aliases.py`（别名层常驻守卫：目标存在/段内键唯一/空值自指/别名≠活规范名，任何违规非零退出；别名悬空检查的权威输出，name_audit 只消费不重复实现）；display_zh.py 或 engine_enums 表变更后还需 `python cache/check_display_names.py`（Tier 1 显示层嵌名交叉验证：IMMUNITY 字典严格对账/EOT 前缀词切分校验/枚举表一致性/嵌名清单落盘 cache/audit/tier1_embedded_names.md）。
 
 旧版专项测试已归档于 `cache/archive/`（15 个，仅作历史参考，不再维护）。
 
