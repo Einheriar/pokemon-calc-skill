@@ -1,6 +1,6 @@
 ---
 name: pokemon-calc
-version: 4.9.3
+version: 5.0.0
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：

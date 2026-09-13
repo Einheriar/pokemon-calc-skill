@@ -524,28 +524,34 @@ python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + 
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
-### 2026-09-13（计划族 Wave 0-3：多语言输入侧补齐，无版本号临时批次）
+### 5.0.0（2026-09-13）
 
-执行 `plans/EXECUTION_PLAYBOOK_2026-09-12.md`（alias_layer / phase2 / phase3 主计划族；zh_hant 与 abilities 别名回填产出候选清单待人工批准后另行入库）。详见 `plans/CHANGELOG_2026-09-13.md`。
+2026-09-12 计划族（alias_layer / zh_hant_support / phase2 / phase3）+ name_audit 独立质量流程全部实施，输入侧多语言大重构。执行 `plans/archive/EXECUTION_PLAYBOOK_2026-09-12[已实施].md`；详见 `plans/CHANGELOG_2026-09-13.md`。
 
 - **解析语言支持矩阵（query 语言矩阵）**：
 
   | 实体 | 简体中文 | 英文 | 日文 | 备注 |
   |---|---|---|---|---|
   | 宝可梦（物种级） | ✓ | ✓ | ✓（1025/1025 name_ja） | ja 走运行时 `_build_ja_index()`（方案 b），`normalize_ja` 确定性归一（半角数字/中点/长音符），歧义 MISS 不静默择一 |
-  | 招式 | ✓ | ✓ | ✓（780/781，缺口 超极巨百火焚野） | 第二批，随 phase2 name_ja 补完接入 |
+  | 招式 | ✓ | ✓ | ✓（781/781） | 第二批随 phase2 接入；唯一缺口 超极巨百火焚野=キョダイヒャッカ 经用户确认填补 |
   | 特性 | ✓ | ✓ | ✓（313/313） | 同上机制 |
   | 道具 | ✓ | ✓ | ✓（复用 name_index items 日文键 + 归一化重扫） | 1387 日文键原生可用 |
-  | 属性/性格/状态 | ✓（+别名） | ✓ | ✗ | 状态枚举英文本就是唯一输入契约；繁体候选已产出待批准 |
+  | 属性/性格/状态 | ✓（+别名） | ✓ | — | 状态枚举英文本就是唯一输入契约；繁体全可用（22 条映射 + 21 条简繁同形） |
 
   解析优先级不变：zh/en 规范名 > ja > 别名/模糊；输出永远简体。黄金快照 60/60 逐字节不变。
 
 - **数据层增补**（只加不改）：`data/items.json` 新建（1386 条，`_ITEM_EFFECTS` 131 键自 query.py 逐字迁出，`cmd_item` 改读数据层）；moves `name_ja` 补 431 条（交叉验证 349/349 一致后经共享快照补全）；forms `name_en` 1131 条（规则推导 + PokeAPI varieties slug 机械验证）。
 - **共享基准**：`cache/pokeapi_names.json` 四语快照入库（物种 1025/1025、特性 312/313、招式 780/781、道具 1071/1386；miss 清单留档 `cache/_meta.miss`）。`cache/fetch_pokeapi_names.py` 断点续抓可复现。
-- **SKILL.md 行为契约变更（phase3 Step 2）**：frontmatter 语言声明改为"简体中文、英文与日文"；输出模板三表（招式/环境/伤害结果）逐项标注响应字段路径（move_info.* / field_info.* / 顶层字段），结构化字段优先、description 降为核对用附注。命令与响应结构零改动。
+- **SKILL.md 行为契约变更（phase3 Step 2）**：frontmatter 语言声明改为"简体中文、繁体中文、英文与日文"；输出模板三表（招式/环境/伤害结果）逐项标注响应字段路径（move_info.* / field_info.* / 顶层字段），结构化字段优先、description 降为核对用附注。命令与响应结构零改动。
 - **别名层**：守卫 `cache/check_aliases.py` 常驻（DEVELOPER 数据校验清单登记）；种子 `地狱突刺→深渊突刺`；4 条反向别名按 PokeAPI 证据翻正。
 - **新测试**：`test_items_data.py`（4 例）、`test_ja_query.py`（11 例）；`check_data.py` 增 name_ja 两态检查。
-- **登记未处理（转 name_audit / 数据批次）**：更名物种 pokemon.json name_zh 为旧名（name_index 键为官方名，正确一侧）；上游 item_list 与 name_index 树果段漂移（10 键配对 + 2 缺键，索引重建改 `--with-index` opt-in）；moves.json 泡沫光线/BubbleBeam 重复条目（ja 歧义 MISS 防御已拦）；Will-O-Wisp 我方译名"磷火"vs 官方"鬼火"。
+- **登记未处理 → 已由 name_audit 结案**：更名物种显示名、树果配对、BubbleBeam、磷火/鬼火各条于同日 name_audit Step 5 落地（见下）；上游 item_list.json 树果配对仍为旧值，`--with-index` 重建前须先修上游。
+
+**人工批准批次（同日）**：繁体 Tier 1 入库（aliases.json 195→2608；形态推导字符映射由共享快照 hans/hant 成对名称对齐推导、出现 ≥2 次才采纳）；繁体 Tier 2 枚举（`TYPE_ZH_HANT_TO_EN` 8 / `NATURE_ZH_HANT_TO_EN` 14，PokeAPI×52poke 双源 0 不一致）；特性/性格别名（abilities 293 / natures 8）并修复 natures 别名段无运行时消费点问题；SKILL 语言声明同步。
+
+**name_audit（Step 1–5 全部完成）**：新增 `check_display_names.py` Tier 1 嵌名守卫（57 条清单）；`check_names.py` 机械 diff（439 条，基准缺口留档）；只读子代理 58 条全部带 52poke 证据裁决（error 28 / variant 26 / unsure 4 → `cache/audit/flagged.json`），主线独立抽查 5 条全一致；Step 5 经用户批准落地——9 种宝可梦显示名更新为 2020 官方现行名（stem 不动、旧名转别名并反转 4 条反向别名）、树果索引配对修正 10 处/清理 4 混键、抗X果别名语义联动修正 11 条、20 条招式旧名别名、4 条 PokeAPI 缺口用户确认。
+
+**收尾**：SKILL.md 增并发与状态说明、DEVELOPER.md 增「性能与并发」节（实测基线）。终态：黄金快照 60/60、7 守卫 + 14 套件全绿、aliases.json 2699 条。
 
 ### 4.9.3（2026-09-12）
 
