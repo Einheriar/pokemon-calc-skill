@@ -416,7 +416,7 @@ class DamageResult:
 | 文件 | 条目数 | 来源 | 说明 |
 |------|--------|------|------|
 | `data/pokemon.json` | 1025 | `pokemon-dataset-zh` | 宝可梦百科数据（含 profile、prototype、图鉴、技能池、进化链）。forms 共 1320 个，其中 1131 个带规则推导并经 PokeAPI varieties 验证的 `name_en`（phase2 Step 2，报告 `cache/audit/form_name_en_report.md`） |
-| `data/moves.json` | 781 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式；`name_ja` 780/781（phase2 Step 1 经共享快照补全，唯一缺口 超极巨百火焚野 登记于 `cache/audit/name_ja_gaps.md`） |
+| `data/moves.json` | 781 | `pokemon-dataset-zh` + `script_res/move_data.js` | 招式数据。以 `MOVES_SV` 为权威来源补全了全部 SV 世代招式；`name_ja` 781/781 全覆盖（phase2 Step 1 经共享快照补全 431 条；唯一 PokeAPI 缺口 超极巨百火焚野=キョダイヒャッカ 经用户查证确认后填补） |
 | `data/abilities.json` | 313 | `pokemon-dataset-zh` | 特性数据（含效果描述、拥有者列表） |
 | `data/items.json` | 1386 | `pokemon-dataset-zh/item_list.json`（`cache/build_item_index.py` 生成） | 消费侧道具数据（phase2 Step 3）：英文规范名主键，`{name_zh, name_ja, name_en, effect, category}`，55 条带中文效果文本（自 query.py `_ITEM_EFFECTS` 逐字迁入）；`cmd_item` 读此文件。解析侧仍走 name_index items 段，两者职责分离。迁移完整性由 `cache/test_items_data.py` 守护 |
 | `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表。**决策登记（phase2 Step 4，2026-09-13）**：不加英文键——引擎加载时已经 `engine_enums.TYPE_ZH_TO_EN` 转为英文键，数据文件加英文键属双键冗余，反增一致性维护负担且零行为收益；官方克制表对账（check_data）已守护其正确性 |
