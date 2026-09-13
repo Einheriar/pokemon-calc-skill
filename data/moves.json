@@ -9604,7 +9604,7 @@
   "BubbleBeam": {
     "name_zh": "BubbleBeam",
     "name_en": "BubbleBeam",
-    "name_ja": "",
+    "name_ja": "バブルこうせん",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -9622,7 +9622,7 @@
   "破灭之愿": {
     "name_zh": "破灭之愿",
     "name_en": "Doom Desire",
-    "name_ja": "",
+    "name_ja": "はめつのねがい",
     "type": "Steel",
     "category": "Special",
     "pp": "",
@@ -9639,7 +9639,7 @@
   "精神突进": {
     "name_zh": "精神突进",
     "name_en": "Psycho Boost",
-    "name_ja": "",
+    "name_ja": "サイコブースト",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -9656,7 +9656,7 @@
   "岩石爆击": {
     "name_zh": "岩石爆击",
     "name_en": "Rock Blast",
-    "name_ja": "",
+    "name_ja": "ロックブラスト",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -9675,7 +9675,7 @@
   "电击波": {
     "name_zh": "电击波",
     "name_en": "Shock Wave",
-    "name_ja": "",
+    "name_ja": "でんげきは",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -9692,7 +9692,7 @@
   "水之波动": {
     "name_zh": "水之波动",
     "name_en": "Water Pulse",
-    "name_ja": "",
+    "name_ja": "みずのはどう",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -9710,7 +9710,7 @@
   "空气之刃": {
     "name_zh": "空气之刃",
     "name_en": "Air Slash",
-    "name_ja": "",
+    "name_ja": "エアスラッシュ",
     "type": "Flying",
     "category": "Special",
     "pp": "",
@@ -9729,7 +9729,7 @@
   "水流喷射": {
     "name_zh": "水流喷射",
     "name_en": "Aqua Jet",
-    "name_ja": "",
+    "name_ja": "アクアジェット",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -9747,7 +9747,7 @@
   "水流尾": {
     "name_zh": "水流尾",
     "name_en": "Aqua Tail",
-    "name_ja": "",
+    "name_ja": "アクアテール",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -9765,7 +9765,7 @@
   "恶意追击": {
     "name_zh": "恶意追击",
     "name_en": "Assurance",
-    "name_ja": "",
+    "name_ja": "ダメおし",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -9783,7 +9783,7 @@
   "波导弹": {
     "name_zh": "波导弹",
     "name_en": "Aura Sphere",
-    "name_ja": "",
+    "name_ja": "はどうだん",
     "type": "Fighting",
     "category": "Special",
     "pp": "",
@@ -9801,7 +9801,7 @@
   "雪崩": {
     "name_zh": "雪崩",
     "name_en": "Avalanche",
-    "name_ja": "",
+    "name_ja": "ゆきなだれ",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -9819,7 +9819,7 @@
   "勇鸟猛攻": {
     "name_zh": "勇鸟猛攻",
     "name_en": "Brave Bird",
-    "name_ja": "",
+    "name_ja": "ブレイブバード",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -9838,7 +9838,7 @@
   "盐水": {
     "name_zh": "盐水",
     "name_en": "Brine",
-    "name_ja": "",
+    "name_ja": "しおみず",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -9855,7 +9855,7 @@
   "虫咬": {
     "name_zh": "虫咬",
     "name_en": "Bug Bite",
-    "name_ja": "",
+    "name_ja": "むしくい",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -9873,7 +9873,7 @@
   "虫鸣": {
     "name_zh": "虫鸣",
     "name_en": "Bug Buzz",
-    "name_ja": "",
+    "name_ja": "むしのさざめき",
     "type": "Bug",
     "category": "Special",
     "pp": "",
@@ -9892,7 +9892,7 @@
   "子弹拳": {
     "name_zh": "子弹拳",
     "name_en": "Bullet Punch",
-    "name_ja": "",
+    "name_ja": "バレットパンチ",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -9911,7 +9911,7 @@
   "充电光束": {
     "name_zh": "充电光束",
     "name_en": "Charge Beam",
-    "name_ja": "",
+    "name_ja": "チャージビーム",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -9929,7 +9929,7 @@
   "喋喋不休": {
     "name_zh": "喋喋不休",
     "name_en": "Chatter",
-    "name_ja": "",
+    "name_ja": "おしゃべり",
     "type": "Flying",
     "category": "Special",
     "pp": "",
@@ -9948,7 +9948,7 @@
   "近身战": {
     "name_zh": "近身战",
     "name_en": "Close Combat",
-    "name_ja": "",
+    "name_ja": "インファイト",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -9966,7 +9966,7 @@
   "十字毒刃": {
     "name_zh": "十字毒刃",
     "name_en": "Cross Poison",
-    "name_ja": "",
+    "name_ja": "クロスポイズン",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -9986,7 +9986,7 @@
   "恶之波动": {
     "name_zh": "恶之波动",
     "name_en": "Dark Pulse",
-    "name_ja": "",
+    "name_ja": "あくのはどう",
     "type": "Dark",
     "category": "Special",
     "pp": "",
@@ -10004,7 +10004,7 @@
   "放电": {
     "name_zh": "放电",
     "name_en": "Discharge",
-    "name_ja": "",
+    "name_ja": "ほうでん",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -10023,7 +10023,7 @@
   "二连击": {
     "name_zh": "二连击",
     "name_en": "Double Hit",
-    "name_ja": "",
+    "name_ja": "ダブルアタック",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -10042,7 +10042,7 @@
   "流星群": {
     "name_zh": "流星群",
     "name_en": "Draco Meteor",
-    "name_ja": "",
+    "name_ja": "りゅうせいぐん",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -10059,7 +10059,7 @@
   "龙之波动": {
     "name_zh": "龙之波动",
     "name_en": "Dragon Pulse",
-    "name_ja": "",
+    "name_ja": "りゅうのはどう",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -10076,7 +10076,7 @@
   "龙之俯冲": {
     "name_zh": "龙之俯冲",
     "name_en": "Dragon Rush",
-    "name_ja": "",
+    "name_ja": "ドラゴンダイブ",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -10095,7 +10095,7 @@
   "吸取拳": {
     "name_zh": "吸取拳",
     "name_en": "Drain Punch",
-    "name_ja": "",
+    "name_ja": "ドレインパンチ",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -10114,7 +10114,7 @@
   "大地之力": {
     "name_zh": "大地之力",
     "name_en": "Earth Power",
-    "name_ja": "",
+    "name_ja": "だいちのちから",
     "type": "Ground",
     "category": "Special",
     "pp": "",
@@ -10132,7 +10132,7 @@
   "能量球": {
     "name_zh": "能量球",
     "name_en": "Energy Ball",
-    "name_ja": "",
+    "name_ja": "エナジーボール",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -10151,7 +10151,7 @@
   "火焰牙": {
     "name_zh": "火焰牙",
     "name_en": "Fire Fang",
-    "name_ja": "",
+    "name_ja": "ほのおのキバ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -10170,7 +10170,7 @@
   "闪焰冲锋": {
     "name_zh": "闪焰冲锋",
     "name_en": "Flare Blitz",
-    "name_ja": "",
+    "name_ja": "フレアドライブ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -10190,7 +10190,7 @@
   "加农光炮": {
     "name_zh": "加农光炮",
     "name_en": "Flash Cannon",
-    "name_ja": "",
+    "name_ja": "ラスターカノン",
     "type": "Steel",
     "category": "Special",
     "pp": "",
@@ -10208,7 +10208,7 @@
   "投掷": {
     "name_zh": "投掷",
     "name_en": "Fling",
-    "name_ja": "",
+    "name_ja": "なげつける",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -10225,7 +10225,7 @@
   "真气弹": {
     "name_zh": "真气弹",
     "name_en": "Focus Blast",
-    "name_ja": "",
+    "name_ja": "きあいだま",
     "type": "Fighting",
     "category": "Special",
     "pp": "",
@@ -10244,7 +10244,7 @@
   "发劲": {
     "name_zh": "发劲",
     "name_en": "Force Palm",
-    "name_ja": "",
+    "name_ja": "はっけい",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -10263,7 +10263,7 @@
   "终极冲击": {
     "name_zh": "终极冲击",
     "name_en": "Giga Impact",
-    "name_ja": "",
+    "name_ja": "ギガインパクト",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -10281,7 +10281,7 @@
   "打草结": {
     "name_zh": "打草结",
     "name_en": "Grass Knot",
-    "name_ja": "",
+    "name_ja": "くさむすび",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -10299,7 +10299,7 @@
   "垃圾射击": {
     "name_zh": "垃圾射击",
     "name_en": "Gunk Shot",
-    "name_ja": "",
+    "name_ja": "ダストシュート",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -10317,7 +10317,7 @@
   "陀螺球": {
     "name_zh": "陀螺球",
     "name_en": "Gyro Ball",
-    "name_ja": "",
+    "name_ja": "ジャイロボール",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -10336,7 +10336,7 @@
   "臂锤": {
     "name_zh": "臂锤",
     "name_en": "Hammer Arm",
-    "name_ja": "",
+    "name_ja": "アームハンマー",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -10355,7 +10355,7 @@
   "双刃头锤": {
     "name_zh": "双刃头锤",
     "name_en": "Head Smash",
-    "name_ja": "",
+    "name_ja": "もろはのずつき",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -10374,7 +10374,7 @@
   "冰冻牙": {
     "name_zh": "冰冻牙",
     "name_en": "Ice Fang",
-    "name_ja": "",
+    "name_ja": "こおりのキバ",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -10393,7 +10393,7 @@
   "冰砾": {
     "name_zh": "冰砾",
     "name_en": "Ice Shard",
-    "name_ja": "",
+    "name_ja": "こおりのつぶて",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -10410,7 +10410,7 @@
   "铁头": {
     "name_zh": "铁头",
     "name_en": "Iron Head",
-    "name_ja": "",
+    "name_ja": "アイアンヘッド",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -10429,7 +10429,7 @@
   "制裁光砾": {
     "name_zh": "制裁光砾",
     "name_en": "Judgment",
-    "name_ja": "",
+    "name_ja": "さばきのつぶて",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -10446,7 +10446,7 @@
   "珍藏": {
     "name_zh": "珍藏",
     "name_en": "Last Resort",
-    "name_ja": "",
+    "name_ja": "とっておき",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -10464,7 +10464,7 @@
   "喷烟": {
     "name_zh": "喷烟",
     "name_en": "Lava Plume",
-    "name_ja": "",
+    "name_ja": "ふんえん",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -10483,7 +10483,7 @@
   "飞叶风暴": {
     "name_zh": "飞叶风暴",
     "name_en": "Leaf Storm",
-    "name_ja": "",
+    "name_ja": "リーフストーム",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -10500,7 +10500,7 @@
   "熔岩风暴": {
     "name_zh": "熔岩风暴",
     "name_en": "Magma Storm",
-    "name_ja": "",
+    "name_ja": "マグマストーム",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -10517,7 +10517,7 @@
   "暗袭要害": {
     "name_zh": "暗袭要害",
     "name_en": "Night Slash",
-    "name_ja": "",
+    "name_ja": "つじぎり",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -10536,7 +10536,7 @@
   "以牙还牙": {
     "name_zh": "以牙还牙",
     "name_en": "Payback",
-    "name_ja": "",
+    "name_ja": "しっぺがえし",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -10554,7 +10554,7 @@
   "啄食": {
     "name_zh": "啄食",
     "name_en": "Pluck",
-    "name_ja": "",
+    "name_ja": "ついばむ",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -10572,7 +10572,7 @@
   "毒击": {
     "name_zh": "毒击",
     "name_en": "Poison Jab",
-    "name_ja": "",
+    "name_ja": "どくづき",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -10591,7 +10591,7 @@
   "力量宝石": {
     "name_zh": "力量宝石",
     "name_en": "Power Gem",
-    "name_ja": "",
+    "name_ja": "パワージェム",
     "type": "Rock",
     "category": "Special",
     "pp": "",
@@ -10608,7 +10608,7 @@
   "强力鞭打": {
     "name_zh": "强力鞭打",
     "name_en": "Power Whip",
-    "name_ja": "",
+    "name_ja": "パワーウィップ",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -10626,7 +10626,7 @@
   "精神利刃": {
     "name_zh": "精神利刃",
     "name_en": "Psycho Cut",
-    "name_ja": "",
+    "name_ja": "サイコカッター",
     "type": "Psychic",
     "category": "Physical",
     "pp": "",
@@ -10644,7 +10644,7 @@
   "种子炸弹": {
     "name_zh": "种子炸弹",
     "name_en": "Seed Bomb",
-    "name_ja": "",
+    "name_ja": "タネばくだん",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -10662,7 +10662,7 @@
   "种子闪光": {
     "name_zh": "种子闪光",
     "name_en": "Seed Flare",
-    "name_ja": "",
+    "name_ja": "シードフレア",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -10680,7 +10680,7 @@
   "暗影爪": {
     "name_zh": "暗影爪",
     "name_en": "Shadow Claw",
-    "name_ja": "",
+    "name_ja": "シャドークロー",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -10698,7 +10698,7 @@
   "暗影潜袭": {
     "name_zh": "暗影潜袭",
     "name_en": "Shadow Force",
-    "name_ja": "",
+    "name_ja": "シャドーダイブ",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -10716,7 +10716,7 @@
   "影子偷袭": {
     "name_zh": "影子偷袭",
     "name_en": "Shadow Sneak",
-    "name_ja": "",
+    "name_ja": "かげうち",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -10734,7 +10734,7 @@
   "亚空裂斩": {
     "name_zh": "亚空裂斩",
     "name_en": "Spacial Rend",
-    "name_ja": "",
+    "name_ja": "あくうせつだん",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -10751,7 +10751,7 @@
   "尖石攻击": {
     "name_zh": "尖石攻击",
     "name_en": "Stone Edge",
-    "name_ja": "",
+    "name_ja": "ストーンエッジ",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -10768,7 +10768,7 @@
   "突袭": {
     "name_zh": "突袭",
     "name_en": "Sucker Punch",
-    "name_ja": "",
+    "name_ja": "ふいうち",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -10786,7 +10786,7 @@
   "雷电牙": {
     "name_zh": "雷电牙",
     "name_en": "Thunder Fang",
-    "name_ja": "",
+    "name_ja": "かみなりのキバ",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -10805,7 +10805,7 @@
   "急速折返": {
     "name_zh": "急速折返",
     "name_en": "U-turn",
-    "name_ja": "",
+    "name_ja": "とんぼがえり",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -10823,7 +10823,7 @@
   "真空波": {
     "name_zh": "真空波",
     "name_en": "Vacuum Wave",
-    "name_ja": "",
+    "name_ja": "しんくうは",
     "type": "Fighting",
     "category": "Special",
     "pp": "",
@@ -10840,7 +10840,7 @@
   "木槌": {
     "name_zh": "木槌",
     "name_en": "Wood Hammer",
-    "name_ja": "",
+    "name_ja": "ウッドハンマー",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -10859,7 +10859,7 @@
   "十字剪": {
     "name_zh": "十字剪",
     "name_en": "X-Scissor",
-    "name_ja": "",
+    "name_ja": "シザークロス",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -10878,7 +10878,7 @@
   "意念头锤": {
     "name_zh": "意念头锤",
     "name_en": "Zen Headbutt",
-    "name_ja": "",
+    "name_ja": "しねんのずつき",
     "type": "Psychic",
     "category": "Physical",
     "pp": "",
@@ -10897,7 +10897,7 @@
   "岩石炮": {
     "name_zh": "岩石炮",
     "name_en": "Rock Wrecker",
-    "name_ja": "",
+    "name_ja": "がんせきほう",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -10915,7 +10915,7 @@
   "时光咆哮": {
     "name_zh": "时光咆哮",
     "name_en": "Roar of Time",
-    "name_ja": "",
+    "name_ja": "ときのほうこう",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -10932,7 +10932,7 @@
   "羽栖": {
     "name_zh": "羽栖",
     "name_en": "Roost",
-    "name_ja": "",
+    "name_ja": "はねやすめ",
     "type": "Flying",
     "category": "Status",
     "pp": "",
@@ -10955,7 +10955,7 @@
   "重力": {
     "name_zh": "重力",
     "name_en": "Gravity",
-    "name_ja": "",
+    "name_ja": "じゅうりょく",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -10975,7 +10975,7 @@
   "治愈之愿": {
     "name_zh": "治愈之愿",
     "name_en": "Healing Wish",
-    "name_ja": "",
+    "name_ja": "いやしのねがい",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -10998,7 +10998,7 @@
   "顺风": {
     "name_zh": "顺风",
     "name_en": "Tailwind",
-    "name_ja": "",
+    "name_ja": "おいかぜ",
     "type": "Flying",
     "category": "Status",
     "pp": "",
@@ -11019,7 +11019,7 @@
   "点穴": {
     "name_zh": "点穴",
     "name_en": "Acupressure",
-    "name_ja": "",
+    "name_ja": "つぼをつく",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -11039,7 +11039,7 @@
   "力量戏法": {
     "name_zh": "力量戏法",
     "name_en": "Power Trick",
-    "name_ja": "",
+    "name_ja": "パワートリック",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11059,7 +11059,7 @@
   "胃液": {
     "name_zh": "胃液",
     "name_en": "Gastro Acid",
-    "name_ja": "",
+    "name_ja": "いえき",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -11079,7 +11079,7 @@
   "仿效": {
     "name_zh": "仿效",
     "name_en": "Copycat",
-    "name_ja": "",
+    "name_ja": "まねっこ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -11099,7 +11099,7 @@
   "力量互换": {
     "name_zh": "力量互换",
     "name_en": "Power Swap",
-    "name_ja": "",
+    "name_ja": "パワースワップ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11119,7 +11119,7 @@
   "烦恼种子": {
     "name_zh": "烦恼种子",
     "name_en": "Worry Seed",
-    "name_ja": "",
+    "name_ja": "なやみのタネ",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -11139,7 +11139,7 @@
   "毒菱": {
     "name_zh": "毒菱",
     "name_en": "Toxic Spikes",
-    "name_ja": "",
+    "name_ja": "どくびし",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -11160,7 +11160,7 @@
   "心灵互换": {
     "name_zh": "心灵互换",
     "name_en": "Heart Swap",
-    "name_ja": "",
+    "name_ja": "ハートスワップ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11180,7 +11180,7 @@
   "电磁飘浮": {
     "name_zh": "电磁飘浮",
     "name_en": "Magnet Rise",
-    "name_ja": "",
+    "name_ja": "でんじふゆう",
     "type": "Electric",
     "category": "Status",
     "pp": "",
@@ -11200,7 +11200,7 @@
   "岩石打磨": {
     "name_zh": "岩石打磨",
     "name_en": "Rock Polish",
-    "name_ja": "",
+    "name_ja": "ロックカット",
     "type": "Rock",
     "category": "Status",
     "pp": "",
@@ -11222,7 +11222,7 @@
   "掉包": {
     "name_zh": "掉包",
     "name_en": "Switcheroo",
-    "name_ja": "",
+    "name_ja": "すりかえ",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -11242,7 +11242,7 @@
   "诡计": {
     "name_zh": "诡计",
     "name_en": "Nasty Plot",
-    "name_ja": "",
+    "name_ja": "わるだくみ",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -11264,7 +11264,7 @@
   "清除浓雾": {
     "name_zh": "清除浓雾",
     "name_en": "Defog",
-    "name_ja": "",
+    "name_ja": "きりばらい",
     "type": "Flying",
     "category": "Status",
     "pp": "",
@@ -11284,7 +11284,7 @@
   "戏法空间": {
     "name_zh": "戏法空间",
     "name_en": "Trick Room",
-    "name_ja": "",
+    "name_ja": "トリックルーム",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11304,7 +11304,7 @@
   "隐形岩": {
     "name_zh": "隐形岩",
     "name_en": "Stealth Rock",
-    "name_ja": "",
+    "name_ja": "ステルスロック",
     "type": "Rock",
     "category": "Status",
     "pp": "",
@@ -11325,7 +11325,7 @@
   "新月舞": {
     "name_zh": "新月舞",
     "name_en": "Lunar Dance",
-    "name_ja": "",
+    "name_ja": "みかづきのまい",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11345,7 +11345,7 @@
   "暗黑洞": {
     "name_zh": "暗黑洞",
     "name_en": "Dark Void",
-    "name_ja": "",
+    "name_ja": "ダークホール",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -11370,7 +11370,7 @@
   "防守互换": {
     "name_zh": "防守互换",
     "name_en": "Guard Swap",
-    "name_ja": "",
+    "name_ja": "ガードスワップ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -11390,7 +11390,7 @@
   "水流环": {
     "name_zh": "水流环",
     "name_en": "Aqua Ring",
-    "name_ja": "",
+    "name_ja": "アクアリング",
     "type": "Water",
     "category": "Status",
     "pp": "",
@@ -11413,7 +11413,7 @@
   "防御指令": {
     "name_zh": "防御指令",
     "name_en": "Defend Order",
-    "name_ja": "",
+    "name_ja": "ぼうぎょしれい",
     "type": "Bug",
     "category": "Status",
     "pp": "",
@@ -11433,7 +11433,7 @@
   "佯攻": {
     "name_zh": "佯攻",
     "name_en": "Feint",
-    "name_ja": "",
+    "name_ja": "フェイント",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -11450,7 +11450,7 @@
   "金属爆炸": {
     "name_zh": "金属爆炸",
     "name_en": "Metal Burst",
-    "name_ja": "",
+    "name_ja": "メタルバースト",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -11467,7 +11467,7 @@
   "攻击指令": {
     "name_zh": "攻击指令",
     "name_en": "Attack Order",
-    "name_ja": "",
+    "name_ja": "こうげきしれい",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -11484,7 +11484,7 @@
   "捏碎": {
     "name_zh": "捏碎",
     "name_en": "Crush Grip",
-    "name_ja": "",
+    "name_ja": "にぎりつぶす",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -11502,7 +11502,7 @@
   "电网": {
     "name_zh": "电网",
     "name_en": "Electroweb",
-    "name_ja": "",
+    "name_ja": "エレキネット",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -11521,7 +11521,7 @@
   "酸液炸弹": {
     "name_zh": "酸液炸弹",
     "name_en": "Acid Spray",
-    "name_ja": "",
+    "name_ja": "アシッドボム",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -11540,7 +11540,7 @@
   "杂技": {
     "name_zh": "杂技",
     "name_en": "Acrobatics",
-    "name_ja": "",
+    "name_ja": "アクロバット",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -11558,7 +11558,7 @@
   "青焰": {
     "name_zh": "青焰",
     "name_en": "Blue Flare",
-    "name_ja": "",
+    "name_ja": "あおいほのお",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -11576,7 +11576,7 @@
   "雷击": {
     "name_zh": "雷击",
     "name_en": "Bolt Strike",
-    "name_ja": "",
+    "name_ja": "らいげき",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -11595,7 +11595,7 @@
   "重踏": {
     "name_zh": "重踏",
     "name_en": "Bulldoze",
-    "name_ja": "",
+    "name_ja": "じならし",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -11614,7 +11614,7 @@
   "巴投": {
     "name_zh": "巴投",
     "name_en": "Circle Throw",
-    "name_ja": "",
+    "name_ja": "ともえなげ",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -11632,7 +11632,7 @@
   "清除之烟": {
     "name_zh": "清除之烟",
     "name_en": "Clear Smog",
-    "name_ja": "",
+    "name_ja": "クリアスモッグ",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -11649,7 +11649,7 @@
   "龙尾": {
     "name_zh": "龙尾",
     "name_en": "Dragon Tail",
-    "name_ja": "",
+    "name_ja": "ドラゴンテール",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -11667,7 +11667,7 @@
   "直冲钻": {
     "name_zh": "直冲钻",
     "name_en": "Drill Run",
-    "name_ja": "",
+    "name_ja": "ドリルライナー",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -11685,7 +11685,7 @@
   "电球": {
     "name_zh": "电球",
     "name_en": "Electro Ball",
-    "name_ja": "",
+    "name_ja": "エレキボール",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -11703,7 +11703,7 @@
   "火之舞": {
     "name_zh": "火之舞",
     "name_en": "Fiery Dance",
-    "name_ja": "",
+    "name_ja": "ほのおのまい",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -11721,7 +11721,7 @@
   "蓄能焰袭": {
     "name_zh": "蓄能焰袭",
     "name_en": "Flame Charge",
-    "name_ja": "",
+    "name_ja": "ニトロチャージ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -11740,7 +11740,7 @@
   "移花接木": {
     "name_zh": "移花接木",
     "name_en": "Foul Play",
-    "name_ja": "",
+    "name_ja": "イカサマ",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -11758,7 +11758,7 @@
   "冰冻伏特": {
     "name_zh": "冰冻伏特",
     "name_en": "Freeze Shock",
-    "name_ja": "",
+    "name_ja": "フリーズボルト",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -11776,7 +11776,7 @@
   "冰息": {
     "name_zh": "冰息",
     "name_en": "Frost Breath",
-    "name_ja": "",
+    "name_ja": "こおりのいぶき",
     "type": "Ice",
     "category": "Special",
     "pp": "",
@@ -11794,7 +11794,7 @@
   "交错闪电": {
     "name_zh": "交错闪电",
     "name_en": "Fusion Bolt",
-    "name_ja": "",
+    "name_ja": "クロスサンダー",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -11811,7 +11811,7 @@
   "交错火焰": {
     "name_zh": "交错火焰",
     "name_en": "Fusion Flare",
-    "name_ja": "",
+    "name_ja": "クロスフレイム",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -11828,7 +11828,7 @@
   "冰封世界": {
     "name_zh": "冰封世界",
     "name_en": "Glaciate",
-    "name_ja": "",
+    "name_ja": "こごえるせかい",
     "type": "Ice",
     "category": "Special",
     "pp": "",
@@ -11847,7 +11847,7 @@
   "重磅冲撞": {
     "name_zh": "重磅冲撞",
     "name_en": "Heavy Slam",
-    "name_ja": "",
+    "name_ja": "ヘビーボンバー",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -11865,7 +11865,7 @@
   "祸不单行": {
     "name_zh": "祸不单行",
     "name_en": "Hex",
-    "name_ja": "",
+    "name_ja": "たたりめ",
     "type": "Ghost",
     "category": "Special",
     "pp": "",
@@ -11882,7 +11882,7 @@
   "木角": {
     "name_zh": "木角",
     "name_en": "Horn Leech",
-    "name_ja": "",
+    "name_ja": "ウッドホーン",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -11900,7 +11900,7 @@
   "暴风": {
     "name_zh": "暴风",
     "name_en": "Hurricane",
-    "name_ja": "",
+    "name_ja": "ぼうふう",
     "type": "Flying",
     "category": "Special",
     "pp": "",
@@ -11919,7 +11919,7 @@
   "极寒冷焰": {
     "name_zh": "极寒冷焰",
     "name_en": "Ice Burn",
-    "name_ja": "",
+    "name_ja": "コールドフレア",
     "type": "Ice",
     "category": "Special",
     "pp": "",
@@ -11937,7 +11937,7 @@
   "冰柱坠击": {
     "name_zh": "冰柱坠击",
     "name_en": "Icicle Crash",
-    "name_ja": "",
+    "name_ja": "つららおとし",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -11955,7 +11955,7 @@
   "烧净": {
     "name_zh": "烧净",
     "name_en": "Incinerate",
-    "name_ja": "",
+    "name_ja": "やきつくす",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -11973,7 +11973,7 @@
   "烈火深渊": {
     "name_zh": "烈火深渊",
     "name_en": "Inferno",
-    "name_ja": "",
+    "name_ja": "れんごく",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -11991,7 +11991,7 @@
   "下盘踢": {
     "name_zh": "下盘踢",
     "name_en": "Low Sweep",
-    "name_ja": "",
+    "name_ja": "ローキック",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -12010,7 +12010,7 @@
   "暗黑爆破": {
     "name_zh": "暗黑爆破",
     "name_en": "Night Daze",
-    "name_ja": "",
+    "name_ja": "ナイトバースト",
     "type": "Dark",
     "category": "Special",
     "pp": "",
@@ -12028,7 +12028,7 @@
   "精神冲击": {
     "name_zh": "精神冲击",
     "name_en": "Psyshock",
-    "name_ja": "",
+    "name_ja": "サイコショック",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -12046,7 +12046,7 @@
   "精神击破": {
     "name_zh": "精神击破",
     "name_en": "Psystrike",
-    "name_ja": "",
+    "name_ja": "サイコブレイク",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -12064,7 +12064,7 @@
   "贝壳刃": {
     "name_zh": "贝壳刃",
     "name_en": "Razor Shell",
-    "name_ja": "",
+    "name_ja": "シェルブレード",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -12084,7 +12084,7 @@
   "古老之歌": {
     "name_zh": "古老之歌",
     "name_en": "Relic Song",
-    "name_ja": "",
+    "name_ja": "いにしえのうた",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -12104,7 +12104,7 @@
   "报仇": {
     "name_zh": "报仇",
     "name_en": "Retaliate",
-    "name_ja": "",
+    "name_ja": "かたきうち",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -12122,7 +12122,7 @@
   "圣剑": {
     "name_zh": "圣剑",
     "name_en": "Sacred Sword",
-    "name_ja": "",
+    "name_ja": "せいなるつるぎ",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -12141,7 +12141,7 @@
   "热水": {
     "name_zh": "热水",
     "name_en": "Scald",
-    "name_ja": "",
+    "name_ja": "ねっとう",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -12159,7 +12159,7 @@
   "火焰弹": {
     "name_zh": "火焰弹",
     "name_en": "Searing Shot",
-    "name_ja": "",
+    "name_ja": "かえんだん",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -12179,7 +12179,7 @@
   "神秘之剑": {
     "name_zh": "神秘之剑",
     "name_en": "Secret Sword",
-    "name_ja": "",
+    "name_ja": "しんぴのつるぎ",
     "type": "Fighting",
     "category": "Special",
     "pp": "",
@@ -12197,7 +12197,7 @@
   "污泥波": {
     "name_zh": "污泥波",
     "name_en": "Sludge Wave",
-    "name_ja": "",
+    "name_ja": "ヘドロウェーブ",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -12216,7 +12216,7 @@
   "击落": {
     "name_zh": "击落",
     "name_en": "Smack Down",
-    "name_ja": "",
+    "name_ja": "うちおとす",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -12233,7 +12233,7 @@
   "大声咆哮": {
     "name_zh": "大声咆哮",
     "name_en": "Snarl",
-    "name_ja": "",
+    "name_ja": "バークアウト",
     "type": "Dark",
     "category": "Special",
     "pp": "",
@@ -12253,7 +12253,7 @@
   "辅助力量": {
     "name_zh": "辅助力量",
     "name_en": "Stored Power",
-    "name_ja": "",
+    "name_ja": "アシストパワー",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -12270,7 +12270,7 @@
   "山岚摔": {
     "name_zh": "山岚摔",
     "name_en": "Storm Throw",
-    "name_ja": "",
+    "name_ja": "やまあらし",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -12289,7 +12289,7 @@
   "虫之抵抗": {
     "name_zh": "虫之抵抗",
     "name_en": "Struggle Bug",
-    "name_ja": "",
+    "name_ja": "むしのていこう",
     "type": "Bug",
     "category": "Special",
     "pp": "",
@@ -12308,7 +12308,7 @@
   "扫尾拍打": {
     "name_zh": "扫尾拍打",
     "name_en": "Tail Slap",
-    "name_ja": "",
+    "name_ja": "スイープビンタ",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -12327,7 +12327,7 @@
   "Ｖ热焰": {
     "name_zh": "Ｖ热焰",
     "name_en": "V-create",
-    "name_ja": "",
+    "name_ja": "Ｖジェネレート",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -12345,7 +12345,7 @@
   "伏特替换": {
     "name_zh": "伏特替换",
     "name_en": "Volt Switch",
-    "name_ja": "",
+    "name_ja": "ボルトチェンジ",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -12362,7 +12362,7 @@
   "疯狂伏特": {
     "name_zh": "疯狂伏特",
     "name_en": "Wild Charge",
-    "name_ja": "",
+    "name_ja": "ワイルドボルト",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -12381,7 +12381,7 @@
   "火之誓约": {
     "name_zh": "火之誓约",
     "name_en": "Fire Pledge",
-    "name_ja": "",
+    "name_ja": "ほのおのちかい",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -12398,7 +12398,7 @@
   "草之誓约": {
     "name_zh": "草之誓约",
     "name_en": "Grass Pledge",
-    "name_ja": "",
+    "name_ja": "くさのちかい",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -12415,7 +12415,7 @@
   "水之誓约": {
     "name_zh": "水之誓约",
     "name_en": "Water Pledge",
-    "name_ja": "",
+    "name_ja": "みずのちかい",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -12432,7 +12432,7 @@
   "高温重压": {
     "name_zh": "高温重压",
     "name_en": "Heat Crash",
-    "name_ja": "",
+    "name_ja": "ヒートスタンプ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -12450,7 +12450,7 @@
   "搏命": {
     "name_zh": "搏命",
     "name_en": "Final Gambit",
-    "name_ja": "",
+    "name_ja": "いのちがけ",
     "type": "Fighting",
     "category": "Special",
     "pp": "",
@@ -12467,7 +12467,7 @@
   "高科技光炮": {
     "name_zh": "高科技光炮",
     "name_en": "Techno Blast",
-    "name_ja": "",
+    "name_ja": "テクノバスター",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -12484,7 +12484,7 @@
   "磨爪": {
     "name_zh": "磨爪",
     "name_en": "Hone Claws",
-    "name_ja": "",
+    "name_ja": "つめとぎ",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -12507,7 +12507,7 @@
   "广域防守": {
     "name_zh": "广域防守",
     "name_en": "Wide Guard",
-    "name_ja": "",
+    "name_ja": "ワイドガード",
     "type": "Rock",
     "category": "Status",
     "pp": "",
@@ -12527,7 +12527,7 @@
   "防守平分": {
     "name_zh": "防守平分",
     "name_en": "Guard Split",
-    "name_ja": "",
+    "name_ja": "ガードシェア",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12547,7 +12547,7 @@
   "力量平分": {
     "name_zh": "力量平分",
     "name_en": "Power Split",
-    "name_ja": "",
+    "name_ja": "パワーシェア",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12567,7 +12567,7 @@
   "愤怒粉": {
     "name_zh": "愤怒粉",
     "name_en": "Rage Powder",
-    "name_ja": "",
+    "name_ja": "いかりのこな",
     "type": "Bug",
     "category": "Status",
     "pp": "",
@@ -12587,7 +12587,7 @@
   "魔法空间": {
     "name_zh": "魔法空间",
     "name_en": "Magic Room",
-    "name_ja": "",
+    "name_ja": "マジックルーム",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12607,7 +12607,7 @@
   "蝶舞": {
     "name_zh": "蝶舞",
     "name_en": "Quiver Dance",
-    "name_ja": "",
+    "name_ja": "ちょうのまい",
     "type": "Bug",
     "category": "Status",
     "pp": "",
@@ -12631,7 +12631,7 @@
   "浸水": {
     "name_zh": "浸水",
     "name_en": "Soak",
-    "name_ja": "",
+    "name_ja": "みずびたし",
     "type": "Water",
     "category": "Status",
     "pp": "",
@@ -12651,7 +12651,7 @@
   "盘蜷": {
     "name_zh": "盘蜷",
     "name_en": "Coil",
-    "name_ja": "",
+    "name_ja": "とぐろをまく",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -12675,7 +12675,7 @@
   "单纯光束": {
     "name_zh": "单纯光束",
     "name_en": "Simple Beam",
-    "name_ja": "",
+    "name_ja": "シンプルビーム",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12695,7 +12695,7 @@
   "找伙伴": {
     "name_zh": "找伙伴",
     "name_en": "Entrainment",
-    "name_ja": "",
+    "name_ja": "なかまづくり",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12715,7 +12715,7 @@
   "您先请": {
     "name_zh": "您先请",
     "name_en": "After You",
-    "name_ja": "",
+    "name_ja": "おさきにどうぞ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12735,7 +12735,7 @@
   "快速防守": {
     "name_zh": "快速防守",
     "name_en": "Quick Guard",
-    "name_ja": "",
+    "name_ja": "ファストガード",
     "type": "Fighting",
     "category": "Status",
     "pp": "",
@@ -12755,7 +12755,7 @@
   "交换场地": {
     "name_zh": "交换场地",
     "name_en": "Ally Switch",
-    "name_ja": "",
+    "name_ja": "サイドチェンジ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12775,7 +12775,7 @@
   "破壳": {
     "name_zh": "破壳",
     "name_en": "Shell Smash",
-    "name_ja": "",
+    "name_ja": "からをやぶる",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12801,7 +12801,7 @@
   "治愈波动": {
     "name_zh": "治愈波动",
     "name_en": "Heal Pulse",
-    "name_ja": "",
+    "name_ja": "いやしのはどう",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12824,7 +12824,7 @@
   "换档": {
     "name_zh": "换档",
     "name_en": "Shift Gear",
-    "name_ja": "",
+    "name_ja": "ギアチェンジ",
     "type": "Steel",
     "category": "Status",
     "pp": "",
@@ -12847,7 +12847,7 @@
   "延后": {
     "name_zh": "延后",
     "name_en": "Quash",
-    "name_ja": "",
+    "name_ja": "さきおくり",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -12867,7 +12867,7 @@
   "镜面属性": {
     "name_zh": "镜面属性",
     "name_en": "Reflect Type",
-    "name_ja": "",
+    "name_ja": "ミラータイプ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12887,7 +12887,7 @@
   "自我激励": {
     "name_zh": "自我激励",
     "name_en": "Work Up",
-    "name_ja": "",
+    "name_ja": "ふるいたてる",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -12910,7 +12910,7 @@
   "棉花防守": {
     "name_zh": "棉花防守",
     "name_en": "Cotton Guard",
-    "name_ja": "",
+    "name_ja": "コットンガード",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -12932,7 +12932,7 @@
   "毒液冲击": {
     "name_zh": "毒液冲击",
     "name_en": "Venoshock",
-    "name_ja": "",
+    "name_ja": "ベノムショック",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -12949,7 +12949,7 @@
   "奇妙空间": {
     "name_zh": "奇妙空间",
     "name_en": "Wonder Room",
-    "name_ja": "",
+    "name_ja": "ワンダールーム",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -12969,7 +12969,7 @@
   "轮唱": {
     "name_zh": "轮唱",
     "name_en": "Round",
-    "name_ja": "",
+    "name_ja": "りんしょう",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -12987,7 +12987,7 @@
   "回声": {
     "name_zh": "回声",
     "name_en": "Echoed Voice",
-    "name_ja": "",
+    "name_ja": "エコーボイス",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -13005,7 +13005,7 @@
   "爆音波": {
     "name_zh": "爆音波",
     "name_en": "Boomburst",
-    "name_ja": "",
+    "name_ja": "ばくおんぱ",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -13024,7 +13024,7 @@
   "魔法闪耀": {
     "name_zh": "魔法闪耀",
     "name_en": "Dazzling Gleam",
-    "name_ja": "",
+    "name_ja": "マジカルシャイン",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -13042,7 +13042,7 @@
   "钻石风暴": {
     "name_zh": "钻石风暴",
     "name_en": "Diamond Storm",
-    "name_ja": "",
+    "name_ja": "ダイヤストーム",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -13061,7 +13061,7 @@
   "画龙点睛": {
     "name_zh": "画龙点睛",
     "name_en": "Dragon Ascent",
-    "name_ja": "",
+    "name_ja": "ガリョウテンセイ",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -13079,7 +13079,7 @@
   "吸取之吻": {
     "name_zh": "吸取之吻",
     "name_en": "Draining Kiss",
-    "name_ja": "",
+    "name_ja": "ドレインキッス",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -13097,7 +13097,7 @@
   "飞身重压": {
     "name_zh": "飞身重压",
     "name_en": "Flying Press",
-    "name_ja": "",
+    "name_ja": "フライングプレス",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -13115,7 +13115,7 @@
   "冷冻干燥": {
     "name_zh": "冷冻干燥",
     "name_en": "Freeze-Dry",
-    "name_ja": "",
+    "name_ja": "フリーズドライ",
     "type": "Ice",
     "category": "Special",
     "pp": "",
@@ -13133,7 +13133,7 @@
   "大地神力": {
     "name_zh": "大地神力",
     "name_en": "Land's Wrath",
-    "name_ja": "",
+    "name_ja": "グランドフォース",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -13151,7 +13151,7 @@
   "月亮之力": {
     "name_zh": "月亮之力",
     "name_en": "Moonblast",
-    "name_ja": "",
+    "name_ja": "ムーンフォース",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -13169,7 +13169,7 @@
   "归天之翼": {
     "name_zh": "归天之翼",
     "name_en": "Oblivion Wing",
-    "name_ja": "",
+    "name_ja": "デスウイング",
     "type": "Flying",
     "category": "Special",
     "pp": "",
@@ -13186,7 +13186,7 @@
   "根源波动": {
     "name_zh": "根源波动",
     "name_en": "Origin Pulse",
-    "name_ja": "",
+    "name_ja": "こんげんのはどう",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -13204,7 +13204,7 @@
   "潜灵奇袭": {
     "name_zh": "潜灵奇袭",
     "name_en": "Phantom Force",
-    "name_ja": "",
+    "name_ja": "ゴーストダイブ",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -13222,7 +13222,7 @@
   "嬉闹": {
     "name_zh": "嬉闹",
     "name_en": "Play Rough",
-    "name_ja": "",
+    "name_ja": "じゃれつく",
     "type": "Fairy",
     "category": "Physical",
     "pp": "",
@@ -13241,7 +13241,7 @@
   "断崖之剑": {
     "name_zh": "断崖之剑",
     "name_en": "Precipice Blades",
-    "name_ja": "",
+    "name_ja": "だんがいのつるぎ",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -13259,7 +13259,7 @@
   "飞水手里剑": {
     "name_zh": "飞水手里剑",
     "name_en": "Water Shuriken",
-    "name_ja": "",
+    "name_ja": "みずしゅりけん",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -13277,7 +13277,7 @@
   "魅惑之声": {
     "name_zh": "魅惑之声",
     "name_en": "Disarming Voice",
-    "name_ja": "",
+    "name_ja": "チャームボイス",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -13296,7 +13296,7 @@
   "魔法火焰": {
     "name_zh": "魔法火焰",
     "name_en": "Mystical Fire",
-    "name_ja": "",
+    "name_ja": "マジカルフレイム",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -13314,7 +13314,7 @@
   "抛物面充电": {
     "name_zh": "抛物面充电",
     "name_en": "Parabolic Charge",
-    "name_ja": "",
+    "name_ja": "パラボラチャージ",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -13332,7 +13332,7 @@
   "落英缤纷": {
     "name_zh": "落英缤纷",
     "name_en": "Petal Blizzard",
-    "name_ja": "",
+    "name_ja": "はなふぶき",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -13351,7 +13351,7 @@
   "黏黏网": {
     "name_zh": "黏黏网",
     "name_en": "Sticky Web",
-    "name_ja": "",
+    "name_ja": "ねばねばネット",
     "type": "Bug",
     "category": "Status",
     "pp": "",
@@ -13372,7 +13372,7 @@
   "森林咒术": {
     "name_zh": "森林咒术",
     "name_en": "Forest's Curse",
-    "name_ja": "",
+    "name_ja": "もりののろい",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -13392,7 +13392,7 @@
   "抛下狠话": {
     "name_zh": "抛下狠话",
     "name_en": "Parting Shot",
-    "name_ja": "",
+    "name_ja": "すてゼリフ",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -13416,7 +13416,7 @@
   "颠倒": {
     "name_zh": "颠倒",
     "name_en": "Topsy-Turvy",
-    "name_ja": "",
+    "name_ja": "ひっくりかえす",
     "type": "Dark",
     "category": "Status",
     "pp": "",
@@ -13436,7 +13436,7 @@
   "青草场地": {
     "name_zh": "青草场地",
     "name_en": "Grassy Terrain",
-    "name_ja": "",
+    "name_ja": "グラスフィールド",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -13456,7 +13456,7 @@
   "薄雾场地": {
     "name_zh": "薄雾场地",
     "name_en": "Misty Terrain",
-    "name_ja": "",
+    "name_ja": "ミストフィールド",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -13476,7 +13476,7 @@
   "尖刺防守": {
     "name_zh": "尖刺防守",
     "name_en": "Spiky Shield",
-    "name_ja": "",
+    "name_ja": "ニードルガード",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -13496,7 +13496,7 @@
   "怪异电波": {
     "name_zh": "怪异电波",
     "name_en": "Eerie Impulse",
-    "name_ja": "",
+    "name_ja": "かいでんぱ",
     "type": "Electric",
     "category": "Status",
     "pp": "",
@@ -13518,7 +13518,7 @@
   "大地掌控": {
     "name_zh": "大地掌控",
     "name_en": "Geomancy",
-    "name_ja": "",
+    "name_ja": "ジオコントロール",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -13542,7 +13542,7 @@
   "电气场地": {
     "name_zh": "电气场地",
     "name_en": "Electric Terrain",
-    "name_ja": "",
+    "name_ja": "エレキフィールド",
     "type": "Electric",
     "category": "Status",
     "pp": "",
@@ -13562,7 +13562,7 @@
   "圆瞳": {
     "name_zh": "圆瞳",
     "name_en": "Baby-Doll Eyes",
-    "name_ja": "",
+    "name_ja": "つぶらなひとみ",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -13584,7 +13584,7 @@
   "蒸汽爆炸": {
     "name_zh": "蒸汽爆炸",
     "name_en": "Steam Eruption",
-    "name_ja": "",
+    "name_ja": "スチームバースト",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -13602,7 +13602,7 @@
   "战吼": {
     "name_zh": "战吼",
     "name_en": "Noble Roar",
-    "name_ja": "",
+    "name_ja": "おたけび",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -13626,7 +13626,7 @@
   "妖精之锁": {
     "name_zh": "妖精之锁",
     "name_en": "Fairy Lock",
-    "name_ja": "",
+    "name_ja": "フェアリーロック",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -13646,7 +13646,7 @@
   "芳香薄雾": {
     "name_zh": "芳香薄雾",
     "name_en": "Aromatic Mist",
-    "name_ja": "",
+    "name_ja": "アロマミスト",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -13668,7 +13668,7 @@
   "磁场操控": {
     "name_zh": "磁场操控",
     "name_en": "Magnetic Flux",
-    "name_ja": "",
+    "name_ja": "じばそうさ",
     "type": "Electric",
     "category": "Status",
     "pp": "",
@@ -13691,7 +13691,7 @@
   "欢乐时光": {
     "name_zh": "欢乐时光",
     "name_en": "Happy Hour",
-    "name_ja": "",
+    "name_ja": "ハッピータイム",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -13711,7 +13711,7 @@
   "庆祝": {
     "name_zh": "庆祝",
     "name_en": "Celebrate",
-    "name_ja": "",
+    "name_ja": "おいわい",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -13731,7 +13731,7 @@
   "牵手": {
     "name_zh": "牵手",
     "name_en": "Hold Hands",
-    "name_ja": "",
+    "name_ja": "てをつなぐ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -13751,7 +13751,7 @@
   "打嗝": {
     "name_zh": "打嗝",
     "name_en": "Belch",
-    "name_ja": "",
+    "name_ja": "ゲップ",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -13768,7 +13768,7 @@
   "致命针刺": {
     "name_zh": "致命针刺",
     "name_en": "Fell Stinger",
-    "name_ja": "",
+    "name_ja": "とどめばり",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -13786,7 +13786,7 @@
   "妖精之风": {
     "name_zh": "妖精之风",
     "name_en": "Fairy Wind",
-    "name_ja": "",
+    "name_ja": "ようせいのかぜ",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -13804,7 +13804,7 @@
   "手下留情": {
     "name_zh": "手下留情",
     "name_en": "Hold Back",
-    "name_ja": "",
+    "name_ja": "てかげん",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -13822,7 +13822,7 @@
   "纠缠不休": {
     "name_zh": "纠缠不休",
     "name_en": "Infestation",
-    "name_ja": "",
+    "name_ja": "まとわりつく",
     "type": "Bug",
     "category": "Special",
     "pp": "",
@@ -13840,7 +13840,7 @@
   "蹭蹭脸颊": {
     "name_zh": "蹭蹭脸颊",
     "name_en": "Nuzzle",
-    "name_ja": "",
+    "name_ja": "ほっぺすりすり",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -13859,7 +13859,7 @@
   "异次元猛攻": {
     "name_zh": "异次元猛攻",
     "name_en": "Hyperspace Fury",
-    "name_ja": "",
+    "name_ja": "いじげんラッシュ",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -13876,7 +13876,7 @@
   "异次元洞": {
     "name_zh": "异次元洞",
     "name_en": "Hyperspace Hole",
-    "name_ja": "",
+    "name_ja": "いじげんホール",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -13893,7 +13893,7 @@
   "麻麻刺刺": {
     "name_zh": "麻麻刺刺",
     "name_en": "Zing Zap",
-    "name_ja": "",
+    "name_ja": "びりびりちくちく",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -13912,7 +13912,7 @@
   "暗影之光": {
     "name_zh": "暗影之光",
     "name_en": "Moongeist Beam",
-    "name_ja": "",
+    "name_ja": "シャドーレイ",
     "type": "Ghost",
     "category": "Special",
     "pp": "",
@@ -13929,7 +13929,7 @@
   "流星闪冲": {
     "name_zh": "流星闪冲",
     "name_en": "Sunsteel Strike",
-    "name_ja": "",
+    "name_ja": "メテオドライブ",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -13947,7 +13947,7 @@
   "暗影偷盗": {
     "name_zh": "暗影偷盗",
     "name_en": "Spectral Thief",
-    "name_ja": "",
+    "name_ja": "シャドースチール",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -13965,7 +13965,7 @@
   "棱镜镭射": {
     "name_zh": "棱镜镭射",
     "name_en": "Prismatic Laser",
-    "name_ja": "",
+    "name_ja": "プリズムレーザー",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -13982,7 +13982,7 @@
   "水流裂破": {
     "name_zh": "水流裂破",
     "name_en": "Liquidation",
-    "name_ja": "",
+    "name_ja": "アクアブレイク",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -14001,7 +14001,7 @@
   "冲岩": {
     "name_zh": "冲岩",
     "name_en": "Accelerock",
-    "name_ja": "",
+    "name_ja": "アクセルロック",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -14019,7 +14019,7 @@
   "暗影之骨": {
     "name_zh": "暗影之骨",
     "name_en": "Shadow Bone",
-    "name_ja": "",
+    "name_ja": "シャドーボーン",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -14037,7 +14037,7 @@
   "跺脚": {
     "name_zh": "跺脚",
     "name_en": "Stomping Tantrum",
-    "name_ja": "",
+    "name_ja": "じだんだ",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -14055,7 +14055,7 @@
   "精神之牙": {
     "name_zh": "精神之牙",
     "name_en": "Psychic Fangs",
-    "name_ja": "",
+    "name_ja": "サイコファング",
     "type": "Psychic",
     "category": "Physical",
     "pp": "",
@@ -14073,7 +14073,7 @@
   "花朵加农炮": {
     "name_zh": "花朵加农炮",
     "name_en": "Fleur Cannon",
-    "name_ja": "",
+    "name_ja": "フルールカノン",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -14090,7 +14090,7 @@
   "陷阱甲壳": {
     "name_zh": "陷阱甲壳",
     "name_en": "Shell Trap",
-    "name_ja": "",
+    "name_ja": "トラップシェル",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -14108,7 +14108,7 @@
   "狂舞挥打": {
     "name_zh": "狂舞挥打",
     "name_en": "Brutal Swing",
-    "name_ja": "",
+    "name_ja": "ぶんまわす",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -14127,7 +14127,7 @@
   "龙锤": {
     "name_zh": "龙锤",
     "name_en": "Dragon Hammer",
-    "name_ja": "",
+    "name_ja": "ドラゴンハンマー",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -14145,7 +14145,7 @@
   "鳞片噪音": {
     "name_zh": "鳞片噪音",
     "name_en": "Clanging Scales",
-    "name_ja": "",
+    "name_ja": "スケイルノイズ",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -14164,7 +14164,7 @@
   "鸟嘴加农炮": {
     "name_zh": "鸟嘴加农炮",
     "name_en": "Beak Blast",
-    "name_ja": "",
+    "name_ja": "くちばしキャノン",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -14182,7 +14182,7 @@
   "热带踢": {
     "name_zh": "热带踢",
     "name_en": "Trop Kick",
-    "name_ja": "",
+    "name_ja": "トロピカルキック",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -14201,7 +14201,7 @@
   "核心惩罚者": {
     "name_zh": "核心惩罚者",
     "name_en": "Core Enforcer",
-    "name_ja": "",
+    "name_ja": "コアパニッシャー",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -14219,7 +14219,7 @@
   "觉醒之舞": {
     "name_zh": "觉醒之舞",
     "name_en": "Revelation Dance",
-    "name_ja": "",
+    "name_ja": "めざめるダンス",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -14236,7 +14236,7 @@
   "修长之角": {
     "name_zh": "修长之角",
     "name_en": "Smart Strike",
-    "name_ja": "",
+    "name_ja": "スマートホーン",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -14254,7 +14254,7 @@
   "多属性攻击": {
     "name_zh": "多属性攻击",
     "name_en": "Multi-Attack",
-    "name_ja": "",
+    "name_ja": "マルチアタック",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -14272,7 +14272,7 @@
   "燃尽": {
     "name_zh": "燃尽",
     "name_en": "Burn Up",
-    "name_ja": "",
+    "name_ja": "もえつきる",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -14289,7 +14289,7 @@
   "嚣张": {
     "name_zh": "嚣张",
     "name_en": "Power Trip",
-    "name_ja": "",
+    "name_ja": "つけあがる",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -14307,7 +14307,7 @@
   "火焰鞭": {
     "name_zh": "火焰鞭",
     "name_en": "Fire Lash",
-    "name_ja": "",
+    "name_ja": "ほのおのムチ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -14326,7 +14326,7 @@
   "猛扑": {
     "name_zh": "猛扑",
     "name_en": "Lunge",
-    "name_ja": "",
+    "name_ja": "とびかかる",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -14345,7 +14345,7 @@
   "掷锚": {
     "name_zh": "掷锚",
     "name_en": "Anchor Shot",
-    "name_ja": "",
+    "name_ja": "アンカーショット",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -14364,7 +14364,7 @@
   "花粉团": {
     "name_zh": "花粉团",
     "name_en": "Pollen Puff",
-    "name_ja": "",
+    "name_ja": "かふんだんご",
     "type": "Bug",
     "category": "Special",
     "pp": "",
@@ -14382,7 +14382,7 @@
   "深渊突刺": {
     "name_zh": "深渊突刺",
     "name_en": "Throat Chop",
-    "name_ja": "",
+    "name_ja": "じごくづき",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -14401,7 +14401,7 @@
   "日光刃": {
     "name_zh": "日光刃",
     "name_en": "Solar Blade",
-    "name_ja": "",
+    "name_ja": "ソーラーブレード",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -14420,7 +14420,7 @@
   "十万马力": {
     "name_zh": "十万马力",
     "name_en": "High Horsepower",
-    "name_ja": "",
+    "name_ja": "１０まんばりき",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -14438,7 +14438,7 @@
   "冰锤": {
     "name_zh": "冰锤",
     "name_en": "Ice Hammer",
-    "name_ja": "",
+    "name_ja": "アイスハンマー",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -14457,7 +14457,7 @@
   "迎头一击": {
     "name_zh": "迎头一击",
     "name_en": "First Impression",
-    "name_ja": "",
+    "name_ja": "であいがしら",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -14475,7 +14475,7 @@
   "泡影的咏叹调": {
     "name_zh": "泡影的咏叹调",
     "name_en": "Sparkling Aria",
-    "name_ja": "",
+    "name_ja": "うたかたのアリア",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -14495,7 +14495,7 @@
   "ＤＤ金勾臂": {
     "name_zh": "ＤＤ金勾臂",
     "name_en": "Darkest Lariat",
-    "name_ja": "",
+    "name_ja": "ＤＤラリアット",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -14513,7 +14513,7 @@
   "缝影": {
     "name_zh": "缝影",
     "name_en": "Spirit Shackle",
-    "name_ja": "",
+    "name_ja": "かげぬい",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -14531,7 +14531,7 @@
   "自然之怒": {
     "name_zh": "自然之怒",
     "name_en": "Nature's Madness",
-    "name_ja": "",
+    "name_ja": "しぜんのいかり",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -14548,7 +14548,7 @@
   "集沙": {
     "name_zh": "集沙",
     "name_en": "Shore Up",
-    "name_ja": "",
+    "name_ja": "すなあつめ",
     "type": "Ground",
     "category": "Status",
     "pp": "",
@@ -14570,7 +14570,7 @@
   "碉堡": {
     "name_zh": "碉堡",
     "name_en": "Baneful Bunker",
-    "name_ja": "",
+    "name_ja": "トーチカ",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -14590,7 +14590,7 @@
   "花疗": {
     "name_zh": "花疗",
     "name_en": "Floral Healing",
-    "name_ja": "",
+    "name_ja": "フラワーヒール",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -14613,7 +14613,7 @@
   "吸取力量": {
     "name_zh": "吸取力量",
     "name_en": "Strength Sap",
-    "name_ja": "",
+    "name_ja": "ちからをすいとる",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -14635,7 +14635,7 @@
   "精神场地": {
     "name_zh": "精神场地",
     "name_en": "Psychic Terrain",
-    "name_ja": "",
+    "name_ja": "サイコフィールド",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -14655,7 +14655,7 @@
   "速度互换": {
     "name_zh": "速度互换",
     "name_en": "Speed Swap",
-    "name_ja": "",
+    "name_ja": "スピードスワップ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -14675,7 +14675,7 @@
   "号令": {
     "name_zh": "号令",
     "name_en": "Instruct",
-    "name_ja": "",
+    "name_ja": "さいはい",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -14695,7 +14695,7 @@
   "极光幕": {
     "name_zh": "极光幕",
     "name_en": "Aurora Veil",
-    "name_ja": "",
+    "name_ja": "オーロラベール",
     "type": "Ice",
     "category": "Status",
     "pp": "",
@@ -14715,7 +14715,7 @@
   "千箭齐发": {
     "name_zh": "千箭齐发",
     "name_en": "Thousand Arrows",
-    "name_ja": "",
+    "name_ja": "サウザンアロー",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -14733,7 +14733,7 @@
   "千波激荡": {
     "name_zh": "千波激荡",
     "name_en": "Thousand Waves",
-    "name_ja": "",
+    "name_ja": "サウザンウェーブ",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -14751,7 +14751,7 @@
   "惊爆大头": {
     "name_zh": "惊爆大头",
     "name_en": "Mind Blown",
-    "name_ja": "",
+    "name_ja": "ビックリヘッド",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -14769,7 +14769,7 @@
   "等离子闪电拳": {
     "name_zh": "等离子闪电拳",
     "name_en": "Plasma Fists",
-    "name_ja": "",
+    "name_ja": "プラズマフィスト",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -14788,7 +14788,7 @@
   "光子喷涌": {
     "name_zh": "光子喷涌",
     "name_en": "Photon Geyser",
-    "name_ja": "",
+    "name_ja": "フォトンゲイザー",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -14805,7 +14805,7 @@
   "毒丝": {
     "name_zh": "毒丝",
     "name_en": "Toxic Thread",
-    "name_ja": "",
+    "name_ja": "どくのいと",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -14832,7 +14832,7 @@
   "净化": {
     "name_zh": "净化",
     "name_en": "Purify",
-    "name_ja": "",
+    "name_ja": "じょうか",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -14855,7 +14855,7 @@
   "泪眼汪汪": {
     "name_zh": "泪眼汪汪",
     "name_en": "Tearful Look",
-    "name_ja": "",
+    "name_ja": "なみだめ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -14878,7 +14878,7 @@
   "树叶": {
     "name_zh": "树叶",
     "name_en": "Leafage",
-    "name_ja": "",
+    "name_ja": "このは",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -14895,7 +14895,7 @@
   "极巨炮": {
     "name_zh": "极巨炮",
     "name_en": "Dynamax Cannon",
-    "name_ja": "",
+    "name_ja": "ダイマックスほう",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -14912,7 +14912,7 @@
   "狙击": {
     "name_zh": "狙击",
     "name_en": "Snipe Shot",
-    "name_ja": "",
+    "name_ja": "ねらいうち",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -14929,7 +14929,7 @@
   "紧咬不放": {
     "name_zh": "紧咬不放",
     "name_en": "Jaw Lock",
-    "name_ja": "",
+    "name_ja": "くらいつく",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -14947,7 +14947,7 @@
   "龙箭": {
     "name_zh": "龙箭",
     "name_en": "Dragon Darts",
-    "name_ja": "",
+    "name_ja": "ドラゴンアロー",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -14965,7 +14965,7 @@
   "电喙": {
     "name_zh": "电喙",
     "name_en": "Bolt Beak",
-    "name_ja": "",
+    "name_ja": "でんげきくちばし",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -14983,7 +14983,7 @@
   "鳃咬": {
     "name_zh": "鳃咬",
     "name_en": "Fishious Rend",
-    "name_ja": "",
+    "name_ja": "エラがみ",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -15001,7 +15001,7 @@
   "扑击": {
     "name_zh": "扑击",
     "name_en": "Body Press",
-    "name_ja": "",
+    "name_ja": "ボディプレス",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -15019,7 +15019,7 @@
   "鼓击": {
     "name_zh": "鼓击",
     "name_en": "Drum Beating",
-    "name_ja": "",
+    "name_ja": "ドラムアタック",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -15037,7 +15037,7 @@
   "捕兽夹": {
     "name_zh": "捕兽夹",
     "name_en": "Snap Trap",
-    "name_ja": "",
+    "name_ja": "トラバサミ",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -15055,7 +15055,7 @@
   "火焰球": {
     "name_zh": "火焰球",
     "name_en": "Pyro Ball",
-    "name_ja": "",
+    "name_ja": "かえんボール",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -15074,7 +15074,7 @@
   "巨兽斩": {
     "name_zh": "巨兽斩",
     "name_en": "Behemoth Blade",
-    "name_ja": "",
+    "name_ja": "きょじゅうざん",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -15093,7 +15093,7 @@
   "巨兽弹": {
     "name_zh": "巨兽弹",
     "name_en": "Behemoth Bash",
-    "name_ja": "",
+    "name_ja": "きょじゅうだん",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -15111,7 +15111,7 @@
   "气场轮": {
     "name_zh": "气场轮",
     "name_en": "Aura Wheel",
-    "name_ja": "",
+    "name_ja": "オーラぐるま",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -15129,7 +15129,7 @@
   "广域破坏": {
     "name_zh": "广域破坏",
     "name_en": "Breaking Swipe",
-    "name_ja": "",
+    "name_ja": "ワイドブレイカー",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -15149,7 +15149,7 @@
   "木枝突刺": {
     "name_zh": "木枝突刺",
     "name_en": "Branch Poke",
-    "name_ja": "",
+    "name_ja": "えだづき",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -15167,7 +15167,7 @@
   "破音": {
     "name_zh": "破音",
     "name_en": "Overdrive",
-    "name_ja": "",
+    "name_ja": "オーバードライブ",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -15186,7 +15186,7 @@
   "苹果酸": {
     "name_zh": "苹果酸",
     "name_en": "Apple Acid",
-    "name_ja": "",
+    "name_ja": "りんごさん",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -15204,7 +15204,7 @@
   "万有引力": {
     "name_zh": "万有引力",
     "name_en": "Grav Apple",
-    "name_ja": "",
+    "name_ja": "Ｇのちから",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -15222,7 +15222,7 @@
   "灵魂冲击": {
     "name_zh": "灵魂冲击",
     "name_en": "Spirit Break",
-    "name_ja": "",
+    "name_ja": "ソウルクラッシュ",
     "type": "Fairy",
     "category": "Physical",
     "pp": "",
@@ -15241,7 +15241,7 @@
   "神奇蒸汽": {
     "name_zh": "神奇蒸汽",
     "name_en": "Strange Steam",
-    "name_ja": "",
+    "name_ja": "ワンダースチーム",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -15259,7 +15259,7 @@
   "假跪真撞": {
     "name_zh": "假跪真撞",
     "name_en": "False Surrender",
-    "name_ja": "",
+    "name_ja": "どげざつき",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -15277,7 +15277,7 @@
   "流星突击": {
     "name_zh": "流星突击",
     "name_en": "Meteor Assault",
-    "name_ja": "",
+    "name_ja": "スターアサルト",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -15294,7 +15294,7 @@
   "铁蹄光线": {
     "name_zh": "铁蹄光线",
     "name_en": "Steel Beam",
-    "name_ja": "",
+    "name_ja": "てっていこうせん",
     "type": "Steel",
     "category": "Special",
     "pp": "",
@@ -15328,7 +15328,7 @@
   "妒火": {
     "name_zh": "妒火",
     "name_en": "Burning Jealousy",
-    "name_ja": "",
+    "name_ja": "しっとのほのお",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -15347,7 +15347,7 @@
   "双翼": {
     "name_zh": "双翼",
     "name_en": "Dual Wingbeat",
-    "name_ja": "",
+    "name_ja": "ダブルウイング",
     "type": "Flying",
     "category": "Physical",
     "pp": "",
@@ -15366,7 +15366,7 @@
   "广域战力": {
     "name_zh": "广域战力",
     "name_en": "Expanding Force",
-    "name_ja": "",
+    "name_ja": "ワイドフォース",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -15383,7 +15383,7 @@
   "快速折返": {
     "name_zh": "快速折返",
     "name_en": "Flip Turn",
-    "name_ja": "",
+    "name_ja": "クイックターン",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -15401,7 +15401,7 @@
   "青草滑梯": {
     "name_zh": "青草滑梯",
     "name_en": "Grassy Glide",
-    "name_ja": "",
+    "name_ja": "グラススライダー",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -15419,7 +15419,7 @@
   "泄愤": {
     "name_zh": "泄愤",
     "name_en": "Lash Out",
-    "name_ja": "",
+    "name_ja": "うっぷんばらし",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -15437,7 +15437,7 @@
   "流星光束": {
     "name_zh": "流星光束",
     "name_en": "Meteor Beam",
-    "name_ja": "",
+    "name_ja": "メテオビーム",
     "type": "Rock",
     "category": "Special",
     "pp": "",
@@ -15454,7 +15454,7 @@
   "薄雾炸裂": {
     "name_zh": "薄雾炸裂",
     "name_en": "Misty Explosion",
-    "name_ja": "",
+    "name_ja": "ミストバースト",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -15472,7 +15472,7 @@
   "灵骚": {
     "name_zh": "灵骚",
     "name_en": "Poltergeist",
-    "name_ja": "",
+    "name_ja": "ポルターガイスト",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -15489,7 +15489,7 @@
   "电力上升": {
     "name_zh": "电力上升",
     "name_en": "Rising Voltage",
-    "name_ja": "",
+    "name_ja": "ライジングボルト",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -15506,7 +15506,7 @@
   "鳞射": {
     "name_zh": "鳞射",
     "name_en": "Scale Shot",
-    "name_ja": "",
+    "name_ja": "スケイルショット",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -15524,7 +15524,7 @@
   "热沙大地": {
     "name_zh": "热沙大地",
     "name_en": "Scorching Sands",
-    "name_ja": "",
+    "name_ja": "ねっさのだいち",
     "type": "Ground",
     "category": "Special",
     "pp": "",
@@ -15542,7 +15542,7 @@
   "臂贝武器": {
     "name_zh": "臂贝武器",
     "name_en": "Shell Side Arm",
-    "name_ja": "",
+    "name_ja": "シェルアームズ",
     "type": "Poison",
     "category": "Special",
     "pp": "",
@@ -15560,7 +15560,7 @@
   "爬击": {
     "name_zh": "爬击",
     "name_en": "Skitter Smack",
-    "name_ja": "",
+    "name_ja": "はいよるいちげき",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -15579,7 +15579,7 @@
   "铁滚轮": {
     "name_zh": "铁滚轮",
     "name_en": "Steel Roller",
-    "name_ja": "",
+    "name_ja": "アイアンローラー",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -15597,7 +15597,7 @@
   "水流连打": {
     "name_zh": "水流连打",
     "name_en": "Surging Strikes",
-    "name_ja": "",
+    "name_ja": "すいりゅうれんだ",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -15618,7 +15618,7 @@
   "大地波动": {
     "name_zh": "大地波动",
     "name_en": "Terrain Pulse",
-    "name_ja": "",
+    "name_ja": "だいちのはどう",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -15635,7 +15635,7 @@
   "三旋击": {
     "name_zh": "三旋击",
     "name_en": "Triple Axel",
-    "name_ja": "",
+    "name_ja": "トリプルアクセル",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -15654,7 +15654,7 @@
   "暗冥强击": {
     "name_zh": "暗冥强击",
     "name_en": "Wicked Blow",
-    "name_ja": "",
+    "name_ja": "あんこくきょうだ",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -15674,7 +15674,7 @@
   "星碎": {
     "name_zh": "星碎",
     "name_en": "Astral Barrage",
-    "name_ja": "",
+    "name_ja": "アストラルビット",
     "type": "Ghost",
     "category": "Special",
     "pp": "",
@@ -15692,7 +15692,7 @@
   "巨龙威能": {
     "name_zh": "巨龙威能",
     "name_en": "Dragon Energy",
-    "name_ja": "",
+    "name_ja": "ドラゴンエナジー",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -15710,7 +15710,7 @@
   "诡异咒语": {
     "name_zh": "诡异咒语",
     "name_en": "Eerie Spell",
-    "name_ja": "",
+    "name_ja": "ぶきみなじゅもん",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -15729,7 +15729,7 @@
   "怒火中烧": {
     "name_zh": "怒火中烧",
     "name_en": "Fiery Wrath",
-    "name_ja": "",
+    "name_ja": "もえあがるいかり",
     "type": "Dark",
     "category": "Special",
     "pp": "",
@@ -15748,7 +15748,7 @@
   "冰冷视线": {
     "name_zh": "冰冷视线",
     "name_en": "Freezing Glare",
-    "name_ja": "",
+    "name_ja": "いてつくしせん",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -15766,7 +15766,7 @@
   "雪矛": {
     "name_zh": "雪矛",
     "name_en": "Glacial Lance",
-    "name_ja": "",
+    "name_ja": "ブリザードランス",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -15784,7 +15784,7 @@
   "雷电囚笼": {
     "name_zh": "雷电囚笼",
     "name_en": "Thunder Cage",
-    "name_ja": "",
+    "name_ja": "サンダープリズン",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -15801,7 +15801,7 @@
   "雷鸣蹴击": {
     "name_zh": "雷鸣蹴击",
     "name_en": "Thunderous Kick",
-    "name_ja": "",
+    "name_ja": "らいめいげり",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -15820,7 +15820,7 @@
   "背水一战": {
     "name_zh": "背水一战",
     "name_en": "No Retreat",
-    "name_ja": "",
+    "name_ja": "はいすいのじん",
     "type": "Fighting",
     "category": "Status",
     "pp": "",
@@ -15846,7 +15846,7 @@
   "蛸固": {
     "name_zh": "蛸固",
     "name_en": "Octolock",
-    "name_ja": "",
+    "name_ja": "たこがため",
     "type": "Fighting",
     "category": "Status",
     "pp": "",
@@ -15866,7 +15866,7 @@
   "魂舞烈音爆": {
     "name_zh": "魂舞烈音爆",
     "name_en": "Clangorous Soul",
-    "name_ja": "",
+    "name_ja": "ソウルビート",
     "type": "Dragon",
     "category": "Status",
     "pp": "",
@@ -15897,7 +15897,7 @@
   "装饰": {
     "name_zh": "装饰",
     "name_en": "Decorate",
-    "name_ja": "",
+    "name_ja": "デコレーション",
     "type": "Fairy",
     "category": "Status",
     "pp": "",
@@ -15920,7 +15920,7 @@
   "生命水滴": {
     "name_zh": "生命水滴",
     "name_en": "Life Dew",
-    "name_ja": "",
+    "name_ja": "いのちのしずく",
     "type": "Water",
     "category": "Status",
     "pp": "",
@@ -15943,7 +15943,7 @@
   "指导": {
     "name_zh": "指导",
     "name_en": "Coaching",
-    "name_ja": "",
+    "name_ja": "コーチング",
     "type": "Fighting",
     "category": "Status",
     "pp": "",
@@ -15963,7 +15963,7 @@
   "钢拳双击": {
     "name_zh": "钢拳双击",
     "name_en": "Double Iron Bash",
-    "name_ja": "",
+    "name_ja": "ダブルパンツァー",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -15984,7 +15984,7 @@
   "丛林治疗": {
     "name_zh": "丛林治疗",
     "name_en": "Jungle Healing",
-    "name_ja": "",
+    "name_ja": "ジャングルヒール",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -16007,7 +16007,7 @@
   "大快朵颐": {
     "name_zh": "大快朵颐",
     "name_en": "Stuff Cheeks",
-    "name_ja": "",
+    "name_ja": "ほおばる",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16033,7 +16033,7 @@
   "沥青射击": {
     "name_zh": "沥青射击",
     "name_en": "Tar Shot",
-    "name_ja": "",
+    "name_ja": "タールショット",
     "type": "Rock",
     "category": "Status",
     "pp": "",
@@ -16053,7 +16053,7 @@
   "魔法粉": {
     "name_zh": "魔法粉",
     "name_en": "Magic Powder",
-    "name_ja": "",
+    "name_ja": "まほうのこな",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -16073,7 +16073,7 @@
   "茶会": {
     "name_zh": "茶会",
     "name_en": "Teatime",
-    "name_ja": "",
+    "name_ja": "おちゃかい",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16093,7 +16093,7 @@
   "换场": {
     "name_zh": "换场",
     "name_en": "Court Change",
-    "name_ja": "",
+    "name_ja": "コートチェンジ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16113,7 +16113,7 @@
   "腐蚀气体": {
     "name_zh": "腐蚀气体",
     "name_en": "Corrosive Gas",
-    "name_ja": "",
+    "name_ja": "ふしょくガス",
     "type": "Poison",
     "category": "Status",
     "pp": "",
@@ -16134,7 +16134,7 @@
   "克命爪": {
     "name_zh": "克命爪",
     "name_en": "Dire Claw",
-    "name_ja": "",
+    "name_ja": "フェイタルクロー",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -16153,7 +16153,7 @@
   "屏障猛攻": {
     "name_zh": "屏障猛攻",
     "name_en": "Psyshield Bash",
-    "name_ja": "",
+    "name_ja": "バリアーラッシュ",
     "type": "Psychic",
     "category": "Physical",
     "pp": "",
@@ -16172,7 +16172,7 @@
   "力量转换": {
     "name_zh": "力量转换",
     "name_en": "Power Shift",
-    "name_ja": "",
+    "name_ja": "パワーシフト",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16192,7 +16192,7 @@
   "岩斧": {
     "name_zh": "岩斧",
     "name_en": "Stone Axe",
-    "name_ja": "",
+    "name_ja": "がんせきアックス",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -16212,7 +16212,7 @@
   "阳春风暴": {
     "name_zh": "阳春风暴",
     "name_en": "Springtide Storm",
-    "name_ja": "",
+    "name_ja": "はるのあらし",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -16232,7 +16232,7 @@
   "神秘之力": {
     "name_zh": "神秘之力",
     "name_en": "Mystical Power",
-    "name_ja": "",
+    "name_ja": "しんぴのちから",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -16250,7 +16250,7 @@
   "大愤慨": {
     "name_zh": "大愤慨",
     "name_en": "Raging Fury",
-    "name_ja": "",
+    "name_ja": "だいふんげき",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -16267,7 +16267,7 @@
   "波动冲": {
     "name_zh": "波动冲",
     "name_en": "Wave Crash",
-    "name_ja": "",
+    "name_ja": "ウェーブタックル",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -16286,7 +16286,7 @@
   "叶绿爆震": {
     "name_zh": "叶绿爆震",
     "name_en": "Chloroblast",
-    "name_ja": "",
+    "name_ja": "クロロブラスト",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -16304,7 +16304,7 @@
   "冰山风": {
     "name_zh": "冰山风",
     "name_en": "Mountain Gale",
-    "name_ja": "",
+    "name_ja": "ひょうざんおろし",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -16322,7 +16322,7 @@
   "胜利之舞": {
     "name_zh": "胜利之舞",
     "name_en": "Victory Dance",
-    "name_ja": "",
+    "name_ja": "しょうりのまい",
     "type": "Fighting",
     "category": "Status",
     "pp": "",
@@ -16346,7 +16346,7 @@
   "突飞猛扑": {
     "name_zh": "突飞猛扑",
     "name_en": "Headlong Rush",
-    "name_ja": "",
+    "name_ja": "ぶちかまし",
     "type": "Ground",
     "category": "Physical",
     "pp": "",
@@ -16365,7 +16365,7 @@
   "毒千针": {
     "name_zh": "毒千针",
     "name_en": "Barb Barrage",
-    "name_ja": "",
+    "name_ja": "どくばりセンボン",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -16383,7 +16383,7 @@
   "气场之翼": {
     "name_zh": "气场之翼",
     "name_en": "Esper Wing",
-    "name_ja": "",
+    "name_ja": "オーラウイング",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -16401,7 +16401,7 @@
   "冤冤相报": {
     "name_zh": "冤冤相报",
     "name_en": "Bitter Malice",
-    "name_ja": "",
+    "name_ja": "うらみつらみ",
     "type": "Ghost",
     "category": "Special",
     "pp": "",
@@ -16419,7 +16419,7 @@
   "闭关": {
     "name_zh": "闭关",
     "name_en": "Shelter",
-    "name_ja": "",
+    "name_ja": "たてこもる",
     "type": "Steel",
     "category": "Status",
     "pp": "",
@@ -16442,7 +16442,7 @@
   "三连箭": {
     "name_zh": "三连箭",
     "name_en": "Triple Arrows",
-    "name_ja": "",
+    "name_ja": "３ぼんのや",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -16460,7 +16460,7 @@
   "群魔乱舞": {
     "name_zh": "群魔乱舞",
     "name_en": "Infernal Parade",
-    "name_ja": "",
+    "name_ja": "ひゃっきやこう",
     "type": "Ghost",
     "category": "Special",
     "pp": "",
@@ -16478,7 +16478,7 @@
   "秘剑・千重涛": {
     "name_zh": "秘剑・千重涛",
     "name_en": "Ceaseless Edge",
-    "name_ja": "",
+    "name_ja": "ひけん・ちえなみ",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -16498,7 +16498,7 @@
   "枯叶风暴": {
     "name_zh": "枯叶风暴",
     "name_en": "Bleakwind Storm",
-    "name_ja": "",
+    "name_ja": "こがらしあらし",
     "type": "Flying",
     "category": "Special",
     "pp": "",
@@ -16518,7 +16518,7 @@
   "鸣雷风暴": {
     "name_zh": "鸣雷风暴",
     "name_en": "Wildbolt Storm",
-    "name_ja": "",
+    "name_ja": "かみなりあらし",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -16538,7 +16538,7 @@
   "热沙风暴": {
     "name_zh": "热沙风暴",
     "name_en": "Sandsear Storm",
-    "name_ja": "",
+    "name_ja": "ねっさのあらし",
     "type": "Ground",
     "category": "Special",
     "pp": "",
@@ -16558,7 +16558,7 @@
   "新月祈祷": {
     "name_zh": "新月祈祷",
     "name_en": "Lunar Blessing",
-    "name_ja": "",
+    "name_ja": "みかづきのいのり",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -16578,7 +16578,7 @@
   "勇气填充": {
     "name_zh": "勇气填充",
     "name_en": "Take Heart",
-    "name_ja": "",
+    "name_ja": "ブレイブチャージ",
     "type": "Psychic",
     "category": "Status",
     "pp": "",
@@ -16601,7 +16601,7 @@
   "太晶爆发": {
     "name_zh": "太晶爆发",
     "name_en": "Tera Blast",
-    "name_ja": "",
+    "name_ja": "テラバースト",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -16618,7 +16618,7 @@
   "线阱": {
     "name_zh": "线阱",
     "name_en": "Silk Trap",
-    "name_ja": "",
+    "name_ja": "スレッドトラップ",
     "type": "Bug",
     "category": "Status",
     "pp": "",
@@ -16638,7 +16638,7 @@
   "下压踢": {
     "name_zh": "下压踢",
     "name_en": "Axe Kick",
-    "name_ja": "",
+    "name_ja": "かかとおとし",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -16658,7 +16658,7 @@
   "扫墓": {
     "name_zh": "扫墓",
     "name_en": "Last Respects",
-    "name_ja": "",
+    "name_ja": "おはかまいり",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -16675,7 +16675,7 @@
   "琉光冲激": {
     "name_zh": "琉光冲激",
     "name_en": "Lumina Crash",
-    "name_ja": "",
+    "name_ja": "ルミナコリジョン",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -16693,7 +16693,7 @@
   "上菜": {
     "name_zh": "上菜",
     "name_en": "Order Up",
-    "name_ja": "",
+    "name_ja": "いっちょうあがり",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -16711,7 +16711,7 @@
   "喷射拳": {
     "name_zh": "喷射拳",
     "name_en": "Jet Punch",
-    "name_ja": "",
+    "name_ja": "ジェットパンチ",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -16731,7 +16731,7 @@
   "辣椒精华": {
     "name_zh": "辣椒精华",
     "name_en": "Spicy Extract",
-    "name_ja": "",
+    "name_ja": "ハバネロエキス",
     "type": "Grass",
     "category": "Status",
     "pp": "",
@@ -16754,7 +16754,7 @@
   "疾速转轮": {
     "name_zh": "疾速转轮",
     "name_en": "Spin Out",
-    "name_ja": "",
+    "name_ja": "ホイールスピン",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -16772,7 +16772,7 @@
   "鼠数儿": {
     "name_zh": "鼠数儿",
     "name_en": "Population Bomb",
-    "name_ja": "",
+    "name_ja": "ネズミざん",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -16791,7 +16791,7 @@
   "冰旋": {
     "name_zh": "冰旋",
     "name_en": "Ice Spinner",
-    "name_ja": "",
+    "name_ja": "アイススピナー",
     "type": "Ice",
     "category": "Physical",
     "pp": "",
@@ -16809,7 +16809,7 @@
   "巨剑突击": {
     "name_zh": "巨剑突击",
     "name_en": "Glaive Rush",
-    "name_ja": "",
+    "name_ja": "きょけんとつげき",
     "type": "Dragon",
     "category": "Physical",
     "pp": "",
@@ -16827,7 +16827,7 @@
   "复生祈祷": {
     "name_zh": "复生祈祷",
     "name_en": "Revival Blessing",
-    "name_ja": "",
+    "name_ja": "さいきのいのり",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16850,7 +16850,7 @@
   "盐腌": {
     "name_zh": "盐腌",
     "name_en": "Salt Cure",
-    "name_ja": "",
+    "name_ja": "しおづけ",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -16868,7 +16868,7 @@
   "三连钻": {
     "name_zh": "三连钻",
     "name_en": "Triple Dive",
-    "name_ja": "",
+    "name_ja": "トリプルダイブ",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -16887,7 +16887,7 @@
   "晶光转转": {
     "name_zh": "晶光转转",
     "name_en": "Mortal Spin",
-    "name_ja": "",
+    "name_ja": "キラースピン",
     "type": "Poison",
     "category": "Physical",
     "pp": "",
@@ -16907,7 +16907,7 @@
   "描绘": {
     "name_zh": "描绘",
     "name_en": "Doodle",
-    "name_ja": "",
+    "name_ja": "うつしえ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16927,7 +16927,7 @@
   "甩肉": {
     "name_zh": "甩肉",
     "name_en": "Fillet Away",
-    "name_ja": "",
+    "name_ja": "みをけずる",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -16951,7 +16951,7 @@
   "仆刀": {
     "name_zh": "仆刀",
     "name_en": "Kowtow Cleave",
-    "name_ja": "",
+    "name_ja": "ドゲザン",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -16970,7 +16970,7 @@
   "千变万花": {
     "name_zh": "千变万花",
     "name_en": "Flower Trick",
-    "name_ja": "",
+    "name_ja": "トリックフラワー",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -16988,7 +16988,7 @@
   "闪焰高歌": {
     "name_zh": "闪焰高歌",
     "name_en": "Torch Song",
-    "name_ja": "",
+    "name_ja": "フレアソング",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -17007,7 +17007,7 @@
   "流水旋舞": {
     "name_zh": "流水旋舞",
     "name_en": "Aqua Step",
-    "name_ja": "",
+    "name_ja": "アクアステップ",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -17026,7 +17026,7 @@
   "怒牛": {
     "name_zh": "怒牛",
     "name_en": "Raging Bull",
-    "name_ja": "",
+    "name_ja": "レイジングブル",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -17044,7 +17044,7 @@
   "淘金潮": {
     "name_zh": "淘金潮",
     "name_en": "Make It Rain",
-    "name_ja": "",
+    "name_ja": "ゴールドラッシュ",
     "type": "Steel",
     "category": "Special",
     "pp": "",
@@ -17062,7 +17062,7 @@
   "大灾难": {
     "name_zh": "大灾难",
     "name_en": "Ruination",
-    "name_ja": "",
+    "name_ja": "カタストロフィ",
     "type": "Dark",
     "category": "Special",
     "pp": "",
@@ -17079,7 +17079,7 @@
   "全开猛撞": {
     "name_zh": "全开猛撞",
     "name_en": "Collision Course",
-    "name_ja": "",
+    "name_ja": "アクセルブレイク",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -17097,7 +17097,7 @@
   "闪电猛冲": {
     "name_zh": "闪电猛冲",
     "name_en": "Electro Drift",
-    "name_ja": "",
+    "name_ja": "イナズマドライブ",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -17115,7 +17115,7 @@
   "断尾": {
     "name_zh": "断尾",
     "name_en": "Shed Tail",
-    "name_ja": "",
+    "name_ja": "しっぽきり",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -17135,7 +17135,7 @@
   "冷笑话": {
     "name_zh": "冷笑话",
     "name_en": "Chilly Reception",
-    "name_ja": "",
+    "name_ja": "さむいギャグ",
     "type": "Ice",
     "category": "Status",
     "pp": "",
@@ -17155,7 +17155,7 @@
   "大扫除": {
     "name_zh": "大扫除",
     "name_en": "Tidy Up",
-    "name_ja": "",
+    "name_ja": "おかたづけ",
     "type": "Normal",
     "category": "Status",
     "pp": "",
@@ -17178,7 +17178,7 @@
   "雪景": {
     "name_zh": "雪景",
     "name_en": "Snowscape",
-    "name_ja": "",
+    "name_ja": "ゆきげしき",
     "type": "Ice",
     "category": "Status",
     "pp": "",
@@ -17198,7 +17198,7 @@
   "虫扑": {
     "name_zh": "虫扑",
     "name_en": "Pounce",
-    "name_ja": "",
+    "name_ja": "とびつく",
     "type": "Bug",
     "category": "Physical",
     "pp": "",
@@ -17217,7 +17217,7 @@
   "起草": {
     "name_zh": "起草",
     "name_en": "Trailblaze",
-    "name_ja": "",
+    "name_ja": "くさわけ",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -17236,7 +17236,7 @@
   "泼冷水": {
     "name_zh": "泼冷水",
     "name_en": "Chilling Water",
-    "name_ja": "",
+    "name_ja": "ひやみず",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -17254,7 +17254,7 @@
   "强力钻": {
     "name_zh": "强力钻",
     "name_en": "Hyper Drill",
-    "name_ja": "",
+    "name_ja": "ハイパードリル",
     "type": "Normal",
     "category": "Physical",
     "pp": "",
@@ -17272,7 +17272,7 @@
   "双光束": {
     "name_zh": "双光束",
     "name_en": "Twin Beam",
-    "name_ja": "",
+    "name_ja": "ツインビーム",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -17290,7 +17290,7 @@
   "愤怒之拳": {
     "name_zh": "愤怒之拳",
     "name_en": "Rage Fist",
-    "name_ja": "",
+    "name_ja": "ふんどのこぶし",
     "type": "Ghost",
     "category": "Physical",
     "pp": "",
@@ -17309,7 +17309,7 @@
   "铠农炮": {
     "name_zh": "铠农炮",
     "name_en": "Armor Cannon",
-    "name_ja": "",
+    "name_ja": "アーマーキャノン",
     "type": "Fire",
     "category": "Special",
     "pp": "",
@@ -17326,7 +17326,7 @@
   "悔念剑": {
     "name_zh": "悔念剑",
     "name_en": "Bitter Blade",
-    "name_ja": "",
+    "name_ja": "むねんのつるぎ",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -17345,7 +17345,7 @@
   "电光双击": {
     "name_zh": "电光双击",
     "name_en": "Double Shock",
-    "name_ja": "",
+    "name_ja": "でんこうそうげき",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -17363,7 +17363,7 @@
   "巨力锤": {
     "name_zh": "巨力锤",
     "name_en": "Gigaton Hammer",
-    "name_ja": "",
+    "name_ja": "デカハンマー",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -17380,7 +17380,7 @@
   "复仇": {
     "name_zh": "复仇",
     "name_en": "Comeuppance",
-    "name_ja": "",
+    "name_ja": "ほうふく",
     "type": "Dark",
     "category": "Physical",
     "pp": "",
@@ -17398,7 +17398,7 @@
   "水波刀": {
     "name_zh": "水波刀",
     "name_en": "Aqua Cutter",
-    "name_ja": "",
+    "name_ja": "アクアカッター",
     "type": "Water",
     "category": "Physical",
     "pp": "",
@@ -17416,7 +17416,7 @@
   "水蒸气": {
     "name_zh": "水蒸气",
     "name_en": "Hydro Steam",
-    "name_ja": "",
+    "name_ja": "ハイドロスチーム",
     "type": "Water",
     "category": "Special",
     "pp": "",
@@ -17433,7 +17433,7 @@
   "精神剑": {
     "name_zh": "精神剑",
     "name_en": "Psyblade",
-    "name_ja": "",
+    "name_ja": "サイコブレイド",
     "type": "Psychic",
     "category": "Physical",
     "pp": "",
@@ -17451,7 +17451,7 @@
   "血月": {
     "name_zh": "血月",
     "name_en": "Blood Moon",
-    "name_ja": "",
+    "name_ja": "ブラッドムーン",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -17468,7 +17468,7 @@
   "刷刷茶炮": {
     "name_zh": "刷刷茶炮",
     "name_en": "Matcha Gotcha",
-    "name_ja": "",
+    "name_ja": "シャカシャカほう",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -17487,7 +17487,7 @@
   "Syrup Bomb": {
     "name_zh": "糖浆炸弹",
     "name_en": "Syrup Bomb",
-    "name_ja": "",
+    "name_ja": "みずあめボム",
     "type": "Grass",
     "category": "Special",
     "pp": "",
@@ -17506,7 +17506,7 @@
   "棘藤棒": {
     "name_zh": "棘藤棒",
     "name_en": "Ivy Cudgel",
-    "name_ja": "",
+    "name_ja": "ツタこんぼう",
     "type": "Grass",
     "category": "Physical",
     "pp": "",
@@ -17523,7 +17523,7 @@
   "电光束": {
     "name_zh": "电光束",
     "name_en": "Electro Shot",
-    "name_ja": "",
+    "name_ja": "エレクトロビーム",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -17541,7 +17541,7 @@
   "晶光星群": {
     "name_zh": "晶光星群",
     "name_en": "Tera Starstorm",
-    "name_ja": "",
+    "name_ja": "テラクラスター",
     "type": "Normal",
     "category": "Special",
     "pp": "",
@@ -17558,7 +17558,7 @@
   "随机光": {
     "name_zh": "随机光",
     "name_en": "Fickle Beam",
-    "name_ja": "",
+    "name_ja": "きまぐレーザー",
     "type": "Dragon",
     "category": "Special",
     "pp": "",
@@ -17575,7 +17575,7 @@
   "火焰守护": {
     "name_zh": "火焰守护",
     "name_en": "Burning Bulwark",
-    "name_ja": "",
+    "name_ja": "かえんのまもり",
     "type": "Fire",
     "category": "Status",
     "pp": "",
@@ -17595,7 +17595,7 @@
   "迅雷": {
     "name_zh": "迅雷",
     "name_en": "Thunderclap",
-    "name_ja": "",
+    "name_ja": "じんらい",
     "type": "Electric",
     "category": "Special",
     "pp": "",
@@ -17612,7 +17612,7 @@
   "强刃攻击": {
     "name_zh": "强刃攻击",
     "name_en": "Mighty Cleave",
-    "name_ja": "",
+    "name_ja": "パワフルエッジ",
     "type": "Rock",
     "category": "Physical",
     "pp": "",
@@ -17631,7 +17631,7 @@
   "迅子利刃": {
     "name_zh": "迅子利刃",
     "name_en": "Tachyon Cutter",
-    "name_ja": "",
+    "name_ja": "タキオンカッター",
     "type": "Steel",
     "category": "Special",
     "pp": "",
@@ -17650,7 +17650,7 @@
   "硬压": {
     "name_zh": "硬压",
     "name_en": "Hard Press",
-    "name_ja": "",
+    "name_ja": "ハードプレス",
     "type": "Steel",
     "category": "Physical",
     "pp": "",
@@ -17668,7 +17668,7 @@
   "龙声鼓舞": {
     "name_zh": "龙声鼓舞",
     "name_en": "Dragon Cheer",
-    "name_ja": "",
+    "name_ja": "ドラゴンエール",
     "type": "Dragon",
     "category": "Status",
     "pp": "",
@@ -17691,7 +17691,7 @@
   "魅诱之声": {
     "name_zh": "魅诱之声",
     "name_en": "Alluring Voice",
-    "name_ja": "",
+    "name_ja": "みわくのボイス",
     "type": "Fairy",
     "category": "Special",
     "pp": "",
@@ -17710,7 +17710,7 @@
   "豁出去": {
     "name_zh": "豁出去",
     "name_en": "Temper Flare",
-    "name_ja": "",
+    "name_ja": "やけっぱち",
     "type": "Fire",
     "category": "Physical",
     "pp": "",
@@ -17728,7 +17728,7 @@
   "闪电强袭": {
     "name_zh": "闪电强袭",
     "name_en": "Supercell Slam",
-    "name_ja": "",
+    "name_ja": "サンダーダイブ",
     "type": "Electric",
     "category": "Physical",
     "pp": "",
@@ -17746,7 +17746,7 @@
   "精神噪音": {
     "name_zh": "精神噪音",
     "name_en": "Psychic Noise",
-    "name_ja": "",
+    "name_ja": "サイコノイズ",
     "type": "Psychic",
     "category": "Special",
     "pp": "",
@@ -17765,7 +17765,7 @@
   "快手还击": {
     "name_zh": "快手还击",
     "name_en": "Upper Hand",
-    "name_ja": "",
+    "name_ja": "はやてがえし",
     "type": "Fighting",
     "category": "Physical",
     "pp": "",
@@ -17784,7 +17784,7 @@
   "邪毒锁链": {
     "name_zh": "邪毒锁链",
     "name_en": "Malignant Chain",
-    "name_ja": "",
+    "name_ja": "じゃどくのくさり",
     "type": "Poison",
     "category": "Special",
     "pp": "",
