@@ -46,18 +46,29 @@ TYPE_ZH_TO_EN: dict[str, str] = {
 }
 TYPE_EN_TO_ZH: dict[str, str] = {v: k for k, v in TYPE_ZH_TO_EN.items()}
 
+# zh-Hant type inputs (zh_hant_support Step 3, 2026-09-13). Sources:
+# PokeAPI /type/{1..18} names[] zh-Hant field, cross-checked against 52poke
+# type pages (格斗/幽灵/龙/电 4 页, 0 mismatch) — see cache/audit/zh_hant_tier2_enums.md.
+# Only the 8 differing types are listed; the other 10 are script-identical.
+TYPE_ZH_HANT_TO_EN: dict[str, str] = {
+    "格鬥": "Fighting", "飛行": "Flying", "蟲": "Bug", "幽靈": "Ghost",
+    "鋼": "Steel", "電": "Electric", "龍": "Dragon", "惡": "Dark",
+}
+
 VALID_TYPES_EN: frozenset[str] = frozenset(TYPE_EN_TO_ZH)
 
 _TYPE_EN_LOWER: dict[str, str] = {t.lower(): t for t in VALID_TYPES_EN}
 
 
 def resolve_type_en(name: str) -> str | None:
-    """Resolve zh / en / any-case type input to the canonical English name."""
+    """Resolve zh / zh-Hant / en / any-case type input to the canonical English name."""
     if not name:
         return None
     n = str(name).strip()
     if n in TYPE_ZH_TO_EN:
         return TYPE_ZH_TO_EN[n]
+    if n in TYPE_ZH_HANT_TO_EN:
+        return TYPE_ZH_HANT_TO_EN[n]
     if n in VALID_TYPES_EN:
         return n
     return _TYPE_EN_LOWER.get(n.lower())
@@ -69,10 +80,25 @@ def resolve_type_en(name: str) -> str | None:
 STELLAR_TERA_INPUTS: frozenset[str] = frozenset({"Stellar", "星晶", "星愿"})
 
 
+def resolve_type_en(name: str) -> str | None:
+    """Resolve zh / zh-Hant / en / any-case type input to the canonical English name."""
+    if not name:
+        return None
+    n = str(name).strip()
+    if n in TYPE_ZH_TO_EN:
+        return TYPE_ZH_TO_EN[n]
+    if n in TYPE_ZH_HANT_TO_EN:
+        return TYPE_ZH_HANT_TO_EN[n]
+    if n in VALID_TYPES_EN:
+        return n
+    return _TYPE_EN_LOWER.get(n.lower())
+
+
 def resolve_tera_type_en(name: str) -> str | None:
     """Canonicalize tera-type input for the engine.
 
-    星晶/星愿 → "Stellar"; the 18 zh type names → English; anything else
+    星晶/星愿 → "Stellar"; the 18 zh type names → English; zh-Hant type
+    names → English (zh_hant_support Step 3); anything else
     passes through unchanged (exact match, no case folding — legacy contract).
     """
     if not name:
@@ -80,7 +106,8 @@ def resolve_tera_type_en(name: str) -> str | None:
     n = str(name)
     if n in STELLAR_TERA_ZH:
         return TERA_STELLAR_EN
-    return TYPE_ZH_TO_EN.get(n, n)
+    hit = TYPE_ZH_TO_EN.get(n) or TYPE_ZH_HANT_TO_EN.get(n)
+    return hit or n
 
 
 TERA_STELLAR_EN = "Stellar"
@@ -124,6 +151,17 @@ NATURE_ZH_TO_EN: dict[str, str] = {
 }
 NATURE_EN_TO_ZH: dict[str, str] = {v: k for k, v in NATURE_ZH_TO_EN.items()}
 
+# zh-Hant nature inputs (zh_hant_support Step 3, 2026-09-13). Sources:
+# PokeAPI /nature/{1..25} names[] zh-Hant field, cross-checked against the
+# 52poke 性格 page 任天堂译名 table (25/25, 0 mismatch) — see
+# cache/audit/zh_hant_tier2_enums.md. Only the 14 differing natures are listed.
+NATURE_ZH_HANT_TO_EN: dict[str, str] = {
+    "勤奮": "Hardy", "大膽": "Bold", "內斂": "Modest", "溫和": "Calm",
+    "膽小": "Timid", "溫順": "Gentle", "固執": "Adamant", "淘氣": "Impish",
+    "馬虎": "Rash", "頑皮": "Naughty", "樂天": "Lax", "悠閒": "Relaxed",
+    "冷靜": "Quiet", "認真": "Serious",
+}
+
 VALID_NATURES_EN: frozenset[str] = frozenset(NATURES_EN)
 
 # Case/alias tolerance, verbatim from damage.py's legacy _NATURE_ALIASES:
@@ -143,7 +181,7 @@ NATURE_ALIASES_TO_ZH: dict[str, str] = {
 
 
 def resolve_nature_en(name: str) -> str | None:
-    """Resolve zh / en / alias / any-case nature input to the canonical English name."""
+    """Resolve zh / zh-Hant / en / alias / any-case nature input to the canonical English name."""
     if not name:
         return None
     n = str(name).strip()
@@ -151,11 +189,19 @@ def resolve_nature_en(name: str) -> str | None:
         return None
     if n in NATURE_ZH_TO_EN:
         return NATURE_ZH_TO_EN[n]
+    if n in NATURE_ZH_HANT_TO_EN:
+        return NATURE_ZH_HANT_TO_EN[n]
     if n in NATURES_EN:
         return n
     alias_zh = NATURE_ALIASES_TO_ZH.get(n.lower()) or NATURE_ALIASES_TO_ZH.get(n)
     if alias_zh is not None:
         return NATURE_ZH_TO_EN.get(alias_zh)
+    # aliases.json natures 段（alias_layer Step 3a 入库的旧译/代理商译名）。
+    # 懒加载避免 normalize <-> engine_enums 循环导入；无命中时返回 None。
+    from normalize import normalize_name
+    alias_hit = normalize_name(n, "natures")
+    if alias_hit != n:
+        return NATURE_ZH_TO_EN.get(alias_hit) or NATURE_ZH_HANT_TO_EN.get(alias_hit)
     return None
 
 

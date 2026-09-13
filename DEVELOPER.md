@@ -494,7 +494,8 @@ python cache/test_regulation_and_forms.py  # 规则模型与形态（20 例）
 python cache/test_audit_fixes.py      # V4.9.1 审核修复回归（25 例）
 python cache/test_round2_fixes.py     # V4.9.2 第二轮修复回归（32 例）
 python cache/test_items_data.py       # items.json 迁移完整性（131 效果逐字 + cmd_item 兼容，4 例）
-python cache/test_ja_query.py         # 日语查询首批 pokemon/ability/item（10 例）
+python cache/test_ja_query.py         # 日语查询（四实体类正例/归一化/歧义防御/zh-en 回归，11 例）
+python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + Tier 2 属性/性格枚举全量，14 例）
 ```
 
 数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（引擎四文件不得含中文字符串字面量，注释除外）；别名更新后还需 `python cache/check_aliases.py`（别名层常驻守卫：目标存在/段内键唯一/空值自指/别名≠活规范名，任何违规非零退出；别名悬空检查的权威输出，name_audit 只消费不重复实现）。
