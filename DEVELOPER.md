@@ -520,6 +520,22 @@ python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + 
 
 ---
 
+## 发布到独立仓库（subtree split）
+
+本目录通过 `git subtree split` 同步到独立仓库 [Einheriar/pokemon-calc-skill](https://github.com/Einheriar/pokemon-calc-skill)（本地 remote 名 `pokemon-calc`，默认分支 `main`）。在**本仓库根目录**、master 分支上执行：
+
+```bash
+git subtree split -P pokemon-calc -b pokemon-calc-branch
+git push pokemon-calc pokemon-calc-branch:main
+```
+
+- **耗时**：全量重放 master 全部历史，约 2 分钟起，且随总提交数线性增长（Windows 上 git-subtree 逐提交 spawn 子进程，成本偏高）。更新频率低，可接受，属正常现象。
+- **缓存**：`.git/subtree-cache/` 是 split 的工作缓存，删掉可自动重建（重建那次会从慢开始）。**不要**在 split 运行中途 Ctrl+C——容易留下半截缓存，下次更慢；让它跑完。
+- **勿加 `--rejoin`**：会往 master 线性历史里塞合成 merge 提交（噪音），当前 master 零 merge，保持干净。
+- 若未来推送变频繁、单次超过约 10 分钟，再考虑增量拆分方案（自定义 `rev-list`+`commit-tree` 脚本），届时按当时历史形态另写。
+
+---
+
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。

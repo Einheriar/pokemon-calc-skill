@@ -70,8 +70,10 @@ optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field
 survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（详见 references/commands.md）
 
 # Phase 3 — 环境情报查询（pokecamp.cc 赛事 + 天梯数据，详见 references/commands.md）
+# 意图路由速记：用户说"天梯/排位"→ 只查 --source ladder；说"比赛/赛事"→ 只查默认源；
+#              不指明来源 → 天梯+赛事双查，天梯为主（完整规则见下方「意图路由」）
 meta [--top N] [--online]                    # 当前环境使用率总排行（默认前 20）
-meta <name> [--online]                       # 单只宝可梦：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友
+meta <name> [--online]                       # 单只宝可梦赛事统计：使用率排名、常用招式/特性/道具/性格/能力点数分配/常见队友（默认源=赛事，勿用于回答天梯问题）
 meta --teams [--top N] [--online]            # 近期赛事队伍列表（默认前 12 支，按赛事日期降序）
 meta --teams <N>                             # 第 N 支队伍的完整配置（道具/特性/招式/性格）
 meta --teams --pokemon <名> [--top N]        # 全量检索：当前窗口哪些队伍用了这只宝可梦
