@@ -80,14 +80,14 @@
 
 ### 作为 Skill 安装
 
-假设你已克隆本仓库，且当前位于仓库根目录，把 `pokemon-calc/` 文件夹拷贝进你的 Agent skills 目录即可。各框架机制完全相同，只有目标路径不同：
+直接把仓库克隆进你的 Agent skills 目录即可。目标文件夹请命名为 `pokemon-calc`，与 Skill 的 `name` 字段保持一致——各框架机制完全相同，只有目标路径不同：
 
 ```bash
-cp -R pokemon-calc "$HOME/.claude/skills/"     # Claude Code（全局；项目级用 .claude/skills/）
-cp -R pokemon-calc "$CODEX_HOME/skills/"      # Codex
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.claude/skills/pokemon-calc"  # Claude Code（全局；项目级用 .claude/skills/）
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$CODEX_HOME/skills/pokemon-calc"   # Codex
 ```
 
-随后在对话中显式请求此 Skill，例如 `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.`（Claude Code：`Please use the pokemon-calc skill to run a damage calc.`）。Hermes Agent 同理——把文件夹装进其 skills 目录即可调用。
+随后在对话中显式请求此 Skill，例如 `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.`（Claude Code：`Please use the pokemon-calc skill to run a damage calc.`）。Hermes Agent 同理——把文件夹克隆进其 skills 目录即可调用。
 
 ### 作为独立 CLI 工具使用
 

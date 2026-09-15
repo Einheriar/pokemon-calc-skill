@@ -80,14 +80,14 @@ This project is an Agent Skill that can be installed into any AI coding assistan
 
 ### Install as a Skill
 
-Assuming you have cloned this repo and are at the repository root, copy the `pokemon-calc/` folder into your agent's skills directory. The mechanics are identical across frameworks — only the destination path differs:
+Clone the repository straight into your agent's skills directory. Name the target folder `pokemon-calc` so it matches the skill's `name` field — the mechanics are identical across frameworks, only the destination differs:
 
 ```bash
-cp -R pokemon-calc "$HOME/.claude/skills/"     # Claude Code (global; use .claude/skills/ for project-level)
-cp -R pokemon-calc "$CODEX_HOME/skills/"      # Codex
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.claude/skills/pokemon-calc"  # Claude Code (global; use .claude/skills/ for project-level)
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$CODEX_HOME/skills/pokemon-calc"   # Codex
 ```
 
-Then reference the skill explicitly in a prompt, e.g. `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.` (Claude Code: `Please use the pokemon-calc skill to run a damage calc.`). Hermes Agent works the same way — install the folder into its skills directory and call it in conversation.
+Then reference the skill explicitly in a prompt, e.g. `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.` (Claude Code: `Please use the pokemon-calc skill to run a damage calc.`). Hermes Agent works the same way — clone the folder into its skills directory and call it in conversation.
 
 ### Use as a Standalone CLI Tool
 
