@@ -36,8 +36,6 @@ The full tournament-team dataset of the rolling 30-day window (9,000+ teams with
 | Usage ranking (`meta`) | "Which Pokémon has the highest usage rate right now?" |
 | Per-Pokémon meta detail (`meta <name>`) | "What moves/items does Kingambit run? Who are its common teammates?" |
 | Recent tournament teams (`meta --teams`) | "Show me the latest tournament-winning teams" |
-| Filter teams by Pokémon / player / tournament (`meta --teams --pokemon/--player/--tournament`) | "Which teams run Basculegion?" / "Show me all of Sooner's teams" |
-| Appearance stats on subsets (`meta --teams --stats`) | "What's the usage ranking among top-8 teams only?" |
 | Teammate co-occurrence (`meta --teams --teammates`) | "Who partners Incineroar most often?" |
 | Official ranked ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What's the official in-game ranked leaderboard right now?" (rank-only) |
 | Ladder build detail (`meta --source ladder <name> --online`) | "What are Kingambit's top 4 moves on the official ladder?" |
@@ -82,48 +80,14 @@ This project is an Agent Skill that can be installed into any AI coding assistan
 
 ### Install as a Skill
 
-Assuming you have cloned this repo and are at the repository root.
-
-#### Codex
+Assuming you have cloned this repo and are at the repository root, copy the `pokemon-calc/` folder into your agent's skills directory. The mechanics are identical across frameworks — only the destination path differs:
 
 ```bash
-mkdir -p "$CODEX_HOME/skills"
-cp -R pokemon-calc "$CODEX_HOME/skills/"
+cp -R pokemon-calc "$HOME/.claude/skills/"     # Claude Code (global; use .claude/skills/ for project-level)
+cp -R pokemon-calc "$CODEX_HOME/skills/"      # Codex
 ```
 
-Usage example:
-
-```text
-Use $pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.
-```
-
-#### Claude Code
-
-Supports either global or project-level installation.
-
-Global:
-
-```bash
-mkdir -p "$HOME/.claude/skills"
-cp -R pokemon-calc "$HOME/.claude/skills/"
-```
-
-Project-level:
-
-```bash
-mkdir -p .claude/skills
-cp -R pokemon-calc .claude/skills/
-```
-
-In prompts, explicitly request this skill, for example:
-
-```text
-Please use the pokemon-calc skill to run a damage calc.
-```
-
-#### Hermes Agent
-
-Tested and verified to work with Hermes Agent. Install the Skill folder into your Agent's skills directory and reference it in conversations.
+Then reference the skill explicitly in a prompt, e.g. `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.` (Claude Code: `Please use the pokemon-calc skill to run a damage calc.`). Hermes Agent works the same way — install the folder into its skills directory and call it in conversation.
 
 ### Use as a Standalone CLI Tool
 
@@ -200,11 +164,11 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 
 ---
 
-## Real-World Examples
+## Real-World Example
 
-> The following examples are shown in Chinese to preserve the authentic interaction style of this Skill, which defaults to Chinese queries.
+> The following example is shown in Chinese to preserve the authentic interaction style of this Skill, which defaults to Chinese queries.
 
-### Example 1: Mega Charizard Y Heat Wave vs Mega Alakazam in Sun
+### Example: Mega Charizard Y Heat Wave vs Mega Alakazam in Sun
 
 **User:** 252特攻的mega喷火龙Y，性格修正特攻，晴天下打热风技能，能打mega胡地多少血？
 
@@ -276,81 +240,6 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 > | KO 概率 | **12.5% 概率一击必杀** |
 >
 > **综合判断**：超级胡地特防 125 且 HP 仅 130，面对晴天下超级喷火龙Y的热风非常脆弱。虽然大部分情况不会被确一，但残血时基本必死。
-
----
-
-### Example 2: Hisuian Decidueye Triple Arrows vs Kingambit with Chople Berry
-
-**User:** 洗翠狙射树枭，252攻击，性格修正攻击，打三连箭，防守方是252HP，带抗斗果的的钢兵，钢兵能不能接？
-
-**Agent's final answer (excerpt):**
-
-> ## 结论摘要
->
-> **对仆刀将军（Kingambit）：不能 OHKO，确定 2HKO。** 携带抗斗果（巧可果）的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，最少剩 51 血。
->
-> **对劈斩司令（Bisharp）：约 31.2% 概率 OHKO，多数情况接下后残血。**
->
-> ---
->
-> ### 攻击方详细信息
->
-> | 项目 | 数值 |
-> |------|------|
-> | 属性 | 草 / 格斗 |
-> | 特性 | 茂盛（可选：茂盛 / 远隔） |
-> | 等级 | Lv.50 |
-> | 种族值 | HP 88 / 攻击 112 / 防御 80 / 特攻 95 / 特防 95 / 速度 60 |
-> | 个体值 | 全 31 |
-> | 努力值 | HP 0 / 攻击 252 / 防御 0 / 特攻 0 / 特防 0 / 速度 0 |
-> | 性格 | 固执（+攻击 / -特攻） |
-> | 实际能力值 | HP 163 / 攻击 **180** / 防御 100 / 特攻 103 / 特防 115 / 速度 80 |
-> | 道具 | 无 |
-> | 太晶化 | 否 |
->
-> ### 防御方详细信息（仆刀将军 Kingambit）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 属性 | 恶 / 钢 |
-> | 特性 | 不服输（可选：不服输 / 大将 / 压迫感） |
-> | 等级 | Lv.50 |
-> | 种族值 | HP 100 / 攻击 135 / 防御 120 / 特攻 60 / 特防 85 / 速度 50 |
-> | 个体值 | 全 31 |
-> | 努力值 | HP 252 / 其余 0 |
-> | 性格 | 勤奋（无修正） |
-> | 实际能力值 | HP **207** / 防御 **140** |
-> | 道具 | **巧可果（抗斗果，格斗伤害减半）** |
-> | 当前 HP / 最大 HP | 207 / 207 |
->
-> ### 伤害计算结果（对仆刀将军）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 伤害范围（单次） | 132 ～ 156 |
-> | 属性相克倍率 | 4.0x（格斗 vs 恶/钢） |
-> | 是否触发 STAB | 是 |
-> | 道具加成（巧可果） | 是，伤害减半 |
-> | KO 概率 | **确定 2 击必杀** |
-> | 最大伤害占 HP 比 | 156 / 207 = **75.4%** |
->
-> **综合判断**：
-> - **不能一击秒杀**。最小剩余 HP = 207 - 156 = **51**
-> - 必为 2HKO，巧可果有效保命
->
-> ### 伤害计算结果（对劈斩司令 Bisharp）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 伤害范围（单次） | 152 ～ 182 |
-> | KO 概率 | **31.2% 概率一击必杀** |
-> | 最小/最大剩余 HP | -10（秒杀） / **20**（存活） |
->
-> **综合判断**：有 31.2% 概率被 OHKO，约 68.8% 概率接下并剩 2～20 血（残血）。
->
-> ## 总结
->
-> 带巧可果的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，确认为 2HKO，最小剩 51 血，绝不被 OHKO。若用户本意是原始劈斩司令，则有约 31.2% 概率被 OHKO。
 
 ---
 

@@ -36,8 +36,6 @@
 | 使用率排行（`meta`） | "现在环境里使用率最高的宝可梦是谁？" |
 | 单只环境详情（`meta <名>`） | "仆刀将军现在都带什么招式和道具？常见队友是谁？" |
 | 近期赛事队伍（`meta --teams`） | "最近比赛有什么队伍？把冠军的阵容给我看看" |
-| 按宝可梦/选手/赛事筛队伍（`meta --teams --pokemon/--player/--tournament`） | "有哪些队伍带了幽尾玄鱼？" / "Sooner 最近都用什么队伍？" |
-| 子集出现率统计（`meta --teams --stats`） | "只看打进前八的队伍，谁最热门？" |
 | 队友共现（`meta --teams --teammates`） | "炽焰咆哮虎最常和谁组队？" |
 | 官方实机排位名次（`meta --source ladder [--format singles\|doubles]`） | "现在天梯排位榜上谁最强？"（仅名次） |
 | 天梯单只配招（`meta --source ladder <名> --online`） | "仆刀将军天梯最常带的 4 个招式是什么？" |
@@ -82,48 +80,14 @@
 
 ### 作为 Skill 安装
 
-假设你已克隆本仓库，且当前位于仓库根目录。
-
-#### Codex
+假设你已克隆本仓库，且当前位于仓库根目录，把 `pokemon-calc/` 文件夹拷贝进你的 Agent skills 目录即可。各框架机制完全相同，只有目标路径不同：
 
 ```bash
-mkdir -p "$CODEX_HOME/skills"
-cp -R pokemon-calc "$CODEX_HOME/skills/"
+cp -R pokemon-calc "$HOME/.claude/skills/"     # Claude Code（全局；项目级用 .claude/skills/）
+cp -R pokemon-calc "$CODEX_HOME/skills/"      # Codex
 ```
 
-使用示例：
-
-```text
-Use $pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.
-```
-
-#### Claude Code
-
-支持全局安装或项目级安装。
-
-全局安装：
-
-```bash
-mkdir -p "$HOME/.claude/skills"
-cp -R pokemon-calc "$HOME/.claude/skills/"
-```
-
-项目级安装：
-
-```bash
-mkdir -p .claude/skills
-cp -R pokemon-calc .claude/skills/
-```
-
-在对话中显式请求此 Skill，例如：
-
-```text
-Please use the pokemon-calc skill to run a damage calc.
-```
-
-#### Hermes Agent
-
-已在 Hermes Agent 中测试验证可用。将 Skill 文件夹安装到 Agent 的 skills 目录下，即可在对话中调用。
+随后在对话中显式请求此 Skill，例如 `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.`（Claude Code：`Please use the pokemon-calc skill to run a damage calc.`）。Hermes Agent 同理——把文件夹装进其 skills 目录即可调用。
 
 ### 作为独立 CLI 工具使用
 
@@ -202,7 +166,7 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 ## 完整对话示例
 
-### 示例一：超级喷火龙Y 热风 vs 超级胡地
+### 示例：超级喷火龙Y 热风 vs 超级胡地
 
 **用户提问：** 252特攻的mega喷火龙Y，性格修正特攻，晴天下打热风技能，能打mega胡地多少血？
 
@@ -274,81 +238,6 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 > | KO 概率 | **12.5% 概率一击必杀** |
 >
 > **综合判断**：超级胡地特防 125 且 HP 仅 130，面对晴天下超级喷火龙Y的热风非常脆弱。虽然大部分情况不会被确一，但残血时基本必死。
-
----
-
-### 示例二：洗翠狙射树枭 三连箭 vs "钢兵"
-
-**用户提问：** 洗翠狙射树枭，252攻击，性格修正攻击，打三连箭，防守方是252HP，带抗斗果的的钢兵，钢兵能不能接？
-
-**Agent 最终回答（节选）：**
-
-> ## 结论摘要
->
-> **对仆刀将军（Kingambit）：不能 OHKO，确定 2HKO。** 携带抗斗果（巧可果）的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，最少剩 51 血。
->
-> **对劈斩司令（Bisharp，原始钢兵）：约 31.2% 概率 OHKO，多数情况接下后残血。**
->
-> ---
->
-> ### 攻击方详细信息
->
-> | 项目 | 数值 |
-> |------|------|
-> | 属性 | 草 / 格斗 |
-> | 特性 | 茂盛（可选：茂盛 / 远隔） |
-> | 等级 | Lv.50 |
-> | 种族值 | HP 88 / 攻击 112 / 防御 80 / 特攻 95 / 特防 95 / 速度 60 |
-> | 个体值 | 全 31 |
-> | 努力值 | HP 0 / 攻击 252 / 防御 0 / 特攻 0 / 特防 0 / 速度 0 |
-> | 性格 | 固执（+攻击 / -特攻） |
-> | 实际能力值 | HP 163 / 攻击 **180** / 防御 100 / 特攻 103 / 特防 115 / 速度 80 |
-> | 道具 | 无 |
-> | 太晶化 | 否 |
->
-> ### 防御方详细信息（仆刀将军 Kingambit）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 属性 | 恶 / 钢 |
-> | 特性 | 不服输（可选：不服输 / 大将 / 压迫感） |
-> | 等级 | Lv.50 |
-> | 种族值 | HP 100 / 攻击 135 / 防御 120 / 特攻 60 / 特防 85 / 速度 50 |
-> | 个体值 | 全 31 |
-> | 努力值 | HP 252 / 其余 0 |
-> | 性格 | 勤奋（无修正） |
-> | 实际能力值 | HP **207** / 防御 **140** |
-> | 道具 | **巧可果（抗斗果，格斗伤害减半）** |
-> | 当前 HP / 最大 HP | 207 / 207 |
->
-> ### 伤害计算结果（对仆刀将军）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 伤害范围（单次） | 132 ～ 156 |
-> | 属性相克倍率 | 4.0x（格斗 vs 恶/钢） |
-> | 是否触发 STAB | 是 |
-> | 道具加成（巧可果） | 是，伤害减半 |
-> | KO 概率 | **确定 2 击必杀** |
-> | 最大伤害占 HP 比 | 156 / 207 = **75.4%** |
->
-> **综合判断**：
-> - **不能一击秒杀**。最小剩余 HP = 207 - 156 = **51**
-> - 必为 2HKO，巧可果有效保命
->
-> ### 伤害计算结果（对劈斩司令 Bisharp）
->
-> | 项目 | 数值 |
-> |------|------|
-> | 伤害范围（单次） | 152 ～ 182 |
-> | KO 概率 | **31.2% 概率一击必杀** |
-> | 最小/最大剩余 HP | -10（秒杀） / **20**（存活） |
->
-> **综合判断**：有 31.2% 概率被 OHKO，约 68.8% 概率接下并剩 2～20 血（残血）。
->
-> ## 总结
->
-> 带巧可果的 252HP 仆刀将军可以稳稳接下洗翠狙射树枭的三连箭，确认为 2HKO，最小剩 51 血，绝不被 OHKO。若用户本意是原始劈斩司令，则有约 31.2% 概率被 OHKO。
 
 ---
 
