@@ -540,6 +540,16 @@ git push pokemon-calc pokemon-calc-branch:main
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
+### 5.0.2（2026-09-16）
+
+修复 ingame 天梯 `includes_mega` 误标并重刷天梯快照。`pokecamp_source.py` 合并循环
+`else` 分支原无条件标 `includes_mega = True`，默认「同 speciesIdentifier 第二行必为
+Mega」，致 19 只多形态物种（雌雄/地区/洛托姆/尺寸形态，如幽尾玄鱼、爱管侍、风速狗、
+清洗洛托姆等）被误标含 Mega；改为仅当遇到真实 Mega 行才标记。重刷 `ladder_ingame.json`
+后 `includes_mega: true` 由 95 降至 76 只，真实 Mega 物种标记不变；`ladder_showdown.json`
+随本次一并重刷。顺带修正 `test_ladder_format_singles` 硬编码旧快照单打榜首（数据漂移）。
+详见 `plans/CHANGELOG_2026-09-16.md`。
+
 ### 5.0.0（2026-09-13）
 
 2026-09-12 计划族（alias_layer / zh_hant_support / phase2 / phase3）+ name_audit 独立质量流程全部实施，输入侧多语言大重构。执行 `plans/archive/EXECUTION_PLAYBOOK_2026-09-12[已实施].md`；详见 `plans/CHANGELOG_2026-09-13.md`。

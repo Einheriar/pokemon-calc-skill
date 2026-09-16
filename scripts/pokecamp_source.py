@@ -974,7 +974,11 @@ def distill_ladder_page(source_kind: str, page: dict[str, Any],
                 if cur is not None:
                     merged[sp]["includes_mega"] = True
             else:
-                cur["includes_mega"] = True
+                # Only a genuine mega row proves the species includes one;
+                # multi-form species (male/female, regional, rotom, etc.) hit
+                # this branch with base forms too.
+                if rec.get("isMega") or cur.get("_is_mega"):
+                    cur["includes_mega"] = True
         pokemon = list(merged.values())
         for e in pokemon:
             e.pop("_is_mega", None)

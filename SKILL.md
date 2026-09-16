@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.0.0"
+  version: "5.0.2"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
