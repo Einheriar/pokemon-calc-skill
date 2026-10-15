@@ -2900,7 +2900,8 @@ def _find_survivability_bp(
             hits=1,
             is_spread=False,
         )
-        result = calculate_damage(attacker, defender, move, field, gen=9)
+        result = calculate_damage(attacker, defender, move, field, gen=9,
+                                  _neutral_damage=True)
         ko_prob = _get_ko_prob(result.damage, defender.current_hp, defender.max_hp)
         return result.damage, ko_prob
 
@@ -2944,13 +2945,15 @@ def _find_survivability_bp(
 
     # Get damage ranges for reporting
     safe_dr = [0, 0]
+    safe_ko = None
     if safe_bp > 0:
-        safe_damage, _ = _test(safe_bp)
+        safe_damage, safe_ko = _test(safe_bp)
         safe_dr = [min(safe_damage), max(safe_damage)]
 
     abs_dr = [0, 0]
+    abs_ko = None
     if abs_safe_bp > 0:
-        abs_damage, _ = _test(abs_safe_bp)
+        abs_damage, abs_ko = _test(abs_safe_bp)
         abs_dr = [min(abs_damage), max(abs_damage)]
 
     return {
@@ -2958,183 +2961,230 @@ def _find_survivability_bp(
         "absolute_safe_bp": abs_safe_bp,
         "safe_damage_range": safe_dr,
         "absolute_safe_damage_range": abs_dr,
+        "search_max_bp": max_bp,
+        "safe_bp_capped": safe_ko_hi < safe_threshold,
+        "absolute_safe_bp_capped": abs_ko_hi == 0.0,
+        "safe_ko_probability": safe_ko,
+        "absolute_safe_ko_probability": abs_ko,
     }
 
 
 def cmd_survivability(
     defender_name: str,
-    attacker_stat: int,
-    category: str,
+    attacker_stat: int | None = 200,
+    category: str | None = None,
     def_ov: str = "{}",
     field_ov: str = "{}",
     setup_moves: list[str] | None = None,
 ) -> dict[str, Any]:
-    """Reverse survivability lookup: find max unboosted BP a defender can survive.
+    """Find neutral, non-STAB, non-critical survivability at level 50.
 
-    Args:
-        defender_name: Pokemon name (zh/en) or JSON with raw_stats.
-        attacker_stat: Attacker's attack or sp_attack stat value.
-        category: "Physical" or "Special".
-        def_ov: JSON override for defender (e.g. raw_stats, boosts, setup_moves).
-        field_ov: JSON override for field (e.g. format).
-        setup_moves: Optional list of defender setup moves to apply as boosts.
-
-    Returns:
-        dict with safe_bp, absolute_safe_bp, defender info, etc.
+    Missing attacker stats default to 200. Explicit defender investments are
+    honored without auto-presets; unsupported inputs fail rather than vanish.
     """
-    import json
+    category = {"physical": "Physical", "special": "Special"}.get(
+        category.lower() if isinstance(category, str) else ""
+    )
+    if category is None:
+        return {"error": "category 必须是 Physical 或 Special（不区分大小写）"}
+    if attacker_stat is None:
+        attacker_stat = 200
+    if type(attacker_stat) is not int or attacker_stat <= 0:
+        return {"error": "attacker_stat 必须是正整数，未指定时默认 200"}
 
-
-    # Category validation (round 2 audit C12: bogus values silently fell
-    # into the Special branch)
-    if category not in ("Physical", "Special"):
-        return {"error": f"category 必须是 Physical 或 Special，收到 '{category}'"}
-
-    # Parse overrides
     try:
         def_override = json.loads(def_ov) if def_ov else {}
-    except (json.JSONDecodeError, TypeError):
-        def_override = {}
-    try:
         field_override = json.loads(field_ov) if field_ov else {}
-    except (json.JSONDecodeError, TypeError):
-        field_override = {}
+    except (json.JSONDecodeError, TypeError) as exc:
+        return {"error": f"def_ov / field_ov 必须是合法 JSON：{exc}"}
+    if not isinstance(def_override, dict) or not isinstance(field_override, dict):
+        return {"error": "def_ov 和 field_ov 必须是 JSON 对象"}
 
-    # Extract setup moves and boosts from defender override
-    setup_moves = def_override.pop("setup_moves", setup_moves) or []
-    def_boosts = def_override.pop("boosts", {})
-
-    # Build virtual attacker (only relevant attack stat set, no STAB, no item, no ability)
-    raw_stats = {"hp": 0, "attack": 0, "defense": 0, "sp_attack": 0, "sp_defense": 0, "speed": 0}
-    if category == "Physical":
-        raw_stats["attack"] = attacker_stat
-    else:
-        raw_stats["sp_attack"] = attacker_stat
-
-    # Use Fire type to avoid STAB with Normal-type move (ensuring "no boost" calculation).
-    # Engine-layer types are Chinese strings.
-    attacker = Pokemon(
-        name="VirtualAttacker",
-        name_en="VirtualAttacker",
-        level=50,
-        types=["火"],
-        stats=raw_stats,
-        raw_stats=raw_stats,
-        ability="",
-        ability_zh="",
-        nature="Hardy",
-        item="",
-        current_hp=0,
-        max_hp=0,
-    )
-
-    # Build defender
-    defender_data: dict[str, Any] = {}
+    # Direct stat JSON remains available for synthetic comparisons and callers
+    # without a species name. Explicit overrides take precedence over it.
+    supplied: dict[str, Any] = {}
     try:
         maybe_json = json.loads(defender_name)
-        if isinstance(maybe_json, dict) and "raw_stats" in maybe_json:
-            defender_data = maybe_json
-            defender_name = defender_data.get("name", "Defender")
+        if isinstance(maybe_json, dict):
+            supplied = maybe_json
+        elif not isinstance(maybe_json, str):
+            return {"error": "防御方 JSON 必须是含 raw_stats 或 stats 的对象"}
     except (json.JSONDecodeError, TypeError):
         pass
+    allowed_def = {
+        "evs", "sps", "ivs", "nature", "raw_stats", "stats", "boosts",
+        "setup_moves", "level", "current_hp", "max_hp",
+    }
+    unknown = set(def_override) - allowed_def
+    unknown |= set(supplied) - allowed_def - {"name", "name_en", "types"}
+    if unknown:
+        return {"error": f"survivability 不支持防御方字段：{', '.join(sorted(unknown))}"}
+    config = {**supplied, **def_override}
+    if "level" in config and (type(config["level"]) is not int or config["level"] != 50):
+        return {"error": "survivability 固定按 50 级计算，level 只能为 50"}
+    if "nature" in config and (not isinstance(config["nature"], str)
+                               or resolve_nature_en(config["nature"]) is None):
+        return {"error": "nature 必须是有效的性格名称"}
+    if "types" in supplied:
+        types = supplied["types"]
+        if (not isinstance(types, list) or not 1 <= len(types) <= 2
+                or not all(isinstance(t, str) and resolve_type_en(t) for t in types)):
+            return {"error": "防御方 types 必须是包含一至两个有效属性的数组"}
+    for key in ("name", "name_en"):
+        if key in supplied and not isinstance(supplied[key], str):
+            return {"error": f"防御方 {key} 必须是字符串"}
 
-    if not defender_data:
+    stat_keys = {"hp", "attack", "defense", "sp_attack", "sp_defense", "speed"}
+    limits = {"evs": (0, 252), "sps": (0, 32), "ivs": (0, 31),
+              "boosts": (-6, 6), "raw_stats": (1, None), "stats": (1, None)}
+    for key, (low, high) in limits.items():
+        if key not in config:
+            continue
+        values = config[key]
+        if not isinstance(values, dict) or set(values) - stat_keys:
+            return {"error": f"{key} 必须是仅含六项能力键的 JSON 对象"}
+        if key == "boosts" and "hp" in values:
+            return {"error": "boosts 不支持 hp"}
+        for stat, value in values.items():
+            if type(value) is not int or value < low or (high is not None and value > high):
+                return {"error": f"{key}.{stat} 数值无效"}
+        if key == "evs" and sum(values.values()) > 510:
+            return {"error": "努力值总和不能超过 510"}
+        if key == "sps" and sum(values.values()) > 66:
+            return {"error": "能力点数总和不能超过 66"}
+    if "raw_stats" in config and "stats" in config:
+        return {"error": "raw_stats 与 stats 请只提供一项"}
+
+    # Only conditions used by this single-hit search are accepted. Hazards and
+    # end-of-turn damage belong to full calc, not this direct-hit KO threshold.
+    allowed_field = {
+        "format", "weather", "terrain", "is_gravity", "is_reflect",
+        "is_light_screen", "is_aurora_veil", "is_friend_guard", "is_helping_hand",
+        "is_battery", "is_power_spot", "is_flower_gift_atk", "is_flower_gift_spd",
+        "is_sword_of_ruin", "is_beads_of_ruin", "is_tablets_of_ruin", "is_vessel_of_ruin",
+    }
+    unknown = set(field_override) - allowed_field
+    if unknown:
+        return {"error": f"survivability 不支持环境字段：{', '.join(sorted(unknown))}"}
+    field_enums = {
+        "format": ("Singles", "Doubles"),
+        "weather": ("Sun", "Rain", "Sand", "Hail", "Snow", "Strong Winds", "Harsh Sun", "Heavy Rain"),
+        "terrain": ("Electric", "Grassy", "Misty", "Psychic"),
+    }
+    for key, value in field_override.items():
+        if key in field_enums:
+            if value is None and key != "format":
+                continue
+            canonical = {v.lower(): v for v in field_enums[key]}
+            if not isinstance(value, str) or value.lower() not in canonical:
+                return {"error": f"{key} 取值无效"}
+            field_override[key] = canonical[value.lower()]
+        elif type(value) is not bool:
+            return {"error": f"{key} 必须是布尔值"}
+
+    setup_moves = config.pop("setup_moves", setup_moves)
+    if setup_moves is None:
+        setup_moves = []
+    if not isinstance(setup_moves, list) or not all(isinstance(m, str) for m in setup_moves):
+        return {"error": "setup_moves 必须是招式名称数组"}
+    if setup_moves and (config.get("boosts") or field_override.get("weather")
+                        or field_override.get("terrain")):
+        return {"error": "setup_moves 与手动 boosts / weather / terrain 请二选一"}
+    canonical_setup = []
+    for name in setup_moves:
+        resolved_move = resolve_move(name)
+        if not resolved_move or not resolved_move[1].get("stat_changes"):
+            return {"error": f"不支持的强化招式：{name}"}
+        canonical_setup.append(resolved_move[0])
+
+    # Reuse the data adapter and stat calculator; do not invoke auto-presets.
+    if supplied:
+        if not (config.get("raw_stats") or config.get("stats")):
+            return {"error": "防御方 JSON 必须提供 raw_stats 或 stats"}
+        if any(k in config for k in ("evs", "sps", "ivs", "nature")):
+            return {"error": "防御方 JSON 已是最终能力值，不支持再指定 EV / SP / IV / nature"}
+        pk_info = {"name": "Defender", "types": ["Normal"], **config}
+    else:
         resolved = resolve_pokemon(defender_name)
-        if resolved:
-            _, data, form_idx = resolved
-            pk_info = _make_pokemon_from_data(data, form_index=form_idx)
-            defender_data = {
-                "name": pk_info.get("name", defender_name),
-                "name_en": pk_info.get("name_en", ""),
-                "types": pk_info.get("types", ["Normal"]),
-                "base_stats": pk_info.get("base_stats", {}),
-            }
-        else:
+        if not resolved:
             return {"error": f"Defender '{defender_name}' not found."}
+        _, data, form_idx = resolved
+        build_config = {k: v for k, v in config.items() if k not in ("raw_stats", "stats")}
+        pk_info = _make_pokemon_from_data(data, build_config, form_index=form_idx)
+    for key in ("_data_source", "is_unobtainable", "_sp_meta"):
+        pk_info.pop(key, None)
+    pk_info.update(ability="", ability_zh="", item="", item_zh="")
+    defender = Pokemon(**pk_info)
+    _finalize_calc_pokemon(defender, config)
+    if "max_hp" in config and "current_hp" not in config:
+        defender.current_hp = defender.max_hp
+    # Champions' 66-SP budget is distinct from the main-series EV budget;
+    # a valid 32/32/2 SP split stores as 252/252/12 EV internally.
+    if "sps" in config:
+        if sum(_evs_to_sps(defender.evs).values()) > 66:
+            return {"error": "EV / SP 合并后的能力点数总和不能超过 66"}
+    elif sum(defender.evs.values()) > 510:
+        return {"error": "努力值总和不能超过 510"}
+    # Merge partial final-stat overrides onto computed defaults.
+    if not supplied:
+        for key in ("raw_stats", "stats"):
+            if key in config:
+                defender.raw_stats.update(config[key])
+        defender.stats = dict(defender.raw_stats)
+        if "hp" in (config.get("raw_stats") or config.get("stats") or {}):
+            if "max_hp" not in config:
+                defender.max_hp = defender.raw_stats["hp"]
+            if "current_hp" not in config:
+                defender.current_hp = defender.max_hp
+    defense_key = "defense" if category == "Physical" else "sp_defense"
+    for key in ("hp", defense_key):
+        if type(defender.raw_stats.get(key)) is not int or defender.raw_stats[key] <= 0:
+            return {"error": f"防御方必须提供正整数能力值 {key}"}
+    if (type(defender.max_hp) is not int or type(defender.current_hp) is not int
+            or not 0 < defender.current_hp <= defender.max_hp):
+        return {"error": "HP 必须满足 0 < current_hp <= max_hp，且均为整数"}
 
-    # 1. Compute default Lv.50 stats first (from base_stats), if not already present
-    if "stats" not in defender_data and "raw_stats" not in defender_data:
-        base_stats = defender_data.get("base_stats", {})
-        if base_stats:
-            from damage import calc_hp_stat, calc_raw_stat, get_nature_modifier
-            stats = {}
-            for stat_key, base in base_stats.items():
-                if stat_key == "hp":
-                    stats[stat_key] = calc_hp_stat(base, 31, 0, 50)
-                else:
-                    raw = calc_raw_stat(base, 31, 0, 50)
-                    stats[stat_key] = int(raw * get_nature_modifier("Hardy", stat_key))
-            defender_data["stats"] = stats
-
-    # 2. Merge user overrides: user-specified fields override defaults, rest keep default Lv.50 values
-    user_raw_stats = def_override.get("raw_stats", {})
-    if user_raw_stats:
-        default_stats = defender_data.get("stats", {})
-        merged_stats = default_stats.copy()
-        merged_stats.update(user_raw_stats)
-        defender_data["raw_stats"] = merged_stats
-    user_stats = def_override.get("stats", {})
-    if user_stats:
-        default_stats = defender_data.get("stats", {})
-        merged_stats = default_stats.copy()
-        merged_stats.update(user_stats)
-        defender_data["stats"] = merged_stats
-
-    if "stats" not in defender_data and "raw_stats" not in defender_data:
-        return {"error": f"No stats available for defender '{defender_name}'."}
-
-    stats = defender_data.get("raw_stats") or defender_data.get("stats", {})
-    hp = stats.get("hp", 0)
-    # Separate copies: _find_survivability_bp writes boosted values back into
-    # defender.stats, which must not alias raw_stats (round 2 audit E10).
-    defender = Pokemon(
-        name=defender_data.get("name", defender_name),
-        name_en=defender_data.get("name_en", "Defender"),
-        level=50,
-        types=defender_data.get("types", ["一般"]),
-        stats=dict(stats),
-        raw_stats=dict(stats),
-        ability="",
-        ability_zh="",
-        nature="勤奋",
-        item="",
-        current_hp=hp,
-        max_hp=hp,
+    raw_stats = {k: 0 for k in stat_keys}
+    raw_stats["attack" if category == "Physical" else "sp_attack"] = attacker_stat
+    attacker = Pokemon(
+        name="VirtualAttacker", name_en="VirtualAttacker", level=50,
+        types=["Fire"], stats=dict(raw_stats), raw_stats=dict(raw_stats),
     )
-
-    # Build field
-    field = Field()
-    for k, v in field_override.items():
-        if hasattr(field, k):
-            setattr(field, k, v)
-    if not getattr(field, "format", None):
-        field.format = "Doubles"
-
-    # Apply defender setup moves (e.g., Calm Mind, Iron Defense) before searching BP
-    if setup_moves:
-        _apply_setup_moves(defender, attacker, field, setup_moves)
-
-    result = _find_survivability_bp(
-        attacker, defender, field, category, def_boosts=def_boosts
-    )
+    field = Field(**field_override)
+    if canonical_setup:
+        _apply_setup_moves(defender, attacker, field, canonical_setup)
+    result = _find_survivability_bp(attacker, defender, field, category)
 
     return {
         "defender": {
             "name_zh": defender.name,
             "name_en": defender.name_en,
             "hp": defender.current_hp,
+            "max_hp": defender.max_hp,
             "defense": defender.raw_stats.get("defense", 0),
             "sp_defense": defender.raw_stats.get("sp_defense", 0),
             "level": 50,
+            "effective_defense": defender.stats.get("defense", 0),
+            "effective_sp_defense": defender.stats.get("sp_defense", 0),
+            "evs": defender.evs,
+            "sps": _evs_to_sps(defender.evs),
+            "ivs": defender.ivs,
+            "nature": defender.nature,
         },
         "attacker_stat": attacker_stat,
         "category": category,
         "format": field.format,
         "defender_boosts": dict(defender.boosts),
-        "safe_bp": result["safe_bp"],
-        "absolute_safe_bp": result["absolute_safe_bp"],
-        "safe_damage_range": result["safe_damage_range"],
-        "absolute_safe_damage_range": result["absolute_safe_damage_range"],
+        "attacker_boosts": dict(attacker.boosts),
+        "setup_moves": canonical_setup,
+        "field_info": {k: getattr(field, k) for k in sorted(allowed_field)},
+        "baseline": {
+            "level": 50, "type_effectiveness": 1.0, "stab_applied": False,
+            "is_critical": False, "hits": 1, "is_spread": False,
+            "safe_ko_threshold": 0.15, "absolute_ko_threshold": 0.0,
+            "pokemon_abilities_applied": False, "items_applied": False,
+        },
+        **result,
     }
 
 
@@ -3722,7 +3772,8 @@ def main() -> int:
         # survivability
         surv_parser = subparsers.add_parser("survivability", help="Reverse survivability: max unboosted BP defender can survive")
         surv_parser.add_argument("defender", help="Defender Pokemon name or JSON with raw_stats")
-        surv_parser.add_argument("attacker_stat", type=int, help="Attacker's attack/sp_attack stat value")
+        surv_parser.add_argument("attacker_stat", type=int, nargs="?", default=200,
+                                 help="Attacker's attack/sp_attack stat value (default: 200)")
         surv_parser.add_argument("category", help="Physical or Special")
         surv_parser.add_argument("--def_ov", default="{}", help="Defender override JSON (supports boosts, setup_moves, raw_stats)")
         surv_parser.add_argument("--def_ov_file", default=None, help="Path to defender override JSON file (takes precedence over --def_ov)")
@@ -3774,6 +3825,8 @@ def main() -> int:
                 with open(path, "r", encoding="utf-8") as f:
                     return f.read()
             except Exception as e:
+                if cmd == "survivability":
+                    parser.error(f"无法读取覆盖文件 '{path}': {e}")
                 print(f"Error reading override file '{path}': {e}")
                 return default
 

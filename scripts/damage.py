@@ -1287,6 +1287,7 @@ def calculate_damage(
     field: Field,
     gen: int = 9,
     _skip_seeds: bool = False,
+    _neutral_damage: bool = False,
 ) -> DamageResult:
     """
     Calculate damage for a single move.
@@ -1303,6 +1304,10 @@ def calculate_damage(
     stages. ``_skip_seeds`` is an internal flag used by the Parental Bond
     recursion: the seed boost persists across both hits in-game, so the
     second hit must not apply it a second time.
+
+    ``_neutral_damage`` is reserved for survivability's synthetic, non-STAB
+    probe. It bypasses type effectiveness without replacing defender types,
+    preserving explicitly requested weather-based defensive modifiers.
     """
 
     # Engine speaks English (engine-English refactor): normalize type and
@@ -1319,7 +1324,7 @@ def calculate_damage(
     defender.boosts = dict(original_boosts)
     defender.stats = dict(original_stats)
     try:
-        return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds)
+        return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds, _neutral_damage)
     finally:
         defender.boosts = original_boosts
         defender.stats = original_stats
@@ -1332,6 +1337,7 @@ def _calculate_damage_core(
     field: Field,
     gen: int,
     _skip_seeds: bool,
+    _neutral_damage: bool,
 ) -> DamageResult:
     # Work on a copy of the move so type/category/is_spread mutations below do not
     # leak back to a Move object reused across multiple calls (e.g. EV optimizer loop).
@@ -1405,6 +1411,8 @@ def _calculate_damage_core(
         def_is_tera=defender.is_terastalize,
         move_name=move.name,
     )
+    if _neutral_damage:
+        type_effectiveness = 1.0
 
     # Ability / item / weather immunities — port of damage_MASTER.js
     # immunityChecks():905. Uses def_ability (Mold Breaker-aware) so abilities
@@ -1533,7 +1541,8 @@ def _calculate_damage_core(
         attacker.ability = ""
         # _skip_seeds: the seed boost persists across both hits, so the
         # second hit keeps the stage already applied above (audit E4).
-        second_result = calculate_damage(attacker, defender, second_move, field, gen, _skip_seeds=True)
+        second_result = calculate_damage(attacker, defender, second_move, field, gen,
+                                         _skip_seeds=True, _neutral_damage=_neutral_damage)
         attacker.ability = original_ability
 
         # Merge damage rolls: all combinations of first + second hit

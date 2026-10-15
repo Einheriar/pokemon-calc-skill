@@ -88,7 +88,7 @@ pokemon-calc/
 | `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
-| `survivability <defender> <attacker_stat> <category> [def_override] [field_override]` | 防御方 攻击方能力值 分类 | 等效威力反查（无加成最大可承受招式威力） | JSON 对象 |
+| `survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]` | 防御方 可选攻击方能力值 分类 | 中性承伤反查（能力值默认 200，50 级、1×、无本系、非要害、单发；配置与触顶字段见 references/commands.md） | JSON 对象 |
 | `meta [target] [--top N] [--online] [--source tournament\|ladder\|ingame\|showdown] [--format singles\|doubles] [--usage] [--teams] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名]` | 宝可梦名 / 序号（可选） | 统一环境情报：使用率排行 / 单只详情 / 队伍列表 / 全量检索 / 出现率聚合 / 队友共现 / 天梯排行（pokecamp.cc 赛事 + 天梯数据） | JSON 对象 |
 | `usage [name] [--top N] [--online]` | （deprecated，自动转发到 `meta --usage`） | 环境使用率排行 / 单只详情 | JSON 对象 |
 | `teams [query] [--top N] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名] [--online]` | （deprecated，自动转发到 `meta --teams`） | 赛事队伍查询 | JSON 对象 |
@@ -493,6 +493,7 @@ python cache/test_filter_moves.py     # filter-moves 命令测试（14 例）
 python cache/test_regulation_and_forms.py  # 规则模型与形态（20 例）
 python cache/test_audit_fixes.py      # V4.9.1 审核修复回归（25 例）
 python cache/test_round2_fixes.py     # V4.9.2 第二轮修复回归（32 例）
+python cache/test_survivability.py    # 中性承伤反查（默认值、临界点、配置、校验与 CLI）
 python cache/test_items_data.py       # items.json 迁移完整性（131 效果逐字 + cmd_item 兼容，4 例）
 python cache/test_ja_query.py         # 日语查询（四实体类正例/归一化/歧义防御/zh-en 回归，11 例）
 python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + Tier 2 属性/性格枚举全量，14 例）
@@ -539,6 +540,14 @@ git push pokemon-calc pokemon-calc-branch:main
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 5.0.3（2026-10-15）
+
+- 修复 `survivability` 的一般属性探针导致抗性/免疫污染结果。引擎新增私有 `_neutral_damage` 参数，仅由承伤反查启用，属性倍率固定 1×；保留真实属性及显式环境的防御修正，普通 `calc` 默认行为不变。
+- 攻方能力值可省略，默认 200；兼容原显式参数用法和分类大小写。固定双方 50 级、无本系、非要害、单次单发；`safe_bp` 为 KO 概率 <15%，`absolute_safe_bp` 为非要害 KO=0，修正文档中的要害安全误述。
+- 防御方 EV/SP/IV/性格、最终能力值及 HP 覆盖生效，不套自动预设。补严格输入校验、强化与环境冲突检查、覆盖文件读取失败保护、真实条件回显。
+- 返回独立触顶标记 `safe_bp_capped` / `absolute_safe_bp_capped`、`search_max_bp` 和临界 KO 概率。上限仍为 500；触顶只能解释为下界。
+- 新增 `cache/test_survivability.py` 专项回归，登记于测试清单。无数据补丁更新。
 
 ### 5.0.2（2026-09-16）
 

@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.0.2"
+  version: "5.0.3"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -67,7 +67,7 @@ calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算（模板见 references/commands.md）
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
-survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]                # 等效威力反查（详见 references/commands.md）
+survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]  # 中性承伤威力反查；攻方能力值默认 200
 
 # Phase 3 — 环境情报查询（pokecamp.cc 赛事 + 天梯数据，详见 references/commands.md）
 # 意图路由速记：用户说"天梯/排位"→ 只查 --source ladder；说"比赛/赛事"→ 只查默认源；
@@ -190,10 +190,18 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ## 3. 执行工作流
 
+### 承伤反查的默认口径（survivability）
+
+- 用户问「不加耐久能顶多大威力的技能」「特防端能接多少」等未指定具体招式的承伤问题时，使用 `survivability`。未指定攻方能力值时，**物攻端默认攻击 200，特攻端默认特攻 200**；明确指定时使用用户给出的值。未指定物理或特殊端时分别查询两端，不自行猜测。
+- 默认条件固定为：双方 50 级、防御方满血、属性倍率 1×、无本系、非要害、单次单发（双打单体，不套扩散减伤），双方无自身特性与道具效果，无天气、场地、墙或辅助加成。「不加耐久」按零耐久努力、31 IV、性格不修正耐久；不套热门预设。用户显式给出的配置和环境优先，实际条件以 `defender` / `field_info` / `defender_boosts` / `attacker_boosts` 回显为准。
+- **稳接**：`safe_bp`，一击击倒概率严格小于 15%；**绝对安全**：`absolute_safe_bp`，非要害时一击击倒概率为零。两者均不保证承受要害。数值全部引用命令输出，不手算，不通过抗性倍率折算旧结果。
+- 回答开头声明攻方能力值及中性、无本系的比较条件，给出防御方 HP、对应防御能力值、临界威力与伤害范围。若对应 `*_bp_capped` 为 true，写「至少能承受 `search_max_bp` 威力，搜索已触顶，真实上限未确定」，不可将其表述为最大值；威力为 0 表示搜索范围内连最低威力也不满足条件。
+- `evs` / `sps` / `ivs` / `nature` 和最终能力值覆盖均可使用；等级固定 50。不支持的覆盖字段、无效 JSON 和配置冲突会报错，应修正输入后重试。需要指定真实招式、属性、本系、道具或自身特性时使用 `calc`，不要将中性反查当作具体招式的伤害结论。详细参数见 `references/commands.md`。
+
 ### 3.1 通用流程
 
 ```
-1. 解析意图 → 百科查询 / 属性相克 / 伤害计算 / 努力值优化
+1. 解析意图 → 百科查询 / 属性相克 / 伤害计算 / 努力值优化 / 中性承伤反查
 2. 名称规范化 → 别名映射、形态确认（未指定则默认"一般"形态）
 3. 执行对应命令并解析结果
 ```

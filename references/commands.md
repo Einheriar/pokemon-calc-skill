@@ -165,33 +165,44 @@ python scripts/query.py filter-pokemon --type 水 --max-stat hp 60 --ability 悠
 ## survivability 命令说明
 
 ```bash
-python scripts/query.py survivability <defender> <attacker_stat> <category> [def_ov] [field_ov]
+python scripts/query.py survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]
 ```
 
-反向查询：给定防御方和攻击方能力值，求防御方能稳定承受的最大无加成招式威力。
+中性承伤反查：给定防御方和攻击方能力值，求满足安全阈值的最大招式威力。未指定攻方能力值时默认 **200**，用户指定的值优先。默认双方 50 级、防御方满血、属性倍率固定 1×、无本系、非要害、单次单发、双打单体，无自身特性、道具、天气、场地、墙和辅助加成。保留真实防御方属性，以便用户显式指定沙暴、雪天等条件时正确应用防御修正。
 
-- `defender`：防御方宝可梦名（中/英）
-- `attacker_stat`：攻击方攻击/特攻能力值（整数）
-- `category`：`physical` 或 `special`
-- `def_ov`：可选，防御方覆盖 JSON（同 calc 的 def_override）
-- `field_ov`：可选，环境覆盖 JSON
+- `defender`：防御方宝可梦名（支持名称解析层的多语言/别名），或含 `raw_stats` / `stats` 的 JSON 对象。
+- `attacker_stat`：可省略，攻击方攻击/特攻能力值，必须为正整数，默认 200。
+- `category`：必填，`Physical` 或 `Special`，不区分大小写。不明确物理/特殊端时分别查询两端。
+- `--def_ov`：防御方覆盖 JSON，仅支持 `evs` / `sps` / `ivs` / `nature` / `raw_stats` / `stats` / `boosts` / `setup_moves` / `current_hp` / `max_hp` / `level`。不传时 0 EV、31 IV、性格不修正耐久、满血、不套预设；`level` 只能为 50。按名称查询时，部分最终能力值覆盖叠加在已计算的默认或用户配置上，未指定能力项保留计算值；`raw_stats` 与 `stats` 不可同时提供。JSON 防御方须给出 HP 和当前端防御的最终能力值，不再接受 EV/SP/IV/性格配置。自身特性、道具等不支持字段会报错，需要此类具体对战条件请使用 `calc`。
+- `--field_ov`：环境覆盖 JSON，支持 `format` / `weather` / `terrain` / `is_gravity` / `is_reflect` / `is_light_screen` / `is_aurora_veil` / `is_friend_guard` / `is_helping_hand` / `is_battery` / `is_power_spot` / `is_flower_gift_atk` / `is_flower_gift_spd` / `is_sword_of_ruin` / `is_beads_of_ruin` / `is_tablets_of_ruin` / `is_vessel_of_ruin`。枚举不区分大小写，开关须为布尔值。钉刺、回合末伤害等不属于单发直伤反查，不接受对应字段。
+- `--def_ov_file` / `--field_ov_file`：从 UTF-8 文件读取 JSON，优先于对应内联参数；无法读取时直接报错，不回退默认条件。
+- `setup_moves` 支持可解析的、含结构化效果的招式名（如冥想）；与手动 `boosts` / 天气 / 场地二选一。未知或未支持效果的招式、非法 JSON、错误字段及不合法数值会明确报错。
 
 **返回值**：
-- `safe_bp`：防御方能稳定承受的最大基础威力（不触发要害）
-- `absolute_safe_bp`：即使触发要害也能承受的最大基础威力
+- `safe_bp`：一击击倒概率严格小于 15% 的最大基础威力（非要害）
+- `absolute_safe_bp`：一击击倒概率为零的最大基础威力（非要害，**不保证承受要害**）
 - `safe_damage_range`：临界威力（safe_bp）下的伤害范围
 - `absolute_safe_damage_range`：绝对安全威力下的伤害范围
 - `defender_boosts`：实际应用的防御方强化（回显）
+- `attacker_boosts` / `setup_moves`：强化招式引起的攻方变化与实际执行的规范招式名。
+- `defender`：HP、最大 HP、原始防御/特防、强化后防御/特防及 EV/SP/IV/性格回显。
+- `baseline` / `field_info`：固定中性计算口径与实际生效的环境条件。
+- `safe_ko_probability` / `absolute_safe_ko_probability`：对应临界威力的一击击倒概率（0～1）。若无任何正威力满足条件，对应威力为 0、伤害范围为 `[0,0]`、概率为 `null`；该范围是占位值，不表示免疫。
+- `search_max_bp`：本次搜索的最大基础威力，目前为 500。
+- `safe_bp_capped` / `absolute_safe_bp_capped`：对应安全线在搜索上限仍满足条件，尚未验证更高威力。为 true 时回答「至少能承受 500 威力，真实上限未确定」，不能称 500 为最大值。
 
-> V4.9.2：`category` 强制校验（非法值返回 error，原先静默按特殊处理）。
+> V5.0.3：修正旧版固定一般属性导致钢/岩石抗性和幽灵免疫污染反查的问题；补全默认 200、配置生效、输入校验与触顶标记。
 
 **示例**：
 
 ```bash
+python scripts/query.py survivability 超级巨金怪 special
 python scripts/query.py survivability 烈咬陆鲨 200 physical
-python scripts/query.py survivability 仆刀将军 180 special '{"evs":{"hp":252,"sp_defense":4}}'
-python scripts/query.py survivability 炽焰咆哮虎 150 physical '{}' '{"weather":"sun"}'
+python scripts/query.py survivability 仆刀将军 180 special --def_ov '{"evs":{"hp":252,"sp_defense":4}}'
+python scripts/query.py survivability 炽焰咆哮虎 150 physical --field_ov '{"weather":"Sun"}'
 ```
+
+Windows 如遇命令行 JSON 引号问题，使用 `--def_ov_file` / `--field_ov_file`。
 
 ## calc-raw 快速填空模板
 
