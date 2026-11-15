@@ -87,11 +87,11 @@ def get_ko_chance_text(
     eot_texts: list[str] = []
     max_chip = 0.5 if defender.is_dynamax else 1.0
 
-    if field.weather == "Sun":
+    if field.weather == "Sun" and defender.item != "Utility Umbrella":
         if defender.ability in ("Dry Skin", "Solar Power"):
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
             eot_texts.append(display_zh.ability_damage(defender.ability))
-    elif field.weather == "Rain":
+    elif field.weather == "Rain" and defender.item != "Utility Umbrella":
         if defender.ability == "Dry Skin":
             eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
             eot_texts.append(display_zh.EOT_DRY_SKIN_HEAL)

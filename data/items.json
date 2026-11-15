@@ -1958,7 +1958,9 @@
  "Utility Umbrella": {
   "name_zh": "万能伞",
   "name_ja": "ばんのうがさ",
-  "name_en": "Utility Umbrella"
+  "name_en": "Utility Umbrella",
+  "effect": "防止持有者受到部分晴天、雨天效果影响；不取消沙暴、冰雹或雪天效果。普通火／水招式天气倍率按防守方判断，气象球按攻击方判断；水蒸气、古代活性、绯红脉动与队友花之礼有特殊交互，详见机制参考。",
+  "category": "天气道具"
  },
  "Adamant Crystal": {
   "name_zh": "大金刚宝玉",
