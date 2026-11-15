@@ -63,15 +63,15 @@ def get_ko_chance_text(
     # Hazards
     hazards = 0
     hazard_texts: list[str] = []
-    # Magic Guard prevents indirect damage in battle, not entry hazards.
-    if field.is_stealth_rock and defender.item != "Heavy-Duty Boots":
+    hazard_immune = defender.ability == "Magic Guard" or defender.item == "Heavy-Duty Boots"
+    if field.is_stealth_rock and not hazard_immune:
         eff = _get_rock_effectiveness(defender)
         hazards += math.floor(eff * defender.max_hp / 8)
         hazard_texts.append(display_zh.HAZARD_STEALTH_ROCK)
 
     from damage import is_grounded
     grounded = is_grounded(defender, field)
-    if grounded and defender.item != "Heavy-Duty Boots":
+    if grounded and not hazard_immune:
         if field.spikes == 1:
             hazards += math.floor(defender.max_hp / 8)
             hazard_texts.append(display_zh.HAZARD_SPIKES_1)
