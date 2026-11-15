@@ -126,6 +126,23 @@ def load_data() -> None:
             if category in _index_data and category in patches["name_index"]:
                 _index_data[category].update(patches["name_index"][category])
 
+    # Some Mega form names are present in the bundled Pokémon data but absent
+    # from the hand-maintained form index. Add their canonical English form
+    # names so callers can resolve Champions additions without falling back
+    # to the base species.
+    pokemon_forms = _index_data.setdefault("pokemon_forms", {})
+    for stem, data in _pokemon_data.items():
+        for form in data.get("forms", []):
+            form_name_en = form.get("name_en", "")
+            if re.search(r"\bmega\b", form_name_en.lower()):
+                pokemon_forms.setdefault(form_name_en, stem)
+    if patches:
+        for stem, data in patches.get("pokemon", {}).items():
+            for form in data.get("forms", []):
+                form_name_en = form.get("name_en", "")
+                if re.search(r"\bmega\b", form_name_en.lower()):
+                    pokemon_forms.setdefault(form_name_en, stem)
+
 
 def _build_ja_index() -> dict[str, dict[str, Any]]:
     """Lazy ja -> entity mapping built at runtime from data files (phase3 Step 0 方案 b).
@@ -657,6 +674,17 @@ def _find_form_index(name: str, data: dict[str, Any]) -> int:
         if form_name and name == form_name:
             return idx
 
+    # English form names are identities too. Compare normalized word sets so
+    # index aliases such as "Salamence-Mega" and "Charizard-Mega-X" select
+    # the matching form instead of silently falling back to the base form.
+    input_words = sorted(re.findall(r"[a-z0-9]+", name.lower()))
+    if input_words:
+        for idx, form in enumerate(forms):
+            form_name_en = form.get("name_en", "")
+            form_words = sorted(re.findall(r"[a-z0-9]+", form_name_en.lower()))
+            if form_words and input_words == form_words:
+                return idx
+
     # Partial suffix match: if input ends with a form name suffix
     for idx, form in enumerate(forms):
         form_name = form.get("name", "")
@@ -744,6 +772,13 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
 
     data = _apply_champions_pokemon_patch(stem, data)
     form_index = _find_form_index(name, data)
+    # If an explicitly requested Mega form is hidden by the active regulation
+    # view, do not silently return the base species.
+    if re.search(r"\bmega\b", name.lower()):
+        forms = data.get("forms", [])
+        selected_name_en = forms[form_index].get("name_en", "") if form_index < len(forms) else ""
+        if not re.search(r"\bmega\b", selected_name_en.lower()):
+            return None
     return stem, data, form_index
 
 
