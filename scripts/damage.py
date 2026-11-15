@@ -690,13 +690,13 @@ _HIGHEST_STAT_ORDER = ("attack", "defense", "sp_attack", "sp_defense", "speed")
 
 
 def _highest_stat(pokemon: Pokemon) -> str:
-    """The pokemon's highest non-HP stat from unboosted stats.
+    """The pokemon's highest non-HP stat, including stat stages only.
 
     Protosynthesis / Quark Drive boost exactly this stat (JS
     damage_MASTER.js:332-341). Comparing only attack vs sp_attack wrongly
     boosts offense for mons whose top stat is defense/speed (round 2 audit E1).
     """
-    raw = pokemon.raw_stats or pokemon.stats
+    raw = pokemon.stats or pokemon.raw_stats
     best, best_val = _HIGHEST_STAT_ORDER[0], None
     for key in _HIGHEST_STAT_ORDER:
         val = raw.get(key, 0)
