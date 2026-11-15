@@ -176,6 +176,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 ### calc 返回值关键字段
 
 - `damage_range` / `damage_rolls` 为**单次打击**（多段招式）；`total_damage_range` / `total_damage_rolls` 为**多段合计**，判断秒杀时引用后者
+- 黑夜魔影、地球上投、蛮干、愤怒门牙、一击必杀等固定伤害招式返回单一确定结果：先检查属性/特性/道具免疫，再按等级、固定数值或当前 HP 计算，不套用普通威力、攻击、防御、烧伤或墙壁公式
 - `type_effectiveness` 反映**实际生效属性**经过属性相克后的原始倍率（已包含 Ate/Ize 特性、气象球、大地波动等导致的类型转换；如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
 - `move_info` / `field_info` / `modifiers`：招式（属性/分类/基础与生效威力/命中/段数）、环境（天气/场地/光墙/钉刺）与双方强化·状态·太晶回显——输出模板中的招式/环境表直接取自这三个键，不要凭记忆补数值
 - 2-5 段变段招式（乱击、岩石爆击、飞水手里剑、鳞射等，数据层 `hits: "multi"`）：引擎按期望段数 3 段估算 `total_damage_range`，响应 `warning` 会注明；用户问"5 段全中"时用 `--move_ov '{"hits": 5}'` 显式指定

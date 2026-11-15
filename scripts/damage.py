@@ -56,6 +56,12 @@ _PARENTAL_BOND_IGNORED_MOVES = {
     "Endeavor", "Sheer Cold", "Fissure", "Horn Drill", "Guillotine",
 }
 
+_FIXED_DAMAGE_MOVES = frozenset({
+    "Seismic Toss", "Night Shade", "Dragon Rage", "Sonic Boom",
+    "Super Fang", "Nature's Madness", "Ruination", "Endeavor", "Final Gambit",
+    "Sheer Cold", "Fissure", "Horn Drill", "Guillotine",
+})
+
 _PULSE_MOVES = {
     "Water Pulse", "Aura Sphere", "Dark Pulse", "Dragon Pulse",
     "Heal Pulse", "Origin Pulse", "Terrain Pulse",
@@ -1367,8 +1373,9 @@ def _calculate_damage_core(
     if not defender.raw_stats:
         compute_raw_stats(defender)
 
-    # Default result for status moves
-    if move.base_power == 0 or move.category == "Status":
+    # Zero-power fixed-damage moves still need the normal immunity pipeline.
+    is_fixed_damage = move.name in _FIXED_DAMAGE_MOVES or move.is_ohko
+    if (move.base_power == 0 or move.category == "Status") and not is_fixed_damage:
         return DamageResult(
             damage=[0],
             min_damage=0,
@@ -1457,6 +1464,31 @@ def _calculate_damage_core(
             type_effectiveness=0.0,
         )
 
+    if is_fixed_damage:
+        if move.name in ("Seismic Toss", "Night Shade"):
+            fixed_damage = attacker.level
+        elif move.name == "Dragon Rage":
+            fixed_damage = 40
+        elif move.name == "Sonic Boom":
+            fixed_damage = 20
+        elif move.name in ("Super Fang", "Nature's Madness", "Ruination"):
+            fixed_damage = math.floor(defender.current_hp / 2)
+        elif move.name == "Endeavor":
+            fixed_damage = max(0, defender.current_hp - attacker.current_hp)
+        elif move.name == "Final Gambit":
+            fixed_damage = attacker.current_hp
+        else:  # Sheer Cold / Fissure / Horn Drill / Guillotine
+            fixed_damage = defender.current_hp
+        return DamageResult(
+            damage=[fixed_damage],
+            min_damage=fixed_damage,
+            max_damage=fixed_damage,
+            description=display_zh.fixed_damage_description(
+                attacker.level, attacker.name, move.name,
+                defender.level, defender.name, fixed_damage,
+            ),
+            type_effectiveness=type_effectiveness,
+        )
 
     # Grounded checks for terrain effects
     att_is_grounded = is_grounded(attacker, field)

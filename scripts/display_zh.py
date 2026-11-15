@@ -54,6 +54,22 @@ def immune_description(move_name: str, defender_name: str, reason: str) -> str:
     return f"{move_name} 对 {defender_name} 无效{reason}"
 
 
+def fixed_damage_description(
+    attacker_level: int,
+    attacker_name: str,
+    move_name: str,
+    defender_level: int,
+    defender_name: str,
+    damage: int,
+) -> str:
+    """Fixed-damage result without misleading power/attack/defense fields."""
+    return (
+        f"Lv.{attacker_level} {attacker_name} 的 {move_name} "
+        f"vs Lv.{defender_level} {defender_name} | 固定伤害 | "
+        f"伤害范围 {damage} ~ {damage}"
+    )
+
+
 def main_description(
     attacker_level: int,
     attacker_name: str,
