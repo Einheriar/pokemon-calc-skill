@@ -70,6 +70,18 @@ def berries_blocked(attacker: Pokemon, defender: Pokemon, field: Field) -> bool:
     return ability in {"Unnerve", "As One", "As One (Glastrier)", "As One (Spectrier)"}
 
 
+def field_ability_active(ability: str, attacker: Pokemon, field: Field) -> bool:
+    """Resolve an unshielded external ability source represented by a field flag.
+
+    The current field model has no source Pokemon/item for allied effects, so a
+    shield held by the damage recipient cannot protect that external source.
+    """
+    if field.is_neutralizing_gas and ability not in _CANNOT_BE_SUPPRESSED:
+        return False
+    return not (effective_ability(attacker, field) in _MOLD_BREAKER_ABILITIES
+                and ability in _BREAKABLE_ABILITIES)
+
+
 def effective_weather(
     attacker: Pokemon,
     defender: Pokemon,

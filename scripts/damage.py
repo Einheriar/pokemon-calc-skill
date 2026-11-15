@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
-from battle_effects import berries_blocked, effective_ability, effective_weather, ignorable_defender_ability
+from battle_effects import berries_blocked, effective_ability, effective_weather, field_ability_active, ignorable_defender_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 from speed_effects import get_effective_speed
 import display_zh
@@ -1314,7 +1314,7 @@ def calc_final_mods(
         final_mods.append(0x800)
 
     # Friend Guard
-    if field.is_friend_guard and def_ability != "[ignored]":
+    if field.is_friend_guard and field_ability_active("Friend Guard", attacker, field):
         final_mods.append(0xC00)
 
     # Solid Rock / Filter / Prism Armor
