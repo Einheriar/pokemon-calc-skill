@@ -31,6 +31,21 @@ MAX_SINGLE_SP = 32
 SP_STEP = 1
 
 _STAT_KEYS = ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"]
+_STATEFUL_REPEAT_MOVES = frozenset({
+    "Super Fang", "Nature's Madness", "Ruination", "Endeavor", "Final Gambit",
+})
+
+
+def _unsupported_stateful_repeat(move: Move, repeated: bool) -> dict | None:
+    """Reject multi-turn thresholds the optimizer cannot model as repeated hits."""
+    canonical_name = move.name.replace("’", "'")
+    if repeated and canonical_name in _STATEFUL_REPEAT_MOVES:
+        return {
+            "success": False,
+            "unsupported": True,
+            "reason": display_zh.OPT_STATEFUL_REPEAT_UNSUPPORTED,
+        }
+    return None
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -177,6 +192,10 @@ def optimize_attack_ev(
 
     Returns a dict with the optimal EV, resulting damage, and description.
     """
+    unsupported = _unsupported_stateful_repeat(move, target in ("2hko", "3hko"))
+    if unsupported is not None:
+        return unsupported
+
     hits_needed = {"ohko": 1, "2hko": 2, "3hko": 3}[target]
     use_min = threshold == "guaranteed"
     _ensure_stats(attacker)
@@ -271,6 +290,10 @@ def optimize_defense_ev(
 
     Returns a dict with the optimal EV allocation.
     """
+    unsupported = _unsupported_stateful_repeat(move, target == "survive_2hko")
+    if unsupported is not None:
+        return unsupported
+
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
     use_max = threshold == "guaranteed"
     _ensure_stats(attacker)
@@ -366,6 +389,10 @@ def optimize_bulk_evs(
 
     Returns the best allocation found.
     """
+    unsupported = _unsupported_stateful_repeat(move, target == "survive_2hko")
+    if unsupported is not None:
+        return unsupported
+
     _ensure_stats(attacker)
     _ensure_stats(defender)
     hits_physical = uses_physical_defense(attacker, defender, move)

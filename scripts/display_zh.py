@@ -117,6 +117,9 @@ KO_RAIN_EXTINGUISHED = "火属性招式在大雨中熄灭了！"
 KO_NO_DAMAGE = "没有造成伤害"
 KO_OHKO = "确定一击必杀"
 KO_MORE_ROUNDS = "可能需要更多回合"
+KO_SINGLE_USE_NO_KO = "当前伤害不足以击倒目标；未模拟该招式重复使用的状态变化"
+KO_HALF_UNSUPPORTED = "无法可靠计算：半血招式与回复／持续伤害的触发时序尚未建模"
+OPT_STATEFUL_REPEAT_UNSUPPORTED = "不支持该招式的多次使用优化：伤害随剩余 HP 或攻击方状态变化"
 
 # 多击招式的回合数前缀
 MULTI_HIT_QUALIFIER = "约 "

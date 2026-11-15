@@ -2119,7 +2119,7 @@ _MOVE_TYPE_EN_TO_ZH: dict[str, str] = {**TYPE_EN_TO_ZH, "Stellar": "星晶"}
 
 
 def _normalize_move_fields(move: dict[str, Any]) -> None:
-    """Normalize move category for the damage engine.
+    """Normalize move category and English punctuation for the damage engine.
 
     Mutates the dict in place: Chinese category names are converted to
     English. Move type is NOT converted here — the engine normalizes both
@@ -2127,6 +2127,8 @@ def _normalize_move_fields(move: dict[str, Any]) -> None:
     """
     if "category" in move:
         move["category"] = _MOVE_CATEGORY_ZH_TO_EN.get(move["category"], move["category"])
+    if isinstance(move.get("name"), str):
+        move["name"] = move["name"].replace("’", "'")
 
 
 # Behavior-only fields that cmd_calc accepts in move_override (AGENTS.md
@@ -2497,7 +2499,7 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
 
     # KO chance
     from ko_chance import get_ko_chance_text, squash_multihit
-    ko_text = get_ko_chance_text(result.damage, move, defender, field)
+    ko_text = get_ko_chance_text(result.damage, result.move or move, defender, field)
 
     # Multi-hit total damage (for moves like Dual Wingbeat)
     total_damage_rolls: list[int] = []
@@ -2827,7 +2829,7 @@ def cmd_calc_raw(
     result = calculate_damage(attacker, defender, move, field, gen=9)
 
     # KO chance
-    ko_text = get_ko_chance_text(result.damage, move, defender, field)
+    ko_text = get_ko_chance_text(result.damage, result.move or move, defender, field)
 
     # Multi-hit total damage
     total_damage_rolls: list[int] = []

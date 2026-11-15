@@ -13,6 +13,9 @@ from models import Field, Move, Pokemon
 import display_zh
 from engine_enums import T
 
+_HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
+_SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
+
 
 def get_ko_chance_text(
     damage: list[int],
@@ -85,84 +88,72 @@ def get_ko_chance_text(
     # End-of-turn effects
     eot = 0
     eot_texts: list[str] = []
+    eot_deltas: list[int] = []
     max_chip = 0.5 if defender.is_dynamax else 1.0
+
+    def add_eot(delta: int, label: str) -> None:
+        nonlocal eot
+        eot += delta
+        eot_deltas.append(delta)
+        eot_texts.append(label)
 
     if field.weather == "Sun" and defender.item != "Utility Umbrella":
         if defender.ability in ("Dry Skin", "Solar Power"):
-            eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.ability_damage(defender.ability))
+            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.ability_damage(defender.ability))
     elif field.weather == "Rain" and defender.item != "Utility Umbrella":
         if defender.ability == "Dry Skin":
-            eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_DRY_SKIN_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_DRY_SKIN_HEAL)
         elif defender.ability == "Rain Dish":
-            eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append(display_zh.EOT_RAIN_DISH_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_RAIN_DISH_HEAL)
     elif field.weather == "Sand":
         if "Rock" not in defender.types and "Ground" not in defender.types and "Steel" not in defender.types:
             if defender.ability not in ("Magic Guard", "Overcoat", "Sand Force", "Sand Rush", "Sand Veil") and defender.item != "Safety Goggles":
-                eot -= math.floor(math.floor(defender.max_hp / 16) * max_chip)
-                eot_texts.append(display_zh.EOT_SAND_DAMAGE)
+                add_eot(-math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_SAND_DAMAGE)
     elif field.weather == "Hail":
         if defender.ability == "Ice Body":
-            eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append(display_zh.EOT_ICE_BODY_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_ICE_BODY_HEAL)
         elif T.ICE not in defender.types and defender.ability not in ("Magic Guard", "Overcoat", "Snow Cloak") and defender.item != "Safety Goggles":
-            eot -= math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append(display_zh.EOT_HAIL_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_HAIL_DAMAGE)
     elif field.weather == "Snow" and defender.ability == "Ice Body":
-        eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-        eot_texts.append(display_zh.EOT_ICE_BODY_HEAL)
+        add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_ICE_BODY_HEAL)
 
     if defender.item == "Leftovers":
-        eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-        eot_texts.append(display_zh.EOT_LEFTOVERS_HEAL)
+        add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_LEFTOVERS_HEAL)
     elif defender.item == "Black Sludge":
         if T.POISON in defender.types:
-            eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append(display_zh.EOT_BLACK_SLUDGE_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_BLACK_SLUDGE_HEAL)
         elif defender.ability not in ("Magic Guard", "Klutz"):
-            eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_BLACK_SLUDGE_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_BLACK_SLUDGE_DAMAGE)
 
     if field.terrain == "Grassy" and grounded:
-        eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-        eot_texts.append(display_zh.EOT_GRASSY_HEAL)
+        add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_GRASSY_HEAL)
 
     toxic_counter = 0
     if defender.status == "Poisoned":
         if defender.ability == "Poison Heal":
-            eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_POISON_HEAL_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_HEAL_HEAL)
         elif defender.ability != "Magic Guard":
-            eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_POISON_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_DAMAGE)
     elif defender.status == "Badly Poisoned":
         if defender.ability == "Poison Heal":
-            eot += math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_POISON_HEAL_HEAL)
+            add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_HEAL_HEAL)
         elif defender.ability != "Magic Guard":
             eot_texts.append(display_zh.EOT_TOXIC_DAMAGE)
             toxic_counter = getattr(defender, "toxic_counter", 0)
     elif defender.status == "Burned":
         burn_div = 16  # gen >= 7
         if defender.ability == "Heatproof":
-            eot -= math.floor(math.floor(defender.max_hp / burn_div / 2) * max_chip)
-            eot_texts.append(display_zh.EOT_HALVED_BURN_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / burn_div / 2) * max_chip), display_zh.EOT_HALVED_BURN_DAMAGE)
         elif defender.ability != "Magic Guard":
-            eot -= math.floor(math.floor(defender.max_hp / burn_div) * max_chip)
-            eot_texts.append(display_zh.EOT_BURN_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / burn_div) * max_chip), display_zh.EOT_BURN_DAMAGE)
     elif defender.status == "Asleep" and is_bad_dreams and defender.ability != "Magic Guard":
-        eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-        eot_texts.append(display_zh.EOT_BAD_DREAMS)
+        add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_BAD_DREAMS)
 
     if field.is_salt_cure and defender.ability != "Magic Guard":
         if T.WATER not in defender.types and T.STEEL not in defender.types:
-            eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
-            eot_texts.append(display_zh.EOT_SALT_CURE_DAMAGE)
+            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_SALT_CURE_DAMAGE)
         else:
-            eot -= math.floor(math.floor(defender.max_hp / 4) * max_chip)
-            eot_texts.append(display_zh.EOT_SALT_CURE_EXTRA)
+            add_eot(-math.floor(math.floor(defender.max_hp / 4) * max_chip), display_zh.EOT_SALT_CURE_EXTRA)
 
     # Multi-hit squash
     qualifier = ""
@@ -171,6 +162,14 @@ def get_ko_chance_text(
         qualifier = display_zh.MULTI_HIT_QUALIFIER
         damage = squash_multihit(damage, move.hits)
         multihit = True
+
+    if move.name in _HALF_CURRENT_HP_MOVES:
+        return _half_current_hp_ko_text(
+            defender.current_hp - hazards, defender.max_hp, eot, toxic_counter,
+            has_sitrus, has_figy, gluttony, ripen, hazard_texts, eot_texts,
+            any(delta > 0 for delta in eot_deltas),
+            any(delta < 0 for delta in eot_deltas) or toxic_counter > 0,
+        )
 
     # Calculate KO chance
     c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, 0, 1, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
@@ -197,6 +196,9 @@ def get_ko_chance_text(
         pct = round(c * 1000) / 10
         return display_zh.ko_prob_with(qualifier, pct, after_text2)
 
+    if move.name in _SINGLE_USE_MOVES:
+        return display_zh.KO_SINGLE_USE_NO_KO
+
     # Recovery and residual damage apply between subsequent hits too.
     for i in range(2, 5):
         c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, eot, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
@@ -215,6 +217,63 @@ def get_ko_chance_text(
         max_c = _get_ko_chance([damage[-1]], multihit, defender.current_hp - hazards, eot, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
         if max_c > 0:
             return display_zh.ko_n_possible(i, after_text2)
+
+    return display_zh.KO_MORE_ROUNDS
+
+
+def _half_current_hp_ko_text(
+    hp: int,
+    max_hp: int,
+    eot: int,
+    toxic_counter: int,
+    has_sitrus: bool,
+    has_figy: bool,
+    gluttony: bool,
+    ripen: int,
+    hazard_texts: list[str],
+    eot_texts: list[str],
+    has_healing_eot: bool,
+    has_damaging_eot: bool,
+) -> str:
+    """Resolve repeated current-HP halving moves with deterministic HP state."""
+    suffix_texts = list(hazard_texts + eot_texts)
+    if has_sitrus:
+        suffix_texts.append(display_zh.EOT_SITRUS_HEAL)
+    if has_figy:
+        suffix_texts.append(display_zh.EOT_BERRY_HEAL)
+    suffix = display_zh.condition_suffix(suffix_texts)
+
+    # Netting recovery with residual damage can miss a faint before the later
+    # event runs. Do not promise a KO when the current model cannot order them.
+    if has_damaging_eot and (has_healing_eot or has_sitrus or has_figy):
+        return display_zh.KO_HALF_UNSUPPORTED + suffix
+
+    hp = max(0, hp)
+    if hp == 0:
+        return display_zh.ko_ohko_with(suffix)
+
+    for hits in range(1, 10):
+        dealt = max(1, hp // 2)
+        if dealt >= hp:
+            return display_zh.ko_ohko_with(suffix) if hits == 1 else display_zh.ko_n_guaranteed(hits, suffix)
+        hp -= dealt
+
+        if has_sitrus and hp <= max_hp // 2:
+            hp = min(max_hp, hp + math.floor(ripen * max_hp / 4))
+            has_sitrus = False
+        elif has_figy and (
+            (hp <= max_hp // 4 and not gluttony)
+            or (hp <= max_hp // 2 and gluttony)
+        ):
+            hp = min(max_hp, hp + math.floor(ripen * max_hp / 3))
+            has_figy = False
+
+        hp = min(max_hp, hp + eot)
+        if toxic_counter > 0:
+            hp -= math.floor(toxic_counter * max_hp / 16)
+            toxic_counter += 1
+        if hp <= 0:
+            return display_zh.ko_ohko_with(suffix) if hits == 1 else display_zh.ko_n_guaranteed(hits, suffix)
 
     return display_zh.KO_MORE_ROUNDS
 
