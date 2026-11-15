@@ -434,10 +434,10 @@ def get_move_effectiveness(
     type1_en = TYPE_ZH_TO_EN.get(def_type1, def_type1)
     type2_en = TYPE_ZH_TO_EN.get(def_type2, def_type2) if def_type2 else None
 
-    if is_tera_shell and chart[move_en].get(type1_en, 1) >= 0.5:
+    if is_tera_shell and chart.get(move_en, {}).get(type1_en, 1) >= 0.5:
         return 0.5
-    if move_en == "Stellar" and def_is_tera:
-        return 2.0
+    if move_en == "Stellar":
+        return 2.0 if def_is_tera else 1.0
 
     eff1 = _type_effectiveness_for(
         move_en, type1_en, type2_en,
@@ -545,16 +545,17 @@ def _immunity_check(
 # ---------------------------------------------------------------------------
 
 def uses_physical_attack(attacker: Pokemon, defender: Pokemon, move: Move) -> bool:
-    """Determine if a move uses the Physical category."""
-    if move.name == "Photon Geyser" or move.name == "Light That Burns the Sky":
+    """Determine the attack category, independently of the defending stat.
+
+    Psyshock-family moves remain Special: ``deals_physical_damage`` only
+    selects the defender's Physical Defense and must not enable burn, Reflect,
+    or other physical-category modifiers.
+    """
+    if move.name in ("Photon Geyser", "Light That Burns the Sky"):
         return attacker.stats.get("attack", 0) > attacker.stats.get("sp_attack", 0)
     if move.name == "Tera Blast" and attacker.is_terastalize:
         return attacker.stats.get("attack", 0) > attacker.stats.get("sp_attack", 0)
-    if move.category == "Physical":
-        return True
-    if move.deals_physical_damage:  # type: ignore[attr-defined]
-        return True
-    return False
+    return move.category == "Physical"
 
 
 # ---------------------------------------------------------------------------
@@ -1319,6 +1320,8 @@ def calculate_damage(
     move.type = resolve_type_en(move.type) or move.type
     if attacker.tera_type:
         attacker.tera_type = resolve_tera_type_en(attacker.tera_type)
+    if defender.tera_type:
+        defender.tera_type = resolve_tera_type_en(defender.tera_type)
     original_boosts = defender.boosts
     original_stats = defender.stats
     defender.boosts = dict(original_boosts)
@@ -1358,9 +1361,10 @@ def _calculate_damage_core(
             description=display_zh.status_move_description(move.name),
         )
 
-    # Determine physical vs special
-    hits_physical = uses_physical_attack(attacker, defender, move)
-    move.category = "Physical" if hits_physical else "Special"
+    # Attack category and defending stat are separate dimensions. Psyshock,
+    # Psystrike and Secret Sword use Special Attack against Physical Defense.
+    move.category = "Physical" if uses_physical_attack(attacker, defender, move) else "Special"
+    hits_physical = move.category == "Physical" or move.deals_physical_damage
 
     # Ability ignore (Mold Breaker, Teravolt, Turboblaze)
     def_ability = defender.ability
@@ -1388,6 +1392,8 @@ def _calculate_damage_core(
         move.type = _WEATHER_BALL_TYPE.get(effective_weather, move.type)
     elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
         move.type = _TERRAIN_PULSE_TYPE.get(field.terrain, move.type)
+    elif move.name == "Tera Blast" and attacker.is_terastalize and attacker.tera_type:
+        move.type = attacker.tera_type
 
     # Turn order (for speed-based moves)
     turn_order = "FIRST" if attacker.stats.get("speed", 0) > defender.stats.get("speed", 0) else "LAST"
@@ -1398,9 +1404,13 @@ def _calculate_damage_core(
 
     # Ate/Ize type change (Pixilate, Aerilate, etc.)
     move, ate_ize_boosted = _ate_ize_type_change(move, attacker)
-    # Type effectiveness
-    def_type1 = defender.types[0] if defender.types else T.NORMAL
-    def_type2 = defender.types[1] if len(defender.types) > 1 else None
+    # Non-Stellar Terastallization replaces the defender's original types.
+    # Stellar is the exception: the defender keeps its original typing.
+    if defender.is_terastalize and defender.tera_type and defender.tera_type != "Stellar":
+        def_type1, def_type2 = defender.tera_type, None
+    else:
+        def_type1 = defender.types[0] if defender.types else T.NORMAL
+        def_type2 = defender.types[1] if len(defender.types) > 1 else None
     type_effectiveness = get_move_effectiveness(
         move.type, def_type1, def_type2,
         is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
