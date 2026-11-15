@@ -66,7 +66,8 @@ preset <pokemon> [name] # 列出预设配置或获取具体配置
 calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤害计算（Lv.50）
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算（模板见 references/commands.md）
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
-optimize <att> <move> <def> [goal] [target] [threshold] [att_ov] [def_ov] [field_ov]  # 努力值优化
+optimize <att> <move> <def> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev|sp]
+                        [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]  # 努力值优化
 survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]  # 中性承伤威力反查；攻方能力值默认 200
 
 # Phase 3 — 环境情报查询（pokecamp.cc 赛事 + 天梯数据，详见 references/commands.md）
@@ -98,7 +99,7 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
 > - "天梯/排位第 N 名是谁" → `meta --source ladder <N>`（名次反查）
 > - 用户**显式**说"比赛/赛事" → 只查 tournament（`meta` / `meta --teams` 系列）；显式说"天梯/排位" → 只查 ladder
 > - 需要天梯的**使用率数字**时改用 `--source showdown`（ladder 总榜只有名次），并注明 `meta.month` 滞后一个月
-> - 离线双查时天梯侧只有名次（单只天梯配招需 `--online`），话术注明"天梯配招需在线查询"；赛事侧配招离线齐全
+> - 离线双查时天梯侧只有名次，单只天梯配招与 SP 分配需 `--online`；详情标记“未获取”表示尚未拉取，并非脚本故障。话术注明"天梯配招需在线查询"；赛事侧配招离线齐全
 >
 > **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`meta --teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
 

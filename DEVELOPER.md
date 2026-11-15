@@ -90,7 +90,7 @@ pokemon-calc/
 | `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
 | `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
-| `optimize <attacker> <move> <defender> [goal] [target] [threshold] [att_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
+| `optimize <attacker> <move> <defender> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev\|sp] [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
 | `survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]` | 防御方 可选攻击方能力值 分类 | 中性承伤反查（能力值默认 200，50 级、1×、无本系、非要害、单发；配置与触顶字段见 references/commands.md） | JSON 对象 |
 | `meta [target] [--top N] [--online] [--source tournament\|ladder\|ingame\|showdown] [--format singles\|doubles] [--usage] [--teams] [--pokemon 名] [--player 名] [--tournament 名] [--stats [--placing-max N]] [--teammates 名]` | 宝可梦名 / 序号（可选） | 统一环境情报：使用率排行 / 单只详情 / 队伍列表 / 全量检索 / 出现率聚合 / 队友共现 / 天梯排行（pokecamp.cc 赛事 + 天梯数据） | JSON 对象 |
 | `usage [name] [--top N] [--online]` | （deprecated，自动转发到 `meta --usage`） | 环境使用率排行 / 单只详情 | JSON 对象 |
@@ -199,16 +199,20 @@ setdex 预设条目字段：`level`、`evs`、`nature`、`ability`、`item`、`m
 
 **输入参数**
 
-| 位置 | 参数名 | 类型 | 必填 | 说明 |
+| 位置 / 形式 | 参数名 | 类型 | 必填 | 说明 |
 |------|--------|------|------|------|
 | 1 | `attacker` | string | 是 | 攻击方宝可梦名 |
 | 2 | `move` | string | 是 | 招式名 |
 | 3 | `defender` | string | 是 | 防御方宝可梦名 |
-| 4 | `goal` | string | 否 | `ko` / `survive` / `survive_bulk`（默认 `ko`） |
-| 5 | `target` | string | 否 | `ohko` / `2hko` / `3hko` / `survive` / `survive_2hko`（默认 `ohko`） |
-| 6 | `threshold` | string | 否 | `guaranteed`（最差乱数）/ `likely`（平均乱数）（默认 `guaranteed`） |
-| 7 | `att_override` | JSON string | 否 | 覆盖攻击方配置 |
-| 8 | `def_override` | JSON string | 否 | 覆盖防御方配置 |
+| 选项 | `--goal` | string | 否 | `ko` / `survive` / `survive_bulk`（默认 `ko`） |
+| 选项 | `--target` | string | 否 | `ohko` / `2hko` / `3hko` / `survive` / `survive_2hko`（默认 `ohko`） |
+| 选项 | `--threshold` | string | 否 | `guaranteed`（最差乱数）/ `likely`（平均乱数）（默认 `guaranteed`） |
+| 选项 | `--mode` | string | 否 | `ev`（默认）/ `sp` |
+| 选项 | `--att_ov` | JSON string | 否 | 覆盖攻击方配置（默认 `{}`） |
+| 选项 | `--def_ov` | JSON string | 否 | 覆盖防御方配置（默认 `{}`） |
+| 选项 | `--field_ov` | JSON string | 否 | 覆盖环境配置（默认 `{}`） |
+
+仅前三项是位置参数，其余参数必须带选项名。JSON 覆盖也可使用 `--att_ov_file` / `--def_ov_file` / `--field_ov_file` 从文件读取，同侧文件参数优先于内联 JSON。
 
 **返回值 JSON Schema**
 
@@ -495,8 +499,8 @@ python scripts/query.py compute-stats '{"hp":78,"attack":104,"defense":78,"sp_at
 python scripts/query.py calc-raw '{"name":"超级喷火龙Y","level":50,"stats":{...}}' '{"name":"热风",...}' '{"name":"超级胡地",...}' '{"weather":"Sun"}'
 
 # 努力值优化
-python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 ko ohko guaranteed
-python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 survive survive guaranteed
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko --threshold guaranteed
+python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal survive --target survive --threshold guaranteed
 ```
 
 
