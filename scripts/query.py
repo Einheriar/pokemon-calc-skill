@@ -2330,6 +2330,13 @@ def cmd_optimize(
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data)
 
+    # Form adapters may infer active Terastallization (e.g. Stellar Terapagos),
+    # so validate the final state as well as the caller's raw overrides.
+    for _side, _pk in (("attacker", att_dict), ("defender", def_dict)):
+        _enum_err = _validate_override_enums(_side, _pk)
+        if _enum_err is not None:
+            return _enum_err
+
     # Remove extra metadata before passing to model constructors
     att_dict.pop("_data_source", None)
     att_dict.pop("is_unobtainable", None)
@@ -2555,6 +2562,12 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
+    # Form adapters may infer active Terastallization (e.g. Stellar Terapagos),
+    # so validate the final state as well as the caller's raw overrides.
+    for _side, _pk in (("attacker", att_dict), ("defender", def_dict)):
+        _enum_err = _validate_override_enums(_side, _pk)
+        if _enum_err is not None:
+            return _enum_err
     att_form_idx = att_dict.get("_sp_meta", {}).get("form_index", att_form_idx)
     def_form_idx = def_dict.get("_sp_meta", {}).get("form_index", def_form_idx)
 
