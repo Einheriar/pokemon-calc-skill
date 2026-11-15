@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
+from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 import display_zh
 from engine_enums import (
     NATURES_EN,
@@ -579,6 +580,10 @@ def uses_physical_attack(attacker: Pokemon, defender: Pokemon, move: Move) -> bo
         return attacker.stats.get("attack", 0) > attacker.stats.get("sp_attack", 0)
     if move.name == "Tera Blast" and attacker.is_terastalize:
         return attacker.stats.get("attack", 0) > attacker.stats.get("sp_attack", 0)
+    if move.name == "Tera Starstorm":
+        if attacker.name_en.removesuffix("-Tera") == "Terapagos-Stellar" and attacker.is_terastalize:
+            return attacker.stats.get("attack", 0) > attacker.stats.get("sp_attack", 0)
+        return False
     return move.category == "Physical"
 
 
@@ -1454,6 +1459,17 @@ def _calculate_damage_core(
     return result
 
 
+def _with_used_state(
+    result: DamageResult,
+    attacker_used: Pokemon,
+    defender_used: Pokemon,
+) -> DamageResult:
+    """Attach the post-activation, post-seed state used for this hit."""
+    result.attacker_used = attacker_used
+    result.defender_used = defender_used
+    return result
+
+
 def _calculate_damage_impl(
     attacker: Pokemon,
     defender: Pokemon,
@@ -1469,15 +1485,25 @@ def _calculate_damage_impl(
     if not defender.raw_stats:
         compute_raw_stats(defender)
 
+    # Terastallization-triggered abilities activate before the move's damage
+    # calculation. Apply both sides' pending events against the shared field.
+    apply_tera_effects(attacker, defender, field)
+    apply_tera_effects(defender, attacker, field)
+    dynamic_type = resolve_dynamic_tera_move_type(move, attacker)
+    if dynamic_type:
+        move.type = dynamic_type
+    attacker_used = deepcopy(attacker)
+    defender_used = deepcopy(defender)
+
     # Zero-power fixed-damage moves still need the normal immunity pipeline.
     is_fixed_damage = move.name in _FIXED_DAMAGE_MOVES or move.is_ohko
     if (move.base_power == 0 or move.category == "Status") and not is_fixed_damage:
-        return DamageResult(
+        return _with_used_state(DamageResult(
             damage=[0],
             min_damage=0,
             max_damage=0,
             description=display_zh.status_move_description(move.name),
-        )
+        ), attacker_used, defender_used)
 
     # Attack category and defending stat are separate dimensions. Psyshock,
     # Psystrike and Secret Sword use Special Attack against Physical Defense.
@@ -1493,6 +1519,8 @@ def _calculate_damage_impl(
     # copy-protected boosts/stats and rolls the mutation back on exit).
     if not _skip_seeds:
         _check_seeds(defender, field)
+    attacker_used = deepcopy(attacker)
+    defender_used = deepcopy(defender)
 
     # Battle Armor / Shell Armor suppress every critical-hit source,
     # including guaranteed-crit moves and Merciless.
@@ -1551,13 +1579,13 @@ def _calculate_damage_impl(
         is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
     )
     if immunity_reason is not None:
-        return DamageResult(
+        return _with_used_state(DamageResult(
             damage=[0],
             min_damage=0,
             max_damage=0,
             description=display_zh.immune_description(move.name, defender.name, immunity_reason),
             type_effectiveness=0.0,
-        )
+        ), attacker_used, defender_used)
 
     if is_fixed_damage:
         if move.name in ("Seismic Toss", "Night Shade"):
@@ -1574,7 +1602,7 @@ def _calculate_damage_impl(
             fixed_damage = attacker.current_hp
         else:  # Sheer Cold / Fissure / Horn Drill / Guillotine
             fixed_damage = defender.current_hp
-        return DamageResult(
+        return _with_used_state(DamageResult(
             damage=[fixed_damage],
             min_damage=fixed_damage,
             max_damage=fixed_damage,
@@ -1583,7 +1611,7 @@ def _calculate_damage_impl(
                 defender.level, defender.name, fixed_damage,
             ),
             type_effectiveness=type_effectiveness,
-        )
+        ), attacker_used, defender_used)
 
     # Grounded checks for terrain effects
     att_is_grounded = is_grounded(attacker, field)
@@ -1745,7 +1773,7 @@ def _calculate_damage_impl(
         damage_rolls[0], damage_rolls[-1],
     )
 
-    return DamageResult(
+    return _with_used_state(DamageResult(
         damage=damage_rolls,
         min_damage=damage_rolls[0],
         max_damage=damage_rolls[-1],
@@ -1755,4 +1783,4 @@ def _calculate_damage_impl(
         stab_applied=stab_mod != 0x1000,
         burn_applied=apply_burn,
         effective_power=base_power,
-    )
+    ), attacker_used, defender_used)
