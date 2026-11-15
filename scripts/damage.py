@@ -20,6 +20,7 @@ from typing import Any, Optional
 from models import DamageResult, Field, Move, Pokemon
 from battle_effects import berries_blocked, effective_ability, effective_weather, ignorable_defender_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
+from speed_effects import get_effective_speed
 import display_zh
 from engine_enums import (
     NATURES_EN,
@@ -728,9 +729,13 @@ def base_power_func(
     name = move.name
 
     if name == "Gyro Ball":
-        bp = min(150, math.floor(25 * defender.stats.get("speed", 1) / max(1, attacker.stats.get("speed", 1))) + 1)
+        own_speed = get_effective_speed(attacker, field, attacker, defender)
+        target_speed = get_effective_speed(defender, field, attacker, defender)
+        bp = min(150, 25 * target_speed // own_speed + 1) if own_speed else 1
     elif name == "Electro Ball":
-        r = math.floor(attacker.stats.get("speed", 1) / max(1, defender.stats.get("speed", 1)))
+        own_speed = get_effective_speed(attacker, field, attacker, defender)
+        target_speed = get_effective_speed(defender, field, attacker, defender)
+        r = own_speed // target_speed if target_speed else 0
         bp = 150 if r >= 4 else 120 if r >= 3 else 80 if r >= 2 else 60 if r >= 1 else 40
     elif name in ("Low Kick", "Grass Knot"):
         w = defender.weight
@@ -1560,7 +1565,7 @@ def _calculate_damage_impl(
         move.type = attacker.tera_type
 
     # Turn order (for speed-based moves)
-    turn_order = "FIRST" if attacker.stats.get("speed", 0) > defender.stats.get("speed", 0) else "LAST"
+    turn_order = "FIRST" if get_effective_speed(attacker, field, attacker, defender) > get_effective_speed(defender, field, attacker, defender) else "LAST"
 
     # Base power
     base_power = base_power_func(move, attacker, defender, field)
