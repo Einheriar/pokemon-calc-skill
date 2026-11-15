@@ -214,6 +214,9 @@ def optimize_attack_ev(
     # Physical vs Special determination (same logic as damage.py)
     hits_physical = uses_physical_attack(attacker, defender, move)
     stat = "attack" if hits_physical else "sp_attack"
+    search_stats = [stat]
+    if move.name == "Tera Blast" and attacker.is_terastalize:
+        search_stats.append("sp_attack" if hits_physical else "attack")
 
     best_val: Optional[int] = None
     best_damage: Optional[DamageResult] = None
@@ -230,22 +233,28 @@ def optimize_attack_ev(
         val_label = display_zh.VAL_LABEL_EV
 
     for val in range(0, max_single + 1, step):
-        result = _evaluate_attack(attacker, defender, move, field, stat, val, mode=mode)
-        dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
-        # Damage rolls are per-hit; multi-hit moves deal hits × per-hit damage.
-        move_hits = max(1, int(getattr(move, "hits", 1) or 1))
-        total = dmg * hits_needed * move_hits
-
-        if total >= defender.current_hp:
-            best_val = val
-            best_damage = result
+        for candidate_stat in search_stats:
+            result = _evaluate_attack(attacker, defender, move, field, candidate_stat, val, mode=mode)
+            dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
+            # Each candidate can change Tera Blast's category independently.
+            move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+            total = dmg * hits_needed * move_hits
+            if total >= defender.current_hp:
+                stat = candidate_stat
+                best_val = val
+                best_damage = result
+                break
+        if best_val is not None:
             break
 
     if best_val is None:
-        result_max = _evaluate_attack(attacker, defender, move, field, stat, max_single, mode=mode)
+        maximums = [_evaluate_attack(attacker, defender, move, field, candidate, max_single, mode=mode)
+                    for candidate in search_stats]
+        result_max = max(maximums, key=lambda candidate: candidate.min_damage if use_min
+                         else sum(candidate.damage) / len(candidate.damage))
         return {
             "success": False,
-            "reason": display_zh.opt_fail_attack(max_single, stat, val_label, target),
+            "reason": display_zh.opt_fail_attack(max_single, "/".join(search_stats), val_label, target),
             "optimal_ev": 0,
             "optimal_sp": 0,
             "max_invested_ev": max_single if mode == "ev" else 0,
