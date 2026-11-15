@@ -2148,6 +2148,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         power = 0
     # Parse hits: can be int or string like "multi"
     hits_raw = data.get("hits", 1)
+    is_multi_hit = hits_raw == "multi"
     if hits_raw == "multi":
         # 2-5 hit variable moves: approximate with the expected count (3).
         # cmd_calc surfaces a warning when the data layer says "multi".
@@ -2157,6 +2158,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
             hits = int(hits_raw)
         except (ValueError, TypeError):
             hits = 1
+        is_multi_hit = hits > 1
     # Accuracy comes from the data layer ("100", "90", or "—" for
     # unmissable/NA) — fall back to the raw string rather than a fake 100.
     acc_raw = data.get("accuracy", 100)
@@ -2172,6 +2174,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "category": data.get("category", ""),
         "accuracy": accuracy,
         "hits": hits,
+        "is_multi_hit": is_multi_hit,
         "is_crit": data.get("always_crit", False),
         "makes_contact": data.get("makes_contact", False),
         "has_recoil": data.get("has_recoil", False),
@@ -2197,6 +2200,7 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
     if overrides:
         move.update(overrides)
         _normalize_move_fields(move)
+    move["is_multi_hit"] = is_multi_hit
     return move
 
 

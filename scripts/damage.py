@@ -807,6 +807,38 @@ def base_power_func(
     return bp
 
 
+_TERA_FLOOR_POSITIVE_PRIORITY_MOVES = frozenset({
+    "Accelerock", "Aqua Jet", "Bullet Punch", "Extreme Speed", "Fake Out",
+    "Feint", "First Impression", "Ice Shard", "Jet Punch", "Mach Punch",
+    "Quick Attack", "Shadow Sneak", "Sucker Punch", "Thunderclap",
+    "Upper Hand", "Vacuum Wave", "Water Shuriken",
+})
+
+
+def _apply_tera_base_power_floor(base_power: int, move: Move, attacker: Pokemon) -> int:
+    """Apply Gen 9's 60 BP floor after base-power modifiers."""
+    if (not attacker.is_terastalize or move.category == "Status"
+            or move.base_power <= 0 or base_power >= 60
+            or getattr(move, "is_multi_hit", False)
+            or move.priority > 0 or getattr(move, "is_priority", False)
+            or move.name in _TERA_FLOOR_POSITIVE_PRIORITY_MOVES):
+        return base_power
+
+    # These 150 BP moves have a Base Power callback in the source rules and
+    # keep their HP-scaled value instead of being raised back to 60.
+    if move.base_power == 150 and move.name in ("Eruption", "Water Spout", "Dragon Energy"):
+        return base_power
+
+    if attacker.tera_type == "Stellar":
+        already_boosted = move.type in getattr(attacker, "stellar_boosted_types", ())
+        if already_boosted:
+            return base_power
+    elif move.type != attacker.tera_type:
+        return base_power
+
+    return 60
+
+
 # ---------------------------------------------------------------------------
 # BP Modifiers
 # ---------------------------------------------------------------------------
@@ -1540,6 +1572,7 @@ def _calculate_damage_impl(
     # BP mods
     bp_mods = calc_bp_mods(attacker, defender, field, move, ate_ize_boosted, base_power, turn_order, def_ability, att_is_grounded, def_is_grounded, gen)
     base_power = max(1, poke_round(base_power * chain_mods(bp_mods) / 0x1000))
+    base_power = _apply_tera_base_power_floor(base_power, move, attacker)
 
     # Attack
     attack = calc_attack(move, attacker, defender, is_critical, def_ability)

@@ -61,6 +61,8 @@ class Move:
     category: str = "Physical"         # Physical / Special / Status
     accuracy: int = 100
     hits: int = 1
+    is_multi_hit: bool = False
+    priority: int = 0
     is_z: bool = False
     is_spread: bool = False
     makes_contact: bool = False
