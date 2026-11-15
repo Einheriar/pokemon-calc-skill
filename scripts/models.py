@@ -124,3 +124,5 @@ class DamageResult:
     type_effectiveness: float = 1.0
     stab_applied: bool = False
     burn_applied: bool = False
+    move: Optional[Move] = None           # Final move after dynamic type/category changes
+    effective_power: Optional[int] = None # Dynamic base power before BP/final modifiers

@@ -1363,10 +1363,25 @@ def _calculate_damage_core(
     _skip_seeds: bool,
     _neutral_damage: bool,
 ) -> DamageResult:
-    # Work on a copy of the move so type/category/is_spread mutations below do not
-    # leak back to a Move object reused across multiple calls (e.g. EV optimizer loop).
-    move = copy(move)
+    # Keep the final private copy in the result. Callers must not reconstruct
+    # dynamic type/category/power from the original Move or display text.
+    final_move = copy(move)
+    result = _calculate_damage_impl(
+        attacker, defender, final_move, field, gen, _skip_seeds, _neutral_damage,
+    )
+    result.move = final_move
+    return result
 
+
+def _calculate_damage_impl(
+    attacker: Pokemon,
+    defender: Pokemon,
+    move: Move,
+    field: Field,
+    gen: int,
+    _skip_seeds: bool,
+    _neutral_damage: bool,
+) -> DamageResult:
     # Ensure stats are computed
     if not attacker.raw_stats:
         compute_raw_stats(attacker)
@@ -1631,4 +1646,5 @@ def _calculate_damage_core(
         type_effectiveness=type_effectiveness,
         stab_applied=stab_mod != 0x1000,
         burn_applied=apply_burn,
+        effective_power=base_power,
     )

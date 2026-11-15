@@ -2076,7 +2076,7 @@ _MOVE_CATEGORY_ZH_TO_EN: dict[str, str] = {
 }
 # English → Chinese type mapping (display layer; the engine canonicalizes
 # zh/en type inputs at its entry). Single source: engine_enums.TYPE_EN_TO_ZH.
-_MOVE_TYPE_EN_TO_ZH: dict[str, str] = dict(TYPE_EN_TO_ZH)
+_MOVE_TYPE_EN_TO_ZH: dict[str, str] = {**TYPE_EN_TO_ZH, "Stellar": "星晶"}
 
 
 def _normalize_move_fields(move: dict[str, Any]) -> None:
@@ -2531,25 +2531,18 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "is_mega": def_extra.get("is_mega", False),
     }
 
-    # Transparency block (round 2 audit C1): the SKILL.md output template
-    # references move/field/modifier data that used to exist nowhere in the
-    # response, forcing the LLM to fill gaps from memory.
-    def _desc_power(desc: str) -> int | None:
-        m = re.search(r"威力 (\d+)", desc)
-        return int(m.group(1)) if m else None
-
+    # Read the engine's final private Move, not the caller's original object.
+    final_move = result.move or move
     move_info: dict[str, Any] = {
-        "name": move_data.get("name_zh") or move.name,
-        "name_en": move.name,
-        # Engine-side final type (post weather/ability mutation) shown in the
-        # data-layer language, as before the engine-English refactor.
-        "type": _MOVE_TYPE_EN_TO_ZH.get(move.type, move.type),
-        "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
+        "name": move_data.get("name_zh") or final_move.name,
+        "name_en": final_move.name,
+        "type": _MOVE_TYPE_EN_TO_ZH.get(final_move.type, final_move.type),
+        "category": "物理" if final_move.category == "Physical" else ("特殊" if final_move.category == "Special" else "变化"),
         "base_power": move_dict.get("base_power"),
-        "effective_power": _desc_power(result.description),
+        "effective_power": result.effective_power,
         "accuracy": move_dict.get("accuracy"),
-        "hits": move.hits,
-        "is_spread": bool(move.is_spread),
+        "hits": final_move.hits,
+        "is_spread": bool(final_move.is_spread),
     }
     field_info: dict[str, Any] = {
         "weather": field.weather,
@@ -2849,21 +2842,18 @@ def cmd_calc_raw(
         "max_hp": defender.max_hp,
     }
 
-    # Transparency block (round 2 audit C1): parity with cmd_calc. For
-    # calc-raw the user-supplied move JSON is the "data layer", so base_power
-    # echoes the input value and effective_power comes from the description.
-    _m = re.search(r"威力 (\d+)", result.description)
+    # Match cmd_calc: source all final move fields from the structured result.
+    final_move = result.move or move
     move_info: dict[str, Any] = {
-        "name": move.name_zh or move.name,
-        "name_en": move.name,
-        # Final engine-side type shown in the data-layer language.
-        "type": _MOVE_TYPE_EN_TO_ZH.get(move.type, move.type),
-        "category": "物理" if move.category == "Physical" else ("特殊" if move.category == "Special" else "变化"),
+        "name": final_move.name_zh or final_move.name,
+        "name_en": final_move.name,
+        "type": _MOVE_TYPE_EN_TO_ZH.get(final_move.type, final_move.type),
+        "category": "物理" if final_move.category == "Physical" else ("特殊" if final_move.category == "Special" else "变化"),
         "base_power": move_dict.get("base_power"),
-        "effective_power": int(_m.group(1)) if _m else None,
+        "effective_power": result.effective_power,
         "accuracy": move_dict.get("accuracy"),
-        "hits": move.hits,
-        "is_spread": bool(move.is_spread),
+        "hits": final_move.hits,
+        "is_spread": bool(final_move.is_spread),
     }
     field_info: dict[str, Any] = {
         "weather": field.weather,

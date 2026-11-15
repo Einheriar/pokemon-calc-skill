@@ -6,8 +6,8 @@
 
 硬约束：
 - 所有拼接格式与抽离前逐字节一致（含空格、半/全角标点、语序）。
-- description 中 "威力 {base_power}" 子串被 query.py 的 _desc_power 正则
-  （r"威力 (\\d+)"）解析为 effective_power，该格式绝不可改动。
+- description 仅用于展示；最终属性、分类与有效威力由 DamageResult 结构化返回，
+  query.py 不再从描述文本解析计算字段。
 - 主描述中 {效果}{要害}{烧伤}{亲子爱} 四段必须保持既有拼接顺序（原子迁移）。
 """
 from __future__ import annotations
