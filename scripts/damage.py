@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
-from battle_effects import berries_blocked, effective_ability, ignorable_defender_ability
+from battle_effects import berries_blocked, effective_ability, effective_weather, ignorable_defender_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 import display_zh
 from engine_enums import (
@@ -1458,9 +1458,11 @@ def _calculate_damage_core(
     original_abilities = (attacker.ability, defender.ability)
     attacker.ability = effective_ability(attacker, field)
     defender.ability = effective_ability(defender, field)
+    calculation_field = copy(field)
+    calculation_field.weather = effective_weather(attacker, defender, field)
     try:
         result = _calculate_damage_impl(
-            attacker, defender, final_move, field, gen, _skip_seeds, _neutral_damage,
+            attacker, defender, final_move, calculation_field, gen, _skip_seeds, _neutral_damage,
         )
     finally:
         attacker.ability, defender.ability = original_abilities
@@ -1472,7 +1474,7 @@ def _calculate_damage_core(
     result.attacker_after = deepcopy(attacker)
     result.defender_after = deepcopy(defender)
     result.field_state = deepcopy(field)
-    result.field_used = deepcopy(field)
+    result.field_used = deepcopy(calculation_field)
     return result
 
 

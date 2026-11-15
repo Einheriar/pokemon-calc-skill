@@ -3,6 +3,8 @@
 """Shared, pure-parameter battle effect rules."""
 from __future__ import annotations
 
+from typing import Optional
+
 from models import Field, Pokemon
 
 
@@ -66,3 +68,29 @@ def berries_blocked(attacker: Pokemon, defender: Pokemon, field: Field) -> bool:
     """Whether the active attacking-side ability prevents the defender eating a berry."""
     ability = effective_ability(attacker, field)
     return ability in {"Unnerve", "As One", "As One (Glastrier)", "As One (Spectrier)"}
+
+
+def effective_weather(
+    attacker: Pokemon,
+    defender: Pokemon,
+    field: Field,
+    *,
+    move_user: bool = True,
+) -> Optional[str]:
+    """Return weather affecting this move, without changing the actual field weather.
+
+    Cloud Nine and Air Lock suppress weather effects while leaving the displayed
+    weather in place. Showdown's Mega Sol user-side weather query overrides that
+    suppression for the active attacker's move.
+    """
+    weather = field.weather
+    weather_suppressed = any(
+        effective_ability(pokemon, field) in {"Cloud Nine", "Air Lock"}
+        for pokemon in (attacker, defender)
+    )
+    if weather_suppressed:
+        weather = None
+
+    if move_user and effective_ability(attacker, field) == "Mega Sol":
+        return "Sun"
+    return weather

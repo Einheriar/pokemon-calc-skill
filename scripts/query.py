@@ -2772,6 +2772,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "defender_is_tera": defender.is_terastalize,
         "defender_tera_type": def_override.get("tera_type", def_dict.get("tera_type")),
     }
+    if result.field_used and result.field_used.weather != actual_field.weather:
+        field_info["effective_weather"] = result.field_used.weather
+        field_info["weather_suppressed"] = bool(actual_field.weather and result.field_used.weather is None)
 
     response: dict[str, Any] = {
         "attacker": attacker_name,
@@ -3098,6 +3101,9 @@ def cmd_calc_raw(
         "move_info": move_info,
         "field_info": field_info,
     }
+    if result.field_used and result.field_used.weather != actual_field.weather:
+        field_info["effective_weather"] = result.field_used.weather
+        field_info["weather_suppressed"] = bool(actual_field.weather and result.field_used.weather is None)
     next_state = _tera_next_state(result, attacker, defender)
     if next_state is not None:
         response["next_state"] = next_state

@@ -13,7 +13,7 @@ from typing import Optional
 from models import Field, Move, Pokemon
 import display_zh
 from engine_enums import T
-from battle_effects import berries_blocked, effective_ability
+from battle_effects import berries_blocked, effective_ability, effective_weather
 
 _HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
 _SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
@@ -85,6 +85,10 @@ def get_ko_chance_text(
     # logic also runs independently in tests and direct library calls.
     move = copy(move)
     defender = copy(defender)
+    field = copy(field)
+    # Residual weather follows the environment, not Mega Sol's move-only view.
+    weather_attacker = battle_context[0] if battle_context else defender
+    field.weather = effective_weather(weather_attacker, defender, field, move_user=False)
     move.type = _type_zh_to_en(move.type)
     defender.types = [_type_zh_to_en(t) for t in defender.types]
     # Hazards model entry before this turn's Terastallization. Residuals and
