@@ -1827,6 +1827,11 @@ _ENGINE_FORM_NAMES = {
     ("Dialga", "起源形态"): "Dialga-Origin",
     ("Palkia", "起源形态"): "Palkia-Origin",
     ("Giratina", "起源形态"): "Giratina-Origin",
+    ("Terapagos", "太晶形态"): "Terapagos-Terastal",
+    ("Terapagos", "星晶形态"): "Terapagos-Stellar",
+    ("Ogerpon", "水井面具"): "Ogerpon-Wellspring",
+    ("Ogerpon", "火灶面具"): "Ogerpon-Hearthflame",
+    ("Ogerpon", "础石面具"): "Ogerpon-Cornerstone",
 }
 _ENGINE_FORM_PREFIXES = {
     "Alolan": "Alola",
@@ -1913,14 +1918,21 @@ def _species_can_evolve(data: dict[str, Any], form: dict[str, Any] | None = None
 
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
+    overrides = overrides or {}
     forms = data.get("forms", [{}])
     # Allow override by explicit form_name (e.g. "洗翠的样子")
-    if overrides and "form_name" in overrides:
+    if "form_name" in overrides:
         target = overrides["form_name"]
         for idx, f in enumerate(forms):
             if f.get("name") == target:
                 form_index = idx
                 break
+    species_en = data.get("name_en", "")
+    tera_type_input = overrides.get("tera_type")
+    resolved_tera_type = resolve_tera_type_en(tera_type_input) if isinstance(tera_type_input, str) else None
+    if (species_en == "Terapagos" and overrides.get("is_terastalize") is True
+            and resolved_tera_type == "Stellar"):
+        form_index = next((i for i, f in enumerate(forms) if f.get("name") == "星晶形态"), form_index)
     form = forms[form_index] if form_index < len(forms) and forms else forms[0] if forms else {}
     stats_list = data.get("stats", [])
     # Try to find stats matching the form name, fallback to form_index or first
@@ -1957,6 +1969,19 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     if is_mega:
         default_item_zh = _derive_mega_stone(form_name)
         default_item = resolve_item(default_item_zh) or default_item_zh
+    elif species_en == "Ogerpon":
+        default_item = {
+            "水井面具": "Wellspring Mask",
+            "火灶面具": "Hearthflame Mask",
+            "础石面具": "Cornerstone Mask",
+        }.get(form_name, "")
+        default_item_zh = form_name if default_item else ""
+
+    # Terastallized Stellar Terapagos uses its Stellar form's stats and ability.
+    # Explicit battle inputs remain authoritative over these derived defaults.
+    is_terapagos_stellar = species_en == "Terapagos" and form_name == "星晶形态"
+    is_ogerpon = species_en == "Ogerpon"
+    is_ogerpon_tera = is_ogerpon and overrides.get("is_terastalize") is True
 
     # Build display name: combine regional prefix with base name for descriptive forms
     name_zh = data.get("name_zh", "")
@@ -2003,6 +2028,14 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_unobtainable": is_mega and data.get("_data_source", "gen9") == "gen9",
         "is_mega": is_mega,
     }
+    if is_terapagos_stellar:
+        pk["is_terastalize"] = True
+        pk["tera_type"] = "Stellar"
+    if is_terapagos_stellar and overrides.get("is_terastalize") is False:
+        pk["tera_type"] = "Stellar"
+    if is_ogerpon_tera:
+        pk["ability"] = _resolve_ability_to_en("面影辉映")
+        pk["ability_zh"] = "面影辉映"
     if overrides:
         # Structural validation for dict-typed fields: fail loudly (main()
         # converts to {"error": ...}) instead of AttributeError deep inside.
@@ -2085,6 +2118,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     sp_meta: dict[str, Any] = {
         "sps": _evs_to_sps(pk.get("evs", {})),
         "approx": _sp_approx_keys(pk.get("evs", {})),
+        "form_index": form_index,
     }
     if sp_warnings:
         sp_meta["warnings"] = sp_warnings
@@ -2607,7 +2641,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
 
     attacker_info = {
         "name_zh": attacker.name,
-        "name_en": att_data.get("name_en", ""),
+        "name_en": (attacker.name_en if attacker.name_en.startswith(("Terapagos-", "Ogerpon-"))
+                    else att_data.get("name_en", "")),
         # Raw input types (pre-engine copy): the engine normalizes its copy to
         # English internally; display keeps the caller-facing language.
         "types": att_dict["types"],
@@ -2630,7 +2665,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     }
     defender_info = {
         "name_zh": defender.name,
-        "name_en": def_data.get("name_en", ""),
+        "name_en": (defender.name_en if defender.name_en.startswith(("Terapagos-", "Ogerpon-"))
+                    else def_data.get("name_en", "")),
         "types": def_dict["types"],
         "base_stats": defender.base_stats,
         "stats": defender.raw_stats,
