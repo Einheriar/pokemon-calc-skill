@@ -17,6 +17,12 @@ from battle_effects import berries_blocked, effective_ability, effective_weather
 
 _HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
 _SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
+_RESIST_BERRY_ITEMS = frozenset({
+    "Chilan Berry", "Occa Berry", "Passho Berry", "Wacan Berry", "Rindo Berry",
+    "Yache Berry", "Chople Berry", "Kebia Berry", "Shuca Berry", "Coba Berry",
+    "Payapa Berry", "Tanga Berry", "Charti Berry", "Kasib Berry", "Haban Berry",
+    "Colbur Berry", "Babiri Berry", "Roseli Berry",
+})
 def _sequential_multihit_ko_probability(
     per_hit_rolls: list[list[int]],
     uses: int,
@@ -334,6 +340,33 @@ def get_ko_chance_text(
 
     if move.name in _SINGLE_USE_MOVES:
         return display_zh.KO_SINGLE_USE_NO_KO
+
+    stateful_resist_berry = (
+        defender.item in _RESIST_BERRY_ITEMS
+        and not berry_blocked
+        and len(damage) < 256
+        and move.hits == 1
+        and not move.is_multi_hit
+    )
+    if stateful_resist_berry and battle_context:
+        attacker, context_defender, context_move, context_field = battle_context
+        memo: dict[tuple, float | None] = {}
+        result_cache: dict[tuple, object] = {}
+        for uses in range(2, 10):
+            chance = _stateful_ko_probability(
+                attacker, context_defender, context_move, context_field, uses,
+                max(0, defender.current_hp - hazards), eot, toxic_counter,
+                has_sitrus, has_figy, gluttony, ripen, field_eot_deltas,
+                memo, result_cache,
+            )
+            if chance is None:
+                return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
+            if chance >= 1.0:
+                return display_zh.ko_n_guaranteed(uses, after_text2)
+            if chance > 0.0:
+                pct = round(chance * 1000) / 10
+                return display_zh.ko_n_prob("", pct, uses, after_text2)
+        return display_zh.KO_MORE_ROUNDS
 
     # Recovery and residual damage apply between subsequent hits too.
     for i in range(2, 5):
