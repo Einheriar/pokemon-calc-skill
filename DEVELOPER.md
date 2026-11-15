@@ -45,6 +45,7 @@ pokemon-calc/
 └── scripts/
     ├── query.py          # 主查询入口（百科 + calc + lookup + preset + optimize + meta）
     ├── damage.py         # 伤害计算引擎（内部全英文枚举，经 engine_enums）
+    ├── tera_effects.py   # 专属太晶触发效果与动态招式规则
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
@@ -250,6 +251,13 @@ class DamageResult:
     type_effectiveness: float
     stab_applied: bool
     burn_applied: bool
+    move: Optional[Move]           # Final move used for the current attack
+    effective_power: Optional[int]
+    attacker_used: Optional[Pokemon]
+    defender_used: Optional[Pokemon]
+    attacker_after: Optional[Pokemon]
+    defender_after: Optional[Pokemon]
+    field_state: Optional[Field]
 ```
 
 **已实现的修正**
@@ -340,6 +348,8 @@ class Pokemon:
     status: Optional[str]
     is_terastalize: bool
     tera_type: Optional[str]
+    stellar_boosted_types: list[str]
+    tera_effects_applied: bool
     is_dynamax: bool
     can_evolve: bool
     weight: float
@@ -351,6 +361,8 @@ class Move:
     type: str
     category: str          # Physical / Special / Status
     hits: int = 1
+    is_multi_hit: bool = False  # Native move property, independent of hit override
+    priority: int = 0
     is_crit: bool = False
     makes_contact: bool = False
     has_recoil: bool = False
@@ -387,6 +399,13 @@ class DamageResult:
     type_effectiveness: float
     stab_applied: bool
     burn_applied: bool
+    move: Optional[Move]
+    effective_power: Optional[int]
+    attacker_used: Optional[Pokemon]
+    defender_used: Optional[Pokemon]
+    attacker_after: Optional[Pokemon]
+    defender_after: Optional[Pokemon]
+    field_state: Optional[Field]
 ```
 
 ---
@@ -543,6 +562,13 @@ git push pokemon-calc pokemon-calc-branch:main
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 5.1.0（2026-11-15）
+
+- 太晶专项补齐输入校验、太晶爆发转换保护、太晶甲壳完整相克／特性忽略，以及 60 威力保底与豁免。
+- 新增星晶每属性消耗、太晶爆发自降及 `next_state`；KO 和优化逐次重算。补齐太乐巴戈斯形态、归零化境、晶光星群，以及厄诡椪面具、面影辉映、棘藤棒和觉醒之舞。
+- 新增 11 套专项，全部 34 套回归、60 个黄金场景、6 项数据检查通过。黄金仅两项太晶场景按规则定点更新，独立卷积验证概率；其余 58 项不变。新增状态字段向后兼容，复杂状态多段／回合末组合仍明确提示限制。
+- 按问题独立本地提交，全部验证通过后由 5.0.5 更新至 5.1.0。详见 `plans/PLAN_2026-11-15_tera_system.md` 与当天 CHANGELOG。
 
 ### 5.0.5（2026-11-15）
 
