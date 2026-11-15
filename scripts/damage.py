@@ -237,7 +237,8 @@ def _ate_ize_type_change(move: Move, attacker: Pokemon) -> tuple[Move, bool]:
     Apply Ate/Ize ability type changes (Aerilate, Pixilate, Refrigerate,
     Galvanize, Normalize) and Liquid Voice. Returns (modified_move, is_boosted).
     """
-    if move.is_z or move.name in _ATE_IZE_IGNORED_MOVES:
+    if (move.is_z or move.name in _ATE_IZE_IGNORED_MOVES
+            or (move.name == "Tera Blast" and attacker.is_terastalize)):
         return move, False
 
     is_boosted = False
