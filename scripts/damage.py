@@ -1294,11 +1294,11 @@ def calc_final_mods(
     if def_ability in ("Multiscale", "Shadow Shield") and defender.current_hp == defender.max_hp:
         final_mods.append(0x800)
 
-    # Fluffy (contact) - Long Reach ignores contact effects; Punching Glove
+    # Contact reduction - Long Reach ignores contact effects; Punching Glove
     # keeps punch moves contact-free (audit E13)
     is_contact = (move.makes_contact and attacker.ability != "Long Reach"
                   and not (move.is_punch and attacker.item in ("Punching Glove",)))
-    if def_ability == "Fluffy" and is_contact:
+    if def_ability in ("Fluffy", "Aura Guard") and is_contact:
         final_mods.append(0x800)
 
     # Punk Rock
