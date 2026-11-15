@@ -1811,6 +1811,64 @@ def _sp_approx_keys(evs: dict[str, int]) -> list[str]:
     return [k for k, v in evs.items() if isinstance(v, int) and v > 0 and (v + 4) % 8 != 0]
 
 
+_ENGINE_FORM_NAMES = {
+    ("Zacian", "剑之王"): "Zacian-Crowned",
+    ("Zamazenta", "盾之王"): "Zamazenta-Crowned",
+    ("Dialga", "起源形态"): "Dialga-Origin",
+    ("Palkia", "起源形态"): "Palkia-Origin",
+    ("Giratina", "起源形态"): "Giratina-Origin",
+}
+_ENGINE_FORM_PREFIXES = {
+    "Alolan": "Alola",
+    "Galarian": "Galar",
+    "Hisuian": "Hisui",
+    "Paldean": "Paldea",
+    "Mega": "Mega",
+    "Primal": "Primal",
+    "Gigantamax": "Gmax",
+}
+
+
+def _engine_pokemon_name(species_en: str, form: dict[str, Any]) -> str:
+    """Translate data-layer display forms to the engine's canonical form IDs.
+
+    The data uses names such as ``Alolan Marowak`` while the engine compares
+    stable IDs such as ``Marowak-Alola``. Keep species-scoped effects scoped to
+    the species by falling back to ``species_en`` for cosmetic/unknown forms.
+    """
+    special = _ENGINE_FORM_NAMES.get((species_en, form.get("name", "")))
+    if special:
+        return special
+    form_en = form.get("name_en") or species_en
+    if not species_en or form_en == species_en:
+        return species_en
+    for prefix, suffix in _ENGINE_FORM_PREFIXES.items():
+        marker = f"{prefix} "
+        if not form_en.startswith(marker):
+            continue
+        remainder = form_en[len(marker):]
+        if remainder == species_en:
+            return f"{species_en}-{suffix}"
+        if prefix == "Mega" and remainder in (f"{species_en} X", f"{species_en} Y", f"{species_en} Z"):
+            return f"{species_en}-Mega-{remainder[-1]}"
+        return species_en
+    match = re.fullmatch(re.escape(species_en) + r" \(([^()]+)\)", form_en)
+    if match:
+        return f"{species_en}-{match.group(1)}"
+    return species_en
+
+
+def _species_can_evolve(data: dict[str, Any]) -> bool:
+    """Infer an outgoing evolution edge from the bundled evolution chains."""
+    species_zh = data.get("name_zh", "")
+    return any(
+        isinstance(node, dict) and node.get("from") == species_zh
+        for chain in data.get("evolution_chains", [])
+        if isinstance(chain, list)
+        for node in chain
+    )
+
+
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
     """Build a Pokemon dict suitable for damage.py from pokedex data."""
     forms = data.get("forms", [{}])
@@ -1874,7 +1932,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
 
     pk = {
         "name": display_name,
-        "name_en": data.get("name_en", ""),
+        "name_en": _engine_pokemon_name(data.get("name_en", ""), form),
+        "can_evolve": _species_can_evolve(data),
         "level": 50,
         "base_stats": base_stats,
         "types": types,
