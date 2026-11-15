@@ -1865,15 +1865,47 @@ def _engine_pokemon_name(species_en: str, form: dict[str, Any]) -> str:
     return species_en
 
 
-def _species_can_evolve(data: dict[str, Any]) -> bool:
-    """Infer an outgoing evolution edge from the bundled evolution chains."""
+def _species_can_evolve(data: dict[str, Any], form: dict[str, Any] | None = None) -> bool:
+    """Infer whether the selected form has an outgoing evolution edge."""
     species_zh = data.get("name_zh", "")
-    return any(
-        isinstance(node, dict) and node.get("from") == species_zh
-        for chain in data.get("evolution_chains", [])
-        if isinstance(chain, list)
-        for node in chain
-    )
+    species_en = data.get("name_en", "")
+    form = form or {}
+    forms = data.get("forms")
+    has_distinct_form_records = isinstance(forms, list) and len(forms) > 1
+    form_zh = form.get("name", "")
+    form_en = form.get("name_en", "")
+
+    def matches_source_form(source_form_name: str | None) -> bool:
+        if not source_form_name:
+            # The source data does not constrain an omitted form_name. Preserve
+            # its species-wide evolution edge instead of guessing special-form
+            # exceptions that are not represented in the evolution chain.
+            return True
+        if source_form_name == form_zh:
+            return True
+        # Evolution data uses regional labels such as "洗翠的样子", while the
+        # Pokémon records use full labels such as "洗翠狃拉" or "洗翠卡蒂狗".
+        if source_form_name.endswith("的样子"):
+            region_prefix = source_form_name[:-3]
+            if region_prefix and form_zh.startswith(region_prefix):
+                return True
+        # Some datasets expose authenticity forms only in the evolution chain,
+        # while the Pokémon record still has one undifferentiated form entry.
+        if not has_distinct_form_records and (form_zh == species_zh or form_en == species_en):
+            return True
+        return False
+
+    for chain in data.get("evolution_chains", []):
+        if not isinstance(chain, list):
+            continue
+        for index, node in enumerate(chain):
+            if not isinstance(node, dict) or node.get("from") != species_zh or index == 0:
+                continue
+            source = chain[index - 1]
+            if (isinstance(source, dict) and source.get("name") == species_zh
+                    and matches_source_form(source.get("form_name"))):
+                return True
+    return False
 
 
 def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | None = None, form_index: int = 0) -> dict[str, Any]:
@@ -1940,7 +1972,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     pk = {
         "name": display_name,
         "name_en": _engine_pokemon_name(data.get("name_en", ""), form),
-        "can_evolve": _species_can_evolve(data),
+        "can_evolve": _species_can_evolve(data, form),
         "level": 50,
         "base_stats": base_stats,
         "types": types,
