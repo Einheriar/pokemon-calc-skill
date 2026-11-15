@@ -98,20 +98,23 @@ def resolve_tera_type_en(name: str) -> str | None:
     """Canonicalize tera-type input for the engine.
 
     星晶/星愿 → "Stellar"; the 18 zh type names → English; zh-Hant type
-    names → English (zh_hant_support Step 3); anything else
-    passes through unchanged (exact match, no case folding — legacy contract).
+    names → English (zh_hant_support Step 3). English names are case-insensitive
+    and surrounding whitespace is ignored. Unknown names and non-string values
+    resolve to None so callers can reject them at the CLI boundary.
     """
-    if not name:
+    if not isinstance(name, str):
         return None
-    n = str(name)
+    n = name.strip()
+    if not n:
+        return None
     if n in STELLAR_TERA_ZH:
         return TERA_STELLAR_EN
     hit = TYPE_ZH_TO_EN.get(n) or TYPE_ZH_HANT_TO_EN.get(n)
-    return hit or n
+    return hit or _TYPE_EN_LOWER.get(n.lower()) or (TERA_STELLAR_EN if n.lower() == "stellar" else None)
 
 
 TERA_STELLAR_EN = "Stellar"
-STELLAR_TERA_ZH: frozenset[str] = frozenset({"星晶", "星愿"})
+STELLAR_TERA_ZH: frozenset[str] = frozenset({"星晶", "星愿", "星願"})
 
 
 # ---------------------------------------------------------------------------

@@ -43,6 +43,7 @@ from engine_enums import (
     VALID_STATUS_EN,
     VALID_TYPES_EN,
     resolve_nature_en,
+    resolve_tera_type_en,
     resolve_type_en,
 )
 
@@ -2269,6 +2270,11 @@ def cmd_optimize(
         overrides.append(parsed or {})
     att_override, def_override, field_override = overrides
 
+    for _side, _ov in (("attacker", att_override), ("defender", def_override)):
+        _enum_err = _validate_override_enums(_side, _ov)
+        if _enum_err is not None:
+            return _enum_err
+
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data)
@@ -2333,6 +2339,17 @@ def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] |
     if isinstance(status, str) and status and status not in VALID_STATUS_EN:
         return {"error": f"{label} status invalid: {status!r}",
                 "suggestions": get_suggestions(status, sorted(VALID_STATUS_EN), n=3)}
+    if "is_terastalize" in ov and not isinstance(ov["is_terastalize"], bool):
+        return {"error": f"{label} is_terastalize must be a JSON boolean"}
+    if "tera_type" in ov and ov["tera_type"] is not None:
+        tera_type = resolve_tera_type_en(ov["tera_type"])
+        if tera_type is None:
+            candidates = list(TYPE_ZH_TO_EN) + sorted(VALID_TYPES_EN) + ["星晶", "星愿", "Stellar"]
+            bad = ov["tera_type"]
+            return {"error": f"{label} tera_type invalid: {bad!r}",
+                    "suggestions": get_suggestions(str(bad), candidates, n=3)}
+    if ov.get("is_terastalize") is True and not ov.get("tera_type"):
+        return {"error": f"{label} is_terastalize requires a valid tera_type"}
     return None
 
 
@@ -2733,6 +2750,11 @@ def cmd_calc_raw(
             return parse_error
         parsed_inputs.append(parsed or {})
     att_dict, move_dict, def_dict, field_dict = parsed_inputs
+
+    for _side, _ov in (("attacker", att_dict), ("defender", def_dict)):
+        _enum_err = _validate_override_enums(_side, _ov)
+        if _enum_err is not None:
+            return _enum_err
 
     # Validate required fields
     if "stats" not in att_dict:

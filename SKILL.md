@@ -145,6 +145,7 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
 - `setup_moves` 是 `att_override` 的字段，接收变化类招式名称数组（如 `["诡计", "求雨"]`）。引擎自动解析并应用招式效果（能力等级变化、天气/场地设置等），重复强化后能力等级始终夹紧在 −6～+6。
 - 未知招式名会出现在响应 `warning` 中；已识别但没有结构化效果的变化招式按未建模机制跳过。`setup_moves` 不是数组或元素不是字符串时返回错误。
 - `calc` / `calc-raw` / `optimize` 的 JSON 参数必须合法且顶层为对象；解析失败会返回 `error`，不会静默套用默认配置。
+- `is_terastalize` 必须为 JSON 布尔值；开启时必须同时给出有效 `tera_type`。太晶属性支持中文、繁体、英文大小写及“星愿”兼容别名，未知类型返回 `error`，不要用字符串 `"false"` 表示关闭。
 - `setup_moves` 与手动的 `boosts`/`weather`/`terrain` 二选一，不要同时传入，避免冲突。
 
 **field_override 取值**：
