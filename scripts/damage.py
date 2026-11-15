@@ -176,13 +176,12 @@ _ITEM_BOOST_MAP: dict[str, str] = {
 # Aura abilities: move type (zh) -> the matching aura ability name.
 _AURA_MAP: dict[str, str] = {T.FAIRY: "Fairy Aura", T.DARK: "Dark Aura"}
 
-# Ogerpon masks boost the matching move type 1.2x (JS damage_MASTER.js:1477).
-# The attribute match implies the matching form (each form holds its own mask).
+# Ogerpon's held masks boost all damaging moves by 1.2x on their matching form.
+# Teal Ogerpon has no held Teal Mask item.
 _OGERPON_MASKS: dict[str, str] = {
-    "Wellspring Mask": T.WATER,
-    "Hearthflame Mask": T.FIRE,
-    "Cornerstone Mask": T.ROCK,
-    "Teal Mask": T.GRASS,
+    "Wellspring Mask": "Ogerpon-Wellspring",
+    "Hearthflame Mask": "Ogerpon-Hearthflame",
+    "Cornerstone Mask": "Ogerpon-Cornerstone",
 }
 
 # Weather Ball / Terrain Pulse type changes (module-level: rebuilt per call
@@ -636,9 +635,10 @@ def _cant_remove_item(item: str, defender: Pokemon) -> bool:
         return True
     if item in ("Red Orb", "Blue Orb", "Griseous Orb"):
         return True
+    if (name_en := (defender.name_en or "")).startswith("Ogerpon") and item in _OGERPON_MASKS:
+        return True
     if _SPECIES_LOCKED_ITEMS.get(defender.name_en) == item:
         return True
-    name_en = defender.name_en or ""
     if name_en == "Arceus" and " Plate" in item:
         return True
     if name_en == "Genesect" and " Drive" in item:
@@ -939,8 +939,11 @@ def calc_bp_mods(
     if boost_type and boost_type == move.type:
         bp_mods.append(0x1333)
 
-    # i2. Ogerpon masks: matching type 1.2x (JS:1477-1481)
-    if attacker.name_en == "Ogerpon" and _OGERPON_MASKS.get(attacker.item) == move.type:
+    # i2. Ogerpon masks boost every damaging move for the matching form.
+    # The mask is an item, not a move-type booster.
+    if (attacker.item in _OGERPON_MASKS
+            and (attacker.name_en == "Ogerpon"
+                 or attacker.name_en.startswith(_OGERPON_MASKS[attacker.item]))):
         bp_mods.append(0x1333)
 
     # i3. Punching Glove: punch moves 1.1x (JS:1581-1584)
