@@ -62,7 +62,13 @@ def get_effective_speed(
         weather_attacker, weather_defender, field, move_user=False,
     )
 
-    if ability in _WEATHER_SPEED_ABILITIES and weather in _WEATHER_SPEED_ABILITIES[ability]:
+    weather_speed_blocked = (
+        pokemon.item == "Utility Umbrella"
+        and weather in ("Sun", "Harsh Sun", "Rain", "Heavy Rain")
+    )
+    if (ability in _WEATHER_SPEED_ABILITIES
+            and weather in _WEATHER_SPEED_ABILITIES[ability]
+            and not weather_speed_blocked):
         modifier = _chain_modifier(modifier, 2)
     elif ability == "Surge Surfer" and field.terrain == "Electric":
         modifier = _chain_modifier(modifier, 2)

@@ -696,10 +696,12 @@ def _highest_stat(pokemon: Pokemon) -> str:
     damage_MASTER.js:332-341). Comparing only attack vs sp_attack wrongly
     boosts offense for mons whose top stat is defense/speed (round 2 audit E1).
     """
-    raw = pokemon.stats or pokemon.raw_stats
+    stats = pokemon.raw_stats or pokemon.stats
     best, best_val = _HIGHEST_STAT_ORDER[0], None
     for key in _HIGHEST_STAT_ORDER:
-        val = raw.get(key, 0)
+        val = stats.get(key, 0)
+        if pokemon.raw_stats:
+            val = get_modified_stat(val, pokemon.boosts.get(key, 0))
         if best_val is None or val > best_val:
             best, best_val = key, val
     return best
