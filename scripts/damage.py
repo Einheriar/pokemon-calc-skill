@@ -300,11 +300,19 @@ def chain_mods(mods: list[int]) -> int:
     return M
 
 
+def get_current_types(pokemon: Pokemon) -> list[str]:
+    """Return battle types while retaining original types for Tera STAB."""
+    tera_type = resolve_tera_type_en(pokemon.tera_type) if pokemon.tera_type else None
+    if pokemon.is_terastalize and tera_type and tera_type != "Stellar":
+        return [tera_type]
+    return [resolve_type_en(t) or t for t in pokemon.types]
+
+
 def is_grounded(pokemon: Pokemon, field: Field) -> bool:
     """Check if a Pokemon is grounded (affected by terrain effects)."""
     if pokemon.item == "Iron Ball" or field.is_gravity:
         return True
-    if T.FLYING in pokemon.types:
+    if T.FLYING in get_current_types(pokemon):
         return False
     if pokemon.item == "Air Balloon":
         return False
@@ -499,7 +507,7 @@ def _immunity_check(
     is_priority = (
         getattr(move, "is_priority", False)
         or name in _PRIORITY_MOVES
-        or (name == "Grassy Glide" and field.terrain == "Grassy")
+        or (name == "Grassy Glide" and field.terrain == "Grassy" and is_grounded(attacker, field))
     )
 
     if (def_ability == "Wonder Guard" and type_effectiveness <= 1 and name != "Struggle"):
@@ -529,9 +537,9 @@ def _immunity_check(
         return display_zh.REASON_AIR_BALLOON
     if (field.weather == "Harsh Sun" and move_type == T.WATER) or (field.weather == "Heavy Rain" and move_type == T.FIRE):
         return display_zh.REASON_WEATHER_LOCK
-    if name == "Sky Drop" and (T.FLYING in defender.types or defender.weight >= 200.0 or field.is_gravity):
+    if name == "Sky Drop" and (T.FLYING in get_current_types(defender) or defender.weight >= 200.0 or field.is_gravity):
         return display_zh.REASON_SKY_DROP
-    if name == "Synchronoise" and not (set(attacker.types) & set(defender.types)):
+    if name == "Synchronoise" and not (set(get_current_types(attacker)) & set(get_current_types(defender))):
         return display_zh.REASON_SYNCHRONOISE
     if defender.is_dynamax and name in ("Grass Knot", "Low Kick", "Heat Crash", "Heavy Slam"):
         return display_zh.REASON_DYNAMAX_WEIGHT
@@ -1108,10 +1116,11 @@ def calc_defense(
 
     # Weather defense mods (applied directly)
     # Sand boosts Sp. Defense of Rock-types by 1.5x; Snow boosts Defense of Ice-types.
-    if (field.weather == "Sand" and T.ROCK in defender.types
+    current_types = get_current_types(defender)
+    if (field.weather == "Sand" and T.ROCK in current_types
             and not hits_physical):
         defense = poke_round(defense * 3 / 2)
-    elif (field.weather == "Snow" and T.ICE in defender.types
+    elif (field.weather == "Snow" and T.ICE in current_types
             and hits_physical):
         defense = poke_round(defense * 3 / 2)
 
@@ -1443,7 +1452,8 @@ def _calculate_damage_impl(
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
     if move.name == "Weather Ball":
         move.type = _WEATHER_BALL_TYPE.get(_weather_ball_weather(attacker, field), move.type)
-    elif move.name in ("Terrain Pulse", "Nature Power") and field.terrain:
+    elif (move.name in ("Terrain Pulse", "Nature Power") and field.terrain
+          and (move.name != "Terrain Pulse" or is_grounded(attacker, field))):
         move.type = _TERRAIN_PULSE_TYPE.get(field.terrain, move.type)
     elif move.name == "Tera Blast" and attacker.is_terastalize and attacker.tera_type:
         move.type = attacker.tera_type
@@ -1459,11 +1469,9 @@ def _calculate_damage_impl(
     move, ate_ize_boosted = _ate_ize_type_change(move, attacker)
     # Non-Stellar Terastallization replaces the defender's original types.
     # Stellar is the exception: the defender keeps its original typing.
-    if defender.is_terastalize and defender.tera_type and defender.tera_type != "Stellar":
-        def_type1, def_type2 = defender.tera_type, None
-    else:
-        def_type1 = defender.types[0] if defender.types else T.NORMAL
-        def_type2 = defender.types[1] if len(defender.types) > 1 else None
+    current_types = get_current_types(defender)
+    def_type1 = current_types[0] if current_types else T.NORMAL
+    def_type2 = current_types[1] if len(current_types) > 1 else None
     type_effectiveness = get_move_effectiveness(
         move.type, def_type1, def_type2,
         is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),

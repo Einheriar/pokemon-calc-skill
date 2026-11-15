@@ -35,6 +35,12 @@ def get_ko_chance_text(
     defender = copy(defender)
     move.type = _type_zh_to_en(move.type)
     defender.types = [_type_zh_to_en(t) for t in defender.types]
+    # Hazards model entry before this turn's Terastallization. Residuals and
+    # terrain recovery use the current battle types instead.
+    entry_defender = copy(defender)
+    entry_defender.is_terastalize = False
+    from damage import get_current_types
+    defender.types = get_current_types(defender)
 
     if not damage or math.isnan(damage[0]):
         return display_zh.KO_ERROR
@@ -68,13 +74,13 @@ def get_ko_chance_text(
     hazard_texts: list[str] = []
     hazard_immune = defender.ability == "Magic Guard" or defender.item == "Heavy-Duty Boots"
     if field.is_stealth_rock and not hazard_immune:
-        eff = _get_rock_effectiveness(defender)
+        eff = _get_rock_effectiveness(entry_defender)
         hazards += math.floor(eff * defender.max_hp / 8)
         hazard_texts.append(display_zh.HAZARD_STEALTH_ROCK)
 
     from damage import is_grounded
     grounded = is_grounded(defender, field)
-    if grounded and not hazard_immune:
+    if is_grounded(entry_defender, field) and not hazard_immune:
         if field.spikes == 1:
             hazards += math.floor(defender.max_hp / 8)
             hazard_texts.append(display_zh.HAZARD_SPIKES_1)
