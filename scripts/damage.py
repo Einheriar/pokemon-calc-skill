@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
-from battle_effects import effective_ability
+from battle_effects import effective_ability, ignorable_defender_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 import display_zh
 from engine_enums import (
@@ -1528,9 +1528,7 @@ def _calculate_damage_impl(
     hits_physical = uses_physical_defense(attacker, defender, move)
 
     # Ability ignore (Mold Breaker, Teravolt, Turboblaze)
-    def_ability = defender.ability
-    if attacker.ability in ("Mold Breaker", "Teravolt", "Turboblaze"):
-        def_ability = "[ignored]"
+    def_ability = ignorable_defender_ability(attacker, defender, field)
 
     # Terrain Seed one-time defensive boost (public wrapper already
     # copy-protected boosts/stats and rolls the mutation back on exit).
