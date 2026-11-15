@@ -707,7 +707,7 @@ def _highest_stat(pokemon: Pokemon) -> str:
 def _weather_ball_weather(attacker: Pokemon, field: Field) -> Optional[str]:
     """Weather Ball's user-side weather, without suppressing sand or snow."""
     weather = field.weather
-    if attacker.ability == "Mega Sol" and weather not in ("Heavy Rain", "Harsh Sun"):
+    if attacker.ability == "Mega Sol":
         weather = "Sun"
     if attacker.item == "Utility Umbrella" and weather in ("Sun", "Rain", "Harsh Sun", "Heavy Rain"):
         return None
@@ -958,7 +958,7 @@ def calc_bp_mods(
 
     # i4. Solar Beam / Solar Blade halve in non-sun weather (JS:1491-1495)
     if (move.name in ("Solar Beam", "SolarBeam", "Solar Blade")
-            and field.weather not in (None, "", "None", "Sun", "Harsh Sun", "Strong Winds")
+            and effective_weather(attacker, defender, field) not in (None, "", "None", "Sun", "Harsh Sun", "Strong Winds")
             and not (field.weather in ("Rain", "Heavy Rain") and defender.item == "Utility Umbrella")):
         bp_mods.append(0x800)
 
@@ -1459,7 +1459,7 @@ def _calculate_damage_core(
     attacker.ability = effective_ability(attacker, field)
     defender.ability = effective_ability(defender, field)
     calculation_field = copy(field)
-    calculation_field.weather = effective_weather(attacker, defender, field)
+    calculation_field.weather = effective_weather(attacker, defender, field, move_user=False)
     try:
         result = _calculate_damage_impl(
             attacker, defender, final_move, calculation_field, gen, _skip_seeds, _neutral_damage,
@@ -1548,9 +1548,7 @@ def _calculate_damage_impl(
     is_critical = (move.is_crit or forced_critical) and def_ability not in ("Battle Armor", "Shell Armor")
 
     # Effective weather for the attacker (Mega Sol treats it as Sun)
-    effective_weather = field.weather
-    if attacker.ability == "Mega Sol" and field.weather not in ("Heavy Rain", "Harsh Sun"):
-        effective_weather = "Sun"
+    move_weather = effective_weather(attacker, defender, field)
 
     # Move type changes based on weather / terrain (Weather Ball, Terrain Pulse, etc.)
     if move.name == "Weather Ball":
@@ -1591,8 +1589,10 @@ def _calculate_damage_impl(
     # Ability / item / weather immunities — port of damage_MASTER.js
     # immunityChecks():905. Uses def_ability (Mold Breaker-aware) so abilities
     # ignored by Mold Breaker / Teravolt / Turboblaze no longer grant immunity.
+    immunity_field = copy(field)
+    immunity_field.weather = move_weather
     immunity_reason = _immunity_check(
-        move, attacker, defender, field, type_effectiveness, def_ability,
+        move, attacker, defender, immunity_field, type_effectiveness, def_ability,
         is_ghost_revealed=(attacker.ability in ("Scrappy", "Mind's Eye") or field.is_foresight),
     )
     if immunity_reason is not None:
@@ -1664,18 +1664,18 @@ def _calculate_damage_impl(
 
     # b. Weather. Hydro Steam's user-side effect is distinct from the
     # target-side Umbrella rule for ordinary Fire/Water weather damage.
-    if effective_weather:
-        if "Sun" in effective_weather and move.name == "Hydro Steam":
+    if move_weather:
+        if "Sun" in move_weather and move.name == "Hydro Steam":
             if attacker.item != "Utility Umbrella":
                 base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
             elif defender.item != "Utility Umbrella":
                 base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
-        elif (("Sun" in effective_weather and move.type == T.FIRE)
-                or ("Rain" in effective_weather and move.type == T.WATER)):
+        elif (("Sun" in move_weather and move.type == T.FIRE)
+                or ("Rain" in move_weather and move.type == T.WATER)):
             if defender.item not in ("Utility Umbrella",):
                 base_dmg = poke_round(base_dmg * 0x1800 / 0x1000)
-        elif ((effective_weather == "Sun" and move.type == T.WATER)
-              or (effective_weather == "Rain" and move.type == T.FIRE)) \
+        elif ((move_weather == "Sun" and move.type == T.WATER)
+              or (move_weather == "Rain" and move.type == T.FIRE)) \
                 and defender.item not in ("Utility Umbrella",):
             base_dmg = poke_round(base_dmg * 0x800 / 0x1000)
 
