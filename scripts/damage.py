@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
+from battle_effects import effective_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 import display_zh
 from engine_enums import (
@@ -317,7 +318,7 @@ def is_grounded(pokemon: Pokemon, field: Field) -> bool:
         return False
     if pokemon.item == "Air Balloon":
         return False
-    if pokemon.ability in ("Levitate", "Eelevate"):
+    if effective_ability(pokemon, field) in ("Levitate", "Eelevate"):
         return False
     return True
 
@@ -1445,17 +1446,33 @@ def _calculate_damage_core(
     # Keep the final private copy in the result. Callers must not reconstruct
     # dynamic type/category/power from the original Move or display text.
     final_move = copy(move)
+    for pokemon in (attacker, defender):
+        if not pokemon.raw_stats:
+            compute_raw_stats(pokemon)
+    # Trigger events against the configured abilities before using their
+    # temporary effective forms for the current attack.
+    apply_tera_effects(attacker, defender, field)
+    apply_tera_effects(defender, attacker, field)
     attacker_before = deepcopy(attacker)
     defender_before = deepcopy(defender)
-    result = _calculate_damage_impl(
-        attacker, defender, final_move, field, gen, _skip_seeds, _neutral_damage,
-    )
+    original_abilities = (attacker.ability, defender.ability)
+    attacker.ability = effective_ability(attacker, field)
+    defender.ability = effective_ability(defender, field)
+    try:
+        result = _calculate_damage_impl(
+            attacker, defender, final_move, field, gen, _skip_seeds, _neutral_damage,
+        )
+    finally:
+        attacker.ability, defender.ability = original_abilities
     result.move = final_move
     result.attacker_used = result.attacker_used or attacker_before
     result.defender_used = result.defender_used or defender_before
+    result.attacker_used.ability = original_abilities[0]
+    result.defender_used.ability = original_abilities[1]
     result.attacker_after = deepcopy(attacker)
     result.defender_after = deepcopy(defender)
     result.field_state = deepcopy(field)
+    result.field_used = deepcopy(field)
     return result
 
 

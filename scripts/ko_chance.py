@@ -13,6 +13,7 @@ from typing import Optional
 from models import Field, Move, Pokemon
 import display_zh
 from engine_enums import T
+from battle_effects import effective_ability
 
 _HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
 _SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
@@ -44,6 +45,7 @@ def get_ko_chance_text(
     entry_defender.is_terastalize = False
     from damage import get_current_types
     defender.types = get_current_types(defender)
+    defender_ability = effective_ability(defender, field)
 
     if not damage or math.isnan(damage[0]):
         return display_zh.KO_ERROR
@@ -69,8 +71,8 @@ def get_ko_chance_text(
 
     has_sitrus = defender.item in ("Sitrus Berry",)
     has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
-    gluttony = defender.ability == "Gluttony"
-    ripen = 2 if defender.ability == "Ripen" else 1
+    gluttony = defender_ability == "Gluttony"
+    ripen = 2 if defender_ability == "Ripen" else 1
 
     # Guaranteed OHKO checks
     if (damage[0] >= defender.current_hp
@@ -81,7 +83,7 @@ def get_ko_chance_text(
     # Hazards
     hazards = 0
     hazard_texts: list[str] = []
-    hazard_immune = defender.ability == "Magic Guard" or defender.item == "Heavy-Duty Boots"
+    hazard_immune = defender_ability == "Magic Guard" or defender.item == "Heavy-Duty Boots"
     if field.is_stealth_rock and not hazard_immune:
         eff = _get_rock_effectiveness(entry_defender)
         hazards += math.floor(eff * defender.max_hp / 8)
@@ -116,23 +118,23 @@ def get_ko_chance_text(
         eot_texts.append(label)
 
     if field.weather == "Sun" and defender.item != "Utility Umbrella":
-        if defender.ability in ("Dry Skin", "Solar Power"):
-            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.ability_damage(defender.ability), True)
+        if defender_ability in ("Dry Skin", "Solar Power"):
+            add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.ability_damage(defender_ability), True)
     elif field.weather == "Rain" and defender.item != "Utility Umbrella":
-        if defender.ability == "Dry Skin":
+        if defender_ability == "Dry Skin":
             add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_DRY_SKIN_HEAL, True)
-        elif defender.ability == "Rain Dish":
+        elif defender_ability == "Rain Dish":
             add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_RAIN_DISH_HEAL, True)
     elif field.weather == "Sand":
         if "Rock" not in defender.types and "Ground" not in defender.types and "Steel" not in defender.types:
-            if defender.ability not in ("Magic Guard", "Overcoat", "Sand Force", "Sand Rush", "Sand Veil") and defender.item != "Safety Goggles":
+            if defender_ability not in ("Magic Guard", "Overcoat", "Sand Force", "Sand Rush", "Sand Veil") and defender.item != "Safety Goggles":
                 add_eot(-math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_SAND_DAMAGE, True)
     elif field.weather == "Hail":
-        if defender.ability == "Ice Body":
+        if defender_ability == "Ice Body":
             add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_ICE_BODY_HEAL, True)
-        elif T.ICE not in defender.types and defender.ability not in ("Magic Guard", "Overcoat", "Snow Cloak") and defender.item != "Safety Goggles":
+        elif T.ICE not in defender.types and defender_ability not in ("Magic Guard", "Overcoat", "Snow Cloak") and defender.item != "Safety Goggles":
             add_eot(-math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_HAIL_DAMAGE, True)
-    elif field.weather == "Snow" and defender.ability == "Ice Body":
+    elif field.weather == "Snow" and defender_ability == "Ice Body":
         add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_ICE_BODY_HEAL, True)
 
     if defender.item == "Leftovers":
@@ -140,7 +142,7 @@ def get_ko_chance_text(
     elif defender.item == "Black Sludge":
         if T.POISON in defender.types:
             add_eot(math.floor(math.floor(defender.max_hp / 16) * max_chip), display_zh.EOT_BLACK_SLUDGE_HEAL)
-        elif defender.ability not in ("Magic Guard", "Klutz"):
+        elif defender_ability not in ("Magic Guard", "Klutz"):
             add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_BLACK_SLUDGE_DAMAGE)
 
     if field.terrain == "Grassy" and grounded:
@@ -148,26 +150,26 @@ def get_ko_chance_text(
 
     toxic_counter = 0
     if defender.status == "Poisoned":
-        if defender.ability == "Poison Heal":
+        if defender_ability == "Poison Heal":
             add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_HEAL_HEAL)
-        elif defender.ability != "Magic Guard":
+        elif defender_ability != "Magic Guard":
             add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_DAMAGE)
     elif defender.status == "Badly Poisoned":
-        if defender.ability == "Poison Heal":
+        if defender_ability == "Poison Heal":
             add_eot(math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_POISON_HEAL_HEAL)
-        elif defender.ability != "Magic Guard":
+        elif defender_ability != "Magic Guard":
             eot_texts.append(display_zh.EOT_TOXIC_DAMAGE)
             toxic_counter = getattr(defender, "toxic_counter", 0)
     elif defender.status == "Burned":
         burn_div = 16  # gen >= 7
-        if defender.ability == "Heatproof":
+        if defender_ability == "Heatproof":
             add_eot(-math.floor(math.floor(defender.max_hp / burn_div / 2) * max_chip), display_zh.EOT_HALVED_BURN_DAMAGE)
-        elif defender.ability != "Magic Guard":
+        elif defender_ability != "Magic Guard":
             add_eot(-math.floor(math.floor(defender.max_hp / burn_div) * max_chip), display_zh.EOT_BURN_DAMAGE)
-    elif defender.status == "Asleep" and is_bad_dreams and defender.ability != "Magic Guard":
+    elif defender.status == "Asleep" and is_bad_dreams and defender_ability != "Magic Guard":
         add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_BAD_DREAMS)
 
-    if field.is_salt_cure and defender.ability != "Magic Guard":
+    if field.is_salt_cure and defender_ability != "Magic Guard":
         if T.WATER not in defender.types and T.STEEL not in defender.types:
             add_eot(-math.floor(math.floor(defender.max_hp / 8) * max_chip), display_zh.EOT_SALT_CURE_DAMAGE)
         else:
@@ -414,15 +416,18 @@ def _stateful_ko_probability(
                 branch_sitrus = sitrus_available
                 branch_figy = figy_available
                 branch_defender = deepcopy(after_defender)
+                branch_ability = effective_ability(branch_defender, after_field)
+                branch_gluttony = branch_ability == "Gluttony"
+                branch_ripen = 2 if branch_ability == "Ripen" else 1
                 if branch_sitrus and branch_hp <= dfn.max_hp // 2:
-                    branch_hp = min(dfn.max_hp, branch_hp + math.floor(ripen * dfn.max_hp / 4))
+                    branch_hp = min(dfn.max_hp, branch_hp + math.floor(branch_ripen * dfn.max_hp / 4))
                     branch_sitrus = False
                     branch_defender.item = ""
                 elif branch_figy and (
-                    (branch_hp <= dfn.max_hp // 4 and not gluttony)
-                    or (branch_hp <= dfn.max_hp // 2 and gluttony)
+                    (branch_hp <= dfn.max_hp // 4 and not branch_gluttony)
+                    or (branch_hp <= dfn.max_hp // 2 and branch_gluttony)
                 ):
-                    branch_hp = min(dfn.max_hp, branch_hp + math.floor(ripen * dfn.max_hp / 3))
+                    branch_hp = min(dfn.max_hp, branch_hp + math.floor(branch_ripen * dfn.max_hp / 3))
                     branch_figy = False
                     branch_defender.item = ""
 
@@ -484,8 +489,9 @@ def get_stateful_ko_probability(
     hp = defender.current_hp if starting_hp is None else starting_hp
     has_sitrus = defender.item == "Sitrus Berry"
     has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
-    gluttony = defender.ability == "Gluttony"
-    ripen = 2 if defender.ability == "Ripen" else 1
+    defender_ability = effective_ability(defender, field)
+    gluttony = defender_ability == "Gluttony"
+    ripen = 2 if defender_ability == "Ripen" else 1
     return _stateful_ko_probability(
         attacker, defender, move, field, hits, hp, eot, 0,
         has_sitrus, has_figy, gluttony, ripen, [],

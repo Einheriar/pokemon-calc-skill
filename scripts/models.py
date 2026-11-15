@@ -135,3 +135,4 @@ class DamageResult:
     attacker_after: Optional[Pokemon] = None
     defender_after: Optional[Pokemon] = None
     field_state: Optional[Field] = None
+    field_used: Optional[Field] = None
