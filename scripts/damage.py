@@ -819,6 +819,7 @@ def _apply_tera_base_power_floor(base_power: int, move: Move, attacker: Pokemon)
     """Apply Gen 9's 60 BP floor after base-power modifiers."""
     if (not attacker.is_terastalize or move.category == "Status"
             or move.base_power <= 0 or base_power >= 60
+            or getattr(move, "_parental_bond_child", False)
             or getattr(move, "is_multi_hit", False)
             or move.priority > 0 or getattr(move, "is_priority", False)
             or move.name in _TERA_FLOOR_POSITIVE_PRIORITY_MOVES):
@@ -1696,6 +1697,7 @@ def _calculate_damage_impl(
                  and (field.format == "Singles" or not move.is_spread))
     if _pb_active:
         second_move = copy(move)
+        second_move._parental_bond_child = True
         second_move.base_power = max(1, math.floor(second_move.base_power * 0.25))
         second_move.fainted_allies = 0  # Prevent dynamic BP boosts from reapplying
         second_move.times_affected = 0  # Same for Rage Fist counters
