@@ -206,6 +206,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 太晶化太晶爆发的攻击优化会分别搜索攻击与特攻路线，并按候选能力值重新决定物理／特殊分类；返回满足目标的最小 EV／SP 路线。
 
+星晶／太晶甲壳等状态连续攻击使用逐击概率：`guaranteed` 要求全部随机伤害分支满足目标，`likely` 要求至少 50% 概率，并回显 `ko_probability`／`survival_probability`（百分数）。普通静态场景的 `likely` 继续使用平均伤害。优化不包含入场钉子或回合末回复／持续伤害。
+
 ## 3. 执行工作流
 
 ### 承伤反查的默认口径（survivability）

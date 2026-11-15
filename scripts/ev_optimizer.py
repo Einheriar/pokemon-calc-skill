@@ -13,7 +13,7 @@ from __future__ import annotations
 import copy
 from typing import Literal, Optional
 
-from damage import calculate_damage, compute_raw_stats, get_modified_stat, uses_physical_attack, uses_physical_defense
+from damage import calculate_damage, compute_raw_stats, get_modified_stat
 from models import DamageResult, Field, Move, Pokemon
 import display_zh
 
@@ -46,6 +46,62 @@ def _unsupported_stateful_repeat(move: Move, repeated: bool) -> dict | None:
             "reason": display_zh.OPT_STATEFUL_REPEAT_UNSUPPORTED,
         }
     return None
+
+
+def _has_stateful_tera_sequence(attacker: Pokemon, defender: Pokemon, move: Move, repeated: bool) -> bool:
+    if not repeated:
+        return False
+    from engine_enums import resolve_tera_type_en
+
+    stellar_user = attacker.is_terastalize and resolve_tera_type_en(attacker.tera_type or "") == "Stellar"
+    teraform_zero = (
+        attacker.is_terastalize and not attacker.tera_effects_applied
+        and attacker.name_en == "Terapagos-Stellar" and attacker.ability == "Teraform Zero"
+    )
+    shell_defender = defender.ability == "Tera Shell"
+    return stellar_user or teraform_zero or shell_defender
+
+
+def _stateful_sequence_unsupported(move: Move) -> dict:
+    return {
+        "success": False,
+        "unsupported": True,
+        "reason": display_zh.OPT_STATEFUL_REPEAT_UNSUPPORTED,
+    }
+
+
+def _probability_meets_threshold(probability: float, threshold: str, goal: str) -> bool:
+    """Use exact all-roll success for guaranteed and a 50% chance for likely."""
+    if goal == "ko":
+        return probability >= (1.0 if threshold == "guaranteed" else 0.5)
+    survival_probability = 1.0 - probability
+    return survival_probability >= (1.0 if threshold == "guaranteed" else 0.5)
+
+
+def _stateful_worst_case_survives(
+    attacker: Pokemon, defender: Pokemon, move: Move, field: Field, hits: int,
+) -> tuple[bool, DamageResult | None]:
+    """Check sequential maximum rolls, recalculating HP- and state-dependent damage."""
+    if move.hits > 1 or getattr(move, "is_multi_hit", False):
+        return False, None
+    att = copy.deepcopy(attacker)
+    dfn = copy.deepcopy(defender)
+    base_move = copy.deepcopy(move)
+    current_field = copy.deepcopy(field)
+    first_result = None
+    for _ in range(hits):
+        # Re-evaluate move type/category from its original definition each use.
+        result = calculate_damage(att, dfn, base_move, current_field, gen=9)
+        if first_result is None:
+            first_result = result
+        if not result.damage or result.max_damage >= dfn.current_hp:
+            return False, first_result
+        next_hp = dfn.current_hp - result.max_damage
+        att = copy.deepcopy(result.attacker_after or att)
+        dfn = copy.deepcopy(result.defender_after or dfn)
+        dfn.current_hp = next_hp
+        current_field = copy.deepcopy(result.field_state or current_field)
+    return True, first_result
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -188,7 +244,8 @@ def optimize_attack_ev(
 
     threshold:
         "guaranteed" -> use min_damage (worst roll)
-        "likely"     -> use average damage
+        "likely"     -> use average damage, or a >=50% exact KO chance for
+                        supported stateful Terastallization sequences
 
     Returns a dict with the optimal EV, resulting damage, and description.
     """
@@ -200,6 +257,9 @@ def optimize_attack_ev(
     use_min = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
+    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_needed > 1)
+    if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
+        return _stateful_sequence_unsupported(move)
 
     # Determine which stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
@@ -212,10 +272,13 @@ def optimize_attack_ev(
         }
 
     # Physical vs Special determination (same logic as damage.py)
-    hits_physical = uses_physical_attack(attacker, defender, move)
+    hits_physical = (result.move or move).category == "Physical"
     stat = "attack" if hits_physical else "sp_attack"
     search_stats = [stat]
-    if move.name == "Tera Blast" and attacker.is_terastalize:
+    if (move.name == "Tera Blast" and attacker.is_terastalize) or (
+        move.name == "Tera Starstorm" and attacker.name_en == "Terapagos-Stellar"
+        and attacker.is_terastalize
+    ):
         search_stats.append("sp_attack" if hits_physical else "attack")
 
     best_val: Optional[int] = None
@@ -235,14 +298,29 @@ def optimize_attack_ev(
     for val in range(0, max_single + 1, step):
         for candidate_stat in search_stats:
             result = _evaluate_attack(attacker, defender, move, field, candidate_stat, val, mode=mode)
-            dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
-            # Each candidate can change Tera Blast's category independently.
-            move_hits = max(1, int(getattr(move, "hits", 1) or 1))
-            total = dmg * hits_needed * move_hits
-            if total >= defender.current_hp:
+            if stateful_sequence:
+                from ko_chance import get_stateful_ko_probability
+
+                candidate_attacker = _set_sp(attacker, candidate_stat, val) if mode == "sp" else _set_ev(attacker, candidate_stat, val)
+                _ensure_stats(candidate_attacker)
+                probability = get_stateful_ko_probability(
+                    candidate_attacker, defender, move, field, hits_needed,
+                )
+                if probability is None:
+                    return _stateful_sequence_unsupported(move)
+                meets_target = _probability_meets_threshold(probability, threshold, "ko")
+            else:
+                probability = None
+                dmg = result.min_damage if use_min else sum(result.damage) // len(result.damage)
+                # Each candidate can change Tera Blast's category independently.
+                move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+                total = dmg * hits_needed * move_hits
+                meets_target = total >= defender.current_hp
+            if meets_target:
                 stat = candidate_stat
                 best_val = val
                 best_damage = result
+                best_probability = probability
                 break
         if best_val is not None:
             break
@@ -274,6 +352,7 @@ def optimize_attack_ev(
         "remaining_sp": _remaining_allocation(attacker, {stat: best_val}, mode) if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
+        **({"ko_probability": round(best_probability * 100, 1)} if stateful_sequence else {}),
     }
 
 
@@ -295,7 +374,8 @@ def optimize_defense_ev(
 
     threshold:
         "guaranteed" -> use max_damage (worst roll)
-        "likely"     -> use average damage
+        "likely"     -> use average damage, or a >=50% exact survival chance
+                        for supported stateful Terastallization sequences
 
     Returns a dict with the optimal EV allocation.
     """
@@ -307,12 +387,15 @@ def optimize_defense_ev(
     use_max = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
+    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_to_survive > 1)
+    if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
+        return _stateful_sequence_unsupported(move)
 
     # Determine which defensive stat to optimize
-    hits_physical = uses_physical_defense(attacker, defender, move)
-    stat = "defense" if hits_physical else "sp_defense"
-
     result = calculate_damage(attacker, defender, move, field, gen=9)
+    effective_move = result.move or move
+    hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
+    stat = "defense" if hits_physical else "sp_defense"
     if result.max_damage == 0:
         return {
             "success": True,
@@ -337,15 +420,30 @@ def optimize_defense_ev(
 
     for val in range(0, max_single + 1, step):
         result = _evaluate_defense(attacker, defender, move, field, stat, val, mode=mode)
-        dmg = result.max_damage if use_max else sum(result.damage) // len(result.damage)
-        # Damage rolls are per-hit; surviving a multi-hit move means
-        # surviving hits × hits_to_survive total damage.
-        move_hits = max(1, int(getattr(move, "hits", 1) or 1))
-        total = dmg * hits_to_survive * move_hits
+        if stateful_sequence:
+            from ko_chance import get_stateful_ko_probability
 
-        if total < defender.current_hp:
+            candidate_defender = _set_sp(defender, stat, val) if mode == "sp" else _set_ev(defender, stat, val)
+            _ensure_stats(candidate_defender)
+            probability = get_stateful_ko_probability(
+                attacker, candidate_defender, move, field, hits_to_survive,
+            )
+            if probability is None:
+                return _stateful_sequence_unsupported(move)
+            meets_target = _probability_meets_threshold(probability, threshold, "survive")
+        else:
+            probability = None
+            dmg = result.max_damage if use_max else sum(result.damage) // len(result.damage)
+            # Damage rolls are per-hit; surviving a multi-hit move means
+            # surviving hits × hits_to_survive total damage.
+            move_hits = max(1, int(getattr(move, "hits", 1) or 1))
+            total = dmg * hits_to_survive * move_hits
+            meets_target = total < defender.current_hp
+
+        if meets_target:
             best_val = val
             best_damage = result
+            best_probability = probability
             break
 
     if best_val is None:
@@ -372,6 +470,7 @@ def optimize_defense_ev(
         "remaining_sp": _remaining_allocation(defender, {stat: best_val}, mode) if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
+        **({"survival_probability": round((1 - best_probability) * 100, 1)} if stateful_sequence else {}),
     }
 
 
@@ -404,9 +503,14 @@ def optimize_bulk_evs(
 
     _ensure_stats(attacker)
     _ensure_stats(defender)
-    hits_physical = uses_physical_defense(attacker, defender, move)
-    def_stat = "defense" if hits_physical else "sp_defense"
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
+    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_to_survive > 1)
+    if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
+        return _stateful_sequence_unsupported(move)
+    initial_result = calculate_damage(attacker, defender, move, field, gen=9)
+    effective_move = initial_result.move or move
+    hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
+    def_stat = "defense" if hits_physical else "sp_defense"
 
     if mode == "sp":
         max_single = MAX_SINGLE_SP
@@ -446,7 +550,28 @@ def optimize_bulk_evs(
             # optimizer-owned candidate before reading its recomputed HP.
             compute_raw_stats(dfn)
             result = calculate_damage(attacker, dfn, move, field, gen=9)
-            if result.max_damage * hits_to_survive * move_hits < dfn.current_hp:
+            if stateful_sequence:
+                if dfn.item in (
+                    "Sitrus Berry", "Figy Berry", "Aguav Berry", "Iapapa Berry",
+                    "Mago Berry", "Wiki Berry",
+                ):
+                    from ko_chance import get_stateful_ko_probability
+
+                    probability = get_stateful_ko_probability(
+                        attacker, dfn, move, field, hits_to_survive,
+                    )
+                    if probability is None:
+                        return _stateful_sequence_unsupported(move)
+                    survives = probability == 0.0
+                else:
+                    survives, sequence_result = _stateful_worst_case_survives(
+                        attacker, dfn, move, field, hits_to_survive,
+                    )
+                    if sequence_result is not None:
+                        result = sequence_result
+            else:
+                survives = result.max_damage * hits_to_survive * move_hits < dfn.current_hp
+            if survives:
                 best_total = hp_val + def_val
                 best_combo = (hp_val, def_val)
                 best_result = result

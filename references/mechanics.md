@@ -77,6 +77,8 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 太晶计算返回的 `next_state.attacker`／`defender` 可合并回对应配置继续计算，其中包含 `boosts`、`stellar_boosted_types`、`tera_effects_applied` 和 `item`。必须同时把 `next_state.field_override` 合并回场地配置。HP 没有自动扣除，调用者须选定一次真实伤害后设置下一次 `current_hp`。连续攻击 KO 使用每个伤害分支自己的 HP、树果和太晶状态；多段／亲子爱或回复与持续伤害混合等未建模组合会明确提示无法可靠计算。
 
+太晶状态相关的多次攻击优化，`guaranteed` 检查所有伤害分支，`likely` 检查目标概率至少 50%，并返回百分数形式的 `ko_probability`／`survival_probability`。其余静态场景保留平均伤害阈值。优化保持既有范围，不把钉子、回合末回复／伤害加入阈值；状态连续多段明确不支持。
+
 ## 万能伞的计算边界
 
 万能伞只影响部分晴天／雨天效果，不清除场上天气。普通火／水招式的天气伤害倍率由防守方是否携伞决定，攻击方单独携伞不取消该倍率。气象球则由攻击方道具决定是否在晴雨下变属性和翻倍威力；沙暴／冰雹／雪天下仍正常变岩／冰属性并翻倍。
