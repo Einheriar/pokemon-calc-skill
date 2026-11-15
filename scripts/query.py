@@ -1652,15 +1652,16 @@ def _derive_mega_stone(form_name: str) -> str:
     return ""
 
 
-def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> None:
-    """Apply stat_changes from setup moves to attacker state and field.
+def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> list[str]:
+    """Apply modeled setup effects and return warnings for unknown moves.
 
-    Reads moves.json for each setup move and applies structured stat changes.
-    This eliminates LLM dependency on move effect knowledge. Whenever boosts
-    change, the corresponding effective stats are re-derived so they stay in
-    sync (round 2 audit E3 follow-up: stats were derived before setup_moves).
+    Recognized moves without structured ``stat_changes`` remain intentional
+    no-ops. Boosts accumulate across repeated setup moves but always obey the
+    battle-stage range of -6..+6. Effective stats are re-derived afterwards.
     """
     from damage import get_modified_stat
+
+    warnings: list[str] = []
 
     def _sync_stats(pk) -> None:
         if pk.raw_stats:
@@ -1670,6 +1671,10 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
     for move_name in setup_moves:
         move_data = _moves_data.get(move_name)
         if not move_data:
+            resolved = resolve_move(move_name)
+            move_data = resolved[1] if resolved else None
+        if not move_data:
+            warnings.append(f"未知 setup move，已忽略：{move_name}")
             continue
         stat_changes = move_data.get("stat_changes")
         if not stat_changes:
@@ -1678,7 +1683,7 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
         # Apply self boosts
         if "self" in stat_changes:
             for stat, change in stat_changes["self"].items():
-                attacker.boosts[stat] = attacker.boosts.get(stat, 0) + change
+                attacker.boosts[stat] = max(-6, min(6, attacker.boosts.get(stat, 0) + change))
             _sync_stats(attacker)
 
         # Apply weather
@@ -1692,7 +1697,7 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
         # Apply opponent debuffs
         if "opponent" in stat_changes:
             for stat, change in stat_changes["opponent"].items():
-                defender.boosts[stat] = defender.boosts.get(stat, 0) + change
+                defender.boosts[stat] = max(-6, min(6, defender.boosts.get(stat, 0) + change))
             _sync_stats(defender)
 
         # Apply heal
@@ -1702,6 +1707,8 @@ def _apply_setup_moves(attacker, defender, field, setup_moves: list[str]) -> Non
             if heal_target == "self" and attacker.max_hp > 0:
                 heal_amount = int(attacker.max_hp * ratio)
                 attacker.current_hp = min(attacker.max_hp, attacker.current_hp + heal_amount)
+
+    return warnings
 
 
 def _resolve_ability_to_en(ability_name: str) -> str:
@@ -2219,21 +2226,14 @@ def cmd_optimize(
     _, def_data, def_form_idx = resolved_def
     _, move_data = resolved_move
 
-    def _strip_quotes(s: str) -> str:
-        return s.strip().strip("'\"'")
-
-    try:
-        att_override = json.loads(_strip_quotes(extra_args[0])) if len(extra_args) > 0 and extra_args[0] else {}
-    except json.JSONDecodeError:
-        att_override = {}
-    try:
-        def_override = json.loads(_strip_quotes(extra_args[1])) if len(extra_args) > 1 and extra_args[1] else {}
-    except json.JSONDecodeError:
-        def_override = {}
-    try:
-        field_override = json.loads(_strip_quotes(extra_args[2])) if len(extra_args) > 2 and extra_args[2] else {}
-    except json.JSONDecodeError:
-        field_override = {}
+    overrides: list[dict[str, Any]] = []
+    for index, label in enumerate(("att_override", "def_override", "field_override")):
+        raw = extra_args[index] if len(extra_args) > index else None
+        parsed, parse_error = _parse_json_object(raw, label)
+        if parse_error is not None:
+            return parse_error
+        overrides.append(parsed or {})
+    att_override, def_override, field_override = overrides
 
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
@@ -2261,6 +2261,19 @@ def cmd_optimize(
     _finalize_calc_pokemon(defender, def_override)
 
     return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
+
+
+def _parse_json_object(raw: str | None, label: str) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+    """Parse a CLI JSON object without silently substituting defaults."""
+    if raw is None or raw == "":
+        return {}, None
+    try:
+        parsed = json.loads(raw.strip().strip("'\""))
+    except (json.JSONDecodeError, TypeError) as exc:
+        return None, {"error": f"{label} 必须是合法 JSON：{exc}"}
+    if not isinstance(parsed, dict):
+        return None, {"error": f"{label} 必须是 JSON 对象"}
+    return parsed, None
 
 
 def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] | None:
@@ -2334,49 +2347,34 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     _, def_data, def_form_idx = resolved_def
     _, move_data = resolved_move
 
-    def _strip_quotes(s: str) -> str:
-        return s.strip().strip("'\"'")
-
     # Collected input warnings surfaced in the response "warning" field
     calc_warnings: list[str] = []
 
-    # Parse optional overrides from extra args
-    try:
-        att_override = json.loads(_strip_quotes(extra_args[0])) if len(extra_args) > 0 and extra_args[0] else {}
-    except json.JSONDecodeError:
-        att_override = {}
-    try:
-        move_override = json.loads(_strip_quotes(extra_args[1])) if len(extra_args) > 1 and extra_args[1] else {}
-    except json.JSONDecodeError:
-        move_override = {}
+    overrides: list[dict[str, Any]] = []
+    for index, label in enumerate(("att_override", "move_override", "def_override", "field_override")):
+        raw = extra_args[index] if len(extra_args) > index else None
+        parsed, parse_error = _parse_json_object(raw, label)
+        if parse_error is not None:
+            return parse_error
+        overrides.append(parsed or {})
+    att_override, move_override, def_override, field_override = overrides
+
     # Whitelist behavior-only fields; never let move_override touch
     # base_power/type/category. Surface dropped keys instead of swallowing.
-    if not isinstance(move_override, dict):
-        move_override = {}
-        calc_warnings.append("move_override 必须是 JSON 对象，已忽略")
-    else:
-        dropped = sorted(set(move_override) - _MOVE_OVERRIDE_WHITELIST)
-        if dropped:
-            calc_warnings.append("move_override 忽略非法字段: " + ", ".join(dropped))
-            move_override = {k: v for k, v in move_override.items() if k in _MOVE_OVERRIDE_WHITELIST}
-        if "hits" in move_override:
-            try:
-                hits_val = int(move_override["hits"])
-            except (TypeError, ValueError):
-                hits_val = 1
-                calc_warnings.append(f"move_override hits={move_override['hits']!r} 非整数，已按 1 处理")
-            clamped = max(1, min(_MOVE_OVERRIDE_HITS_MAX, hits_val))
-            if clamped != hits_val:
-                calc_warnings.append(f"move_override hits={hits_val} 超出 1-{_MOVE_OVERRIDE_HITS_MAX}，已夹紧为 {clamped}")
-            move_override["hits"] = clamped
-    try:
-        def_override = json.loads(_strip_quotes(extra_args[2])) if len(extra_args) > 2 and extra_args[2] else {}
-    except json.JSONDecodeError:
-        def_override = {}
-    try:
-        field_override = json.loads(_strip_quotes(extra_args[3])) if len(extra_args) > 3 and extra_args[3] else {}
-    except json.JSONDecodeError:
-        field_override = {}
+    dropped = sorted(set(move_override) - _MOVE_OVERRIDE_WHITELIST)
+    if dropped:
+        calc_warnings.append("move_override 忽略非法字段: " + ", ".join(dropped))
+        move_override = {k: v for k, v in move_override.items() if k in _MOVE_OVERRIDE_WHITELIST}
+    if "hits" in move_override:
+        try:
+            hits_val = int(move_override["hits"])
+        except (TypeError, ValueError):
+            hits_val = 1
+            calc_warnings.append(f"move_override hits={move_override['hits']!r} 非整数，已按 1 处理")
+        clamped = max(1, min(_MOVE_OVERRIDE_HITS_MAX, hits_val))
+        if clamped != hits_val:
+            calc_warnings.append(f"move_override hits={hits_val} 超出 1-{_MOVE_OVERRIDE_HITS_MAX}，已夹紧为 {clamped}")
+        move_override["hits"] = clamped
 
     # Boundary enum validation: invalid type/nature/status inputs are rejected
     # here with suggestions instead of passing through (or exploding) in the engine.
@@ -2456,8 +2454,12 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
 
     # Apply setup moves (e.g., Nasty Plot, Swords Dance) if specified in att_override
     setup_moves = att_override.get("setup_moves", [])
+    if setup_moves is None:
+        setup_moves = []
+    if not isinstance(setup_moves, list) or not all(isinstance(name, str) for name in setup_moves):
+        return {"error": "setup_moves 必须是招式名称数组"}
     if setup_moves:
-        _apply_setup_moves(attacker, defender, field, setup_moves)
+        calc_warnings.extend(_apply_setup_moves(attacker, defender, field, setup_moves))
 
     result = calculate_damage(attacker, defender, move, field, gen=9)
 
@@ -2685,28 +2687,18 @@ def cmd_calc_raw(
     from models import Pokemon, Move, Field
     from ko_chance import get_ko_chance_text, squash_multihit
 
-    def _strip_quotes(s: str) -> str:
-        return s.strip().strip("'\"'")
-
-    try:
-        att_dict = json.loads(_strip_quotes(attacker_json))
-    except (json.JSONDecodeError, TypeError):
-        return {"error": "Invalid attacker JSON"}
-
-    try:
-        move_dict = json.loads(_strip_quotes(move_json))
-    except (json.JSONDecodeError, TypeError):
-        return {"error": "Invalid move JSON"}
-
-    try:
-        def_dict = json.loads(_strip_quotes(defender_json))
-    except (json.JSONDecodeError, TypeError):
-        return {"error": "Invalid defender JSON"}
-
-    try:
-        field_dict = json.loads(_strip_quotes(field_json)) if field_json else {}
-    except (json.JSONDecodeError, TypeError):
-        field_dict = {}
+    parsed_inputs: list[dict[str, Any]] = []
+    for raw, label in (
+        (attacker_json, "attacker_json"),
+        (move_json, "move_json"),
+        (defender_json, "defender_json"),
+        (field_json, "field_json"),
+    ):
+        parsed, parse_error = _parse_json_object(raw, label)
+        if parse_error is not None:
+            return parse_error
+        parsed_inputs.append(parsed or {})
+    att_dict, move_dict, def_dict, field_dict = parsed_inputs
 
     # Validate required fields
     if "stats" not in att_dict:

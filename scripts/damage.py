@@ -1320,22 +1320,29 @@ def calculate_damage(
       - description: human-readable summary
       - is_critical, type_effectiveness, stab_applied, burn_applied
 
-    Terrain Seed boosts are applied on throwaway copies of the defender's
-    boosts/stats and rolled back on exit, so repeated calls on the same
-    Pokemon objects (EV optimizer loops, repeated calcs) never accumulate
-    stages. ``_skip_seeds`` is an internal flag used by the Parental Bond
-    recursion: the seed boost persists across both hits in-game, so the
-    second hit must not apply it a second time.
+    All engine-side normalization, derived-stat calculation and Terrain Seed
+    boosts happen on private copies. Caller-owned Pokemon and Move objects,
+    including their mutable stat/boost dictionaries, remain unchanged across
+    repeated calculations. ``_skip_seeds`` is an internal flag used by the
+    Parental Bond recursion: the seed boost persists across both hits in-game,
+    so the second hit must not apply it a second time.
 
     ``_neutral_damage`` is reserved for survivability's synthetic, non-STAB
     probe. It bypasses type effectiveness without replacing defender types,
     preserving explicitly requested weather-based defensive modifiers.
     """
 
+    attacker = copy(attacker)
+    defender = copy(defender)
+    move = copy(move)
+    for pokemon in (attacker, defender):
+        pokemon.types = list(pokemon.types)
+        for attr in ("base_stats", "evs", "ivs", "boosts", "raw_stats", "stats"):
+            setattr(pokemon, attr, dict(getattr(pokemon, attr)))
+
     # Engine speaks English (engine-English refactor): normalize type and
     # tera inputs once at entry. zh data-layer values and en/any-case input
-    # canonicalize here; unknown strings pass through unchanged. Rebinds the
-    # lists (not in-place) so adapter-held pre-engine copies stay untouched.
+    # canonicalize here; unknown strings pass through unchanged.
     attacker.types = [resolve_type_en(t) or t for t in attacker.types]
     defender.types = [resolve_type_en(t) or t for t in defender.types]
     move.type = resolve_type_en(move.type) or move.type
@@ -1343,15 +1350,7 @@ def calculate_damage(
         attacker.tera_type = resolve_tera_type_en(attacker.tera_type)
     if defender.tera_type:
         defender.tera_type = resolve_tera_type_en(defender.tera_type)
-    original_boosts = defender.boosts
-    original_stats = defender.stats
-    defender.boosts = dict(original_boosts)
-    defender.stats = dict(original_stats)
-    try:
-        return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds, _neutral_damage)
-    finally:
-        defender.boosts = original_boosts
-        defender.stats = original_stats
+    return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds, _neutral_damage)
 
 
 def _calculate_damage_core(
@@ -1613,11 +1612,13 @@ def _calculate_damage_impl(
         # Temporarily disable Parental Bond to prevent infinite recursion
         original_ability = attacker.ability
         attacker.ability = ""
-        # _skip_seeds: the seed boost persists across both hits, so the
-        # second hit keeps the stage already applied above (audit E4).
-        second_result = calculate_damage(attacker, defender, second_move, field, gen,
-                                         _skip_seeds=True, _neutral_damage=_neutral_damage)
-        attacker.ability = original_ability
+        try:
+            # _skip_seeds: the seed boost persists across both hits, so the
+            # second hit keeps the stage already applied above (audit E4).
+            second_result = calculate_damage(attacker, defender, second_move, field, gen,
+                                             _skip_seeds=True, _neutral_damage=_neutral_damage)
+        finally:
+            attacker.ability = original_ability
 
         # Merge damage rolls: all combinations of first + second hit
         merged_rolls: list[int] = []

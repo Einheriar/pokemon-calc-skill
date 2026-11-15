@@ -13,7 +13,7 @@ from __future__ import annotations
 import copy
 from typing import Literal, Optional
 
-from damage import calculate_damage
+from damage import calculate_damage, compute_raw_stats
 from models import DamageResult, Field, Move, Pokemon
 import display_zh
 
@@ -35,6 +35,12 @@ _STAT_KEYS = ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"]
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+
+def _ensure_stats(pokemon: Pokemon) -> None:
+    """Materialize optimizer-owned inputs before reading their HP pool."""
+    if not pokemon.raw_stats:
+        compute_raw_stats(pokemon)
 
 
 def _set_ev(pokemon: Pokemon, stat: str, ev: int) -> Pokemon:
@@ -170,6 +176,8 @@ def optimize_attack_ev(
     """
     hits_needed = {"ohko": 1, "2hko": 2, "3hko": 3}[target]
     use_min = threshold == "guaranteed"
+    _ensure_stats(attacker)
+    _ensure_stats(defender)
 
     # Determine which stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
@@ -263,6 +271,8 @@ def optimize_defense_ev(
     """
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
     use_max = threshold == "guaranteed"
+    _ensure_stats(attacker)
+    _ensure_stats(defender)
 
     # Determine which defensive stat to optimize
     from damage import uses_physical_attack
@@ -394,6 +404,9 @@ def optimize_bulk_evs(
                 dfn = _set_ev(defender, "hp", hp_val)
                 dfn = _set_ev(dfn, def_stat, def_val)
 
+            # The damage engine works on private copies; materialize this
+            # optimizer-owned candidate before reading its recomputed HP.
+            compute_raw_stats(dfn)
             result = calculate_damage(attacker, dfn, move, field, gen=9)
             if result.max_damage * hits_to_survive * move_hits < dfn.current_hp:
                 best_total = hp_val + def_val

@@ -6,6 +6,7 @@ KO chance calculator ported from script_res/ko_chance.js.
 from __future__ import annotations
 
 import math
+from copy import copy
 from typing import Optional
 
 from models import Field, Move, Pokemon
@@ -25,6 +26,13 @@ def get_ko_chance_text(
 
     damage: sorted list of possible damage values (from calculate_damage)
     """
+    # Do not rely on calculate_damage normalizing caller-owned objects. KO
+    # logic also runs independently in tests and direct library calls.
+    move = copy(move)
+    defender = copy(defender)
+    move.type = _type_zh_to_en(move.type)
+    defender.types = [_type_zh_to_en(t) for t in defender.types]
+
     if not damage or math.isnan(damage[0]):
         return display_zh.KO_ERROR
 
