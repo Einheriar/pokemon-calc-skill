@@ -55,13 +55,15 @@ def get_ko_chance_text(
     # Hazards
     hazards = 0
     hazard_texts: list[str] = []
-    if field.is_stealth_rock and defender.ability != "Magic Guard" and defender.item != "Heavy-Duty Boots":
-        # Simplified: type effectiveness for Rock
+    # Magic Guard prevents indirect damage in battle, not entry hazards.
+    if field.is_stealth_rock and defender.item != "Heavy-Duty Boots":
         eff = _get_rock_effectiveness(defender)
         hazards += math.floor(eff * defender.max_hp / 8)
         hazard_texts.append(display_zh.HAZARD_STEALTH_ROCK)
 
-    if T.FLYING not in defender.types and defender.ability not in ("Magic Guard", "Levitate", "Eelevate") and defender.item not in ("Air Balloon", "Heavy-Duty Boots"):
+    from damage import is_grounded
+    grounded = is_grounded(defender, field)
+    if grounded and defender.item != "Heavy-Duty Boots":
         if field.spikes == 1:
             hazards += math.floor(defender.max_hp / 8)
             hazard_texts.append(display_zh.HAZARD_SPIKES_1)
@@ -115,10 +117,9 @@ def get_ko_chance_text(
             eot -= math.floor(math.floor(defender.max_hp / 8) * max_chip)
             eot_texts.append(display_zh.EOT_BLACK_SLUDGE_DAMAGE)
 
-    if field.terrain == "Grassy":
-        if field.is_gravity or (T.FLYING not in defender.types and defender.item != "Air Balloon" and defender.ability != "Levitate"):
-            eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
-            eot_texts.append(display_zh.EOT_GRASSY_HEAL)
+    if field.terrain == "Grassy" and grounded:
+        eot += math.floor(math.floor(defender.max_hp / 16) * max_chip)
+        eot_texts.append(display_zh.EOT_GRASSY_HEAL)
 
     toxic_counter = 0
     if defender.status == "Poisoned":
@@ -188,21 +189,24 @@ def get_ko_chance_text(
         pct = round(c * 1000) / 10
         return display_zh.ko_prob_with(qualifier, pct, after_text2)
 
-    # 2HKO to 4HKO
+    # Recovery and residual damage apply between subsequent hits too.
     for i in range(2, 5):
-        c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, 0, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
+        c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, eot, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
         if c == 1:
-            return display_zh.ko_n_guaranteed(i, after_text)
+            return display_zh.ko_n_guaranteed(i, after_text2)
         elif c > 0:
             pct = round(c * 1000) / 10
-            return display_zh.ko_n_prob(qualifier, pct, i, after_text)
+            return display_zh.ko_n_prob(qualifier, pct, i, after_text2)
 
-    # 5HKO to 9HKO prediction
+    # Only the min/max rolls are needed for 5-9HKO boundary prediction. Using
+    # one-roll state trees avoids exponential enumeration without changing rules.
     for i in range(5, 10):
-        if _predict_total(damage[0], 0, i, toxic_counter, defender.current_hp - hazards, defender.max_hp, has_sitrus, has_figy, gluttony, ripen) >= defender.current_hp - hazards:
-            return display_zh.ko_n_guaranteed(i, after_text)
-        elif _predict_total(damage[-1], 0, i, toxic_counter, defender.current_hp - hazards, defender.max_hp, has_sitrus, has_figy, gluttony, ripen) >= defender.current_hp - hazards:
-            return display_zh.ko_n_possible(i, after_text)
+        min_c = _get_ko_chance([damage[0]], multihit, defender.current_hp - hazards, eot, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
+        if min_c == 1:
+            return display_zh.ko_n_guaranteed(i, after_text2)
+        max_c = _get_ko_chance([damage[-1]], multihit, defender.current_hp - hazards, eot, i, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)
+        if max_c > 0:
+            return display_zh.ko_n_possible(i, after_text2)
 
     return display_zh.KO_MORE_ROUNDS
 
@@ -235,9 +239,13 @@ def _get_ko_chance(
     gluttony: bool,
     ripen: int,
 ) -> float:
-    """Recursive KO probability calculation."""
+    """Recursive KO probability with branch-local HP and berry state."""
     n = len(damage)
+    if hits <= 0:
+        return 0.0
     if hits == 1:
+        # Keep the existing aggregate multi-hit berry approximation. Ordinary
+        # hits always check lethality directly; recovery never revives a KO.
         if (not multihit or (not has_sitrus and not has_figy)) and damage[-1] < hp:
             return 0.0
         if multihit and has_sitrus and damage[-1] < hp + math.floor(ripen * max_hp / 4):
@@ -251,36 +259,42 @@ def _get_ko_chance(
                 return (n - i) / n
             if multihit and has_figy and damage[i] >= hp + math.floor(ripen * max_hp / 3):
                 return (n - i) / n
+        return 0.0
 
-    toxic_damage = 0
-    if toxic_counter > 0:
-        toxic_damage = math.floor(toxic_counter * max_hp / 16)
-        toxic_counter += 1
+    toxic_damage = math.floor(toxic_counter * max_hp / 16) if toxic_counter > 0 else 0
+    next_toxic_counter = toxic_counter + 1 if toxic_counter > 0 else toxic_counter
 
     total = 0.0
     last_c = 0.0
-    for i in range(n):
-        if (hp - damage[i] <= max_hp // 2) and has_sitrus:
-            hp += math.floor(ripen * max_hp / 4)
-            has_sitrus = False
-        elif ((hp - damage[i] <= max_hp // 4 and has_figy and not gluttony)
-              or (hp - damage[i] <= max_hp // 2 and has_figy and gluttony)):
-            hp += math.floor(ripen * max_hp / 3)
-            has_figy = False
+    for i, dealt in enumerate(damage):
+        if i == 0 or dealt != damage[i - 1]:
+            if dealt >= hp:
+                c = 1.0
+            else:
+                branch_hp = hp - dealt
+                branch_sitrus = has_sitrus
+                branch_figy = has_figy
+                if branch_sitrus and branch_hp <= max_hp // 2:
+                    branch_hp = min(max_hp, branch_hp + math.floor(ripen * max_hp / 4))
+                    branch_sitrus = False
+                elif branch_figy and (
+                    (branch_hp <= max_hp // 4 and not gluttony)
+                    or (branch_hp <= max_hp // 2 and gluttony)
+                ):
+                    branch_hp = min(max_hp, branch_hp + math.floor(ripen * max_hp / 3))
+                    branch_figy = False
 
-        if i == 0 or damage[i] != damage[i - 1]:
-            c = _get_ko_chance(
-                damage, multihit, hp - damage[i] + eot - toxic_damage,
-                eot, hits - 1, max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen
-            )
+                branch_hp = min(max_hp, branch_hp + eot) - toxic_damage
+                if branch_hp <= 0:
+                    c = 1.0
+                else:
+                    c = _get_ko_chance(
+                        damage, multihit, branch_hp, eot, hits - 1, max_hp,
+                        next_toxic_counter, branch_sitrus, branch_figy, gluttony, ripen,
+                    )
         else:
             c = last_c
-
-        if c == 1:
-            total += (n - i)
-            break
-        else:
-            total += c
+        total += c
         last_c = c
 
     return total / n
