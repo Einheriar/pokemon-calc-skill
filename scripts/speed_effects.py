@@ -93,7 +93,7 @@ def get_effective_speed(
         modifier = _chain_modifier(modifier, 1, 2)
 
     item = pokemon.item
-    if effective_ability(pokemon, field) == "Klutz" and item not in _KLUTZ_IGNORING_SPEED_ITEMS:
+    if ability == "Klutz" and item not in _KLUTZ_IGNORING_SPEED_ITEMS:
         item = ""
     if item == "Choice Scarf":
         modifier = _chain_modifier(modifier, 3, 2)

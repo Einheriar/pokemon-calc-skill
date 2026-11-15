@@ -145,11 +145,7 @@ def get_ko_chance_text(
     if berry_multihit and battle_context is None:
         return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
 
-    if (not berry_multihit and (
-            damage[0] >= defender.current_hp
-            or (len(damage) == 256 and has_sitrus and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 4))
-            or (len(damage) == 256 and has_figy and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 3))
-    )):
+    if not berry_multihit and damage[0] >= defender.current_hp:
         return display_zh.KO_OHKO
 
     # Hazards
@@ -465,8 +461,7 @@ def _requires_stateful_tera(attacker: Pokemon, defender: Pokemon, move: Move, fi
         and defender.ability == "Teraform Zero"
     )
     shell_can_change = defender.ability == "Tera Shell" and defender.max_hp > 0
-    tera_blast_drop = stellar_user and move.name == "Tera Blast"
-    return stellar_user or teraform_zero_pending or shell_can_change or tera_blast_drop
+    return stellar_user or teraform_zero_pending or shell_can_change
 
 
 def _freeze_state(value):

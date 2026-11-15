@@ -56,10 +56,7 @@ def _unsupported_stateful_repeat(move: Move, repeated: bool) -> dict | None:
     return None
 
 
-def _has_stateful_sequence(attacker: Pokemon, defender: Pokemon, move: Move, field: Field,
-                           repeated: bool) -> bool:
-    if not repeated:
-        return False
+def _has_stateful_sequence(attacker: Pokemon, defender: Pokemon, move: Move, field: Field) -> bool:
     from engine_enums import resolve_tera_type_en
     from battle_effects import berries_blocked, effective_ability
     attacker_ability = effective_ability(attacker, field)
@@ -84,7 +81,7 @@ def _has_stateful_sequence(attacker: Pokemon, defender: Pokemon, move: Move, fie
     return stellar_user or teraform_zero or shell_defender or active_berry or target_hp_dependent
 
 
-def _stateful_sequence_unsupported(move: Move) -> dict:
+def _stateful_sequence_unsupported() -> dict:
     return {
         "success": False,
         "unsupported": True,
@@ -279,15 +276,16 @@ def optimize_attack_ev(
     use_min = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
-    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_needed > 1)
+    has_stateful_effect = _has_stateful_sequence(attacker, defender, move, field)
+    stateful_sequence = has_stateful_effect and hits_needed > 1
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
 
     # Determine which stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_sequence(attacker, defender, move, field, True)
+    if (has_stateful_effect
             and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
     if result.min_damage == 0:
         return {
             "success": False,
@@ -332,7 +330,7 @@ def optimize_attack_ev(
                     candidate_attacker, defender, move, field, hits_needed,
                 )
                 if probability is None:
-                    return _stateful_sequence_unsupported(move)
+                    return _stateful_sequence_unsupported()
                 meets_target = _probability_meets_threshold(probability, threshold, "ko")
             else:
                 probability = None
@@ -412,15 +410,16 @@ def optimize_defense_ev(
     use_max = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
-    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_to_survive > 1)
+    has_stateful_effect = _has_stateful_sequence(attacker, defender, move, field)
+    stateful_sequence = has_stateful_effect and hits_to_survive > 1
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
 
     # Determine which defensive stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_sequence(attacker, defender, move, field, True)
+    if (has_stateful_effect
             and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
     effective_move = result.move or move
     hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
     stat = "defense" if hits_physical else "sp_defense"
@@ -457,7 +456,7 @@ def optimize_defense_ev(
                 attacker, candidate_defender, move, field, hits_to_survive,
             )
             if probability is None:
-                return _stateful_sequence_unsupported(move)
+                return _stateful_sequence_unsupported()
             meets_target = _probability_meets_threshold(probability, threshold, "survive")
         else:
             probability = None
@@ -532,13 +531,14 @@ def optimize_bulk_evs(
     _ensure_stats(attacker)
     _ensure_stats(defender)
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
-    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_to_survive > 1)
+    has_stateful_effect = _has_stateful_sequence(attacker, defender, move, field)
+    stateful_sequence = has_stateful_effect and hits_to_survive > 1
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
     initial_result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_sequence(attacker, defender, move, field, True)
+    if (has_stateful_effect
             and (move.hits > 1 or move.is_multi_hit or len(initial_result.damage) == 256)):
-        return _stateful_sequence_unsupported(move)
+        return _stateful_sequence_unsupported()
     effective_move = initial_result.move or move
     hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
     def_stat = "defense" if hits_physical else "sp_defense"
@@ -589,7 +589,7 @@ def optimize_bulk_evs(
                         attacker, dfn, move, field, hits_to_survive,
                     )
                     if probability is None:
-                        return _stateful_sequence_unsupported(move)
+                        return _stateful_sequence_unsupported()
                     survives = probability == 0.0
                 else:
                     survives, sequence_result = _stateful_worst_case_survives(

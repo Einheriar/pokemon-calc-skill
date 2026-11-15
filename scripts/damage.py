@@ -1505,16 +1505,6 @@ def _calculate_damage_impl(
     _skip_seeds: bool,
     _neutral_damage: bool,
 ) -> DamageResult:
-    # Ensure stats are computed
-    if not attacker.raw_stats:
-        compute_raw_stats(attacker)
-    if not defender.raw_stats:
-        compute_raw_stats(defender)
-
-    # Terastallization-triggered abilities activate before the move's damage
-    # calculation. Apply both sides' pending events against the shared field.
-    apply_tera_effects(attacker, defender, field)
-    apply_tera_effects(defender, attacker, field)
     dynamic_type = resolve_dynamic_tera_move_type(move, attacker)
     if dynamic_type:
         move.type = dynamic_type
