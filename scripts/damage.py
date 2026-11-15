@@ -67,9 +67,13 @@ _BITE_MOVES = {
 }
 
 _SECONDARY_EFFECT_MOVES = {
+    # Raw-parameter fallback. Named calc also consumes the data-layer
+    # has_secondary_effect flag, so this list need not be the sole source.
+    "Bite", "Crunch", "Dark Pulse", "Fire Fang", "Ice Fang", "Poison Fang",
+    "Thunder Fang", "Thunder Punch", "Water Pulse",
     "Acid", "Blizzard", "Body Slam", "BubbleBeam", "Fire Blast", "Fire Punch",
     "Flamethrower", "Ice Beam", "Ice Punch", "Psychic", "Rock Slide", "Sky Attack",
-    "Sludge", "Thunder", "ThunderPunch", "Thunderbolt", "Twineedle", "Stomp",
+    "Sludge", "Thunder", "Thunderbolt", "Twineedle", "Stomp",
     "Rolling Kick", "Poison Sting", "Ember", "Psybeam", "Aurora Beam", "Thunder Shock",
     "Lick", "Smog", "Bone Club", "Constrict", "Bubble", "Dizzy Punch", "Tri Attack",
     "Waterfall", "Ancient Power", "Dynamic Punch", "Flame Wheel", "Headbutt", "Icy Wind",
@@ -463,7 +467,7 @@ def get_move_effectiveness(
 _PRIORITY_MOVES = frozenset({
     "Fake Out", "First Impression", "Extreme Speed", "Sucker Punch",
     "Quick Attack", "Aqua Jet", "Bullet Punch", "Mach Punch", "Ice Shard",
-    "Shadow Sneak", "Vacuum Wave", "Water Shuriken", "Grassy Glide",
+    "Shadow Sneak", "Vacuum Wave", "Water Shuriken",
     "Jet Punch", "Thunderclap", "Accelerock", "Pursuit",
 })
 
@@ -486,7 +490,11 @@ def _immunity_check(
 
     move_type = move.type
     name = move.name
-    is_priority = getattr(move, "is_priority", False) or name in _PRIORITY_MOVES
+    is_priority = (
+        getattr(move, "is_priority", False)
+        or name in _PRIORITY_MOVES
+        or (name == "Grassy Glide" and field.terrain == "Grassy")
+    )
 
     if (def_ability == "Wonder Guard" and type_effectiveness <= 1 and name != "Struggle"):
         return _reason(def_ability)
@@ -749,9 +757,10 @@ def base_power_func(
     elif name == "Rising Voltage" and field.terrain == "Electric" and is_grounded(defender, field):
         # Surges through the terrain into the grounded *target* (JS:1273-1275)
         bp = 140
-    elif name == "Weather Ball" and field.weather and field.weather not in ("", "Strong Winds"):
+    elif (name == "Weather Ball" and field.weather and field.weather not in ("", "Strong Winds")
+          and attacker.item != "Utility Umbrella"):
         bp *= 2
-    elif name == "Terrain Pulse" and field.terrain:
+    elif name == "Terrain Pulse" and field.terrain and is_grounded(attacker, field):
         bp *= 2
     elif name in ("Triple Kick", "Triple Axel") and move.hits > 1:
         # Per-hit powers escalate (e.g. 20/40/60). The engine rolls one damage
@@ -814,7 +823,8 @@ def calc_bp_mods(
         bp_mods.append(0x1333)
 
     # d. 1.3x BP abilities (Sheer Force, Sand Force, Analytic, Tough Claws)
-    if attacker.ability == "Sheer Force" and move.name in _SECONDARY_EFFECT_MOVES:
+    if (attacker.ability == "Sheer Force"
+            and (move.has_secondary_effect or move.name in _SECONDARY_EFFECT_MOVES)):
         bp_mods.append(0x14CD)
     elif attacker.ability == "Sand Force" and field.weather == "Sand" and move.type in (T.ROCK, T.STEEL, T.GROUND):
         bp_mods.append(0x14CD)
@@ -851,10 +861,8 @@ def calc_bp_mods(
     if field.is_helping_hand:
         bp_mods.append(0x1800)
 
-    # f. Charge, Power Spot etc omitted for brevity
-    # g. Terrain pulse
-    if move.name == "Terrain Pulse" and field.terrain:
-        bp_mods.append(0x1800)
+    # Terrain Pulse's 1.5x is Mega Launcher, handled above. Applying another
+    # unconditional 1.5x here would double-count the pulse modifier.
 
     # h. Muscle Band / Wise Glasses (1.1x)
     if attacker.item in ("Muscle Band",) and move.category == "Physical":
@@ -988,7 +996,7 @@ def calc_at_mods(
             or (attacker.ability == "Flash Fire" and attacker.ability_on and move.type == T.FIRE)
             or (attacker.ability == "Steelworker" and move.type == T.STEEL)
             or (attacker.ability == "Gorilla Tactics" and move.category == "Physical" and not attacker.is_dynamax)
-            or (attacker.ability in ("Plus", "Minus") and attacker.ability_on)
+            or (attacker.ability in ("Plus", "Minus") and attacker.ability_on and move.category == "Special")
             or (attacker.ability == "Sharpness" and move.is_slice)
             or (attacker.ability == "Rocky Payload" and move.type == T.ROCK)):
         at_mods.append(0x1800)
@@ -1059,16 +1067,20 @@ def calc_defense(
 ) -> int:
     """Calculate the effective Defense (or Sp. Defense) stat."""
     defense_stat = "defense" if hits_physical else "sp_defense"
+    ignores_defense_boosts = (
+        move.ignores_defense_boosts
+        or move.name in ("Sacred Sword", "Chip Away", "Darkest Lariat")
+    )
 
     if move.name == "Spectral Thief" and defender.boosts.get(defense_stat, 0) > 0:
         defense = defender.raw_stats.get(defense_stat, 0)
     elif attacker.ability == "Unaware" and defender.boosts.get(defense_stat, 0) != 0:
         defense = defender.raw_stats.get(defense_stat, 0)
-    elif move.ignores_screens and defender.boosts.get(defense_stat, 0) != 0:  # Chip Away / Sacred Sword
+    elif ignores_defense_boosts and defender.boosts.get(defense_stat, 0) != 0:
         defense = defender.raw_stats.get(defense_stat, 0)
     elif defender.boosts.get(defense_stat, 0) == 0 or (is_critical and defender.boosts.get(defense_stat, 0) > 0):
         defense = defender.raw_stats.get(defense_stat, 0)
-    elif move.ignores_screens or attacker.ability == "Unaware":
+    elif ignores_defense_boosts or attacker.ability == "Unaware":
         defense = defender.raw_stats.get(defense_stat, 0)
     else:
         defense = defender.stats.get(defense_stat, 0)
@@ -1244,11 +1256,14 @@ def calc_final_mods(
     elif attacker.item in ("Life Orb",):
         final_mods.append(0x14CC)
 
-    # Resist berries (halve super-effective moves of the corresponding type)
+    # Chilan Berry halves Normal damage without a super-effective requirement.
+    # Other resist berries still require their corresponding type to be SE.
     move_type_en = move.type
     resist_berries = _RESIST_BERRIES.get(move_type_en, [])
     canonical_item = _canonical_berry(defender.item)
-    if canonical_item in resist_berries and type_effectiveness > 1:
+    if canonical_item == "Chilan Berry" and move_type_en == T.NORMAL:
+        final_mods.append(0x800)
+    elif canonical_item in resist_berries and type_effectiveness > 1:
         final_mods.append(0x800)
 
     return final_mods
@@ -1376,11 +1391,13 @@ def _calculate_damage_core(
     if not _skip_seeds:
         _check_seeds(defender, field)
 
-    # Critical hit
-    is_critical = move.is_crit and def_ability not in ("Battle Armor", "Shell Armor")
-    # Merciless: always crit against poisoned/toxiced defender
-    if attacker.ability == "Merciless" and defender.status in ("Poisoned", "Badly Poisoned"):
-        is_critical = True
+    # Battle Armor / Shell Armor suppress every critical-hit source,
+    # including guaranteed-crit moves and Merciless.
+    forced_critical = (
+        attacker.ability == "Merciless"
+        and defender.status in ("Poisoned", "Badly Poisoned")
+    )
+    is_critical = (move.is_crit or forced_critical) and def_ability not in ("Battle Armor", "Shell Armor")
 
     # Effective weather for the attacker (Mega Sol treats it as Sun)
     effective_weather = field.weather
@@ -1508,7 +1525,7 @@ def _calculate_damage_core(
     else:
         if move_type_en in (atk_type1_en, atk_type2_en):
             stab_mod = 0x2000 if attacker.ability == "Adaptability" else 0x1800
-        elif attacker.ability in ("Protean", "Libero"):
+        elif attacker.ability in ("Protean", "Libero") and attacker.ability_on:
             stab_mod = 0x1800
 
     # Burn

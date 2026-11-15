@@ -67,9 +67,11 @@ class Move:
     is_crit: bool = False
     ignores_burn: bool = False
     ignores_screens: bool = False
+    ignores_defense_boosts: bool = False
     is_ohko: bool = False
     is_priority: bool = False
     deals_physical_damage: bool = False
+    has_secondary_effect: bool = False  # For Sheer Force ability
     has_recoil: bool = False           # For Reckless ability
     is_punch: bool = False             # For Iron Fist ability
     is_sound: bool = False             # For Liquid Voice / Punk Rock

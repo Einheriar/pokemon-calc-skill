@@ -2071,9 +2071,10 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "category": data.get("category", ""),
         "accuracy": accuracy,
         "hits": hits,
-        "is_crit": False,
+        "is_crit": data.get("always_crit", False),
         "makes_contact": data.get("makes_contact", False),
         "has_recoil": data.get("has_recoil", False),
+        "has_secondary_effect": data.get("has_secondary_effect", False),
         "is_punch": data.get("is_punch", False),
         "is_sound": data.get("is_sound", False),
         "is_slice": data.get("is_slice", False),
@@ -2084,6 +2085,10 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
         "is_ohko": data.get("is_ohko", False),
         "is_z": data.get("is_z", False),
         "ignores_screens": data.get("ignores_screens", False),
+        "ignores_defense_boosts": data.get(
+            "ignores_defense_boosts",
+            data.get("name_en") in ("Sacred Sword", "Chip Away", "Darkest Lariat"),
+        ),
         "deals_physical_damage": data.get("deals_physical_damage", False),
         "fainted_allies": 0,
     }

@@ -5114,7 +5114,7 @@
   "name_zh": "灯浆果",
   "name_ja": "ホズのみ",
   "name_en": "Chilan Berry",
-  "effect": "携带后，受到效果拔群的一般属性招式攻击时，伤害减半（一次性）",
+  "effect": "携带后，受到一般属性招式攻击时，伤害减半（一次性）",
   "category": "抗性树果"
  },
  "Liechi Berry": {
