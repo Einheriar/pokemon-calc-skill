@@ -263,6 +263,9 @@ def optimize_attack_ev(
 
     # Determine which stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
+    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+            and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
+        return _stateful_sequence_unsupported(move)
     if result.min_damage == 0:
         return {
             "success": False,
@@ -393,6 +396,9 @@ def optimize_defense_ev(
 
     # Determine which defensive stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
+    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+            and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
+        return _stateful_sequence_unsupported(move)
     effective_move = result.move or move
     hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
     stat = "defense" if hits_physical else "sp_defense"
@@ -508,6 +514,9 @@ def optimize_bulk_evs(
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
         return _stateful_sequence_unsupported(move)
     initial_result = calculate_damage(attacker, defender, move, field, gen=9)
+    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+            and (move.hits > 1 or move.is_multi_hit or len(initial_result.damage) == 256)):
+        return _stateful_sequence_unsupported(move)
     effective_move = initial_result.move or move
     hits_physical = effective_move.category == "Physical" or effective_move.deals_physical_damage
     def_stat = "defense" if hits_physical else "sp_defense"

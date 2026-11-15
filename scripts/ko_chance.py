@@ -61,6 +61,12 @@ def get_ko_chance_text(
             return display_zh.KO_RAIN_EXTINGUISHED
         return display_zh.KO_NO_DAMAGE
 
+    # Aggregate multihit rolls cannot prove an OHKO when an intermediate hit
+    # can consume a berry or change Tera state. Reject before the fast OHKO path.
+    if (battle_context and _requires_stateful_tera(*battle_context)
+            and (len(damage) == 256 or move.hits > 1 or move.is_multi_hit)):
+        return display_zh.KO_TERA_STATE_UNSUPPORTED
+
     has_sitrus = defender.item in ("Sitrus Berry",)
     has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
     gluttony = defender.ability == "Gluttony"
