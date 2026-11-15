@@ -453,23 +453,25 @@ def get_move_effectiveness(
     type1_en = TYPE_ZH_TO_EN.get(def_type1, def_type1)
     type2_en = TYPE_ZH_TO_EN.get(def_type2, def_type2) if def_type2 else None
 
-    if is_tera_shell and chart.get(move_en, {}).get(type1_en, 1) >= 0.5:
-        return 0.5
     if move_en == "Stellar":
-        return 2.0 if def_is_tera else 1.0
-
-    eff1 = _type_effectiveness_for(
-        move_en, type1_en, type2_en,
-        is_ghost_revealed, is_gravity, def_item, is_strong_winds, move_name,
-    )
-    if type2_en and type2_en != type1_en and move_en != "Stellar":
-        eff2 = _type_effectiveness_for(
-            move_en, type2_en, type1_en,
+        effectiveness = 2.0 if def_is_tera else 1.0
+    else:
+        eff1 = _type_effectiveness_for(
+            move_en, type1_en, type2_en,
             is_ghost_revealed, is_gravity, def_item, is_strong_winds, move_name,
         )
-    else:
-        eff2 = 1
-    return eff1 * eff2
+        if type2_en and type2_en != type1_en:
+            eff2 = _type_effectiveness_for(
+                move_en, type2_en, type1_en,
+                is_ghost_revealed, is_gravity, def_item, is_strong_winds, move_name,
+            )
+        else:
+            eff2 = 1
+        effectiveness = eff1 * eff2
+
+    if is_tera_shell and effectiveness >= 1:
+        return 0.5
+    return effectiveness
 
 
 # ---------------------------------------------------------------------------
@@ -1479,7 +1481,7 @@ def _calculate_damage_impl(
         is_gravity=field.is_gravity,
         def_item=defender.item,
         is_strong_winds=(field.weather == "Strong Winds"),
-        is_tera_shell=(defender.ability == "Tera Shell" and defender.current_hp == defender.max_hp),
+        is_tera_shell=(def_ability == "Tera Shell" and defender.current_hp == defender.max_hp),
         def_is_tera=defender.is_terastalize,
         move_name=move.name,
     )
