@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.1.0"
+  version: "5.1.1"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -195,6 +195,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 - `tera_effects_applied` 默认 `false`：归零化境在太晶触发时清除天气／场地，面影辉映按形态强化一次。已发动后再出现的天气／场地、或已包含强化的快照须传 `true`。晶光星群、棘藤棒和觉醒之舞的动态属性、分类及扩散信息直接读 `move_info`。
 - 化学变化气体通过统一有效特性判定影响伤害和 KO，保留不可压制特性与特性护具例外；计算快照仍保存原配置特性，方便续算与解释。
 - 紧张感／人马一体会阻止对方抗性树果及回复树果，阻止时不减伤、不回复也不消耗；气体和护具通过有效特性判定影响该规则。
+- 普通单击招式的连续 KO 估计会在抗性果消费后重新计算后续伤害，不能将首次减伤重复套用到每次攻击。
 - 普通亲子爱与回复树果的 KO 按分击顺序结算，先判倒下再回复；子击倍率在基础伤害阶段应用。缺少分击数据或涉及尚未建模的 HP 依赖／回合末组合时明确提示限制。
 - 无关天气／气闸压制天气影响但不清除天气，伤害和 KO 读取相应生效天气；`field_info` 在存在差异时给出 `effective_weather`／`weather_suppressed`，续算仍使用实际场地。Mega Sol 的招式天气与回合末环境分开处理。
 - 陀螺球／电球与分析的速度比较读取实际速度，计入已生效的天气／场地特性、轻装、慢启动、飞毛腿、速度道具与麻痹；能力等级仅计算一次，配置和回填能力值不因临时速度修正而改变。

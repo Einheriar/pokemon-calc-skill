@@ -46,6 +46,8 @@ pokemon-calc/
     ├── query.py          # 主查询入口（百科 + calc + lookup + preset + optimize + meta）
     ├── damage.py         # 伤害计算引擎（内部全英文枚举，经 engine_enums）
     ├── tera_effects.py   # 专属太晶触发效果与动态招式规则
+    ├── battle_effects.py # 有效特性、树果阻断、环境／招式天气共用规则
+    ├── speed_effects.py  # 实际速度，供动态威力和速度比较使用
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
@@ -183,6 +185,12 @@ pokemon-calc/
 4. **道具白名单**：仅纯增伤道具自动套用（Life Orb、Choice Band、Choice Specs、Expert Belt、Muscle Band、Wise Glasses）并以 `*_auto_item` 上报；判定触发类（文柚果、气势披带、树果等）与不加伤道具（讲究围巾）不兜底。用户显式指定的道具永远优先。
 5. **形态永不切换**：预设中的 `form_name` 不参与 auto 填充（问水箭龟永远是水箭龟）；仅在用户显式引用 `preset` 时生效（如天梯套将 Mega 形态的 `form_name` 带入计算）。
 
+**计算态与配置回显（V5.1.1 起）**
+
+`calc`／`calc-raw` 保留双方配置中的特性和实际场地。气体、破格和护具通过有效特性规则作用于计算，不将配置里的特性清空。无关天气／气闸压制环境天气时，`field_info.weather` 仍是场上天气，并补充 `effective_weather: null`、`weather_suppressed: true`。Mega Sol 的招式天气单独计算，环境天气仍用于天气特性、天气增防和回合末结算。
+
+陀螺球／电球及分析的比较使用实际速度，包括有效天气／场地特性、速度道具与麻痹等。`stats.speed` 回显仍是已应用能力等级的能力值，不把临时修正写回；调用者不要预先再乘这些倍率。普通连续攻击含可触发树果时，KO／优化使用逐击概率，`guaranteed` 要求全部分支满足，`likely` 要求至少 50%；静态场景保留原平均伤害契约。
+
 #### preset 命令
 
 setdex 预设条目字段：`level`、`evs`、`nature`、`ability`、`item`、`moves`、`ivs`（可选）及天梯套扩展字段 `priority`（int，auto 匹配分层用）、`usage_pct`（该套依据的天梯最高占比分配使用率）、`source`（数据来源与日期）、`form_name`（天梯特指形态，仅显式引用时生效）。扩展字段为透明度元数据，计算端忽略。
@@ -243,7 +251,7 @@ def calculate_damage(
 ```python
 @dataclass
 class DamageResult:
-    damage: list[int]          # 16 个乱数 roll 的伤害值（已排序）
+    damage: list[int]          # 已排序；普通单击 16 个，亲子爱独立乱数合计 256 个
     min_damage: int
     max_damage: int
     description: str
@@ -258,6 +266,8 @@ class DamageResult:
     attacker_after: Optional[Pokemon]
     defender_after: Optional[Pokemon]
     field_state: Optional[Field]
+    field_used: Optional[Field]   # 本次有效环境；field_state 保留实际场地
+    hit_damage_rolls: Optional[list[list[int]]] # 普通亲子爱逐击乱数，供树果 KO 使用
 ```
 
 **已实现的修正**
@@ -268,7 +278,7 @@ class DamageResult:
 - 道具修正（生命宝珠、讲究头带/眼镜、突击背心、进化奇石、深海的牙齿/鳞片等）
 - 场地/天气（晴天/雨天/沙暴/下雪、青草/电气/薄雾/精神场地）
 - Ate/Ize 特性（Pixilate / Aerilate / Refrigerate / Galvanize / Normalize）
-- 抗性树果（16 种，效果拔群时触发 0.5x 修正）
+- 抗性树果（18 种；对应超有效伤害减半，Chilan Berry 对一般属性命中生效；紧张感／人马一体可阻止触发）
 - 其他：烧伤减半、要害 1.5x、能力等级变化、重力、光墙/反射壁/极光幕
 
 ---
@@ -284,6 +294,8 @@ def get_ko_chance_text(
     defender: Pokemon,
     field: Field,
     is_bad_dreams: bool = False,
+    *,
+    battle_context: tuple[Pokemon, Pokemon, Move, Field] | None = None,
 ) -> str:
 ```
 
@@ -294,6 +306,7 @@ def get_ko_chance_text(
 - `defender`: 防御方宝可梦
 - `field`: 场地条件
 - `is_bad_dreams`: 是否处于噩梦状态
+- `battle_context`: 原始双方、招式与实际场地，供有效特性／天气及状态逐击重算；公开命名／原始参数命令自动提供。只有合计多段伤害、缺少逐击数据时不能可靠判断回复果 KO。
 
 **输出**
 
@@ -521,7 +534,9 @@ python cache/test_ja_query.py         # 日语查询（四实体类正例/归一
 python cache/test_zh_hant.py          # 繁体输入（Tier 1 实体名抽样 + Tier 2 属性/性格枚举全量，14 例）
 ```
 
-数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（引擎四文件不得含中文字符串字面量，注释除外）；别名更新后还需 `python cache/check_aliases.py`（别名层常驻守卫：目标存在/段内键唯一/空值自指/别名≠活规范名，任何违规非零退出；别名悬空检查的权威输出，name_audit 只消费不重复实现）；display_zh.py 或 engine_enums 表变更后还需 `python cache/check_display_names.py`（Tier 1 显示层嵌名交叉验证：IMMUNITY 字典严格对账/EOT 前缀词切分校验/枚举表一致性/嵌名清单落盘 cache/audit/tier1_embedded_names.md）。
+完整回归还包含 `cache/` 顶层全部 `test_review_*.py`、`test_tera_*.py`、`test_ogerpon_mask.py` 和 `test_fix511_*.py`。后者覆盖本次 13 项审查反例与交互，分组及运行方法见 `cache/README.md`；不运行 `archive/` 或历史 `audit510_*_probe.py` 的旧错误预期。
+
+数据校验（非测试套件，数据更新后必跑）：`python cache/check_data.py`、`python cache/check_index.py`；重跑过 `cache/build_champions_patch.py` 后还需 `python cache/check_champions_patch.py`（9 断言）；引擎改动后还需 `python cache/check_engine_enums.py`（含太晶、有效特性和速度共用模块；不得含中文字符串字面量，注释除外）；别名更新后还需 `python cache/check_aliases.py`（别名层常驻守卫：目标存在/段内键唯一/空值自指/别名≠活规范名，任何违规非零退出；别名悬空检查的权威输出，name_audit 只消费不重复实现）；display_zh.py 或 engine_enums 表变更后还需 `python cache/check_display_names.py`（Tier 1 显示层嵌名交叉验证：IMMUNITY 字典严格对账/EOT 前缀词切分校验/枚举表一致性/嵌名清单落盘 cache/audit/tier1_embedded_names.md）。
 
 旧版专项测试已归档于 `cache/archive/`（15 个，仅作历史参考，不再维护）。
 
@@ -562,6 +577,12 @@ git push pokemon-calc pokemon-calc-branch:main
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 5.1.1（2026-11-15）
+
+- 修复复审全部 13 项：星晶自降的唱反调／单纯、太晶触发／甲壳与护具、波导防护、Champions 招式分类、英文 Mega 解析、亲子爱回复果、普通状态优化、树果阻断、有效特性／天气、实际速度和陀螺球公式。
+- 共用规则覆盖气体／破格／护具，保留配置及实际场地；KO 对抗性果只消费一次。普通亲子爱逐击处理树果；复杂状态多段明确限制。实际速度计入能力等级、天气／场地、道具、麻痹及万能伞边界。347 形态全量验收另纠正超坏星旧别名。
+- 新增 22 套专项，全部 **56 套回归、60 个黄金场景、6 项检查通过**后更新版本。黄金仅亲子爱一项按正确子击倍率阶段定点更新，独立数值断言通过，其余 59 项不变。计划及逐问题提交见 `plans/PLAN_2026-11-15_v5.1.1_audit_fixes.md` 和当天 CHANGELOG。
 
 ### 5.1.0（2026-11-15）
 
