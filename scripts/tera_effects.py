@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from battle_effects import effective_ability
 from models import Field, Move, Pokemon
 
 
@@ -46,21 +47,21 @@ def apply_tera_effects(attacker: Pokemon, defender: Pokemon, field: Field) -> No
     if not attacker.is_terastalize or attacker.tera_effects_applied:
         return
 
-    if not field.is_neutralizing_gas:
-        if (_canonical_form_name(attacker.name_en) == "Terapagos-Stellar"
-                and attacker.ability == "Teraform Zero"):
-            field.weather = None
-            field.terrain = None
-        elif attacker.ability == "Embody Aspect":
-            stat = _OGERPON_ASPECT_STATS.get(_canonical_form_name(attacker.name_en))
-            if stat:
-                current_stage = attacker.boosts.get(stat, 0)
-                attacker.boosts[stat] = min(6, current_stage + 1)
-                if stat in attacker.raw_stats:
-                    # Delayed import avoids a module cycle with the damage engine.
-                    from damage import get_modified_stat
+    ability = effective_ability(attacker, field)
+    if (_canonical_form_name(attacker.name_en) == "Terapagos-Stellar"
+            and ability == "Teraform Zero"):
+        field.weather = None
+        field.terrain = None
+    elif ability == "Embody Aspect":
+        stat = _OGERPON_ASPECT_STATS.get(_canonical_form_name(attacker.name_en))
+        if stat:
+            current_stage = attacker.boosts.get(stat, 0)
+            attacker.boosts[stat] = min(6, current_stage + 1)
+            if stat in attacker.raw_stats:
+                # Delayed import avoids a module cycle with the damage engine.
+                from damage import get_modified_stat
 
-                    attacker.stats[stat] = get_modified_stat(attacker.raw_stats[stat], attacker.boosts[stat])
+                attacker.stats[stat] = get_modified_stat(attacker.raw_stats[stat], attacker.boosts[stat])
 
     attacker.tera_effects_applied = True
 
