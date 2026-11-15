@@ -32,6 +32,8 @@ class Pokemon:
     types: list[str] = field(default_factory=list)
     tera_type: Optional[str] = None
     is_terastalize: bool = False
+    stellar_boosted_types: list[str] = field(default_factory=list)
+    tera_effects_applied: bool = False
     boosts: dict[str, int] = field(default_factory=lambda: {
         "hp": 0, "attack": 0, "defense": 0,
         "sp_attack": 0, "sp_defense": 0, "speed": 0
@@ -128,3 +130,8 @@ class DamageResult:
     burn_applied: bool = False
     move: Optional[Move] = None           # Final move after dynamic type/category changes
     effective_power: Optional[int] = None # Dynamic base power before BP/final modifiers
+    attacker_used: Optional[Pokemon] = None
+    defender_used: Optional[Pokemon] = None
+    attacker_after: Optional[Pokemon] = None
+    defender_after: Optional[Pokemon] = None
+    field_state: Optional[Field] = None

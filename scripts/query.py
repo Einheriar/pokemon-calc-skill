@@ -297,6 +297,7 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
         "name", "name_en", "level", "base_stats", "evs", "ivs",
         "nature", "ability", "ability_zh", "item", "types", "tera_type",
         "is_terastalize", "boosts", "current_hp", "max_hp",
+        "stellar_boosted_types", "tera_effects_applied",
         "status", "weight", "is_dynamax", "can_evolve",
         "raw_stats", "stats",
         "form_name",
@@ -470,7 +471,8 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
     # If the user has specified any build-related field, do not force the preset's ability.
     _BUILD_FIELDS = {"evs", "sps", "nature", "ivs", "ability", "ability_zh", "item",
                      "item_zh", "tera_type", "is_terastalize", "boosts", "status",
-                     "level", "raw_stats", "stats", "current_hp", "max_hp"}
+                     "level", "raw_stats", "stats", "current_hp", "max_hp",
+                     "stellar_boosted_types", "tera_effects_applied"}
     is_empty_override = not any(k in _BUILD_FIELDS for k in override)
 
     # Priority tier: only presets at the highest priority compete (newer
@@ -1988,6 +1990,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "status": None,
         "is_terastalize": False,
         "tera_type": None,
+        "stellar_boosted_types": [],
+        "tera_effects_applied": False,
         "is_dynamax": False,
         # Populate weight from data so weight-based moves (Low Kick, Grass Knot,
         # Heavy Slam, Heat Crash) work out of the box. Data layer stores weight
@@ -2008,6 +2012,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
                     f"override 字段 {_k} 必须是 JSON 对象，收到 {type(overrides[_k]).__name__}"
                 )
         pk.update(overrides)
+    if pk.get("tera_type") is not None:
+        pk["tera_type"] = resolve_tera_type_en(pk["tera_type"])
     sp_warnings: list[str] = []
     # Merge SP (Stat Points) override into EVs. The engine stores EVs (keeping
     # full 4-EV granularity); `sps` is only an input/view layer. sps takes
@@ -2032,10 +2038,16 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     # Sync ability_zh with the final ability
     if overrides and "ability" in overrides:
         pk["ability_zh"] = _resolve_ability_to_zh(overridden_ability) or pk.get("ability_zh", "")
+    if overrides and "ability_zh" in overrides and "ability" not in overrides:
+        pk["ability"] = _resolve_ability_to_en(pk["ability_zh"])
+    if isinstance(pk.get("stellar_boosted_types"), list):
+        pk["stellar_boosted_types"] = [resolve_tera_type_en(t) for t in pk["stellar_boosted_types"]]
     # Post-override: ensure item is canonical English for the damage engine
     # while preserving the original display name (usually Chinese) for UI output
     overridden_item = pk.get("item", "")
     overridden_item_zh = pk.get("item_zh", "")
+    if overrides and "item" in overrides and not overridden_item:
+        pk["item_zh"] = overridden_item
     if overridden_item:
         resolved_item = _normalize_item_input(overridden_item)
         if resolved_item:
@@ -2058,7 +2070,8 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
     _VALID_PK_FIELDS = {
         "name", "name_en", "level", "base_stats", "evs", "ivs",
         "nature", "ability", "ability_zh", "item", "item_zh", "types", "tera_type",
-        "is_terastalize", "boosts", "current_hp", "max_hp",
+        "is_terastalize", "stellar_boosted_types", "tera_effects_applied",
+        "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
         "ability_on", "fainted_allies",
         "gender", "is_mega",
@@ -2345,6 +2358,13 @@ def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] |
                 "suggestions": get_suggestions(status, sorted(VALID_STATUS_EN), n=3)}
     if "is_terastalize" in ov and not isinstance(ov["is_terastalize"], bool):
         return {"error": f"{label} is_terastalize must be a JSON boolean"}
+    if "stellar_boosted_types" in ov:
+        boosted_types = ov["stellar_boosted_types"]
+        if (not isinstance(boosted_types, list)
+                or not all(isinstance(t, str) and resolve_tera_type_en(t) for t in boosted_types)):
+            return {"error": f"{label} stellar_boosted_types must be an array of valid type names"}
+    if "tera_effects_applied" in ov and not isinstance(ov["tera_effects_applied"], bool):
+        return {"error": f"{label} tera_effects_applied must be a JSON boolean"}
     if "tera_type" in ov and ov["tera_type"] is not None:
         tera_type = resolve_tera_type_en(ov["tera_type"])
         if tera_type is None:
@@ -2355,6 +2375,35 @@ def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] |
     if ov.get("is_terastalize") is True and not ov.get("tera_type"):
         return {"error": f"{label} is_terastalize requires a valid tera_type"}
     return None
+
+
+def _normalize_tera_state(pokemon_dict: dict[str, Any]) -> None:
+    """Canonicalize the types carried by the Stellar once-per-type state."""
+    if isinstance(pokemon_dict.get("stellar_boosted_types"), list):
+        pokemon_dict["stellar_boosted_types"] = [
+            resolve_tera_type_en(t) for t in pokemon_dict["stellar_boosted_types"]
+        ]
+
+
+def _tera_next_state(result: Any, attacker: Any, defender: Any) -> dict[str, Any] | None:
+    """Expose deterministic Tera state without choosing a random damage roll."""
+    if not (attacker.is_terastalize or defender.is_terastalize):
+        return None
+    state: dict[str, Any] = {}
+    for label, original in (("attacker", attacker), ("defender", defender)):
+        pokemon = getattr(result, label + "_after", None) or original
+        state[label] = {
+            "boosts": dict(pokemon.boosts),
+            "stellar_boosted_types": list(pokemon.stellar_boosted_types),
+            "tera_effects_applied": pokemon.tera_effects_applied,
+            "item": pokemon.item,
+        }
+    actual_field = result.field_state
+    if actual_field is not None:
+        state["field_override"] = {
+            "weather": actual_field.weather, "terrain": actual_field.terrain,
+        }
+    return state
 
 
 def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args: str) -> dict[str, Any]:
@@ -2462,9 +2511,18 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         def_auto_preset = None
         def_auto_item = None
 
+    # Explicit presets may carry model fields that were not present in the
+    # original override object, so validate the merged adapter input as well.
+    for _side, _ov in (("attacker", att_override), ("defender", def_override)):
+        _enum_err = _validate_override_enums(_side, _ov)
+        if _enum_err is not None:
+            return _enum_err
+
     att_dict = _make_pokemon_from_data(att_data, att_override, form_index=att_form_idx)
     def_dict = _make_pokemon_from_data(def_data, def_override, form_index=def_form_idx)
     move_dict = _make_move_from_data(move_data, move_override)
+    att_form_idx = att_dict.get("_sp_meta", {}).get("form_index", att_form_idx)
+    def_form_idx = def_dict.get("_sp_meta", {}).get("form_index", def_form_idx)
 
     # Extract extra metadata before passing to model constructors
     # (setup_moves never survives _make_pokemon_from_data's field whitelist;
@@ -2520,7 +2578,11 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
 
     # KO chance
     from ko_chance import get_ko_chance_text, squash_multihit
-    ko_text = get_ko_chance_text(result.damage, result.move or move, defender, field)
+    actual_field = result.field_state or field
+    ko_text = get_ko_chance_text(
+        result.damage, result.move or move, defender, actual_field,
+        battle_context=(attacker, defender, move, field),
+    )
 
     # Multi-hit total damage (for moves like Dual Wingbeat)
     total_damage_rolls: list[int] = []
@@ -2602,8 +2664,8 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "is_spread": bool(final_move.is_spread),
     }
     field_info: dict[str, Any] = {
-        "weather": field.weather,
-        "terrain": field.terrain,
+        "weather": actual_field.weather,
+        "terrain": actual_field.terrain,
         "format": field.format,
         "is_gravity": field.is_gravity,
         "is_reflect": field.is_reflect,
@@ -2617,14 +2679,14 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "is_power_spot": field.is_power_spot,
     }
     modifiers: dict[str, Any] = {
-        "attacker_boosts": attacker.boosts,
+        "attacker_boosts": (result.attacker_used or attacker).boosts,
         "attacker_status": attacker.status,
         "attacker_is_tera": attacker.is_terastalize,
-        "attacker_tera_type": att_dict.get("tera_type"),
-        "defender_boosts": defender.boosts,
+        "attacker_tera_type": att_override.get("tera_type", att_dict.get("tera_type")),
+        "defender_boosts": (result.defender_used or defender).boosts,
         "defender_status": defender.status,
         "defender_is_tera": defender.is_terastalize,
-        "defender_tera_type": def_dict.get("tera_type"),
+        "defender_tera_type": def_override.get("tera_type", def_dict.get("tera_type")),
     }
 
     response: dict[str, Any] = {
@@ -2646,6 +2708,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "modifiers": modifiers,
         "_data_source": attacker_info.get("_data_source", "gen9"),
     }
+    next_state = _tera_next_state(result, attacker, defender)
+    if next_state is not None:
+        response["next_state"] = next_state
     if att_auto_preset:
         response["attacker_auto_preset"] = att_auto_preset
     if att_auto_item:
@@ -2759,6 +2824,7 @@ def cmd_calc_raw(
         _enum_err = _validate_override_enums(_side, _ov)
         if _enum_err is not None:
             return _enum_err
+        _normalize_tera_state(_ov)
 
     # Validate required fields
     if "stats" not in att_dict:
@@ -2773,6 +2839,7 @@ def cmd_calc_raw(
     # coerce like _make_move_from_data instead of crashing on str>int later.
     if "hits" in move_dict:
         if move_dict["hits"] == "multi":
+            move_dict.setdefault("is_multi_hit", True)
             move_dict["hits"] = 3
         else:
             try:
@@ -2832,15 +2899,18 @@ def cmd_calc_raw(
             if resolved:
                 side_dict["item"] = resolved
 
-    # Auto-fill is_spread from moves.json if not explicitly provided
-    if "is_spread" not in move_dict:
+    # Preserve native move properties even when the caller overrides hit count.
+    if any(key not in move_dict for key in ("is_spread", "is_multi_hit", "priority")):
         move_name = move_dict.get("name") or move_dict.get("name_zh", "")
         if move_name:
             resolved = resolve_move(move_name)
             if resolved:
                 _, move_data = resolved
                 if "is_spread" in move_data:
-                    move_dict["is_spread"] = move_data["is_spread"]
+                    move_dict.setdefault("is_spread", move_data["is_spread"])
+                native_hits = move_data.get("hits", 1)
+                move_dict.setdefault("is_multi_hit", native_hits == "multi" or isinstance(native_hits, int) and native_hits > 1)
+                move_dict.setdefault("priority", move_data.get("priority", 0))
 
     # Build objects
     try:
@@ -2855,7 +2925,11 @@ def cmd_calc_raw(
     result = calculate_damage(attacker, defender, move, field, gen=9)
 
     # KO chance
-    ko_text = get_ko_chance_text(result.damage, result.move or move, defender, field)
+    actual_field = result.field_state or field
+    ko_text = get_ko_chance_text(
+        result.damage, result.move or move, defender, actual_field,
+        battle_context=(attacker, defender, move, field),
+    )
 
     # Multi-hit total damage
     total_damage_rolls: list[int] = []
@@ -2908,8 +2982,8 @@ def cmd_calc_raw(
         "is_spread": bool(final_move.is_spread),
     }
     field_info: dict[str, Any] = {
-        "weather": field.weather,
-        "terrain": field.terrain,
+        "weather": actual_field.weather,
+        "terrain": actual_field.terrain,
         "format": field.format,
         "is_gravity": field.is_gravity,
         "is_reflect": field.is_reflect,
@@ -2940,6 +3014,9 @@ def cmd_calc_raw(
         "move_info": move_info,
         "field_info": field_info,
     }
+    next_state = _tera_next_state(result, attacker, defender)
+    if next_state is not None:
+        response["next_state"] = next_state
     if move.hits > 1:
         response["total_damage_range"] = [min(total_damage_rolls), max(total_damage_rolls)]
         response["total_damage_rolls"] = total_damage_rolls

@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 import math
 import sys
-from copy import copy
+from copy import copy, deepcopy
 from pathlib import Path
 from typing import Any, Optional
 
@@ -830,7 +830,8 @@ def _apply_tera_base_power_floor(base_power: int, move: Move, attacker: Pokemon)
         return base_power
 
     if attacker.tera_type == "Stellar":
-        already_boosted = move.type in getattr(attacker, "stellar_boosted_types", ())
+        already_boosted = (attacker.name_en != "Terapagos-Stellar"
+                           and move.type in getattr(attacker, "stellar_boosted_types", ()))
         if already_boosted:
             return base_power
     elif move.type != attacker.tera_type:
@@ -1359,6 +1360,7 @@ def _check_seeds(defender: Pokemon, field: Field) -> None:
         new_boost = min(6, defender.boosts.get(stat, 0) + 1)
         defender.boosts[stat] = new_boost
         defender.stats[stat] = get_modified_stat(defender.raw_stats.get(stat, 0), new_boost)
+        defender.item = ""
 
 
 def calculate_damage(
@@ -1394,8 +1396,10 @@ def calculate_damage(
     attacker = copy(attacker)
     defender = copy(defender)
     move = copy(move)
+    field = copy(field)
     for pokemon in (attacker, defender):
         pokemon.types = list(pokemon.types)
+        pokemon.stellar_boosted_types = list(pokemon.stellar_boosted_types)
         for attr in ("base_stats", "evs", "ivs", "boosts", "raw_stats", "stats"):
             setattr(pokemon, attr, dict(getattr(pokemon, attr)))
 
@@ -1409,6 +1413,14 @@ def calculate_damage(
         attacker.tera_type = resolve_tera_type_en(attacker.tera_type)
     if defender.tera_type:
         defender.tera_type = resolve_tera_type_en(defender.tera_type)
+    attacker.stellar_boosted_types = [
+        resolve_type_en(t) or resolve_tera_type_en(t) or t
+        for t in attacker.stellar_boosted_types
+    ]
+    defender.stellar_boosted_types = [
+        resolve_type_en(t) or resolve_tera_type_en(t) or t
+        for t in defender.stellar_boosted_types
+    ]
     return _calculate_damage_core(attacker, defender, move, field, gen, _skip_seeds, _neutral_damage)
 
 
@@ -1424,10 +1436,17 @@ def _calculate_damage_core(
     # Keep the final private copy in the result. Callers must not reconstruct
     # dynamic type/category/power from the original Move or display text.
     final_move = copy(move)
+    attacker_before = deepcopy(attacker)
+    defender_before = deepcopy(defender)
     result = _calculate_damage_impl(
         attacker, defender, final_move, field, gen, _skip_seeds, _neutral_damage,
     )
     result.move = final_move
+    result.attacker_used = result.attacker_used or attacker_before
+    result.defender_used = result.defender_used or defender_before
+    result.attacker_after = deepcopy(attacker)
+    result.defender_after = deepcopy(defender)
+    result.field_state = deepcopy(field)
     return result
 
 
@@ -1626,10 +1645,11 @@ def _calculate_damage_impl(
         elif (move_type_en != tera_type_en and (atk_type1_en == move_type_en or atk_type2_en == move_type_en)) or move_type_en == tera_type_en:
             stab_mod = 0x2000 if (attacker.ability == "Adaptability" and move_type_en == tera_type_en) else 0x1800
     elif attacker.is_terastalize and tera_type_en == "Stellar":
-        if move_type_en in (atk_type1_en, atk_type2_en):
-            stab_mod = 0x2000
+        is_base_stab = move_type_en in (atk_type1_en, atk_type2_en)
+        if attacker.name_en == "Terapagos-Stellar" or move_type_en not in attacker.stellar_boosted_types:
+            stab_mod = 0x2000 if is_base_stab else 0x1333
         else:
-            stab_mod = 0x1333
+            stab_mod = 0x1800 if is_base_stab else 0x1000
     else:
         if move_type_en in (atk_type1_en, atk_type2_en):
             stab_mod = 0x2000 if attacker.ability == "Adaptability" else 0x1800
@@ -1660,6 +1680,11 @@ def _calculate_damage_impl(
 
     damage_rolls.sort()
 
+    # A later attack cannot receive the same resist berry reduction again.
+    if (_canonical_berry(defender.item) in _RESIST_BERRIES.get(move_type_en, [])
+            and (type_effectiveness > 1 or move_type_en == T.NORMAL)):
+        defender.item = ""
+
     # Parental Bond: second hit at 25% base power (Gen 6+). In doubles the
     # second hit only applies to non-spread moves (JS:1980, audit E5).
     _pb_active = (attacker.ability == "Parental Bond"
@@ -1689,6 +1714,21 @@ def _calculate_damage_impl(
                 merged_rolls.append(d1 + d2)
         merged_rolls.sort()
         damage_rolls = merged_rolls
+
+    # Both hits of one Parental Bond attack share the first-use bonus.
+    if (attacker.is_terastalize and tera_type_en == "Stellar"
+            and attacker.name_en != "Terapagos-Stellar"
+            and move_type_en not in attacker.stellar_boosted_types
+            and damage_rolls and damage_rolls[-1] > 0):
+        attacker.stellar_boosted_types.append(move_type_en)
+
+    if (attacker.is_terastalize and tera_type_en == "Stellar"
+            and move.name == "Tera Blast" and damage_rolls and damage_rolls[-1] > 0):
+        for stat in ("attack", "sp_attack"):
+            attacker.boosts[stat] = max(-6, attacker.boosts.get(stat, 0) - 1)
+            attacker.stats[stat] = get_modified_stat(
+                attacker.raw_stats.get(stat, 0), attacker.boosts[stat],
+            )
 
     # Build description — copy assembly lives in display_zh; the
     # {eff}{crit}{burn}{pb} segments stay an atomic ordered unit.

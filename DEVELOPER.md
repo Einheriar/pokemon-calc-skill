@@ -142,6 +142,9 @@ pokemon-calc/
 ```
 
 - `times_affected`：Rage Fist（愤怒之拳）已受击次数，威力 = 50 × (times_affected + 1)。
+- 太晶输入：`is_terastalize` 仅接受 JSON 布尔值，开启时须指定合法的 `tera_type`（18 属性或 Stellar，接受中英繁体及英文大小写）。
+- `stellar_boosted_types: []` 保存星晶已消耗首次增幅的属性，必须为有效属性名数组；默认空数组。`tera_effects_applied: false` 保存本次太晶触发效果是否已结算，必须为 JSON 布尔值。
+- 太晶响应新增 `next_state`：`attacker`／`defender` 各含 `boosts`、`stellar_boosted_types`、`tera_effects_applied`、`item`；`field_override` 含实际 `weather`／`terrain`。这些字段可合并回原配置继续计算，HP 须另按实际伤害更新。`modifiers` 表示本次攻击使用的强化，`next_state` 表示攻击后的状态，星晶太晶爆发自降不会提前影响本次伤害。
 - 响应 `warning` 字段还可能包含：SP 超限提示（`sps` > 32 或负数）、
   不可用形态提示（is_unobtainable）。
 
