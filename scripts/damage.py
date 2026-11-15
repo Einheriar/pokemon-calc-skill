@@ -1757,8 +1757,9 @@ def _calculate_damage_impl(
 
     if (attacker.is_terastalize and tera_type_en == "Stellar"
             and move.name == "Tera Blast" and damage_rolls and damage_rolls[-1] > 0):
+        delta = 1 if attacker.ability == "Contrary" else -2 if attacker.ability == "Simple" else -1
         for stat in ("attack", "sp_attack"):
-            attacker.boosts[stat] = max(-6, attacker.boosts.get(stat, 0) - 1)
+            attacker.boosts[stat] = max(-6, min(6, attacker.boosts.get(stat, 0) + delta))
             attacker.stats[stat] = get_modified_stat(
                 attacker.raw_stats.get(stat, 0), attacker.boosts[stat],
             )
