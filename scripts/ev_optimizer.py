@@ -106,6 +106,40 @@ def _evaluate_defense(
     return calculate_damage(attacker, dfn, move, field, gen=9)
 
 
+def _remaining_allocation(
+    pokemon: Pokemon,
+    optimized: dict[str, int],
+    mode: Literal["ev", "sp"],
+) -> int:
+    """Return the unused pool after replacing only the optimized stats.
+
+    The original allocation on every other stat remains part of the set and
+    must therefore be deducted from the reported remainder. SP is a display
+    view over the stored EVs, so convert those other stats with the same
+    EV -> SP rule used by the public query layer.
+    """
+    original_evs = getattr(pokemon, "evs", None) or {}
+    if mode == "sp":
+        max_total = MAX_TOTAL_SP
+
+        def allocation(ev: object) -> int:
+            ev_value = max(0, int(ev or 0))
+            return 0 if ev_value == 0 else (ev_value + 4) // 8
+
+    else:
+        max_total = MAX_TOTAL_EVS
+
+        def allocation(ev: object) -> int:
+            return max(0, int(ev or 0))
+
+    other_total = sum(
+        allocation(original_evs.get(stat, 0))
+        for stat in _STAT_KEYS
+        if stat not in optimized
+    )
+    return max(0, max_total - sum(optimized.values()) - other_total)
+
+
 # ---------------------------------------------------------------------------
 # Single-stat optimization
 # ---------------------------------------------------------------------------
@@ -198,8 +232,8 @@ def optimize_attack_ev(
         "stat": stat,
         "optimal_ev": best_val if mode == "ev" else 0,
         "optimal_sp": best_val if mode == "sp" else 0,
-        "remaining_evs": max_total - best_val if mode == "ev" else 0,
-        "remaining_sp": max_total - best_val if mode == "sp" else 0,
+        "remaining_evs": _remaining_allocation(attacker, {stat: best_val}, mode) if mode == "ev" else 0,
+        "remaining_sp": _remaining_allocation(attacker, {stat: best_val}, mode) if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
     }
@@ -291,8 +325,8 @@ def optimize_defense_ev(
         "stat": stat,
         "optimal_ev": best_val if mode == "ev" else 0,
         "optimal_sp": best_val if mode == "sp" else 0,
-        "remaining_evs": max_total - best_val if mode == "ev" else 0,
-        "remaining_sp": max_total - best_val if mode == "sp" else 0,
+        "remaining_evs": _remaining_allocation(defender, {stat: best_val}, mode) if mode == "ev" else 0,
+        "remaining_sp": _remaining_allocation(defender, {stat: best_val}, mode) if mode == "sp" else 0,
         "damage_range": [best_damage.min_damage, best_damage.max_damage],
         "description": best_damage.description,
     }
@@ -390,8 +424,12 @@ def optimize_bulk_evs(
         "optimal_def_sp": def_val if mode == "sp" else 0,
         "total_evs": best_total if mode == "ev" else 0,
         "total_sp": best_total if mode == "sp" else 0,
-        "remaining_evs": max_total - best_total if mode == "ev" else 0,
-        "remaining_sp": max_total - best_total if mode == "sp" else 0,
+        "remaining_evs": _remaining_allocation(
+            defender, {"hp": hp_val, def_stat: def_val}, mode,
+        ) if mode == "ev" else 0,
+        "remaining_sp": _remaining_allocation(
+            defender, {"hp": hp_val, def_stat: def_val}, mode,
+        ) if mode == "sp" else 0,
         "damage_range": [best_result.min_damage, best_result.max_damage],
         "description": best_result.description,
     }
