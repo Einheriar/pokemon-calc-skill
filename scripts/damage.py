@@ -727,7 +727,7 @@ def base_power_func(
     name = move.name
 
     if name == "Gyro Ball":
-        bp = min(150, math.floor(25 * defender.stats.get("speed", 1) / max(1, attacker.stats.get("speed", 1))))
+        bp = min(150, math.floor(25 * defender.stats.get("speed", 1) / max(1, attacker.stats.get("speed", 1))) + 1)
     elif name == "Electro Ball":
         r = math.floor(attacker.stats.get("speed", 1) / max(1, defender.stats.get("speed", 1)))
         bp = 150 if r >= 4 else 120 if r >= 3 else 80 if r >= 2 else 60 if r >= 1 else 40
