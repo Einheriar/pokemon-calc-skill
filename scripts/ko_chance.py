@@ -13,7 +13,7 @@ from typing import Optional
 from models import Field, Move, Pokemon
 import display_zh
 from engine_enums import T
-from battle_effects import effective_ability
+from battle_effects import berries_blocked, effective_ability
 
 _HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
 _SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
@@ -69,8 +69,13 @@ def get_ko_chance_text(
             and (len(damage) == 256 or move.hits > 1 or move.is_multi_hit)):
         return display_zh.KO_TERA_STATE_UNSUPPORTED
 
-    has_sitrus = defender.item in ("Sitrus Berry",)
-    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
+    berry_blocked = bool(
+        battle_context and berries_blocked(
+            battle_context[0], defender, battle_context[3],
+        )
+    )
+    has_sitrus = defender.item == "Sitrus Berry" and not berry_blocked
+    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry") and not berry_blocked
     gluttony = defender_ability == "Gluttony"
     ripen = 2 if defender_ability == "Ripen" else 1
 
@@ -487,8 +492,9 @@ def get_stateful_ko_probability(
     single net end-of-turn effect they want modeled.
     """
     hp = defender.current_hp if starting_hp is None else starting_hp
-    has_sitrus = defender.item == "Sitrus Berry"
-    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry")
+    berry_blocked = berries_blocked(attacker, defender, field)
+    has_sitrus = defender.item == "Sitrus Berry" and not berry_blocked
+    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry") and not berry_blocked
     defender_ability = effective_ability(defender, field)
     gluttony = defender_ability == "Gluttony"
     ripen = 2 if defender_ability == "Ripen" else 1

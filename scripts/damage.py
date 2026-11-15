@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from models import DamageResult, Field, Move, Pokemon
-from battle_effects import effective_ability, ignorable_defender_ability
+from battle_effects import berries_blocked, effective_ability, ignorable_defender_ability
 from tera_effects import apply_tera_effects, resolve_dynamic_tera_move_type
 import display_zh
 from engine_enums import (
@@ -1337,9 +1337,10 @@ def calc_final_mods(
     move_type_en = move.type
     resist_berries = _RESIST_BERRIES.get(move_type_en, [])
     canonical_item = _canonical_berry(defender.item)
-    if canonical_item == "Chilan Berry" and move_type_en == T.NORMAL:
+    can_eat_berry = not berries_blocked(attacker, defender, field)
+    if can_eat_berry and canonical_item == "Chilan Berry" and move_type_en == T.NORMAL:
         final_mods.append(0x800)
-    elif canonical_item in resist_berries and type_effectiveness > 1:
+    elif can_eat_berry and canonical_item in resist_berries and type_effectiveness > 1:
         final_mods.append(0x800)
 
     return final_mods
@@ -1729,7 +1730,8 @@ def _calculate_damage_impl(
 
     # A later attack cannot receive the same resist berry reduction again.
     if (_canonical_berry(defender.item) in _RESIST_BERRIES.get(move_type_en, [])
-            and (type_effectiveness > 1 or move_type_en == T.NORMAL)):
+            and (type_effectiveness > 1 or move_type_en == T.NORMAL)
+            and not berries_blocked(attacker, defender, field)):
         defender.item = ""
 
     # Parental Bond: second hit at 25% base power (Gen 6+). In doubles the
