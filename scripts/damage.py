@@ -1501,7 +1501,7 @@ def _calculate_damage_impl(
         elif move.name == "Sonic Boom":
             fixed_damage = 20
         elif move.name in ("Super Fang", "Nature's Madness", "Ruination"):
-            fixed_damage = math.floor(defender.current_hp / 2)
+            fixed_damage = max(1, math.floor(defender.current_hp / 2)) if defender.current_hp > 0 else 0
         elif move.name == "Endeavor":
             fixed_damage = max(0, defender.current_hp - attacker.current_hp)
         elif move.name == "Final Gambit":
