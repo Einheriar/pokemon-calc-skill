@@ -2033,17 +2033,23 @@
  "Cornerstone Mask": {
   "name_zh": "础石面具",
   "name_ja": "いしずえのめん",
-  "name_en": "Cornerstone Mask"
+  "name_en": "Cornerstone Mask",
+  "effect": "厄诡椪础石面具形态携带时，所有伤害招式威力提升20%，棘藤棒变为岩石属性；厄诡椪携带的面具不能被移除。",
+  "category": "形态专属道具"
  },
  "Wellspring Mask": {
   "name_zh": "水井面具",
   "name_ja": "いどのめん",
-  "name_en": "Wellspring Mask"
+  "name_en": "Wellspring Mask",
+  "effect": "厄诡椪水井面具形态携带时，所有伤害招式威力提升20%，棘藤棒变为水属性；厄诡椪携带的面具不能被移除。",
+  "category": "形态专属道具"
  },
  "Hearthflame Mask": {
   "name_zh": "火灶面具",
   "name_ja": "かまどのめん",
-  "name_en": "Hearthflame Mask"
+  "name_en": "Hearthflame Mask",
+  "effect": "厄诡椪火灶面具形态携带时，所有伤害招式威力提升20%，棘藤棒变为火属性；厄诡椪携带的面具不能被移除。",
+  "category": "形态专属道具"
  },
  "Orange Mail": {
   "name_zh": "橙色邮件",

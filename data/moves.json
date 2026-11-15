@@ -17551,7 +17551,7 @@
     "description": "照射出结晶的力量来驱逐敌人。太乐巴戈斯在星晶形态下使出时，能对所有对手造成伤害。",
     "intro": "",
     "effect": [],
-    "additional_effect": "",
+    "additional_effect": "太乐巴戈斯星晶形态使用时变为星晶属性并攻击所有对手；太晶化且攻击高于特攻时按物理招式计算，平手仍为特殊招式。",
     "details": "",
     "move_changes": ""
   },
