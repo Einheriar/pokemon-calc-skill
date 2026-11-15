@@ -193,6 +193,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 `optimal_ev`（默认 EV 模式）在回答中转换为**能力值描述**（如"特攻能力值需要达到 177"），并可标注 SP 等价（"252 努力值 = 32 能力点数"），不要只给数值。若用户以 SP 提问并加 `--mode sp`，则引用 `optimal_sp`（双模式返回字段详见 references/mechanics.md）。`remaining_evs` / `remaining_sp` 已扣除搜索属性之外的原配置分配；搜索属性只按新最优值计算一次。
 
+精神冲击／精神击破／圣剑仍属特殊招式：攻击优化搜索特攻，防守优化搜索物防；冰鳞按特殊分类减伤，不因命中物防而失效。
+
 ## 3. 执行工作流
 
 ### 承伤反查的默认口径（survivability）

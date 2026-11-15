@@ -13,7 +13,7 @@ from __future__ import annotations
 import copy
 from typing import Literal, Optional
 
-from damage import calculate_damage, compute_raw_stats
+from damage import calculate_damage, compute_raw_stats, get_modified_stat, uses_physical_attack, uses_physical_defense
 from models import DamageResult, Field, Move, Pokemon
 import display_zh
 
@@ -41,6 +41,9 @@ def _ensure_stats(pokemon: Pokemon) -> None:
     """Materialize optimizer-owned inputs before reading their HP pool."""
     if not pokemon.raw_stats:
         compute_raw_stats(pokemon)
+    elif not pokemon.stats:
+        pokemon.stats = {stat: get_modified_stat(value, pokemon.boosts.get(stat, 0))
+                         for stat, value in pokemon.raw_stats.items()}
 
 
 def _set_ev(pokemon: Pokemon, stat: str, ev: int) -> Pokemon:
@@ -190,7 +193,6 @@ def optimize_attack_ev(
         }
 
     # Physical vs Special determination (same logic as damage.py)
-    from damage import uses_physical_attack
     hits_physical = uses_physical_attack(attacker, defender, move)
     stat = "attack" if hits_physical else "sp_attack"
 
@@ -275,8 +277,7 @@ def optimize_defense_ev(
     _ensure_stats(defender)
 
     # Determine which defensive stat to optimize
-    from damage import uses_physical_attack
-    hits_physical = uses_physical_attack(attacker, defender, move)
+    hits_physical = uses_physical_defense(attacker, defender, move)
     stat = "defense" if hits_physical else "sp_defense"
 
     result = calculate_damage(attacker, defender, move, field, gen=9)
@@ -365,8 +366,9 @@ def optimize_bulk_evs(
 
     Returns the best allocation found.
     """
-    from damage import uses_physical_attack
-    hits_physical = uses_physical_attack(attacker, defender, move)
+    _ensure_stats(attacker)
+    _ensure_stats(defender)
+    hits_physical = uses_physical_defense(attacker, defender, move)
     def_stat = "defense" if hits_physical else "sp_defense"
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
 

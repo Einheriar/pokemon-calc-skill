@@ -572,6 +572,11 @@ def uses_physical_attack(attacker: Pokemon, defender: Pokemon, move: Move) -> bo
     return move.category == "Physical"
 
 
+def uses_physical_defense(attacker: Pokemon, defender: Pokemon, move: Move) -> bool:
+    """Determine whether damage is calculated against the target's Defense."""
+    return uses_physical_attack(attacker, defender, move) or move.deals_physical_damage
+
+
 # ---------------------------------------------------------------------------
 # Base Power
 # ---------------------------------------------------------------------------
@@ -1236,7 +1241,7 @@ def calc_final_mods(
         final_mods.append(0x800)
 
     # Ice Scales
-    if def_ability == "Ice Scales" and not hits_physical:
+    if def_ability == "Ice Scales" and move.category == "Special":
         final_mods.append(0x800)
 
     # Friend Guard
@@ -1400,7 +1405,7 @@ def _calculate_damage_impl(
     # Attack category and defending stat are separate dimensions. Psyshock,
     # Psystrike and Secret Sword use Special Attack against Physical Defense.
     move.category = "Physical" if uses_physical_attack(attacker, defender, move) else "Special"
-    hits_physical = move.category == "Physical" or move.deals_physical_damage
+    hits_physical = uses_physical_defense(attacker, defender, move)
 
     # Ability ignore (Mold Breaker, Teravolt, Turboblaze)
     def_ability = defender.ability
