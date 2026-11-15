@@ -17,6 +17,54 @@ from battle_effects import berries_blocked, effective_ability
 
 _HALF_CURRENT_HP_MOVES = frozenset({"Super Fang", "Nature's Madness", "Ruination"})
 _SINGLE_USE_MOVES = frozenset({"Endeavor", "Final Gambit"})
+def _sequential_multihit_ko_probability(
+    per_hit_rolls: list[list[int]],
+    uses: int,
+    starting_hp: int,
+    max_hp: int,
+    has_sitrus: bool,
+    has_figy: bool,
+    gluttony: bool,
+    ripen: int,
+) -> float:
+    """Enumerate independent sub-hit rolls with branch-local berry state."""
+    memo: dict[tuple[int, int, bool, bool], float] = {}
+    total_hits = len(per_hit_rolls) * uses
+
+    def walk(index: int, hp: int, sitrus_available: bool, figy_available: bool) -> float:
+        if hp <= 0:
+            return 1.0
+        if index >= total_hits:
+            return 0.0
+        key = (index, hp, sitrus_available, figy_available)
+        if key in memo:
+            return memo[key]
+        rolls = per_hit_rolls[index % len(per_hit_rolls)]
+        if not rolls:
+            return 0.0
+        probability = 0.0
+        for dealt in rolls:
+            if dealt >= hp:
+                probability += 1.0
+                continue
+            next_hp = hp - dealt
+            next_sitrus = sitrus_available
+            next_figy = figy_available
+            if next_sitrus and next_hp <= max_hp // 2:
+                next_hp = min(max_hp, next_hp + math.floor(ripen * max_hp / 4))
+                next_sitrus = False
+            elif next_figy and (
+                (next_hp <= max_hp // 4 and not gluttony)
+                or (next_hp <= max_hp // 2 and gluttony)
+            ):
+                next_hp = min(max_hp, next_hp + math.floor(ripen * max_hp / 3))
+                next_figy = False
+            probability += walk(index + 1, next_hp, next_sitrus, next_figy)
+        probability /= len(rolls)
+        memo[key] = probability
+        return probability
+
+    return walk(0, starting_hp, has_sitrus, has_figy)
 
 
 def get_ko_chance_text(
@@ -74,15 +122,24 @@ def get_ko_chance_text(
             battle_context[0], defender, battle_context[3],
         )
     )
-    has_sitrus = defender.item == "Sitrus Berry" and not berry_blocked
-    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry") and not berry_blocked
+    can_eat_berry = not berry_blocked and move.name != "Knock Off"
+    has_sitrus = defender.item == "Sitrus Berry" and can_eat_berry
+    has_figy = defender.item in ("Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry") and can_eat_berry
     gluttony = defender_ability == "Gluttony"
     ripen = 2 if defender_ability == "Ripen" else 1
 
     # Guaranteed OHKO checks
-    if (damage[0] >= defender.current_hp
+    berry_multihit = (has_sitrus or has_figy) and (
+        len(damage) == 256 or move.hits > 1 or move.is_multi_hit
+    )
+    if berry_multihit and battle_context is None:
+        return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
+
+    if (not berry_multihit and (
+            damage[0] >= defender.current_hp
             or (len(damage) == 256 and has_sitrus and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 4))
-            or (len(damage) == 256 and has_figy and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 3))):
+            or (len(damage) == 256 and has_figy and damage[0] >= defender.current_hp + math.floor(ripen * defender.max_hp / 3))
+    )):
         return display_zh.KO_OHKO
 
     # Hazards
@@ -202,6 +259,49 @@ def get_ko_chance_text(
             toxic_counter, has_sitrus, has_figy, gluttony, ripen,
             hazard_texts, eot_texts, eot_deltas, field_eot_deltas,
         )
+
+    if berry_multihit:
+        if eot != 0 or toxic_counter > 0:
+            return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
+        assert battle_context is not None
+        _sequence_attacker, sequence_defender, sequence_move, sequence_field = battle_context
+        if (sequence_move.name in {"Brine", "Crush Grip", "Wring Out", "Hard Press"}
+                or (sequence_defender.current_hp == sequence_defender.max_hp
+                    and effective_ability(sequence_defender, sequence_field)
+                    in {"Multiscale", "Shadow Shield"})
+                or sequence_move.hits > 1 or sequence_move.is_multi_hit):
+            return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
+        from damage import calculate_damage
+        sequence_result = calculate_damage(*battle_context, gen=9)
+        per_hit_rolls = getattr(sequence_result, "hit_damage_rolls", None)
+        if (not per_hit_rolls or len(per_hit_rolls) != 2
+                or any(len(rolls) != 16 for rolls in per_hit_rolls)):
+            return display_zh.KO_MULTI_HIT_BERRY_UNSUPPORTED
+
+        after_text = display_zh.condition_suffix(hazard_texts)
+        berry_texts: list[str] = []
+        if has_sitrus:
+            berry_texts.append(display_zh.EOT_SITRUS_HEAL)
+        if has_figy:
+            berry_texts.append(display_zh.EOT_BERRY_HEAL)
+        after_text_with_berry = display_zh.condition_suffix(hazard_texts + berry_texts)
+        starting_hp = max(0, defender.current_hp - hazards)
+        if starting_hp <= 0:
+            return display_zh.ko_ohko_with(after_text)
+
+        for uses in range(1, 10):
+            probability = _sequential_multihit_ko_probability(
+                per_hit_rolls, uses, starting_hp, defender.max_hp,
+                has_sitrus, has_figy, gluttony, ripen,
+            )
+            if probability >= 1.0:
+                return (display_zh.ko_ohko_with(after_text_with_berry) if uses == 1
+                        else display_zh.ko_n_guaranteed(uses, after_text_with_berry))
+            if probability > 0.0:
+                pct = round(probability * 1000) / 10
+                return (display_zh.ko_prob_with("", pct, after_text_with_berry) if uses == 1
+                        else display_zh.ko_n_prob("", pct, uses, after_text_with_berry))
+        return display_zh.KO_MORE_ROUNDS
 
     # Calculate KO chance
     c = _get_ko_chance(damage, multihit, defender.current_hp - hazards, 0, 1, defender.max_hp, toxic_counter, has_sitrus, has_figy, gluttony, ripen)

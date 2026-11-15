@@ -825,7 +825,6 @@ def _apply_tera_base_power_floor(base_power: int, move: Move, attacker: Pokemon)
     """Apply Gen 9's 60 BP floor after base-power modifiers."""
     if (not attacker.is_terastalize or move.category == "Status"
             or move.base_power <= 0 or base_power >= 60
-            or getattr(move, "_parental_bond_child", False)
             or getattr(move, "is_multi_hit", False)
             or move.priority > 0 or getattr(move, "is_priority", False)
             or move.name in _TERA_FLOOR_POSITIVE_PRIORITY_MOVES):
@@ -1658,6 +1657,8 @@ def _calculate_damage_impl(
     # a. Spread move
     if field.format != "Singles" and move.is_spread:
         base_dmg = poke_round(base_dmg * 0xC00 / 0x1000)
+    elif getattr(move, "_parental_bond_child", False):
+        base_dmg = poke_round(base_dmg * 0x400 / 0x1000)
 
     # b. Weather. Hydro Steam's user-side effect is distinct from the
     # target-side Umbrella rule for ordinary Fire/Water weather damage.
@@ -1734,18 +1735,16 @@ def _calculate_damage_impl(
             and not berries_blocked(attacker, defender, field)):
         defender.item = ""
 
-    # Parental Bond: second hit at 25% base power (Gen 6+). In doubles the
+    # Parental Bond: second hit at 25% base damage (Gen 7+). In doubles the
     # second hit only applies to non-spread moves (JS:1980, audit E5).
     _pb_active = (attacker.ability == "Parental Bond"
                  and move.name not in _PARENTAL_BOND_IGNORED_MOVES
                  and move.hits == 1
                  and (field.format == "Singles" or not move.is_spread))
+    hit_damage_rolls = None
     if _pb_active:
         second_move = copy(move)
         second_move._parental_bond_child = True
-        second_move.base_power = max(1, math.floor(second_move.base_power * 0.25))
-        second_move.fainted_allies = 0  # Prevent dynamic BP boosts from reapplying
-        second_move.times_affected = 0  # Same for Rage Fist counters
         # Temporarily disable Parental Bond to prevent infinite recursion
         original_ability = attacker.ability
         attacker.ability = ""
@@ -1758,6 +1757,7 @@ def _calculate_damage_impl(
             attacker.ability = original_ability
 
         # Merge damage rolls: all combinations of first + second hit
+        hit_damage_rolls = [list(damage_rolls), list(second_result.damage)]
         merged_rolls: list[int] = []
         for d1 in damage_rolls:
             for d2 in second_result.damage:
@@ -1801,4 +1801,5 @@ def _calculate_damage_impl(
         stab_applied=stab_mod != 0x1000,
         burn_applied=apply_burn,
         effective_power=base_power,
+        hit_damage_rolls=hit_damage_rolls,
     ), attacker_used, defender_used)

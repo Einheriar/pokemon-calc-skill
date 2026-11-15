@@ -136,3 +136,4 @@ class DamageResult:
     defender_after: Optional[Pokemon] = None
     field_state: Optional[Field] = None
     field_used: Optional[Field] = None
+    hit_damage_rolls: Optional[list[list[int]]] = None
