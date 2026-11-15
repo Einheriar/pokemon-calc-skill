@@ -217,6 +217,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 星晶／太晶甲壳等状态连续攻击使用逐击概率：`guaranteed` 要求全部随机伤害分支满足目标，`likely` 要求至少 50% 概率，并回显 `ko_probability`／`survival_probability`（百分数）。普通静态场景的 `likely` 继续使用平均伤害。优化不包含入场钉子或回合末回复／持续伤害。
 
+持有可触发树果、HP 相关威力或满血减伤会改变后续攻击时，普通重复攻击优化也按真实状态重算；不会仅凭首次伤害乘次数承诺保证击倒。未能可靠处理的多段组合返回 `unsupported: true`。
+
 ## 3. 执行工作流
 
 ### 承伤反查的默认口径（survivability）

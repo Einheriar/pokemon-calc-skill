@@ -34,6 +34,14 @@ _STAT_KEYS = ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"]
 _STATEFUL_REPEAT_MOVES = frozenset({
     "Super Fang", "Nature's Madness", "Ruination", "Endeavor", "Final Gambit",
 })
+_STATEFUL_BERRY_ITEMS = frozenset({
+    "Sitrus Berry", "Figy Berry", "Aguav Berry", "Iapapa Berry", "Mago Berry", "Wiki Berry",
+    "Chilan Berry", "Occa Berry", "Passho Berry", "Wacan Berry", "Rindo Berry",
+    "Yache Berry", "Chople Berry", "Kebia Berry", "Shuca Berry", "Coba Berry",
+    "Payapa Berry", "Tanga Berry", "Charti Berry", "Kasib Berry", "Haban Berry",
+    "Colbur Berry", "Babiri Berry", "Roseli Berry",
+})
+_TARGET_HP_DEPENDENT_MOVES = frozenset({"Brine", "Crush Grip", "Wring Out", "Hard Press"})
 
 
 def _unsupported_stateful_repeat(move: Move, repeated: bool) -> dict | None:
@@ -48,18 +56,32 @@ def _unsupported_stateful_repeat(move: Move, repeated: bool) -> dict | None:
     return None
 
 
-def _has_stateful_tera_sequence(attacker: Pokemon, defender: Pokemon, move: Move, repeated: bool) -> bool:
+def _has_stateful_sequence(attacker: Pokemon, defender: Pokemon, move: Move, field: Field,
+                           repeated: bool) -> bool:
     if not repeated:
         return False
     from engine_enums import resolve_tera_type_en
+    from battle_effects import berries_blocked, effective_ability
+    attacker_ability = effective_ability(attacker, field)
+    defender_ability = effective_ability(defender, field)
 
     stellar_user = attacker.is_terastalize and resolve_tera_type_en(attacker.tera_type or "") == "Stellar"
     teraform_zero = (
         attacker.is_terastalize and not attacker.tera_effects_applied
-        and attacker.name_en == "Terapagos-Stellar" and attacker.ability == "Teraform Zero"
+        and attacker.name_en == "Terapagos-Stellar" and attacker_ability == "Teraform Zero"
     )
-    shell_defender = defender.ability == "Tera Shell"
-    return stellar_user or teraform_zero or shell_defender
+    shell_defender = defender_ability == "Tera Shell"
+    active_berry = (
+        defender.item in _STATEFUL_BERRY_ITEMS
+        and move.name != "Knock Off"
+        and not berries_blocked(attacker, defender, field)
+    )
+    target_hp_dependent = (
+        move.name in _TARGET_HP_DEPENDENT_MOVES
+        or (defender.current_hp == defender.max_hp
+            and defender_ability in {"Multiscale", "Shadow Shield"})
+    )
+    return stellar_user or teraform_zero or shell_defender or active_berry or target_hp_dependent
 
 
 def _stateful_sequence_unsupported(move: Move) -> dict:
@@ -257,13 +279,13 @@ def optimize_attack_ev(
     use_min = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
-    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_needed > 1)
+    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_needed > 1)
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
         return _stateful_sequence_unsupported(move)
 
     # Determine which stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+    if (_has_stateful_sequence(attacker, defender, move, field, True)
             and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
         return _stateful_sequence_unsupported(move)
     if result.min_damage == 0:
@@ -390,13 +412,13 @@ def optimize_defense_ev(
     use_max = threshold == "guaranteed"
     _ensure_stats(attacker)
     _ensure_stats(defender)
-    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_to_survive > 1)
+    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_to_survive > 1)
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
         return _stateful_sequence_unsupported(move)
 
     # Determine which defensive stat to optimize
     result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+    if (_has_stateful_sequence(attacker, defender, move, field, True)
             and (move.hits > 1 or move.is_multi_hit or len(result.damage) == 256)):
         return _stateful_sequence_unsupported(move)
     effective_move = result.move or move
@@ -510,11 +532,11 @@ def optimize_bulk_evs(
     _ensure_stats(attacker)
     _ensure_stats(defender)
     hits_to_survive = {"survive": 1, "survive_2hko": 2}[target]
-    stateful_sequence = _has_stateful_tera_sequence(attacker, defender, move, hits_to_survive > 1)
+    stateful_sequence = _has_stateful_sequence(attacker, defender, move, field, hits_to_survive > 1)
     if stateful_sequence and (move.hits > 1 or getattr(move, "is_multi_hit", False)):
         return _stateful_sequence_unsupported(move)
     initial_result = calculate_damage(attacker, defender, move, field, gen=9)
-    if (_has_stateful_tera_sequence(attacker, defender, move, True)
+    if (_has_stateful_sequence(attacker, defender, move, field, True)
             and (move.hits > 1 or move.is_multi_hit or len(initial_result.damage) == 256)):
         return _stateful_sequence_unsupported(move)
     effective_move = initial_result.move or move
@@ -560,10 +582,7 @@ def optimize_bulk_evs(
             compute_raw_stats(dfn)
             result = calculate_damage(attacker, dfn, move, field, gen=9)
             if stateful_sequence:
-                if dfn.item in (
-                    "Sitrus Berry", "Figy Berry", "Aguav Berry", "Iapapa Berry",
-                    "Mago Berry", "Wiki Berry",
-                ):
+                if dfn.item in _STATEFUL_BERRY_ITEMS and move.name != "Knock Off":
                     from ko_chance import get_stateful_ko_probability
 
                     probability = get_stateful_ko_probability(
