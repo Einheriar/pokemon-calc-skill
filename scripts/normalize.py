@@ -7,13 +7,14 @@ Only depends on Python standard library (difflib).
 """
 
 import json
+import os
 import unicodedata
 from pathlib import Path
 from typing import Any
 import difflib
 
 _SCRIPT_DIR = Path(__file__).resolve().parent
-_DATA_DIR = _SCRIPT_DIR.parent / "data"
+_DATA_DIR = Path(os.environ.get("POKEMON_CALC_DATA_DIR", _SCRIPT_DIR.parent / "data"))
 
 _aliases_data: dict[str, dict[str, str]] | None = None
 

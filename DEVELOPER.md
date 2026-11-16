@@ -88,7 +88,7 @@ pokemon-calc/
 | `filter-pokemon [--type ...] [--min-stat stat n] [--max-stat stat n] [--ability ...]` | 筛选条件 | 按属性（AND）/种族值范围/特性（OR）筛选宝可梦 | JSON 对象 |
 | `preset <pokemon> [preset_name]` | 宝可梦名 [预设名] | 列出/获取 VGC 预设配置 | JSON 对象 |
 | `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
-| `compute-stats <base_stats> [evs] [ivs] [nature] [level]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
+| `compute-stats <base_stats> [--evs JSON] [--ivs JSON] [--nature <nature>] [--level <level>]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev\|sp] [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |
 | `survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]` | 防御方 可选攻击方能力值 分类 | 中性承伤反查（能力值默认 200，50 级、1×、无本系、非要害、单发；配置与触顶字段见 references/commands.md） | JSON 对象 |
@@ -148,8 +148,7 @@ pokemon-calc/
 - 太晶输入：`is_terastalize` 仅接受 JSON 布尔值，开启时须指定合法的 `tera_type`（18 属性或 Stellar，接受中英繁体及英文大小写）。
 - `stellar_boosted_types: []` 保存星晶已消耗首次增幅的属性，必须为有效属性名数组；默认空数组。`tera_effects_applied: false` 保存本次太晶触发效果是否已结算，必须为 JSON 布尔值。
 - 太晶响应新增 `next_state`：`attacker`／`defender` 各含 `boosts`、`stellar_boosted_types`、`tera_effects_applied`、`item`；`field_override` 含实际 `weather`／`terrain`。这些字段可合并回原配置继续计算，HP 须另按实际伤害更新。`modifiers` 表示本次攻击使用的强化，`next_state` 表示攻击后的状态，星晶太晶爆发自降不会提前影响本次伤害。
-- 响应 `warning` 字段还可能包含：SP 超限提示（`sps` > 32 或负数）、
-  不可用形态提示（is_unobtainable）。
+- 单项 `sps` 超过 32 或为负数时直接返回 `error`。响应 `warning` 仍可能包含不可用形态提示（is_unobtainable）。
 
 **返回值 JSON Schema**
 
@@ -213,6 +212,8 @@ setdex 预设条目字段：`level`、`evs`、`nature`、`ability`、`item`、`m
 | 选项 | `--field_ov` | JSON string | 否 | 覆盖环境配置（默认 `{}`） |
 
 仅前三项是位置参数，其余参数必须带选项名。JSON 覆盖也可使用 `--att_ov_file` / `--def_ov_file` / `--field_ov_file` 从文件读取，同侧文件参数优先于内联 JSON。
+
+未知 `goal` / `target` / `threshold` / `mode` 返回 `error`。`ko` 仅接受 `ohko` / `2hko` / `3hko`；`survive` / `survive_bulk` 对这三个合法 KO 目标继续兼容转换为 `survive`，保留只指定 goal 时的默认行为。`survive_bulk` 只实现最坏伤害保证搜索，仅支持 `threshold=guaranteed`，`likely` 返回明确错误。
 
 **返回值 JSON Schema**
 
@@ -495,7 +496,7 @@ python scripts/query.py calc 烈箭鹰 Brave\ Bird 喷火龙 '{"preset":"Sharp B
 
 # 纯参数模式（未过签宝可梦）
 python scripts/query.py pokemon 超级喷火龙Y
-python scripts/query.py compute-stats '{"hp":78,"attack":104,"defense":78,"sp_attack":159,"sp_defense":115,"speed":100}' '{"sp_attack":252}' '{}' '内敛' 50
+python scripts/query.py compute-stats '{"hp":78,"attack":104,"defense":78,"sp_attack":159,"sp_defense":115,"speed":100}' --evs '{"sp_attack":252}' --nature 内敛 --level 50
 python scripts/query.py calc-raw '{"name":"超级喷火龙Y","level":50,"stats":{...}}' '{"name":"热风",...}' '{"name":"超级胡地",...}' '{"weather":"Sun"}'
 
 # 努力值优化
@@ -581,6 +582,13 @@ git push pokemon-calc pokemon-calc-branch:main
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 5.1.3（2026-11-16）
+
+- 所有计算入口在适配层统一 `special_attack` / `special_defense` 为 `sp_attack` / `sp_defense`，覆盖种族值、EV/IV/SP、最终能力值及能力等级；修复长键导致性格、投资和强化静默失效。未知统计项、别名冲突和非整数值明确报错。
+- `compute-stats` 严格解析三个 JSON 对象并校验性格、等级与数值范围。所有计算入口校验单项 EV/IV/SP/能力等级范围，拒绝未知宝可梦/环境字段、字符串布尔、非法属性列表和环境枚举；天气、场地、单双打格式大小写归一。覆盖文件读取失败不再继续计算。
+- 优化器拒绝无效选项；联合耐久优化明确不支持 `likely`。自定义数据目录中的别名文件与主查询使用相同环境变量。
+- 新增 4 套、32 项专项回归，修正旧回归中错位的优化参数及未实现字段的假通过。全部 60 套现行回归、60 个黄金场景、6 项检查通过；黄金仅一项错误提示定点更新，计算结果不变。
 
 ### 5.1.2（2026-11-15）
 

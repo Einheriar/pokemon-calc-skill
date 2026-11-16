@@ -676,14 +676,35 @@ def optimize_evs(
         # Optimal HP + Defense split to survive?
         optimize_evs(att, dfn, move, field, goal="survive_bulk", target="survive")
     """
+    ko_targets = {"ohko", "2hko", "3hko"}
+    survive_targets = {"survive", "survive_2hko"}
+    if goal not in ("ko", "survive", "survive_bulk"):
+        return {"error": f"Invalid optimization goal: {goal!r}. Expected ko, survive, or survive_bulk."}
+    if threshold not in ("guaranteed", "likely"):
+        return {"error": f"Invalid optimization threshold: {threshold!r}. Expected guaranteed or likely."}
+    if mode not in ("ev", "sp"):
+        return {"error": f"Invalid optimization mode: {mode!r}. Expected ev or sp."}
+
     if goal == "ko":
+        if target not in ko_targets:
+            return {"error": f"Invalid KO target: {target!r}. Expected ohko, 2hko, or 3hko."}
         return optimize_attack_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
-    elif goal == "survive":
-        # Coerce ko-style targets (e.g. the CLI default "ohko") to survive goals
-        if target not in ("survive", "survive_2hko"):
+
+    if goal == "survive":
+        # Preserve public compatibility: ko-style targets, including the CLI's
+        # default "ohko", continue to mean a single-hit survival target here.
+        if target in ko_targets:
             target = "survive"
+        elif target not in survive_targets:
+            return {"error": f"Invalid survival target: {target!r}. Expected survive or survive_2hko."}
         return optimize_defense_ev(attacker, defender, move, field, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
-    else:
-        if target not in ("survive", "survive_2hko"):
-            target = "survive"
-        return optimize_bulk_evs(attacker, defender, move, field, target=target, mode=mode)  # type: ignore[arg-type]
+
+    # Preserve the existing CLI default ("ohko") and compatible KO-style
+    # targets for bulk survival queries, just as for the single-stat goal.
+    if target in ko_targets:
+        target = "survive"
+    elif target not in survive_targets:
+        return {"error": f"Invalid bulk survival target: {target!r}. Expected survive or survive_2hko."}
+    if threshold != "guaranteed":
+        return {"error": "The survive_bulk goal supports only the guaranteed threshold."}
+    return optimize_bulk_evs(attacker, defender, move, field, target=target, mode=mode)  # type: ignore[arg-type]

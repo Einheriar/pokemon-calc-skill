@@ -2287,10 +2287,9 @@ def _make_move_from_data(data: dict[str, Any], overrides: dict[str, Any] | None 
 
 
 def _apply_field_overrides(field: Any, overrides: dict[str, Any]) -> None:
-    """Apply JSON overrides to a Field dataclass instance."""
+    """Apply validated JSON overrides to a Field dataclass instance."""
     for k, v in overrides.items():
-        if hasattr(field, k):
-            setattr(field, k, v)
+        setattr(field, k, v)
 
 
 def cmd_optimize(
@@ -2356,6 +2355,9 @@ def cmd_optimize(
         overrides.append(parsed or {})
     att_override, def_override, field_override = overrides
 
+    field_error = _validate_field_overrides(field_override)
+    if field_error is not None:
+        return field_error
     for _side, _ov in (("attacker", att_override), ("defender", def_override)):
         _enum_err = _validate_override_enums(_side, _ov)
         if _enum_err is not None:
@@ -2409,29 +2411,118 @@ def _parse_json_object(raw: str | None, label: str) -> tuple[dict[str, Any] | No
     return parsed, None
 
 
+_STAT_KEYS = frozenset({"hp", "attack", "defense", "sp_attack", "sp_defense", "speed"})
+_STAT_ALIASES = {"special_attack": "sp_attack", "special_defense": "sp_defense"}
+_STAT_DICT_FIELDS = ("base_stats", "evs", "ivs", "sps", "raw_stats", "stats", "boosts")
+_STAT_LIMITS = {"evs": (0, 252), "ivs": (0, 31), "sps": (0, 32), "boosts": (-6, 6)}
+_FIELD_ENUMS = {
+    "format": ("Singles", "Doubles"),
+    "weather": ("Sun", "Rain", "Sand", "Hail", "Snow", "Strong Winds", "Harsh Sun", "Heavy Rain"),
+    "terrain": ("Electric", "Grassy", "Misty", "Psychic"),
+}
+
+
+def _normalize_stat_keys(values: Any, label: str, limits: tuple[int, int] | None = None) -> dict[str, Any]:
+    """Canonicalize supported stat aliases before any engine or preset lookup."""
+    if not isinstance(values, dict):
+        raise ValueError(f"{label} 必须是 JSON 对象")
+    normalized: dict[str, Any] = {}
+    for key, value in values.items():
+        canonical = _STAT_ALIASES.get(key, key)
+        if canonical not in _STAT_KEYS:
+            raise ValueError(f"{label} 包含未知能力项：{key}")
+        if type(value) is not int:
+            raise ValueError(f"{label}.{canonical} 必须是整数")
+        if limits is not None and not limits[0] <= value <= limits[1]:
+            raise ValueError(f"{label}.{canonical} 必须在 {limits[0]} 至 {limits[1]} 范围内")
+        if canonical in normalized and normalized[canonical] != value:
+            raise ValueError(f"{label} 的 {canonical} 与其别名取值冲突")
+        normalized[canonical] = value
+    return normalized
+
+
+def _normalize_stat_fields(ov: dict[str, Any], label: str) -> dict[str, Any] | None:
+    """Normalize nested stat maps consistently across public calculation inputs."""
+    try:
+        for key in _STAT_DICT_FIELDS:
+            if key in ov:
+                ov[key] = _normalize_stat_keys(ov[key], f"{label}.{key}", _STAT_LIMITS.get(key))
+    except ValueError as exc:
+        return {"error": str(exc)}
+    return None
+
+
+def _validate_bool_fields(label: str, values: dict[str, Any], model: Any) -> dict[str, Any] | None:
+    """Reject string or numeric flags rather than relying on Python truthiness."""
+    for name, field in model.__dataclass_fields__.items():
+        if type(field.default) is bool and name in values and type(values[name]) is not bool:
+            return {"error": f"{label}.{name} 必须是 JSON 布尔值"}
+    return None
+
+
+def _validate_field_overrides(values: dict[str, Any]) -> dict[str, Any] | None:
+    """Validate field keys and normalize enum spelling at the CLI boundary."""
+    unknown = set(values) - Field.__dataclass_fields__.keys()
+    if unknown:
+        return {"error": f"field_override 包含未知字段：{', '.join(sorted(unknown))}"}
+    error = _validate_bool_fields("field_override", values, Field)
+    if error is not None:
+        return error
+    for key, options in _FIELD_ENUMS.items():
+        if key not in values:
+            continue
+        value = values[key]
+        if key != "format" and (value is None or value == ""):
+            values[key] = None
+            continue
+        canonical = {option.lower(): option for option in options}
+        if not isinstance(value, str) or value.strip().lower() not in canonical:
+            return {"error": f"field_override.{key} 取值无效"}
+        values[key] = canonical[value.strip().lower()]
+    if "spikes" in values and (type(values["spikes"]) is not int or not 0 <= values["spikes"] <= 3):
+        return {"error": "field_override.spikes 必须是 0 至 3 的整数"}
+    return None
+
+
 def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] | None:
     """Whitelist-validate enum-ish override fields before they reach the engine.
 
     Returns an {"error": ..., "suggestions": [...]} payload on the first
     invalid field, or None when everything resolves.
     """
+    allowed = set(Pokemon.__dataclass_fields__) | {
+        "preset", "form_name", "setup_moves", "sps",
+        "_data_source", "is_unobtainable", "_sp_meta",
+    }
+    unknown = set(ov) - allowed
+    if unknown:
+        return {"error": f"{label} 包含未知字段：{', '.join(sorted(unknown))}"}
+    stat_error = _normalize_stat_fields(ov, label)
+    if stat_error is not None:
+        return stat_error
+    bool_error = _validate_bool_fields(label, ov, Pokemon)
+    if bool_error is not None:
+        return bool_error
+    if "level" in ov and (type(ov["level"]) is not int or not 1 <= ov["level"] <= 100):
+        return {"error": f"{label}.level 必须是 1 至 100 的整数"}
     types = ov.get("types")
-    if types is not None:
+    if "types" in ov:
         if (not isinstance(types, list)
+                or not 1 <= len(types) <= 2
                 or not all(isinstance(t, str) and resolve_type_en(t) for t in types)):
             cands = list(TYPE_ZH_TO_EN) + sorted(VALID_TYPES_EN)
-            bad = types if isinstance(types, str) else ", ".join(map(repr, types))
+            bad = ", ".join(map(repr, types)) if isinstance(types, list) else str(types)
             return {"error": f"{label} types invalid: {bad}",
                     "suggestions": get_suggestions(bad, cands, n=3)}
     nature = ov.get("nature")
-    if isinstance(nature, str) and nature and resolve_nature_en(nature) is None:
+    if "nature" in ov and (not isinstance(nature, str) or resolve_nature_en(nature) is None):
         cands = list(NATURE_ZH_TO_EN) + sorted(VALID_NATURES_EN)
         return {"error": f"{label} nature invalid: {nature!r}",
-                "suggestions": get_suggestions(nature, cands, n=3)}
+                "suggestions": get_suggestions(str(nature), cands, n=3)}
     status = ov.get("status")
-    if isinstance(status, str) and status and status not in VALID_STATUS_EN:
+    if status is not None and status != "" and (not isinstance(status, str) or status not in VALID_STATUS_EN):
         return {"error": f"{label} status invalid: {status!r}",
-                "suggestions": get_suggestions(status, sorted(VALID_STATUS_EN), n=3)}
+                "suggestions": get_suggestions(str(status), sorted(VALID_STATUS_EN), n=3)}
     if "is_terastalize" in ov and not isinstance(ov["is_terastalize"], bool):
         return {"error": f"{label} is_terastalize must be a JSON boolean"}
     if "stellar_boosted_types" in ov:
@@ -2539,6 +2630,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         overrides.append(parsed or {})
     att_override, move_override, def_override, field_override = overrides
 
+    field_error = _validate_field_overrides(field_override)
+    if field_error is not None:
+        return field_error
     # Whitelist behavior-only fields; never let move_override touch
     # base_power/type/category. Surface dropped keys instead of swallowing.
     dropped = sorted(set(move_override) - _MOVE_OVERRIDE_WHITELIST)
@@ -2556,6 +2650,9 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
             calc_warnings.append(f"move_override hits={hits_val} 超出 1-{_MOVE_OVERRIDE_HITS_MAX}，已夹紧为 {clamped}")
         move_override["hits"] = clamped
 
+    move_error = _validate_bool_fields("move_override", move_override, Move)
+    if move_error is not None:
+        return move_error
     # Boundary enum validation: invalid type/nature/status inputs are rejected
     # here with suggestions instead of passing through (or exploding) in the engine.
     for _side, _ov in (("attacker", att_override), ("defender", def_override)):
@@ -2826,31 +2923,34 @@ def cmd_compute_stats(
     level: str = "50",
 ) -> dict[str, Any]:
     """Compute final stats (ability values) from base stats + evs + ivs + nature + level."""
-    import json
     from damage import calc_hp_stat, calc_raw_stat, get_nature_modifier
 
-    def _strip_quotes(s: str) -> str:
-        return s.strip().strip("'\"'")
+    inputs = {}
+    for label, raw in (("base_stats", base_stats_json), ("evs", evs_json), ("ivs", ivs_json)):
+        parsed, parse_error = _parse_json_object(raw, label)
+        if parse_error is not None:
+            return parse_error
+        try:
+            inputs[label] = _normalize_stat_keys(parsed, label, _STAT_LIMITS.get(label))
+        except ValueError as exc:
+            return {"error": str(exc)}
+    base_stats, evs, ivs = inputs["base_stats"], inputs["evs"], inputs["ivs"]
+    if not base_stats:
+        return {"error": "base_stats 至少需要一个能力项"}
+    for key, value in base_stats.items():
+        if value < 1:
+            return {"error": f"base_stats.{key} 必须是正整数"}
+    if not isinstance(nature, str) or resolve_nature_en(nature) is None:
+        return {"error": "nature 必须是有效的性格名称"}
 
     try:
-        base_stats = json.loads(_strip_quotes(base_stats_json))
-    except (json.JSONDecodeError, TypeError):
-        return {"error": "Invalid base_stats JSON"}
-
-    try:
-        evs = json.loads(_strip_quotes(evs_json)) if evs_json else {}
-    except (json.JSONDecodeError, TypeError):
-        evs = {}
-
-    try:
-        ivs = json.loads(_strip_quotes(ivs_json)) if ivs_json else {}
-    except (json.JSONDecodeError, TypeError):
-        ivs = {}
-
-    try:
+        if type(level) is not int and not isinstance(level, str):
+            raise ValueError
         level_int = int(level)
+        if not 1 <= level_int <= 100:
+            raise ValueError
     except (ValueError, TypeError):
-        level_int = 50
+        return {"error": "level 必须是 1 至 100 的整数"}
 
     # EVs are kept as raw values (full 4-EV granularity); SP is only a view.
     raw_stats: dict[str, int] = {}
@@ -2907,6 +3007,12 @@ def cmd_calc_raw(
         parsed_inputs.append(parsed or {})
     att_dict, move_dict, def_dict, field_dict = parsed_inputs
 
+    field_error = _validate_field_overrides(field_dict)
+    if field_error is not None:
+        return field_error
+    move_error = _validate_bool_fields("move_json", move_dict, Move)
+    if move_error is not None:
+        return move_error
     for _side, _ov in (("attacker", att_dict), ("defender", def_dict)):
         _enum_err = _validate_override_enums(_side, _ov)
         if _enum_err is not None:
@@ -3293,6 +3399,9 @@ def cmd_survivability(
     if unknown:
         return {"error": f"survivability 不支持防御方字段：{', '.join(sorted(unknown))}"}
     config = {**supplied, **def_override}
+    stat_error = _normalize_stat_fields(config, "defender")
+    if stat_error is not None:
+        return stat_error
     if "level" in config and (type(config["level"]) is not int or config["level"] != 50):
         return {"error": "survivability 固定按 50 级计算，level 只能为 50"}
     if "nature" in config and (not isinstance(config["nature"], str)
@@ -3339,21 +3448,9 @@ def cmd_survivability(
     unknown = set(field_override) - allowed_field
     if unknown:
         return {"error": f"survivability 不支持环境字段：{', '.join(sorted(unknown))}"}
-    field_enums = {
-        "format": ("Singles", "Doubles"),
-        "weather": ("Sun", "Rain", "Sand", "Hail", "Snow", "Strong Winds", "Harsh Sun", "Heavy Rain"),
-        "terrain": ("Electric", "Grassy", "Misty", "Psychic"),
-    }
-    for key, value in field_override.items():
-        if key in field_enums:
-            if value is None and key != "format":
-                continue
-            canonical = {v.lower(): v for v in field_enums[key]}
-            if not isinstance(value, str) or value.lower() not in canonical:
-                return {"error": f"{key} 取值无效"}
-            field_override[key] = canonical[value.lower()]
-        elif type(value) is not bool:
-            return {"error": f"{key} 必须是布尔值"}
+    field_error = _validate_field_overrides(field_override)
+    if field_error is not None:
+        return field_error
 
     setup_moves = config.pop("setup_moves", setup_moves)
     if setup_moves is None:
@@ -4097,11 +4194,8 @@ def main() -> int:
             try:
                 with open(path, "r", encoding="utf-8") as f:
                     return f.read()
-            except Exception as e:
-                if cmd == "survivability":
-                    parser.error(f"无法读取覆盖文件 '{path}': {e}")
-                print(f"Error reading override file '{path}': {e}")
-                return default
+            except (OSError, UnicodeError) as e:
+                parser.error(f"无法读取覆盖文件 '{path}': {e}")
 
         args.att_ov = _read_file_or_default(getattr(args, "att_ov_file", None), getattr(args, "att_ov", "{}"))
         args.move_ov = _read_file_or_default(getattr(args, "move_ov_file", None), getattr(args, "move_ov", "{}"))

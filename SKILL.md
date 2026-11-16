@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.1.2"
+  version: "5.1.3"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -145,8 +145,11 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
 
 - `setup_moves` 是 `att_override` 的字段，接收变化类招式名称数组（如 `["诡计", "求雨"]`）。引擎自动解析并应用招式效果（能力等级变化、天气/场地设置等），重复强化后能力等级始终夹紧在 −6～+6。
 - 未知招式名会出现在响应 `warning` 中；已识别但没有结构化效果的变化招式按未建模机制跳过。`setup_moves` 不是数组或元素不是字符串时返回错误。
-- `calc` / `calc-raw` / `optimize` 的 JSON 参数必须合法且顶层为对象；解析失败会返回 `error`，不会静默套用默认配置。
-- `is_terastalize` 必须为 JSON 布尔值；开启时必须同时给出有效 `tera_type`。太晶属性支持中文、繁体、英文大小写及“星愿”兼容别名，未知类型返回 `error`，不要用字符串 `"false"` 表示关闭。
+- 所有计算入口的能力项统一为 `hp` / `attack` / `defense` / `sp_attack` / `sp_defense` / `speed`。输入兼容 `special_attack` / `special_defense`，在种族值、EV、IV、SP、最终能力值和能力等级中均转为规范键，输出只使用规范键；未知键、冲突别名及非整数值返回 `error`。
+- 所有计算入口的单项 EV 为 0 至 252、IV 为 0 至 31、SP 为 0 至 32、能力等级为 −6 至 +6，超出范围返回 `error`。Champions 的 66 SP 总额与传统 EV 预算分别处理。
+- `calc` / `calc-raw` / `optimize` / `compute-stats` 的 JSON 参数必须合法且顶层为对象；解析失败不再使用默认配置。`compute-stats` 的 EV 为 0 至 252、IV 为 0 至 31、等级为 1 至 100，性格必须有效。指定的覆盖文件不可读取时命令失败，不回退内联或默认配置。
+- 宝可梦、招式及环境中的布尔开关均必须使用 JSON `true` / `false`，不要传字符串 `"false"`。`types` 为一至两个有效属性。开启 `is_terastalize` 时必须同时给出有效 `tera_type`；太晶属性支持中文、繁体、英文大小写及“星愿”兼容别名。
+- `optimize` 拒绝未知 `goal` / `target` / `threshold` / `mode`；`survive` / `survive_bulk` 仍将默认的 `ohko` 等合法 KO 目标转换为单次存活。`survive_bulk` 仅支持 `--threshold guaranteed`，不要要求其给出 `likely` 概率方案。
 - `setup_moves` 与手动的 `boosts`/`weather`/`terrain` 二选一，不要同时传入，避免冲突。
 
 **field_override 取值**：
@@ -154,6 +157,7 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
 - `terrain`: Electric / Grassy / Misty / Psychic
 - `format`: Singles / Doubles
 - 墙壁/辅助特性/灾祸系列等：布尔开关，见 `field_override` JSON 示例
+- 上述枚举不区分大小写，`weather` / `terrain` 的 `null` 或空字符串表示无天气/场地；未知字段或枚举值返回 `error`，`spikes` 只能为 0 至 3 的整数。
 
 ### 命令示例
 
