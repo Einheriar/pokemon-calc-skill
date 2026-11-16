@@ -7,7 +7,9 @@
 
 传统宝可梦伤害计算器是给"人"用的网页或 App，而 `pokemon-calc` 是专为 **AI Agent (大语言模型)** 量身定制的底层计算 Skill。
 
-本项目通过提供标准化的纯函数 CLI 接口与完全本地化的静态数据，彻底解决了 LLM 在处理宝可梦对战中"属性相克×特性×道具×天气×场地"等复杂乘区时极易产生的**数值幻觉**问题（也并没有完全解决，LLM偶尔还是会编造内容，但整体可控）。
+本项目通过标准化的 CLI 接口和可复现的本地计算，降低 LLM 在宝可梦对战计算中编造数值的风险。计算结果应以 CLI 返回为准；这不能消除模型在解释结果或补充建议时出错的可能。
+
+对已收录对应别名的实体，可使用简体中文、繁体中文、英文或日文名称查询。输出以中文说明为主，JSON 字段名使用英文规范键；没有 `--lang` 参数，自然语言翻译与回答由调用它的 Agent 负责。实体覆盖范围以本地数据为准。
 
 ## 这个 Skill 能做什么
 
@@ -27,21 +29,21 @@
 | 查询图鉴描述 | "梦幻在各代图鉴里怎么描述的？" |
 | 查询热门配置 | "喷火龙有什么常用的 VGC 配置？" |
 
-### 环境情报（《宝可梦冠军》M-C 规则）
+### 环境情报（默认离线快照）
 
-滚动 30 天窗口的**全量赛事队伍**（9,000+ 支，含招式/道具/特性明细）已随仓库内置，以下查询全部开箱即用、无需联网。所有环境查询统一走 `meta` 命令。
+环境查询统一走 `meta` 命令。默认读取随仓库提供的离线快照；快照覆盖范围和规则因数据源而异，不能视为同一赛制或实时数据：赛事队伍为 M-B、2026-07-26 至 2026-08-26；官方实机天梯为 M-C、截至 2026-09-15 的名次快照；Showdown 为 M-B、2026-08 月报。单只天梯配招详情需联网获取。
 
 | 功能 | 你可以这样问 |
 |------|-------------|
-| 使用率排行（`meta`） | "现在环境里使用率最高的宝可梦是谁？" |
-| 单只环境详情（`meta <名>`） | "仆刀将军现在都带什么招式和道具？常见队友是谁？" |
-| 近期赛事队伍（`meta --teams`） | "最近比赛有什么队伍？把冠军的阵容给我看看" |
-| 队友共现（`meta --teams --teammates`） | "炽焰咆哮虎最常和谁组队？" |
-| 官方实机排位名次（`meta --source ladder [--format singles\|doubles]`） | "现在天梯排位榜上谁最强？"（仅名次） |
+| 使用率排行（`meta`） | "捆绑快照中使用率最高的宝可梦是谁？" |
+| 单只赛事详情（`meta <名>`） | "捆绑赛事快照中，仆刀将军有哪些常见招式、道具和队友？" |
+| 赛事队伍（`meta --teams`） | "已收录的赛事快照里有哪些队伍？" |
+| 队友共现（`meta --teams --teammates`） | "在捆绑赛事快照里，炽焰咆哮虎最常和谁组队？" |
+| 官方实机排位名次（`meta --source ladder [--format singles\|doubles]`） | "截至 2026-09-15 的天梯排位快照中谁排名最高？"（仅名次） |
 | 天梯单只配招（`meta --source ladder <名> --online`） | "仆刀将军天梯最常带的 4 个招式是什么？" |
-| Showdown 天梯月报（`meta --source showdown`） | "Showdown 上天梯使用率是多少？"（滞后一个月） |
+| Showdown 天梯月报（`meta --source showdown`） | "捆绑的 Showdown 月报（2026-08）中使用率是多少？"（月份见返回值） |
 
-> 环境数据来自 [pokecamp.cc](https://pokecamp.cc)：默认源为 Limitless 公开赛事统计（滚动 30 天），属于**赛事数据**；`--source ladder`/`ingame` 为**官方实机排位数据**（最新赛制，约 1~3 天更新，总榜仅名次；单只配招/道具/性格/努力为真实百分比，需 `--online`）；`--source showdown` 为 Showdown 天梯月报（`meta.month` 注明月份）。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍查询。内置数据离线可查，`--online` 可按需增量拉取最新数据。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
+数据由 [pokecamp.cc](https://pokecamp.cc) 等来源整理。`meta` 默认使用捆绑快照；显式添加 `--online` 才会请求在线数据，失败时回退到本地快照或缓存。赛事源是 Limitless 公开赛事统计；`--source ladder`/`ingame` 是官方实机排位数据，离线快照仅有名次，单只配招/道具/性格/努力详情需 `--online`；`--source showdown` 是 Showdown 天梯月报，月份见 `meta.month`。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍查询。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta` 并输出弃用警告）。
 
 ### 伤害计算与优化
 
@@ -62,14 +64,14 @@
 大语言模型擅长意图识别和参数提取，但在涉及大量查表和多级修正的数值计算时几乎必然出错。本项目采用解耦设计：
 
 - **LLM 的工作**：将用户的自然语言（例如："晴天下，带命玉的满特攻 Mega 喷火龙 Y 用大字爆炎打极限特耐的暴露菇能秒吗？"）解析为结构化的 JSON 参数。
-- **本引擎的工作**：接收参数，执行包含 40+ 种修正逻辑（STAB、天气、道具、太晶化等）的确定性计算，并返回精确的伤害乱数范围与 KO 概率。
+- **本引擎的工作**：接收参数，按已实现的常见对战修正（如 STAB、天气、道具、太晶化）进行确定性计算，并返回伤害乱数范围与 KO 概率；支持范围以引擎实现和查询结果为准，不代表覆盖所有机制。
 - **纯函数接口**：所有查询与计算均通过单一入口 `query.py` 完成，输入输出结构明确（JSON In, JSON Out），极易被封装为 GPTs Action、Dify 插件或 MCP (Model Context Protocol) 工具。
 
-### 2. 100% 本地化与零外部依赖
+### 2. 默认离线与仅依赖 Python 标准库
 
-无需配置复杂的数据库，无需请求外部 API（避免网络延迟和 Token 消耗），真正做到开箱即用：
+百科、计算及捆绑环境快照默认可离线使用；查询不会自动访问外部 API。`meta --online` 会请求在线数据；单只天梯配招详情需显式添加此选项，失败时按命令支持情况回退到快照或缓存。是否消耗模型 Token 取决于调用它的 Agent 和平台。
 
-- **内聚静态数据**：约 39MB 的预处理 JSON 数据（全国图鉴 1~1025 号、781 个招式、特性、VGC 预设等）全部内置。
+- **内聚静态数据**：仓库跟踪的 `pokemon-calc/data/` 文件合计约 35.05 MB（十进制，18 个文件；不含运行时缓存）。包含图鉴、招式、特性、VGC 预设和环境快照等数据，具体覆盖以各数据文件为准。
 - **极简运行环境**：仅使用 Python 3.10+ 标准库。**不需要**安装 `numpy`、`pandas`，甚至不需要 `pip install` 任何第三方包。克隆即可运行，极为适合作为轻量级子模块集成到各类 AI 智能体项目中。
 
 ---
@@ -80,21 +82,26 @@
 
 ### 作为 Skill 安装
 
-直接把仓库克隆进你的 Agent skills 目录即可。目标文件夹请命名为 `pokemon-calc`，与 Skill 的 `name` 字段保持一致——各框架机制完全相同，只有目标路径不同：
+把仓库克隆到对应 Agent 的 skills 目录，并将目标文件夹命名为 `pokemon-calc`。各 Agent 的发现与加载机制不同，请按其官方文档配置：
 
 ```bash
 git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.claude/skills/pokemon-calc"  # Claude Code（全局；项目级用 .claude/skills/）
-git clone https://github.com/Einheriar/pokemon-calc-skill.git "$CODEX_HOME/skills/pokemon-calc"   # Codex
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.agents/skills/pokemon-calc"   # Codex
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.hermes/skills/pokemon-calc"  # Hermes Agent
 ```
 
-随后在对话中显式请求此 Skill，例如 `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.`（Claude Code：`Please use the pokemon-calc skill to run a damage calc.`）。Hermes Agent 同理——把文件夹克隆进其 skills 目录即可调用。
+Codex 和 Claude Code 的全局目录分别为 `~/.agents/skills/` 和 `~/.claude/skills/`；Hermes Agent 可使用 `~/.hermes/skills/`，具体加载方式见 [Hermes Agent 官方文档](https://hermes-agent.nousresearch.com/docs/user-guide/skills)。随后在对话中显式请求使用此 Skill，例如 `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.`。不同框架的发现和调用方式并不完全相同。
 
 ### 作为独立 CLI 工具使用
 
-即使不接入任何 Agent 框架，也可直接作为命令行工具使用：
+即使不接入任何 Agent 框架，也可直接作为命令行工具使用。尚未克隆时，将独立 Skill 仓库克隆为 `pokemon-calc` 并进入该目录；若已克隆独立 Skill 仓库，则直接从仓库根目录运行：
 
 ```bash
+# 尚未克隆独立 Skill 仓库时：
+git clone https://github.com/Einheriar/pokemon-calc-skill.git pokemon-calc
 cd pokemon-calc
+python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
+# 已克隆独立 Skill 仓库时，在仓库根目录运行：
 python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
 ```
 
@@ -128,9 +135,11 @@ python scripts/query.py calc 喷火龙 喷射火焰 水箭龟
 # 带复杂环境与配置覆盖的计算 (JSON 格式)
 python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
   --att_ov '{"evs":{"sp_attack":252},"nature":"内敛"}' \
-  --def_ov '{"item":"讲究围巾"}' \
+  --def_ov '{"evs":{},"nature":"勤奋","form_name":"超级胡地"}' \
   --field_ov '{"weather":"Sun","format":"Doubles"}'
 ```
+
+上面的多行写法使用 Bash 的 `\` 续行符。Windows PowerShell 用户可改用单行命令，或按 [`references/commands.md`](./references/commands.md) 使用 `--*_file` 参数传入 JSON。
 
 返回示例（节选）：
 
@@ -143,24 +152,26 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 }
 ```
 
-> 说明：上例 override 已显式指定努力值，故不触发预设兜底。未指定配置时，引擎会自动套用 setdex 预设（天梯热门套优先）并在返回值中以 `attacker_auto_preset` / `defender_auto_preset` 标注命中套名；预设携带纯增伤道具时另以 `attacker_auto_item` / `defender_auto_item` 标注（回答时应声明该假设）。override 一旦指定任一努力类字段（`evs`/`sps`/`raw_stats`/`stats`），预设完全跳过。
+> 说明：上例对攻守双方都显式指定了努力值，所以双方均跳过预设。未指定努力配置时，引擎可自动套用该侧的 setdex 预设（天梯热门套优先），并在返回值中以 `attacker_auto_preset` / `defender_auto_preset` 标注命中套名；预设携带纯增伤道具时另以 `attacker_auto_item` / `defender_auto_item` 标注。某一侧 override 一旦指定任一努力类字段（`evs`/`sps`/`raw_stats`/`stats`），该侧跳过预设。
 
 ### 3. 努力值 / 能力点数优化
 
 支持两套能力值分配系统：Gen9 标准努力值（默认）和《宝可梦冠军》(Pokémon Champions) 能力点数（SP）。
 
 ```bash
-# Gen9 努力值模式（默认）：搜索保证秒杀所需的最低特攻努力值
+# Gen9 努力值模式（默认）：搜索达到确一目标所需的最低特攻努力值；若目标不可达会返回失败结果
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko
 
-# Champions 能力点数模式（SP）：1 SP = +1 能力值（Lv.50）
+# Champions 能力点数模式（SP）：搜索达到确一目标所需的最低特攻 SP；若目标不可达会返回失败结果
 python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --target ohko --mode sp
 ```
 
+这两个示例在当前默认配置下会返回 `success: false`，说明即使达到搜索上限也无法确一；优化结果会随查询参数变化。
+
 | 模式 | 参数 | 总点数 | 单项上限 | 步进 | Lv.50 能力值增长 |
 |------|------|--------|----------|------|----------------|
-| Gen9 努力值 | `--mode ev`（默认） | 508 | 252 | 4 | 每 8 EV = +1 |
-| Champions 能力点数 | `--mode sp` | 66 | 32 | 1 | 每 1 SP = +1 |
+| Gen9 努力值 | `--mode ev`（默认） | 508 | 252 | 4 | 每项能力按 4 EV 步进；能力值增量还取决于等级、个体值、种族值和性格取整 |
+| Champions 能力点数 | `--mode sp` | 66 | 32 | 1 | `SP>0` 时对应 `EV=8×SP−4`，`SP=0` 对应 `EV=0`；实际能力值增量受等级、个体值和性格取整影响 |
 
 ---
 
@@ -243,10 +254,10 @@ python scripts/query.py optimize 喷火龙 喷射火焰 水箭龟 --goal ko --ta
 
 ## 领域功能特性
 
-虽然是一个底层引擎，但在宝可梦对战的规则支持上毫不妥协：
+底层引擎覆盖常见查询场景，具体支持范围以实现和查询结果为准：
 
-- **全图鉴与双层数据架构**：支持 1~1025 号宝可梦的所有形态（含 Mega、原始回归、地区形态）。底层整合 Gen9（朱紫）官方数据与《宝可梦冠军》规则数据（当前 M-C，champout v1.2.0 / 2026-09-11）。每个 Champions 形态带"引入规则"标签（M-A/M-B/M-C），随赛季推进仍支持按规则累积查看。
-- **VGC 实战预设**：内置 207 只宝可梦共 314 个对战预设配置——264 个社区旧预设 + 50 个官方实机双打天梯 Top50 提炼的热门套（auto-preset 优先命中天梯套，priority 字段分层共存；部分指定努力值时不套预设，形态永不自动切换）。LLM 遇到未明确指定努力值的查询时，可直接调用预设。
+- **图鉴与双层数据架构**：收录全国图鉴 1~1025 号的宝可梦数据与部分形态（包括 Mega、原始回归和地区形态；不承诺穷尽所有形态）。底层整合 Gen9（朱紫）数据与《宝可梦冠军》规则数据（当前 M-C，champout v1.2.0 / 2026-09-11）。Champions 形态带有引入规则标签（M-A/M-B/M-C）。
+- **VGC 实战预设**：当前内置 207 个宝可梦条目、314 个对战预设——264 个旧预设及 50 个官方实机双打天梯 Top50 热门套（该批数据来源日期为 2026-08-30）。auto-preset 优先命中天梯套，priority 字段分层共存；配置某一侧的努力类字段会跳过该侧预设，形态不会自动切换。
 - **努力值逆向优化 (EV Optimizer)**：不仅能算伤害，还能"反推"努力值。自动搜索满足"确一 (OHKO)"或"确二生存"目标的最低努力值配置。
 - **人类语言容错 (Normalize 层)**：内置"老喷"、"命玉"、"抗斗果"等玩家俗称与官方标准译名的自动映射，另覆盖 ROM 官方译名变体（如"迭失棺"→死神棺、"霸道熊猫"→流氓熊猫），降低 LLM 实体提取的难度。
 

@@ -264,6 +264,20 @@ python scripts/query.py calc 喷火龙 热风 水箭龟 '{}' '{}' '{}' '{"weathe
 python scripts/query.py calc 喷火龙 热风 水箭龟 --field_ov '{"weather":"sun"}'
 ```
 
+如当前 PowerShell 版本的原生命令引号转义影响 JSON，可先将以下内容保存为 UTF-8 文件 `field.json`：
+
+```json
+{"weather":"sun","format":"Doubles"}
+```
+
+然后使用文件参数读取：
+
+```powershell
+python scripts/query.py calc 喷火龙 热风 水箭龟 --field_ov_file field.json
+```
+
+`calc` 同样支持 `--att_ov_file`、`--move_ov_file` 和 `--def_ov_file`；文件参数优先于对应的内联覆盖参数。
+
 能力项键名统一使用 `sp_attack` / `sp_defense`；`special_attack` / `special_defense` 在所有计算入口均可作为输入别名，输出使用规范键。JSON 中的整数和布尔值应直接传入，不要转成字符串。未知键、冲突别名、无效枚举和不可读取的覆盖文件会使查询失败。
 
 `compute-stats` 示例：
@@ -272,7 +286,7 @@ python scripts/query.py calc 喷火龙 热风 水箭龟 --field_ov '{"weather":"
 python scripts/query.py compute-stats '{"hp":55,"attack":50,"defense":45,"special_attack":135,"special_defense":95,"speed":120}' --evs '{"special_attack":252}' --nature 内敛 --level 50
 ```
 
-能力点数（SP）模式：Champions 规则下，1 SP = +1 能力值（Lv.50），32 SP = 252 EV。在 override 中使用 `sps` 字段：
+能力点数（SP）模式：在 override 中使用 `sps` 字段，正数 SP 按 `EV = 8 × SP - 4` 换算，0 SP 为 0 EV；因此 32 SP 对应 252 EV。最终能力值由等级、IV、性格和取整共同决定，不保证每 1 SP 都使最终能力值增加 1。详见 `mechanics.md` 的换算说明。
 
 ```json
 {"sps": {"hp": 4, "attack": 32, "speed": 32}}

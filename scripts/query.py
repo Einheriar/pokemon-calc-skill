@@ -854,6 +854,14 @@ def resolve_item(name: str) -> str | None:
                 if normalize_ja(k) == ja_name:
                     en = v
                     break
+    if not en:
+        # name_index maps localized names to canonical English values. Also
+        # accept those canonical English names directly, case-insensitively.
+        name_lower = name.lower()
+        for canonical_en in items.values():
+            if canonical_en.lower() == name_lower:
+                en = canonical_en
+                break
     return en
 
 

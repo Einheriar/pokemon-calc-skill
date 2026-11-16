@@ -7,7 +7,7 @@
 
 Traditional Pokémon damage calculators are web apps or tools built for humans. `pokemon-calc` is a purpose-built computation engine designed for **AI Agents (Large Language Models)**.
 
-By providing standardized pure-function CLI interfaces and fully localized static data, this project eliminates the **numerical hallucinations** that LLMs commonly produce when handling complex multiplicative modifiers in Pokémon battles (type matchups × abilities × items × weather × terrain).
+By providing a deterministic CLI and bundled reference data, this project helps reduce the risk of numerical errors when an AI agent handles Pokémon battle modifiers such as type matchups, abilities, items, weather, and terrain. The engine computes supported cases; it does not cover every mechanic or replace careful interpretation of unsupported interactions.
 
 ## What can you ask?
 
@@ -27,21 +27,22 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 | Pokédex entries | "What does Mew's Pokédex entry say?" |
 | VGC presets | "What are common Charizard VGC sets?" |
 
-### Meta Environment (Pokémon Champions Regulation M-C)
+### Meta Environment Snapshots
 
-The full tournament-team dataset of the rolling 30-day window (9,000+ teams with moves/items/abilities) ships bundled, so every query below works offline out of the box. All queries go through the unified `meta` command.
+Meta data is shipped as dated snapshots and does not update automatically. The battle data layer includes Pokémon Champions M-C records. Meta snapshots have separate publication dates: the bundled tournament usage and team snapshot covers Pokémon Champions M-B from **2026-07-26 through 2026-08-26** (150 tournaments and 9,250 teams); the bundled official in-game ladder snapshot is M-C through **2026-09-15** and contains rankings only; the bundled Showdown report is M-B for **2026-08**. Offline meta queries use these snapshots; they do not represent live rankings or current tournament results.
 
 | Capability | Example question |
 |------------|------------------|
-| Usage ranking (`meta`) | "Which Pokémon has the highest usage rate right now?" |
-| Per-Pokémon meta detail (`meta <name>`) | "What moves/items does Kingambit run? Who are its common teammates?" |
-| Recent tournament teams (`meta --teams`) | "Show me the latest tournament-winning teams" |
-| Teammate co-occurrence (`meta --teams --teammates`) | "Who partners Incineroar most often?" |
-| Official ranked ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What's the official in-game ranked leaderboard right now?" (rank-only) |
+| Usage ranking (`meta`) | "Which Pokémon ranked highest in the bundled tournament snapshot?" |
+| Per-Pokémon meta detail (`meta <name>`) | "What moves/items did Kingambit use in the bundled tournament snapshot? Who were its common teammates?" |
+| Tournament teams (`meta --teams`) | "Show me teams from the bundled tournament snapshot" |
+| Teammate co-occurrence (`meta --teams --teammates`) | "Who partnered Incineroar most often in the bundled snapshot?" |
+| Bundled official ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What is the official in-game ladder ranking in the bundled M-C snapshot?" (rank-only) |
+| Fresh official ladder ranking (`meta --source ladder --online`) | "What is the latest official in-game ladder ranking?" |
 | Ladder build detail (`meta --source ladder <name> --online`) | "What are Kingambit's top 4 moves on the official ladder?" |
-| Showdown ladder monthly report (`meta --source showdown`) | "Showdown usage stats with percentages?" (one month behind) |
+| Showdown ladder monthly report (`meta --source showdown`) | "What are the usage stats in the bundled Showdown report?" (2026-08) |
 
-> Meta data comes from [pokecamp.cc](https://pokecamp.cc): the default source is Limitless public tournament stats (rolling 30-day window); `--source ladder`/`ingame` is **official in-game ranked data** (latest regulation, refreshed every 1–3 days, rank-only at the leaderboard level; per-Pokémon builds carry real percentages and require `--online`); `--source showdown` is the Showdown ladder monthly report (`meta.month` marks the month). Ladder sources support `--format singles|doubles` (default doubles) and have no team queries. Bundled data works offline; `--online` fetches fresh data incrementally on explicit request. Legacy `usage` / `teams` commands still work as deprecated aliases.
+> `meta --online` requests fresh upstream data only when explicitly used and requires network access. Results are cached locally; if a request fails, the CLI falls back to its local cache or bundled snapshot and reports the actual source and any online error in `meta`. Official ladder rankings are rank-only in the bundled snapshot; per-Pokémon ladder details require `--online`. Ladder sources support `--format singles|doubles` (default doubles) and do not provide tournament-team queries. Legacy `usage` / `teams` commands remain deprecated aliases for `meta`.
 
 ### Damage Calculation & Optimization
 
@@ -59,59 +60,66 @@ The full tournament-team dataset of the rolling 30-day window (9,000+ teams with
 
 ### 1. Designed for Agents: LLM Understands, Engine Computes
 
-Large language models excel at intent recognition and parameter extraction, but they inevitably fail at numerical calculations involving extensive table lookups and multi-level modifiers. This project decouples the two responsibilities:
+Large language models can recognize intent and extract parameters, while deterministic calculation reduces arithmetic and lookup errors for supported cases. This project separates the two responsibilities:
 
 - **LLM's Job**: Parse natural language (e.g. "Can Life Orb max SpA Mega Charizard Y OHKO max SpD Amoonguss in Sun?") into structured JSON parameters.
-- **Engine's Job**: Receive parameters, execute deterministic calculations covering 40+ modifiers (STAB, weather, items, Tera, etc.), and return exact damage ranges and KO probabilities.
+- **Engine's Job**: Receive parameters, apply common supported modifiers (such as STAB, weather, items, and Terastallization), and return damage ranges and KO probabilities for the modeled case.
 - **Pure-Function Interface**: All queries and calculations flow through a single entry point, `query.py`, with well-defined JSON In / JSON Out semantics. This makes it trivial to wrap as a GPTs Action, Dify plugin, or MCP (Model Context Protocol) tool.
 
-### 2. 100% Local & Zero External Dependencies
+### 2. Offline by Default, with Optional Online Meta Queries
 
-No database configuration, no external API calls (avoiding network latency and token consumption). Truly out-of-the-box:
+Encyclopedia, calculation, optimization, and bundled meta-snapshot queries run offline after cloning. Optional `meta --online` requests fresh upstream meta data and therefore needs network access; results are cached locally, with cache/snapshot fallback if a request fails. The agent framework may still use model tokens when interpreting a request and presenting results.
 
-- **Embedded Static Data**: ~39 MB of preprocessed JSON data (National Dex #1–1025, 781 moves, abilities, VGC sets, etc.) all bundled inside.
-- **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, **no** `pip install` of any kind. Clone and run — ideal as a lightweight submodule for any AI agent project.
+- **Bundled Data**: approximately 35 MB (decimal) of tracked JSON data, including Pokédex and battle data, aliases, presets, and dated meta snapshots. Coverage reflects the records included in this release; it is not a guarantee that every form or mechanic is represented.
+- **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, and no third-party Python packages to install.
 
 ---
 
 ## Installation & Usage
 
-This project is an Agent Skill that can be installed into any AI coding assistant or agent framework that supports custom skills.
+This project is an Agent Skill. The following destinations are the documented personal skill directories for [Codex](https://developers.openai.com/api/reference/cli), [Claude Code](https://code.claude.com/docs/en/skills), and [Hermes Agent](https://hermes-agent.nousresearch.com/docs/guides/work-with-skills/). Skill discovery and session refresh behavior can differ by agent.
 
 ### Install as a Skill
 
-Clone the repository straight into your agent's skills directory. Name the target folder `pokemon-calc` so it matches the skill's `name` field — the mechanics are identical across frameworks, only the destination differs:
+Create the destination's parent directory before cloning. These bash commands install it for the current user:
 
 ```bash
-git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.claude/skills/pokemon-calc"  # Claude Code (global; use .claude/skills/ for project-level)
-git clone https://github.com/Einheriar/pokemon-calc-skill.git "$CODEX_HOME/skills/pokemon-calc"   # Codex
+mkdir -p "$HOME/.agents/skills" "$HOME/.claude/skills" "$HOME/.hermes/skills"
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.agents/skills/pokemon-calc"   # Codex (user-level)
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.claude/skills/pokemon-calc"  # Claude Code (user-level)
+git clone https://github.com/Einheriar/pokemon-calc-skill.git "$HOME/.hermes/skills/pokemon-calc"  # Hermes Agent
 ```
 
-Then reference the skill explicitly in a prompt, e.g. `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.` (Claude Code: `Please use the pokemon-calc skill to run a damage calc.`). Hermes Agent works the same way — clone the folder into its skills directory and call it in conversation.
+For project-level Codex and Claude Code installs, use `.agents/skills/pokemon-calc` and `.claude/skills/pokemon-calc` within the project. Then start a new session if needed and request the skill explicitly, for example: `Use pokemon-calc to check if Mega Charizard Y can OHKO Amoonguss under sun.` Hermes Agent's documented user skill directory is `~/.hermes/skills/`; newly installed skills are available in new sessions.
 
 ### Use as a Standalone CLI Tool
 
-Even without an Agent framework, you can run it directly from the command line:
+To clone into a new directory named `pokemon-calc` and run the CLI from that repository root:
 
 ```bash
+git clone https://github.com/Einheriar/pokemon-calc-skill.git pokemon-calc
 cd pokemon-calc
 python scripts/query.py calc Charizard Flamethrower Blastoise
 ```
+
+If you already cloned the repository, run `python scripts/query.py ...` from its root; the published repository root already contains `scripts/` and `data/`.
+
+The command examples below use Bash syntax. In Windows PowerShell, run commands on one line rather than using Bash's trailing `\` continuation. See [`references/commands.md`](./references/commands.md) for Windows command examples.
 
 ---
 
 ## Quick Start
 
-After cloning, no dependencies to install — just run with Python:
+After cloning, no dependencies to install. The CLI accepts Simplified Chinese, Traditional Chinese, English, and Japanese names where those names are present in the bundled name index; coverage does not include every possible spelling or romanization. JSON field names are English, while descriptive text and display names are primarily Simplified Chinese; some fields include canonical English names. There is no `--lang` switch; an AI agent can translate or rephrase the result for the user.
 
 ### 1. Encyclopedia & Mechanics Queries
 
 ```bash
-# Query base stats and typing
-python scripts/query.py stats Hisuian Decidueye
+# Query stats for regular and Hisuian Decidueye
+python scripts/query.py stats Decidueye
 
 # Query move mechanics
-python scripts/query.py move Expanding Force
+python scripts/query.py move "Heat Wave"
 
 # Query type matchup
 python scripts/query.py type Fairy Steel
@@ -126,9 +134,9 @@ Combines positional arguments with named override parameters.
 python scripts/query.py calc Charizard Flamethrower Blastoise
 
 # Complex calc with environment and config overrides (JSON)
-python scripts/query.py calc "Mega Charizard Y" Heat Wave "Mega Alakazam" \
-  --att_ov '{"evs":{"sp_attack":252},"nature":"Modest"}' \
-  --def_ov '{"item":"Choice Scarf"}' \
+python scripts/query.py calc "Mega Charizard Y" "Heat Wave" "Mega Alakazam" \
+  --att_ov '{"evs":{"sp_attack":252},"nature":"Modest","form_name":"Mega Charizard Y"}' \
+  --def_ov '{"evs":{},"nature":"Hardy","form_name":"Mega Alakazam"}' \
   --field_ov '{"weather":"Sun","format":"Doubles"}'
 ```
 
@@ -137,30 +145,32 @@ Sample response (excerpt):
 ```json
 {
   "damage_range": [111, 132],
-  "ko_chance": "12.5% chance to OHKO",
+  "ko_chance": "12.5% 概率一击必杀",
   "type_effectiveness": 1.0,
   "stab_applied": true
 }
 ```
 
-> Note: the example above specifies EVs explicitly, so no preset fallback kicks in. When a config is left unspecified, the engine auto-applies a setdex preset (ladder-meta sets first) and reports it via `attacker_auto_preset` / `defender_auto_preset`; if the preset carries a pure damage-boosting item, it is also applied and reported via `attacker_auto_item` / `defender_auto_item` (declare that assumption in your answer). Once the override contains any stat-investment field (`evs`/`sps`/`raw_stats`/`stats`), presets are skipped entirely.
+> Note: this example sets the attacker to 252 SpA EVs and the defender to 0 EVs with a neutral nature. Because each side's override contains a stat-investment field (`evs`), auto-presets are skipped on both sides. If an override leaves a side unspecified, a setdex preset may be applied to that side; the result reports it through `attacker_auto_preset` / `defender_auto_preset` and, when applicable, `attacker_auto_item` / `defender_auto_item`.
 
 ### 3. EV / SP Optimization
 
 Supports both Gen9 EV system (default) and Pokémon Champions SP (Stat Points) system.
 
 ```bash
-# Gen9 EV mode (default): search for minimum SpA EVs to guarantee OHKO
+# Gen9 EV mode (default): search for SpA EVs to reach an OHKO target
 python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --target ohko
 
-# Champions SP mode: search for minimum Stat Points (1 SP = +1 stat at Lv.50)
+# Champions SP mode: search for SP investment to reach an OHKO target
 python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --target ohko --mode sp
 ```
 
-| Mode | Flag | Total Points | Max per Stat | Step | Stat gain at Lv.50 |
-|------|------|--------------|--------------|------|-------------------|
-| Gen9 EV | `--mode ev` (default) | 508 | 252 | 4 | +1 per 8 EV |
-| Champions SP | `--mode sp` | 66 | 32 | 1 | +1 per 1 SP |
+| Mode | Flag | Total Points | Max per Stat | Step | SP-to-EV conversion |
+|------|------|--------------|--------------|------|---------------------|
+| Gen9 EV | `--mode ev` (default) | 508 | 252 | 4 | — |
+| Champions SP | `--mode sp` | 66 | 32 | 1 | EV = 0 when SP = 0; otherwise EV = 8 × SP − 4 |
+
+The conversion describes stored EV allocation only. Final stats also depend on base stats, level, IVs, and nature; do not infer a fixed stat increase per SP. An optimization result can be unreachable: check its `success` field and report failure rather than claiming the target is guaranteed.
 
 ---
 
@@ -184,7 +194,7 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
    - 我是否试图在 plan 阶段预设能力值、努力值、性格或伤害数字？否
    - 我是否打算凭内部记忆解释属性相克、特性效果或招式机制？否
 4. 即将执行的精确命令：
-   python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 --att_ov '{"evs":{"sp_attack":252},"nature":"内敛","form_name":"超级喷火龙Ｙ"}' --field_ov '{"weather":"Sun","format":"Doubles"}'
+   python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 --att_ov '{"evs":{"sp_attack":252},"nature":"内敛","form_name":"超级喷火龙Ｙ"}' --def_ov '{"evs":{},"nature":"勤奋","form_name":"超级胡地"}' --field_ov '{"weather":"Sun","format":"Doubles"}'
 </plan>
 ```
 
@@ -245,12 +255,12 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 
 ## Domain Features
 
-Despite being a low-level engine, it makes no compromises on competitive rule coverage:
+The bundled data and calculation engine cover many common competitive use cases, with support bounded by the data and mechanics implemented in this release:
 
-- **Full National Dex & Dual-Layer Data Architecture**: Supports all forms of #1–1025 (including Mega, Primal, regional forms). Underlying data integrates Gen9 (Scarlet/Violet) official data with *Pokémon Champions* rules data (currently M-C, champout v1.2.0 / 2026-09-11). Every Champions form is tagged with the regulation that introduced it (M-A/M-B/M-C), so cumulative regulation views stay possible as seasons advance.
-- **VGC Battle Presets**: 314 pre-built sets across 207 Pokémon — 264 legacy community sets plus 50 ladder-meta sets distilled from the official in-game doubles Top 50 (auto-preset prefers them; a priority field keeps both tiers, and EV/nature-only fallback never switches forms). When the LLM encounters a query without explicit EVs, it can fall back to a preset.
+- **Pokédex and Champions Data**: Bundled Gen 9 data and *Pokémon Champions* rules data currently include many species and forms, including Mega and regional forms. Champions records are tagged with their introducing regulation (M-A/M-B/M-C); this does not guarantee exhaustive coverage of every species, form, or mechanic.
+- **VGC Battle Presets**: 314 pre-built sets across 207 Pokémon in the bundled setdex: 264 legacy community sets and 50 ladder-derived sets based on the official in-game doubles Top 50 from **2026-08-30**. Auto-preset selection prefers the latter tier when applicable. Treat presets as dated references, not live recommendations; users can provide explicit settings to skip presets for that side.
 - **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
-- **Human-Language Tolerance (Normalize Layer)**: Built-in alias mappings for player slang (e.g. "Charizard" ↔ "老喷", "Life Orb" ↔ "命玉", "Chople Berry" ↔ "抗斗果"), plus ROM translation variants (e.g. "迭失棺" → 死神棺, "霸道熊猫" → 流氓熊猫), lowering the burden on LLM entity extraction.
+- **Multilingual Name Input**: The name index includes Simplified Chinese, Traditional Chinese, English, and Japanese names, plus a maintained set of aliases. It does not cover every spelling, romanization, or player nickname; the CLI resolves recognized names to canonical English entity keys while text fields default to Simplified Chinese.
 
 ---
 
@@ -271,9 +281,9 @@ User's natural-language question
         | Routes to sub-commands
         v
 +---------------+
-|   damage.py   | Pure-parameter deterministic calculator (reads local data/*.json)
+|   damage.py   | Deterministic calculator for supported parameters and mechanics (reads local data/*.json)
 +-------+-------+
-        | Returns exact numerical result (DamageResult JSON)
+        | Returns deterministic results for the supported case (DamageResult JSON)
         v
 +---------------+
 |   AI Agent    | Formats JSON into natural language, tables, and explanations relevant to the question
@@ -299,9 +309,9 @@ If you want to integrate this engine into your own LLM application, refer to:
 - **Gen 1–9 Pokédex Data**: Crawled from [42arch/pokemon-dataset-zh](https://github.com/42arch/pokemon-dataset-zh)
 - ***Pokémon Champions* Rules Data (currently M-C)**: Game ROM extraction and parsing from [projectpokemon/champout](https://github.com/projectpokemon/champout) (v1.2.0)
 - **VGC Damage Calculator Frontend Logic**: Ported and refactored from the [VGC Damage Calculator](https://professorsidon.github.io/VGC-Damage-Calculator-Chinese/) JavaScript engine
-- **Meta Environment Data (`meta` command)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats) — with thanks
+- **Meta Environment Data (`meta` command)**: [pokecamp.cc](https://pokecamp.cc) (Limitless public tournament stats, official ladder rankings, and Showdown monthly reports) — with thanks
 
-> **Crawling policy**: access to pokecamp.cc is restrained and on-demand, not bulk scraping — requests are made only when a user explicitly asks for fresh data (`--online`) or a maintainer periodically refreshes the bundled snapshot; results are always cached locally, no site-wide traversal, and robots.txt is respected. If the pokecamp.cc team has any concerns, please open an Issue and we will adjust promptly.
+> **Data and online queries**: Bundled meta data are dated snapshots (see the snapshot dates above), not a live feed. The CLI contacts pokecamp.cc only when a user explicitly invokes `--online`; successful results are cached locally, and failed requests fall back to available cache/snapshot data with the actual source and error reported in `meta`. Online query results are written to the local cache and do not rewrite the bundled snapshot files.
 
 ---
 
