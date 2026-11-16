@@ -239,7 +239,7 @@ python scripts/query.py optimize Charizard Flamethrower Blastoise --goal ko --ta
 > | 天气加成 | 是（晴天火系威力 ×1.5） |
 > | KO 概率 | **12.5% 概率一击必杀** |
 >
-> **综合判断**：超级胡地特防 125 且 HP 仅 130，面对晴天下超级喷火龙Y的热风非常脆弱。虽然大部分情况不会被确一，但残血时基本必死。
+> **综合判断**：结论仅适用于上述已计算的配置与环境。
 
 ---
 
@@ -276,7 +276,7 @@ User's natural-language question
         | Returns exact numerical result (DamageResult JSON)
         v
 +---------------+
-|   AI Agent    | Formats JSON into natural language, tables, or analysis
+|   AI Agent    | Formats JSON into natural language, tables, and explanations relevant to the question
 +-------+-------+
         |
         v
