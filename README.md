@@ -29,7 +29,7 @@ Two EV/SP systems supported: traditional Gen9 **EVs** (252/4/508 rule) and Poké
 
 ### Meta Environment Snapshots
 
-Meta data is shipped as dated snapshots and does not update automatically. The battle data layer includes Pokémon Champions M-C records. Meta snapshots have separate publication dates: the bundled tournament usage and team snapshot covers Pokémon Champions M-B from **2026-07-26 through 2026-08-26** (150 tournaments and 9,250 teams); the bundled official in-game ladder snapshot is M-C through **2026-09-15** and contains rankings only; the bundled Showdown report is M-B for **2026-08**. Offline meta queries use these snapshots; they do not represent live rankings or current tournament results.
+Meta data is shipped as dated snapshots and does not update automatically. The battle data layer includes Pokémon Champions M-C records. Meta snapshots have separate publication dates: the bundled tournament usage and team data covers M-C from **2026-10-16 through 2026-11-16** (312 usage entries, 135 tournaments, 134 with team data, and 6,469 fully detailed teams); the bundled official in-game ladder snapshot is M-C as of **2026-11-16** (data version `20261116083343008`, 262 ranking entries) and contains rankings only. Only rows marked `isMega=true` with a `linkId` explicitly pointing to the corresponding non-Mega form are merged; other non-Mega forms, including male/female and regional battle forms, remain separate. The bundled Showdown report is M-C for **2026-10** (cutoff 1760, 289 entries). Offline meta queries use these snapshots; they do not represent live rankings or current tournament results.
 
 | Capability | Example question |
 |------------|------------------|
@@ -37,12 +37,14 @@ Meta data is shipped as dated snapshots and does not update automatically. The b
 | Per-Pokémon meta detail (`meta <name>`) | "What moves/items did Kingambit use in the bundled tournament snapshot? Who were its common teammates?" |
 | Tournament teams (`meta --teams`) | "Show me teams from the bundled tournament snapshot" |
 | Teammate co-occurrence (`meta --teams --teammates`) | "Who partnered Incineroar most often in the bundled snapshot?" |
-| Bundled official ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What is the official in-game ladder ranking in the bundled M-C snapshot?" (rank-only) |
+| Bundled official ladder ranking (`meta --source ladder [--format singles\|doubles]`) | "What is the official in-game ladder ranking in the bundled M-C snapshot?" (rank-only; snapshot as of 2026-11-16) |
 | Fresh official ladder ranking (`meta --source ladder --online`) | "What is the latest official in-game ladder ranking?" |
 | Ladder build detail (`meta --source ladder <name> --online`) | "What are Kingambit's top 4 moves on the official ladder?" |
-| Showdown ladder monthly report (`meta --source showdown`) | "What are the usage stats in the bundled Showdown report?" (2026-08) |
+| Showdown ladder monthly report (`meta --source showdown`) | "What are the usage stats in the bundled Showdown report?" (2026-10, cutoff 1760) |
 
-> `meta --online` requests fresh upstream data only when explicitly used and requires network access. Results are cached locally; if a request fails, the CLI falls back to its local cache or bundled snapshot and reports the actual source and any online error in `meta`. Official ladder rankings are rank-only in the bundled snapshot; per-Pokémon ladder details require `--online`. Ladder sources support `--format singles|doubles` (default doubles) and do not provide tournament-team queries. Legacy `usage` / `teams` commands remain deprecated aliases for `meta`.
+> `meta --online` requests fresh upstream data only when explicitly used and requires network access. For tournament usage rankings, a failed refresh falls back to a completed distilled online cache, then to the bundled snapshot. Raw endpoint caches are not used to present an incomplete or stale payload as a fresh result. The returned `meta.origin` and `meta.online_error` identify the source actually used and any fetch failure.
+>
+> With `--online`, a named tournament usage query may combine ranking data with separately fetched Pokémon details. `meta.origin`, `meta.date_range`, and `meta.format` describe the ranking data; when a detail fetch is attempted, `meta.detail_origin`, `meta.detail_fetched_at`, `meta.detail_date_range`, `meta.detail_format`, and `meta.detail_online_error` describe the detail data. Those sources and dates can differ, so use the matching metadata for usage/ranking claims versus moves, items, abilities, or spreads. Official ladder rankings are rank-only in the bundled snapshot; per-Pokémon ladder details require `--online`. Ladder sources support `--format singles|doubles` (default doubles) and do not provide tournament-team queries. `--source showdown --online` uses the Showdown source and its regulation-specific report route. Legacy `usage` / `teams` commands remain deprecated aliases for `meta`.
 
 ### Damage Calculation & Optimization
 
@@ -70,7 +72,7 @@ Large language models can recognize intent and extract parameters, while determi
 
 Encyclopedia, calculation, optimization, and bundled meta-snapshot queries run offline after cloning. Optional `meta --online` requests fresh upstream meta data and therefore needs network access; results are cached locally, with cache/snapshot fallback if a request fails. The agent framework may still use model tokens when interpreting a request and presenting results.
 
-- **Bundled Data**: approximately 35 MB (decimal) of tracked JSON data, including Pokédex and battle data, aliases, presets, and dated meta snapshots. Coverage reflects the records included in this release; it is not a guarantee that every form or mechanic is represented.
+- **Bundled Data**: 34,619,350 bytes (34.62 MB, decimal) across 18 tracked data files, including Pokédex and battle data, aliases, presets, and dated meta snapshots. Coverage reflects the records included in this release; it is not a guarantee that every form or mechanic is represented.
 - **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, and no third-party Python packages to install.
 
 ---
@@ -258,7 +260,7 @@ The conversion describes stored EV allocation only. Final stats also depend on b
 The bundled data and calculation engine cover many common competitive use cases, with support bounded by the data and mechanics implemented in this release:
 
 - **Pokédex and Champions Data**: Bundled Gen 9 data and *Pokémon Champions* rules data currently include many species and forms, including Mega and regional forms. Champions records are tagged with their introducing regulation (M-A/M-B/M-C); this does not guarantee exhaustive coverage of every species, form, or mechanic.
-- **VGC Battle Presets**: 314 pre-built sets across 207 Pokémon in the bundled setdex: 264 legacy community sets and 50 ladder-derived sets based on the official in-game doubles Top 50 from **2026-08-30**. Auto-preset selection prefers the latter tier when applicable. Treat presets as dated references, not live recommendations; users can provide explicit settings to skip presets for that side.
+- **VGC Battle Presets**: 314 pre-built sets across 208 species keys in the bundled setdex: 264 legacy community sets and 50 ladder-derived sets based on the complete official in-game doubles Top 50 from **2026-11-16** (all 50 single-Pokémon details available; built on 2026-11-17). Indeedee and Basculegion male and female battle forms have separate presets. Auto-preset selection prefers the ladder-derived tier when a matching form is available. Treat presets as dated references, not live recommendations; users can provide explicit settings to skip presets for that side.
 - **EV Reverse Optimizer**: Not just damage calculation — it can "work backwards" to find the minimum EV investment needed to achieve OHKO, 2HKO, or survival benchmarks.
 - **Multilingual Name Input**: The name index includes Simplified Chinese, Traditional Chinese, English, and Japanese names, plus a maintained set of aliases. It does not cover every spelling, romanization, or player nickname; the CLI resolves recognized names to canonical English entity keys while text fields default to Simplified Chinese.
 

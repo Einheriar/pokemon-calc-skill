@@ -259,6 +259,37 @@ def _load_setdex() -> dict[str, Any]:
     return _setdex_data
 
 
+_GENDER_FORM_NAMES = {"雄性的样子", "雌性的样子"}
+
+
+def _preset_gender_form(data: dict[str, Any], form_index: int | None = None,
+                        override: dict[str, Any] | None = None) -> str | None:
+    """Identify distinct male/female battle forms before choosing a preset."""
+    forms = data.get("forms") or []
+    if not _GENDER_FORM_NAMES.issubset({f.get("name") for f in forms}):
+        return None
+    requested = (override or {}).get("form_name")
+    if requested is not None:
+        if not isinstance(requested, str) or requested not in _GENDER_FORM_NAMES:
+            raise ValueError(f"Unknown gender form {requested!r}; use 雄性的样子 or 雌性的样子.")
+        return requested
+    index = form_index if form_index is not None else 0
+    return forms[index].get("name") if 0 <= index < len(forms) else None
+
+
+def _presets_for_form(pokemon_en: str, gender_form: str | None = None) -> dict[str, Any]:
+    """Keep historical gender-keyed sets reachable beside current form sets."""
+    setdex = _load_setdex()
+    presets = dict(setdex.get(pokemon_en) or {})
+    if gender_form is not None:
+        suffix = "M" if gender_form == "雄性的样子" else "F"
+        for name, config in (setdex.get(f"{pokemon_en}-{suffix}") or {}).items():
+            # The historical key itself establishes the battle-form identity.
+            tagged = {**config, "form_name": gender_form}
+            presets.setdefault(name, tagged)
+    return presets
+
+
 def _resolve_preset(pokemon_name: str, preset_name: str | None = None) -> dict[str, Any] | None:
     """Resolve preset by pokemon name (zh or en) and optional preset name.
 
@@ -267,31 +298,44 @@ def _resolve_preset(pokemon_name: str, preset_name: str | None = None) -> dict[s
     load_data()
     setdex = _load_setdex()
 
+    resolved = resolve_pokemon(pokemon_name)
+    gender_form = None
     # Try direct match (English name)
     pokemon_en = None
     if pokemon_name in setdex:
         pokemon_en = pokemon_name
     else:
         # Use resolve_pokemon to get the English name from Chinese name
-        resolved = resolve_pokemon(pokemon_name)
         if resolved:
             _, data, _ = resolved
             pokemon_en = data.get("name_en", "")
 
-    if not pokemon_en or pokemon_en not in setdex:
+    if resolved:
+        gender_form = _preset_gender_form(resolved[1], resolved[2])
+        if gender_form is not None:
+            pokemon_en = resolved[1].get("name_en", "")
+
+    presets = _presets_for_form(pokemon_en or "", gender_form)
+    if not pokemon_en or not presets:
         return None
 
-    presets = setdex[pokemon_en]
     if preset_name is None:
-        return {"pokemon_en": pokemon_en, "presets": list(presets.keys())}
+        names = [name for name, config in presets.items()
+                 if gender_form is None
+                 or config.get("form_name") == gender_form]
+        return {"pokemon_en": pokemon_en, "presets": names}
 
     if preset_name not in presets:
+        return None
+    if (gender_form is not None
+            and presets[preset_name].get("form_name") != gender_form):
         return None
 
     return {"pokemon_en": pokemon_en, "preset_name": preset_name, "config": presets[preset_name]}
 
 
-def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict[str, Any]:
+def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str,
+                              gender_form: str | None = None) -> dict[str, Any]:
     """If override contains 'preset' key, merge preset config with override.
 
     Preset fields are used as base, override fields take precedence.
@@ -301,13 +345,12 @@ def _apply_preset_to_override(override: dict[str, Any], pokemon_en: str) -> dict
     if preset_name is None:
         return override
 
-    setdex = _load_setdex()
-    if pokemon_en not in setdex:
-        return override
-
-    presets = setdex[pokemon_en]
+    presets = _presets_for_form(pokemon_en, gender_form)
     if preset_name not in presets:
         return override
+    preset_form = presets[preset_name].get("form_name")
+    if gender_form is not None and preset_form != gender_form:
+        raise ValueError(f"Preset '{preset_name}' has form {preset_form!r}, not {gender_form}.")
 
     # Fields that Pokemon model accepts; discard setdex-specific fields like 'moves'
     _VALID_PK_FIELDS = {
@@ -446,7 +489,8 @@ def _score_preset(preset_config: dict[str, Any], user_override: dict[str, Any]) 
     return score
 
 
-def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) -> tuple[dict[str, Any], str | None, str | None]:
+def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str,
+                                  gender_form: str | None = None) -> tuple[dict[str, Any], str | None, str | None]:
     """Auto-match best preset from setdex for the given pokemon.
 
     Preset priority tiers first: only presets at the highest ``priority`` value
@@ -476,11 +520,12 @@ def _apply_auto_preset_to_override(override: dict[str, Any], pokemon_en: str) ->
     if any(k in _EV_SPEC_FIELDS for k in override):
         return override, None, None
 
-    setdex = _load_setdex()
-    if pokemon_en not in setdex:
-        return override, None, None
-
-    presets = setdex[pokemon_en]
+    presets = _presets_for_form(pokemon_en, gender_form)
+    if gender_form is not None:
+        # Gender battle forms have different stats and learnsets. Untagged
+        # historical species-wide sets cannot establish a matching form.
+        presets = {name: config for name, config in presets.items()
+                   if config.get("form_name") == gender_form}
     if not presets:
         return override, None, None
 
@@ -711,6 +756,22 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
     """
     load_data()
     name = normalize_name(name, "pokemon")
+
+    # These suffixes identify battle forms, not cosmetic sex differences.
+    # Resolve only when the actual species contains both distinct forms.
+    gender_match = re.fullmatch(
+        r"(.+?)(?:[- ](male|female|m|f)|[（(](雄性(?:的样子)?|雌性(?:的样子)?)[）)])",
+        name.strip(), re.IGNORECASE)
+    if gender_match:
+        base = resolve_pokemon(gender_match.group(1))
+        if base and _GENDER_FORM_NAMES.issubset(
+                {form.get("name") for form in base[1].get("forms", [])}):
+            label = gender_match.group(2) or gender_match.group(3)
+            gender_form = ("雌性的样子" if label.lower() in ("f", "female")
+                           or label.startswith("雌") else "雄性的样子")
+            index = next(i for i, form in enumerate(base[1]["forms"])
+                         if form.get("name") == gender_form)
+            return base[0], base[1], index
 
     # Try exact match first
     stem = _index_data["pokemon"].get(name) or _index_data["pokemon_forms"].get(name)
@@ -2672,21 +2733,28 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
     att_has_explicit_preset = "preset" in att_override
     def_has_explicit_preset = "preset" in def_override
 
-    # Apply presets if specified in overrides
-    att_override = _apply_preset_to_override(att_override, att_data.get("name_en", ""))
-    def_override = _apply_preset_to_override(def_override, def_data.get("name_en", ""))
+    # Resolve the target gender battle form before either preset path runs.
+    try:
+        att_gender_form = _preset_gender_form(att_data, att_form_idx, att_override)
+        def_gender_form = _preset_gender_form(def_data, def_form_idx, def_override)
+        att_override = _apply_preset_to_override(
+            att_override, att_data.get("name_en", ""), att_gender_form)
+        def_override = _apply_preset_to_override(
+            def_override, def_data.get("name_en", ""), def_gender_form)
+    except ValueError as exc:
+        return {"error": str(exc)}
 
     # Auto-match preset for partially specified configs (evs/nature/ivs only)
     if not att_has_explicit_preset:
         att_override, att_auto_preset, att_auto_item = _apply_auto_preset_to_override(
-            att_override, att_data.get("name_en", "")
+            att_override, att_data.get("name_en", ""), att_gender_form
         )
     else:
         att_auto_preset = None
         att_auto_item = None
     if not def_has_explicit_preset:
         def_override, def_auto_preset, def_auto_item = _apply_auto_preset_to_override(
-            def_override, def_data.get("name_en", "")
+            def_override, def_data.get("name_en", ""), def_gender_form
         )
     else:
         def_auto_preset = None
@@ -3578,14 +3646,32 @@ def _find_usage_entry(pokemon_list: list[dict[str, Any]], name: str) -> dict[str
         return None
     norm = normalize_name(name, "pokemon")
     lowered = {c.strip().lower() for c in (name, norm) if c and c.strip()}
-    for e in pokemon_list:
-        names = {str(e.get("name_zh", "")).lower(),
-                 str(e.get("name_en", "")).lower(),
-                 str(e.get("identifier", "")).lower()}
-        if names & lowered:
-            return e
-    # Fall back to the local index: resolve to stem / name_en, then match
+    direct_matches = [entry for entry in pokemon_list if lowered & {
+        str(entry.get("name_zh", "")).lower(),
+        str(entry.get("name_en", "")).lower(),
+        str(entry.get("identifier", "")).lower(),
+    }]
+    if len(direct_matches) == 1:
+        return direct_matches[0]
     resolved = resolve_pokemon(name)
+    if resolved:
+        _, pdata, form_index = resolved
+        gender_form = _preset_gender_form(pdata, form_index)
+        if gender_form is not None:
+            en = (pdata.get("name_en") or "").lower()
+            gender = "female" if gender_form == "雌性的样子" else "male"
+            identifiers = {f"{en}-{gender}", f"{en}-{gender[0]}"}
+            if gender == "male":
+                identifiers.add(en)
+            names = {f"{en}-{gender}", f"{en}-{gender[0]}", f"{en} {gender}"}
+            for entry in pokemon_list:
+                if (str(entry.get("identifier", "")).lower() in identifiers
+                        or str(entry.get("name_en", "")).lower() in names):
+                    return entry
+            return None
+    if direct_matches:
+        return direct_matches[0]
+    # Fall back to the local index: resolve to stem / name_en, then match
     if resolved:
         stem, pdata, _ = resolved
         en = (pdata.get("name_en") or "").lower()
@@ -3714,7 +3800,13 @@ def _cmd_meta_usage(name: str = "", top: int = 20, online: bool = False) -> dict
     if "abilities" not in entry and online:
         detailed = pcs.get_usage_entry_detail(DATA_DIR, entry.get("id"), online=True)
         if detailed:
-            entry = detailed
+            if isinstance(detailed.get("entry"), dict):
+                entry = detailed["entry"]
+            detail_meta = detailed.get("meta") or {}
+            meta = dict(meta)
+            for key in ("origin", "fetched_at", "date_range", "format", "online_error"):
+                if key in detail_meta:
+                    meta[f"detail_{key}"] = detail_meta[key]
 
     result: dict[str, Any] = {"meta": meta}
     result.update(entry)

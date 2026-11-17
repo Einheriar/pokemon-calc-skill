@@ -11,7 +11,7 @@ python scripts/query.py meta [target] [--top N] [--online] [--source tournament|
                            [--tournament 名] [--stats [--placing-max N]] [--teammates 名]
 ```
 
-统一的环境情报查询入口。默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口）；`--source ladder` / `showdown` 接入天梯数据（见下文「--source 参数」）。
+统一的环境情报查询入口。默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计。当前内置快照为 M-C、2026-10-16 至 2026-11-16；`--online` 的滚动窗口和日期可能变化。`--source ladder` / `showdown` 接入各自的天梯数据（见下文「--source 参数」）。
 
 ### 智能推断规则
 
@@ -34,7 +34,8 @@ python scripts/query.py meta <name> [--online]            # 单只宝可梦环�
 
 - **不带名称**：返回使用率总排行，每条含 `rank`、`name_zh`、`usage_percent`、`win_rate`、`team_count`。
 - **带名称**：返回单只宝可梦的环境详情：使用率排名、胜率、Top 12 常用招式、Top 8 特性、Top 8 道具、Top 8 性格、Top 8 能力点数（SP）分配推荐、Top 12 常见队友，均带百分比。
-- **`--online`**：实时拉取 pokecamp 最新数据（单只查询只多下载该只的详情，约 23 KB）；结果缓存到 `data/cache/`；网络失败自动回退内置快照。
+- **`--online`**：请求在线使用率数据并写入本地缓存。排名刷新失败时，依次回退到完整蒸馏后的在线使用率缓存和捆绑快照；原始 `index` / `teams_page` 缓存不会被拼接成一条看似新鲜的完整结果。
+- **单只详情来源**：在线排名查询成功后，单只详情会单独请求并缓存。响应中的 `meta.origin` / `date_range` / `format` 描述排名数据；`meta.detail_origin` / `detail_fetched_at` / `detail_date_range` / `detail_format` 描述单只详情。在线详情失败时会使用该宝可梦已有的完整详情缓存（`detail_origin: "cache"`）或保留排名结果并报告 `detail_origin: "unavailable"` 与 `detail_online_error`。两部分来源和日期可能不同，应按字段分别说明。
 
 ### 队伍查询（`--teams`）
 
@@ -49,7 +50,7 @@ python scripts/query.py meta --teams --stats --pokemon <名>            # 道具
 python scripts/query.py meta --teams --teammates <名>                  # 队友共现排行
 ```
 
-当前窗口的**全量队伍**（约 9,000+ 支，含完整明细）已内置为 `data/teams_full.json.gz`，首次全量查询自动派生本地 SQLite 索引（一次性数秒，之后离线可用）。
+当前内置的**全量队伍**（6,469 支；135 场赛事元数据中，134 场包含队伍数据，这 134 场的队伍详情齐全，缺失详情数为 0）已打包在 `data/teams_full.json.gz`，另有前 12 支轻量快照 `data/meta_teams.json`。首次全量查询自动派生本地 SQLite 索引（之后可离线查询）。
 
 - **不带参数**：按赛事日期降序列出前 12 支队伍（与 pokecamp 赛事队伍页首页一致）。列表与 `meta --teams <N>` 详情同源同序（均来自本地 SQLite 索引），编号一一对应。
 - **`meta --teams <N>`**：全量列表按日期降序第 N 支的完整配置（每只宝可梦的道具、特性、4 个招式、性格，均为中英文双语）。
@@ -66,25 +67,26 @@ python scripts/query.py meta --teams --teammates <名>                  # 队友
 ```bash
 python scripts/query.py meta --source tournament   # 默认：赛事数据（pokecamp.cc / Limitless）
 python scripts/query.py meta --source ladder       # 官方实机排位（等价 ingame，日更，仅名次）
-python scripts/query.py meta --source showdown     # Showdown 天梯月报（含使用率，滞后一个月）
+python scripts/query.py meta --source showdown     # Showdown 天梯月报（含使用率，月份见 meta.month）
+python scripts/query.py meta --source showdown --online  # 在线请求 Showdown 来源的月报
 ```
 
 | 源 | 性质 | 时效 | 使用率 | 单只详情 | 队伍查询 |
 |---|---|---|---|---|---|
-| `tournament`（默认） | Limitless 公开赛事统计 | 滚动 30 天，日更 | ✅ 含胜率 | ✅（`--online` 更全） | ✅ |
-| `ladder` / `ingame` | Pokémon Champions 官方实机排位 | 最新赛制，约 1~3 天 | ❌ **仅名次**（`rank_only: true`） | ✅ 配招/道具/特性/性格/努力为真实百分比（**需 `--online`**），队友仅名次 | ❌ |
-| `showdown` | Showdown 天梯月报（cutoff 1760） | 月更，滞后一个月 | ✅ 无胜率 | ✅（**需 `--online`**） | ❌ |
+| `tournament`（默认） | Limitless 公开赛事统计 | 内置 M-C 快照：2026-10-16 至 2026-11-16（312 条使用率，135 场赛事，134 场含队伍详情，6,469 支队伍）；在线数据按滚动窗口返回 | ✅ 含胜率 | ✅（`--online` 可请求单只详情） | ✅ |
+| `ladder` / `ingame` | Pokémon Champions 官方实机排位 | 内置 M-C 快照截至 2026-11-16，data version `20261116083343008` | ❌ **仅名次**（`rank_only: true`；262 条；仅 `isMega=true` 且 `linkId` 明确指向对应非 Mega 形态的行合并，其他非 Mega 形态独立保留） | ✅ 配招/道具/特性/性格/努力为真实百分比（**需 `--online`**），队友仅名次 | ❌ |
+| `showdown` | Showdown 天梯月报（cutoff 1760） | M-C、`meta.month=2026-10`，`meta.raw_count=1,649,648` 个原始样本计数，蒸馏为 289 条宝可梦记录 | ✅ 无胜率 | ✅（**需 `--online`**） | ❌ |
 
 - 天梯源用 `--format singles|doubles` 切换单打/双打排行（默认 `doubles`，输出 `meta.format_note` 会注明当前赛制与切换方法）；对 tournament 源无效（limitless 仅双打）。
-- 天梯源各自锁定其发布的最新赛制（官方实机排位 `ingame` 随新规则即时切换；Showdown 月报可能滞后一个规则），按数据源在规则清单中声明。
-- 天梯总榜为纯名次/使用率表；ingame 的名次按物种计（Mega 形态并入基础形态，行内 `includes_mega: true` 标注），showdown 的 Mega 形态为 Smogon 独立统计口径、保持分行。
+- 天梯的在线请求按来源使用对应的规则与路由：`ingame` 读取官方实机排位源，`showdown` 读取 Showdown 月报源。两者的规则版本可能不同，以返回的 `meta.source_kind`、`meta.regulation` 和 Showdown 的 `meta.month` 为准；不要把一个来源的规则套到另一个来源。
+- 天梯总榜为纯名次/使用率表；ingame 仅当来源行 `isMega=true` 且 `linkId` 明确关联到相应非 Mega 形态时才合并（行内 `includes_mega: true` 标注），其他非 Mega 形态包括雌雄和地区形态均独立保留；showdown 的 Mega 形态为 Smogon 独立统计口径、保持分行。
 - 官方天梯离线快照仅含名次，单只配招与 SP 分配详情需 `--online`；报表中的“未获取”表示详情尚未拉取，属于预期状态，并非脚本故障。
 - 天梯源与 `--teams`/`--stats`/`--teammates`/`--player`/`--tournament` 组合会返回友好错误（天梯没有赛事队伍概念）。
-- `--online`：天梯总榜每次抓取约 230 KB（24 小时节流，复用缓存）；单只天梯详情约 127 KB（gzip），按宝可梦缓存 24 小时，失败回退缓存/内置快照（`meta.online_error` 会给出失败原因）。
+- `--online`：ingame 与 showdown 的天梯总榜分别缓存，约 230 KB，按 24 小时窗口复用/刷新；单只详情约 127 KB（gzip），使用共享的 `ladder_detail_<id>.json` 原始详情缓存，缓存项保留 source 与 regulation 信息，按 24 小时窗口复用/刷新。失败时回退缓存/内置快照（`meta.online_error` 会给出失败原因）。
 
 ### meta 字段
 
-所有返回值含 `meta` 字段：`origin`（snapshot/cache/online）、`date_range`（数据窗口）、`tournament_count` / `team_count`（样本量）。回答时必须引用 `date_range` 说明数据时效。天梯源额外含 `source_kind`（ingame/showdown）、`battle_format`（singles/doubles）、`format_note`（当前赛制提醒）；ingame 含 `rank_only: true`、`season`、`data_version`，showdown 含 `month`、`cutoff`、`raw_count`。
+所有返回值含 `meta` 字段：`origin`（snapshot/cache/online）、`date_range`（数据窗口）、`tournament_count` / `team_count`（适用时的赛事样本量）。使用率单只详情响应还可能包含 `detail_origin`、`detail_fetched_at`、`detail_date_range`、`detail_format`、`detail_online_error`；它们描述单只细节，与总体排名的 `origin`、`date_range`、`format` 分开。回答时按所引用的数据字段说明相应来源和日期。天梯源额外含 `source_kind`（ingame/showdown）、`regulation`、`battle_format`（singles/doubles）、`format_note`；ingame 含 `rank_only: true`、`season`、`data_version`，showdown 含 `month`、`cutoff`、`raw_count`。
 
 ### 旧命令兼容
 
@@ -111,7 +113,7 @@ python scripts/query.py meta 仆刀将军 --online                # 强制拉取
 python scripts/query.py meta --source ladder                  # 官方实机排位名次榜（双打，前 20）
 python scripts/query.py meta --source ladder --format singles # 官方实机排位单打名次榜
 python scripts/query.py meta --source ladder 仆刀将军 --online  # 仆刀将军官方天梯配招/道具/性格/努力
-python scripts/query.py meta --source showdown                # Showdown 天梯使用率月报（滞后一个月）
+python scripts/query.py meta --source showdown                # 捆绑 Showdown 月报（2026-10；月份见 meta.month）
 python scripts/query.py meta --source showdown 仆刀将军 --online  # Showdown 月报口径的单只详情
 ```
 

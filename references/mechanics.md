@@ -125,16 +125,22 @@ Champions 数据按**引入规则累积保留**（M-A 275 / M-B 38 / M-C 34 种�
 | 项目 | 说明 |
 |------|------|
 | 来源 | pokecamp.cc（聚合 Limitless 公开赛事统计） |
-| 规则 | 《宝可梦冠军》Champions 规则（当前 M-C；集合为滚动 30 天窗口，按双打统计） |
-| 样本 | 滚动 30 天窗口内的公开赛事队伍（样本量见 `meta.tournament_count` / `meta.team_count`） |
-| 更新 | 内置数据随版本更新；`--online` 可实时拉取（按需请求，结果本地缓存） |
+| 规则 | 数据源可能使用不同 Champions 规则；以文件或返回值的 `meta.format` / `meta.regulation` 为准 |
+| 样本 | 公开赛事队伍；样本量及时间窗口以各快照和返回值中的 `meta.tournament_count` / `meta.team_count` / `meta.date_range` 为准 |
+| 更新 | 内置快照随版本发布；`--online` 按需请求上游并使用相应缓存，来源与日期由返回值标记 |
 | 性质 | 赛事环境统计，非官方游戏内天梯数据，也非模拟器数据 |
 
 两条命令的数据形态与分工：
 
 | 命令 | 内置数据 | 能回答的问题 |
 |------|---------|-------------|
-| `usage` | `data/usage_stats.json`：299 只宝可梦的站点预计算统计（排名、胜率、Top 招式/特性/道具/性格、**SP 能力点数分配推荐**、队友） | "谁最热门"、"X 怎么加点/带什么" |
-| `teams` | `data/teams_full.json.gz`：当前窗口**全量队伍**（9,000+ 支，含每队 6 只的道具/特性/性格/招式明细），首次全量查询自动派生本地 SQLite 索引（`data/cache/teams_index.db`，可删可重建）；`data/meta_teams.json` 为前 12 支的轻量兜底 | "哪些队伍用了 X"、"某选手的队伍"、"前八队伍里谁最热门"（子集统计）、"X 最常和谁组队" |
+| `usage` | `data/usage_stats.json`：312 项 M-C 赛事快照统计，窗口为 2026-10-16 至 2026-11-16（排名、胜率、Top 招式/特性/道具/性格、**SP 能力点数分配推荐**、队友） | "谁最热门"、"X 怎么加点/带什么" |
+| `teams` | `data/teams_full.json.gz`：当前捆绑快照含 6,469 支队伍，来自 135 场赛事元数据，其中 134 场包含队伍数据；这 134 场详情齐全，缺失详情数为 0。每队含道具/特性/性格/招式明细。首次全量查询自动派生本地 SQLite 索引（`data/cache/teams_index.db`，可删可重建）；`data/meta_teams.json` 为前 12 支的轻量兜底 | "哪些队伍用了 X"、"某选手的队伍"、"前八队伍里谁最热门"（子集统计）、"X 最常和谁组队" |
 
 注意：队伍数据**不含 SP/努力值分配**（teams.json 本身没有），加点类问题一律走 `usage <宝可梦名>`；两边的出现率同口径同数据集（已数值验证吻合），`teams --stats` 的价值在于子集聚合（`--placing-max` / `--tournament`）。所有 teams 查询输出硬上限 50 条，原始数据与索引不进入上下文。
+
+`meta --online` 的 tournament usage 排名刷新失败时，先回退完整蒸馏后的在线缓存，再回退内置 usage 快照；原始 endpoint 缓存不能单独代表一份完整的在线排名结果。单只宝可梦详情可能独立请求或命中详情缓存，返回的 `meta.detail_origin`、`detail_fetched_at`、`detail_date_range`、`detail_format`、`detail_online_error` 描述该详情来源；总体排名使用 `meta.origin`、`date_range`、`format`。两组来源/日期可能不同，回答时按所引用内容分别说明。
+
+天梯数据按来源区分：`ingame` 与 `showdown` 使用各自声明的 regulation、总榜端点和详情解析路径。传入 `--source showdown --online` 时使用 Showdown 对应的在线源；Showdown 月份以返回的 `meta.month` 为准，不能用官方 `ingame` 天梯的规则或抓取日期替代。
+
+当前打包的两个天梯快照日期不同：官方实机为 M-C、截至 2026-11-16（data version `20261116083343008`，262 条）；仅合并 `isMega=true` 且 `linkId` 明确关联到对应非 Mega 形态的 Mega 行，其他非 Mega 形态（包括雌雄与地区形态）独立保留。Showdown 为 M-C、2026-10 月报（cutoff 1760，289 条宝可梦记录；`meta.raw_count=1,649,648` 是源报告的原始样本计数）。赛事 usage/teams 则是 M-C、2026-10-16 至 2026-11-16，312 个使用率条目、135 场赛事元数据，134 场包含队伍数据且详情缺失为 0，共 6,469 支队伍。使用时以各自响应 `meta` 中的来源和日期字段为准。

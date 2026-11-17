@@ -101,6 +101,9 @@ class PokecampSource:
     def teams_path(self) -> str:
         return self._regulation_path("teams.json")
 
+    def teams_members_path(self) -> str:
+        return self._regulation_path("teams-members.json")
+
     def teams_page_path(self) -> str:
         return self._regulation_path("teams-page.json")
 
@@ -116,7 +119,22 @@ class PokecampSource:
 
     def fetch_teams(self) -> list[dict[str, Any]]:
         # NOTE: ~15 MB single file; call only on explicit --online demand.
-        return self.fetch_json(self.teams_path())
+        teams = self.fetch_json(self.teams_path())
+        if not isinstance(teams, list):
+            raise ValueError("teams endpoint returned an unexpected JSON type")
+        needs_members = any(
+            type(slot) is int
+            for team in teams if isinstance(team, dict)
+            for slot in (team.get("pokemon") or [])
+        )
+        members = self.fetch_teams_members() if needs_members else None
+        return resolve_team_rosters(teams, members)
+
+    def fetch_teams_members(self) -> list[dict[str, Any]]:
+        members = self.fetch_json(self.teams_members_path())
+        if not isinstance(members, list):
+            raise ValueError("teams-members endpoint returned an unexpected JSON type")
+        return members
 
     def fetch_teams_page(self) -> dict[str, Any]:
         return self.fetch_json(self.teams_page_path())
@@ -318,6 +336,53 @@ def distill_usage_snapshot(index_data: list[dict[str, Any]],
 def _sort_key_team(team: dict[str, Any]) -> tuple:
     date = ((team.get("tournament") or {}).get("date") or "")
     return (date, -(team.get("placing") or 9999))
+
+
+def resolve_team_rosters(teams: list[dict[str, Any]],
+                         members: list[dict[str, Any]] | None = None
+                         ) -> list[dict[str, Any]]:
+    """Resolve compact integer pokemon slots through teams-members.json.
+
+    Legacy team documents with object rosters are copied through unchanged.
+    Integer slots are strict list indexes; invalid types and missing members
+    raise instead of guessing a species or silently dropping roster entries.
+    """
+    if not isinstance(teams, list):
+        raise TypeError("teams must be a list")
+    if members is not None and not isinstance(members, list):
+        raise TypeError("members must be a list when provided")
+
+    resolved: list[dict[str, Any]] = []
+    for team_pos, team in enumerate(teams):
+        if not isinstance(team, dict):
+            raise TypeError(f"team at index {team_pos} must be an object")
+        roster = team.get("pokemon") or []
+        if not isinstance(roster, list):
+            raise TypeError(f"team {team.get('id')!r} pokemon roster must be a list")
+        decoded = []
+        for slot_pos, slot in enumerate(roster):
+            if isinstance(slot, dict):
+                decoded.append(slot)
+                continue
+            if type(slot) is not int:
+                raise TypeError(
+                    f"team {team.get('id')!r} pokemon slot {slot_pos} "
+                    f"must be an object or integer index, got {type(slot).__name__}")
+            if members is None:
+                raise ValueError(
+                    f"team {team.get('id')!r} pokemon slot {slot} has no members dictionary")
+            if slot < 0 or slot >= len(members):
+                raise IndexError(
+                    f"team {team.get('id')!r} pokemon slot {slot} is outside "
+                    f"members range 0..{len(members) - 1}")
+            member = members[slot]
+            if not isinstance(member, dict):
+                raise TypeError(f"members[{slot}] must be an object")
+            decoded.append(member)
+        resolved_team = dict(team)
+        resolved_team["pokemon"] = decoded
+        resolved.append(resolved_team)
+    return resolved
 
 
 TEAM_DETAILS_CACHE_DIR = "team_details"
@@ -742,22 +807,21 @@ def _now_iso() -> str:
 
 
 def _get_raw(data_dir: Path, kind: str, fetcher, online: bool) -> Any:
-    """Fetch a raw pokecamp document with cache write-through / read fallback.
+    """Fetch a raw document; an online failure must reach the dataset fallback.
 
-    Re-raises the original error when no cache exists, so callers can report
-    the real failure reason to the user.
+    Raw endpoint caches are retained for inspection, but are not mixed into a
+    newly distilled online result. Distilled cache/snapshot fallbacks carry
+    their own provenance and date range.
     """
     if not online:
         return _read_cache(data_dir, RAW_CACHE_FILES[kind])
+    data = fetcher()
     try:
-        data = fetcher()
         _write_cache(data_dir, RAW_CACHE_FILES[kind], data)
-        return data
-    except Exception:
-        cached = _read_cache(data_dir, RAW_CACHE_FILES[kind])
-        if cached is not None:
-            return cached
-        raise
+    except OSError:
+        # A failed optional cache write does not make the fetched payload stale.
+        pass
+    return data
 
 
 def get_usage_data(data_dir: Path, online: bool = False,
@@ -802,30 +866,73 @@ def get_usage_entry_detail(data_dir: Path, pokemon_id: int, online: bool = False
                            source: PokecampSource | None = None) -> dict[str, Any] | None:
     """Fetch + distill a single pokemon's full entry (lightweight online path).
 
-    Costs one ~23 KB detail request (cached per pokemon) plus the cheap raw
-    index / teams-page documents (also cached). Returns None when offline or
-    when every fetch/cache path fails — callers then degrade to the light
-    entry from get_usage_data().
+    Returns {entry, meta}. Detail caches contain the distilled entry and its
+    actual fetch time, so a failed partial refresh can fall back atomically
+    without mixing an old raw index or teams-page document with fresh detail.
     """
     if not online:
         return None
     source = source or get_source()
     detail_cache = f"usage_detail_{pokemon_id}.json"
+
+    def cached_detail(error: Exception) -> dict[str, Any] | None:
+        cached = _read_cache(data_dir, detail_cache)
+        if not isinstance(cached, dict) or not isinstance(cached.get("entry"), dict):
+            return None
+        cached_meta = cached.get("meta") or {}
+        return {
+            "entry": cached["entry"],
+            "meta": {
+                "origin": "cache",
+                "fetched_at": cached_meta.get("fetched_at"),
+                "date_range": cached_meta.get("date_range"),
+                "format": cached_meta.get("format"),
+                "online_error": f"{type(error).__name__}: {error}",
+            },
+        }
+
     try:
+        # These supporting documents must also be fresh before the detail can
+        # be labeled online; stale raw-cache data is never used for distilling.
+        index = _get_raw(data_dir, "index", source.fetch_usage_index, online=True)
+        teams_page = _get_raw(data_dir, "teams_page", source.fetch_teams_page, online=True)
+        if index is None or teams_page is None:
+            raise ConnectionError("pokecamp fetch failed and no fresh raw payload was returned")
         detail = source.fetch_pokemon_detail(pokemon_id)
-        _write_cache(data_dir, detail_cache, detail)
-    except Exception:
-        detail = _read_cache(data_dir, detail_cache)
-    if detail is None:
-        return None
-    index = _get_raw(data_dir, "index", source.fetch_usage_index, online=True)
-    teams_page = _get_raw(data_dir, "teams_page", source.fetch_teams_page, online=True)
-    index_rec = next((r for r in (index or []) if r.get("id") == pokemon_id), None)
-    if index_rec is None:
-        index_rec = (detail.get("pokemon") or {})
-    name_maps = build_name_maps(teams_page or {})
-    sp_recs = (teams_page or {}).get("statPointRecommendations") or {}
-    return distill_pokemon_entry(index_rec, detail, name_maps, sp_recs)
+        if detail is None:
+            raise ConnectionError(f"pokecamp returned no detail for pokemon id={pokemon_id}")
+        index_rec = next((r for r in index if r.get("id") == pokemon_id), None)
+        if index_rec is None:
+            index_rec = detail.get("pokemon") or {}
+        name_maps = build_name_maps(teams_page)
+        sp_recs = teams_page.get("statPointRecommendations") or {}
+        entry = distill_pokemon_entry(index_rec, detail, name_maps, sp_recs)
+        fetched_at = _now_iso()
+        meta_page = teams_page.get("meta") or {}
+        cached_payload = {
+            "entry": entry,
+            "meta": {
+                "fetched_at": fetched_at,
+                "date_range": meta_page.get("dateRange"),
+                "format": meta_page.get("format"),
+            },
+        }
+        try:
+            _write_cache(data_dir, detail_cache, cached_payload)
+        except OSError:
+            pass
+        return {
+            "entry": entry,
+            "meta": {"origin": "online", **cached_payload["meta"]},
+        }
+    except Exception as e:
+        fallback = cached_detail(e)
+        if fallback is not None:
+            return fallback
+        return {"entry": None, "meta": {
+            "origin": "unavailable",
+            "online_error": f"{type(e).__name__}: {e}",
+        }}
 
 
 def get_teams_data(data_dir: Path, online: bool = False, top: int = 12,
@@ -953,38 +1060,57 @@ def distill_ladder_page(source_kind: str, page: dict[str, Any],
 
     pokemon: list[dict[str, Any]] = []
     if source_kind == "ingame":
-        # Merge mega rows into their base species (same speciesIdentifier,
-        # identical ranks by construction).
-        merged: dict[str, dict[str, Any]] = {}
+        # Keep each non-Mega battle form as its own row. In particular,
+        # speciesIdentifier groups forms such as Indeedee and Basculegion
+        # whose stats differ. Only an explicit Mega row with a linkId to a
+        # non-Mega record is folded into that exact base form.
+        base_by_id: dict[Any, dict[str, Any]] = {}
+        bases_by_link_id: dict[Any, list[dict[str, Any]]] = {}
+        mega_rows: list[dict[str, Any]] = []
         for rec in plist:
+            if rec.get("isMega"):
+                mega_rows.append(rec)
+                continue
             u = rec.get("usage") or {}
-            sp = rec.get("speciesIdentifier") or rec.get("identifier") or ""
-            cur = merged.get(sp)
-            if cur is None or (cur.get("_is_mega") and not rec.get("isMega")):
-                merged[sp] = {
-                    "id": rec.get("id"),
-                    "identifier": rec.get("identifier"),
-                    "name_zh": rec.get("displayName") or rec.get("nameZh") or "",
-                    "name_en": rec.get("nameEn") or "",
-                    "singles_rank": u.get("singlesRank") or None,
-                    "doubles_rank": u.get("doublesRank") or None,
-                    "includes_mega": False,
-                    "_is_mega": bool(rec.get("isMega")),
-                }
-                if cur is not None:
-                    merged[sp]["includes_mega"] = True
-            else:
-                # Only a genuine mega row proves the species includes one;
-                # multi-form species (male/female, regional, rotom, etc.) hit
-                # this branch with base forms too.
-                if rec.get("isMega") or cur.get("_is_mega"):
-                    cur["includes_mega"] = True
-        pokemon = list(merged.values())
-        for e in pokemon:
-            e.pop("_is_mega", None)
-            # A species seen only as a mega row is not "base + mega".
-            if e["identifier"] and "-mega" in str(e["identifier"]):
-                e["includes_mega"] = False
+            entry = {
+                "id": rec.get("id"),
+                "identifier": rec.get("identifier"),
+                "name_zh": rec.get("displayName") or rec.get("nameZh") or "",
+                "name_en": rec.get("nameEn") or "",
+                "singles_rank": u.get("singlesRank") or None,
+                "doubles_rank": u.get("doublesRank") or None,
+                "includes_mega": False,
+            }
+            pokemon.append(entry)
+            if rec.get("id") is not None:
+                base_by_id[rec["id"]] = entry
+            if rec.get("linkId") is not None:
+                bases_by_link_id.setdefault(rec["linkId"], []).append(entry)
+
+        for rec in mega_rows:
+            link_id = rec.get("linkId")
+            base = base_by_id.get(link_id)
+            if base is None:
+                candidates = bases_by_link_id.get(link_id) or []
+                if len(candidates) == 1:
+                    # Some alternate base forms carry the canonical species
+                    # id in linkId (for example Floette-Eternal); use that
+                    # fallback only when it identifies one unambiguous row.
+                    base = candidates[0]
+            if base is not None:
+                base["includes_mega"] = True
+                continue
+            # Keep Mega-only records when their exact base form is absent.
+            u = rec.get("usage") or {}
+            pokemon.append({
+                "id": rec.get("id"),
+                "identifier": rec.get("identifier"),
+                "name_zh": rec.get("displayName") or rec.get("nameZh") or "",
+                "name_en": rec.get("nameEn") or "",
+                "singles_rank": u.get("singlesRank") or None,
+                "doubles_rank": u.get("doublesRank") or None,
+                "includes_mega": False,
+            })
     else:
         for rec in plist:
             u = rec.get("usage") or {}
@@ -1029,7 +1155,7 @@ def get_ladder_data(data_dir: Path, source_kind: str, online: bool = False,
                 f"{LADDER_SNAPSHOT_FILES[source_kind]} snapshot is missing")
         return _with_provenance(snap, "snapshot")
 
-    source = _ladder_source(source)
+    source = _ladder_source(source, source_kind)
     cached = _read_cache(data_dir, LADDER_CACHE_FILES[source_kind])
     if _cache_fresh(cached):
         cached = _with_provenance(cached, "cache")
@@ -1190,7 +1316,7 @@ def get_ladder_entry_detail(data_dir: Path, pokemon_id: int,
     """
     if not online or pokemon_id is None:
         return None
-    source = _ladder_source(source)
+    source = _ladder_source(source, source_kind)
     cache_file = f"ladder_detail_{pokemon_id}.json"
     cached = _read_cache(data_dir, cache_file)
     raw = None

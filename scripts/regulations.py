@@ -30,7 +30,7 @@ _FALLBACK = {
         {"id": "M-B", "order": 20},
         {"id": "M-C", "order": 30},
     ],
-    "sources": {"tournament": "M-C", "ingame": "M-C", "showdown": "M-B"},
+    "sources": {"tournament": "M-C", "ingame": "M-C", "showdown": "M-C"},
 }
 
 

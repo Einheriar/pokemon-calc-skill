@@ -6,7 +6,7 @@
    LLM 仅负责将用户的自然语言请求转化为结构化参数，所有伤害数值计算由固定 Python 程序完成。
 
 2. **仅依赖 Python 标准库，默认离线**
-   核心查询与计算不需要第三方 Python 包。`meta` 默认读取内置快照，显式 `--online` 可访问 pokecamp.cc 并复用本地缓存；上游更新不代表打包快照自动更新。
+   核心查询与计算不需要第三方 Python 包。`meta` 默认读取内置快照；显式 `--online` 才访问 pokecamp.cc。查询响应的来源与日期由 `meta` 字段标明，上游更新不会自动改写打包快照。
 
 3. **数据静态化**
    将 JS 数据文件一次性提取为 JSON，运行时直接加载，不解析 JS。
@@ -37,7 +37,7 @@ pokemon-calc/
 │   ├── abilities.json    # 特性数据
 │   ├── type_chart.json   # 18x18 属性相克表
 │   ├── name_index.json   # 中英文名称索引
-│   ├── setdex.json       # VGC 预设配置（207 只，314 个预设：旧 VGC 预设 + 天梯双打 Top50 热门套）
+│   ├── setdex.json       # VGC 预设配置（208 个物种键，314 个预设：264 个旧套 + 50 个双打 Top50 推导套）
 │   ├── aliases.json      # 玩家俗称 → 标准名称映射
 │   ├── usage_stats.json  # 环境使用率快照（pokecamp.cc / Limitless 赛事数据）
 │   ├── meta_teams.json   # 近期赛事队伍快照（前 12 支，pokecamp.cc / Limitless 赛事数据）
@@ -432,12 +432,21 @@ class DamageResult:
 
 `meta` 命令的数据访问层，可插拔设计（旧命令 `usage` / `teams` 自动转发到 `meta`）：
 
+#### 数据来源与打包更新
+
+- **百科与战斗数据**：百科基础记录来自 [`pokemon-dataset-zh`](https://github.com/42arch/pokemon-dataset-zh)，并由本仓库构建脚本整理为 `data/pokemon.json` 等运行时 JSON。战斗数据也有本仓库静态站点的 JavaScript 来源；招式数据以 `script_res/move_data.js` 的 `MOVES_SV` 为准。Champions 规则补丁由维护者从仓库中的 `champout/` 数据用 `cache/build_champions_patch.py` 生成；更新上游/原始数据后需要手动重建并检查补丁，不会在 Skill 查询时自动同步。维护步骤记录在维护仓库的 `cache/README.md` 中，该文件不随单独发布的 `pokemon-calc` Skill 子目录提供。
+- **环境数据**：赛事使用率和队伍数据通过 Pokecamp 的赛事数据入口获取，其赛事统计来自 Limitless 公开赛事数据；官方实机排位以及 Showdown 月报也通过 Pokecamp 对应的数据入口读取。`--source` 选择的是数据类别和路由；具体规则、月份、时间范围及来源以每次响应的 `meta` 为准，不应把不同来源的快照日期合并成一个日期。
+- **预设不是完整联立队伍**：历史 VGC 预设来自静态站点的 `script_res/setdex_ncp-g9.js`；天梯热门预设由维护脚本根据排名及各字段的聚合推荐生成。聚合出的努力分配、性格、特性、道具和招式并不保证来自同一只实际队伍或同一个完整玩家配置。使用时应把它们视作可编辑的常见起点，而非原始队伍记录。
+- **快照维护**：`data/` 中的快照和预设只会在维护者刷新、核对并随版本更新后改变。`--online` 仅在本地运行时请求上游并写入 `data/cache/` 缓存，不会改写已打包的快照文件；请求失败时使用完整在线缓存或打包快照，并在 `meta.origin`、`meta.online_error` 等字段标明实际来源和错误。赛事队伍在线索引有 24 小时节流；其他查询的缓存时效以具体返回的抓取时间/日期字段和对应实现为准。
+
 - **数据源**：`PokecampSource` 类封装 pokecamp.cc 的静态 JSON 端点（Champions 规则，当前 M-C）；注册在 `SOURCES` 字典中，经 `get_source()` 获取。新增/更换数据源时实现同一组 fetch 方法并注册即可，`query.py` 无需改动。
-- **三层数据**：内置快照（`data/usage_stats.json` / `data/teams_full.json.gz`）→ 在线缓存（`data/cache/`，gitignore）→ 实时拉取（`--online`，仅标准库 `urllib`，尊重 `HTTP_PROXY`/`HTTPS_PROXY`，请求 gzip 传输压缩）。网络失败沿反方向回退，返回的 `meta.origin` 标明实际来源（snapshot/cache/online），且 `meta.online_error` 携带失败原因供上层汇报用户。
-- **--source 参数**：`--source tournament`（默认）走 pokecamp.cc 赛事数据；`--source ladder`/`ingame` 走官方实机排位数据（仅名次，日更）；`--source showdown` 走 Showdown 天梯月报（含使用率，月更滞后）。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍类查询。
-- **天梯数据层**（V4.8.09 新增）：总榜走 `pokemon-page/{ingame|showdown}.json` 轻量端点（约 230 KB），蒸馏后内置快照 `data/ladder_ingame.json`（39 KB）/ `data/ladder_showdown.json`（72 KB），维护者脚本 `cache/build_ladder_stats.py`。ingame 蒸馏时按 `speciesIdentifier` 合并 Mega 展开行，并丢弃 pokecamp 为统一结构填充的占位字段（usagePercent=0/teamCount=1/winRate=null），快照只保留真实名次。单只天梯详情走 `_next/data/{buildId}/.../pokemon/{id}.json`（gzip 约 127 KB/只，按宝可梦缓存 24h；buildId 从页面 HTML 自动发现并缓存，404 时重新发现重试一次），ingame 读 `detailBySource.ingame.inGameReferenceByFormat[format]`（配招/道具/特性/性格/努力为真实百分比，队友仅名次），showdown 读 `smogonReferenceByFormat[format]`；名称翻译复用响应内嵌的 itemMap/abilityMap/moveMap/teammateMap。天梯源 regulation 按数据源解析自 `data/regulation_manifest.json`（`pokecamp_source.ladder_regulation(kind)`）：官方实机排位 `ingame` 随新规则即时切换（当前 M-C），Showdown 月报 `showdown` 可能滞后一个规则（当前 M-B），因此不共用一个常量。已知上游：championsbattledata.com（官方排位数据的社区发布方，内容一致），仅作备选参考，不接入。
+- **使用率在线与回退**：`meta --online` 在线获取 usage index 与 teams-page 并重新蒸馏完整排名缓存（`data/cache/usage_stats_online.json`）。拉取失败时依次使用完整蒸馏缓存与内置快照；原始端点缓存仅供后续诊断，不会被拼接后伪装成完整在线结果。`meta.origin` 标明排名来源（snapshot/cache/online），`meta.online_error` 标注失败原因。
+- **单只使用率详情来源**：在线排名结果为轻量列表，具备排名条目后再独立获取该宝可梦的详情，缓存为 `usage_detail_<id>.json`。若详情请求失败，使用该宝可梦的完整详情缓存或返回 `unavailable`。响应的 `meta.detail_origin`、`detail_fetched_at`、`detail_date_range`、`detail_format`、`detail_online_error` 描述详情数据；总体的 `meta.origin`、`date_range`、`format` 描述排名数据，两者来源和日期可以不同。
+- **队伍数据在线**：`meta --teams --online` 使用增量更新；网络失败时回退已构建的在线队伍缓存或内置包/轻量快照，来源及失败信息在 `meta` 中回显。此链与 usage 的完整蒸馏缓存分开。
+- **--source 参数**：`--source tournament`（默认）走 pokecamp.cc 赛事数据；`--source ladder`/`ingame` 走官方实机排位数据（总榜仅名次）；`--source showdown` 走 Showdown 天梯月报（含使用率）。在线请求和缓存按 `source_kind` 选择各自的规则与数据路由，来源元信息可能不同；以返回的 `meta.source_kind`、`regulation`、`month` 和 `origin` 为准。天梯源支持 `--format singles|doubles`（默认双打），不支持队伍类查询。
+- **天梯数据层**（V4.8.09 新增）：总榜走 `pokemon-page/{ingame|showdown}.json` 轻量端点（约 230 KB），蒸馏后内置快照 `data/ladder_ingame.json`（48,517 bytes）/ `data/ladder_showdown.json`（73,041 bytes），维护者脚本 `cache/build_ladder_stats.py`。ingame 蒸馏只合并 `isMega=true` 且 `linkId` 明确指向对应非 Mega 形态的行，并丢弃 pokecamp 为统一结构填充的占位字段（usagePercent=0/teamCount=1/winRate=null），快照只保留真实名次；其他非 Mega 形态（包括雌雄、地区形态）保持独立。单只天梯详情走 `_next/data/{buildId}/.../pokemon/{id}.json`（gzip 约 127 KB/只，按宝可梦缓存 24h；buildId 从页面 HTML 自动发现并缓存，404 时重新发现重试一次），ingame 读 `detailBySource.ingame.inGameReferenceByFormat[format]`（配招/道具/特性/性格/努力为真实百分比，队友仅名次），showdown 读 `smogonReferenceByFormat[format]`；名称翻译复用响应内嵌的 itemMap/abilityMap/moveMap/teammateMap。天梯源 regulation 按数据源解析自 `data/regulation_manifest.json`（`pokecamp_source.ladder_regulation(kind)`）：官方实机排位 `ingame` 随新规则即时切换（当前 M-C），Showdown 月报 `showdown` 按来源清单独立选择规则，因此不共用一个常量。已知上游：championsbattledata.com（官方排位数据的社区发布方，内容一致），仅作备选参考，不接入。
 - **蒸馏函数**：`distill_usage_snapshot()` / `distill_teams_snapshot()` / `distill_teams_full()` 同时被构建脚本（`cache/build_usage_stats.py`、`cache/build_teams_pack.py`）和在线模式复用，保证快照与在线结果结构一致；`meta_snapshot_from_pack()` 可从全量包直接派生前 12 支的轻量快照。
-- **在线查询成本**：`meta <name> --online` 只多下载该只宝可梦的详情（约 23 KB）；`meta --teams --online` 为增量更新——下载队伍列表（原始约 15 MB、gzip 传输约 1.3 MB）+ 仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。
+- **在线查询节流**：`meta --teams --online` 为增量更新，仅抓取缓存中缺失的赛事明细（`fetch_team_details_cached()` 按赛事永久缓存，0.15 s 请求间隔），teams.json 内容哈希未变时跳过索引重建；并有 24 小时节流（`ONLINE_MIN_INTERVAL_SEC`）——距上次成功拉取不足 24 小时时不发起任何网络请求，直接复用现有索引并在 `meta.note` 注明。天梯总榜按 `ingame` / `showdown` 分别缓存，规则来源由各自清单确定；单只详情使用共享的 `ladder_detail_<id>.json` 缓存，缓存项保留来源和规则信息，按 24 小时刷新/复用。
 - **爬虫礼仪**：仅在用户显式 `--online` 或维护者刷新快照时发起请求；结果本地缓存；不批量遍历站点；遵守 robots.txt。
 
 ### 7. teams_index.py（全量队伍本地索引）
@@ -461,15 +470,17 @@ class DamageResult:
 | `data/items.json` | 1386 | `pokemon-dataset-zh/item_list.json`（`cache/build_item_index.py` 生成） | 消费侧道具数据（phase2 Step 3）：英文规范名主键，`{name_zh, name_ja, name_en, effect, category}`，55 条带中文效果文本（自 query.py `_ITEM_EFFECTS` 逐字迁入）；`cmd_item` 读此文件。解析侧仍走 name_index items 段，两者职责分离。迁移完整性由 `cache/test_items_data.py` 守护 |
 | `data/type_chart.json` | 18x18 | `script_res/` | 属性相克表。**决策登记（phase2 Step 4，2026-09-13）**：不加英文键——引擎加载时已经 `engine_enums.TYPE_ZH_TO_EN` 转为英文键，数据文件加英文键属双键冗余，反增一致性维护负担且零行为收益；官方克制表对账（check_data）已守护其正确性 |
 | `data/name_index.json` | ~7500 | 自动生成 | 中英文名称双向索引（pokemon + moves + abilities + items）；items 段含日文键 1387 个（ja 解析复用）。与 items.json 同源不同职责：解析侧索引 vs 消费侧数据 |
-| `data/setdex.json` | 207 只 / 314 预设 | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧 VGC 预设（Reg D/E 时代）+ 50 个天梯热门套 `天梯双打热门配置`（官方实机排位双打 Top50，2026-08-30，`priority: 1`；性格取聚合排行榜首——数据源 spread 行不带性格） |
+| `data/setdex.json` | 208 个物种键 / 314 预设（163,297 bytes） | `script_res/setdex_ncp-g9.js` + `cache/build_ladder_presets.py` | VGC 预设配置（性格、努力值、道具、特性、招式参考）。264 个旧预设保持不变；另有 50 个根据官方实机双打 Top50 推导的热门配置（来源日期 2026-11-16，取得全部 50 条单只详情，2026-11-17 构建）。Indeedee 与 Basculegion 的雄、雌形态分别建套；其余热门配置按来源形态记录。聚合字段不保证来自同一支完整队伍。 |
 | `data/aliases.json` | 2699 条（pokemon 1033 / moves 545 / abilities 293 / items 820 / natures 8） | 手工维护 + `cache/gen_rom_name_aliases.py` + zh-Hant/特性性格/招式旧名批次 | 输入容错别名（旧名→现行名、繁体、俗称）。守卫 `cache/check_aliases.py`；来源注记 `cache/alias_sources.md`。2026-09-13 name_audit Step 5 起：9 种宝可梦显示名更新为 2020 官方现行名（迭失棺/霸道熊猫/谜拟丘/狡小狐/猾大狐/电音婴/迭失板/多边兽２型/乙型），旧名转别名 |
 | `data/champions_pokemon_patch.json` 等 4 件 | pokemon 231 / moves 778 / learnset 231 物种（含各形态） | `cache/build_champions_patch.py`（champout/ ROM 数据） | Champions 补丁层（当前 M-C）：形态名与本库命名体系对齐（纯外观形态已按数值比对剔除）、每个形态带 `regulation` 引入规则标签（M-A/M-B/M-C）、learnset 为 `{stem: {form: [moves]}}` 嵌套结构（按形态隔离，231 物种全覆盖）。重建后必跑 `cache/check_champions_patch.py`；`cache/champions_build_report.json` 为构建报告 |
 | `data/regulation_manifest.json` | 3 条规则 + 数据源映射 | 手工维护 | 规则身份与顺序的唯一来源：`current`（当前规则）、`regulations[].order`（顺序）、`sources`（各数据源发布的规则）。运行时经 `scripts/regulations.py` 读取；新增/插入规则只改此文件 |
-| `data/usage_stats.json` | 299 只 | pokecamp.cc（Limitless 赛事统计） | 环境使用率快照：排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
-| `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计） | 近期赛事队伍轻量快照：全量索引不可用时的兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
-| `data/teams_full.json.gz` | 9,250 支 / 150 赛事 | pokecamp.cc（Limitless 赛事统计） | 全量赛事队伍内置包（gzip，约 1.4 MB）：全部队伍 + 道具/特性/性格/招式明细 + EN→ZH 名称映射；首次查询派生本地 SQLite 索引（由 `cache/build_teams_pack.py` 构建，原始数据留存于 gitignored 的 `pokecamp_data/`） |
-| `data/ladder_ingame.json` | 231 只 | pokecamp.cc（官方实机排位，M-C） | 天梯名次快照（43 KB）：单/双打名次，Mega 已并入基础物种，占位字段已丢弃（由 `cache/build_ladder_stats.py` 构建） |
-| `data/ladder_showdown.json` | 283 只 | pokecamp.cc（Showdown 天梯月报） | Showdown 使用率快照（72 KB）：单/双打名次 + 使用率，`meta.month` 注明月份（由 `cache/build_ladder_stats.py` 构建） |
+| `data/usage_stats.json` | 312 项 | pokecamp.cc（Limitless 赛事统计，M-C） | 环境使用率快照：2026-10-16 至 2026-11-16（1,255,789 bytes）；排名、胜率、Top 招式/特性/道具/性格/SP 分配/队友（由 `cache/build_usage_stats.py` 构建） |
+| `data/meta_teams.json` | 12 支 | pokecamp.cc（Limitless 赛事统计，M-C） | 前 12 支赛事队伍轻量快照（39,291 bytes）：全量索引不可用时的兜底（由 `cache/build_teams_pack.py` 从全量包派生） |
+| `data/teams_full.json.gz` | 6,469 支 / 134 场含队伍数据（来自 135 场赛事元数据） | pokecamp.cc（Limitless 赛事统计，M-C） | 全量赛事队伍内置包（gzip，1,021,818 bytes）：134 场中有队伍数据的赛事详情完整，缺失详情数为 0；含队伍明细与 EN→ZH 名称映射。首次查询派生本地 SQLite 索引（由 `cache/build_teams_pack.py` 构建） |
+| `data/ladder_ingame.json` | 262 条 | pokecamp.cc（官方实机排位，M-C） | 截至 2026-11-16 的名次快照（data version `20261116083343008`，48,517 bytes）；仅合并 `isMega=true` 且 `linkId` 指向对应非 Mega 形态的 Mega 行，雌雄、地区等非 Mega 形态独立保留；占位字段丢弃（由 `cache/build_ladder_stats.py` 构建） |
+| `data/ladder_showdown.json` | 289 条 | pokecamp.cc（Showdown 天梯月报，M-C） | 2026-10 月报，cutoff 1760；源报告 `meta.raw_count` 为 1,649,648 个原始样本计数（非宝可梦记录数），蒸馏后为 289 条单/双打排名与使用率数据（73,041 bytes，由 `cache/build_ladder_stats.py` 构建） |
+
+当前 `data/` 下 18 个跟踪文件合计 **34,619,350 bytes（34.62 MB，十进制）**，不含运行时缓存。
 
 
 ### 数据修复记录
@@ -583,12 +594,14 @@ git push pokemon-calc pokemon-calc-branch:main
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
 
-### 未发布（2026-11-16）
+### 5.1.5（2026-11-17）
 
 - 修复 `resolve_item()` 对规范英文道具名的解析，`item`、`lookup` 与计算覆盖共用入口，接受大小写变体并保留已收录中文、繁体和日文名称。
 - 修订双语 README 的联网边界、名称输入与输出语言、安装及 CLI 示例、逐侧自动预设、EV/SP 换算、现有快照日期与数据体积；机制参考同步说明性格、IV 和取整对能力值的影响。
-- 内置赛事与天梯快照、热门预设及版本号保持原状，快照刷新等待后续讨论。多轮规则、`<plan>` 与既有输出格式保持原状。
-- 12 套共 201 项回归通过，60 个黄金场景逐字节一致；16 个独立 README 离线命令、实际 JSON 摘录、文件覆盖示例以及数据/索引/别名检查通过。
+- 刷新赛事 usage / teams、官方实机天梯与 Showdown 快照；赛事快照覆盖 M-C 2026-10-16 至 2026-11-16（312 个使用率条目、135 场赛事、134 场含队伍详情、6,469 支队伍），Showdown 为 M-C 2026-10 月报（cutoff 1760，289 条），官方实机快照截至 2026-11-16（data version `20261116083343008`，262 条）。
+- 从完整官方实机双打 Top50 推导 50 个热门配置（来源日期 2026-11-16，取得全部 50 条单只详情，构建于 2026-11-17）；Indeedee 与 Basculegion 的雄、雌战斗形态配置隔离，旧 264 个预设保留。完整的性别形态输入会路由到对应 setdex 和 usage 条目，历史性别键预设仍可显式调用。
+- 修正 usage 在线刷新失败时的回退边界与单只详情的独立来源元数据；Showdown 在线路由按 `source_kind` 使用对应规则与报告端点。线上赛事队伍抓取解码 `members` 物种映射；Mega 标记只由 `isMega=true` 且 `linkId` 明确关联到对应非 Mega 形态的来源行触发。
+- 全部 62 套现行回归通过；八套基础回归共 178 项，形态预设专项 7 项、暂存工具专项 19 项（1 项 Windows 符号链接条件跳过）。六项数据检查及 16 个独立 README 离线命令通过。旧 setdex 对照下 60 个黄金场景仍逐字节一致；新默认预设使 27 个场景变化，其中 19 个伤害范围变化来自班基拉斯新的努力分配，逐项审查后更新，其余 33 个场景不变；最终 60 个黄金场景通过。多轮工作流、输出格式和最终模板保持原状。
 
 ### 5.1.4（2026-11-16）
 

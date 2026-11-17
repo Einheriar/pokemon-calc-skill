@@ -2,251 +2,183 @@
  "meta": {
   "source": "pokecamp.cc（基于 Limitless 公开赛事统计）",
   "source_url": "https://pokecamp.cc/zh/champions/teams",
-  "format": "M-B",
+  "format": "M-C",
   "date_range": {
-   "from": "2026-07-26",
-   "to": "2026-08-26"
+   "from": "2026-10-16",
+   "to": "2026-11-16"
   },
-  "tournament_count": 150,
-  "team_count": 9250,
-  "fetched_at": "2026-08-26T12:33:13Z",
+  "tournament_count": 135,
+  "team_count": 6469,
+  "fetched_at": "2026-11-17T01:18:22Z",
   "top": 12
  },
  "teams": [
   {
-   "id": "6a8c049281741245b151d4e4:0",
+   "id": "6af176bdc931f53978d9707a:28",
    "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
    },
-   "player": "Sooner",
-   "country": "US",
+   "player": "Papucaru",
+   "country": "AR",
    "placing": 1,
    "record": {
     "wins": 7,
-    "losses": 1,
+    "losses": 2,
     "ties": 0
    },
    "pokemon": [
     {
-     "identifier": "floette-mega",
-     "name_zh": "超级花叶蒂",
-     "item_en": "Floettite",
-     "item_zh": "花叶蒂进化石",
-     "ability_en": "Fairy Aura",
-     "ability_zh": "妖精气场",
-     "moves_en": [
-      "Moonblast",
-      "Dazzling Gleam",
-      "Light of Ruin",
-      "Protect"
-     ],
-     "moves_zh": [
-      "月亮之力",
-      "魔法闪耀",
-      "破灭之光",
-      "守住"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕"
-    },
-    {
-     "identifier": "whimsicott",
-     "name_zh": "风妖精",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Prankster",
-     "ability_zh": "恶作剧之心",
-     "moves_en": [
-      "Tailwind",
-      "Moonblast",
-      "Encore",
-      "Protect"
-     ],
-     "moves_zh": [
-      "顺风",
-      "月亮之力",
-      "再来一次",
-      "守住"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
-    },
-    {
-     "identifier": "arcanine-hisui",
-     "name_zh": "风速狗（洗翠的样子）",
+     "identifier": "kangaskhan",
+     "name_zh": "袋兽",
      "item_en": "Life Orb",
      "item_zh": "生命宝珠",
-     "ability_en": "Rock Head",
-     "ability_zh": "坚硬脑袋",
+     "ability_en": "Scrappy",
+     "ability_zh": "胆量",
      "moves_en": [
-      "Head Smash",
-      "Flare Blitz",
-      "Extreme Speed",
+      "Fake Out",
+      "Hammer Arm",
+      "Double-Edge",
+      "Brick Break"
+     ],
+     "moves_zh": [
+      "击掌奇袭",
+      "臂锤",
+      "舍身冲撞",
+      "劈瓦"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    },
+    {
+     "identifier": "farigiraf",
+     "name_zh": "奇麒麟",
+     "item_en": "Colbur Berry",
+     "item_zh": "刺耳果",
+     "ability_en": "Armor Tail",
+     "ability_zh": "尾甲",
+     "moves_en": [
+      "Expanding Force",
+      "Trick Room",
+      "Imprison",
       "Protect"
      ],
      "moves_zh": [
-      "双刃头锤",
-      "闪焰冲锋",
-      "神速",
+      "广域战力",
+      "戏法空间",
+      "封印",
       "守住"
      ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
+     "nature_en": "Relaxed",
+     "nature_zh": "悠闲"
     },
     {
-     "identifier": "basculegion-male",
-     "name_zh": "幽尾玄鱼",
-     "item_en": "Choice Scarf",
-     "item_zh": "讲究围巾",
-     "ability_en": "Adaptability",
-     "ability_zh": "适应力",
-     "moves_en": [
-      "Wave Crash",
-      "Last Respects",
-      "Aqua Jet",
-      "Flip Turn"
-     ],
-     "moves_zh": [
-      "波动冲",
-      "扫墓",
-      "水流喷射",
-      "快速折返"
-     ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
-    },
-    {
-     "identifier": "kingambit",
-     "name_zh": "仆刀将军",
-     "item_en": "Black Glasses",
-     "item_zh": "黑色眼镜",
-     "ability_en": "Defiant",
-     "ability_zh": "不服输",
-     "moves_en": [
-      "Kowtow Cleave",
-      "Sucker Punch",
-      "Iron Head",
-      "Protect"
-     ],
-     "moves_zh": [
-      "仆刀",
-      "突袭",
-      "铁头",
-      "守住"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "dragonite",
-     "name_zh": "快龙",
-     "item_en": "Dragon Fang",
-     "item_zh": "龙之牙",
-     "ability_en": "Inner Focus",
-     "ability_zh": "精神力",
-     "moves_en": [
-      "Dragon Claw",
-      "Protect",
-      "Extreme Speed",
-      "Low Kick"
-     ],
-     "moves_zh": [
-      "龙爪",
-      "守住",
-      "神速",
-      "踢倒"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:1",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "Jin-Hao Jiang",
-   "country": "TW",
-   "placing": 2,
-   "record": {
-    "wins": 7,
-    "losses": 1,
-    "ties": 0
-   },
-   "pokemon": [
-    {
-     "identifier": "charizard-mega-y",
-     "name_zh": "超级喷火龙Ｙ",
-     "item_en": "Charizardite Y",
-     "item_zh": "喷火龙进化石Ｙ",
-     "ability_en": "Drought",
-     "ability_zh": "日照",
+     "identifier": "camerupt-mega",
+     "name_zh": "超级喷火驼",
+     "item_en": "Cameruptite",
+     "item_zh": "喷火驼进化石",
+     "ability_en": "Sheer Force",
+     "ability_zh": "强行",
      "moves_en": [
       "Heat Wave",
-      "Weather Ball",
-      "Solar Beam",
+      "Earth Power",
+      "Ancient Power",
       "Protect"
      ],
      "moves_zh": [
       "热风",
-      "气象球",
-      "日光束",
+      "大地之力",
+      "原始之力",
       "守住"
      ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Solar Power",
-     "pre_mega_ability_zh": "太阳之力"
+     "nature_en": "Quiet",
+     "nature_zh": "冷静",
+     "pre_mega_ability_en": "Solid Rock",
+     "pre_mega_ability_zh": "坚硬岩石"
     },
     {
-     "identifier": "whimsicott",
-     "name_zh": "风妖精",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Prankster",
-     "ability_zh": "恶作剧之心",
+     "identifier": "drampa",
+     "name_zh": "老翁龙",
+     "item_en": "Expert Belt",
+     "item_zh": "达人带",
+     "ability_en": "Cloud Nine",
+     "ability_zh": "无关天气",
      "moves_en": [
-      "Moonblast",
-      "Tailwind",
-      "Encore",
+      "Dragon Pulse",
+      "Flamethrower",
+      "Thunderbolt",
       "Protect"
      ],
      "moves_zh": [
-      "月亮之力",
-      "顺风",
-      "再来一次",
+      "龙之波动",
+      "喷射火焰",
+      "十万伏特",
+      "守住"
+     ],
+     "nature_en": "Quiet",
+     "nature_zh": "冷静"
+    },
+    {
+     "identifier": "rillaboom",
+     "name_zh": "轰擂金刚猩",
+     "item_en": "Iron Ball",
+     "item_zh": "黑色铁球",
+     "ability_en": "Grassy Surge",
+     "ability_zh": "青草制造者",
+     "moves_en": [
+      "Wood Hammer",
+      "Grassy Glide",
+      "High Horsepower",
+      "Fake Out"
+     ],
+     "moves_zh": [
+      "木槌",
+      "青草滑梯",
+      "十万马力",
+      "击掌奇袭"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    },
+    {
+     "identifier": "vivillon",
+     "name_zh": "彩粉蝶",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Compound Eyes",
+     "ability_zh": "复眼",
+     "moves_en": [
+      "Hurricane",
+      "Sleep Powder",
+      "Rage Powder",
+      "Protect"
+     ],
+     "moves_zh": [
+      "暴风",
+      "催眠粉",
+      "愤怒粉",
       "守住"
      ],
      "nature_en": "Timid",
      "nature_zh": "胆小"
-    },
-    {
-     "identifier": "incineroar",
-     "name_zh": "炽焰咆哮虎",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Intimidate",
-     "ability_zh": "威吓",
-     "moves_en": [
-      "Flare Blitz",
-      "Throat Chop",
-      "Fake Out",
-      "Parting Shot"
-     ],
-     "moves_zh": [
-      "闪焰冲锋",
-      "深渊突刺",
-      "击掌奇袭",
-      "抛下狠话"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
+    }
+   ]
+  },
+  {
+   "id": "6afa543ab2fccaf0272d39cd:0",
+   "tournament": {
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
+   },
+   "player": "Zytar",
+   "country": "BR",
+   "placing": 1,
+   "record": {
+    "wins": 6,
+    "losses": 2,
+    "ties": 0
+   },
+   "pokemon": [
     {
      "identifier": "basculegion-male",
      "name_zh": "幽尾玄鱼",
@@ -277,174 +209,65 @@
      "ability_en": "Rough Skin",
      "ability_zh": "粗糙皮肤",
      "moves_en": [
-      "Stomping Tantrum",
-      "Dragon Claw",
       "Rock Slide",
+      "Earthquake",
+      "Dragon Claw",
       "Protect"
      ],
      "moves_zh": [
-      "跺脚",
-      "龙爪",
       "岩崩",
+      "地震",
+      "龙爪",
       "守住"
      ],
      "nature_en": "Jolly",
      "nature_zh": "爽朗"
     },
     {
-     "identifier": "floette-mega",
-     "name_zh": "超级花叶蒂",
-     "item_en": "Floettite",
-     "item_zh": "花叶蒂进化石",
-     "ability_en": "Fairy Aura",
-     "ability_zh": "妖精气场",
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
      "moves_en": [
-      "Moonblast",
-      "Dazzling Gleam",
-      "Calm Mind",
+      "Weather Ball",
+      "Heat Wave",
+      "Solar Beam",
       "Protect"
      ],
      "moves_zh": [
-      "月亮之力",
-      "魔法闪耀",
-      "冥想",
+      "气象球",
+      "热风",
+      "日光束",
       "守住"
      ],
      "nature_en": "Modest",
      "nature_zh": "内敛",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:2",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "Gmaddox",
-   "country": "BR",
-   "placing": 3,
-   "record": {
-    "wins": 5,
-    "losses": 2,
-    "ties": 0
-   },
-   "pokemon": [
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
+    },
     {
-     "identifier": "staraptor-mega",
-     "name_zh": "超级姆克鹰",
-     "item_en": "Staraptite",
-     "item_zh": "姆克鹰进化石",
-     "ability_en": "Contrary",
-     "ability_zh": "唱反调",
+     "identifier": "sneasler",
+     "name_zh": "大狃拉",
+     "item_en": "White Herb",
+     "item_zh": "白色香草",
+     "ability_en": "Unburden",
+     "ability_zh": "轻装",
      "moves_en": [
-      "Protect",
-      "Roost",
       "Close Combat",
-      "Brave Bird"
+      "Dire Claw",
+      "Rock Tomb",
+      "Protect"
      ],
      "moves_zh": [
-      "守住",
-      "羽栖",
       "近身战",
-      "勇鸟猛攻"
+      "克命爪",
+      "岩石封锁",
+      "守住"
      ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗",
-     "pre_mega_ability_en": "Intimidate",
-     "pre_mega_ability_zh": "威吓"
-    },
-    {
-     "identifier": "garchomp",
-     "name_zh": "烈咬陆鲨",
-     "item_en": "Life Orb",
-     "item_zh": "生命宝珠",
-     "ability_en": "Rough Skin",
-     "ability_zh": "粗糙皮肤",
-     "moves_en": [
-      "Protect",
-      "Rock Slide",
-      "Earthquake",
-      "Dragon Claw"
-     ],
-     "moves_zh": [
-      "守住",
-      "岩崩",
-      "地震",
-      "龙爪"
-     ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
-    },
-    {
-     "identifier": "whimsicott",
-     "name_zh": "风妖精",
-     "item_en": "Occa Berry",
-     "item_zh": "巧可果",
-     "ability_en": "Prankster",
-     "ability_zh": "恶作剧之心",
-     "moves_en": [
-      "Moonblast",
-      "Tailwind",
-      "Charm",
-      "Light Screen"
-     ],
-     "moves_zh": [
-      "月亮之力",
-      "顺风",
-      "撒娇",
-      "光墙"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
-    },
-    {
-     "identifier": "delphox-mega",
-     "name_zh": "超级妖火红狐",
-     "item_en": "Delphoxite",
-     "item_zh": "妖火红狐进化石",
-     "ability_en": "Levitate",
-     "ability_zh": "飘浮",
-     "moves_en": [
-      "Protect",
-      "Psychic",
-      "Heat Wave",
-      "Substitute"
-     ],
-     "moves_zh": [
-      "守住",
-      "精神强念",
-      "热风",
-      "替身"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小",
-     "pre_mega_ability_en": "Magician",
-     "pre_mega_ability_zh": "魔术师"
-    },
-    {
-     "identifier": "glimmora",
-     "name_zh": "晶光花",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Toxic Debris",
-     "ability_zh": "毒满地",
-     "moves_en": [
-      "Spiky Shield",
-      "Sludge Bomb",
-      "Earth Power",
-      "Power Gem"
-     ],
-     "moves_zh": [
-      "尖刺防守",
-      "污泥炸弹",
-      "大地之力",
-      "力量宝石"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
     },
     {
      "identifier": "kingambit",
@@ -455,33 +278,361 @@
      "ability_zh": "不服输",
      "moves_en": [
       "Sucker Punch",
-      "Low Kick",
       "Iron Head",
-      "Kowtow Cleave"
+      "Kowtow Cleave",
+      "Low Kick"
      ],
      "moves_zh": [
       "突袭",
-      "踢倒",
       "铁头",
-      "仆刀"
+      "仆刀",
+      "踢倒"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
+    },
+    {
+     "identifier": "whimsicott",
+     "name_zh": "风妖精",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Prankster",
+     "ability_zh": "恶作剧之心",
+     "moves_en": [
+      "Protect",
+      "Encore",
+      "Moonblast",
+      "Tailwind"
+     ],
+     "moves_zh": [
+      "守住",
+      "再来一次",
+      "月亮之力",
+      "顺风"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小"
     }
    ]
   },
   {
-   "id": "6a8c049281741245b151d4e4:3",
+   "id": "6af176bdc931f53978d9707a:29",
    "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
    },
-   "player": "notwinning",
+   "player": "systemsolo",
    "country": "US",
-   "placing": 4,
+   "placing": 2,
    "record": {
-    "wins": 5,
+    "wins": 7,
     "losses": 2,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "metagross-mega",
+     "name_zh": "超级巨金怪",
+     "item_en": "Metagrossite",
+     "item_zh": "巨金怪进化石",
+     "ability_en": "Tough Claws",
+     "ability_zh": "硬爪",
+     "moves_en": [
+      "Protect",
+      "Steel Roller",
+      "Psychic Fangs",
+      "Stomping Tantrum"
+     ],
+     "moves_zh": [
+      "守住",
+      "铁滚轮",
+      "精神之牙",
+      "跺脚"
+     ],
+     "nature_en": "Jolly",
+     "nature_zh": "爽朗",
+     "pre_mega_ability_en": "Clear Body",
+     "pre_mega_ability_zh": "恒净之躯"
+    },
+    {
+     "identifier": "delphox",
+     "name_zh": "妖火红狐",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
+     "ability_en": "Magician",
+     "ability_zh": "魔术师",
+     "moves_en": [
+      "Protect",
+      "Flamethrower",
+      "Expanding Force",
+      "Nasty Plot"
+     ],
+     "moves_zh": [
+      "守住",
+      "喷射火焰",
+      "广域战力",
+      "诡计"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "indeedee-female",
+     "name_zh": "爱管侍（雌性的样子）",
+     "item_en": "Rocky Helmet",
+     "item_zh": "凸凸头盔",
+     "ability_en": "Psychic Surge",
+     "ability_zh": "精神制造者",
+     "moves_en": [
+      "Protect",
+      "Psychic",
+      "Trick Room",
+      "Follow Me"
+     ],
+     "moves_zh": [
+      "守住",
+      "精神强念",
+      "戏法空间",
+      "看我嘛"
+     ],
+     "nature_en": "Relaxed",
+     "nature_zh": "悠闲"
+    },
+    {
+     "identifier": "sneasler",
+     "name_zh": "大狃拉",
+     "item_en": "Psychic Seed",
+     "item_zh": "精神种子",
+     "ability_en": "Unburden",
+     "ability_zh": "轻装",
+     "moves_en": [
+      "Protect",
+      "Close Combat",
+      "Dire Claw",
+      "Throat Chop"
+     ],
+     "moves_zh": [
+      "守住",
+      "近身战",
+      "克命爪",
+      "深渊突刺"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "primarina",
+     "name_zh": "西狮海壬",
+     "item_en": "Leftovers",
+     "item_zh": "吃剩的东西",
+     "ability_en": "Liquid Voice",
+     "ability_zh": "湿润之声",
+     "moves_en": [
+      "Protect",
+      "Hyper Voice",
+      "Moonblast",
+      "Calm Mind"
+     ],
+     "moves_zh": [
+      "守住",
+      "巨声",
+      "月亮之力",
+      "冥想"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "raichu-mega-y",
+     "name_zh": "超级雷丘 Y",
+     "item_en": "Raichunite Y",
+     "item_zh": "雷丘进化石Ｙ",
+     "ability_en": "No Guard",
+     "ability_zh": "无防守",
+     "moves_en": [
+      "Protect",
+      "Zap Cannon",
+      "Focus Blast",
+      "Fake Out"
+     ],
+     "moves_zh": [
+      "守住",
+      "电磁炮",
+      "真气弹",
+      "击掌奇袭"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Lightning Rod",
+     "pre_mega_ability_zh": "避雷针"
+    }
+   ]
+  },
+  {
+   "id": "6afa543ab2fccaf0272d39cd:1",
+   "tournament": {
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
+   },
+   "player": "BeeSilvaa",
+   "country": "BR",
+   "placing": 2,
+   "record": {
+    "wins": 6,
+    "losses": 2,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "annihilape",
+     "name_zh": "弃世猴",
+     "item_en": "Choice Scarf",
+     "item_zh": "讲究围巾",
+     "ability_en": "Defiant",
+     "ability_zh": "不服输",
+     "moves_en": [
+      "Close Combat",
+      "Phantom Force",
+      "Rock Tomb",
+      "U-turn"
+     ],
+     "moves_zh": [
+      "近身战",
+      "潜灵奇袭",
+      "岩石封锁",
+      "急速折返"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "venusaur",
+     "name_zh": "妙蛙花",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Chlorophyll",
+     "ability_zh": "叶绿素",
+     "moves_en": [
+      "Leaf Storm",
+      "Sludge Bomb",
+      "Sleep Powder",
+      "Protect"
+     ],
+     "moves_zh": [
+      "飞叶风暴",
+      "污泥炸弹",
+      "催眠粉",
+      "守住"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "gardevoir-mega",
+     "name_zh": "超级沙奈朵",
+     "item_en": "Gardevoirite",
+     "item_zh": "沙奈朵进化石",
+     "ability_en": "Pixilate",
+     "ability_zh": "妖精皮肤",
+     "moves_en": [
+      "Hyper Voice",
+      "Expanding Force",
+      "Moonblast",
+      "Protect"
+     ],
+     "moves_zh": [
+      "巨声",
+      "广域战力",
+      "月亮之力",
+      "守住"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Trace",
+     "pre_mega_ability_zh": "复制"
+    },
+    {
+     "identifier": "indeedee-female",
+     "name_zh": "爱管侍（雌性的样子）",
+     "item_en": "Sitrus Berry",
+     "item_zh": "文柚果",
+     "ability_en": "Psychic Surge",
+     "ability_zh": "精神制造者",
+     "moves_en": [
+      "Psychic",
+      "Follow Me",
+      "Helping Hand",
+      "Protect"
+     ],
+     "moves_zh": [
+      "精神强念",
+      "看我嘛",
+      "帮助",
+      "守住"
+     ],
+     "nature_en": "Bold",
+     "nature_zh": "大胆"
+    },
+    {
+     "identifier": "gliscor",
+     "name_zh": "天蝎王",
+     "item_en": "Psychic Seed",
+     "item_zh": "精神种子",
+     "ability_en": "Hyper Cutter",
+     "ability_zh": "怪力钳",
+     "moves_en": [
+      "High Horsepower",
+      "Acrobatics",
+      "Tailwind",
+      "Protect"
+     ],
+     "moves_zh": [
+      "十万马力",
+      "杂技",
+      "顺风",
+      "守住"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
+     "moves_en": [
+      "Heat Wave",
+      "Weather Ball",
+      "Ancient Power",
+      "Protect"
+     ],
+     "moves_zh": [
+      "热风",
+      "气象球",
+      "原始之力",
+      "守住"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Solar Power",
+     "pre_mega_ability_zh": "太阳之力"
+    }
+   ]
+  },
+  {
+   "id": "6afa543ab2fccaf0272d39cd:2",
+   "tournament": {
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
+   },
+   "player": "IcaroFix",
+   "country": "BR",
+   "placing": 3,
+   "record": {
+    "wins": 6,
+    "losses": 1,
     "ties": 0
    },
    "pokemon": [
@@ -493,16 +644,16 @@
      "ability_en": "Drought",
      "ability_zh": "日照",
      "moves_en": [
-      "Weather Ball",
       "Protect",
+      "Heat Wave",
       "Solar Beam",
-      "Heat Wave"
+      "Weather Ball"
      ],
      "moves_zh": [
-      "气象球",
       "守住",
+      "热风",
       "日光束",
-      "热风"
+      "气象球"
      ],
      "nature_en": "Modest",
      "nature_zh": "内敛",
@@ -510,176 +661,152 @@
      "pre_mega_ability_zh": "猛火"
     },
     {
-     "identifier": "toxapex",
-     "name_zh": "超坏星",
-     "item_en": "Leftovers",
-     "item_zh": "吃剩的东西",
-     "ability_en": "Regenerator",
-     "ability_zh": "再生力",
+     "identifier": "glimmora",
+     "name_zh": "晶光花",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
+     "ability_en": "Rough Skin",
+     "ability_zh": "粗糙皮肤",
      "moves_en": [
-      "Baneful Bunker",
-      "Wide Guard",
-      "Toxic",
-      "Infestation"
+      "Spiky Shield",
+      "Sludge Bomb",
+      "Power Gem",
+      "Earth Power"
      ],
      "moves_zh": [
-      "碉堡",
-      "广域防守",
-      "剧毒",
-      "纠缠不休"
+      "尖刺防守",
+      "污泥炸弹",
+      "力量宝石",
+      "大地之力"
      ],
-     "nature_en": "Bold",
-     "nature_zh": "大胆"
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "staraptor-mega",
+     "name_zh": "超级姆克鹰",
+     "item_en": "Staraptite",
+     "item_zh": "姆克鹰进化石",
+     "ability_en": "Contrary",
+     "ability_zh": "唱反调",
+     "moves_en": [
+      "Protect",
+      "Brave Bird",
+      "Close Combat",
+      "Roost"
+     ],
+     "moves_zh": [
+      "守住",
+      "勇鸟猛攻",
+      "近身战",
+      "羽栖"
+     ],
+     "nature_en": "Jolly",
+     "nature_zh": "爽朗",
+     "pre_mega_ability_en": "Intimidate",
+     "pre_mega_ability_zh": "威吓"
+    },
+    {
+     "identifier": "garchomp",
+     "name_zh": "烈咬陆鲨",
+     "item_en": "Choice Scarf",
+     "item_zh": "讲究围巾",
+     "ability_en": "Rough Skin",
+     "ability_zh": "粗糙皮肤",
+     "moves_en": [
+      "Stomping Tantrum",
+      "Dragon Claw",
+      "Rock Slide",
+      "Earthquake"
+     ],
+     "moves_zh": [
+      "跺脚",
+      "龙爪",
+      "岩崩",
+      "地震"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
     },
     {
      "identifier": "whimsicott",
      "name_zh": "风妖精",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
+     "item_en": "Occa Berry",
+     "item_zh": "巧可果",
      "ability_en": "Prankster",
      "ability_zh": "恶作剧之心",
      "moves_en": [
-      "Encore",
+      "Moonblast",
       "Tailwind",
-      "Protect",
-      "Energy Ball"
+      "Encore",
+      "Charm"
      ],
      "moves_zh": [
-      "再来一次",
+      "月亮之力",
       "顺风",
-      "守住",
-      "能量球"
+      "再来一次",
+      "撒娇"
      ],
      "nature_en": "Timid",
      "nature_zh": "胆小"
     },
     {
-     "identifier": "garchomp",
-     "name_zh": "烈咬陆鲨",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Rough Skin",
-     "ability_zh": "粗糙皮肤",
+     "identifier": "indeedee-male",
+     "name_zh": "爱管侍",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Psychic Surge",
+     "ability_zh": "精神制造者",
      "moves_en": [
-      "Rock Slide",
-      "Earthquake",
       "Protect",
-      "Dragon Claw"
+      "Expanding Force",
+      "Trick Room",
+      "Imprison"
      ],
      "moves_zh": [
-      "岩崩",
-      "地震",
       "守住",
-      "龙爪"
+      "广域战力",
+      "戏法空间",
+      "封印"
      ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "kingambit",
-     "name_zh": "仆刀将军",
-     "item_en": "Black Glasses",
-     "item_zh": "黑色眼镜",
-     "ability_en": "Defiant",
-     "ability_zh": "不服输",
-     "moves_en": [
-      "Kowtow Cleave",
-      "Sucker Punch",
-      "Protect",
-      "Low Kick"
-     ],
-     "moves_zh": [
-      "仆刀",
-      "突袭",
-      "守住",
-      "踢倒"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "floette-mega",
-     "name_zh": "超级花叶蒂",
-     "item_en": "Floettite",
-     "item_zh": "花叶蒂进化石",
-     "ability_en": "Fairy Aura",
-     "ability_zh": "妖精气场",
-     "moves_en": [
-      "Moonblast",
-      "Light of Ruin",
-      "Protect",
-      "Dazzling Gleam"
-     ],
-     "moves_zh": [
-      "月亮之力",
-      "破灭之光",
-      "守住",
-      "魔法闪耀"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Flower Veil",
-     "pre_mega_ability_zh": "花幕"
+     "nature_en": "Timid",
+     "nature_zh": "胆小"
     }
    ]
   },
   {
-   "id": "6a8c049281741245b151d4e4:4",
+   "id": "6af176bdc931f53978d9707a:30",
    "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
    },
-   "player": "darxzy",
-   "country": "NL",
-   "placing": 5,
+   "player": "KMMULLER2020",
+   "country": "AU",
+   "placing": 3,
    "record": {
-    "wins": 4,
-    "losses": 1,
+    "wins": 6,
+    "losses": 2,
     "ties": 0
    },
    "pokemon": [
     {
-     "identifier": "blaziken-mega",
-     "name_zh": "超级火焰鸡",
-     "item_en": "Blazikenite",
-     "item_zh": "火焰鸡进化石",
-     "ability_en": "Speed Boost",
-     "ability_zh": "加速",
+     "identifier": "gengar-mega",
+     "name_zh": "超级耿鬼",
+     "item_en": "Gengarite",
+     "item_zh": "耿鬼进化石",
+     "ability_en": "Shadow Tag",
+     "ability_zh": "踩影",
      "moves_en": [
-      "Close Combat",
-      "Flare Blitz",
-      "Rock Slide",
-      "Detect"
-     ],
-     "moves_zh": [
-      "近身战",
-      "闪焰冲锋",
-      "岩崩",
-      "看穿"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执",
-     "pre_mega_ability_en": "Speed Boost",
-     "pre_mega_ability_zh": "加速"
-    },
-    {
-     "identifier": "froslass-mega",
-     "name_zh": "超级雪妖女",
-     "item_en": "Froslassite",
-     "item_zh": "雪妖女进化石",
-     "ability_en": "Snow Warning",
-     "ability_zh": "降雪",
-     "moves_en": [
-      "Blizzard",
+      "Protect",
+      "Perish Song",
       "Shadow Ball",
-      "Aurora Veil",
-      "Protect"
+      "Sludge Bomb"
      ],
      "moves_zh": [
-      "暴风雪",
+      "守住",
+      "终焉之歌",
       "暗影球",
-      "极光幕",
-      "守住"
+      "污泥炸弹"
      ],
      "nature_en": "Timid",
      "nature_zh": "胆小",
@@ -694,59 +821,492 @@
      "ability_en": "Intimidate",
      "ability_zh": "威吓",
      "moves_en": [
-      "Flare Blitz",
+      "Protect",
       "Fake Out",
       "Parting Shot",
-      "Helping Hand"
+      "Flare Blitz"
      ],
      "moves_zh": [
-      "闪焰冲锋",
+      "守住",
       "击掌奇袭",
       "抛下狠话",
-      "帮助"
+      "闪焰冲锋"
      ],
-     "nature_en": "Careful",
-     "nature_zh": "慎重"
+     "nature_en": "Relaxed",
+     "nature_zh": "悠闲"
+    },
+    {
+     "identifier": "rillaboom",
+     "name_zh": "轰擂金刚猩",
+     "item_en": "Eject Button",
+     "item_zh": "逃脱按键",
+     "ability_en": "Grassy Surge",
+     "ability_zh": "青草制造者",
+     "moves_en": [
+      "Protect",
+      "Fake Out",
+      "Grassy Glide",
+      "High Horsepower"
+     ],
+     "moves_zh": [
+      "守住",
+      "击掌奇袭",
+      "青草滑梯",
+      "十万马力"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    },
+    {
+     "identifier": "primarina",
+     "name_zh": "西狮海壬",
+     "item_en": "Leftovers",
+     "item_zh": "吃剩的东西",
+     "ability_en": "Liquid Voice",
+     "ability_zh": "湿润之声",
+     "moves_en": [
+      "Protect",
+      "Perish Song",
+      "Moonblast",
+      "Hyper Voice"
+     ],
+     "moves_zh": [
+      "守住",
+      "终焉之歌",
+      "月亮之力",
+      "巨声"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "hippowdon",
+     "name_zh": "河马兽",
+     "item_en": "Soft Sand",
+     "item_zh": "柔软沙子",
+     "ability_en": "Sand Stream",
+     "ability_zh": "扬沙",
+     "moves_en": [
+      "Protect",
+      "Helping Hand",
+      "High Horsepower",
+      "Stone Edge"
+     ],
+     "moves_zh": [
+      "守住",
+      "帮助",
+      "十万马力",
+      "尖石攻击"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
     },
     {
      "identifier": "kingambit",
      "name_zh": "仆刀将军",
-     "item_en": "Black Glasses",
-     "item_zh": "黑色眼镜",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
      "ability_en": "Defiant",
      "ability_zh": "不服输",
      "moves_en": [
+      "Protect",
       "Kowtow Cleave",
-      "Sucker Punch",
-      "Swords Dance",
-      "Protect"
+      "Iron Head",
+      "Sucker Punch"
      ],
      "moves_zh": [
+      "守住",
+      "仆刀",
+      "铁头",
+      "突袭"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    }
+   ]
+  },
+  {
+   "id": "6afa543ab2fccaf0272d39cd:3",
+   "tournament": {
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
+   },
+   "player": "Oyasumigab",
+   "country": "BR",
+   "placing": 4,
+   "record": {
+    "wins": 5,
+    "losses": 2,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "spiritomb",
+     "name_zh": "花岩怪",
+     "item_en": "Sitrus Berry",
+     "item_zh": "文柚果",
+     "ability_en": "Pressure",
+     "ability_zh": "压迫感",
+     "moves_en": [
+      "Trick Room",
+      "Dark Pulse",
+      "Will-O-Wisp",
+      "Destiny Bond"
+     ],
+     "moves_zh": [
+      "戏法空间",
+      "恶之波动",
+      "磷火",
+      "同命"
+     ],
+     "nature_en": "Bold",
+     "nature_zh": "大胆"
+    },
+    {
+     "identifier": "chimecho-mega",
+     "name_zh": "超级风铃铃",
+     "item_en": "Chimechite",
+     "item_zh": "风铃铃进化石",
+     "ability_en": "Levitate",
+     "ability_zh": "飘浮",
+     "moves_en": [
+      "Flash Cannon",
+      "Psychic",
+      "Recover",
+      "Trick Room"
+     ],
+     "moves_zh": [
+      "加农光炮",
+      "精神强念",
+      "自我再生",
+      "戏法空间"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Levitate",
+     "pre_mega_ability_zh": "飘浮"
+    },
+    {
+     "identifier": "snorlax",
+     "name_zh": "卡比兽",
+     "item_en": "White Herb",
+     "item_zh": "白色香草",
+     "ability_en": "Thick Fat",
+     "ability_zh": "厚脂肪",
+     "moves_en": [
+      "Double-Edge",
+      "Protect",
+      "Encore",
+      "Crunch"
+     ],
+     "moves_zh": [
+      "舍身冲撞",
+      "守住",
+      "再来一次",
+      "咬碎"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    },
+    {
+     "identifier": "hatterene",
+     "name_zh": "布莉姆温",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Magic Bounce",
+     "ability_zh": "魔法镜",
+     "moves_en": [
+      "Dazzling Gleam",
+      "Psychic",
+      "Magic Powder",
+      "Trick Room"
+     ],
+     "moves_zh": [
+      "魔法闪耀",
+      "精神强念",
+      "魔法粉",
+      "戏法空间"
+     ],
+     "nature_en": "Quiet",
+     "nature_zh": "冷静"
+    },
+    {
+     "identifier": "mudsdale",
+     "name_zh": "重泥挽马",
+     "item_en": "Lum Berry",
+     "item_zh": "木子果",
+     "ability_en": "Own Tempo",
+     "ability_zh": "我行我素",
+     "moves_en": [
+      "Earthquake",
+      "High Horsepower",
+      "Protect",
+      "Body Press"
+     ],
+     "moves_zh": [
+      "地震",
+      "十万马力",
+      "守住",
+      "扑击"
+     ],
+     "nature_en": "Brave",
+     "nature_zh": "勇敢"
+    },
+    {
+     "identifier": "dragonite",
+     "name_zh": "快龙",
+     "item_en": "Yache Berry",
+     "item_zh": "番荔果",
+     "ability_en": "Inner Focus",
+     "ability_zh": "精神力",
+     "moves_en": [
+      "Fire Punch",
+      "Dragon Claw",
+      "Haze",
+      "Aerial Ace"
+     ],
+     "moves_zh": [
+      "火焰拳",
+      "龙爪",
+      "黑雾",
+      "燕返"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    }
+   ]
+  },
+  {
+   "id": "6af176bdc931f53978d9707a:31",
+   "tournament": {
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
+   },
+   "player": "Mario_Lemon",
+   "country": "IT",
+   "placing": 4,
+   "record": {
+    "wins": 5,
+    "losses": 3,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "alakazam-mega",
+     "name_zh": "超级胡地",
+     "item_en": "Alakazite",
+     "item_zh": "胡地进化石",
+     "ability_en": "Trace",
+     "ability_zh": "复制",
+     "moves_en": [
+      "Protect",
+      "Expanding Force",
+      "Focus Blast",
+      "Encore"
+     ],
+     "moves_zh": [
+      "守住",
+      "广域战力",
+      "真气弹",
+      "再来一次"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Inner Focus",
+     "pre_mega_ability_zh": "精神力"
+    },
+    {
+     "identifier": "indeedee-female",
+     "name_zh": "爱管侍（雌性的样子）",
+     "item_en": "Rocky Helmet",
+     "item_zh": "凸凸头盔",
+     "ability_en": "Psychic Surge",
+     "ability_zh": "精神制造者",
+     "moves_en": [
+      "Follow Me",
+      "Psychic",
+      "Helping Hand",
+      "Trick Room"
+     ],
+     "moves_zh": [
+      "看我嘛",
+      "精神强念",
+      "帮助",
+      "戏法空间"
+     ],
+     "nature_en": "Relaxed",
+     "nature_zh": "悠闲"
+    },
+    {
+     "identifier": "kingambit",
+     "name_zh": "仆刀将军",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Defiant",
+     "ability_zh": "不服输",
+     "moves_en": [
+      "Low Kick",
+      "Kowtow Cleave",
+      "Sucker Punch",
+      "Iron Head"
+     ],
+     "moves_zh": [
+      "踢倒",
       "仆刀",
       "突袭",
-      "剑舞",
-      "守住"
+      "铁头"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
     },
     {
-     "identifier": "sinistcha",
-     "name_zh": "来悲粗茶",
-     "item_en": "Occa Berry",
-     "item_zh": "巧可果",
-     "ability_en": "Hospitality",
-     "ability_zh": "款待",
+     "identifier": "sneasler",
+     "name_zh": "大狃拉",
+     "item_en": "Psychic Seed",
+     "item_zh": "精神种子",
+     "ability_en": "Unburden",
+     "ability_zh": "轻装",
      "moves_en": [
-      "Matcha Gotcha",
-      "Shadow Ball",
-      "Rage Powder",
+      "Protect",
+      "Close Combat",
+      "Gunk Shot",
+      "Rock Slide"
+     ],
+     "moves_zh": [
+      "守住",
+      "近身战",
+      "垃圾射击",
+      "岩崩"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
+     "moves_en": [
+      "Protect",
+      "Heat Wave",
+      "Weather Ball",
+      "Solar Beam"
+     ],
+     "moves_zh": [
+      "守住",
+      "热风",
+      "气象球",
+      "日光束"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
+    },
+    {
+     "identifier": "milotic",
+     "name_zh": "美纳斯",
+     "item_en": "Leftovers",
+     "item_zh": "吃剩的东西",
+     "ability_en": "Competitive",
+     "ability_zh": "好胜",
+     "moves_en": [
+      "Recover",
+      "Coil",
+      "Hypnosis",
+      "Muddy Water"
+     ],
+     "moves_zh": [
+      "自我再生",
+      "盘蜷",
+      "催眠术",
+      "浊流"
+     ],
+     "nature_en": "Calm",
+     "nature_zh": "温和"
+    }
+   ]
+  },
+  {
+   "id": "6af176bdc931f53978d9707a:32",
+   "tournament": {
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
+   },
+   "player": "monkeychese",
+   "country": null,
+   "placing": 5,
+   "record": {
+    "wins": 5,
+    "losses": 2,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
+     "moves_en": [
+      "Heat Wave",
+      "Weather Ball",
+      "Solar Beam",
+      "Protect"
+     ],
+     "moves_zh": [
+      "热风",
+      "气象球",
+      "日光束",
+      "守住"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
+    },
+    {
+     "identifier": "hydreigon",
+     "name_zh": "三首恶龙",
+     "item_en": "Choice Scarf",
+     "item_zh": "讲究围巾",
+     "ability_en": "Levitate",
+     "ability_zh": "飘浮",
+     "moves_en": [
+      "Draco Meteor",
+      "Dark Pulse",
+      "Snarl",
+      "Earth Power"
+     ],
+     "moves_zh": [
+      "流星群",
+      "恶之波动",
+      "大声咆哮",
+      "大地之力"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛"
+    },
+    {
+     "identifier": "farigiraf",
+     "name_zh": "奇麒麟",
+     "item_en": "Sitrus Berry",
+     "item_zh": "文柚果",
+     "ability_en": "Armor Tail",
+     "ability_zh": "尾甲",
+     "moves_en": [
+      "Psychic",
+      "Thunderbolt",
+      "Helping Hand",
       "Trick Room"
      ],
      "moves_zh": [
-      "刷刷茶炮",
-      "暗影球",
-      "愤怒粉",
+      "精神强念",
+      "十万伏特",
+      "帮助",
       "戏法空间"
      ],
      "nature_en": "Bold",
@@ -760,16 +1320,60 @@
      "ability_en": "Unburden",
      "ability_zh": "轻装",
      "moves_en": [
+      "Dire Claw",
       "Close Combat",
-      "Gunk Shot",
       "Fake Out",
       "Protect"
      ],
      "moves_zh": [
+      "克命爪",
       "近身战",
-      "垃圾射击",
       "击掌奇袭",
       "守住"
+     ],
+     "nature_en": "Naive",
+     "nature_zh": "天真"
+    },
+    {
+     "identifier": "incineroar",
+     "name_zh": "炽焰咆哮虎",
+     "item_en": "Chople Berry",
+     "item_zh": "莲蒲果",
+     "ability_en": "Intimidate",
+     "ability_zh": "威吓",
+     "moves_en": [
+      "Flare Blitz",
+      "Darkest Lariat",
+      "Parting Shot",
+      "Fake Out"
+     ],
+     "moves_zh": [
+      "闪焰冲锋",
+      "ＤＤ金勾臂",
+      "抛下狠话",
+      "击掌奇袭"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "basculegion-male",
+     "name_zh": "幽尾玄鱼",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
+     "ability_en": "Adaptability",
+     "ability_zh": "适应力",
+     "moves_en": [
+      "Wave Crash",
+      "Protect",
+      "Last Respects",
+      "Aqua Jet"
+     ],
+     "moves_zh": [
+      "波动冲",
+      "守住",
+      "扫墓",
+      "水流喷射"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
@@ -777,110 +1381,20 @@
    ]
   },
   {
-   "id": "6a8c049281741245b151d4e4:5",
+   "id": "6afa543ab2fccaf0272d39cd:4",
    "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
    },
-   "player": "Igi2408",
+   "player": "Vantaa",
    "country": "BR",
-   "placing": 6,
+   "placing": 5,
    "record": {
-    "wins": 3,
-    "losses": 3,
+    "wins": 4,
+    "losses": 2,
     "ties": 0
    },
    "pokemon": [
-    {
-     "identifier": "sinistcha",
-     "name_zh": "来悲粗茶",
-     "item_en": "Kasib Berry",
-     "item_zh": "佛柑果",
-     "ability_en": "Hospitality",
-     "ability_zh": "款待",
-     "moves_en": [
-      "Matcha Gotcha",
-      "Life Dew",
-      "Rage Powder",
-      "Shadow Ball"
-     ],
-     "moves_zh": [
-      "刷刷茶炮",
-      "生命水滴",
-      "愤怒粉",
-      "暗影球"
-     ],
-     "nature_en": "Bold",
-     "nature_zh": "大胆"
-    },
-    {
-     "identifier": "pelipper",
-     "name_zh": "大嘴鸥",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Drizzle",
-     "ability_zh": "降雨",
-     "moves_en": [
-      "Hurricane",
-      "Protect",
-      "Tailwind",
-      "Weather Ball"
-     ],
-     "moves_zh": [
-      "暴风",
-      "守住",
-      "顺风",
-      "气象球"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
-    },
-    {
-     "identifier": "swampert-mega",
-     "name_zh": "超级巨沼怪",
-     "item_en": "Swampertite",
-     "item_zh": "巨沼怪进化石",
-     "ability_en": "Swift Swim",
-     "ability_zh": "悠游自如",
-     "moves_en": [
-      "Wave Crash",
-      "Earthquake",
-      "Ice Punch",
-      "Protect"
-     ],
-     "moves_zh": [
-      "波动冲",
-      "地震",
-      "冰冻拳",
-      "守住"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执",
-     "pre_mega_ability_en": "Torrent",
-     "pre_mega_ability_zh": "激流"
-    },
-    {
-     "identifier": "archaludon",
-     "name_zh": "铝钢桥龙",
-     "item_en": "Leftovers",
-     "item_zh": "吃剩的东西",
-     "ability_en": "Stamina",
-     "ability_zh": "持久力",
-     "moves_en": [
-      "Draco Meteor",
-      "Electro Shot",
-      "Flash Cannon",
-      "Protect"
-     ],
-     "moves_zh": [
-      "流星群",
-      "电光束",
-      "加农光炮",
-      "守住"
-     ],
-     "nature_en": "Calm",
-     "nature_zh": "温和"
-    },
     {
      "identifier": "sneasler",
      "name_zh": "大狃拉",
@@ -889,609 +1403,19 @@
      "ability_en": "Unburden",
      "ability_zh": "轻装",
      "moves_en": [
+      "Rock Tomb",
       "Fake Out",
       "Close Combat",
-      "Dire Claw",
-      "Protect"
+      "Dire Claw"
      ],
      "moves_zh": [
+      "岩石封锁",
       "击掌奇袭",
       "近身战",
-      "克命爪",
-      "守住"
+      "克命爪"
      ],
      "nature_en": "Jolly",
      "nature_zh": "爽朗"
-    },
-    {
-     "identifier": "incineroar",
-     "name_zh": "炽焰咆哮虎",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Intimidate",
-     "ability_zh": "威吓",
-     "moves_en": [
-      "Fake Out",
-      "Flare Blitz",
-      "Throat Chop",
-      "Parting Shot"
-     ],
-     "moves_zh": [
-      "击掌奇袭",
-      "闪焰冲锋",
-      "深渊突刺",
-      "抛下狠话"
-     ],
-     "nature_en": "Impish",
-     "nature_zh": "淘气"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:6",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "CJ__black98",
-   "country": "PR",
-   "placing": 7,
-   "record": {
-    "wins": 3,
-    "losses": 3,
-    "ties": 0
-   },
-   "pokemon": [
-    {
-     "identifier": "charizard-mega-y",
-     "name_zh": "超级喷火龙Ｙ",
-     "item_en": "Charizardite Y",
-     "item_zh": "喷火龙进化石Ｙ",
-     "ability_en": "Drought",
-     "ability_zh": "日照",
-     "moves_en": [
-      "Heat Wave",
-      "Solar Beam",
-      "Weather Ball",
-      "Protect"
-     ],
-     "moves_zh": [
-      "热风",
-      "日光束",
-      "气象球",
-      "守住"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Solar Power",
-     "pre_mega_ability_zh": "太阳之力"
-    },
-    {
-     "identifier": "venusaur",
-     "name_zh": "妙蛙花",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Chlorophyll",
-     "ability_zh": "叶绿素",
-     "moves_en": [
-      "Sleep Powder",
-      "Sludge Bomb",
-      "Earth Power",
-      "Protect"
-     ],
-     "moves_zh": [
-      "催眠粉",
-      "污泥炸弹",
-      "大地之力",
-      "守住"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
-    },
-    {
-     "identifier": "archaludon",
-     "name_zh": "铝钢桥龙",
-     "item_en": "Leftovers",
-     "item_zh": "吃剩的东西",
-     "ability_en": "Stamina",
-     "ability_zh": "持久力",
-     "moves_en": [
-      "Dragon Pulse",
-      "Electro Shot",
-      "Flash Cannon",
-      "Protect"
-     ],
-     "moves_zh": [
-      "龙之波动",
-      "电光束",
-      "加农光炮",
-      "守住"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
-    },
-    {
-     "identifier": "politoed",
-     "name_zh": "蚊香蛙皇",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Drizzle",
-     "ability_zh": "降雨",
-     "moves_en": [
-      "Weather Ball",
-      "Icy Wind",
-      "Helping Hand",
-      "Protect"
-     ],
-     "moves_zh": [
-      "气象球",
-      "冰冻之风",
-      "帮助",
-      "守住"
-     ],
-     "nature_en": "Calm",
-     "nature_zh": "温和"
-    },
-    {
-     "identifier": "grimmsnarl",
-     "name_zh": "长毛巨魔",
-     "item_en": "Light Clay",
-     "item_zh": "光之黏土",
-     "ability_en": "Prankster",
-     "ability_zh": "恶作剧之心",
-     "moves_en": [
-      "Spirit Break",
-      "Reflect",
-      "Light Screen",
-      "Parting Shot"
-     ],
-     "moves_zh": [
-      "灵魂冲击",
-      "反射壁",
-      "光墙",
-      "抛下狠话"
-     ],
-     "nature_en": "Careful",
-     "nature_zh": "慎重"
-    },
-    {
-     "identifier": "swampert-mega",
-     "name_zh": "超级巨沼怪",
-     "item_en": "Swampertite",
-     "item_zh": "巨沼怪进化石",
-     "ability_en": "Swift Swim",
-     "ability_zh": "悠游自如",
-     "moves_en": [
-      "Wave Crash",
-      "Earthquake",
-      "Ice Punch",
-      "Protect"
-     ],
-     "moves_zh": [
-      "波动冲",
-      "地震",
-      "冰冻拳",
-      "守住"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执",
-     "pre_mega_ability_en": "Torrent",
-     "pre_mega_ability_zh": "激流"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:7",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "FredoCR12",
-   "country": "MX",
-   "placing": 8,
-   "record": {
-    "wins": 3,
-    "losses": 3,
-    "ties": 0
-   },
-   "pokemon": [
-    {
-     "identifier": "incineroar",
-     "name_zh": "炽焰咆哮虎",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Intimidate",
-     "ability_zh": "威吓",
-     "moves_en": [
-      "Fake Out",
-      "Flare Blitz",
-      "Throat Chop",
-      "Parting Shot"
-     ],
-     "moves_zh": [
-      "击掌奇袭",
-      "闪焰冲锋",
-      "深渊突刺",
-      "抛下狠话"
-     ],
-     "nature_en": "Impish",
-     "nature_zh": "淘气"
-    },
-    {
-     "identifier": "maushold-family-of-four",
-     "name_zh": "一家鼠",
-     "item_en": "Chople Berry",
-     "item_zh": "莲蒲果",
-     "ability_en": "Friend Guard",
-     "ability_zh": "友情防守",
-     "moves_en": [
-      "Super Fang",
-      "Feint",
-      "Follow Me",
-      "Protect"
-     ],
-     "moves_zh": [
-      "愤怒门牙",
-      "佯攻",
-      "看我嘛",
-      "守住"
-     ],
-     "nature_en": "Impish",
-     "nature_zh": "淘气"
-    },
-    {
-     "identifier": "sinistcha",
-     "name_zh": "来悲粗茶",
-     "item_en": "Occa Berry",
-     "item_zh": "巧可果",
-     "ability_en": "Hospitality",
-     "ability_zh": "款待",
-     "moves_en": [
-      "Matcha Gotcha",
-      "Life Dew",
-      "Rage Powder",
-      "Protect"
-     ],
-     "moves_zh": [
-      "刷刷茶炮",
-      "生命水滴",
-      "愤怒粉",
-      "守住"
-     ],
-     "nature_en": "Bold",
-     "nature_zh": "大胆"
-    },
-    {
-     "identifier": "sneasler",
-     "name_zh": "大狃拉",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Poison Touch",
-     "ability_zh": "毒手",
-     "moves_en": [
-      "Fake Out",
-      "Close Combat",
-      "Poison Jab",
-      "Quick Guard"
-     ],
-     "moves_zh": [
-      "击掌奇袭",
-      "近身战",
-      "毒击",
-      "快速防守"
-     ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
-    },
-    {
-     "identifier": "blastoise-mega",
-     "name_zh": "超级水箭龟",
-     "item_en": "Blastoisinite",
-     "item_zh": "水箭龟进化石",
-     "ability_en": "Mega Launcher",
-     "ability_zh": "超级发射器",
-     "moves_en": [
-      "Water Spout",
-      "Dark Pulse",
-      "Shell Smash",
-      "Protect"
-     ],
-     "moves_zh": [
-      "喷水",
-      "恶之波动",
-      "破壳",
-      "守住"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Rain Dish",
-     "pre_mega_ability_zh": "雨盘"
-    },
-    {
-     "identifier": "delphox-mega",
-     "name_zh": "超级妖火红狐",
-     "item_en": "Delphoxite",
-     "item_zh": "妖火红狐进化石",
-     "ability_en": "Levitate",
-     "ability_zh": "飘浮",
-     "moves_en": [
-      "Heat Wave",
-      "Psychic",
-      "Nasty Plot",
-      "Protect"
-     ],
-     "moves_zh": [
-      "热风",
-      "精神强念",
-      "诡计",
-      "守住"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小",
-     "pre_mega_ability_en": "Blaze",
-     "pre_mega_ability_zh": "猛火"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:8",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "blcde",
-   "country": "GB",
-   "placing": 9,
-   "record": {
-    "wins": 3,
-    "losses": 2,
-    "ties": 0
-   },
-   "pokemon": [
-    {
-     "identifier": "aerodactyl-mega",
-     "name_zh": "超级化石翼龙",
-     "item_en": "Aerodactylite",
-     "item_zh": "化石翼龙进化石",
-     "ability_en": "Tough Claws",
-     "ability_zh": "硬爪",
-     "moves_en": [
-      "Rock Slide",
-      "Tailwind",
-      "Dual Wingbeat",
-      "Protect"
-     ],
-     "moves_zh": [
-      "岩崩",
-      "顺风",
-      "双翼",
-      "守住"
-     ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗",
-     "pre_mega_ability_en": "Unnerve",
-     "pre_mega_ability_zh": "紧张感"
-    },
-    {
-     "identifier": "basculegion-male",
-     "name_zh": "幽尾玄鱼",
-     "item_en": "Mystic Water",
-     "item_zh": "神秘水滴",
-     "ability_en": "Adaptability",
-     "ability_zh": "适应力",
-     "moves_en": [
-      "Last Respects",
-      "Protect",
-      "Wave Crash",
-      "Aqua Jet"
-     ],
-     "moves_zh": [
-      "扫墓",
-      "守住",
-      "波动冲",
-      "水流喷射"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "kingambit",
-     "name_zh": "仆刀将军",
-     "item_en": "Chople Berry",
-     "item_zh": "莲蒲果",
-     "ability_en": "Defiant",
-     "ability_zh": "不服输",
-     "moves_en": [
-      "Kowtow Cleave",
-      "Sucker Punch",
-      "Low Kick",
-      "Iron Head"
-     ],
-     "moves_zh": [
-      "仆刀",
-      "突袭",
-      "踢倒",
-      "铁头"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "dragonite-mega",
-     "name_zh": "超级快龙",
-     "item_en": "Dragoninite",
-     "item_zh": "快龙进化石",
-     "ability_en": "Multiscale",
-     "ability_zh": "多重鳞片",
-     "moves_en": [
-      "Protect",
-      "Extreme Speed",
-      "Dragon Pulse",
-      "Heat Wave"
-     ],
-     "moves_zh": [
-      "守住",
-      "神速",
-      "龙之波动",
-      "热风"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Multiscale",
-     "pre_mega_ability_zh": "多重鳞片"
-    },
-    {
-     "identifier": "sneasler",
-     "name_zh": "大狃拉",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Poison Touch",
-     "ability_zh": "毒手",
-     "moves_en": [
-      "Fake Out",
-      "Protect",
-      "Dire Claw",
-      "Close Combat"
-     ],
-     "moves_zh": [
-      "击掌奇袭",
-      "守住",
-      "克命爪",
-      "近身战"
-     ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
-    },
-    {
-     "identifier": "sylveon",
-     "name_zh": "仙子伊布",
-     "item_en": "Fairy Feather",
-     "item_zh": "妖精之羽",
-     "ability_en": "Pixilate",
-     "ability_zh": "妖精皮肤",
-     "moves_en": [
-      "Detect",
-      "Quick Attack",
-      "Hyper Beam",
-      "Hyper Voice"
-     ],
-     "moves_zh": [
-      "看穿",
-      "电光一闪",
-      "破坏光线",
-      "巨声"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:9",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "Wheretfismariojudah",
-   "country": "US",
-   "placing": 10,
-   "record": {
-    "wins": 3,
-    "losses": 2,
-    "ties": 0
-   },
-   "pokemon": [
-    {
-     "identifier": "charizard-mega-y",
-     "name_zh": "超级喷火龙Ｙ",
-     "item_en": "Charizardite Y",
-     "item_zh": "喷火龙进化石Ｙ",
-     "ability_en": "Drought",
-     "ability_zh": "日照",
-     "moves_en": [
-      "Heat Wave",
-      "Weather Ball",
-      "Solar Beam",
-      "Protect"
-     ],
-     "moves_zh": [
-      "热风",
-      "气象球",
-      "日光束",
-      "守住"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Blaze",
-     "pre_mega_ability_zh": "猛火"
-    },
-    {
-     "identifier": "glimmora-mega",
-     "name_zh": "超级晶光花",
-     "item_en": "Glimmoranite",
-     "item_zh": "晶光花进化石",
-     "ability_en": "Adaptability",
-     "ability_zh": "适应力",
-     "moves_en": [
-      "Sludge Bomb",
-      "Power Gem",
-      "Earth Power",
-      "Spiky Shield"
-     ],
-     "moves_zh": [
-      "污泥炸弹",
-      "力量宝石",
-      "大地之力",
-      "尖刺防守"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Toxic Debris",
-     "pre_mega_ability_zh": "毒满地"
-    },
-    {
-     "identifier": "whimsicott",
-     "name_zh": "风妖精",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Prankster",
-     "ability_zh": "恶作剧之心",
-     "moves_en": [
-      "Moonblast",
-      "Tailwind",
-      "Encore",
-      "Protect"
-     ],
-     "moves_zh": [
-      "月亮之力",
-      "顺风",
-      "再来一次",
-      "守住"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
-    },
-    {
-     "identifier": "ninetales-alola",
-     "name_zh": "九尾（阿罗拉的样子）",
-     "item_en": "Never-Melt Ice",
-     "item_zh": "不融冰",
-     "ability_en": "Snow Warning",
-     "ability_zh": "降雪",
-     "moves_en": [
-      "Blizzard",
-      "Freeze-Dry",
-      "Disable",
-      "Protect"
-     ],
-     "moves_zh": [
-      "暴风雪",
-      "冷冻干燥",
-      "定身法",
-      "守住"
-     ],
-     "nature_en": "Timid",
-     "nature_zh": "胆小"
     },
     {
      "identifier": "kingambit",
@@ -1503,345 +1427,413 @@
      "moves_en": [
       "Kowtow Cleave",
       "Sucker Punch",
-      "Iron Head",
-      "Protect"
+      "Protect",
+      "Iron Head"
      ],
      "moves_zh": [
       "仆刀",
       "突袭",
-      "铁头",
-      "守住"
+      "守住",
+      "铁头"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
     },
     {
-     "identifier": "kommo-o",
-     "name_zh": "杖尾鳞甲龙",
-     "item_en": "Life Orb",
-     "item_zh": "生命宝珠",
-     "ability_en": "Soundproof",
-     "ability_zh": "隔音",
+     "identifier": "salamence-mega",
+     "name_zh": "超级暴飞龙",
+     "item_en": "Salamencite",
+     "item_zh": "暴飞龙进化石",
+     "ability_en": "Aerilate",
+     "ability_zh": "飞行皮肤",
      "moves_en": [
-      "Clanging Scales",
-      "Aura Sphere",
-      "Vacuum Wave",
+      "Flamethrower",
+      "Hyper Voice",
+      "Draco Meteor",
       "Protect"
      ],
      "moves_zh": [
-      "鳞片噪音",
-      "波导弹",
-      "真空波",
+      "喷射火焰",
+      "巨声",
+      "流星群",
       "守住"
      ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
-    }
-   ]
-  },
-  {
-   "id": "6a8c049281741245b151d4e4:10",
-   "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
-   },
-   "player": "Ryuzaki26",
-   "country": "GB",
-   "placing": 11,
-   "record": {
-    "wins": 3,
-    "losses": 2,
-    "ties": 0
-   },
-   "pokemon": [
+     "nature_en": "Timid",
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Aerilate",
+     "pre_mega_ability_zh": "飞行皮肤"
+    },
     {
-     "identifier": "glimmora-mega",
-     "name_zh": "超级晶光花",
-     "item_en": "Glimmoranite",
-     "item_zh": "晶光花进化石",
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
+     "moves_en": [
+      "Protect",
+      "Heat Wave",
+      "Solar Beam",
+      "Weather Ball"
+     ],
+     "moves_zh": [
+      "守住",
+      "热风",
+      "日光束",
+      "气象球"
+     ],
+     "nature_en": "Modest",
+     "nature_zh": "内敛",
+     "pre_mega_ability_en": "Drought",
+     "pre_mega_ability_zh": "日照"
+    },
+    {
+     "identifier": "basculegion-male",
+     "name_zh": "幽尾玄鱼",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
      "ability_en": "Adaptability",
      "ability_zh": "适应力",
      "moves_en": [
-      "Earth Power",
-      "Spiky Shield",
-      "Power Gem",
-      "Sludge Bomb"
-     ],
-     "moves_zh": [
-      "大地之力",
-      "尖刺防守",
-      "力量宝石",
-      "污泥炸弹"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Toxic Debris",
-     "pre_mega_ability_zh": "毒满地"
-    },
-    {
-     "identifier": "excadrill",
-     "name_zh": "龙头地鼠",
-     "item_en": "Focus Sash",
-     "item_zh": "气势披带",
-     "ability_en": "Sand Rush",
-     "ability_zh": "拨沙",
-     "moves_en": [
-      "Earthquake",
-      "Iron Head",
-      "Protect",
-      "Rock Slide"
-     ],
-     "moves_zh": [
-      "地震",
-      "铁头",
-      "守住",
-      "岩崩"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执"
-    },
-    {
-     "identifier": "tyranitar-mega",
-     "name_zh": "超级班基拉斯",
-     "item_en": "Tyranitarite",
-     "item_zh": "班基拉斯进化石",
-     "ability_en": "Sand Stream",
-     "ability_zh": "扬沙",
-     "moves_en": [
-      "Rock Slide",
-      "Knock Off",
-      "Protect",
-      "Dragon Dance"
-     ],
-     "moves_zh": [
-      "岩崩",
-      "拍落",
-      "守住",
-      "龙之舞"
-     ],
-     "nature_en": "Adamant",
-     "nature_zh": "固执",
-     "pre_mega_ability_en": "Sand Stream",
-     "pre_mega_ability_zh": "扬沙"
-    },
-    {
-     "identifier": "orthworm",
-     "name_zh": "拖拖蚓",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Earth Eater",
-     "ability_zh": "食土",
-     "moves_en": [
-      "Shed Tail",
-      "Body Press",
-      "Protect",
-      "Iron Defense"
-     ],
-     "moves_zh": [
-      "断尾",
-      "扑击",
-      "守住",
-      "铁壁"
-     ],
-     "nature_en": "Impish",
-     "nature_zh": "淘气"
-    },
-    {
-     "identifier": "hydreigon",
-     "name_zh": "三首恶龙",
-     "item_en": "Life Orb",
-     "item_zh": "生命宝珠",
-     "ability_en": "Levitate",
-     "ability_zh": "飘浮",
-     "moves_en": [
-      "Heat Wave",
-      "Protect",
-      "Nasty Plot",
-      "Dragon Pulse"
-     ],
-     "moves_zh": [
-      "热风",
-      "守住",
-      "诡计",
-      "龙之波动"
-     ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
-    },
-    {
-     "identifier": "houndstone",
-     "name_zh": "墓扬犬",
-     "item_en": "Spell Tag",
-     "item_zh": "咒术之符",
-     "ability_en": "Sand Rush",
-     "ability_zh": "拨沙",
-     "moves_en": [
       "Last Respects",
-      "Disable",
-      "Ally Switch",
-      "Will-O-Wisp"
+      "Protect",
+      "Aqua Jet",
+      "Wave Crash"
      ],
      "moves_zh": [
       "扫墓",
-      "定身法",
-      "交换场地",
-      "磷火"
+      "守住",
+      "水流喷射",
+      "波动冲"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
+    },
+    {
+     "identifier": "whimsicott",
+     "name_zh": "风妖精",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Prankster",
+     "ability_zh": "恶作剧之心",
+     "moves_en": [
+      "Protect",
+      "Encore",
+      "Tailwind",
+      "Moonblast"
+     ],
+     "moves_zh": [
+      "守住",
+      "再来一次",
+      "顺风",
+      "月亮之力"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小"
     }
    ]
   },
   {
-   "id": "6a8c049281741245b151d4e4:11",
+   "id": "6af176bdc931f53978d9707a:33",
    "tournament": {
-    "name": "HeroicTitan’s VGC Battle Arena",
-    "date": "2026-08-26"
+    "name": "Sketch Academy Sunday Regulation M-C Tournament",
+    "date": "2026-11-16"
    },
-   "player": "Mongoos19",
-   "country": "US",
-   "placing": 12,
+   "player": "Alexander Daly",
+   "country": "AU",
+   "placing": 6,
    "record": {
-    "wins": 3,
+    "wins": 5,
     "losses": 2,
     "ties": 0
    },
    "pokemon": [
     {
-     "identifier": "venusaur-mega",
-     "name_zh": "超级妙蛙花",
-     "item_en": "Venusaurite",
-     "item_zh": "妙蛙花进化石",
-     "ability_en": "Thick Fat",
-     "ability_zh": "厚脂肪",
+     "identifier": "gholdengo",
+     "name_zh": "赛富豪",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
+     "ability_en": "Good as Gold",
+     "ability_zh": "黄金之躯",
      "moves_en": [
-      "Giga Drain",
-      "Sludge Bomb",
-      "Earth Power",
+      "Nasty Plot",
+      "Make It Rain",
+      "Shadow Ball",
       "Protect"
      ],
      "moves_zh": [
-      "终极吸取",
-      "污泥炸弹",
-      "大地之力",
+      "诡计",
+      "淘金潮",
+      "暗影球",
       "守住"
      ],
      "nature_en": "Modest",
-     "nature_zh": "内敛",
-     "pre_mega_ability_en": "Chlorophyll",
-     "pre_mega_ability_zh": "叶绿素"
+     "nature_zh": "内敛"
     },
     {
-     "identifier": "pelipper",
-     "name_zh": "大嘴鸥",
-     "item_en": "Sitrus Berry",
-     "item_zh": "文柚果",
-     "ability_en": "Drizzle",
-     "ability_zh": "降雨",
+     "identifier": "staraptor-mega",
+     "name_zh": "超级姆克鹰",
+     "item_en": "Staraptite",
+     "item_zh": "姆克鹰进化石",
+     "ability_en": "Contrary",
+     "ability_zh": "唱反调",
      "moves_en": [
-      "Hurricane",
-      "Weather Ball",
+      "Close Combat",
+      "Brave Bird",
       "Tailwind",
       "Protect"
      ],
      "moves_zh": [
-      "暴风",
-      "气象球",
+      "近身战",
+      "勇鸟猛攻",
       "顺风",
       "守住"
      ],
-     "nature_en": "Modest",
-     "nature_zh": "内敛"
+     "nature_en": "Jolly",
+     "nature_zh": "爽朗",
+     "pre_mega_ability_en": "Intimidate",
+     "pre_mega_ability_zh": "威吓"
     },
     {
-     "identifier": "dragonite-mega",
-     "name_zh": "超级快龙",
-     "item_en": "Dragoninite",
-     "item_zh": "快龙进化石",
-     "ability_en": "Multiscale",
-     "ability_zh": "多重鳞片",
+     "identifier": "raichu-mega-y",
+     "name_zh": "超级雷丘 Y",
+     "item_en": "Raichunite Y",
+     "item_zh": "雷丘进化石Ｙ",
+     "ability_en": "No Guard",
+     "ability_zh": "无防守",
      "moves_en": [
-      "Dragon Pulse",
-      "Hurricane",
-      "Thunderbolt",
+      "Zap Cannon",
+      "Focus Blast",
+      "Fake Out",
       "Protect"
      ],
      "moves_zh": [
-      "龙之波动",
-      "暴风",
-      "十万伏特",
+      "电磁炮",
+      "真气弹",
+      "击掌奇袭",
+      "守住"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小",
+     "pre_mega_ability_en": "Lightning Rod",
+     "pre_mega_ability_zh": "避雷针"
+    },
+    {
+     "identifier": "milotic",
+     "name_zh": "美纳斯",
+     "item_en": "Leftovers",
+     "item_zh": "吃剩的东西",
+     "ability_en": "Competitive",
+     "ability_zh": "好胜",
+     "moves_en": [
+      "Muddy Water",
+      "Hypnosis",
+      "Protect",
+      "Coil"
+     ],
+     "moves_zh": [
+      "浊流",
+      "催眠术",
+      "守住",
+      "盘蜷"
+     ],
+     "nature_en": "Calm",
+     "nature_zh": "温和"
+    },
+    {
+     "identifier": "rillaboom",
+     "name_zh": "轰擂金刚猩",
+     "item_en": "Miracle Seed",
+     "item_zh": "奇迹种子",
+     "ability_en": "Grassy Surge",
+     "ability_zh": "青草制造者",
+     "moves_en": [
+      "Fake Out",
+      "Grassy Glide",
+      "Wood Hammer",
+      "High Horsepower"
+     ],
+     "moves_zh": [
+      "击掌奇袭",
+      "青草滑梯",
+      "木槌",
+      "十万马力"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "arcanine-hisui",
+     "name_zh": "风速狗（洗翠的样子）",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Rock Head",
+     "ability_zh": "坚硬脑袋",
+     "moves_en": [
+      "Head Smash",
+      "Flare Blitz",
+      "Protect",
+      "Extreme Speed"
+     ],
+     "moves_zh": [
+      "双刃头锤",
+      "闪焰冲锋",
+      "守住",
+      "神速"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    }
+   ]
+  },
+  {
+   "id": "6afa543ab2fccaf0272d39cd:5",
+   "tournament": {
+    "name": "Warm-up for LAIC! 🔥🔥🔥🔥Decode Store",
+    "date": "2026-11-16"
+   },
+   "player": "Luc4zi",
+   "country": "BR",
+   "placing": 6,
+   "record": {
+    "wins": 3,
+    "losses": 3,
+    "ties": 0
+   },
+   "pokemon": [
+    {
+     "identifier": "charizard-mega-y",
+     "name_zh": "超级喷火龙Ｙ",
+     "item_en": "Charizardite Y",
+     "item_zh": "喷火龙进化石Ｙ",
+     "ability_en": "Drought",
+     "ability_zh": "日照",
+     "moves_en": [
+      "Heat Wave",
+      "Solar Beam",
+      "Weather Ball",
+      "Protect"
+     ],
+     "moves_zh": [
+      "热风",
+      "日光束",
+      "气象球",
       "守住"
      ],
      "nature_en": "Modest",
      "nature_zh": "内敛",
-     "pre_mega_ability_en": "Multiscale",
-     "pre_mega_ability_zh": "多重鳞片"
+     "pre_mega_ability_en": "Blaze",
+     "pre_mega_ability_zh": "猛火"
+    },
+    {
+     "identifier": "sneasler",
+     "name_zh": "大狃拉",
+     "item_en": "White Herb",
+     "item_zh": "白色香草",
+     "ability_en": "Unburden",
+     "ability_zh": "轻装",
+     "moves_en": [
+      "Close Combat",
+      "Dire Claw",
+      "Rock Tomb",
+      "Protect"
+     ],
+     "moves_zh": [
+      "近身战",
+      "克命爪",
+      "岩石封锁",
+      "守住"
+     ],
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
     },
     {
      "identifier": "kingambit",
      "name_zh": "仆刀将军",
-     "item_en": "Life Orb",
-     "item_zh": "生命宝珠",
+     "item_en": "Chople Berry",
+     "item_zh": "莲蒲果",
      "ability_en": "Defiant",
      "ability_zh": "不服输",
      "moves_en": [
       "Kowtow Cleave",
       "Iron Head",
       "Sucker Punch",
-      "Protect"
+      "Low Kick"
      ],
      "moves_zh": [
       "仆刀",
       "铁头",
       "突袭",
-      "守住"
+      "踢倒"
      ],
      "nature_en": "Adamant",
      "nature_zh": "固执"
     },
     {
-     "identifier": "farigiraf",
-     "name_zh": "奇麒麟",
-     "item_en": "Colbur Berry",
-     "item_zh": "刺耳果",
-     "ability_en": "Armor Tail",
-     "ability_zh": "尾甲",
+     "identifier": "garchomp",
+     "name_zh": "烈咬陆鲨",
+     "item_en": "Life Orb",
+     "item_zh": "生命宝珠",
+     "ability_en": "Rough Skin",
+     "ability_zh": "粗糙皮肤",
      "moves_en": [
-      "Psychic Noise",
-      "Thunderbolt",
-      "Trick Room",
+      "Earthquake",
+      "Dragon Claw",
+      "Rock Slide",
       "Protect"
      ],
      "moves_zh": [
-      "精神噪音",
-      "十万伏特",
-      "戏法空间",
+      "地震",
+      "龙爪",
+      "岩崩",
       "守住"
      ],
-     "nature_en": "Quiet",
-     "nature_zh": "冷静"
+     "nature_en": "Jolly",
+     "nature_zh": "爽朗"
     },
     {
      "identifier": "basculegion-male",
      "name_zh": "幽尾玄鱼",
-     "item_en": "Choice Scarf",
-     "item_zh": "讲究围巾",
+     "item_en": "Mystic Water",
+     "item_zh": "神秘水滴",
      "ability_en": "Adaptability",
      "ability_zh": "适应力",
      "moves_en": [
       "Wave Crash",
       "Last Respects",
       "Aqua Jet",
-      "Flip Turn"
+      "Protect"
      ],
      "moves_zh": [
       "波动冲",
       "扫墓",
       "水流喷射",
-      "快速折返"
+      "守住"
      ],
-     "nature_en": "Jolly",
-     "nature_zh": "爽朗"
+     "nature_en": "Adamant",
+     "nature_zh": "固执"
+    },
+    {
+     "identifier": "whimsicott",
+     "name_zh": "风妖精",
+     "item_en": "Focus Sash",
+     "item_zh": "气势披带",
+     "ability_en": "Prankster",
+     "ability_zh": "恶作剧之心",
+     "moves_en": [
+      "Moonblast",
+      "Encore",
+      "Tailwind",
+      "Protect"
+     ],
+     "moves_zh": [
+      "月亮之力",
+      "再来一次",
+      "顺风",
+      "守住"
+     ],
+     "nature_en": "Timid",
+     "nature_zh": "胆小"
     }
    ]
   }

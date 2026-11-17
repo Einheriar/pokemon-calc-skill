@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.1.4"
+  version: "5.1.5"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -89,9 +89,9 @@ meta --source showdown [--format ...]        # Showdown 天梯月报（含使用
 meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛事（默认），ladder/ingame=官方排位，showdown=Showdown 天梯
 ```
 
-> **数据性质说明**：`meta` 默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计（滚动 30 天窗口），属于**赛事数据**。内置快照为 M-B 窗口（2026-08-26 抓取，`meta.format` 如实标注），与全局 M-C 规则声明存在滞后；需要最新窗口时加 `--online`。`--source ladder`（等价 `ingame`）为 Pokémon Champions **官方实机排位**数据（最新赛制，约 1~3 天更新）：总榜**只有名次**（`rank_only: true`，官方不公布使用率/胜率），单只详情的配招/道具/特性/性格/努力分配为真实百分比（需 `--online`）；`--source showdown` 为 Showdown 天梯月报（含使用率，`meta.month` 注明月份，滞后一个月）。天梯源用 `--format singles|doubles` 切换单/双打（默认双打，输出 `meta.format_note` 会注明），不支持 `--teams` 等队伍查询。全量队伍数据（当前窗口全部 9,000+ 支队伍，含每队 6 只宝可梦的道具/特性/招式/性格明细）已作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
+> **数据性质说明**：`meta` 默认源（tournament）来自 pokecamp.cc 聚合的 Limitless 公开赛事统计，属于**赛事数据**，统计窗口以 `meta.date_range` 为准。内置 M-C 快照包含 312 个使用率条目、6,469 支队伍，上游统计 135 场赛事，其中 134 场有队伍详情；需要最新窗口时加 `--online`。`--source ladder`（等价 `ingame`）为 Pokémon Champions **官方实机排位**数据：总榜**只有名次**（`rank_only: true`，官方不公布使用率/胜率），单只详情的配招/道具/特性/性格/努力分配为真实百分比（需 `--online`）；`--source showdown` 为 Showdown 天梯月报（含使用率，`meta.month` 注明实际月份）。天梯源用 `--format singles|doubles` 切换单/双打（默认双打，输出 `meta.format_note` 会注明），不支持 `--teams` 等队伍查询。全量队伍及其道具/特性/招式/性格明细作为压缩包**内置发布**（`data/teams_full.json.gz`），首次执行全量查询时自动派生本地 SQLite 索引（一次性，数秒，之后离线可用）；所有查询输出硬上限 50 条，原始数据与索引永不进入上下文。回答中注明数据窗口（`meta.date_range`）与来源（`meta.origin`：snapshot=内置数据，cache=此前在线拉取的缓存，online=本次实时拉取）。
 >
-> **内置快照时效**：赛事使用率与队伍快照的窗口为 2026-07-26 至 2026-08-26（M-B）；官方实机天梯快照截至 2026-09-15（M-C，2026-09-16 抓取）；Showdown 快照为 2026-08 月报（M-B，2026-09-16 抓取）。来源网站的更新节奏不代表内置文件自动更新；这些文件本轮未刷新，回答以返回的日期与规则为准。
+> **内置快照时效**：赛事使用率与队伍窗口为 2026-10-16 至 2026-11-16（M-C）；官方实机天梯为 2026-11-16 的 M-C 名次快照（262 条记录，明确关联的 Mega 合并，不同性别等独立战斗形态分别保留）；Showdown 为 2026-10 月报（M-C）。天梯热门预设取自同批 2026-11-16 双打 Top50，按 50 个战斗形态保留 50 套，其中爱管侍、幽尾玄鱼的雌雄配置各自独立。来源网站的更新节奏不代表内置文件自动更新，抓取/构建日期不等于统计日期；回答以返回的日期与规则为准。
 >
 > **智能推断规则**：`meta` 不带任何标志时，按位置参数自动推断——纯数字 → 队伍详情（天梯源下为"第 N 名是谁"的名次反查）；宝可梦名 → 单只使用率详情；空 → 使用率排行。带 `--teams` 强制走队伍查询，带 `--usage` 强制走使用率查询。旧命令 `usage` / `teams` 仍可用（自动转发到 `meta`，输出 deprecation 警告）。
 >
@@ -103,7 +103,11 @@ meta --source <tournament|ladder|ingame|showdown>  # 数据源：tournament=赛�
 > - 需要天梯的**使用率数字**时改用 `--source showdown`（ladder 总榜只有名次），并注明 `meta.month` 滞后一个月
 > - 离线双查时天梯侧只有名次，单只天梯配招与 SP 分配需 `--online`；详情标记“未获取”表示尚未拉取，并非脚本故障。话术注明"天梯配招需在线查询"；赛事侧配招离线齐全
 >
-> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`meta --teams --online` 为增量更新（队伍列表 gzip 约 1.3 MB + 仅抓取新增赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
+> **`--online` 使用规则**：只有当用户**显式要求**"最新/当前/热门队伍/实时"等时效性数据时才允许加 `--online`，其他情况一律使用内置数据。`meta --teams --online` 为增量更新（下载队伍列表并仅抓取未缓存赛事的明细），且有 24 小时节流——距上次成功拉取不足 24 小时时直接复用现有索引、不发起网络请求（返回 `meta.note` 会注明），但仍不得主动触发。若在线拉取失败，返回值 `meta.online_error` 含有失败原因，**必须在回答中原样告知用户失败原因**，并说明已回退到内置/缓存数据及其日期。
+>
+> **单只赛事详情的来源**：`meta.origin` 描述榜单或主数据来源；在线补充的配招等详情另看 `meta.detail_origin`、`detail_fetched_at`、`detail_date_range` 和 `detail_format`。主数据在线不代表详情也在线，详情回退缓存时必须按详情的实际规则与日期说明；有 `detail_online_error` 时同样告知失败原因。`detail_origin: unavailable` 表示详情未获取，不补造配招、分配或比例。在线原始端点失败不会再混用旧原始缓存并标记为新在线数据。
+
+> **不同性别的战斗形态**：爱管侍、幽尾玄鱼等具有独立种族值的雌雄形态不得合并。可用 `Indeedee-M/F`、`Basculegion-M/F` 或中文名称加 `（雄性的样子）` / `（雌性的样子）`；也可在 override 明确 `form_name`。热门预设只匹配目标性别形态；缺少匹配套时不套用异性或未标形态的旧套。预设是各项聚合统计推导的配置起点，不代表同一真实玩家的完整联立配装。
 
 ### 参数覆盖 JSON 示例
 
@@ -211,7 +215,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 - `type_effectiveness` 反映**实际生效属性**经过属性相克后的原始倍率（已包含 Ate/Ize 特性、气象球、大地波动等导致的类型转换；如 格斗 vs 恶/钢 = 4.0），**不包含**抗性树果、Solid Rock、Filter 等后续修正。判断道具是否生效时，对比 `damage_range` 是否减半，而非观察 `type_effectiveness` 是否变化
 - `move_info` / `field_info` / `modifiers`：招式（属性/分类/基础与生效威力/命中/段数）、环境（天气/场地/光墙/钉刺）与双方强化·状态·太晶回显——输出模板中的招式/环境表直接取自这三个键，不要凭记忆补数值。`move_info` 由引擎结构化返回最终招式副本：气象球、太晶爆发等动态属性／分类与 `effective_power` 均为实际计算值，不依赖原始招式或描述文本解析
 - 2-5 段变段招式（乱击、岩石爆击、飞水手里剑、鳞射等，数据层 `hits: "multi"`）：引擎按期望段数 3 段估算 `total_damage_range`，响应 `warning` 会注明；用户问"5 段全中"时用 `--move_ov '{"hits": 5}'` 显式指定
-- `attacker_auto_preset` / `defender_auto_preset`：当用户未指定配置或只给出部分配置（如性格、道具、特性）时，引擎自动从 setdex 匹配预设，用其 **evs / nature / ivs** 补全未指定字段；若用户完全未指定配置，还会同时采用该预设的 **特性**。**形态永不切换**——问水箭龟就是水箭龟。若该宝可梦不在 setdex 中（共 207 只），值为 `null`。回答中若该字段非 null，声明："未指定努力值按热门预设 `{preset_name}` 补全"。
+- `attacker_auto_preset` / `defender_auto_preset`：当用户未指定配置或只给出部分配置（如性格、道具、特性）时，引擎自动从 setdex 匹配预设，用其 **evs / nature / ivs** 补全未指定字段；若用户完全未指定配置，还会同时采用该预设的 **特性**。**形态永不切换**——问水箭龟就是水箭龟。若该宝可梦不在 setdex 中（共 208 个条目），值为 `null`。回答中若该字段非 null，声明："未指定努力值按热门预设 `{preset_name}` 补全"。
 - **部分指定努力值时不套预设**：override 中出现任一努力类字段（`evs` / `sps` / `raw_stats` / `stats`）时，预设完全跳过——用户给的分配就是完整分配，未指定项 = 0 努力、无修正性格。例："32 HP 能力点数的咆哮虎" 就是 HP32/其余 0，不补其余耐久。回答中无需声明预设假设。
 - `attacker_auto_item` / `defender_auto_item`：auto-preset 命中且预设道具为**纯增伤道具**（生命宝珠/讲究头带/讲究眼镜/达人带/力量头带/博识眼镜）时自动套用并在回答开头声明："假设携带 `{item}`（来自热门配置）"；其余道具（文柚果、披带、树果等判定触发类）一律不兜底，保持无道具基线。用户显式指定的道具永远优先。
 - 携带进化奇石时，`calc` 会从内置进化链按当前形态判断资格，红／蓝条纹野蛮鲈鱼不会继承白条纹的进化资格；`can_evolve` 显式覆盖优先，通常无需手工传入。地区、Mega、起源、王冠等形态会保留引擎形态身份，物种／形态限定道具与拍落判定按实际形态处理。
