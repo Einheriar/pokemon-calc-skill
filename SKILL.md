@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.2.0"
+  version: "5.2.1"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -66,7 +66,7 @@ preset <pokemon> [name] # 列出预设配置或获取具体配置
 calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤害计算（Lv.50）
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算（模板见 references/commands.md）
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
-speed <pokemon> [--pokemon_ov JSON] [--field_ov JSON] [--range N]  # 50级速度计算，自动附附近参照
+speed <pokemon> [--pokemon_ov JSON] [--field_ov JSON] [--range N]  # 速度计算，自动附附近参照
 speed --value <speed> [--range N]                               # 已有最终速度 → 附近参照，默认±5
 optimize <att> <move> <def> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev|sp]
                         [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]  # 努力值优化
@@ -387,21 +387,11 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ### 3.3 速度计算器与自动参照
 
-用户询问速度能力值、给出具体速度配置，或希望判断某个速度的位置时，使用 `speed`：有宝可梦及配置时执行 `speed <名> --pokemon_ov JSON --field_ov JSON`；已有最终生效速度时直接执行 `speed --value <数值>`，不反推配置。此规则用于用户的速度问题，不为无关的伤害回答额外附加速度线。
+- 查宝可梦速度能力值用 `speed <宝可梦>`，已有实战速度用 `speed --value <数值>`。配置和顺风等参数见[命令参考](references/commands.md#speed-速度计算器)。
+- 计算时先给面板速度，有修正时同时给实战速度及条件。回答默认附上实战速度 **±5** 内的参照，并注明范围。用 `--range N` 调整范围，`0` 仅查同速。
+- 从 `references.matches` 按速度分组，简列窗口内有命中的更快、同速和更慢配置，标明差值。配置和状态用半角方括号，如“大嘴鸥 [极速] [围巾]”。形态与性别分组用圆括号。
 
-命令自动返回实战速度 **±5** 内的精选参照。用户指定其他正负范围时，通过 `--range N` 原样传入非负整数；`0` 只查同速。窗口按能力值距离筛选、包含边界，不按档位数量取邻居；为空时如实说明，不自动扩大范围。参考 JSON 只由脚本读取，**不要将 `data/speed_tiers.json` 或整张长表读入上下文**。
-
-计算固定 50 级；未指定的投入为 0、个体值为 31、性格为勤奋，不套用热门预设。用户明确给出的性格、EV／SP、IV、形态、道具、特性及其触发状态和速度能力等级优先，均通过 `pokemon_ov`；天气／场地等只通过 `field_ov`。支持字段、JSON 文件覆盖与示例见 `references/commands.md`。不支持的字段会报错，不自行补算或声称已支持。
-
-轻装已触发时明确传 `ability:"轻装"`、`ability_on:true` 且当前无道具；碎裂铠甲触发一次传 `boosts:{"speed":2}`。天气特性同时明确对应天气。用户提及己方顺风时，在 `field_ov` 传 `"is_tailwind":true`（仅 JSON 布尔值）；它只作用于本次计算目标，与道具／特性速度倍率统一结算取整。面板速度不变，使用顺风后的 `effective_speed` 自动查询附近参照，范围仍由 `--range N` 控制。参照表不因此整体翻倍，每条参照保留原本条件。
-
-回答先给 `panel_speed`；有临时修正时同时给 `effective_speed` 并说明条件，再附 `references.matches` 中的名称、配置、条件与快慢差值。参照窗口以 **effective_speed** 为中心，`delta` 表示“参照速度减用户速度”，正为参照更快、负为参照更慢。同速可合并展示，明确标注围巾、天气／特性状态；精选名单不等于使用率分布，不能据此推算百分位。返回参照数据错误时说明错误，不将其描述为窗口内没有参照。
-
-**显示格式**：面向用户展示速度配置或状态时，统一使用半角方括号，如 [无努力]、[满速]、[极速]、[极限零速]、[速度2SP]、[围巾]、[轻装]、[雨天]、[顺风]。同一条参照的多个标签分别括起，例如“大嘴鸥 [极速] [围巾]”“超级雷电兽 [满速]”。表格单元格中的标签也按此格式展示；性别与形态分组继续使用此前确认的圆括号写法。
-
-分线名称仍依据**速度种族值**：135 及以上“超高速线”、120“高速线”，另有 100／80／50 线；这些标签不参与能力值窗口检索。收录项由用户指定，具体性别／地区／Mega 形态独立保存；用户已确认的同速参考组按括号范围展示，不自动扩展其他配置。
-
-**固定速查基准（已由引擎核验，可直接引用）**：以下均为 50 级、31 速度 IV、32 速度 SP（252 EV）；满速为性格不修正速度，极速为加速性格，不含其他修正。表中种族值为准确基准点，不代表整个分组内的宝可梦都达到相同速度。
+速度线按种族值命名。135 及以上是超高速线，120 是高速线，另有 100／80／50 线。下表为 31 速度 IV、32 速度 SP 的面板基准，可直接引用。
 
 | 速度种族值线 | [满速]能力值 | [极速]能力值 |
 | --- | --- | --- |
@@ -410,7 +400,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 | 100 | 152 | 167 |
 | 80 | 132 | 145 |
 
-**80 线极速＋讲究围巾：速度能力值 217**（面板极速 145，围巾生效后 217）。本表固定基准不含顺风；具体宝可梦在顺风或其他条件下的速度和附近参照仍调用 `speed`，不要直接对已取整的围巾结果再次乘二。
+80 线 [极速] [围巾] 的实战速度为 **217**。
 
 ## 4. 输出格式
 

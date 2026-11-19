@@ -5,7 +5,7 @@
 
 # pokemon-calc: 面向 AI Agent 的宝可梦百科与伤害计算 Skill
 
-**v5.2.0** 新增速度计算器：计算后自动附上附近速度线，正负范围可调，并支持顺风修正。详见 [speed 命令](references/commands.md#speed-速度计算器)。
+**v5.2.1** 精简速度查询指引。速度回答默认附上 ±5 范围内的参照，支持调整范围和顺风修正。详见 [speed 命令](references/commands.md#speed-速度计算器)。
 
 传统宝可梦伤害计算器是给"人"用的网页或 App，而 `pokemon-calc` 是专为 **AI Agent (大语言模型)** 量身定制的底层计算 Skill。
 

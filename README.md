@@ -5,7 +5,7 @@
 
 # pokemon-calc: Pokédex & Damage Calculator for AI Agents
 
-**v5.2.0** adds a Speed calculator with automatic nearby benchmarks, an adjustable ± range, and Tailwind support. See the [Speed command](references/commands.md#speed-速度计算器).
+**v5.2.1** simplifies the Skill's Speed instructions. Answers include nearby Speed benchmarks within ±5 by default, with an adjustable range and Tailwind support. See the [Speed command](references/commands.md#speed-速度计算器).
 
 Traditional Pokémon damage calculators are web apps or tools built for humans. `pokemon-calc` is a purpose-built computation engine designed for **AI Agents (Large Language Models)**.
 
