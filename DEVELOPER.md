@@ -39,6 +39,7 @@ pokemon-calc/
 │   ├── name_index.json   # 中英文名称索引
 │   ├── setdex.json       # VGC 预设配置（208 个物种键，314 个预设：264 个旧套 + 50 个双打 Top50 推导套）
 │   ├── aliases.json      # 玩家俗称 → 标准名称映射
+│   ├── speed_tiers.json  # 574条精选速度参照，脚本按可变能力值窗口检索
 │   ├── usage_stats.json  # 环境使用率快照（pokecamp.cc / Limitless 赛事数据）
 │   ├── meta_teams.json   # 近期赛事队伍快照（前 12 支，pokecamp.cc / Limitless 赛事数据）
 │   └── teams_full.json.gz # 全量赛事队伍内置包（当前窗口全部队伍 + 完整明细，gzip 压缩）
@@ -47,7 +48,8 @@ pokemon-calc/
     ├── damage.py         # 伤害计算引擎（内部全英文枚举，经 engine_enums）
     ├── tera_effects.py   # 专属太晶触发效果与动态招式规则
     ├── battle_effects.py # 有效特性、树果阻断、环境／招式天气共用规则
-    ├── speed_effects.py  # 实际速度，供动态威力和速度比较使用
+    ├── speed_effects.py  # 实际速度，供动态威力、速度计算器和比较使用
+    ├── speed_tiers.py    # 精选速度参照的可变正负窗口检索
     ├── ko_chance.py      # KO 概率计算
     ├── ev_optimizer.py   # 努力值优化搜索
     ├── models.py         # 数据模型（Pokemon, Move, Field, DamageResult）
@@ -60,6 +62,18 @@ pokemon-calc/
 
 
 ---
+
+## 速度计算器接口（V5.2.0，2026-11-19）
+
+`query.py speed [pokemon] [--value N] [--range N] [--pokemon_ov JSON] [--field_ov JSON]`。名称模式经现有名称／形态适配器构造 Pokemon，默认 50 级、0 投入、31 IV、勤奋，不调用预设；能力值由共享计算模块生成，实战速度由 `speed_effects.get_effective_speed` 计算。`--value`／纯数字位置参数仅查参照，禁止同时提供非空配置或环境参数。`--range` 默认 5，可为任意非负整数，0 仅查同速。
+
+结果包含面板、能力等级修正后及实战速度，按实战速度的正负闭区间检索用户精选参照；返回全部命中，差值为参照减用户。Field 条件仍只有 `field_ov` 一个入口。覆盖文件沿用 `*_ov_file` 优先规则。允许字段、例子、错误及当前不支持的场景见 [commands](references/commands.md#speed-速度计算器)。
+
+顺风使用速度命令专用 `field_ov.is_tailwind` 布尔值。入口单独验证并取出该字段，其余参数仍走共享 Field 校验；没有给共享 Field 或伤害计算增加无法区分双方的全局顺风。`get_effective_speed(..., tailwind=False)` 的关键字参数只作用于本次目标，默认调用行为不变；为 true 时将 2 倍纳入原有固定点倍率链，之后统一取整、处理麻痹与上限。查询参照使用顺风后的最终速度，默认 ±5 或指定 `--range N`；现有参考索引不改写。
+
+`data/speed_tiers.json` 是自包含运行时数据：schema v1、level 50、regulation M-C、count 574、source SHA-256、profile 短码与 150 个速度分组，每个配置保存 `[显示名称, profile短码, 状态]`。`speed_tiers.find_speed_references(data_dir, value, radius=5)` 只用标准库读取并二分截取闭区间，数据目录遵循 `POKEMON_CALC_DATA_DIR`，不依赖维护仓库的 plans/cache。按需加载数据发生在 Python 中，不进入 LLM 上下文。
+
+维护名单或基础数据时，先用 `cache/build_speed_tiers_review.py` 重建审核 JSON，再运行独立数值／范围校验；通过后运行 `python cache/build_speed_tiers_data.py` 编译运行时文件，并跑 `python cache/test_speed_command.py`。完整数值、人工收集源表及 token 报告继续保留在维护仓库 `plans/`。新运行时只增加小型精选索引，不携带完整审核 JSON。
 
 ## 脚本 I/O 规范
 
@@ -593,6 +607,14 @@ git push pokemon-calc pokemon-calc-branch:main
 ## 版本历史
 
 版本号与 git commit 历史一致。仅记录有真实意义的功能/修复变动，跳过纯临时存档与琐碎备份。
+
+### 5.2.0（2026-11-19）
+
+- 新增 `speed` 速度计算器：支持名称／形态及性格、EV／SP、IV、道具、特性、能力等级和异常状态，固定 50 级且不套热门预设；已有最终速度可用 `--value` 直接查询。
+- 自动返回最终实战速度正负范围内的精选参照。`--range` 默认 5，可调非负整数，0 仅同速；闭区间包含边界，空窗口不扩展，返回参照差值和明确配置／条件。
+- 加入目标一侧的顺风开关 `field_ov.is_tailwind`，在共享倍率链统一取整，保持旧伤害入口的默认行为。精选运行时索引包含 574 条配置、150 个速度分组，只将命中窗口交给 LLM。
+- SKILL 3.3 写入自动调用规则、固定种族值基准和半角方括号状态标签；双语 README、命令参考及维护说明同步。数值及范围由子 Agent 独立复核，完整验证见维护仓库的当天 CHANGELOG。
+- 发布验证：64 套现行测试通过；60 个黄金场景逐字节一致，六项数据／索引／枚举检查及两项速度资料独立复核通过。暂存工具的 1 项 Windows 符号链接条件测试跳过。速度命令专项 30 项与独立有理数组合测试 2 项通过，运行时索引 574 条与审核源一致。
 
 ### 5.1.5（2026-11-17）
 

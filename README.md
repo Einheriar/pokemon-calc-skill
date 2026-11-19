@@ -5,6 +5,8 @@
 
 # pokemon-calc: Pokédex & Damage Calculator for AI Agents
 
+**v5.2.0** adds a Speed calculator with automatic nearby benchmarks, an adjustable ± range, and Tailwind support. See the [Speed command](references/commands.md#speed-速度计算器).
+
 Traditional Pokémon damage calculators are web apps or tools built for humans. `pokemon-calc` is a purpose-built computation engine designed for **AI Agents (Large Language Models)**.
 
 By providing a deterministic CLI and bundled reference data, this project helps reduce the risk of numerical errors when an AI agent handles Pokémon battle modifiers such as type matchups, abilities, items, weather, and terrain. The engine computes supported cases; it does not cover every mechanic or replace careful interpretation of unsupported interactions.
@@ -55,6 +57,7 @@ Meta data is shipped as dated snapshots and does not update automatically. The b
 | SP optimization | "Pokémon Champions (SP system: 66/32/1), how much SpA SP does Charizard need to OHKO Blastoise?" |
 | Survivability lookup | "My Garchomp has 185 HP. What base power Physical/Special moves can it survive from a 200-Atk/SpA attacker?" |
 | Stat computation | "What's the Attack stat of 95 base, 252 EV, Adamant, Lv.50?" |
+| Speed calculator | "What's Mega Manectric's Modest max-SP Speed, and which selected benchmarks are within ±5?" |
 
 ---
 
@@ -72,7 +75,7 @@ Large language models can recognize intent and extract parameters, while determi
 
 Encyclopedia, calculation, optimization, and bundled meta-snapshot queries run offline after cloning. Optional `meta --online` requests fresh upstream meta data and therefore needs network access; results are cached locally, with cache/snapshot fallback if a request fails. The agent framework may still use model tokens when interpreting a request and presenting results.
 
-- **Bundled Data**: 34,619,350 bytes (34.62 MB, decimal) across 18 tracked data files, including Pokédex and battle data, aliases, presets, and dated meta snapshots. Coverage reflects the records included in this release; it is not a guarantee that every form or mechanic is represented.
+- **Bundled Data**: 34,636,873 bytes (34.64 MB, decimal) across 19 bundled data files, including Pokédex and battle data, aliases, presets, dated meta snapshots, and curated Speed references. Coverage reflects the included records; it is not a guarantee that every form or mechanic is represented.
 - **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, and no third-party Python packages to install.
 
 ---

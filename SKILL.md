@@ -3,13 +3,13 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.1.5"
+  version: "5.2.0"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
   (1) 宝可梦属性、种族值、弱点抗性、特性、技能池、进化链、图鉴描述、profile、prototype 等百科信息；
   (2) 招式威力、命中、PP、效果、属性相克；
-  (3) 宝可梦伤害计算、KO 概率、努力值优化（Phase 2+）；
+  (3) 宝可梦伤害计算、KO 概率、努力值优化、速度能力值计算与附近速度线参考；
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
   (6) 当前赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
@@ -35,7 +35,7 @@ description: >
 > **路径解析说明**：脚本通过 `__file__` 动态定位自身目录，并自动查找同级目录下的 `data/` 文件夹。若 Skill 被安装到其他位置，可通过设置环境变量 `POKEMON_CALC_DATA_DIR` 显式指定数据目录。
 
 > **参考文件使用规则**：本文件只含高频刚需内容。以下情况**先 Read 对应参考文件再执行**：
-> - 使用 `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move --source`，或需要更多命令示例、Windows 环境执行方式 → [`references/commands.md`](references/commands.md)
+> - 使用 `speed` / `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move --source`，或需要更多命令示例、Windows 环境执行方式 → [`references/commands.md`](references/commands.md)
 > - 需要 SP/EV 换算公式与对照表、optimize 双模式返回字段、数据来源完整说明 → [`references/mechanics.md`](references/mechanics.md)
 
 ```bash
@@ -66,6 +66,8 @@ preset <pokemon> [name] # 列出预设配置或获取具体配置
 calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤害计算（Lv.50）
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算（模板见 references/commands.md）
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
+speed <pokemon> [--pokemon_ov JSON] [--field_ov JSON] [--range N]  # 50级速度计算，自动附附近参照
+speed --value <speed> [--range N]                               # 已有最终速度 → 附近参照，默认±5
 optimize <att> <move> <def> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev|sp]
                         [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]  # 努力值优化
 survivability <defender> [attacker_stat] <category> [--def_ov JSON] [--field_ov JSON]  # 中性承伤威力反查；攻方能力值默认 200
@@ -382,6 +384,33 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 #### Step 9: 结果解析与回答
 
 按文档末尾「最终输出模板」组织回答，使用命令返回的精确数字。
+
+### 3.3 速度计算器与自动参照
+
+用户询问速度能力值、给出具体速度配置，或希望判断某个速度的位置时，使用 `speed`：有宝可梦及配置时执行 `speed <名> --pokemon_ov JSON --field_ov JSON`；已有最终生效速度时直接执行 `speed --value <数值>`，不反推配置。此规则用于用户的速度问题，不为无关的伤害回答额外附加速度线。
+
+命令自动返回实战速度 **±5** 内的精选参照。用户指定其他正负范围时，通过 `--range N` 原样传入非负整数；`0` 只查同速。窗口按能力值距离筛选、包含边界，不按档位数量取邻居；为空时如实说明，不自动扩大范围。参考 JSON 只由脚本读取，**不要将 `data/speed_tiers.json` 或整张长表读入上下文**。
+
+计算固定 50 级；未指定的投入为 0、个体值为 31、性格为勤奋，不套用热门预设。用户明确给出的性格、EV／SP、IV、形态、道具、特性及其触发状态和速度能力等级优先，均通过 `pokemon_ov`；天气／场地等只通过 `field_ov`。支持字段、JSON 文件覆盖与示例见 `references/commands.md`。不支持的字段会报错，不自行补算或声称已支持。
+
+轻装已触发时明确传 `ability:"轻装"`、`ability_on:true` 且当前无道具；碎裂铠甲触发一次传 `boosts:{"speed":2}`。天气特性同时明确对应天气。用户提及己方顺风时，在 `field_ov` 传 `"is_tailwind":true`（仅 JSON 布尔值）；它只作用于本次计算目标，与道具／特性速度倍率统一结算取整。面板速度不变，使用顺风后的 `effective_speed` 自动查询附近参照，范围仍由 `--range N` 控制。参照表不因此整体翻倍，每条参照保留原本条件。
+
+回答先给 `panel_speed`；有临时修正时同时给 `effective_speed` 并说明条件，再附 `references.matches` 中的名称、配置、条件与快慢差值。参照窗口以 **effective_speed** 为中心，`delta` 表示“参照速度减用户速度”，正为参照更快、负为参照更慢。同速可合并展示，明确标注围巾、天气／特性状态；精选名单不等于使用率分布，不能据此推算百分位。返回参照数据错误时说明错误，不将其描述为窗口内没有参照。
+
+**显示格式**：面向用户展示速度配置或状态时，统一使用半角方括号，如 [无努力]、[满速]、[极速]、[极限零速]、[速度2SP]、[围巾]、[轻装]、[雨天]、[顺风]。同一条参照的多个标签分别括起，例如“大嘴鸥 [极速] [围巾]”“超级雷电兽 [满速]”。表格单元格中的标签也按此格式展示；性别与形态分组继续使用此前确认的圆括号写法。
+
+分线名称仍依据**速度种族值**：135 及以上“超高速线”、120“高速线”，另有 100／80／50 线；这些标签不参与能力值窗口检索。收录项由用户指定，具体性别／地区／Mega 形态独立保存；用户已确认的同速参考组按括号范围展示，不自动扩展其他配置。
+
+**固定速查基准（已由引擎核验，可直接引用）**：以下均为 50 级、31 速度 IV、32 速度 SP（252 EV）；满速为性格不修正速度，极速为加速性格，不含其他修正。表中种族值为准确基准点，不代表整个分组内的宝可梦都达到相同速度。
+
+| 速度种族值线 | [满速]能力值 | [极速]能力值 |
+| --- | --- | --- |
+| 135 | 187 | 205 |
+| 120 | 172 | 189 |
+| 100 | 152 | 167 |
+| 80 | 132 | 145 |
+
+**80 线极速＋讲究围巾：速度能力值 217**（面板极速 145，围巾生效后 217）。本表固定基准不含顺风；具体宝可梦在顺风或其他条件下的速度和附近参照仍调用 `speed`，不要直接对已取整的围巾结果再次乘二。
 
 ## 4. 输出格式
 

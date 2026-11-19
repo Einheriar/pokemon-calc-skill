@@ -1,6 +1,30 @@
 # pokemon-calc 命令详细参考
 
-> 本文件为 SKILL.md 的按需参考，不自动加载。当需要 `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move` 的参数细节，或在 Windows 环境下执行命令时，先阅读本文件。
+> 本文件为 SKILL.md 的按需参考，不自动加载。当需要 `speed` / `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move` 的参数细节，或在 Windows 环境下执行命令时，先阅读本文件。
+
+## speed 速度计算器
+
+```powershell
+python scripts/query.py speed 超级雷电兽 --pokemon_ov '{"nature":"内敛","sps":{"speed":32}}'
+python scripts/query.py speed --value 187 --range 10
+python scripts/query.py speed 187 --range 0
+python scripts/query.py speed 龙头地鼠 --pokemon_ov '{"nature":"爽朗","sps":{"speed":32},"ability":"拨沙"}' --field_ov '{"weather":"Sand"}'
+python scripts/query.py speed 超级雷电兽 --pokemon_ov '{"nature":"内敛","sps":{"speed":32}}' --field_ov '{"is_tailwind":true}' --range 5
+```
+
+- 名称模式：固定 50 级，默认全部 0 投入、31 IV、勤奋性格，不使用自动或显式预设。`--pokemon_ov` 支持 `form_name`、`nature`、`evs`、`sps`、`ivs`、`boosts`、`item`、`ability`、`ability_on`、`status`。SP／EV 的相同能力项以 SP 为准。其他能力项的投入也可传入，以准确判断古代活性／夸克充能的最高项。
+- `--field_ov` 为已有 Field 参数，天气／场地的英文枚举不区分大小写，例如 `Sun`、`Rain`、`Sand`、`Electric`。能力等级用 `boosts.speed`；碎裂铠甲触发一次要显式传 `2`。轻装已触发要传 `ability:"轻装"`、`ability_on:true`，并保持当前无道具。天气特性不自动设置天气。
+- 已有数值模式：`--value N` 或纯数字位置参数表示**最终实战速度**，允许 0～10000 的整数；不能同时指定宝可梦或非空配置／环境覆盖。数值不再应用围巾或天气修正。
+- `--range N` 为非负整数，默认 5。对最终实战速度 S 查闭区间 `[max(0,S-N), min(10000,S+N)]`；0 仅同速，空窗口不扩展。不按档位数筛选，不隐式截断窗口内条目。
+- 文件覆盖：`--pokemon_ov_file`、`--field_ov_file`，UTF-8 JSON 文件优先于对应行内参数。文件缺失、非法 JSON、未知形态／枚举／字段均明确报错。
+- 顺风通过 `--field_ov '{"is_tailwind":true}'` 指定，必须为 JSON 布尔值，默认 false。此字段是速度计算器专用的目标一侧状态，不施加给其他宝可梦，也不扩展伤害命令的 Field 字段。顺风加入共享实际速度模块的倍率链，在最终取整和麻痹处理之前结算；计算后仍按最终 `effective_speed` 自动查 ±N 范围。关闭或不传时保持原结果，不批量修改 574 条参照的速度或条件。
+- 不模拟顺风回合倒计时、戏法空间或对手配置引起的场上状态变化。戏法空间不会在本命令中改变数值或参照关系；其他未支持字段仍拒绝。
+
+返回 `panel_speed`、`staged_speed`、`effective_speed`，以及配置摘要和 `references`。`references.matches` 只含窗口内配置，每项有 `speed`、`name`、`profile`、`condition`、`delta` 和 `relation`。**delta = 参照速度 − 用户实战速度**；正数参照更快、负数参照更慢，0 同速。这是速度数值比较，不推断先制招式等实际行动顺序。
+
+精选参照为 M-C、50 级、2026-11-19 用户确定的 574 条配置。天气、围巾和特性参照的条件始终保留，基础配置不继承相邻参照的条件。名单代表人工挑选的比较对象，不是使用率百分位。参照文件缺失／损坏时返回明确错误；已有算出的速度可保留，不把失败伪装为“没有附近参照”。
+
+数据由脚本从 `data/speed_tiers.json` 读取，LLM 不读取整表。Windows 引号受 shell 影响时优先使用覆盖文件。
 
 ## meta 命令说明
 

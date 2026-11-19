@@ -46,12 +46,15 @@ def get_effective_speed(
     field: Field,
     attacker: Pokemon | None = None,
     defender: Pokemon | None = None,
+    *,
+    tailwind: bool = False,
 ) -> int:
     """Return actual Speed from precomputed stages plus active battle modifiers.
 
     ``pokemon.stats['speed']`` already includes the stat-stage adjustment. The
     optional attack context is used only to resolve shared weather suppression;
-    it does not mutate either Pokemon or the field.
+    it does not mutate either Pokemon or the field. ``tailwind`` applies only
+    to this Pokemon's side and joins the modifier chain before final rounding.
     """
     speed = int(pokemon.stats.get("speed", 1))
     modifier = 4096
@@ -99,6 +102,9 @@ def get_effective_speed(
         modifier = _chain_modifier(modifier, 3, 2)
     elif item in _HALF_SPEED_ITEMS:
         modifier = _chain_modifier(modifier, 1, 2)
+
+    if tailwind:
+        modifier = _chain_modifier(modifier, 2)
 
     speed = _apply_modifier(speed, modifier)
     if pokemon.status == "Paralyzed" and ability != "Quick Feet":

@@ -19,6 +19,8 @@ Usage:
     python query.py filter-moves            # Filter moves by type/category/power
     python query.py preset <pokemon>        # List presets for a pokemon
     python query.py preset <pokemon> <name> # Get specific preset config
+    python query.py speed <pokemon> [--range N]  # Speed calculation + nearby references
+    python query.py speed --value <N> [--range N] # References around a final Speed value
     python query.py usage [--top N]         # Meta usage ranking (pokecamp.cc)
     python query.py usage <name>            # Pokemon's common moves/items/teammates
     python query.py teams                   # Recent tournament teams (top 12)
@@ -3052,6 +3054,99 @@ def cmd_compute_stats(
     }
 
 
+def cmd_speed(
+    name: str = "", value: int | None = None, radius: int = 5,
+    pokemon_override: str = "{}", field_override: str = "{}",
+) -> dict[str, Any]:
+    """Calculate Lv50 Speed without presets and attach a numeric reference window."""
+    from speed_effects import get_effective_speed
+    from speed_tiers import find_speed_references
+
+    if type(radius) is not int or radius < 0:
+        return {"error": "--range 必须是非负整数"}
+    pokemon_ov, error = _parse_json_object(pokemon_override, "pokemon_override")
+    if error is not None:
+        return error
+    field_ov, error = _parse_json_object(field_override, "field_override")
+    if error is not None:
+        return error
+    if value is None and isinstance(name, str) and name.isascii() and name.isdigit():
+        value, name = int(name), ""
+    if value is not None:
+        if name or pokemon_ov or field_ov:
+            return {"error": "--value 已是最终生效速度，不能同时指定宝可梦或配置／环境覆盖"}
+        if type(value) is not int or not 0 <= value <= 10000:
+            return {"error": "--value 必须是 0 至 10000 的整数"}
+        response: dict[str, Any] = {"mode": "reference", "effective_speed": value}
+    else:
+        if not isinstance(name, str) or not name.strip():
+            return {"error": "speed 需要宝可梦名称或 --value 速度能力值"}
+        allowed = {"evs", "sps", "ivs", "nature", "form_name", "ability", "ability_on",
+                   "item", "status", "boosts"}
+        unknown = set(pokemon_ov) - allowed
+        if unknown:
+            return {"error": "pokemon_override 包含不支持的速度计算字段：" + ", ".join(sorted(unknown))}
+        error = _validate_override_enums("pokemon_override", pokemon_ov)
+        if error is not None:
+            return error
+        tailwind = field_ov.get("is_tailwind", False)
+        if type(tailwind) is not bool:
+            return {"error": "field_override.is_tailwind 必须是 JSON 布尔值"}
+        field_values = {key: item for key, item in field_ov.items() if key != "is_tailwind"}
+        error = _validate_field_overrides(field_values)
+        if error is not None:
+            return error
+        for key in ("ability", "item", "form_name"):
+            if key in pokemon_ov and not isinstance(pokemon_ov[key], str):
+                return {"error": f"pokemon_override.{key} 必须是字符串"}
+        if pokemon_ov.get("ability"):
+            resolved_ability = resolve_ability(pokemon_ov["ability"])
+            if not resolved_ability or not resolved_ability[1]:
+                return {"error": f"未知特性：{pokemon_ov['ability']}"}
+            pokemon_ov["ability"] = resolved_ability[1]["name_en"]
+        if pokemon_ov.get("item"):
+            if not resolve_item(pokemon_ov["item"]) and pokemon_ov["item"] not in _ITEM_INPUT_FALLBACK:
+                return {"error": f"未知道具：{pokemon_ov['item']}"}
+        resolved = resolve_pokemon(name)
+        if not resolved:
+            return cmd_pokemon(name)
+        _, data, form_index = resolved
+        if "form_name" in pokemon_ov and pokemon_ov["form_name"] not in {f["name"] for f in data["forms"]}:
+            return {"error": f"未知形态：{pokemon_ov['form_name']}",
+                    "forms": [f["name"] for f in data["forms"]]}
+        pk_dict = _make_pokemon_from_data(data, pokemon_ov, form_index=form_index)
+        source = pk_dict.pop("_data_source", "gen9")
+        unavailable = pk_dict.pop("is_unobtainable", False)
+        sp_meta = pk_dict.pop("_sp_meta")
+        pokemon = Pokemon(**pk_dict)
+        _finalize_calc_pokemon(pokemon, pokemon_ov)
+        field = Field(**field_values)
+        value = get_effective_speed(pokemon, field, tailwind=tailwind)
+        final_form = data["forms"][sp_meta["form_index"]]["name"]
+        response = {
+            "mode": "calculate", "level": 50,
+            "pokemon": {"name": pokemon.name, "name_en": pokemon.name_en, "form_name": final_form,
+                        "base_speed": pokemon.base_stats["speed"], "nature": pokemon.nature,
+                        "speed_sp": sp_meta["sps"].get("speed", 0),
+                        "speed_ev": pokemon.evs.get("speed", 0), "speed_iv": pokemon.ivs.get("speed", 31),
+                        "speed_stage": pokemon.boosts.get("speed", 0),
+                        "ability": pokemon.ability, "ability_on": pokemon.ability_on,
+                        "item": pokemon.item, "status": pokemon.status,
+                        "_data_source": source, "is_unobtainable": unavailable},
+            "panel_speed": pokemon.raw_stats["speed"], "staged_speed": pokemon.stats["speed"],
+            "effective_speed": value,
+            "field": {**field_values, **({"is_tailwind": tailwind} if "is_tailwind" in field_ov else {})},
+            "defaults": "50级；未指定的能力投入为0、个体值为31、性格为勤奋；不套用热门预设",
+        }
+        if sp_meta.get("approx"):
+            response["sp_approx_keys"] = sp_meta["approx"]
+    try:
+        response["references"] = find_speed_references(DATA_DIR, value, radius)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        response["error"] = f"速度线参照数据不可用：{exc}"
+    return response
+
+
 def cmd_calc_raw(
     attacker_json: str,
     move_json: str,
@@ -4116,6 +4211,7 @@ COMMANDS: dict[str, Any] = {
     "calc": cmd_calc,
     "calc-raw": cmd_calc_raw,
     "compute-stats": cmd_compute_stats,
+    "speed": cmd_speed,
     "optimize": cmd_optimize,
     "survivability": cmd_survivability,
     "meta": cmd_meta,
@@ -4160,7 +4256,7 @@ def main() -> int:
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
-    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta", "lookup"):
+    if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "speed", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta", "lookup"):
         import argparse
 
         parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
@@ -4219,6 +4315,16 @@ def main() -> int:
         stats_parser.add_argument("--ivs", default="{}", help="IVs JSON")
         stats_parser.add_argument("--nature", default="勤奋", help="Nature name (Chinese or English)")
         stats_parser.add_argument("--level", default="50", help="Level")
+
+        # speed
+        speed_parser = subparsers.add_parser("speed", help="Calculate Speed and attach nearby curated references")
+        speed_parser.add_argument("name", nargs="?", default="", help="Pokemon name, or a final Speed integer")
+        speed_parser.add_argument("--value", type=int, default=None, help="Final effective Speed for reference lookup only")
+        speed_parser.add_argument("--range", dest="radius", type=int, default=5, help="Inclusive plus/minus reference range (default 5)")
+        speed_parser.add_argument("--pokemon_ov", default="{}", help="Pokemon configuration override JSON")
+        speed_parser.add_argument("--field_ov", default="{}", help="Weather / terrain / field override JSON")
+        speed_parser.add_argument("--pokemon_ov_file", default=None, help="Pokemon override JSON file (takes precedence)")
+        speed_parser.add_argument("--field_ov_file", default=None, help="Field override JSON file (takes precedence)")
 
         # find-move
         findmove_parser = subparsers.add_parser("find-move", help="Find all pokemon that can learn a given move")
@@ -4301,6 +4407,8 @@ def main() -> int:
         args.move_ov = _read_file_or_default(getattr(args, "move_ov_file", None), getattr(args, "move_ov", "{}"))
         args.def_ov = _read_file_or_default(getattr(args, "def_ov_file", None), getattr(args, "def_ov", "{}"))
         args.field_ov = _read_file_or_default(getattr(args, "field_ov_file", None), getattr(args, "field_ov", "{}"))
+        if cmd == "speed":
+            args.pokemon_ov = _read_file_or_default(args.pokemon_ov_file, args.pokemon_ov)
 
         try:
             if cmd == "calc":
@@ -4331,6 +4439,8 @@ def main() -> int:
                     result = cmd_pokemon(type_filters=args.type_filters)
                 else:
                     result = cmd_pokemon(name=args.name)
+            elif cmd == "speed":
+                result = cmd_speed(args.name, args.value, args.radius, args.pokemon_ov, args.field_ov)
             elif cmd == "compute-stats":
                 result = cmd_compute_stats(
                     args.base_stats,
