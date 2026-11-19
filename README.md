@@ -75,7 +75,7 @@ Large language models can recognize intent and extract parameters, while determi
 
 Encyclopedia, calculation, optimization, and bundled meta-snapshot queries run offline after cloning. Optional `meta --online` requests fresh upstream meta data and therefore needs network access; results are cached locally, with cache/snapshot fallback if a request fails. The agent framework may still use model tokens when interpreting a request and presenting results.
 
-- **Bundled Data**: 34,636,873 bytes (34.64 MB, decimal) across 19 bundled data files, including Pokédex and battle data, aliases, presets, dated meta snapshots, and curated Speed references. Coverage reflects the included records; it is not a guarantee that every form or mechanic is represented.
+- **Bundled Data**: 34,636,872 bytes (34.64 MB, decimal) across 19 bundled data files, including Pokédex and battle data, aliases, presets, dated meta snapshots, and curated Speed references. Coverage reflects the included records; it is not a guarantee that every form or mechanic is represented.
 - **Minimal Runtime**: Python 3.10+ standard library only. **No** `numpy`, **no** `pandas`, and no third-party Python packages to install.
 
 ---
