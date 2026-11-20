@@ -837,24 +837,56 @@
  "Bright Powder": {
   "name_zh": "光粉",
   "name_ja": "ひかりのこな",
-  "name_en": "Bright Powder"
+  "name_en": "Bright Powder",
+  "localized_names": {
+   "fr": "Poudre Claire",
+   "de": "Blendpuder",
+   "it": "Luminpolvere",
+   "es-ES": "Polvo Brillo",
+   "es-419": "Polvo Brillo",
+   "ko": "반짝가루"
+  }
  },
  "Quick Claw": {
   "name_zh": "先制之爪",
   "name_ja": "せんせいのツメ",
-  "name_en": "Quick Claw"
+  "name_en": "Quick Claw",
+  "localized_names": {
+   "fr": "Vive Griffe",
+   "de": "Flinkklaue",
+   "it": "Rapidartiglio",
+   "es-ES": "Garra Rápida",
+   "es-419": "Garra Rápida",
+   "ko": "선제공격손톱"
+  }
  },
  "King's Rock": {
   "name_zh": "王者之证",
   "name_ja": "おうじゃのしるし",
-  "name_en": "King's Rock"
+  "name_en": "King's Rock",
+  "localized_names": {
+   "fr": "Roche Royale",
+   "de": "King-Stein",
+   "it": "Roccia di re",
+   "es-ES": "Roca del Rey",
+   "es-419": "Roca del Rey",
+   "ko": "왕의징표석"
+  }
  },
  "Silver Powder": {
   "name_zh": "银粉",
   "name_ja": "ぎんのこな",
   "name_en": "Silver Powder",
   "effect": "携带后，虫属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Poudre Argentée",
+   "de": "Silberstaub",
+   "it": "Argenpolvere",
+   "es-ES": "Polvo Plata",
+   "es-419": "Polvo Plata",
+   "ko": "은빛가루"
+  }
  },
  "Amulet Coin": {
   "name_zh": "护符金币",
@@ -881,7 +913,15 @@
   "name_ja": "きあいのハチマキ",
   "name_en": "Focus Band",
   "effect": "携带后，受到濒死攻击时有10%概率保留1HP",
-  "category": "保命道具"
+  "category": "保命道具",
+  "localized_names": {
+   "fr": "Bandeau",
+   "de": "Fokusband",
+   "it": "Bandana",
+   "es-ES": "Cinta Aguante",
+   "es-419": "Cinta Aguante",
+   "ko": "기합의머리띠"
+  }
  },
  "Lucky Egg": {
   "name_zh": "幸运蛋",
@@ -891,21 +931,45 @@
  "Scope Lens": {
   "name_zh": "焦点镜",
   "name_ja": "ピントレンズ",
-  "name_en": "Scope Lens"
+  "name_en": "Scope Lens",
+  "localized_names": {
+   "fr": "Lentilscope",
+   "de": "Scope-Linse",
+   "it": "Mirino",
+   "es-ES": "Periscopio",
+   "es-419": "Periscopio",
+   "ko": "초점렌즈"
+  }
  },
  "Metal Coat": {
   "name_zh": "金属膜",
   "name_ja": "メタルコート",
   "name_en": "Metal Coat",
   "effect": "携带后，钢属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Peau Métal",
+   "de": "Metallmantel",
+   "it": "Metalcopertura",
+   "es-ES": "Revest. Metálico",
+   "es-419": "Revest. Metálico",
+   "ko": "금속코트"
+  }
  },
  "Leftovers": {
   "name_zh": "吃剩的东西",
   "name_ja": "たべのこし",
   "name_en": "Leftovers",
   "effect": "携带后，每回合结束时回复少量HP",
-  "category": "回复道具"
+  "category": "回复道具",
+  "localized_names": {
+   "fr": "Restes",
+   "de": "Überreste",
+   "it": "Avanzi",
+   "es-ES": "Restos",
+   "es-419": "Restos",
+   "ko": "먹다남은음식"
+  }
  },
  "Dragon Scale": {
   "name_zh": "龙之鳞片",
@@ -915,105 +979,225 @@
  "Light Ball": {
   "name_zh": "电气球",
   "name_ja": "でんきだま",
-  "name_en": "Light Ball"
+  "name_en": "Light Ball",
+  "localized_names": {
+   "fr": "Balle Lumière",
+   "de": "Kugelblitz",
+   "it": "Elettropalla",
+   "es-ES": "Bola Luminosa",
+   "es-419": "Bola Luminosa",
+   "ko": "전기구슬"
+  }
  },
  "Soft Sand": {
   "name_zh": "柔软沙子",
   "name_ja": "やわらかいすな",
   "name_en": "Soft Sand",
   "effect": "携带后，地面属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Sable Doux",
+   "de": "Pudersand",
+   "it": "Sabbia soffice",
+   "es-ES": "Arena Fina",
+   "es-419": "Arena Fina",
+   "ko": "부드러운모래"
+  }
  },
  "Hard Stone": {
   "name_zh": "硬石头",
   "name_ja": "かたいいし",
   "name_en": "Hard Stone",
   "effect": "携带后，岩石属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Pierre Dure",
+   "de": "Granitstein",
+   "it": "Pietradura",
+   "es-ES": "Piedra Dura",
+   "es-419": "Piedra Dura",
+   "ko": "딱딱한돌"
+  }
  },
  "Miracle Seed": {
   "name_zh": "奇迹种子",
   "name_ja": "きせきのタネ",
   "name_en": "Miracle Seed",
   "effect": "携带后，草属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Graine Miracle",
+   "de": "Wundersaat",
+   "it": "Miracolseme",
+   "es-ES": "Semilla Milagro",
+   "es-419": "Semilla Milagro",
+   "ko": "기적의씨"
+  }
  },
  "Black Glasses": {
   "name_zh": "黑色眼镜",
   "name_ja": "くろいメガネ",
   "name_en": "Black Glasses",
   "effect": "携带后，恶属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Lunettes Noires",
+   "de": "Schattenbrille",
+   "it": "Occhialineri",
+   "es-ES": "Gafas de Sol",
+   "es-419": "Lentes de Sol",
+   "ko": "검은안경"
+  }
  },
  "Black Belt": {
   "name_zh": "黑带",
   "name_ja": "くろおび",
   "name_en": "Black Belt",
   "effect": "携带后，格斗属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Ceinture Noire",
+   "de": "Schwarzgurt",
+   "it": "Cintura nera",
+   "es-ES": "Cinturón Negro",
+   "es-419": "Cinturón Negro",
+   "ko": "검은띠"
+  }
  },
  "Magnet": {
   "name_zh": "磁铁",
   "name_ja": "じしゃく",
   "name_en": "Magnet",
   "effect": "携带后，电属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Aimant",
+   "de": "Magnet",
+   "it": "Calamita",
+   "es-ES": "Imán",
+   "es-419": "Imán",
+   "ko": "자석"
+  }
  },
  "Mystic Water": {
   "name_zh": "神秘水滴",
   "name_ja": "しんぴのしずく",
   "name_en": "Mystic Water",
   "effect": "携带后，水属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Eau Mystique",
+   "de": "Zauberwasser",
+   "it": "Acqua magica",
+   "es-ES": "Agua Mística",
+   "es-419": "Agua Mística",
+   "ko": "신비의물방울"
+  }
  },
  "Sharp Beak": {
   "name_zh": "锐利鸟嘴",
   "name_ja": "するどいくちばし",
   "name_en": "Sharp Beak",
   "effect": "携带后，飞行属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Bec Pointu",
+   "de": "Spitzer Schnabel",
+   "it": "Beccaffilato",
+   "es-ES": "Pico Afilado",
+   "es-419": "Pico Afilado",
+   "ko": "예리한부리"
+  }
  },
  "Poison Barb": {
   "name_zh": "毒针",
   "name_ja": "どくバリ",
   "name_en": "Poison Barb",
   "effect": "携带后，毒属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Pic Venin",
+   "de": "Giftstich",
+   "it": "Velenaculeo",
+   "es-ES": "Flecha Venenosa",
+   "es-419": "Flecha Venenosa",
+   "ko": "독바늘"
+  }
  },
  "Never-Melt Ice": {
   "name_zh": "不融冰",
   "name_ja": "とけないこおり",
   "name_en": "Never-Melt Ice",
   "effect": "携带后，冰属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Glace Éternelle",
+   "de": "Ewiges Eis",
+   "it": "Gelomai",
+   "es-ES": "Hielo Perpetuo",
+   "es-419": "Hielo Perpetuo",
+   "ko": "녹지않는얼음"
+  }
  },
  "Spell Tag": {
   "name_zh": "诅咒之符",
   "name_ja": "のろいのおふだ",
   "name_en": "Spell Tag",
   "effect": "携带后，幽灵属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Rune Sort",
+   "de": "Bannsticker",
+   "it": "Spettrotarga",
+   "es-ES": "Hechizo",
+   "es-419": "Hechizo",
+   "ko": "저주의부적"
+  }
  },
  "Twisted Spoon": {
   "name_zh": "弯曲的汤匙",
   "name_ja": "まがったスプーン",
   "name_en": "Twisted Spoon",
   "effect": "携带后，超能力属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Cuillère Tordue",
+   "de": "Krummlöffel",
+   "it": "Cucchiaio torto",
+   "es-ES": "Cuchara Torcida",
+   "es-419": "Cuchara Torcida",
+   "ko": "휘어진스푼"
+  }
  },
  "Charcoal": {
   "name_zh": "木炭",
   "name_ja": "もくたん",
   "name_en": "Charcoal",
   "effect": "携带后，火属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Charbon",
+   "de": "Holzkohle",
+   "it": "Carbonella",
+   "es-ES": "Carbón",
+   "es-419": "Carbón",
+   "ko": "목탄"
+  }
  },
  "Dragon Fang": {
   "name_zh": "龙之牙",
   "name_ja": "りゅうのキバ",
   "name_en": "Dragon Fang",
   "effect": "携带后，龙属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Croc Dragon",
+   "de": "Drachenzahn",
+   "it": "Dente di drago",
+   "es-ES": "Colmillo de Dragón",
+   "es-419": "Colmillo Dragón",
+   "ko": "용의이빨"
+  }
  },
  "Pink Bow": {
   "name_zh": "粉红色丝带",
@@ -1030,7 +1214,15 @@
   "name_ja": "シルクのスカーフ",
   "name_en": "Silk Scarf",
   "effect": "携带后，一般属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Mouchoir Soie",
+   "de": "Seidenschal",
+   "it": "Sciarpa seta",
+   "es-ES": "Pañuelo de Seda",
+   "es-419": "Pañuelo de Seda",
+   "ko": "실크스카프"
+  }
  },
  "Berserk Gene": {
   "name_zh": "破坏基因",
@@ -1120,12 +1312,28 @@
  "White Herb": {
   "name_zh": "白色香草",
   "name_ja": "しろいハーブ",
-  "name_en": "White Herb"
+  "name_en": "White Herb",
+  "localized_names": {
+   "fr": "Herbe Blanche",
+   "de": "Schlohkraut",
+   "it": "Erbachiara",
+   "es-ES": "Hierba Blanca",
+   "es-419": "Hierba Blanca",
+   "ko": "하양허브"
+  }
  },
  "Mental Herb": {
   "name_zh": "心灵香草",
   "name_ja": "メンタルハーブ",
-  "name_en": "Mental Herb"
+  "name_en": "Mental Herb",
+  "localized_names": {
+   "fr": "Herbe Mental",
+   "de": "Mentalkraut",
+   "it": "Mentalerba",
+   "es-ES": "Hierba Mental",
+   "es-419": "Hierba Mental",
+   "ko": "멘탈허브"
+  }
  },
  "Power Herb": {
   "name_zh": "强力香草",
@@ -1161,7 +1369,15 @@
   "name_ja": "こだわりスカーフ",
   "name_en": "Choice Scarf",
   "effect": "携带后，速度提升50%，但只能使用上场后使出的第一个招式",
-  "category": "讲究道具"
+  "category": "讲究道具",
+  "localized_names": {
+   "fr": "Mouchoir Choix",
+   "de": "Wahlschal",
+   "it": "Stolascelta",
+   "es-ES": "Pañuelo Elección",
+   "es-419": "Pañuelo Elección",
+   "ko": "구애스카프"
+  }
  },
  "Soul Dew": {
   "name_zh": "心之水滴",
@@ -1181,7 +1397,15 @@
  "Shell Bell": {
   "name_zh": "贝壳之铃",
   "name_ja": "かいがらのすず",
-  "name_en": "Shell Bell"
+  "name_en": "Shell Bell",
+  "localized_names": {
+   "fr": "Grelot Coque",
+   "de": "Muschelglocke",
+   "it": "Conchinella",
+   "es-ES": "Cascabel Concha",
+   "es-419": "Cascabel Nácar",
+   "ko": "조개껍질방울"
+  }
  },
  "Sea Incense": {
   "name_zh": "海潮薰香",
@@ -1406,40 +1630,88 @@
  "Wide Lens": {
   "name_zh": "广角镜",
   "name_ja": "こうかくレンズ",
-  "name_en": "Wide Lens"
+  "name_en": "Wide Lens",
+  "localized_names": {
+   "fr": "Loupe",
+   "de": "Großlinse",
+   "it": "Grandelente",
+   "es-ES": "Lupa",
+   "es-419": "Lupa",
+   "ko": "광각렌즈"
+  }
  },
  "Muscle Band": {
   "name_zh": "力量头带",
   "name_ja": "ちからのハチマキ",
   "name_en": "Muscle Band",
   "effect": "携带后，物理招式威力提升10%",
-  "category": "分类增强道具"
+  "category": "分类增强道具",
+  "localized_names": {
+   "fr": "Bandeau Muscle",
+   "de": "Muskelband",
+   "it": "Muscolbanda",
+   "es-ES": "Cinta Fuerte",
+   "es-419": "Cinta Fuerte",
+   "ko": "힘의머리띠"
+  }
  },
  "Wise Glasses": {
   "name_zh": "博识眼镜",
   "name_ja": "ものしりメガネ",
   "name_en": "Wise Glasses",
   "effect": "携带后，特殊招式威力提升10%",
-  "category": "分类增强道具"
+  "category": "分类增强道具",
+  "localized_names": {
+   "fr": "Lunettes Sages",
+   "de": "Schlaubrille",
+   "it": "Saviocchiali",
+   "es-ES": "Gafas Especiales",
+   "es-419": "Lentes Especiales",
+   "ko": "박식안경"
+  }
  },
  "Expert Belt": {
   "name_zh": "达人带",
   "name_ja": "たつじんのおび",
   "name_en": "Expert Belt",
   "effect": "携带后，效果拔群的招式威力额外提升20%",
-  "category": "威力增强道具"
+  "category": "威力增强道具",
+  "localized_names": {
+   "fr": "Ceinture Pro",
+   "de": "Expertengurt",
+   "it": "Abilcintura",
+   "es-ES": "Cinturón de Experto",
+   "es-419": "Cinturón de Experto",
+   "ko": "달인의띠"
+  }
  },
  "Light Clay": {
   "name_zh": "光之黏土",
   "name_ja": "ひかりのねんど",
-  "name_en": "Light Clay"
+  "name_en": "Light Clay",
+  "localized_names": {
+   "fr": "Lumargile",
+   "de": "Lichtlehm",
+   "it": "Creta luce",
+   "es-ES": "Refleluz",
+   "es-419": "Refleluz",
+   "ko": "빛의점토"
+  }
  },
  "Life Orb": {
   "name_zh": "生命宝珠",
   "name_ja": "いのちのたま",
   "name_en": "Life Orb",
   "effect": "携带后，招式威力提升30%，但攻击时会损失少量HP",
-  "category": "威力增强道具"
+  "category": "威力增强道具",
+  "localized_names": {
+   "fr": "Orbe Vie",
+   "de": "Leben-Orb",
+   "it": "Assorbisfera",
+   "es-ES": "Vidasfera",
+   "es-419": "Vidaesfera",
+   "ko": "생명의구슬"
+  }
  },
  "Toxic Orb": {
   "name_zh": "剧毒宝珠",
@@ -1456,22 +1728,54 @@
   "name_ja": "きあいのタスキ",
   "name_en": "Focus Sash",
   "effect": "携带后，满HP时受到一击濒死的攻击可以保留1HP（一次性）",
-  "category": "保命道具"
+  "category": "保命道具",
+  "localized_names": {
+   "fr": "Ceinture Force",
+   "de": "Fokusgurt",
+   "it": "Focalnastro",
+   "es-ES": "Banda Aguante",
+   "es-419": "Banda Aguante",
+   "ko": "기합의띠"
+  }
  },
  "Zoom Lens": {
   "name_zh": "对焦镜",
   "name_ja": "フォーカスレンズ",
-  "name_en": "Zoom Lens"
+  "name_en": "Zoom Lens",
+  "localized_names": {
+   "fr": "Lentille Zoom",
+   "de": "Zoomlinse",
+   "it": "Zoomlente",
+   "es-ES": "Telescopio",
+   "es-419": "Telescopio",
+   "ko": "포커스렌즈"
+  }
  },
  "Metronome": {
   "name_zh": "节拍器",
   "name_ja": "メトロノーム",
-  "name_en": "Metronome"
+  "name_en": "Metronome",
+  "localized_names": {
+   "fr": "Métronome",
+   "de": "Metronom",
+   "it": "Plessimetro",
+   "es-ES": "Metrónomo",
+   "es-419": "Metrónomo",
+   "ko": "메트로놈"
+  }
  },
  "Iron Ball": {
   "name_zh": "黑色铁球",
   "name_ja": "くろいてっきゅう",
-  "name_en": "Iron Ball"
+  "name_en": "Iron Ball",
+  "localized_names": {
+   "fr": "Balle Fer",
+   "de": "Eisenkugel",
+   "it": "Ferropalla",
+   "es-ES": "Bola Férrea",
+   "es-419": "Bola Férrea",
+   "ko": "검은철구"
+  }
  },
  "Lagging Tail": {
   "name_zh": "后攻之尾",
@@ -1491,22 +1795,54 @@
  "Icy Rock": {
   "name_zh": "冰冷岩石",
   "name_ja": "つめたいいわ",
-  "name_en": "Icy Rock"
+  "name_en": "Icy Rock",
+  "localized_names": {
+   "fr": "Roche Glace",
+   "de": "Eisbrocken",
+   "it": "Rocciafredda",
+   "es-ES": "Roca Helada",
+   "es-419": "Roca Helada",
+   "ko": "차가운바위"
+  }
  },
  "Smooth Rock": {
   "name_zh": "沙沙岩石",
   "name_ja": "さらさらいわ",
-  "name_en": "Smooth Rock"
+  "name_en": "Smooth Rock",
+  "localized_names": {
+   "fr": "Roche Lisse",
+   "de": "Glattbrocken",
+   "it": "Roccialiscia",
+   "es-ES": "Roca Suave",
+   "es-419": "Roca Suave",
+   "ko": "보송보송바위"
+  }
  },
  "Heat Rock": {
   "name_zh": "炽热岩石",
   "name_ja": "あついいわ",
-  "name_en": "Heat Rock"
+  "name_en": "Heat Rock",
+  "localized_names": {
+   "fr": "Roche Chaude",
+   "de": "Heißbrocken",
+   "it": "Rocciacalda",
+   "es-ES": "Roca Calor",
+   "es-419": "Roca Calor",
+   "ko": "뜨거운바위"
+  }
  },
  "Damp Rock": {
   "name_zh": "潮湿岩石",
   "name_ja": "しめったいわ",
-  "name_en": "Damp Rock"
+  "name_en": "Damp Rock",
+  "localized_names": {
+   "fr": "Roche Humide",
+   "de": "Nassbrocken",
+   "it": "Rocciaumida",
+   "es-ES": "Roca Lluvia",
+   "es-419": "Roca Lluvia",
+   "ko": "축축한바위"
+  }
  },
  "Grip Claw": {
   "name_zh": "紧缠钩爪",
@@ -1551,12 +1887,28 @@
  "Shed Shell": {
   "name_zh": "美丽空壳",
   "name_ja": "きれいなぬけがら",
-  "name_en": "Shed Shell"
+  "name_en": "Shed Shell",
+  "localized_names": {
+   "fr": "Carapace Mue",
+   "de": "Wechselhülle",
+   "it": "Disfoguscio",
+   "es-ES": "Muda Concha",
+   "es-419": "Muda de Piel",
+   "ko": "아름다운허물"
+  }
  },
  "Big Root": {
   "name_zh": "大根茎",
   "name_ja": "おおきなねっこ",
-  "name_en": "Big Root"
+  "name_en": "Big Root",
+  "localized_names": {
+   "fr": "Grosse Racine",
+   "de": "Großwurzel",
+   "it": "Granradice",
+   "es-ES": "Raíz Grande",
+   "es-419": "Raíz Grande",
+   "ko": "큰뿌리"
+  }
  },
  "Douse Drive": {
   "name_zh": "水流卡带",
@@ -1600,17 +1952,41 @@
   "name_ja": "ゴツゴツメット",
   "name_en": "Rocky Helmet",
   "effect": "携带后，受到接触类招式攻击时，攻击方会受到少量伤害",
-  "category": "反伤道具"
+  "category": "反伤道具",
+  "localized_names": {
+   "fr": "Casque Brut",
+   "de": "Beulenhelm",
+   "it": "Bitorzolelmo",
+   "es-ES": "Casco Dentado",
+   "es-419": "Casco Dentado",
+   "ko": "울퉁불퉁멧"
+  }
  },
  "Air Balloon": {
   "name_zh": "气球",
   "name_ja": "ふうせん",
-  "name_en": "Air Balloon"
+  "name_en": "Air Balloon",
+  "localized_names": {
+   "fr": "Ballon",
+   "de": "Luftballon",
+   "it": "Palloncino",
+   "es-ES": "Globo Helio",
+   "es-419": "Globo con Helio",
+   "ko": "풍선"
+  }
  },
  "Red Card": {
   "name_zh": "红牌",
   "name_ja": "レッドカード",
-  "name_en": "Red Card"
+  "name_en": "Red Card",
+  "localized_names": {
+   "fr": "Carton Rouge",
+   "de": "Rote Karte",
+   "it": "Cartelrosso",
+   "es-ES": "Tarjeta Roja",
+   "es-419": "Tarjeta Roja",
+   "ko": "레드카드"
+  }
  },
  "Ring Target": {
   "name_zh": "标靶",
@@ -1620,7 +1996,15 @@
  "Binding Band": {
   "name_zh": "紧绑束带",
   "name_ja": "しめつけバンド",
-  "name_en": "Binding Band"
+  "name_en": "Binding Band",
+  "localized_names": {
+   "fr": "Bande Étreinte",
+   "de": "Klammerband",
+   "it": "Legafascia",
+   "es-ES": "Banda Atadura",
+   "es-419": "Banda Atadura",
+   "ko": "조임밴드"
+  }
  },
  "Absorb Bulb": {
   "name_zh": "球根",
@@ -1635,7 +2019,15 @@
  "Eject Button": {
   "name_zh": "逃脱按键",
   "name_ja": "だっしゅつボタン",
-  "name_en": "Eject Button"
+  "name_en": "Eject Button",
+  "localized_names": {
+   "fr": "Bouton Fuite",
+   "de": "Fluchtknopf",
+   "it": "Pulsantefuga",
+   "es-ES": "Botón Escape",
+   "es-419": "Botón de Escape",
+   "ko": "탈출버튼"
+  }
  },
  "Fire Gem": {
   "name_zh": "火之宝石",
@@ -1720,7 +2112,15 @@
  "Normal Gem": {
   "name_zh": "一般宝石",
   "name_ja": "ノーマルジュエル",
-  "name_en": "Normal Gem"
+  "name_en": "Normal Gem",
+  "localized_names": {
+   "fr": "Joyau Normal",
+   "de": "Normaljuwel",
+   "it": "Bijounormale",
+   "es-ES": "Gema Normal",
+   "es-419": "Gema Normal",
+   "ko": "노말주얼"
+  }
  },
  "Fairy Gem": {
   "name_zh": "妖精宝石",
@@ -1776,7 +2176,15 @@
  "Terrain Extender": {
   "name_zh": "大地膜",
   "name_ja": "グランドコート",
-  "name_en": "Terrain Extender"
+  "name_en": "Terrain Extender",
+  "localized_names": {
+   "fr": "Champ’Duit",
+   "de": "Feldbeschichtung",
+   "it": "Fissacampo",
+   "es-ES": "Cubresuelos",
+   "es-419": "Cubresuelos",
+   "ko": "그라운드코트"
+  }
  },
  "Protective Pads": {
   "name_zh": "部位护具",
@@ -1786,22 +2194,54 @@
  "Electric Seed": {
   "name_zh": "电气种子",
   "name_ja": "エレキシード",
-  "name_en": "Electric Seed"
+  "name_en": "Electric Seed",
+  "localized_names": {
+   "fr": "Graine Électrik",
+   "de": "Elektro-Samen",
+   "it": "Elettroseme",
+   "es-ES": "Semilla Electro",
+   "es-419": "Semilla Electro",
+   "ko": "일렉트릭시드"
+  }
  },
  "Psychic Seed": {
   "name_zh": "精神种子",
   "name_ja": "サイコシード",
-  "name_en": "Psychic Seed"
+  "name_en": "Psychic Seed",
+  "localized_names": {
+   "fr": "Graine Psychique",
+   "de": "Psycho-Samen",
+   "it": "Psicoseme",
+   "es-ES": "Semilla Psique",
+   "es-419": "Semilla Psique",
+   "ko": "사이코시드"
+  }
  },
  "Misty Seed": {
   "name_zh": "薄雾种子",
   "name_ja": "ミストシード",
-  "name_en": "Misty Seed"
+  "name_en": "Misty Seed",
+  "localized_names": {
+   "fr": "Graine Brume",
+   "de": "Nebel-Samen",
+   "it": "Nebbiaseme",
+   "es-ES": "Semilla Bruma",
+   "es-419": "Semilla Bruma",
+   "ko": "미스트시드"
+  }
  },
  "Grassy Seed": {
   "name_zh": "青草种子",
   "name_ja": "グラスシード",
-  "name_en": "Grassy Seed"
+  "name_en": "Grassy Seed",
+  "localized_names": {
+   "fr": "Graine Herbe",
+   "de": "Gras-Samen",
+   "it": "Erbaseme",
+   "es-ES": "Semilla Hierba",
+   "es-419": "Semilla Césped",
+   "ko": "그래스시드"
+  }
  },
  "Fighting Memory": {
   "name_zh": "战斗存储碟",
@@ -2028,7 +2468,15 @@
   "name_ja": "ようせいのハネ",
   "name_en": "Fairy Feather",
   "effect": "携带后，妖精属性招式威力提升20%",
-  "category": "属性增强道具"
+  "category": "属性增强道具",
+  "localized_names": {
+   "fr": "Plume Enchantée",
+   "de": "Feendaune",
+   "it": "Piuma fatata",
+   "es-ES": "Pluma Feérica",
+   "es-419": "Pluma Feérica",
+   "ko": "요정의깃털"
+  }
  },
  "Cornerstone Mask": {
   "name_zh": "础石面具",
@@ -3319,87 +3767,223 @@
  "Venusaurite": {
   "name_zh": "妙蛙花进化石",
   "name_ja": "フシギバナイト",
-  "name_en": "Venusaurite"
+  "name_en": "Venusaurite",
+  "localized_names": {
+   "fr": "Florizarrite",
+   "de": "Bisaflornit",
+   "it": "Venusaurite",
+   "es-ES": "Venusaurita",
+   "es-419": "Venusaurita",
+   "ko": "이상해꽃나이트"
+  }
  },
  "Charizardite X": {
   "name_zh": "喷火龙进化石Ｘ",
   "name_ja": "リザードナイトX",
-  "name_en": "Charizardite X"
+  "name_en": "Charizardite X",
+  "localized_names": {
+   "fr": "Dracaufite X",
+   "de": "Gluraknit X",
+   "it": "Charizardite X",
+   "es-ES": "Charizardita X",
+   "es-419": "Charizardita X",
+   "ko": "리자몽나이트X"
+  }
  },
  "Charizardite Y": {
   "name_zh": "喷火龙进化石Ｙ",
   "name_ja": "リザードナイトY",
-  "name_en": "Charizardite Y"
+  "name_en": "Charizardite Y",
+  "localized_names": {
+   "fr": "Dracaufite Y",
+   "de": "Gluraknit Y",
+   "it": "Charizardite Y",
+   "es-ES": "Charizardita Y",
+   "es-419": "Charizardita Y",
+   "ko": "리자몽나이트Y"
+  }
  },
  "Blastoisinite": {
   "name_zh": "水箭龟进化石",
   "name_ja": "カメックスナイト",
-  "name_en": "Blastoisinite"
+  "name_en": "Blastoisinite",
+  "localized_names": {
+   "fr": "Tortankite",
+   "de": "Turtoknit",
+   "it": "Blastoisite",
+   "es-ES": "Blastoisita",
+   "es-419": "Blastoisita",
+   "ko": "거북왕나이트"
+  }
  },
  "Beedrillite": {
   "name_zh": "大针蜂进化石",
   "name_ja": "スピアナイト",
-  "name_en": "Beedrillite"
+  "name_en": "Beedrillite",
+  "localized_names": {
+   "fr": "Dardargnite",
+   "de": "Bibornit",
+   "it": "Beedrillite",
+   "es-ES": "Beedrillita",
+   "es-419": "Beedrillita",
+   "ko": "독침붕나이트"
+  }
  },
  "Pidgeotite": {
   "name_zh": "大比鸟进化石",
   "name_ja": "ピジョットナイト",
-  "name_en": "Pidgeotite"
+  "name_en": "Pidgeotite",
+  "localized_names": {
+   "fr": "Roucarnagite",
+   "de": "Taubossnit",
+   "it": "Pidgeotite",
+   "es-ES": "Pidgeotita",
+   "es-419": "Pidgeotita",
+   "ko": "피죤투나이트"
+  }
  },
  "Clefablite": {
   "name_zh": "皮可西进化石",
   "name_ja": "ピクシナイト",
-  "name_en": "Clefablite"
+  "name_en": "Clefablite",
+  "localized_names": {
+   "fr": "Mélodelfite",
+   "de": "Pixinit",
+   "it": "Clefablite",
+   "es-ES": "Clefablita",
+   "es-419": "Clefablita",
+   "ko": "픽시나이트"
+  }
  },
  "Alakazite": {
   "name_zh": "胡地进化石",
   "name_ja": "フーディナイト",
-  "name_en": "Alakazite"
+  "name_en": "Alakazite",
+  "localized_names": {
+   "fr": "Alakazamite",
+   "de": "Simsalanit",
+   "it": "Alakazamite",
+   "es-ES": "Alakazamita",
+   "es-419": "Alakazamita",
+   "ko": "후디나이트"
+  }
  },
  "Victreebelite": {
   "name_zh": "大食花进化石",
   "name_ja": "ウツボットナイト",
-  "name_en": "Victreebelite"
+  "name_en": "Victreebelite",
+  "localized_names": {
+   "fr": "Empiflorite",
+   "de": "Sarzenianit",
+   "it": "Victreebelite",
+   "es-ES": "Victreebelita",
+   "es-419": "Victreebelita",
+   "ko": "우츠보트나이트"
+  }
  },
  "Slowbronite": {
   "name_zh": "呆壳兽进化石",
   "name_ja": "ヤドランナイト",
-  "name_en": "Slowbronite"
+  "name_en": "Slowbronite",
+  "localized_names": {
+   "fr": "Flagadossite",
+   "de": "Lahmusnit",
+   "it": "Slowbroite",
+   "es-ES": "Slowbronita",
+   "es-419": "Slowbronita",
+   "ko": "야도란나이트"
+  }
  },
  "Gengarite": {
   "name_zh": "耿鬼进化石",
   "name_ja": "ゲンガナイト",
-  "name_en": "Gengarite"
+  "name_en": "Gengarite",
+  "localized_names": {
+   "fr": "Ectoplasmite",
+   "de": "Gengarnit",
+   "it": "Gengarite",
+   "es-ES": "Gengarita",
+   "es-419": "Gengarita",
+   "ko": "팬텀나이트"
+  }
  },
  "Kangaskhanite": {
   "name_zh": "袋兽进化石",
   "name_ja": "ガルーラナイト",
-  "name_en": "Kangaskhanite"
+  "name_en": "Kangaskhanite",
+  "localized_names": {
+   "fr": "Kangourexite",
+   "de": "Kangamanit",
+   "it": "Kangaskhanite",
+   "es-ES": "Kangaskhanita",
+   "es-419": "Kangaskhanita",
+   "ko": "캥카나이트"
+  }
  },
  "Starminite": {
   "name_zh": "宝石海星进化石",
   "name_ja": "スターミナイト",
-  "name_en": "Starminite"
+  "name_en": "Starminite",
+  "localized_names": {
+   "fr": "Starossite",
+   "de": "Starmienit",
+   "it": "Starmite",
+   "es-ES": "Starmita",
+   "es-419": "Starmita",
+   "ko": "아쿠스타나이트"
+  }
  },
  "Pinsirite": {
   "name_zh": "凯罗斯进化石",
   "name_ja": "カイロスナイト",
-  "name_en": "Pinsirite"
+  "name_en": "Pinsirite",
+  "localized_names": {
+   "fr": "Scarabruite",
+   "de": "Pinsirnit",
+   "it": "Pinsirite",
+   "es-ES": "Pinsirita",
+   "es-419": "Pinsirita",
+   "ko": "쁘사이저나이트"
+  }
  },
  "Gyaradosite": {
   "name_zh": "暴鲤龙进化石",
   "name_ja": "ギャラドスナイト",
-  "name_en": "Gyaradosite"
+  "name_en": "Gyaradosite",
+  "localized_names": {
+   "fr": "Léviatorite",
+   "de": "Garadosnit",
+   "it": "Gyaradosite",
+   "es-ES": "Gyaradosita",
+   "es-419": "Gyaradosita",
+   "ko": "갸라도스나이트"
+  }
  },
  "Aerodactylite": {
   "name_zh": "化石翼龙进化石",
   "name_ja": "リプテラナイト",
-  "name_en": "Aerodactylite"
+  "name_en": "Aerodactylite",
+  "localized_names": {
+   "fr": "Ptéraïte",
+   "de": "Aerodactylonit",
+   "it": "Aerodactylite",
+   "es-ES": "Aerodactylita",
+   "es-419": "Aerodactylita",
+   "ko": "프테라나이트"
+  }
  },
  "Dragoninite": {
   "name_zh": "快龙进化石",
   "name_ja": "カイリューナイト",
-  "name_en": "Dragoninite"
+  "name_en": "Dragoninite",
+  "localized_names": {
+   "fr": "Dracolossite",
+   "de": "Dragoranit",
+   "it": "Dragonitite",
+   "es-ES": "Dragonitita",
+   "es-419": "Dragonitita",
+   "ko": "망나뇽나이트"
+  }
  },
  "Mewtwonite X": {
   "name_zh": "超梦进化石Ｘ",
@@ -3414,132 +3998,340 @@
  "Meganiumite": {
   "name_zh": "大竺葵进化石",
   "name_ja": "メガニウムナイト",
-  "name_en": "Meganiumite"
+  "name_en": "Meganiumite",
+  "localized_names": {
+   "fr": "Méganiumite",
+   "de": "Meganienit",
+   "it": "Meganiumite",
+   "es-ES": "Meganiumita",
+   "es-419": "Meganiumita",
+   "ko": "메가니움나이트"
+  }
  },
  "Feraligite": {
   "name_zh": "大力鳄进化石",
   "name_ja": "オーダイルナイト",
-  "name_en": "Feraligite"
+  "name_en": "Feraligite",
+  "localized_names": {
+   "fr": "Aligatueurite",
+   "de": "Impergatornit",
+   "it": "Feraligatrite",
+   "es-ES": "Feraligatrita",
+   "es-419": "Feraligatrita",
+   "ko": "장크로다일나이트"
+  }
  },
  "Ampharosite": {
   "name_zh": "电龙进化石",
   "name_ja": "デンリュウナイト",
-  "name_en": "Ampharosite"
+  "name_en": "Ampharosite",
+  "localized_names": {
+   "fr": "Pharampite",
+   "de": "Ampharosnit",
+   "it": "Ampharosite",
+   "es-ES": "Ampharosita",
+   "es-419": "Ampharosita",
+   "ko": "전룡나이트"
+  }
  },
  "Steelixite": {
   "name_zh": "大钢蛇进化石",
   "name_ja": "ハガネールナイト",
-  "name_en": "Steelixite"
+  "name_en": "Steelixite",
+  "localized_names": {
+   "fr": "Steelixite",
+   "de": "Stahlosnit",
+   "it": "Steelixite",
+   "es-ES": "Steelixita",
+   "es-419": "Steelixita",
+   "ko": "강철톤나이트"
+  }
  },
  "Scizorite": {
   "name_zh": "巨钳螳螂进化石",
   "name_ja": "ハッサムナイト",
-  "name_en": "Scizorite"
+  "name_en": "Scizorite",
+  "localized_names": {
+   "fr": "Cizayoxite",
+   "de": "Scheroxnit",
+   "it": "Scizorite",
+   "es-ES": "Scizorita",
+   "es-419": "Scizorita",
+   "ko": "핫삼나이트"
+  }
  },
  "Heracronite": {
   "name_zh": "赫拉克罗斯进化石",
   "name_ja": "ヘラクロスナイト",
-  "name_en": "Heracronite"
+  "name_en": "Heracronite",
+  "localized_names": {
+   "fr": "Scarhinoïte",
+   "de": "Skarabornit",
+   "it": "Heracrossite",
+   "es-ES": "Heracrossita",
+   "es-419": "Heracrossita",
+   "ko": "헤라크로스나이트"
+  }
  },
  "Skarmorite": {
   "name_zh": "盔甲鸟进化石",
   "name_ja": "エアームドナイト",
-  "name_en": "Skarmorite"
+  "name_en": "Skarmorite",
+  "localized_names": {
+   "fr": "Airmurite",
+   "de": "Panzaeronit",
+   "it": "Skarmorite",
+   "es-ES": "Skarmorita",
+   "es-419": "Skarmorita",
+   "ko": "무장조나이트"
+  }
  },
  "Houndoominite": {
   "name_zh": "黑鲁加进化石",
   "name_ja": "ヘルガナイト",
-  "name_en": "Houndoominite"
+  "name_en": "Houndoominite",
+  "localized_names": {
+   "fr": "Démolossite",
+   "de": "Hundemonit",
+   "it": "Houndoomite",
+   "es-ES": "Houndoomita",
+   "es-419": "Houndoomita",
+   "ko": "헬가나이트"
+  }
  },
  "Tyranitarite": {
   "name_zh": "班基拉斯进化石",
   "name_ja": "バンギラスナイト",
-  "name_en": "Tyranitarite"
+  "name_en": "Tyranitarite",
+  "localized_names": {
+   "fr": "Tyranocivite",
+   "de": "Despotarnit",
+   "it": "Tyranitarite",
+   "es-ES": "Tyranitarita",
+   "es-419": "Tyranitarita",
+   "ko": "마기라스나이트"
+  }
  },
  "Sceptilite": {
   "name_zh": "蜥蜴王进化石",
   "name_ja": "ジュカインナイト",
-  "name_en": "Sceptilite"
+  "name_en": "Sceptilite",
+  "localized_names": {
+   "fr": "Jungkite",
+   "de": "Gewaldronit",
+   "it": "Sceptilite",
+   "es-ES": "Sceptilita",
+   "es-419": "Sceptilita",
+   "ko": "나무킹나이트"
+  }
  },
  "Blazikenite": {
   "name_zh": "火焰鸡进化石",
   "name_ja": "バシャーモナイト",
-  "name_en": "Blazikenite"
+  "name_en": "Blazikenite",
+  "localized_names": {
+   "fr": "Braségalite",
+   "de": "Lohgocknit",
+   "it": "Blazikenite",
+   "es-ES": "Blazikenita",
+   "es-419": "Blazikenita",
+   "ko": "번치코나이트"
+  }
  },
  "Swampertite": {
   "name_zh": "巨沼怪进化石",
   "name_ja": "ラグラージナイト",
-  "name_en": "Swampertite"
+  "name_en": "Swampertite",
+  "localized_names": {
+   "fr": "Laggronite",
+   "de": "Sumpexnit",
+   "it": "Swampertite",
+   "es-ES": "Swampertita",
+   "es-419": "Swampertita",
+   "ko": "대짱이나이트"
+  }
  },
  "Gardevoirite": {
   "name_zh": "沙奈朵进化石",
   "name_ja": "サーナイトナイト",
-  "name_en": "Gardevoirite"
+  "name_en": "Gardevoirite",
+  "localized_names": {
+   "fr": "Gardevoirite",
+   "de": "Guardevoirnit",
+   "it": "Gardevoirite",
+   "es-ES": "Gardevoirita",
+   "es-419": "Gardevoirita",
+   "ko": "가디안나이트"
+  }
  },
  "Sablenite": {
   "name_zh": "勾魂眼进化石",
   "name_ja": "ヤミラミナイト",
-  "name_en": "Sablenite"
+  "name_en": "Sablenite",
+  "localized_names": {
+   "fr": "Ténéfixite",
+   "de": "Zobirisnit",
+   "it": "Sableyite",
+   "es-ES": "Sableynita",
+   "es-419": "Sableynita",
+   "ko": "깜까미나이트"
+  }
  },
  "Mawilite": {
   "name_zh": "大嘴娃进化石",
   "name_ja": "クチートナイト",
-  "name_en": "Mawilite"
+  "name_en": "Mawilite",
+  "localized_names": {
+   "fr": "Mysdibulite",
+   "de": "Flunkifernit",
+   "it": "Mawilite",
+   "es-ES": "Mawilita",
+   "es-419": "Mawilita",
+   "ko": "입치트나이트"
+  }
  },
  "Aggronite": {
   "name_zh": "波士可多拉进化石",
   "name_ja": "ボスゴドラナイト",
-  "name_en": "Aggronite"
+  "name_en": "Aggronite",
+  "localized_names": {
+   "fr": "Galekingite",
+   "de": "Stollossnit",
+   "it": "Aggronite",
+   "es-ES": "Aggronita",
+   "es-419": "Aggronita",
+   "ko": "보스로라나이트"
+  }
  },
  "Medichamite": {
   "name_zh": "恰雷姆进化石",
   "name_ja": "チャーレムナイト",
-  "name_en": "Medichamite"
+  "name_en": "Medichamite",
+  "localized_names": {
+   "fr": "Charminite",
+   "de": "Meditalisnit",
+   "it": "Medichamite",
+   "es-ES": "Medichamita",
+   "es-419": "Medichamita",
+   "ko": "요가램나이트"
+  }
  },
  "Manectite": {
   "name_zh": "雷电兽进化石",
   "name_ja": "ライボルトナイト",
-  "name_en": "Manectite"
+  "name_en": "Manectite",
+  "localized_names": {
+   "fr": "Élecsprintite",
+   "de": "Voltensonit",
+   "it": "Manectricite",
+   "es-ES": "Manectricita",
+   "es-419": "Manectricita",
+   "ko": "썬더볼트나이트"
+  }
  },
  "Sharpedonite": {
   "name_zh": "巨牙鲨进化石",
   "name_ja": "サメハダナイト",
-  "name_en": "Sharpedonite"
+  "name_en": "Sharpedonite",
+  "localized_names": {
+   "fr": "Sharpedite",
+   "de": "Tohaidonit",
+   "it": "Sharpedite",
+   "es-ES": "Sharpedonita",
+   "es-419": "Sharpedonita",
+   "ko": "샤크니아나이트"
+  }
  },
  "Cameruptite": {
   "name_zh": "喷火驼进化石",
   "name_ja": "バクーダナイト",
-  "name_en": "Cameruptite"
+  "name_en": "Cameruptite",
+  "localized_names": {
+   "fr": "Caméruptite",
+   "de": "Cameruptnit",
+   "it": "Cameruptite",
+   "es-ES": "Cameruptita",
+   "es-419": "Cameruptita",
+   "ko": "폭타나이트"
+  }
  },
  "Altarianite": {
   "name_zh": "七夕青鸟进化石",
   "name_ja": "チルタリスナイト",
-  "name_en": "Altarianite"
+  "name_en": "Altarianite",
+  "localized_names": {
+   "fr": "Altarite",
+   "de": "Altarianit",
+   "it": "Altarite",
+   "es-ES": "Altarianita",
+   "es-419": "Altarianita",
+   "ko": "파비코리나이트"
+  }
  },
  "Banettite": {
   "name_zh": "诅咒娃娃进化石",
   "name_ja": "ジュペッタナイト",
-  "name_en": "Banettite"
+  "name_en": "Banettite",
+  "localized_names": {
+   "fr": "Branettite",
+   "de": "Banetteonit",
+   "it": "Banettite",
+   "es-ES": "Banettita",
+   "es-419": "Banettita",
+   "ko": "다크펫나이트"
+  }
  },
  "Absolite": {
   "name_zh": "阿勃梭鲁进化石",
   "name_ja": "アブソルナイト",
-  "name_en": "Absolite"
+  "name_en": "Absolite",
+  "localized_names": {
+   "fr": "Absolite",
+   "de": "Absolnit",
+   "it": "Absolite",
+   "es-ES": "Absolita",
+   "es-419": "Absolita",
+   "ko": "앱솔나이트"
+  }
  },
  "Glalitite": {
   "name_zh": "冰鬼护进化石",
   "name_ja": "オニゴーリナイト",
-  "name_en": "Glalitite"
+  "name_en": "Glalitite",
+  "localized_names": {
+   "fr": "Oniglalite",
+   "de": "Firnontornit",
+   "it": "Glalite",
+   "es-ES": "Glalita",
+   "es-419": "Glalita",
+   "ko": "얼음귀신나이트"
+  }
  },
  "Salamencite": {
   "name_zh": "暴飞龙进化石",
   "name_ja": "ボーマンダナイト",
-  "name_en": "Salamencite"
+  "name_en": "Salamencite",
+  "localized_names": {
+   "fr": "Drattakite",
+   "de": "Brutalandanit",
+   "it": "Salamencite",
+   "es-ES": "Salamencita",
+   "es-419": "Salamencita",
+   "ko": "보만다나이트"
+  }
  },
  "Metagrossite": {
   "name_zh": "巨金怪进化石",
   "name_ja": "メタグロスナイト",
-  "name_en": "Metagrossite"
+  "name_en": "Metagrossite",
+  "localized_names": {
+   "fr": "Métalossite",
+   "de": "Metagrossnit",
+   "it": "Metagrossite",
+   "es-ES": "Metagrossita",
+   "es-419": "Metagrossita",
+   "ko": "메타그로스나이트"
+  }
  },
  "Latiasite": {
   "name_zh": "拉帝亚斯进化石",
@@ -3554,112 +4346,288 @@
  "Lopunnite": {
   "name_zh": "长耳兔进化石",
   "name_ja": "ミミロップナイト",
-  "name_en": "Lopunnite"
+  "name_en": "Lopunnite",
+  "localized_names": {
+   "fr": "Lockpinite",
+   "de": "Schlapornit",
+   "it": "Lopunnite",
+   "es-ES": "Lopunnita",
+   "es-419": "Lopunnita",
+   "ko": "이어롭나이트"
+  }
  },
  "Garchompite": {
   "name_zh": "烈咬陆鲨进化石",
   "name_ja": "ガブリアスナイト",
-  "name_en": "Garchompite"
+  "name_en": "Garchompite",
+  "localized_names": {
+   "fr": "Carchacrokite",
+   "de": "Knakracknit",
+   "it": "Garchompite",
+   "es-ES": "Garchompita",
+   "es-419": "Garchompita",
+   "ko": "한카리아스나이트"
+  }
  },
  "Lucarionite": {
   "name_zh": "路卡利欧进化石",
   "name_ja": "ルカリオナイト",
-  "name_en": "Lucarionite"
+  "name_en": "Lucarionite",
+  "localized_names": {
+   "fr": "Lucarite",
+   "de": "Lucarionit",
+   "it": "Lucarite",
+   "es-ES": "Lucarita",
+   "es-419": "Lucarita",
+   "ko": "루카리오나이트"
+  }
  },
  "Abomasite": {
   "name_zh": "暴雪王进化石",
   "name_ja": "ユキノオナイト",
-  "name_en": "Abomasite"
+  "name_en": "Abomasite",
+  "localized_names": {
+   "fr": "Blizzarite",
+   "de": "Rexblisarnit",
+   "it": "Abomasnowite",
+   "es-ES": "Abomasnowita",
+   "es-419": "Abomasnowita",
+   "ko": "눈설왕나이트"
+  }
  },
  "Galladite": {
   "name_zh": "艾路雷朵进化石",
   "name_ja": "エルレイドナイト",
-  "name_en": "Galladite"
+  "name_en": "Galladite",
+  "localized_names": {
+   "fr": "Gallamite",
+   "de": "Galagladinit",
+   "it": "Galladite",
+   "es-ES": "Galladita",
+   "es-419": "Galladita",
+   "ko": "엘레이드나이트"
+  }
  },
  "Froslassite": {
   "name_zh": "雪妖女进化石",
   "name_ja": "ユキメノコナイト",
-  "name_en": "Froslassite"
+  "name_en": "Froslassite",
+  "localized_names": {
+   "fr": "Momartikite",
+   "de": "Frosdedjenit",
+   "it": "Froslassite",
+   "es-ES": "Froslassita",
+   "es-419": "Froslassita",
+   "ko": "눈여아나이트"
+  }
  },
  "Emboarite": {
   "name_zh": "炎武王进化石",
   "name_ja": "エンブオナイト",
-  "name_en": "Emboarite"
+  "name_en": "Emboarite",
+  "localized_names": {
+   "fr": "Roitiflamite",
+   "de": "Flambirexonit",
+   "it": "Emboarite",
+   "es-ES": "Emboarita",
+   "es-419": "Emboarita",
+   "ko": "염무왕나이트"
+  }
  },
  "Excadrite": {
   "name_zh": "龙头地鼠进化石",
   "name_ja": "ドリュウズナイト",
-  "name_en": "Excadrite"
+  "name_en": "Excadrite",
+  "localized_names": {
+   "fr": "Minotaupite",
+   "de": "Stalobornit",
+   "it": "Excadrillite",
+   "es-ES": "Excadrillita",
+   "es-419": "Excadrillita",
+   "ko": "몰드류나이트"
+  }
  },
  "Audinite": {
   "name_zh": "差不多娃娃进化石",
   "name_ja": "タブンネナイト",
-  "name_en": "Audinite"
+  "name_en": "Audinite",
+  "localized_names": {
+   "fr": "Nanméouïte",
+   "de": "Ohrdochnit",
+   "it": "Audinite",
+   "es-ES": "Audinita",
+   "es-419": "Audinita",
+   "ko": "다부니나이트"
+  }
  },
  "Scolipite": {
   "name_zh": "蜈蚣王进化石",
   "name_ja": "ペンドラナイト",
-  "name_en": "Scolipite"
+  "name_en": "Scolipite",
+  "localized_names": {
+   "fr": "Brutapodite",
+   "de": "Cerapendranit",
+   "it": "Scolipedite",
+   "es-ES": "Scolipedita",
+   "es-419": "Scolipedita",
+   "ko": "펜드라나이트"
+  }
  },
  "Scraftinite": {
   "name_zh": "头巾混混进化石",
   "name_ja": "ズルズキナイト",
-  "name_en": "Scraftinite"
+  "name_en": "Scraftinite",
+  "localized_names": {
+   "fr": "Baggaïdite",
+   "de": "Irokexonit",
+   "it": "Scraftite",
+   "es-ES": "Scraftita",
+   "es-419": "Scraftita",
+   "ko": "곤율거니나이트"
+  }
  },
  "Eelektrossite": {
   "name_zh": "麻麻鳗鱼王进化石",
   "name_ja": "シビルドナイト",
-  "name_en": "Eelektrossite"
+  "name_en": "Eelektrossite",
+  "localized_names": {
+   "fr": "Ohmassacrite",
+   "de": "Zapplarangonit",
+   "it": "Eelektrossite",
+   "es-ES": "Eelektrossita",
+   "es-419": "Eelektrossita",
+   "ko": "저리더프나이트"
+  }
  },
  "Chandelurite": {
   "name_zh": "水晶灯火灵进化石",
   "name_ja": "シャンデラナイト",
-  "name_en": "Chandelurite"
+  "name_en": "Chandelurite",
+  "localized_names": {
+   "fr": "Lugulabrite",
+   "de": "Skelabranit",
+   "it": "Chandelurite",
+   "es-ES": "Chandelurita",
+   "es-419": "Chandelurita",
+   "ko": "샹델라나이트"
+  }
  },
  "Chesnaughtite": {
   "name_zh": "布里卡隆进化石",
   "name_ja": "ブリガロナイト",
-  "name_en": "Chesnaughtite"
+  "name_en": "Chesnaughtite",
+  "localized_names": {
+   "fr": "Blindépiquite",
+   "de": "Brigaronit",
+   "it": "Chesnaughtite",
+   "es-ES": "Chesnaughtita",
+   "es-419": "Chesnaughtita",
+   "ko": "브리가론나이트"
+  }
  },
  "Delphoxite": {
   "name_zh": "妖火红狐进化石",
   "name_ja": "マフォクシナイト",
-  "name_en": "Delphoxite"
+  "name_en": "Delphoxite",
+  "localized_names": {
+   "fr": "Goupelinite",
+   "de": "Fennexisnit",
+   "it": "Delphoxite",
+   "es-ES": "Delphoxita",
+   "es-419": "Delphoxita",
+   "ko": "마폭시나이트"
+  }
  },
  "Greninjite": {
   "name_zh": "甲贺忍蛙进化石",
   "name_ja": "ゲッコウガナイト",
-  "name_en": "Greninjite"
+  "name_en": "Greninjite",
+  "localized_names": {
+   "fr": "Amphinolite",
+   "de": "Quajutsunit",
+   "it": "Greninjite",
+   "es-ES": "Greninjanita",
+   "es-419": "Greninjanita",
+   "ko": "개굴닌자나이트"
+  }
  },
  "Pyroarite": {
   "name_zh": "火炎狮进化石",
   "name_ja": "カエンジシナイト",
-  "name_en": "Pyroarite"
+  "name_en": "Pyroarite",
+  "localized_names": {
+   "fr": "Néméliosite",
+   "de": "Pyroleonit",
+   "it": "Pyroarite",
+   "es-ES": "Pyroarita",
+   "es-419": "Pyroarita",
+   "ko": "화염레오나이트"
+  }
  },
  "Floettite": {
   "name_zh": "花叶蒂进化石",
   "name_ja": "フラエッテナイト",
-  "name_en": "Floettite"
+  "name_en": "Floettite",
+  "localized_names": {
+   "fr": "Floettite",
+   "de": "Floetteonit",
+   "it": "Floettite",
+   "es-ES": "Floettita",
+   "es-419": "Floettita",
+   "ko": "플라엣테나이트"
+  }
  },
  "Malamarite": {
   "name_zh": "乌贼王进化石",
   "name_ja": "カラマネロ‎ナイト",
-  "name_en": "Malamarite"
+  "name_en": "Malamarite",
+  "localized_names": {
+   "fr": "Sepiatrocite",
+   "de": "Calamaneronit",
+   "it": "Malamarite",
+   "es-ES": "Malamarita",
+   "es-419": "Malamarita",
+   "ko": "칼라마네로나이트"
+  }
  },
  "Barbaracite": {
   "name_zh": "龟足巨铠进化石",
   "name_ja": "ガメノデスナイト",
-  "name_en": "Barbaracite"
+  "name_en": "Barbaracite",
+  "localized_names": {
+   "fr": "Golgopathite",
+   "de": "Thanathoranit",
+   "it": "Barbaraclite",
+   "es-ES": "Barbaraclita",
+   "es-419": "Barbaraclita",
+   "ko": "거북손데스나이트"
+  }
  },
  "Dragalgite": {
   "name_zh": "毒藻龙进化石",
   "name_ja": "ドラミドナイト",
-  "name_en": "Dragalgite"
+  "name_en": "Dragalgite",
+  "localized_names": {
+   "fr": "Kravarekite",
+   "de": "Tandraknit",
+   "it": "Dragalgite",
+   "es-ES": "Dragalgita",
+   "es-419": "Dragalgita",
+   "ko": "드래캄나이트"
+  }
  },
  "Hawluchanite": {
   "name_zh": "摔角鹰人进化石",
   "name_ja": "ルチャブルナイト",
-  "name_en": "Hawluchanite"
+  "name_en": "Hawluchanite",
+  "localized_names": {
+   "fr": "Brutalibrite",
+   "de": "Resladeronit",
+   "it": "Hawluchite",
+   "es-ES": "Hawluchanita",
+   "es-419": "Hawluchanita",
+   "ko": "루차불나이트"
+  }
  },
  "Zygardite": {
   "name_zh": "基格尔德进化石",
@@ -3674,12 +4642,28 @@
  "Drampanite": {
   "name_zh": "老翁龙进化石",
   "name_ja": "ジジーロナイト",
-  "name_en": "Drampanite"
+  "name_en": "Drampanite",
+  "localized_names": {
+   "fr": "Draïeulite",
+   "de": "Sen-Longnit",
+   "it": "Drampite",
+   "es-ES": "Drampanita",
+   "es-419": "Drampanita",
+   "ko": "할비롱나이트"
+  }
  },
  "Falinksite": {
   "name_zh": "列阵兵进化石",
   "name_ja": "タイレーツナイト",
-  "name_en": "Falinksite"
+  "name_en": "Falinksite",
+  "localized_names": {
+   "fr": "Hexadronite",
+   "de": "Legiosnit",
+   "it": "Falinksite",
+   "es-ES": "Falinksita",
+   "es-419": "Falinksita",
+   "ko": "대여르나이트"
+  }
  },
  "Normalium Z": {
   "name_zh": "一般Ｚ",
@@ -4804,52 +5788,132 @@
  "Cheri Berry": {
   "name_zh": "樱子果",
   "name_ja": "クラボのみ",
-  "name_en": "Cheri Berry"
+  "name_en": "Cheri Berry",
+  "localized_names": {
+   "fr": "Baie Ceriz",
+   "de": "Amrenabeere",
+   "it": "Baccaliegia",
+   "es-ES": "Baya Zreza",
+   "es-419": "Baya Zreza",
+   "ko": "버치열매"
+  }
  },
  "Chesto Berry": {
   "name_zh": "零余果",
   "name_ja": "カゴのみ",
-  "name_en": "Chesto Berry"
+  "name_en": "Chesto Berry",
+  "localized_names": {
+   "fr": "Baie Maron",
+   "de": "Maronbeere",
+   "it": "Baccastagna",
+   "es-ES": "Baya Atania",
+   "es-419": "Baya Atania",
+   "ko": "유루열매"
+  }
  },
  "Pecha Berry": {
   "name_zh": "桃桃果",
   "name_ja": "モモンのみ",
-  "name_en": "Pecha Berry"
+  "name_en": "Pecha Berry",
+  "localized_names": {
+   "fr": "Baie Pêcha",
+   "de": "Pirsifbeere",
+   "it": "Baccapesca",
+   "es-ES": "Baya Meloc",
+   "es-419": "Baya Duraz",
+   "ko": "복슝열매"
+  }
  },
  "Rawst Berry": {
   "name_zh": "莓莓果",
   "name_ja": "チーゴのみ",
-  "name_en": "Rawst Berry"
+  "name_en": "Rawst Berry",
+  "localized_names": {
+   "fr": "Baie Fraive",
+   "de": "Fragiabeere",
+   "it": "Baccafrago",
+   "es-ES": "Baya Safre",
+   "es-419": "Baya Safre",
+   "ko": "복분열매"
+  }
  },
  "Aspear Berry": {
   "name_zh": "利木果",
   "name_ja": "ナナシのみ",
-  "name_en": "Aspear Berry"
+  "name_en": "Aspear Berry",
+  "localized_names": {
+   "fr": "Baie Willia",
+   "de": "Wilbirbeere",
+   "it": "Baccaperina",
+   "es-ES": "Baya Perasi",
+   "es-419": "Baya Perasi",
+   "ko": "배리열매"
+  }
  },
  "Leppa Berry": {
   "name_zh": "苹野果",
   "name_ja": "ヒメリのみ",
-  "name_en": "Leppa Berry"
+  "name_en": "Leppa Berry",
+  "localized_names": {
+   "fr": "Baie Mepo",
+   "de": "Jonagobeere",
+   "it": "Baccamela",
+   "es-ES": "Baya Zanama",
+   "es-419": "Baya Zanama",
+   "ko": "과사열매"
+  }
  },
  "Oran Berry": {
   "name_zh": "橙橙果",
   "name_ja": "オレンのみ",
-  "name_en": "Oran Berry"
+  "name_en": "Oran Berry",
+  "localized_names": {
+   "fr": "Baie Oran",
+   "de": "Sinelbeere",
+   "it": "Baccarancia",
+   "es-ES": "Baya Aranja",
+   "es-419": "Baya Aranja",
+   "ko": "오랭열매"
+  }
  },
  "Persim Berry": {
   "name_zh": "柿仔果",
   "name_ja": "キーのみ",
-  "name_en": "Persim Berry"
+  "name_en": "Persim Berry",
+  "localized_names": {
+   "fr": "Baie Kika",
+   "de": "Persimbeere",
+   "it": "Baccaki",
+   "es-ES": "Baya Caquic",
+   "es-419": "Baya Caquic",
+   "ko": "시몬열매"
+  }
  },
  "Lum Berry": {
   "name_zh": "木子果",
   "name_ja": "ラムのみ",
-  "name_en": "Lum Berry"
+  "name_en": "Lum Berry",
+  "localized_names": {
+   "fr": "Baie Prine",
+   "de": "Prunusbeere",
+   "it": "Baccaprugna",
+   "es-ES": "Baya Ziuela",
+   "es-419": "Baya Ziuela",
+   "ko": "리샘열매"
+  }
  },
  "Sitrus Berry": {
   "name_zh": "文柚果",
   "name_ja": "オボンのみ",
-  "name_en": "Sitrus Berry"
+  "name_en": "Sitrus Berry",
+  "localized_names": {
+   "fr": "Baie Sitrus",
+   "de": "Tsitrubeere",
+   "it": "Baccacedro",
+   "es-ES": "Baya Zidra",
+   "es-419": "Baya Citrón",
+   "ko": "자뭉열매"
+  }
  },
  "Figy Berry": {
   "name_zh": "勿花果",
@@ -5011,119 +6075,255 @@
   "name_ja": "オッカのみ",
   "name_en": "Occa Berry",
   "effect": "携带后，受到效果拔群的火属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Chocco",
+   "de": "Koakobeere",
+   "it": "Baccacao",
+   "es-ES": "Baya Caoca",
+   "es-419": "Baya Caoca",
+   "ko": "오카열매"
+  }
  },
  "Passho Berry": {
   "name_zh": "千香果",
   "name_ja": "イトケのみ",
   "name_en": "Passho Berry",
   "effect": "携带后，受到效果拔群的水属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Pocpoc",
+   "de": "Foepasbeere",
+   "it": "Baccapasflo",
+   "es-ES": "Baya Pasio",
+   "es-419": "Baya Pasio",
+   "ko": "꼬시개열매"
+  }
  },
  "Wacan Berry": {
   "name_zh": "烛木果",
   "name_ja": "ソクノのみ",
   "name_en": "Wacan Berry",
   "effect": "携带后，受到效果拔群的电属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Parma",
+   "de": "Kerzalbeere",
+   "it": "Baccaparmen",
+   "es-ES": "Baya Gualot",
+   "es-419": "Baya Gualot",
+   "ko": "초나열매"
+  }
  },
  "Rindo Berry": {
   "name_zh": "罗子果",
   "name_ja": "リンドのみ",
   "name_en": "Rindo Berry",
   "effect": "携带后，受到效果拔群的草属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Ratam",
+   "de": "Grindobeere",
+   "it": "Baccarindo",
+   "es-ES": "Baya Tamar",
+   "es-419": "Baya Tamar",
+   "ko": "린드열매"
+  }
  },
  "Yache Berry": {
   "name_zh": "番荔果",
   "name_ja": "ヤチェのみ",
   "name_en": "Yache Berry",
   "effect": "携带后，受到效果拔群的冰属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Nanone",
+   "de": "Kiroyabeere",
+   "it": "Baccamoya",
+   "es-ES": "Baya Rimoya",
+   "es-419": "Baya Rimoya",
+   "ko": "플카열매"
+  }
  },
  "Chople Berry": {
   "name_zh": "莲蒲果",
   "name_ja": "ヨプのみ",
   "name_en": "Chople Berry",
   "effect": "携带后，受到效果拔群的格斗属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Pomroz",
+   "de": "Rospelbeere",
+   "it": "Baccarosmel",
+   "es-ES": "Baya Pomaro",
+   "es-419": "Baya Pomaro",
+   "ko": "로플열매"
+  }
  },
  "Kebia Berry": {
   "name_zh": "通通果",
   "name_ja": "ビアーのみ",
   "name_en": "Kebia Berry",
   "effect": "携带后，受到效果拔群的毒属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Kébia",
+   "de": "Grarzbeere",
+   "it": "Baccakebia",
+   "es-ES": "Baya Kebia",
+   "es-419": "Baya Kebia",
+   "ko": "으름열매"
+  }
  },
  "Shuca Berry": {
   "name_zh": "腰木果",
   "name_ja": "シュカのみ",
   "name_en": "Shuca Berry",
   "effect": "携带后，受到效果拔群的地面属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Jouca",
+   "de": "Schukebeere",
+   "it": "Baccanaca",
+   "es-ES": "Baya Acardo",
+   "es-419": "Baya Acardo",
+   "ko": "슈캐열매"
+  }
  },
  "Coba Berry": {
   "name_zh": "棱瓜果",
   "name_ja": "バコウのみ",
   "name_en": "Coba Berry",
   "effect": "携带后，受到效果拔群的飞行属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Cobaba",
+   "de": "Kobabeere",
+   "it": "Baccababa",
+   "es-ES": "Baya Kouba",
+   "es-419": "Baya Kouba",
+   "ko": "바코열매"
+  }
  },
  "Payapa Berry": {
   "name_zh": "福禄果",
   "name_ja": "ウタンのみ",
   "name_en": "Payapa Berry",
   "effect": "携带后，受到效果拔群的超能力属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Yapap",
+   "de": "Pyapabeere",
+   "it": "Baccapayapa",
+   "es-ES": "Baya Payapa",
+   "es-419": "Baya Payapa",
+   "ko": "야파열매"
+  }
  },
  "Tanga Berry": {
   "name_zh": "扁樱果",
   "name_ja": "タンガのみ",
   "name_en": "Tanga Berry",
   "effect": "携带后，受到效果拔群的虫属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Panga",
+   "de": "Tanigabeere",
+   "it": "Baccaitan",
+   "es-ES": "Baya Yecana",
+   "es-419": "Baya Yecana",
+   "ko": "리체열매"
+  }
  },
  "Charti Berry": {
   "name_zh": "草蚕果",
   "name_ja": "ヨロギのみ",
   "name_en": "Charti Berry",
   "effect": "携带后，受到效果拔群的岩石属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Charti",
+   "de": "Chiaribeere",
+   "it": "Baccaciofo",
+   "es-ES": "Baya Alcho",
+   "es-419": "Baya Alcho",
+   "ko": "루미열매"
+  }
  },
  "Kasib Berry": {
   "name_zh": "佛柑果",
   "name_ja": "カシブのみ",
   "name_en": "Kasib Berry",
   "effect": "携带后，受到效果拔群的幽灵属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Sédra",
+   "de": "Zitarzbeere",
+   "it": "Baccacitrus",
+   "es-ES": "Baya Drasi",
+   "es-419": "Baya Drasi",
+   "ko": "수불열매"
+  }
  },
  "Haban Berry": {
   "name_zh": "莓榴果",
   "name_ja": "ハバンのみ",
   "name_en": "Haban Berry",
   "effect": "携带后，受到效果拔群的龙属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Fraigo",
+   "de": "Terirobeere",
+   "it": "Baccahaban",
+   "es-ES": "Baya Anjiro",
+   "es-419": "Baya Anjiro",
+   "ko": "하반열매"
+  }
  },
  "Colbur Berry": {
   "name_zh": "刺耳果",
   "name_ja": "ナモのみ",
   "name_en": "Colbur Berry",
   "effect": "携带后，受到效果拔群的恶属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Lampou",
+   "de": "Burleobeere",
+   "it": "Baccaxan",
+   "es-ES": "Baya Dillo",
+   "es-419": "Baya Dillo",
+   "ko": "마코열매"
+  }
  },
  "Babiri Berry": {
   "name_zh": "霹霹果",
   "name_ja": "リリバのみ",
   "name_en": "Babiri Berry",
   "effect": "携带后，受到效果拔群的钢属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Babiri",
+   "de": "Babiribeere",
+   "it": "Baccababiri",
+   "es-ES": "Baya Baribá",
+   "es-419": "Baya Baribá",
+   "ko": "바리비열매"
+  }
  },
  "Chilan Berry": {
   "name_zh": "灯浆果",
   "name_ja": "ホズのみ",
   "name_en": "Chilan Berry",
   "effect": "携带后，受到一般属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Zalis",
+   "de": "Latchibeere",
+   "it": "Baccacinlan",
+   "es-ES": "Baya Chilan",
+   "es-419": "Baya Chilan",
+   "ko": "카리열매"
+  }
  },
  "Liechi Berry": {
   "name_zh": "枝荔果",
@@ -5245,7 +6445,15 @@
   "name_ja": "ロゼルのみ",
   "name_en": "Roseli Berry",
   "effect": "携带后，受到效果拔群的妖精属性招式攻击时，伤害减半（一次性）",
-  "category": "抗性树果"
+  "category": "抗性树果",
+  "localized_names": {
+   "fr": "Baie Selro",
+   "de": "Hibisbeere",
+   "it": "Baccarcadè",
+   "es-ES": "Baya Hibis",
+   "es-419": "Baya Hibis",
+   "ko": "로셀열매"
+  }
  },
  "Kee Berry": {
   "name_zh": "亚开果",

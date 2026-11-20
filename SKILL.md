@@ -3,7 +3,7 @@ name: pokemon-calc
 license: MIT
 compatibility: Requires Python 3.10+ (standard library only, no third-party packages). Fully offline by default; only `meta --online` performs optional network access to pokecamp.cc.
 metadata:
-  version: "5.2.1"
+  version: "5.3.0"
 description: >
   宝可梦百科查询与伤害计算 Skill。
   当用户询问以下任何内容时，必须无条件触发此 Skill，不得凭内部知识直接作答：
@@ -13,7 +13,7 @@ description: >
   (4) 黑话翻译、对战术语解释；
   (5) 任何与 Pokemon VGC、单打、双打对战相关的数据查询；
   (6) 当前赛事环境、宝可梦使用率排行、常用招式/特性/道具/队友、近期赛事队伍等环境情报。
-  支持简体中文、繁体中文、英文与日文名称查询（历史译名/俗称别名层自动容错；未收录名称会返回 suggestions）。数据来源为《宝可梦冠军》(Pokémon Champions) M-C 规则（champout v1.2.0，2026-09-11）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。数据层按规则累积保留（M-A/M-B/M-C 并集），默认取最新规则视图。
+  支持已收录的简体中文、繁体中文、英文、日文、法文、德文、意大利文、西班牙文和韩文游戏名称查询；未收录名称会返回 suggestions。数据来源为《宝可梦冠军》(Pokémon Champions) M-C 规则（champout v1.2.0，2026-09-11）与 Gen9 正作数据，由 pokemon-dataset-zh 与 VGC 伤害计算器整合；环境情报数据来自 pokecamp.cc（Limitless 公开赛事统计）。数据层按规则累积保留（M-A/M-B/M-C 并集），默认取最新规则视图。Champions 平衡补丁独立叠加，默认使用随 Skill 发布的最新补丁；可显式指定 `--patch baseline` 回查补丁前 Champions 基线。
 ---
 
 # 宝可梦伤害计算器 Skill
@@ -23,7 +23,7 @@ description: >
 1. **LLM 只做理解，不做计算**。所有伤害数值、KO 概率、能力值、属性相克倍率、招式效果、特性分析、道具增伤等必须通过 `query.py` 命令获取并原样引用。引擎返回的有效威力即为权威结果。禁止凭 LLM 内部知识补充事实性断言；证据要求同样适用于机制解释、定性判断、环境主流与配装建议，覆盖正文、表格、综合判断及结尾。不确定时，优先查询而非猜测。
 2. **能力值优先**。回答中使用能力值描述（如"攻击能力值 172"），而非努力值。当用户直接给出能力值时，通过 `raw_stats` 字段直接传入，不再调用 `compute-stats` 反推努力值。`raw_stats` 为最终能力值（含性格修正），`stats` 为 `raw_stats` 经 `boosts` 修正后的值。无能力等级变化时两者传相同值即可。
 3. **环境参数唯一入口**。环境条件（天气、场地、对战模式等）一律经 `field_override` 传入。`move_override` 仅用于行为参数（`is_crit`、`hits`、`fainted_allies`、`times_affected`），不修改 `base_power` 或 `type`——引擎已强制校验（白名单之外的字段被忽略并在响应 `warning` 中列出，`hits` 夹紧 1-10）。原始参数输入请用 `calc-raw`。
-4. **中文优先**。数据以中文名为主索引，接受已收录的简体中文、繁体中文、英文与日文实体名称。规范英文道具名支持大小写不敏感查询，`lookup`、`item` 与计算参数共用名称解析入口。CLI 的文本说明以简体中文为主，部分字段保留英文规范名；没有 `--lang` 输出语言切换选项。
+4. **回答语言**。优先使用用户明确指定的语言，其次跟随提问语言。仅有实体名等情况可参考对话，无法判断时默认简体中文。专有名称优先取数据里的对应语言游戏译名。西语有西班牙及拉美译名，按用户指定地区显示，未指定时用西班牙版。命令用法见 [`references/commands.md`](references/commands.md)。
 5. **仅依赖 Python 标准库，默认离线**。核心数据已静态化为 JSON，查询脚本不需要第三方 Python 包。环境查询命令（`meta`）默认读取内置快照（离线可用）；仅当用户显式要求最新数据时才加 `--online` 按需联网（pokecamp.cc，仅用标准库 `urllib`），网络失败自动回退快照，并在回答中注明数据来源与日期。
 
 ## 2. 命令速查
@@ -40,11 +40,12 @@ description: >
 
 ```bash
 # Phase 0 — 名称解析（不确定规范英文名时先用它）
-lookup <name>         # 多语名 → 规范英文标识符（宝可梦/招式/特性/道具），返回 {input, canonical_en, entity_type}
+lookup <name> [--locale <tag>]  # 四类实体查规范名，可选返回指定语言显示名
 # Phase 1 — 百科查询（纯数据查询，无计算）
 pokemon <name> [--type <type> ...]  # 基础信息查询；或按属性筛选（如 `pokemon --type 超能 --type 恶` 列出所有超能+恶属性宝可梦）
 move <name>           # 威力、命中、PP、属性、分类、效果
                       # `description` 为游戏内官方中文描述（单行，换行符已替换为空格）。若为空，表示该招式暂无官方描述。
+                      # 有改动字段时引用 balance_changes 提供的补丁日期和字段来源，不改写原始说明。
 ability <name>        # 效果描述、元信息
 item <name>           # 效果描述、分类、持有效果
 type <atk> [def]      # 属性相克倍率。传入两个属性则返回点对点倍率（如 `type 冰 龙` → 2.0x）；仅传入一个属性则返回该属性的完整克制速查表（进攻端克制/被抵抗/无效 + 防御端弱点/抗性/免疫）
@@ -64,6 +65,7 @@ preset <pokemon> [name] # 列出预设配置或获取具体配置
 
 # Phase 2 — 伤害计算与优化
 calc <att> <move> <def> [att_ov] [move_ov] [def_ov] [field_ov]       # 快捷伤害计算（Lv.50）
+                      # 默认使用随 Skill 发布的最新 Champions 补丁；可用 --patch baseline 选择补丁前 Champions 基线
 calc-raw <att_json> <move_json> <def_json> [field_json]              # 纯参数计算（模板见 references/commands.md）
 compute-stats <base_stats> --evs <evs> --ivs <ivs> --nature <nature> --level <level>  # 种族值+配置 → 能力值
 speed <pokemon> [--pokemon_ov JSON] [--field_ov JSON] [--range N]  # 速度计算，自动附附近参照
@@ -286,7 +288,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 **别名处理规则**：`data/aliases.json` 已收录常见俗称（如"钢兵"→"仆刀将军"、"抗斗果"→"巧可果"），`normalize.py` 在所有查询命令的底层自动完成映射。**Agent 无需预先转换别名，直接使用用户提供的原始名称作为参数传入即可，以查询的结果为准。**
 
-**多语言输入规则**：中文（简体/繁体）、英文、日文输入均合法（如 `nature:"内敛"` 与 `nature:"Modest"`、`types:["火","飞行"]` 与 `["Fire","Flying"]`、`types:["格鬥"]` 等价；繁体/日语实体名如 `閃電鳥`、`カプ・コケコ`、`１０まんボルト` 直接解析到简体规范实体，输出仍为简体）。**优先直接输出规范英文标识符**（招式/特性/道具英文名、性格英文名、属性英文名）；不确定某个名称的规范英文写法时，先执行 `lookup <名称>` 获取 `{canonical_en, entity_type}` 再用于参数。引擎内部已统一英文枚举；非法的属性/性格/状态 override 值会被入口校验拒绝并返回 `suggestions`。
+**多语言输入**。宝可梦、招式、特性和道具接受已收录的游戏译名。保留用户给出的完整形态名传给计算。用 `lookup <名称> --input-locale <名称语言>` 核实可能混淆的译名，再使用确认的规范名。例如法语 `Charge` 对应 `Tackle`。按名称实际使用的语言传值，回答语言由 `--locale` 指定。仍有歧义时按语境确定实体或询问用户。属性、性格和状态继续使用已支持的枚举表示，例如 `nature:"Modest"`、`types:["Fire","Flying"]`。
 
 **形态查询与消歧规则**：
 
@@ -404,6 +406,8 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ## 4. 输出格式
 
+对支持的非简中回答语言，用 `lookup <名称> --locale <语言>` 取得百科答复所需的 `display_name`。用 `calc ... --locale <语言>` 一次取得计算数值和 `localized_names` 中实际生效实体的显示名称。按返回的名称填写标题、表格和说明。译名缺失时使用命令给出的回退名称。补丁日期、数据来源、威力、命中与伤害等仍引用实际查询版本的字段。
+
 ### 4.1 百科查询回答
 
 一句话总结核心信息，可附关键数据表格。
@@ -442,7 +446,13 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ### 5.1 数据来源与版本策略
 
-采用双层数据架构：《宝可梦冠军》(Pokémon Champions) Champions 规则数据（最新为 M-C，champout v1.2.0 / 2026-09-11；231 物种 / 347 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。规则数据按引入规则累积保留（M-A 275 / M-B 38 / M-C 34 种形态），默认展示最新规则的完整并集。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`meta` 使用独立的 pokecamp.cc 赛事数据层。完整说明见 [`references/mechanics.md`](references/mechanics.md)。
+采用双层数据架构：《宝可梦冠军》(Pokémon Champions) Champions 规则数据（最新为 M-C，champout v1.2.0 / 2026-09-11；231 物种 / 347 种形态）**优先于** Gen9（朱紫）正作数据（全国图鉴 1~1025）。规则数据按引入规则累积保留（M-A 275 / M-B 38 / M-C 34 种形态），默认展示最新规则的完整并集。查询结果中的 `"_data_source"` 字段标识具体来源（`"champions"` 或 `"gen9"`）。数据包含所有形态（含 Mega、原始回归等），伤害计算时不过签过滤。`meta` 使用独立的 pokecamp.cc 赛事数据层。
+
+Champions 平衡调整存放于独立补丁目录，并按补丁 ID 顺序叠加到运行时数据副本。默认选择随 Skill 发布的最新补丁，不读取系统日期，也不在线检查版本。原始 JSON 和其中的官方说明保持原样。响应中的 `balance_patch` 标出该实体实际采用的最近补丁，`balance_changes` 逐项列出发生变化的字段、值及其来源补丁；未被补丁改动的字段继续沿用原始数据来源。
+
+本版最新补丁为 **2026-12-2宝可梦冠军平衡性补丁**，稳定 ID 为 `2026-12-02`，生效日为 2026-12-02，应用于所有 Champions 规则。公告列出的学招调整、招式命中变化和特性变化均按该补丁登记，来源为[官方公告](https://champions-news.pokemon-home.com/en/page/877.html)。用户明确要求补丁前数据时，使用 `--patch baseline`；固定指定该补丁时使用 `--patch 2026-12-02`。默认按随包最高日期 ID 选择，不依赖查询当天的日期。
+
+Champions 补丁不会作用于 Gen9 正作数据。招式命中率作为字段回显，不折算进伤害范围或 KO 概率；畏缩概率也不纳入计算。引火在超级进化后保留的强化通过独立的 `fire_boost` 对战状态表达，不能仅由当前特性名推断其已触发。坚毅的替身穿透作为补丁效果说明返回，当前伤害模型不计算替身伤害。若某个补丁效果未由计算器建模，必须依据响应中的警告和支持范围说明，不得把说明文本当作已计算效果。完整伤害边界见 [`references/mechanics.md`](references/mechanics.md)。
 
 ### 5.2 能力点数（SP）与努力值（EV）双视图
 
@@ -477,7 +487,7 @@ python scripts/query.py calc 超级喷火龙Y 热风 超级胡地 \
 
 ## 最终输出模板
 
-> 伤害计算的回答按此模板组织：将占位符替换为引擎返回的真实数据，不增删二级标题，不改变顺序。
+> 伤害计算答复沿用下方栏目和顺序。标题及说明文字可按回答语言表达，占位符用实际结果填充，有对应游戏译名时引用命令返回的名称。
 
 **回答开头先声明假设**：
 

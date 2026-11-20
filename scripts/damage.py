@@ -1073,7 +1073,8 @@ def calc_at_mods(
             or (attacker.ability == "Torrent" and attacker.current_hp <= hp_third and move.type == T.WATER)
             or (attacker.ability == "Swarm" and attacker.current_hp <= hp_third and move.type == T.BUG)
             or (attacker.ability == "Dragon's Maw" and move.type == T.DRAGON)
-            or (attacker.ability == "Flash Fire" and attacker.ability_on and move.type == T.FIRE)
+            or (attacker.ability == "Flash Fire" and attacker.ability_on
+                and not attacker.fire_boost and move.type == T.FIRE)
             or (attacker.ability == "Steelworker" and move.type == T.STEEL)
             or (attacker.ability == "Gorilla Tactics" and move.category == "Physical" and not attacker.is_dynamax)
             or (attacker.ability in ("Plus", "Minus") and attacker.ability_on and move.category == "Special")
@@ -1082,6 +1083,10 @@ def calc_at_mods(
         at_mods.append(0x1800)
     elif (attacker.ability == "Solar Power" and field.weather and "Sun" in field.weather
           and move.category == "Special" and attacker.item not in ("Utility Umbrella",)):
+        at_mods.append(0x1800)
+
+    # An already active Fire Boost is a separate status from the current Ability.
+    if attacker.fire_boost and move.type == T.FIRE:
         at_mods.append(0x1800)
 
     # 1.3x abilities (Protosynthesis / Quark Drive / Transistor Gen9).

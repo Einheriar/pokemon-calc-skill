@@ -115,7 +115,7 @@ The command examples below use Bash syntax. In Windows PowerShell, run commands 
 
 ## Quick Start
 
-After cloning, no dependencies to install. The CLI accepts Simplified Chinese, Traditional Chinese, English, and Japanese names where those names are present in the bundled name index; coverage does not include every possible spelling or romanization. JSON field names are English, while descriptive text and display names are primarily Simplified Chinese; some fields include canonical English names. There is no `--lang` switch; an AI agent can translate or rephrase the result for the user.
+After cloning, no dependencies to install. The CLI accepts bundled game names in Simplified Chinese, Traditional Chinese, English, Japanese, French, German, Italian, Spanish, and Korean. Use `--locale` with `lookup` or `calc` for localized game names, for example `lookup 'Rock Slide' --locale fr` returns `Éboulement`. JSON keys are English, most descriptive text is Simplified Chinese, and the calling agent writes its reply in the user's language. [Command reference](references/commands.md#多语言名称)
 
 ### 1. Encyclopedia & Mechanics Queries
 

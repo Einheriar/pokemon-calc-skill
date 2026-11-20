@@ -5,6 +5,7 @@ Pokemon encyclopedia query tool (Phase 1).
 Loads consolidated JSON data and answers lookup queries.
 
 Usage:
+    Add --patch baseline or --patch YYYY-MM-DD to select a Champions balance version.
     python query.py pokemon <name>          # Full pokemon info
     python query.py move <name>             # Move info
     python query.py ability <name>          # Ability info
@@ -30,6 +31,7 @@ Usage:
 import io
 import json
 import re
+import unicodedata
 from models import Pokemon, Move, Field
 import os
 import sys
@@ -50,6 +52,7 @@ from engine_enums import (
 )
 
 import pokecamp_source as pcs
+import balance_patches
 import regulations
 
 # Force UTF-8 stdout/stderr on Windows
@@ -68,10 +71,46 @@ _index_data: dict[str, Any] | None = None
 _type_chart: dict[str, dict[str, float]] | None = None
 _items_data: dict[str, Any] | None = None
 _ja_index: dict[str, dict[str, Any]] | None = None
+_locale_index: dict[str, dict[str, dict[str, Any]]] | None = None
 _champions_patches: dict[str, Any] | None = None
+_balance_version: str | None = None  # None selects the latest patch bundled with the skill.
+_display_locale: str | None = None
+_input_locale: str | None = None
+_lookup_entity: str | None = None
 # Internal cumulative regulation cap (see _visible_form). None = newest
 # regulation in data/regulation_manifest.json, i.e. show every form.
 _regulation_cap: str | None = None
+
+
+def _selected_balance_patches() -> tuple[dict[str, Any], ...]:
+    if _balance_version == "baseline":
+        return ()
+    return tuple(patch for patch_id, patch in balance_patches.load_patches(DATA_DIR).items()
+                 if _balance_version is None or patch_id <= _balance_version)
+
+
+def _balance_changes(section: str, stem: str) -> dict[str, Any]:
+    return balance_patches.changes(_selected_balance_patches(), section, stem)
+
+
+def _move_balance_fields(data: dict[str, Any]) -> dict[str, Any]:
+    return {key: data[key] for key in ("flinch_chance", "balance_patch", "balance_changes") if key in data}
+
+
+def _learnset_balance_fields(key: str, additions: dict[str, Any]) -> dict[str, Any]:
+    if not additions:
+        return {}
+    latest = max(additions.values(), key=lambda patch: patch["id"])
+    return balance_patches.result_fields({key: {
+        "value": list(additions), "patch": latest,
+        "sources": {name: patch["id"] for name, patch in additions.items()},
+    }})
+
+
+def _fire_boost_result(pokemon: Pokemon) -> dict[str, Any]:
+    if not pokemon.fire_boost:
+        return {}
+    return {"fire_boost": True, **balance_patches.result_fields(_balance_changes("abilities", "引火"))}
 
 
 def set_regulation_cap(reg_id: str | None) -> str:
@@ -197,6 +236,253 @@ def _ja_lookup(section: str, name: str) -> Any | None:
     if isinstance(hit, list):
         return None  # ambiguous ja name -> miss with candidates at cmd layer
     return hit
+
+
+_SUPPORTED_LOCALES = {"fr", "de", "it", "es-ES", "es-419", "ko"}
+_LOCALE_ALIASES = {
+    "fr": "fr", "fr-fr": "fr", "de": "de", "de-de": "de",
+    "it": "it", "it-it": "it", "es": "es-ES", "es-es": "es-ES",
+    "es-419": "es-419", "es-005": "es-419", "ko": "ko", "ko-kr": "ko",
+    "zh": "zh-Hans", "zh-cn": "zh-Hans", "zh-hans": "zh-Hans",
+    "zh-tw": "zh-Hant", "zh-hant": "zh-Hant",
+    "en": "en", "en-us": "en", "ja": "ja",
+}
+
+
+def _normalize_locale(value: str | None) -> str | None:
+    if not value:
+        return None
+    locale = _LOCALE_ALIASES.get(value.strip().replace("_", "-").lower())
+    if locale not in _SUPPORTED_LOCALES | {"zh-Hans", "zh-Hant", "en", "ja"}:
+        raise ValueError(
+            f"unsupported locale {value!r}; supported: fr, de, it, es-ES, es-419, ko, zh-Hans, zh-Hant, en, ja"
+        )
+    return locale
+
+
+def _locale_key(value: str) -> str:
+    """Normalize Unicode composition and case while preserving meaningful accents."""
+    return unicodedata.normalize("NFC", value.strip()).casefold()
+
+
+def _build_locale_index() -> dict[str, dict[str, dict[str, Any]]]:
+    """Build localized-name indexes from the bundled entity records."""
+    global _locale_index
+    if _locale_index is not None:
+        return _locale_index
+    load_data()
+    index: dict[str, dict[str, dict[str, Any]]] = {
+        locale: {"pokemon": {}, "moves": {}, "abilities": {}, "items": {}}
+        for locale in _SUPPORTED_LOCALES
+    }
+
+    def add(section: str, names: Any, target: Any) -> None:
+        if not isinstance(names, dict):
+            return
+        for raw_locale, raw_name in names.items():
+            locale = _normalize_locale(raw_locale)
+            if locale not in index or not isinstance(raw_name, str) or not raw_name.strip():
+                continue
+            key = _locale_key(raw_name)
+            bucket = index[locale][section]
+            existing = bucket.get(key)
+            if existing is None:
+                bucket[key] = target
+            elif isinstance(existing, list):
+                if target not in existing:
+                    existing.append(target)
+            elif existing != target:
+                bucket[key] = [existing, target]
+
+    for stem, data in _pokemon_data.items():
+        add("pokemon", data.get("localized_names"), (stem, None))
+        for form in data.get("forms", []):
+            if form.get("name"):
+                add("pokemon", form.get("localized_names"), (stem, form["name"]))
+    for stem, data in _moves_data.items():
+        add("moves", data.get("localized_names"), stem)
+    for stem, data in _abilities_data.items():
+        add("abilities", data.get("localized_names"), stem)
+    for canonical_en, data in (_items_data or {}).items():
+        add("items", data.get("localized_names"), canonical_en)
+
+    # Champions-only names live in their rules overlays.
+    champions = _load_champions_patches()
+    for stem, data in champions.get("pokemon", {}).items():
+        for form in data.get("forms", []):
+            if form.get("name"):
+                add("pokemon", form.get("localized_names"), (stem, form["name"]))
+    for stem, data in champions.get("moves", {}).items():
+        add("moves", data.get("localized_names"), stem)
+
+    _locale_index = index
+    return index
+
+
+def _locale_lookup(section: str, name: str, locale: str | None = None,
+                   include_spanish_variant: bool = True) -> Any | None:
+    indexes = _build_locale_index()
+    normalized = _locale_key(name)
+    locales = []
+    if locale in indexes:
+        locales.append(locale)
+        if include_spanish_variant and locale == "es-ES":
+            locales.append("es-419")
+        elif include_spanish_variant and locale == "es-419":
+            locales.append("es-ES")
+    elif locale is None:
+        locales.extend(sorted(indexes))
+    hits = []
+    for candidate_locale in locales:
+        hit = indexes[candidate_locale][section].get(normalized)
+        if hit is None:
+            continue
+        for target in hit if isinstance(hit, list) else [hit]:
+            if target not in hits:
+                hits.append(target)
+    return hits[0] if len(hits) == 1 else hits if hits else None
+
+
+def _localized_display_name(data: dict[str, Any], locale: str,
+                            form: dict[str, Any] | None = None) -> tuple[str, str]:
+    """Return the best verified display name and the locale actually used."""
+    form_is_default = bool(
+        form and (form.get("name") == data.get("name_zh")
+                  or form.get("name") == data.get("name_en"))
+    )
+    if locale == "zh-Hans":
+        if form and form.get("name"):
+            form_name = form["name"]
+            if form_is_default or data.get("name_zh", "") in form_name:
+                return form_name, "zh-Hans"
+            return f"{data.get('name_zh', '')}（{form_name}）", "zh-Hans"
+        if data.get("name_zh"):
+            return data["name_zh"], "zh-Hans"
+    if locale == "ja" and (not form or form_is_default) and data.get("name_ja"):
+        return data["name_ja"], "ja"
+    if locale == "en" and (not form or form_is_default) and data.get("name_en"):
+        return data["name_en"], "en"
+    records = [form or {}]
+    if not form or form_is_default:
+        records.append(data)
+    fallback_locales = [locale]
+    if locale == "es-ES":
+        fallback_locales.append("es-419")
+    elif locale == "es-419":
+        fallback_locales.append("es-ES")
+    for record in records:
+        names = record.get("localized_names", {})
+        for candidate in fallback_locales:
+            name = names.get(candidate)
+            if name:
+                return name, candidate
+    for record in records:
+        name = record.get("name_en")
+        if name:
+            return name, "en"
+    for record in records:
+        name = record.get("name_zh") or record.get("name")
+        if name:
+            if record is form and not form_is_default and data.get("name_zh"):
+                if data["name_zh"] not in name:
+                    name = f"{data['name_zh']}（{name}）"
+            return name, "zh-Hans"
+    return "", locale
+
+
+def _locale_result_fields(data: dict[str, Any], locale: str | None,
+                          form: dict[str, Any] | None = None) -> dict[str, Any]:
+    if not locale:
+        return {}
+    display_name, display_locale = _localized_display_name(data, locale, form)
+    fields = {"display_name": display_name, "display_locale": display_locale}
+    if form and form.get("name"):
+        fields["display_form"] = form["name"]
+    return fields
+
+
+def _is_species_name(name: str, data: dict[str, Any]) -> bool:
+    normalized = _locale_key(name)
+    names = [data.get("name_zh", ""), data.get("name_en", ""), data.get("name_ja", "")]
+    names.extend((data.get("localized_names") or {}).values())
+    return any(isinstance(candidate, str) and _locale_key(candidate) == normalized
+               for candidate in names if candidate)
+
+
+def _locale_candidate_labels(section: str, candidates: list[Any]) -> list[str]:
+    load_data()
+    labels = []
+    for candidate in candidates:
+        if section == "pokemon" and isinstance(candidate, tuple):
+            stem, form_name = candidate
+            data = _pokemon_data.get(stem, {})
+            champion = _load_champions_patches().get("pokemon", {}).get(stem, {})
+            form = next((row for row in data.get("forms", [])
+                         if row.get("name") == form_name), None)
+            if form is None:
+                form = next((row for row in champion.get("forms", [])
+                             if row.get("name") == form_name), {})
+            label = (form or {}).get("name_en") or (
+                f"{data.get('name_en', stem)} ({form_name})" if form_name
+                else data.get("name_en", stem)
+            )
+        elif section == "moves":
+            label = (_moves_data.get(candidate, {}) or {}).get("name_en") or candidate
+        elif section == "abilities":
+            label = (_abilities_data.get(candidate, {}) or {}).get("name_en") or candidate
+        else:
+            label = candidate
+        if label not in labels:
+            labels.append(label)
+    return labels
+
+
+def _localized_calc_names(locale: str, attacker_data: dict[str, Any],
+                          attacker_form: dict[str, Any], attacker: Pokemon,
+                          move_data: dict[str, Any], defender_data: dict[str, Any],
+                          defender_form: dict[str, Any], defender: Pokemon) -> dict[str, Any]:
+    def ability_name(pokemon: Pokemon) -> dict[str, str] | None:
+        canonical = _resolve_ability_to_en(pokemon.ability_zh or pokemon.ability)
+        resolved = resolve_ability(pokemon.ability_zh or pokemon.ability)
+        record = resolved[1] if resolved else next(
+            (entry for entry in (_abilities_data or {}).values()
+             if entry.get("name_en") == canonical), None)
+        if not record:
+            return None
+        name, used_locale = _localized_display_name(record, locale)
+        return {"name": name, "locale": used_locale}
+
+    def item_name(pokemon: Pokemon) -> dict[str, str] | None:
+        canonical = _normalize_item_input(pokemon.item or pokemon.item_zh)
+        record = (_items_data or {}).get(canonical)
+        if not record:
+            return None
+        name, used_locale = _localized_display_name(record, locale)
+        return {"name": name, "locale": used_locale}
+
+    def side_names(data: dict[str, Any], form: dict[str, Any],
+                   pokemon: Pokemon) -> dict[str, Any]:
+        name, used_locale = _localized_display_name(data, locale, form)
+        result: dict[str, Any] = {
+            "name": name,
+            "locale": used_locale,
+            "form": form.get("name", ""),
+        }
+        ability = ability_name(pokemon)
+        item = item_name(pokemon)
+        if ability:
+            result["ability"] = ability
+        if item:
+            result["item"] = item
+        return result
+
+    move_name, move_locale = _localized_display_name(move_data, locale)
+    return {
+        "display_locale": locale,
+        "attacker": side_names(attacker_data, attacker_form, attacker),
+        "move": {"name": move_name, "locale": move_locale},
+        "defender": side_names(defender_data, defender_form, defender),
+    }
 
 
 def _load_champions_patches() -> dict[str, Any]:
@@ -693,12 +979,15 @@ def _apply_champions_pokemon_patch(stem: str, data: dict[str, Any]) -> dict[str,
 
 def _apply_champions_move_patch(name: str, data: dict[str, Any]) -> dict[str, Any]:
     """Apply Champions patch to a move data entry if available."""
-    patches = _load_champions_patches()
-    if not patches or name not in patches.get("moves", {}):
+    patch = _load_champions_patches()["moves"].get(name, {})
+    changes = _balance_changes("moves", name)
+    if not patch and not changes:
         return data
-    patch = patches["moves"][name]
-    merged = data.copy()
-    merged.update(patch)
+    merged = {**data, **patch}
+    if changes:
+        merged.update({key: change["value"] for key, change in changes.items() if key != "note"})
+        merged.update(balance_patches.result_fields(changes))
+        merged["_data_source"] = "champions"
     return merged
 
 
@@ -757,6 +1046,15 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
     form_index is the index into data['forms'] matching the requested form.
     """
     load_data()
+    locale_form_name = None
+    locale_stem = None
+    if _input_locale:
+        locale_hit = _locale_lookup("pokemon", name, _input_locale, False)
+        if isinstance(locale_hit, list):
+            return None
+        if isinstance(locale_hit, tuple):
+            locale_stem, locale_form_name = locale_hit
+            name = locale_form_name or _pokemon_data[locale_stem].get("name_zh", "")
     name = normalize_name(name, "pokemon")
 
     # These suffixes identify battle forms, not cosmetic sex differences.
@@ -776,7 +1074,7 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
             return base[0], base[1], index
 
     # Try exact match first
-    stem = _index_data["pokemon"].get(name) or _index_data["pokemon_forms"].get(name)
+    stem = locale_stem or _index_data["pokemon"].get(name) or _index_data["pokemon_forms"].get(name)
 
     # Try case-insensitive match in pokemon base names
     if not stem:
@@ -820,6 +1118,12 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
         if ja_stem:
             stem = ja_stem
 
+    if not stem:
+        locale_hit = _locale_lookup("pokemon", name)
+        if isinstance(locale_hit, tuple):
+            stem, locale_form_name = locale_hit
+            name = locale_form_name or _pokemon_data[stem].get("name_zh", "")
+
     # NOTE: bare fullwidth suffix without the species prefix ("喷火龙Ｙ") is
     # deliberately NOT resolved — the canonical form name is "超级喷火龙Ｙ",
     # and silently guessing a Mega form from a name the caller never wrote
@@ -835,6 +1139,15 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
 
     data = _apply_champions_pokemon_patch(stem, data)
     form_index = _find_form_index(name, data)
+    if locale_form_name:
+        forms = data.get("forms", [])
+        form_index = next(
+            (index for index, form in enumerate(forms)
+             if form.get("name") == locale_form_name and _visible_form(form)),
+            -1,
+        )
+        if form_index < 0:
+            return None
     # If an explicitly requested Mega form is hidden by the active regulation
     # view, do not silently return the base species.
     if re.search(r"\bmega\b", name.lower()):
@@ -848,6 +1161,14 @@ def resolve_pokemon(name: str) -> tuple[str, Any, int] | None:
 def resolve_move(name: str) -> tuple[str, Any] | None:
     """Return (stem, data) for a move by zh, en, or ja name."""
     load_data()
+    if _input_locale:
+        locale_hit = _locale_lookup("moves", name, _input_locale, False)
+        if isinstance(locale_hit, list):
+            return None
+        if isinstance(locale_hit, str):
+            data = _moves_data.get(locale_hit)
+            if data is not None:
+                return locale_hit, _apply_champions_move_patch(locale_hit, data)
     name = normalize_name(name, "moves")
     stem = _index_data["moves"].get(name)
     if not stem:
@@ -859,6 +1180,10 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
         ja_zh = _ja_lookup("moves", name)
         if ja_zh:
             stem = _index_data["moves"].get(ja_zh) or ja_zh
+    if not stem:
+        locale_stem = _locale_lookup("moves", name)
+        if isinstance(locale_stem, str):
+            stem = _index_data["moves"].get(locale_stem) or locale_stem
     if not stem:
         return None
     data = _moves_data.get(stem)
@@ -873,6 +1198,12 @@ def resolve_move(name: str) -> tuple[str, Any] | None:
 def resolve_ability(name: str) -> tuple[str, Any] | None:
     """Return (stem, data) for an ability by zh, en, or ja name."""
     load_data()
+    if _input_locale:
+        locale_hit = _locale_lookup("abilities", name, _input_locale, False)
+        if isinstance(locale_hit, list):
+            return None
+        if isinstance(locale_hit, str):
+            return locale_hit, _abilities_data.get(locale_hit)
     name = normalize_name(name, "abilities")
     stem = _index_data["abilities"].get(name)
     if not stem:
@@ -884,6 +1215,10 @@ def resolve_ability(name: str) -> tuple[str, Any] | None:
         ja_zh = _ja_lookup("abilities", name)
         if ja_zh:
             stem = _index_data["abilities"].get(ja_zh) or ja_zh
+    if not stem:
+        locale_stem = _locale_lookup("abilities", name)
+        if isinstance(locale_stem, str):
+            stem = _index_data["abilities"].get(locale_stem) or locale_stem
     if not stem:
         return None
     return stem, _abilities_data.get(stem)
@@ -900,6 +1235,12 @@ def resolve_ability(name: str) -> tuple[str, Any] | None:
 def resolve_item(name: str) -> str | None:
     """Return English canonical name for an item by zh, ja, or en name."""
     load_data()
+    if _input_locale:
+        locale_hit = _locale_lookup("items", name, _input_locale, False)
+        if isinstance(locale_hit, list):
+            return None
+        if isinstance(locale_hit, str):
+            return locale_hit
     name = normalize_name(name, "items")
     items = _index_data.get("items", {})
     en = items.get(name)
@@ -925,6 +1266,10 @@ def resolve_item(name: str) -> str | None:
             if canonical_en.lower() == name_lower:
                 en = canonical_en
                 break
+    if not en:
+        locale_en = _locale_lookup("items", name)
+        if isinstance(locale_en, str):
+            en = locale_en
     return en
 
 
@@ -974,6 +1319,10 @@ def cmd_item(name: str) -> dict[str, Any]:
     """Lookup item by any language name. Returns canonical English name and effect."""
     en = resolve_item(name)
     if not en:
+        locale_hits = _locale_lookup("items", name)
+        if isinstance(locale_hits, list):
+            return {"error": f"Item '{name}' is ambiguous.",
+                    "candidates": _locale_candidate_labels("items", locale_hits)}
         candidates = list(_index_data.get("items", {}).keys())
         suggestions = get_suggestions(name, candidates, n=3)
         err: dict[str, Any] = {"error": f"Item '{name}' not found."}
@@ -1092,6 +1441,10 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
 
     resolved = resolve_pokemon(name)
     if not resolved:
+        locale_hits = _locale_lookup("pokemon", name)
+        if isinstance(locale_hits, list):
+            return {"error": f"Pokemon '{name}' is ambiguous.",
+                    "candidates": _locale_candidate_labels("pokemon", locale_hits)}
         candidates = list(_index_data.get("pokemon", {}).keys()) + list(_index_data.get("pokemon_forms", {}).keys())
         suggestions = get_suggestions(name, candidates, n=3)
         err: dict[str, Any] = {"error": f"Pokemon '{name}' not found."}
@@ -1146,6 +1499,10 @@ def cmd_pokemon(name: str = "", type_filters: list[str] | None = None) -> dict[s
 def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
     resolved = resolve_move(name)
     if not resolved:
+        locale_hits = _locale_lookup("moves", name)
+        if isinstance(locale_hits, list):
+            return {"error": f"Move '{name}' is ambiguous.",
+                    "candidates": _locale_candidate_labels("moves", locale_hits)}
         candidates = list(_index_data.get("moves", {}).keys())
         suggestions = get_suggestions(name, candidates, n=3)
         err: dict[str, Any] = {"error": f"Move '{name}' not found."}
@@ -1153,7 +1510,7 @@ def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
             err["suggestions"] = suggestions
         return err
     stem, data = resolved
-    return {
+    result = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
         "type": data.get("type"),
@@ -1168,12 +1525,18 @@ def cmd_move(name: str, *_extra: str) -> dict[str, Any]:
         "additional_effect": data.get("additional_effect"),
         "move_changes": data.get("move_changes"),
         "_data_source": data.get("_data_source", "gen9"),
+        **_move_balance_fields(data),
     }
+    return result
 
 
 def cmd_ability(name: str) -> dict[str, Any]:
     resolved = resolve_ability(name)
     if not resolved:
+        locale_hits = _locale_lookup("abilities", name)
+        if isinstance(locale_hits, list):
+            return {"error": f"Ability '{name}' is ambiguous.",
+                    "candidates": _locale_candidate_labels("abilities", locale_hits)}
         candidates = list(_index_data.get("abilities", {}).keys())
         suggestions = get_suggestions(name, candidates, n=3)
         err: dict[str, Any] = {"error": f"Ability '{name}' not found."}
@@ -1181,13 +1544,15 @@ def cmd_ability(name: str) -> dict[str, Any]:
             err["suggestions"] = suggestions
         return err
     stem, data = resolved
-    return {
+    result = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
         "introduction": data.get("introduction"),
         "effect": data.get("effect"),
         "basic_info": data.get("basic_info"),
+        **balance_patches.result_fields(_balance_changes("abilities", stem)),
     }
+    return result
 
 
 def cmd_type(atk: str, dfn: str = "") -> dict[str, Any]:
@@ -1299,10 +1664,11 @@ def cmd_learnset(name: str) -> dict[str, Any]:
     forms = data.get("forms", [])
     form_name = forms[form_idx].get("name") if forms and form_idx < len(forms) else None
     champions_moves = _get_champions_learnset(stem, form_name)
-    if champions_moves:
+    additions = balance_patches.learnset_additions(_selected_balance_patches(), stem).get(form_name, {})
+    if champions_moves or additions:
         # Champions patch provides the move list for the requested form.
-        formatted = [{"name": m} for m in champions_moves]
-        return {
+        formatted = [{"name": m} for m in dict.fromkeys([*champions_moves, *additions])]
+        result = {
             "name_zh": data.get("name_zh"),
             "name_en": data.get("name_en"),
             "learnable_moves": [{"form": form_name or "", "data": formatted}],
@@ -1310,7 +1676,11 @@ def cmd_learnset(name: str) -> dict[str, Any]:
             "egg_moves": [],
             "tutor_moves": [],
             "_data_source": "champions",
+            **_learnset_balance_fields("added_moves", additions),
         }
+        if not champions_moves:
+            result["learnset_complete"] = False
+        return result
     result: dict[str, Any] = {
         "name_zh": data.get("name_zh"),
         "name_en": data.get("name_en"),
@@ -1406,52 +1776,49 @@ def cmd_find_move(move_name: str, source: str = "") -> dict[str, Any]:
 
     Optional source filter: "champions" | "gen9"
     """
-    load_data()
-    move_stem = _index_data["moves"].get(move_name)
-    if not move_stem:
-        for k, v in _index_data["moves"].items():
-            if k.lower() == move_name.lower():
-                move_stem = v
-                break
-    move_data = _moves_data.get(move_stem) if move_stem else None
-    if move_data is not None:
-        move_data = _apply_champions_move_patch(move_stem, move_data)
-    move_zh = move_data.get("name_zh") if move_data else move_name
+    resolved = resolve_move(move_name)
+    move_zh = resolved[1].get("name_zh", resolved[0]) if resolved else move_name
+    selected = _selected_balance_patches() if source != "gen9" else ()
 
     result: list[dict[str, Any]] = []
     for stem, pdata in _pokemon_data.items():
         # Apply Champions patch to determine data_source for filtering
         merged_pdata = _apply_champions_pokemon_patch(stem, pdata)
         data_source = merged_pdata.get("_data_source", "gen9")
+        forms = merged_pdata.get("forms", [])
+        form_types = {form.get("name"): form.get("types", []) for form in forms}
+        additions = {
+            form: moves[move_zh]
+            for form, moves in balance_patches.learnset_additions(selected, stem).items()
+            if form in form_types and move_zh in moves
+        }
 
         # Apply source filter
-        if source == "champions" and data_source != "champions":
+        if source == "champions" and data_source != "champions" and not additions:
             continue
         if source == "gen9" and data_source == "champions":
             continue
 
-        for move, category, form_name in _iter_moves(pdata, stem=stem):
-            if move.get("name") == move_zh:
-                forms = merged_pdata.get("forms", [{}])
-                # Report the types of the form that actually learns the move,
-                # not always the base form's.
-                matched_types = []
-                for f in forms:
-                    if form_name and f.get("name") == form_name:
-                        matched_types = f.get("types", [])
-                        break
-                if not matched_types and forms:
-                    matched_types = forms[0].get("types", [])
-                result.append({
-                    "name_zh": pdata.get("name_zh"),
-                    "name_en": pdata.get("name_en"),
-                    "pokedex_id": pdata.get("pokedex_id"),
-                    "form_name": form_name or "",
-                    # Champions learnsets carry no level info (round 2 audit D11)
-                    "method": "Champions" if data_source == "champions" else _get_method_name(move, category),
-                    "types": matched_types,
-                })
-                break
+        if additions:
+            form_name = next(iter(additions))
+            method = "Champions"
+        else:
+            found = next(((move, category, form) for move, category, form in _iter_moves(pdata, stem=stem)
+                          if move.get("name") == move_zh), None)
+            if found is None:
+                continue
+            move, category, form_name = found
+            method = "Champions" if data_source == "champions" else _get_method_name(move, category)
+
+        result.append({
+            "name_zh": pdata.get("name_zh"),
+            "name_en": pdata.get("name_en"),
+            "pokedex_id": pdata.get("pokedex_id"),
+            "form_name": form_name or "",
+            "method": method,
+            "types": form_types.get(form_name) or (forms[0].get("types", []) if forms else []),
+            **_learnset_balance_fields("added_to_forms", additions),
+        })
     return {"move": move_zh, "count": len(result), "pokemon": result}
 
 
@@ -1576,6 +1943,7 @@ def cmd_filter_moves(
             "accuracy": data.get("accuracy", ""),
             "pp": data.get("pp", ""),
             "description": data.get("description", ""),
+            **_move_balance_fields(data),
         })
 
     # Sort by power descending, then by Chinese name ascending
@@ -1824,14 +2192,19 @@ def _resolve_ability_to_en(ability_name: str) -> str:
     """Resolve an ability name (zh or en) to its English canonical name."""
     if not ability_name:
         return ""
-    # Already English
-    if ability_name.isascii():
-        return ability_name
     load_data()
     if _abilities_data is not None:
         info = _abilities_data.get(ability_name)
         if info:
             return info.get("name_en", ability_name)
+        locale_hit = _locale_lookup("abilities", ability_name)
+        if isinstance(locale_hit, str):
+            info = _abilities_data.get(locale_hit)
+            if info:
+                return info.get("name_en", ability_name)
+    # Preserve unknown English engine names for existing callers.
+    if ability_name.isascii():
+        return ability_name
     return ability_name
 
 
@@ -1839,14 +2212,17 @@ def _resolve_ability_to_zh(ability_name: str) -> str:
     """Resolve an ability name (zh or en) to its Chinese canonical name."""
     if not ability_name:
         return ""
-    # Already Chinese
-    if not ability_name.isascii():
-        return ability_name
     load_data()
     if _abilities_data is not None:
+        if ability_name in _abilities_data:
+            return ability_name
         for zh_name, info in _abilities_data.items():
             if info.get("name_en") == ability_name:
                 return zh_name
+        locale_hit = _locale_lookup("abilities", ability_name)
+        if isinstance(locale_hit, str):
+            return locale_hit
+    # Preserve unknown names for existing callers.
     return ability_name
 
 
@@ -2212,7 +2588,7 @@ def _make_pokemon_from_data(data: dict[str, Any], overrides: dict[str, Any] | No
         "is_terastalize", "stellar_boosted_types", "tera_effects_applied",
         "boosts", "current_hp", "max_hp",
         "status", "weight", "is_dynamax", "can_evolve",
-        "ability_on", "fainted_allies",
+        "ability_on", "fire_boost", "fainted_allies",
         "gender", "is_mega",
         "raw_stats", "stats",
         "_data_source", "is_unobtainable",
@@ -2466,7 +2842,14 @@ def cmd_optimize(
     _finalize_calc_pokemon(attacker, att_override)
     _finalize_calc_pokemon(defender, def_override)
 
-    return optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
+    result = optimize_evs(attacker, defender, move, field, goal=goal, target=target, threshold=threshold, mode=mode)  # type: ignore[arg-type]
+    if "error" not in result:
+        result.update(_move_balance_fields(move_data))
+        if attacker.fire_boost:
+            result["attacker_info"] = _fire_boost_result(attacker)
+        if defender.fire_boost:
+            result["defender_info"] = _fire_boost_result(defender)
+    return result
 
 
 def _parse_json_object(raw: str | None, label: str) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
@@ -2574,6 +2957,9 @@ def _validate_override_enums(label: str, ov: dict[str, Any]) -> dict[str, Any] |
     bool_error = _validate_bool_fields(label, ov, Pokemon)
     if bool_error is not None:
         return bool_error
+    if ov.get("fire_boost") and not _balance_changes("abilities", "引火").get(
+            "retains_fire_boost_on_mega", {}).get("value"):
+        return {"error": f"{label}.fire_boost 需要支持该状态的《宝可梦冠军》平衡性补丁"}
     if "level" in ov and (type(ov["level"]) is not int or not 1 <= ov["level"] <= 100):
         return {"error": f"{label}.level 必须是 1 至 100 的整数"}
     types = ov.get("types")
@@ -2970,6 +3356,16 @@ def cmd_calc(attacker_name: str, move_name: str, defender_name: str, *extra_args
         "modifiers": modifiers,
         "_data_source": attacker_info.get("_data_source", "gen9"),
     }
+    move_info.update(_move_balance_fields(move_data))
+    attacker_info.update(_fire_boost_result(attacker))
+    defender_info.update(_fire_boost_result(defender))
+    if _display_locale:
+        attacker_form = att_forms[att_form_idx] if att_form_idx < len(att_forms) else {}
+        defender_form = def_forms[def_form_idx] if def_form_idx < len(def_forms) else {}
+        response["localized_names"] = _localized_calc_names(
+            _display_locale, att_data, attacker_form, attacker,
+            move_data, def_data, defender_form, defender,
+        )
     next_state = _tera_next_state(result, attacker, defender)
     if next_state is not None:
         response["next_state"] = next_state
@@ -3378,6 +3774,8 @@ def cmd_calc_raw(
         "move_info": move_info,
         "field_info": field_info,
     }
+    attacker_info.update(_fire_boost_result(attacker))
+    defender_info.update(_fire_boost_result(defender))
     if result.field_used and result.field_used.weather != actual_field.weather:
         field_info["effective_weather"] = result.field_used.weather
         field_info["weather_suppressed"] = bool(actual_field.weather and result.field_used.weather is None)
@@ -4165,7 +4563,7 @@ def cmd_teams(query: str = "", top: int = 12, online: bool = False,
                     tournament=tournament)
 
 
-def cmd_lookup(name: str) -> dict[str, Any]:
+def cmd_lookup(name: str, locale: str | None = None) -> dict[str, Any]:
     """Resolve a multi-language name to its canonical English identifier.
 
     Lightweight intent disambiguation (pokemon -> move -> ability -> item);
@@ -4173,19 +4571,134 @@ def cmd_lookup(name: str) -> dict[str, Any]:
     """
     if not name:
         return {"error": "usage: lookup <name>"}
-    p = resolve_pokemon(name)
-    if p:
-        return {"input": name, "canonical_en": p[1].get("name_en", ""), "entity_type": "pokemon"}
-    mv = resolve_move(name)
-    if mv:
-        return {"input": name, "canonical_en": mv[1].get("name_en", ""), "entity_type": "move"}
-    ab = resolve_ability(name)
-    if ab:
-        return {"input": name, "canonical_en": ab[1].get("name_en", ""), "entity_type": "ability"}
-    it = resolve_item(name)
-    if it:
-        return {"input": name, "canonical_en": it, "entity_type": "item"}
+    global _display_locale, _lookup_entity
+    previous_locale, previous_entity = _display_locale, _lookup_entity
+    effective_locale = _normalize_locale(locale) if locale is not None else previous_locale
     load_data()
+    preferred_entity = None
+    if not _lookup_entity and _input_locale:
+        localized_matches = []
+        for entity_type, section in (
+            ("pokemon", "pokemon"), ("move", "moves"),
+            ("ability", "abilities"), ("item", "items"),
+        ):
+            hit = _locale_lookup(section, name, _input_locale, False)
+            if hit is not None:
+                for candidate in hit if isinstance(hit, list) else [hit]:
+                    localized_matches.append((entity_type, section, candidate))
+        matched_types = {entity_type for entity_type, _, _ in localized_matches}
+        if len(matched_types) > 1:
+            candidates = []
+            for entity_type, section, candidate in localized_matches:
+                labels = _locale_candidate_labels(section, [candidate])
+                candidates.extend(f"{entity_type}: {label}" for label in labels)
+            return {"error": f"'{name}' is ambiguous.",
+                    "candidates": list(dict.fromkeys(candidates))}
+        if matched_types:
+            preferred_entity = next(iter(matched_types))
+    if not _lookup_entity and not _input_locale:
+        legacy_sections = ("pokemon", "pokemon_forms", "moves", "abilities", "items")
+        has_legacy_match = any(
+            key.casefold() == name.strip().casefold()
+            for section in legacy_sections
+            for key in _index_data.get(section, {})
+        )
+        if not has_legacy_match:
+            localized_matches = []
+            for entity_type, section in (
+                ("pokemon", "pokemon"), ("move", "moves"),
+                ("ability", "abilities"), ("item", "items"),
+            ):
+                hit = _locale_lookup(section, name)
+                if hit is not None:
+                    for candidate in hit if isinstance(hit, list) else [hit]:
+                        localized_matches.append((entity_type, candidate))
+            matched_types = {entity_type for entity_type, _ in localized_matches}
+            if len(matched_types) > 1:
+                candidates = []
+                for entity_type, candidate in localized_matches:
+                    labels = _locale_candidate_labels(
+                        {"pokemon": "pokemon", "move": "moves",
+                         "ability": "abilities", "item": "items"}[entity_type],
+                        [candidate],
+                    )
+                    candidates.extend(f"{entity_type}: {label}" for label in labels)
+                return {"error": f"'{name}' is ambiguous.",
+                        "candidates": list(dict.fromkeys(candidates))}
+    try:
+        _display_locale = effective_locale
+        resolvers = {
+            "pokemon": resolve_pokemon,
+            "move": resolve_move,
+            "ability": resolve_ability,
+            "item": resolve_item,
+        }
+        sections = {
+            "pokemon": "pokemon",
+            "move": "moves",
+            "ability": "abilities",
+            "item": "items",
+        }
+        entity_types = ([_lookup_entity] if _lookup_entity
+                        else [preferred_entity] if preferred_entity
+                        else ["pokemon", "move", "ability", "item"])
+        for entity_type in entity_types:
+            resolved = resolvers[entity_type](name)
+            if not resolved:
+                continue
+            if entity_type == "pokemon":
+                stem, data, form_index = resolved
+                forms = data.get("forms", [])
+                form = forms[form_index] if forms and form_index < len(forms) else None
+                if _is_species_name(name, data):
+                    form = None
+                result = {"input": name, "canonical_en": data.get("name_en", ""),
+                          "entity_type": entity_type}
+                if effective_locale:
+                    result.update(_locale_result_fields(data, effective_locale, form))
+                return result
+            if entity_type == "move":
+                _, data = resolved
+                result = {"input": name, "canonical_en": data.get("name_en", ""),
+                          "entity_type": entity_type}
+            elif entity_type == "ability":
+                _, data = resolved
+                result = {"input": name, "canonical_en": data.get("name_en", ""),
+                          "entity_type": entity_type}
+            else:
+                data = (_items_data or {}).get(resolved, {"name_en": resolved})
+                result = {"input": name, "canonical_en": resolved, "entity_type": entity_type}
+            if effective_locale:
+                result.update(_locale_result_fields(data, effective_locale))
+            return result
+    finally:
+        _display_locale = previous_locale
+        _lookup_entity = previous_entity
+    load_data()
+    ambiguous = []
+    sections = {"pokemon": "pokemon", "move": "moves",
+                "ability": "abilities", "item": "items"}
+    entity_types = [_lookup_entity] if _lookup_entity else list(sections)
+    for entity_type in entity_types:
+        section = sections[entity_type]
+        hits = _locale_lookup(section, name)
+        if not isinstance(hits, list):
+            continue
+        for candidate in hits:
+            if section == "pokemon" and isinstance(candidate, tuple):
+                stem, form_name = candidate
+                data = _pokemon_data.get(stem, {})
+                form = next((f for f in data.get("forms", [])
+                             if f.get("name") == form_name), {}) if form_name else {}
+                candidate = form.get("name_en") or data.get("name_en") or stem
+            elif section == "moves":
+                candidate = (_moves_data.get(candidate, {}) or {}).get("name_en") or candidate
+            elif section == "abilities":
+                candidate = (_abilities_data.get(candidate, {}) or {}).get("name_en") or candidate
+            ambiguous.append(f"{entity_type}: {candidate}")
+    if ambiguous:
+        return {"error": f"'{name}' is ambiguous.",
+                "candidates": list(dict.fromkeys(ambiguous))}
     cands = (list(_index_data.get("pokemon", {}).keys())
              + list(_index_data.get("pokemon_forms", {}).keys())
              + list(_index_data.get("moves", {}).keys()))
@@ -4245,6 +4758,7 @@ def _extract_regulation_flag(argv: list[str]) -> tuple[list[str], str | None]:
 
 
 def main() -> int:
+    global _balance_version
     if len(sys.argv) < 2:
         print(__doc__)
         return 1
@@ -4253,13 +4767,32 @@ def main() -> int:
     if _reg_arg is not None:
         set_regulation_cap(_reg_arg)
 
+    # Parse the shared option for both argparse and legacy positional commands.
+    import argparse
+    version_parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
+    version_parser.add_argument("--patch", metavar="BASELINE_OR_DATE")
+    version, remaining = version_parser.parse_known_args(sys.argv[1:])
+    _balance_version = version.patch
+    if _balance_version not in (None, "baseline"):
+        try:
+            available = balance_patches.load_patches(DATA_DIR)
+            if _balance_version not in available:
+                raise ValueError(f"未知补丁 {_balance_version!r}，可选版本：{', '.join(['baseline', *available])}")
+        except (OSError, ValueError) as e:
+            print(json.dumps({"error": str(e)}, ensure_ascii=False))
+            return 1
+    sys.argv[1:] = remaining
+    if len(sys.argv) < 2:
+        print(__doc__)
+        return 1
     cmd = sys.argv[1]
 
     # Named-argument commands: use argparse
     if cmd in ("calc", "optimize", "calc-raw", "compute-stats", "speed", "find-move", "pokemon", "filter-moves", "filter-pokemon", "survivability", "usage", "teams", "meta", "lookup"):
-        import argparse
-
-        parser = argparse.ArgumentParser(description="Pokemon Calc CLI")
+        parser = argparse.ArgumentParser(
+            description="Pokemon Calc CLI",
+            epilog="Use --patch baseline or --patch YYYY-MM-DD to select a Champions balance version.",
+        )
         subparsers = parser.add_subparsers(dest="command")
 
         # pokemon
@@ -4270,12 +4803,17 @@ def main() -> int:
         # lookup
         lookup_parser = subparsers.add_parser("lookup", help="Resolve a multi-language name to canonical English")
         lookup_parser.add_argument("name", help="Pokemon / move / ability / item name")
+        lookup_parser.add_argument("--locale", default=None, help="Display name language, e.g. fr, de, it, es-ES, es-419, ko")
+        lookup_parser.add_argument("--entity", choices=("pokemon", "move", "ability", "item"), help="Resolve only this entity category")
+        lookup_parser.add_argument("--input-locale", default=None, help="Prefer names from this language when input is ambiguous")
 
         # calc
         calc_parser = subparsers.add_parser("calc", help="Quick damage calculation")
         calc_parser.add_argument("attacker", help="Attacker Pokemon name")
         calc_parser.add_argument("move", help="Move name")
         calc_parser.add_argument("defender", help="Defender Pokemon name")
+        calc_parser.add_argument("--locale", default=None, help="Include localized entity names, e.g. fr, de, it, es-ES, es-419, ko")
+        calc_parser.add_argument("--input-locale", default=None, help="Prefer names from this language when input is ambiguous")
         calc_parser.add_argument("--att_ov", default="{}", help="Attacker override JSON")
         calc_parser.add_argument("--move_ov", default="{}", help="Move override JSON")
         calc_parser.add_argument("--def_ov", default="{}", help="Defender override JSON")
@@ -4391,6 +4929,13 @@ def main() -> int:
         meta_parser.add_argument("--placing-max", type=int, default=None, help="With --stats: only count teams placing <= N")
 
         args = parser.parse_args()
+        global _display_locale, _input_locale, _lookup_entity
+        try:
+            _display_locale = _normalize_locale(getattr(args, "locale", None))
+            _input_locale = _normalize_locale(getattr(args, "input_locale", None))
+        except ValueError as e:
+            parser.error(str(e))
+        _lookup_entity = getattr(args, "entity", None)
 
         # If *_ov_file is provided, read file content and override the JSON string args.
         # File-based input takes precedence over inline JSON.

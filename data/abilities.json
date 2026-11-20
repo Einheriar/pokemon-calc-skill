@@ -237,7 +237,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "196"
+    "id": "196",
+    "localized_names": {
+      "fr": "Cruauté",
+      "de": "Quälerei",
+      "it": "Spietatezza",
+      "es-ES": "Ensañamiento",
+      "es-419": "Ensañamiento",
+      "ko": "무도한행동"
+    }
   },
   "不屈之心": {
     "name_zh": "不屈之心",
@@ -439,7 +447,15 @@
         "hidden_ability": "胆量"
       }
     ],
-    "id": "080"
+    "id": "080",
+    "localized_names": {
+      "fr": "Impassible",
+      "de": "Felsenfest",
+      "it": "Cuordeciso",
+      "es-ES": "Impasible",
+      "es-419": "Impasible",
+      "ko": "불굴의마음"
+    }
   },
   "不屈之盾": {
     "name_zh": "不屈之盾",
@@ -744,7 +760,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "128"
+    "id": "128",
+    "localized_names": {
+      "fr": "Acharné",
+      "de": "Siegeswille",
+      "it": "Agonismo",
+      "es-ES": "Competitivo",
+      "es-419": "Competitivo",
+      "ko": "오기"
+    }
   },
   "不眠": {
     "name_zh": "不眠",
@@ -1001,7 +1025,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "015"
+    "id": "015",
+    "localized_names": {
+      "fr": "Insomnia",
+      "de": "Insomnia",
+      "it": "Insonnia",
+      "es-ES": "Insomnio",
+      "es-419": "Insomnio",
+      "ko": "불면"
+    }
   },
   "中毒激升": {
     "name_zh": "中毒激升",
@@ -1119,7 +1151,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "185"
+    "id": "185",
+    "localized_names": {
+      "fr": "Amour Filial",
+      "de": "Familienbande",
+      "it": "Amorefiliale",
+      "es-ES": "Amor Filial",
+      "es-419": "Amor Filial",
+      "ko": "부자유친"
+    }
   },
   "人马一体": {
     "name_zh": "人马一体",
@@ -1375,7 +1415,15 @@
         "hidden_ability": "搬岩"
       }
     ],
-    "id": "145"
+    "id": "145",
+    "localized_names": {
+      "fr": "Cœur de Coq",
+      "de": "Brustbieter",
+      "it": "Pettinfuori",
+      "es-ES": "Sacapecho",
+      "es-419": "Sacapecho",
+      "ko": "부풀린가슴"
+    }
   },
   "储水": {
     "name_zh": "储水",
@@ -1751,7 +1799,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "011"
+    "id": "011",
+    "localized_names": {
+      "fr": "Absorbe-Eau",
+      "de": "H2O-Absorber",
+      "it": "Assorbacqua",
+      "es-ES": "Absorbe Agua",
+      "es-419": "Absorbeagua",
+      "ko": "저수"
+    }
   },
   "兆级电压": {
     "name_zh": "兆级电压",
@@ -1881,7 +1937,15 @@
         "hidden_ability": "中毒激升"
       }
     ],
-    "id": "017"
+    "id": "017",
+    "localized_names": {
+      "fr": "Vaccin",
+      "de": "Immunität",
+      "it": "Immunità",
+      "es-ES": "Inmunidad",
+      "es-419": "Inmunidad",
+      "ko": "면역"
+    }
   },
   "全能变身": {
     "name_zh": "全能变身",
@@ -1923,7 +1987,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "278"
+    "id": "278",
+    "localized_names": {
+      "fr": "Supermutation",
+      "de": "Superwechsel",
+      "it": "Supercambio",
+      "es-ES": "Cambio Heroico",
+      "es-419": "Cambio Heroico",
+      "ko": "마이티체인지"
+    }
   },
   "共生": {
     "name_zh": "共生",
@@ -2002,7 +2074,15 @@
         "hidden_ability": "共生"
       }
     ],
-    "id": "180"
+    "id": "180",
+    "localized_names": {
+      "fr": "Symbiose",
+      "de": "Symbiose",
+      "it": "Simbiosi",
+      "es-ES": "Simbiosis",
+      "es-419": "Simbiosis",
+      "ko": "공생"
+    }
   },
   "再生力": {
     "name_zh": "再生力",
@@ -2357,7 +2437,15 @@
         "hidden_ability": "黏着"
       }
     ],
-    "id": "144"
+    "id": "144",
+    "localized_names": {
+      "fr": "Régé-Force",
+      "de": "Belebekraft",
+      "it": "Rigenergia",
+      "es-ES": "Regeneración",
+      "es-419": "Regeneración",
+      "ko": "재생력"
+    }
   },
   "冰冻之躯": {
     "name_zh": "冰冻之躯",
@@ -2638,7 +2726,15 @@
         "hidden_ability": "冰冻之躯"
       }
     ],
-    "id": "115"
+    "id": "115",
+    "localized_names": {
+      "fr": "Corps Gel",
+      "de": "Eishaut",
+      "it": "Corpogelo",
+      "es-ES": "Gélido",
+      "es-419": "Cuerpo de Hielo",
+      "ko": "아이스바디"
+    }
   },
   "冰冻皮肤": {
     "name_zh": "冰冻皮肤",
@@ -2694,7 +2790,15 @@
         "hidden_ability": "降雪"
       }
     ],
-    "id": "174"
+    "id": "174",
+    "localized_names": {
+      "fr": "Peau Gelée",
+      "de": "Frostschicht",
+      "it": "Pellegelo",
+      "es-ES": "Piel Helada",
+      "es-419": "Piel Helada",
+      "ko": "프리즈스킨"
+    }
   },
   "冰鳞粉": {
     "name_zh": "冰鳞粉",
@@ -2770,7 +2874,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "207"
+    "id": "207",
+    "localized_names": {
+      "fr": "Surf Caudal",
+      "de": "Surf-Schweif",
+      "it": "Codasurf",
+      "es-ES": "Cola Surf",
+      "es-419": "Cola Surf",
+      "ko": "서핑테일"
+    }
   },
   "分析": {
     "name_zh": "分析",
@@ -2948,7 +3060,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "148"
+    "id": "148",
+    "localized_names": {
+      "fr": "Analyste",
+      "de": "Analyse",
+      "it": "Ponderazione",
+      "es-ES": "Cálculo Final",
+      "es-419": "Cálculo Final",
+      "ko": "애널라이즈"
+    }
   },
   "加速": {
     "name_zh": "加速",
@@ -3157,7 +3277,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "003"
+    "id": "003",
+    "localized_names": {
+      "fr": "Turbo",
+      "de": "Temposchub",
+      "it": "Acceleratore",
+      "es-ES": "Impulso",
+      "es-419": "Impulso",
+      "ko": "가속"
+    }
   },
   "化学之力": {
     "name_zh": "化学之力",
@@ -3339,7 +3467,15 @@
         "hidden_ability": "单纯"
       }
     ],
-    "id": "086"
+    "id": "086",
+    "localized_names": {
+      "fr": "Simple",
+      "de": "Wankelmut",
+      "it": "Disinvoltura",
+      "es-ES": "Simple",
+      "es-419": "Simple",
+      "ko": "단순"
+    }
   },
   "危险回避": {
     "name_zh": "危险回避",
@@ -3370,7 +3506,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "194"
+    "id": "194",
+    "localized_names": {
+      "fr": "Repli Tactique",
+      "de": "Rückzug",
+      "it": "Passoindietro",
+      "es-ES": "Retirada",
+      "es-419": "Retirada",
+      "ko": "위기회피"
+    }
   },
   "危险预知": {
     "name_zh": "危险预知",
@@ -3552,7 +3696,15 @@
         "hidden_ability": "加速"
       }
     ],
-    "id": "107"
+    "id": "107",
+    "localized_names": {
+      "fr": "Anticipation",
+      "de": "Vorahnung",
+      "it": "Presagio",
+      "es-ES": "Anticipación",
+      "es-419": "Anticipación",
+      "ko": "위험예지"
+    }
   },
   "卷发": {
     "name_zh": "卷发",
@@ -3596,7 +3748,15 @@
         "hidden_ability": "沙之力"
       }
     ],
-    "id": "221"
+    "id": "221",
+    "localized_names": {
+      "fr": "Mèche Rebelle",
+      "de": "Lockenkopf",
+      "it": "Boccolidoro",
+      "es-ES": "Rizos Rebeldes",
+      "es-419": "Rizos Rebeldes",
+      "ko": "컬리헤어"
+    }
   },
   "压迫感": {
     "name_zh": "压迫感",
@@ -4055,7 +4215,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "046"
+    "id": "046",
+    "localized_names": {
+      "fr": "Pression",
+      "de": "Erzwinger",
+      "it": "Pressione",
+      "es-ES": "Presión",
+      "es-419": "Presión",
+      "ko": "프레셔"
+    }
   },
   "厚脂肪": {
     "name_zh": "厚脂肪",
@@ -4449,7 +4617,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "047"
+    "id": "047",
+    "localized_names": {
+      "fr": "Isograisse",
+      "de": "Speckschicht",
+      "it": "Grassospesso",
+      "es-ES": "Sebo",
+      "es-419": "Sebo",
+      "ko": "두꺼운지방"
+    }
   },
   "友情防守": {
     "name_zh": "友情防守",
@@ -4579,7 +4755,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "132"
+    "id": "132",
+    "localized_names": {
+      "fr": "Garde-Ami",
+      "de": "Freundeshut",
+      "it": "Amicoscudo",
+      "es-ES": "Compiescolta",
+      "es-419": "Compiescolta",
+      "ko": "프렌드가드"
+    }
   },
   "反刍": {
     "name_zh": "反刍",
@@ -4648,7 +4832,15 @@
         "hidden_ability": "食草"
       }
     ],
-    "id": "291"
+    "id": "291",
+    "localized_names": {
+      "fr": "Ruminant",
+      "de": "Wiederkäuer",
+      "it": "Ruminante",
+      "es-ES": "Rumia",
+      "es-419": "Rumia",
+      "ko": "되새김질"
+    }
   },
   "发光": {
     "name_zh": "发光",
@@ -4768,7 +4960,15 @@
         "hidden_ability": "雨盘"
       }
     ],
-    "id": "035"
+    "id": "035",
+    "localized_names": {
+      "fr": "Luminescence",
+      "de": "Erleuchtung",
+      "it": "Risplendi",
+      "es-ES": "Iluminación",
+      "es-419": "Iluminación",
+      "ko": "발광"
+    }
   },
   "发号施令": {
     "name_zh": "发号施令",
@@ -4973,7 +5173,15 @@
         "hidden_ability": "变幻自如"
       }
     ],
-    "id": "168"
+    "id": "168",
+    "localized_names": {
+      "fr": "Protéen",
+      "de": "Wandlungskunst",
+      "it": "Mutatipo",
+      "es-ES": "Mutatipo",
+      "es-419": "Mutatipo",
+      "ko": "변환자재"
+    }
   },
   "变色": {
     "name_zh": "变色",
@@ -5033,7 +5241,15 @@
         "hidden_ability": "变身者"
       }
     ],
-    "id": "150"
+    "id": "150",
+    "localized_names": {
+      "fr": "Imposteur",
+      "de": "Doppelgänger",
+      "it": "Sosia",
+      "es-ES": "Impostor",
+      "es-419": "Impostor",
+      "ko": "괴짜"
+    }
   },
   "古代活性": {
     "name_zh": "古代活性",
@@ -5460,7 +5676,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "102"
+    "id": "102",
+    "localized_names": {
+      "fr": "Feuille Garde",
+      "de": "Floraschild",
+      "it": "Fogliamanto",
+      "es-ES": "Defensa Hoja",
+      "es-419": "Defensa Hoja",
+      "ko": "리프가드"
+    }
   },
   "叶绿素": {
     "name_zh": "叶绿素",
@@ -5960,7 +6184,15 @@
         "hidden_ability": "心情不定"
       }
     ],
-    "id": "034"
+    "id": "034",
+    "localized_names": {
+      "fr": "Chlorophylle",
+      "de": "Chlorophyll",
+      "it": "Clorofilla",
+      "es-ES": "Clorofila",
+      "es-419": "Clorofila",
+      "ko": "엽록소"
+    }
   },
   "同台共演": {
     "name_zh": "同台共演",
@@ -6233,7 +6465,15 @@
         "hidden_ability": "心灵感应"
       }
     ],
-    "id": "028"
+    "id": "028",
+    "localized_names": {
+      "fr": "Synchro",
+      "de": "Synchro",
+      "it": "Sincronismo",
+      "es-ES": "Sincronía",
+      "es-419": "Sincronía",
+      "ko": "싱크로"
+    }
   },
   "吐沙": {
     "name_zh": "吐沙",
@@ -6275,7 +6515,15 @@
         "hidden_ability": "沙隐"
       }
     ],
-    "id": "245"
+    "id": "245",
+    "localized_names": {
+      "fr": "Expul’Sable",
+      "de": "Sandspeier",
+      "it": "Sputasabbia",
+      "es-ES": "Expulsarena",
+      "es-419": "Expulsarena",
+      "ko": "모래뿜기"
+    }
   },
   "吸盘": {
     "name_zh": "吸盘",
@@ -6358,7 +6606,15 @@
         "hidden_ability": "穿透"
       }
     ],
-    "id": "021"
+    "id": "021",
+    "localized_names": {
+      "fr": "Ventouse",
+      "de": "Saugnapf",
+      "it": "Ventose",
+      "es-ES": "Ventosas",
+      "es-419": "Ventosas",
+      "ko": "흡반"
+    }
   },
   "唱反调": {
     "name_zh": "唱反调",
@@ -6501,7 +6757,15 @@
         "hidden_ability": "唱反调"
       }
     ],
-    "id": "126"
+    "id": "126",
+    "localized_names": {
+      "fr": "Contestation",
+      "de": "Umkehrung",
+      "it": "Inversione",
+      "es-ES": "Respondón",
+      "es-419": "Respondón",
+      "ko": "심술꾸러기"
+    }
   },
   "坚毅": {
     "name_zh": "坚毅",
@@ -6545,7 +6809,15 @@
         "hidden_ability": "坚毅"
       }
     ],
-    "id": "242"
+    "id": "242",
+    "localized_names": {
+      "fr": "Nerfs d’Acier",
+      "de": "Stahlrückgrat",
+      "it": "Volontà di Ferro",
+      "es-ES": "Acérrimo",
+      "es-419": "Acérrimo",
+      "ko": "굳건한신념"
+    }
   },
   "坚硬岩石": {
     "name_zh": "坚硬岩石",
@@ -6616,7 +6888,15 @@
         "hidden_ability": "悠游自如"
       }
     ],
-    "id": "116"
+    "id": "116",
+    "localized_names": {
+      "fr": "Solide Roc",
+      "de": "Felskern",
+      "it": "Solidroccia",
+      "es-ES": "Roca Sólida",
+      "es-419": "Roca Sólida",
+      "ko": "하드록"
+    }
   },
   "坚硬脑袋": {
     "name_zh": "坚硬脑袋",
@@ -6926,7 +7206,15 @@
         "hidden_ability": "坚硬脑袋"
       }
     ],
-    "id": "069"
+    "id": "069",
+    "localized_names": {
+      "fr": "Tête de Roc",
+      "de": "Steinhaupt",
+      "it": "Testadura",
+      "es-ES": "Cabeza Roca",
+      "es-419": "Cabeza Roca",
+      "ko": "돌머리"
+    }
   },
   "复制": {
     "name_zh": "复制",
@@ -7019,7 +7307,15 @@
         "hidden_ability": "心灵感应"
       }
     ],
-    "id": "036"
+    "id": "036",
+    "localized_names": {
+      "fr": "Calque",
+      "de": "Erfassen",
+      "it": "Traccia",
+      "es-ES": "Calco",
+      "es-419": "Calco",
+      "ko": "트레이스"
+    }
   },
   "复眼": {
     "name_zh": "复眼",
@@ -7190,7 +7486,15 @@
         "hidden_ability": "蜕皮"
       }
     ],
-    "id": "014"
+    "id": "014",
+    "localized_names": {
+      "fr": "Œil Composé",
+      "de": "Facettenauge",
+      "it": "Insettocchi",
+      "es-ES": "Ojo Compuesto",
+      "es-419": "Ojo Compuesto",
+      "ko": "복안"
+    }
   },
   "多属性": {
     "name_zh": "多属性",
@@ -7265,7 +7569,15 @@
         "hidden_ability": "多重鳞片"
       }
     ],
-    "id": "136"
+    "id": "136",
+    "localized_names": {
+      "fr": "Multiécaille",
+      "de": "Multischuppe",
+      "it": "Multisquame",
+      "es-ES": "Multiescamas",
+      "es-419": "Multiescamas",
+      "ko": "멀티스케일"
+    }
   },
   "大力士": {
     "name_zh": "大力士",
@@ -7384,7 +7696,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "037"
+    "id": "037",
+    "localized_names": {
+      "fr": "Coloforce",
+      "de": "Kraftkoloss",
+      "it": "Macroforza",
+      "es-ES": "Potencia",
+      "es-419": "Potencia",
+      "ko": "천하장사"
+    }
   },
   "大将": {
     "name_zh": "大将",
@@ -7415,7 +7735,15 @@
         "hidden_ability": "压迫感"
       }
     ],
-    "id": "293"
+    "id": "293",
+    "localized_names": {
+      "fr": "Général Suprême",
+      "de": "Feldherr",
+      "it": "Generale Supremo",
+      "es-ES": "General Supremo",
+      "es-419": "General Supremo",
+      "ko": "총대장"
+    }
   },
   "天恩": {
     "name_zh": "天恩",
@@ -7801,7 +8129,15 @@
         "hidden_ability": "太阳之力"
       }
     ],
-    "id": "094"
+    "id": "094",
+    "localized_names": {
+      "fr": "Force Soleil",
+      "de": "Solarkraft",
+      "it": "Solarpotere",
+      "es-ES": "Poder Solar",
+      "es-419": "Poder Solar",
+      "ko": "선파워"
+    }
   },
   "夸克充能": {
     "name_zh": "夸克充能",
@@ -8062,7 +8398,15 @@
         "hidden_ability": "甜幕"
       }
     ],
-    "id": "214"
+    "id": "214",
+    "localized_names": {
+      "fr": "Prestance Royale",
+      "de": "Majestät",
+      "it": "Regalità",
+      "es-ES": "Regia Presencia",
+      "es-419": "Regia Presencia",
+      "ko": "여왕의위엄"
+    }
   },
   "好胜": {
     "name_zh": "好胜",
@@ -8267,7 +8611,15 @@
         "hidden_ability": "好胜"
       }
     ],
-    "id": "172"
+    "id": "172",
+    "localized_names": {
+      "fr": "Battant",
+      "de": "Unbeugsamkeit",
+      "it": "Tenacia",
+      "es-ES": "Tenacidad",
+      "es-419": "Tenacidad",
+      "ko": "승기"
+    }
   },
   "妖精气场": {
     "name_zh": "妖精气场",
@@ -8297,7 +8649,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "187"
+    "id": "187",
+    "localized_names": {
+      "fr": "Aura Féérique",
+      "de": "Feenaura",
+      "it": "Aurafolletto",
+      "es-ES": "Aura Feérica",
+      "es-419": "Aura Feérica",
+      "ko": "페어리오라"
+    }
   },
   "妖精皮肤": {
     "name_zh": "妖精皮肤",
@@ -8353,7 +8713,15 @@
         "hidden_ability": "妖精皮肤"
       }
     ],
-    "id": "182"
+    "id": "182",
+    "localized_names": {
+      "fr": "Peau Féérique",
+      "de": "Feenschicht",
+      "it": "Pellefolletto",
+      "es-ES": "Piel Feérica",
+      "es-419": "Piel Feérica",
+      "ko": "페어리스킨"
+    }
   },
   "始源之海": {
     "name_zh": "始源之海",
@@ -8990,7 +9358,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "022"
+    "id": "022",
+    "localized_names": {
+      "fr": "Intimidation",
+      "de": "Bedroher",
+      "it": "Prepotenza",
+      "es-ES": "Intimidación",
+      "es-419": "Intimidación",
+      "ko": "위협"
+    }
   },
   "孢子": {
     "name_zh": "孢子",
@@ -9148,7 +9524,15 @@
         "hidden_ability": "孢子"
       }
     ],
-    "id": "027"
+    "id": "027",
+    "localized_names": {
+      "fr": "Pose Spore",
+      "de": "Sporenwirt",
+      "it": "Spargispora",
+      "es-ES": "Efecto Espora",
+      "es-419": "Efecto Espora",
+      "ko": "포자"
+    }
   },
   "察觉": {
     "name_zh": "察觉",
@@ -9543,7 +9927,15 @@
         "hidden_ability": "察觉"
       }
     ],
-    "id": "119"
+    "id": "119",
+    "localized_names": {
+      "fr": "Fouille",
+      "de": "Schnüffler",
+      "it": "Indagine",
+      "es-ES": "Cacheo",
+      "es-419": "Inspección",
+      "ko": "통찰"
+    }
   },
   "尾甲": {
     "name_zh": "尾甲",
@@ -9575,7 +9967,15 @@
         "hidden_ability": "食草"
       }
     ],
-    "id": "296"
+    "id": "296",
+    "localized_names": {
+      "fr": "Armure Caudale",
+      "de": "Schweifrüstung",
+      "it": "Codarmatura",
+      "es-ES": "Cola Armadura",
+      "es-419": "Cola Armadura",
+      "ko": "테일아머"
+    }
   },
   "干劲": {
     "name_zh": "干劲",
@@ -9789,7 +10189,15 @@
         "hidden_ability": "不服输"
       }
     ],
-    "id": "072"
+    "id": "072",
+    "localized_names": {
+      "fr": "Esprit Vital",
+      "de": "Munterkeit",
+      "it": "Spiritovivo",
+      "es-ES": "Espíritu Vital",
+      "es-419": "Espíritu Vital",
+      "ko": "의기양양"
+    }
   },
   "干燥皮肤": {
     "name_zh": "干燥皮肤",
@@ -9899,7 +10307,15 @@
         "hidden_ability": "太阳之力"
       }
     ],
-    "id": "087"
+    "id": "087",
+    "localized_names": {
+      "fr": "Peau Sèche",
+      "de": "Trockenheit",
+      "it": "Pellearsa",
+      "es-ES": "Piel Seca",
+      "es-419": "Piel Seca",
+      "ko": "건조피부"
+    }
   },
   "幻影防守": {
     "name_zh": "幻影防守",
@@ -9999,7 +10415,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "149"
+    "id": "149",
+    "localized_names": {
+      "fr": "Illusion",
+      "de": "Trugbild",
+      "it": "Illusione",
+      "es-ES": "Ilusión",
+      "es-419": "Ilusión",
+      "ko": "일루전"
+    }
   },
   "庞克摇滚": {
     "name_zh": "庞克摇滚",
@@ -10044,7 +10468,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "244"
+    "id": "244",
+    "localized_names": {
+      "fr": "Punk Rock",
+      "de": "Punk Rock",
+      "it": "Punk Rock",
+      "es-ES": "Punk Rock",
+      "es-419": "Punk Rock",
+      "ko": "펑크록"
+    }
   },
   "异兽提升": {
     "name_zh": "异兽提升",
@@ -10718,7 +11150,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "018"
+    "id": "018",
+    "localized_names": {
+      "fr": "Torche",
+      "de": "Feuerfänger",
+      "it": "Fuocardore",
+      "es-ES": "Absorbe Fuego",
+      "es-419": "Absorbefuego",
+      "ko": "타오르는불꽃"
+    }
   },
   "引爆": {
     "name_zh": "引爆",
@@ -10862,7 +11302,15 @@
         "hidden_ability": "诱爆"
       }
     ],
-    "id": "106"
+    "id": "106",
+    "localized_names": {
+      "fr": "Boom Final",
+      "de": "Finalschlag",
+      "it": "Scoppio",
+      "es-ES": "Detonación",
+      "es-419": "Secuela",
+      "ko": "유폭"
+    }
   },
   "强壮之颚": {
     "name_zh": "强壮之颚",
@@ -11019,7 +11467,15 @@
         "hidden_ability": "拨沙"
       }
     ],
-    "id": "173"
+    "id": "173",
+    "localized_names": {
+      "fr": "Prognathe",
+      "de": "Titankiefer",
+      "it": "Ferromascella",
+      "es-ES": "Mandíbula Fuerte",
+      "es-419": "Mandíbula Fuerte",
+      "ko": "옹골찬턱"
+    }
   },
   "强子引擎": {
     "name_zh": "强子引擎",
@@ -11489,7 +11945,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "125"
+    "id": "125",
+    "localized_names": {
+      "fr": "Sans Limite",
+      "de": "Rohe Gewalt",
+      "it": "Forzabruta",
+      "es-ES": "Potencia Bruta",
+      "es-419": "Potencia Bruta",
+      "ko": "우격다짐"
+    }
   },
   "归零化境": {
     "name_zh": "归零化境",
@@ -11666,7 +12130,15 @@
         "hidden_ability": "心情不定"
       }
     ],
-    "id": "141"
+    "id": "141",
+    "localized_names": {
+      "fr": "Lunatique",
+      "de": "Gefühlswippe",
+      "it": "Altalena",
+      "es-ES": "Veleta",
+      "es-419": "Temperamental",
+      "ko": "변덕쟁이"
+    }
   },
   "心灵感应": {
     "name_zh": "心灵感应",
@@ -12029,7 +12501,15 @@
         "hidden_ability": "心灵感应"
       }
     ],
-    "id": "140"
+    "id": "140",
+    "localized_names": {
+      "fr": "Télépathe",
+      "de": "Telepathie",
+      "it": "Telepatia",
+      "es-ES": "Telepatía",
+      "es-419": "Telepatía",
+      "ko": "텔레파시"
+    }
   },
   "心眼": {
     "name_zh": "心眼",
@@ -12105,7 +12585,15 @@
         "hidden_ability": "无关天气"
       }
     ],
-    "id": "201"
+    "id": "201",
+    "localized_names": {
+      "fr": "Folle Furie",
+      "de": "Wutausbruch",
+      "it": "Furore",
+      "es-ES": "Cólera",
+      "es-419": "Ira",
+      "ko": "발끈"
+    }
   },
   "怪力钳": {
     "name_zh": "怪力钳",
@@ -12261,7 +12749,15 @@
         "hidden_ability": "愤怒穴位"
       }
     ],
-    "id": "052"
+    "id": "052",
+    "localized_names": {
+      "fr": "Hyper Cutter",
+      "de": "Scherenmacht",
+      "it": "Ipertaglio",
+      "es-ES": "Corte Fuerte",
+      "es-419": "Corte Fuerte",
+      "ko": "괴력집게"
+    }
   },
   "怪药": {
     "name_zh": "怪药",
@@ -12292,7 +12788,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "261"
+    "id": "261",
+    "localized_names": {
+      "fr": "Breuvage Suspect",
+      "de": "Kuriose Arznei",
+      "it": "Stranofarmaco",
+      "es-ES": "Medicina Extraña",
+      "es-419": "Medicina Extraña",
+      "ko": "기묘한약"
+    }
   },
   "恒净之躯": {
     "name_zh": "恒净之躯",
@@ -12549,7 +13053,15 @@
         "hidden_ability": "恒净之躯"
       }
     ],
-    "id": "029"
+    "id": "029",
+    "localized_names": {
+      "fr": "Corps Sain",
+      "de": "Neutraltorso",
+      "it": "Corpochiaro",
+      "es-ES": "Cuerpo Puro",
+      "es-419": "Cuerpo Puro",
+      "ko": "클리어바디"
+    }
   },
   "恶作剧之心": {
     "name_zh": "恶作剧之心",
@@ -12806,7 +13318,15 @@
         "hidden_ability": "恶作剧之心"
       }
     ],
-    "id": "158"
+    "id": "158",
+    "localized_names": {
+      "fr": "Farceur",
+      "de": "Strolch",
+      "it": "Burla",
+      "es-ES": "Bromista",
+      "es-419": "Timador",
+      "ko": "짓궂은마음"
+    }
   },
   "恶臭": {
     "name_zh": "恶臭",
@@ -12935,7 +13455,15 @@
         "hidden_ability": "诱爆"
       }
     ],
-    "id": "001"
+    "id": "001",
+    "localized_names": {
+      "fr": "Puanteur",
+      "de": "Duftnote",
+      "it": "Tanfo",
+      "es-ES": "Hedor",
+      "es-419": "Hedor",
+      "ko": "악취"
+    }
   },
   "悠游自如": {
     "name_zh": "悠游自如",
@@ -13530,7 +14058,15 @@
         "hidden_ability": "威吓"
       }
     ],
-    "id": "033"
+    "id": "033",
+    "localized_names": {
+      "fr": "Glissade",
+      "de": "Wassertempo",
+      "it": "Nuotovelox",
+      "es-ES": "Nado Rápido",
+      "es-419": "Nado Rápido",
+      "ko": "쓱쓱"
+    }
   },
   "愤怒甲壳": {
     "name_zh": "愤怒甲壳",
@@ -13729,7 +14265,15 @@
         "hidden_ability": "愤怒穴位"
       }
     ],
-    "id": "083"
+    "id": "083",
+    "localized_names": {
+      "fr": "Colérique",
+      "de": "Kurzschluss",
+      "it": "Grancollera",
+      "es-ES": "Irascible",
+      "es-419": "Irascible",
+      "ko": "분노의경혈"
+    }
   },
   "慢出": {
     "name_zh": "慢出",
@@ -13760,7 +14304,15 @@
         "hidden_ability": "恶作剧之心"
       }
     ],
-    "id": "100"
+    "id": "100",
+    "localized_names": {
+      "fr": "Frein",
+      "de": "Zeitspiel",
+      "it": "Rallentatore",
+      "es-ES": "Rezagado",
+      "es-419": "Rezagado",
+      "ko": "시간벌기"
+    }
   },
   "慢启动": {
     "name_zh": "慢启动",
@@ -14285,7 +14837,15 @@
         "hidden_ability": "顺手牵羊"
       }
     ],
-    "id": "020"
+    "id": "020",
+    "localized_names": {
+      "fr": "Tempo Perso",
+      "de": "Gleichmut",
+      "it": "Mente Locale",
+      "es-ES": "Ritmo Propio",
+      "es-419": "Ritmo Propio",
+      "ko": "마이페이스"
+    }
   },
   "战斗切换": {
     "name_zh": "战斗切换",
@@ -14329,7 +14889,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "176"
+    "id": "176",
+    "localized_names": {
+      "fr": "Déclic Tactique",
+      "de": "Taktikwechsel",
+      "it": "Accendilotta",
+      "es-ES": "Cambio Táctico",
+      "es-419": "Cambio Táctico",
+      "ko": "배틀스위치"
+    }
   },
   "战斗盔甲": {
     "name_zh": "战斗盔甲",
@@ -14486,7 +15054,15 @@
         "hidden_ability": "不服输"
       }
     ],
-    "id": "004"
+    "id": "004",
+    "localized_names": {
+      "fr": "Armurbaston",
+      "de": "Kampfpanzer",
+      "it": "Lottascudo",
+      "es-ES": "Armadura Batalla",
+      "es-419": "Armadura Batalla",
+      "ko": "전투무장"
+    }
   },
   "扬沙": {
     "name_zh": "扬沙",
@@ -14566,7 +15142,15 @@
         "hidden_ability": "沙之力"
       }
     ],
-    "id": "045"
+    "id": "045",
+    "localized_names": {
+      "fr": "Sable Volant",
+      "de": "Sandsturm",
+      "it": "Sabbiafiume",
+      "es-ES": "Chorro Arena",
+      "es-419": "Chorro de Arena",
+      "ko": "모래날림"
+    }
   },
   "技术高手": {
     "name_zh": "技术高手",
@@ -14883,7 +15467,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "101"
+    "id": "101",
+    "localized_names": {
+      "fr": "Technicien",
+      "de": "Techniker",
+      "it": "Tecnico",
+      "es-ES": "Experto",
+      "es-419": "Experto",
+      "ko": "테크니션"
+    }
   },
   "拟态": {
     "name_zh": "拟态",
@@ -14914,7 +15506,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "250"
+    "id": "250",
+    "localized_names": {
+      "fr": "Mimétisme",
+      "de": "Mimese",
+      "it": "Mimetismo",
+      "es-ES": "Mimetismo",
+      "es-419": "Mimetismo",
+      "ko": "의태"
+    }
   },
   "拨沙": {
     "name_zh": "拨沙",
@@ -15055,7 +15655,15 @@
         "hidden_ability": "毛茸茸"
       }
     ],
-    "id": "146"
+    "id": "146",
+    "localized_names": {
+      "fr": "Baigne Sable",
+      "de": "Sandscharrer",
+      "it": "Remasabbia",
+      "es-ES": "Ímpetu Arena",
+      "es-419": "Ímpetu Arena",
+      "ko": "모래헤치기"
+    }
   },
   "拨雪": {
     "name_zh": "拨雪",
@@ -15161,7 +15769,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "202"
+    "id": "202",
+    "localized_names": {
+      "fr": "Chasse-Neige",
+      "de": "Schneescharrer",
+      "it": "Spalaneve",
+      "es-ES": "Quitanieves",
+      "es-419": "Quitanieves",
+      "ko": "눈치우기"
+    }
   },
   "持久力": {
     "name_zh": "持久力",
@@ -15228,7 +15844,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "192"
+    "id": "192",
+    "localized_names": {
+      "fr": "Endurance",
+      "de": "Zähigkeit",
+      "it": "Sopportazione",
+      "es-ES": "Firmeza",
+      "es-419": "Firmeza",
+      "ko": "지구력"
+    }
   },
   "捡拾": {
     "name_zh": "捡拾",
@@ -15530,7 +16154,15 @@
         "hidden_ability": "毛茸茸"
       }
     ],
-    "id": "053"
+    "id": "053",
+    "localized_names": {
+      "fr": "Ramassage",
+      "de": "Mitnahme",
+      "it": "Raccolta",
+      "es-ES": "Recogida",
+      "es-419": "Recolección",
+      "ko": "픽업"
+    }
   },
   "捡球": {
     "name_zh": "捡球",
@@ -15591,7 +16223,15 @@
         "hidden_ability": "收获"
       }
     ],
-    "id": "269"
+    "id": "269",
+    "localized_names": {
+      "fr": "Semencier",
+      "de": "Streusaat",
+      "it": "Spargisemi",
+      "es-ES": "Disemillar",
+      "es-419": "Disemillar",
+      "ko": "넘치는씨"
+    }
   },
   "接球手": {
     "name_zh": "接球手",
@@ -15621,7 +16261,15 @@
         "hidden_ability": "不服输"
       }
     ],
-    "id": "222"
+    "id": "222",
+    "localized_names": {
+      "fr": "Receveur",
+      "de": "Receiver",
+      "it": "Ricezione",
+      "es-ES": "Receptor",
+      "es-419": "Receptor",
+      "ko": "리시버"
+    }
   },
   "搬岩": {
     "name_zh": "搬岩",
@@ -15787,7 +16435,15 @@
         "hidden_ability": "收获"
       }
     ],
-    "id": "139"
+    "id": "139",
+    "localized_names": {
+      "fr": "Récolte",
+      "de": "Reiche Ernte",
+      "it": "Coglibacche",
+      "es-ES": "Cosecha",
+      "es-419": "Cosecha",
+      "ko": "수확"
+    }
   },
   "斗争心": {
     "name_zh": "斗争心",
@@ -16029,7 +16685,15 @@
         "hidden_ability": "自信过度"
       }
     ],
-    "id": "079"
+    "id": "079",
+    "localized_names": {
+      "fr": "Rivalité",
+      "de": "Rivalität",
+      "it": "Antagonismo",
+      "es-ES": "Rivalidad",
+      "es-419": "Rivalidad",
+      "ko": "투쟁심"
+    }
   },
   "无关天气": {
     "name_zh": "无关天气",
@@ -16134,7 +16798,15 @@
         "hidden_ability": "无关天气"
       }
     ],
-    "id": "013"
+    "id": "013",
+    "localized_names": {
+      "fr": "Ciel Gris",
+      "de": "Wolke Sieben",
+      "it": "Antimeteo",
+      "es-ES": "Aclimatación",
+      "es-419": "Aclimatación",
+      "ko": "날씨부정"
+    }
   },
   "无形拳": {
     "name_zh": "无形拳",
@@ -16178,7 +16850,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "260"
+    "id": "260",
+    "localized_names": {
+      "fr": "Poing Invisible",
+      "de": "Verborgene Faust",
+      "it": "Pugni Invisibili",
+      "es-ES": "Puño Invisible",
+      "es-419": "Puño Invisible",
+      "ko": "보이지않는주먹"
+    }
   },
   "无防守": {
     "name_zh": "无防守",
@@ -16322,7 +17002,15 @@
         "hidden_ability": "无防守"
       }
     ],
-    "id": "099"
+    "id": "099",
+    "localized_names": {
+      "fr": "Annule Garde",
+      "de": "Schildlos",
+      "it": "Nullodifesa",
+      "es-ES": "Indefenso",
+      "es-419": "Indefenso",
+      "ko": "노가드"
+    }
   },
   "日照": {
     "name_zh": "日照",
@@ -16401,7 +17089,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "070"
+    "id": "070",
+    "localized_names": {
+      "fr": "Sécheresse",
+      "de": "Dürre",
+      "it": "Siccità",
+      "es-ES": "Sequía",
+      "es-419": "Sequía",
+      "ko": "가뭄"
+    }
   },
   "早起": {
     "name_zh": "早起",
@@ -16635,7 +17331,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "048"
+    "id": "048",
+    "localized_names": {
+      "fr": "Matinal",
+      "de": "Frühwecker",
+      "it": "Sveglialampo",
+      "es-ES": "Madrugar",
+      "es-419": "Madrugador",
+      "ko": "일찍기상"
+    }
   },
   "暗黑气场": {
     "name_zh": "暗黑气场",
@@ -16880,7 +17584,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "152"
+    "id": "152",
+    "localized_names": {
+      "fr": "Momie",
+      "de": "Mumie",
+      "it": "Mummia",
+      "es-ES": "Momia",
+      "es-419": "Momia",
+      "ko": "미라"
+    }
   },
   "杂音": {
     "name_zh": "杂音",
@@ -17087,7 +17799,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "007"
+    "id": "007",
+    "localized_names": {
+      "fr": "Échauffement",
+      "de": "Flexibilität",
+      "it": "Scioltezza",
+      "es-ES": "Flexibilidad",
+      "es-419": "Flexibilidad",
+      "ko": "유연"
+    }
   },
   "梦魇": {
     "name_zh": "梦魇",
@@ -17260,7 +17980,15 @@
         "hidden_ability": "耐热"
       }
     ],
-    "id": "299"
+    "id": "299",
+    "localized_names": {
+      "fr": "Aux Petits Soins",
+      "de": "Gastlichkeit",
+      "it": "Ospitalità",
+      "es-ES": "Hospitalidad",
+      "es-419": "Hospitalidad",
+      "ko": "대접"
+    }
   },
   "正义之心": {
     "name_zh": "正义之心",
@@ -17405,7 +18133,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "154"
+    "id": "154",
+    "localized_names": {
+      "fr": "Cœur Noble",
+      "de": "Redlichkeit",
+      "it": "Giustizia",
+      "es-ES": "Justiciero",
+      "es-419": "Justiciero",
+      "ko": "정의의마음"
+    }
   },
   "正电": {
     "name_zh": "正电",
@@ -17534,7 +18270,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "057"
+    "id": "057",
+    "localized_names": {
+      "fr": "Plus",
+      "de": "Plus",
+      "it": "Più",
+      "es-ES": "Más",
+      "es-419": "Más",
+      "ko": "플러스"
+    }
   },
   "毅力": {
     "name_zh": "毅力",
@@ -17860,7 +18604,15 @@
         "hidden_ability": "毅力"
       }
     ],
-    "id": "062"
+    "id": "062",
+    "localized_names": {
+      "fr": "Cran",
+      "de": "Adrenalin",
+      "it": "Dentistretti",
+      "es-ES": "Agallas",
+      "es-419": "Agallas",
+      "ko": "근성"
+    }
   },
   "毒傀儡": {
     "name_zh": "毒傀儡",
@@ -18164,7 +18916,15 @@
         "hidden_ability": "纯朴"
       }
     ],
-    "id": "038"
+    "id": "038",
+    "localized_names": {
+      "fr": "Point Poison",
+      "de": "Giftdorn",
+      "it": "Velenopunte",
+      "es-ES": "Punto Tóxico",
+      "es-419": "Punto Tóxico",
+      "ko": "독가시"
+    }
   },
   "毒手": {
     "name_zh": "毒手",
@@ -18323,7 +19083,15 @@
         "hidden_ability": "恶作剧之心"
       }
     ],
-    "id": "143"
+    "id": "143",
+    "localized_names": {
+      "fr": "Toxitouche",
+      "de": "Giftgriff",
+      "it": "Velentocco",
+      "es-ES": "Toque Tóxico",
+      "es-419": "Contacto Tóxico",
+      "ko": "독수"
+    }
   },
   "毒满地": {
     "name_zh": "毒满地",
@@ -18379,7 +19147,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "295"
+    "id": "295",
+    "localized_names": {
+      "fr": "Dépôt Toxique",
+      "de": "Giftbelag",
+      "it": "Mantossina",
+      "es-ES": "Capa Tóxica",
+      "es-419": "Capa Tóxica",
+      "ko": "독치장"
+    }
   },
   "毒疗": {
     "name_zh": "毒疗",
@@ -18435,7 +19211,15 @@
         "hidden_ability": "毒疗"
       }
     ],
-    "id": "090"
+    "id": "090",
+    "localized_names": {
+      "fr": "Soin Poison",
+      "de": "Giftheilung",
+      "it": "Velencura",
+      "es-ES": "Antídoto",
+      "es-419": "Antídoto",
+      "ko": "포이즌힐"
+    }
   },
   "毒锁链": {
     "name_zh": "毒锁链",
@@ -18535,7 +19319,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "169"
+    "id": "169",
+    "localized_names": {
+      "fr": "Toison Épaisse",
+      "de": "Fellkleid",
+      "it": "Foltopelo",
+      "es-ES": "Pelaje Recio",
+      "es-419": "Pelaje Recio",
+      "ko": "퍼코트"
+    }
   },
   "毛茸茸": {
     "name_zh": "毛茸茸",
@@ -18628,7 +19420,15 @@
         "hidden_ability": "毛茸茸"
       }
     ],
-    "id": "218"
+    "id": "218",
+    "localized_names": {
+      "fr": "Boule de Poils",
+      "de": "Flauschigkeit",
+      "it": "Morbidone",
+      "es-ES": "Peluche",
+      "es-419": "Mullido",
+      "ko": "복슬복슬"
+    }
   },
   "气场破坏": {
     "name_zh": "气场破坏",
@@ -18925,7 +19725,15 @@
         "hidden_ability": "储水"
       }
     ],
-    "id": "199"
+    "id": "199",
+    "localized_names": {
+      "fr": "Aquabulle",
+      "de": "Wasserblase",
+      "it": "Bolladacqua",
+      "es-ES": "Pompa",
+      "es-419": "Acuaburbuja",
+      "ko": "수포"
+    }
   },
   "污泥浆": {
     "name_zh": "污泥浆",
@@ -18994,7 +19802,15 @@
         "hidden_ability": "贪吃鬼"
       }
     ],
-    "id": "064"
+    "id": "064",
+    "localized_names": {
+      "fr": "Suintement",
+      "de": "Kloakensoße",
+      "it": "Melma",
+      "es-ES": "Viscosecreción",
+      "es-419": "Toxisecreción",
+      "ko": "해감액"
+    }
   },
   "沙之力": {
     "name_zh": "沙之力",
@@ -19236,7 +20052,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "159"
+    "id": "159",
+    "localized_names": {
+      "fr": "Force Sable",
+      "de": "Sandgewalt",
+      "it": "Silicoforza",
+      "es-ES": "Poder Arena",
+      "es-419": "Poder Arenoso",
+      "ko": "모래의힘"
+    }
   },
   "沙穴": {
     "name_zh": "沙穴",
@@ -19674,7 +20498,15 @@
         "hidden_ability": "沙隐"
       }
     ],
-    "id": "008"
+    "id": "008",
+    "localized_names": {
+      "fr": "Voile Sable",
+      "de": "Sandschleier",
+      "it": "Sabbiavelo",
+      "es-ES": "Velo Arena",
+      "es-419": "Velo de Arena",
+      "ko": "모래숨기"
+    }
   },
   "治愈之心": {
     "name_zh": "治愈之心",
@@ -19826,7 +20658,15 @@
         "hidden_ability": "魔法镜"
       }
     ],
-    "id": "131"
+    "id": "131",
+    "localized_names": {
+      "fr": "Cœur Soin",
+      "de": "Heilherz",
+      "it": "Curacuore",
+      "es-ES": "Alma Cura",
+      "es-419": "Alma Sanadora",
+      "ko": "치유의마음"
+    }
   },
   "洁净之盐": {
     "name_zh": "洁净之盐",
@@ -19881,7 +20721,15 @@
         "hidden_ability": "恒净之躯"
       }
     ],
-    "id": "272"
+    "id": "272",
+    "localized_names": {
+      "fr": "Sel Purificateur",
+      "de": "Läutersalz",
+      "it": "Sale Purificante",
+      "es-ES": "Sal Purificadora",
+      "es-419": "Sal Purificadora",
+      "ko": "정화의소금"
+    }
   },
   "活力": {
     "name_zh": "活力",
@@ -20253,7 +21101,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "055"
+    "id": "055",
+    "localized_names": {
+      "fr": "Agitation",
+      "de": "Übereifer",
+      "it": "Tuttafretta",
+      "es-ES": "Entusiasmo",
+      "es-419": "Entusiasmo",
+      "ko": "의욕"
+    }
   },
   "涡轮火焰": {
     "name_zh": "涡轮火焰",
@@ -20341,7 +21197,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "254"
+    "id": "254",
+    "localized_names": {
+      "fr": "Âme Vagabonde",
+      "de": "Rastlose Seele",
+      "it": "Anima Errante",
+      "es-ES": "Alma Errante",
+      "es-419": "Alma Errante",
+      "ko": "떠도는영혼"
+    }
   },
   "湿气": {
     "name_zh": "湿气",
@@ -20610,7 +21474,15 @@
         "hidden_ability": "湿气"
       }
     ],
-    "id": "006"
+    "id": "006",
+    "localized_names": {
+      "fr": "Moiteur",
+      "de": "Feuchtigkeit",
+      "it": "Umidità",
+      "es-ES": "Humedad",
+      "es-419": "Humedad",
+      "ko": "습기"
+    }
   },
   "湿润之声": {
     "name_zh": "湿润之声",
@@ -20665,7 +21537,15 @@
         "hidden_ability": "湿润之声"
       }
     ],
-    "id": "204"
+    "id": "204",
+    "localized_names": {
+      "fr": "Hydrata-Son",
+      "de": "Plätscherstimme",
+      "it": "Idrovoce",
+      "es-ES": "Voz Fluida",
+      "es-419": "Voz Fluida",
+      "ko": "촉촉보이스"
+    }
   },
   "湿润之躯": {
     "name_zh": "湿润之躯",
@@ -20956,7 +21836,15 @@
         "hidden_ability": "黏滑"
       }
     ],
-    "id": "093"
+    "id": "093",
+    "localized_names": {
+      "fr": "Hydratation",
+      "de": "Hydration",
+      "it": "Idratazione",
+      "es-ES": "Hidratación",
+      "es-419": "Hidratación",
+      "ko": "촉촉바디"
+    }
   },
   "漆黑嘶鸣": {
     "name_zh": "漆黑嘶鸣",
@@ -21371,7 +22259,15 @@
         "hidden_ability": "自信过度"
       }
     ],
-    "id": "067"
+    "id": "067",
+    "localized_names": {
+      "fr": "Torrent",
+      "de": "Sturzbach",
+      "it": "Acquaiuto",
+      "es-ES": "Torrente",
+      "es-419": "Torrente",
+      "ko": "급류"
+    }
   },
   "火焰之躯": {
     "name_zh": "火焰之躯",
@@ -21655,7 +22551,15 @@
         "hidden_ability": "火焰之躯"
       }
     ],
-    "id": "049"
+    "id": "049",
+    "localized_names": {
+      "fr": "Corps Ardent",
+      "de": "Flammkörper",
+      "it": "Corpodifuoco",
+      "es-ES": "Cuerpo Llama",
+      "es-419": "Cuerpo de Fuego",
+      "ko": "불꽃몸"
+    }
   },
   "灭亡之躯": {
     "name_zh": "灭亡之躯",
@@ -21867,7 +22771,15 @@
         "hidden_ability": "冰冻之躯"
       }
     ],
-    "id": "270"
+    "id": "270",
+    "localized_names": {
+      "fr": "Thermodynamique",
+      "de": "Thermowandel",
+      "it": "Termoscambio",
+      "es-ES": "Termoconversión",
+      "es-419": "Termoconversión",
+      "ko": "열교환"
+    }
   },
   "焦香之躯": {
     "name_zh": "焦香之躯",
@@ -21955,7 +22867,15 @@
         "hidden_ability": "愤怒穴位"
       }
     ],
-    "id": "040"
+    "id": "040",
+    "localized_names": {
+      "fr": "Armumagma",
+      "de": "Magmapanzer",
+      "it": "Magmascudo",
+      "es-ES": "Escudo Magma",
+      "es-419": "Escudo de Magma",
+      "ko": "마그마의무장"
+    }
   },
   "熟成": {
     "name_zh": "熟成",
@@ -22012,7 +22932,15 @@
         "hidden_ability": "厚脂肪"
       }
     ],
-    "id": "247"
+    "id": "247",
+    "localized_names": {
+      "fr": "Mûrissement",
+      "de": "Heranreifen",
+      "it": "Maturazione",
+      "es-ES": "Maduración",
+      "es-419": "Maduración",
+      "ko": "숙성"
+    }
   },
   "牵绊变身": {
     "name_zh": "牵绊变身",
@@ -22288,7 +23216,15 @@
         "hidden_ability": "狙击手"
       }
     ],
-    "id": "097"
+    "id": "097",
+    "localized_names": {
+      "fr": "Sniper",
+      "de": "Superschütze",
+      "it": "Cecchino",
+      "es-ES": "Francotirador",
+      "es-419": "Puntería",
+      "ko": "스나이퍼"
+    }
   },
   "猛火": {
     "name_zh": "猛火",
@@ -22689,7 +23625,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "066"
+    "id": "066",
+    "localized_names": {
+      "fr": "Brasier",
+      "de": "Großbrand",
+      "it": "Aiutofuoco",
+      "es-ES": "Mar Llamas",
+      "es-419": "Mar de Llamas",
+      "ko": "맹화"
+    }
   },
   "瑜伽之力": {
     "name_zh": "瑜伽之力",
@@ -22746,7 +23690,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "074"
+    "id": "074",
+    "localized_names": {
+      "fr": "Force Pure",
+      "de": "Mentalkraft",
+      "it": "Forzapura",
+      "es-ES": "Energía Pura",
+      "es-419": "Energía Pura",
+      "ko": "순수한힘"
+    }
   },
   "甘露之蜜": {
     "name_zh": "甘露之蜜",
@@ -22790,7 +23742,15 @@
         "hidden_ability": "黏着"
       }
     ],
-    "id": "306"
+    "id": "306",
+    "localized_names": {
+      "fr": "Nectar Mielleux",
+      "de": "Süßer Nektar",
+      "it": "Sciroppo Sublime",
+      "es-ES": "Néctar Dulce",
+      "es-419": "Néctar Dulce",
+      "ko": "감미로운꿀"
+    }
   },
   "甜幕": {
     "name_zh": "甜幕",
@@ -22919,7 +23879,15 @@
         "hidden_ability": "芳香幕"
       }
     ],
-    "id": "175"
+    "id": "175",
+    "localized_names": {
+      "fr": "Gluco-Voile",
+      "de": "Zuckerhülle",
+      "it": "Dolcevelo",
+      "es-ES": "Velo Dulce",
+      "es-419": "Velo Dulce",
+      "ko": "스위트베일"
+    }
   },
   "甩不掉的气味": {
     "name_zh": "甩不掉的气味",
@@ -22979,7 +23947,15 @@
         "hidden_ability": "湿气"
       }
     ],
-    "id": "280"
+    "id": "280",
+    "localized_names": {
+      "fr": "Grecharge",
+      "de": "Dynamo",
+      "it": "Convertivolt",
+      "es-ES": "Dinamo",
+      "es-419": "Dínamo",
+      "ko": "전기로바꾸기"
+    }
   },
   "电晶体": {
     "name_zh": "电晶体",
@@ -23052,7 +24028,15 @@
         "hidden_ability": "电气制造者"
       }
     ],
-    "id": "226"
+    "id": "226",
+    "localized_names": {
+      "fr": "Créa-Élec",
+      "de": "Elektro-Erzeuger",
+      "it": "Elettrogenesi",
+      "es-ES": "Electrogénesis",
+      "es-419": "Electrogénesis",
+      "ko": "일렉트릭메이커"
+    }
   },
   "电气引擎": {
     "name_zh": "电气引擎",
@@ -23132,7 +24116,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "078"
+    "id": "078",
+    "localized_names": {
+      "fr": "Motorisé",
+      "de": "Starthilfe",
+      "it": "Elettrorapid",
+      "es-ES": "Electromotor",
+      "es-419": "Electromotor",
+      "ko": "전기엔진"
+    }
   },
   "电气皮肤": {
     "name_zh": "电气皮肤",
@@ -23234,7 +24226,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "209"
+    "id": "209",
+    "localized_names": {
+      "fr": "Fantômasque",
+      "de": "Kostümspuk",
+      "it": "Fantasmanto",
+      "es-ES": "Disfraz",
+      "es-419": "Disfraz",
+      "ko": "탈"
+    }
   },
   "界限盾壳": {
     "name_zh": "界限盾壳",
@@ -23336,7 +24336,15 @@
         "hidden_ability": "疾风之翼"
       }
     ],
-    "id": "177"
+    "id": "177",
+    "localized_names": {
+      "fr": "Ailes Bourrasque",
+      "de": "Orkanschwingen",
+      "it": "Aliraffica",
+      "es-ES": "Alas Vendaval",
+      "es-419": "Alas Vendaval",
+      "ko": "질풍날개"
+    }
   },
   "白色烟雾": {
     "name_zh": "白色烟雾",
@@ -23405,7 +24413,15 @@
         "hidden_ability": "火焰之躯"
       }
     ],
-    "id": "073"
+    "id": "073",
+    "localized_names": {
+      "fr": "Écran Fumée",
+      "de": "Pulverrauch",
+      "it": "Fumochiaro",
+      "es-ES": "Humo Blanco",
+      "es-419": "Humo Blanco",
+      "ko": "하얀연기"
+    }
   },
   "看门犬": {
     "name_zh": "看门犬",
@@ -23449,7 +24465,15 @@
         "hidden_ability": "看门犬"
       }
     ],
-    "id": "275"
+    "id": "275",
+    "localized_names": {
+      "fr": "Chien de Garde",
+      "de": "Wachhund",
+      "it": "Cane da Guardia",
+      "es-ES": "Perro Guardián",
+      "es-419": "Perro Guardián",
+      "ko": "파수견"
+    }
   },
   "破格": {
     "name_zh": "破格",
@@ -23778,7 +24802,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "104"
+    "id": "104",
+    "localized_names": {
+      "fr": "Brise Moule",
+      "de": "Überbrückung",
+      "it": "Rompiforma",
+      "es-ES": "Rompemoldes",
+      "es-419": "Rompemoldes",
+      "ko": "틀깨기"
+    }
   },
   "硬壳盔甲": {
     "name_zh": "硬壳盔甲",
@@ -24147,7 +25179,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "075"
+    "id": "075",
+    "localized_names": {
+      "fr": "Coque Armure",
+      "de": "Panzerhaut",
+      "it": "Guscioscudo",
+      "es-ES": "Caparazón",
+      "es-419": "Caparazón",
+      "ko": "조가비갑옷"
+    }
   },
   "硬爪": {
     "name_zh": "硬爪",
@@ -24266,7 +25306,15 @@
         "hidden_ability": "钢之意志"
       }
     ],
-    "id": "181"
+    "id": "181",
+    "localized_names": {
+      "fr": "Griffe Dure",
+      "de": "Krallenwucht",
+      "it": "Unghiedure",
+      "es-ES": "Garra Dura",
+      "es-419": "Garra Dura",
+      "ko": "단단한발톱"
+    }
   },
   "碎裂铠甲": {
     "name_zh": "碎裂铠甲",
@@ -24585,7 +25633,15 @@
         "hidden_ability": "碎裂铠甲"
       }
     ],
-    "id": "133"
+    "id": "133",
+    "localized_names": {
+      "fr": "Armurouillée",
+      "de": "Bruchrüstung",
+      "it": "Sottilguscio",
+      "es-ES": "Armadura Frágil",
+      "es-419": "Armadura Frágil",
+      "ko": "깨어진갑옷"
+    }
   },
   "磁力": {
     "name_zh": "磁力",
@@ -24818,7 +25874,15 @@
         "hidden_ability": "迷人之躯"
       }
     ],
-    "id": "063"
+    "id": "063",
+    "localized_names": {
+      "fr": "Écaille Spéciale",
+      "de": "Notschutz",
+      "it": "Pelledura",
+      "es-ES": "Escama Especial",
+      "es-419": "Escama Especial",
+      "ko": "이상한비늘"
+    }
   },
   "穿透": {
     "name_zh": "穿透",
@@ -25170,7 +26234,15 @@
         "hidden_ability": "穿透"
       }
     ],
-    "id": "151"
+    "id": "151",
+    "localized_names": {
+      "fr": "Infiltration",
+      "de": "Schwebedurch",
+      "it": "Intrapasso",
+      "es-ES": "Allanamiento",
+      "es-419": "Allanamiento",
+      "ko": "틈새포착"
+    }
   },
   "笨拙": {
     "name_zh": "笨拙",
@@ -25339,7 +26411,15 @@
         "hidden_ability": "笨拙"
       }
     ],
-    "id": "103"
+    "id": "103",
+    "localized_names": {
+      "fr": "Maladresse",
+      "de": "Tollpatsch",
+      "it": "Impaccio",
+      "es-ES": "Zoquete",
+      "es-419": "Torpeza",
+      "ko": "서투름"
+    }
   },
   "粉彩护幕": {
     "name_zh": "粉彩护幕",
@@ -25478,7 +26558,15 @@
         "hidden_ability": "破格"
       }
     ],
-    "id": "024"
+    "id": "024",
+    "localized_names": {
+      "fr": "Peau Dure",
+      "de": "Rauhaut",
+      "it": "Cartavetro",
+      "es-ES": "Piel Tosca",
+      "es-419": "Piel Tosca",
+      "ko": "까칠한피부"
+    }
   },
   "精神制造者": {
     "name_zh": "精神制造者",
@@ -25535,7 +26623,15 @@
         "hidden_ability": "精神制造者"
       }
     ],
-    "id": "227"
+    "id": "227",
+    "localized_names": {
+      "fr": "Créa-Psy",
+      "de": "Psycho-Erzeuger",
+      "it": "Psicogenesi",
+      "es-ES": "Psicogénesis",
+      "es-419": "Psicogénesis",
+      "ko": "사이코메이커"
+    }
   },
   "精神力": {
     "name_zh": "精神力",
@@ -26025,7 +27121,15 @@
         "hidden_ability": "不服输"
       }
     ],
-    "id": "039"
+    "id": "039",
+    "localized_names": {
+      "fr": "Attention",
+      "de": "Konzentrator",
+      "it": "Forza Interiore",
+      "es-ES": "Fuerza Mental",
+      "es-419": "Fuerza Mental",
+      "ko": "정신력"
+    }
   },
   "紧张感": {
     "name_zh": "紧张感",
@@ -26369,7 +27473,15 @@
         "hidden_ability": "紧张感"
       }
     ],
-    "id": "127"
+    "id": "127",
+    "localized_names": {
+      "fr": "Tension",
+      "de": "Anspannung",
+      "it": "Agitazione",
+      "es-ES": "Nerviosismo",
+      "es-419": "Nerviosismo",
+      "ko": "긴장감"
+    }
   },
   "纯朴": {
     "name_zh": "纯朴",
@@ -26576,7 +27688,15 @@
         "hidden_ability": "纯朴"
       }
     ],
-    "id": "109"
+    "id": "109",
+    "localized_names": {
+      "fr": "Inconscient",
+      "de": "Unkenntnis",
+      "it": "Imprudenza",
+      "es-ES": "Ignorante",
+      "es-419": "Ignorancia",
+      "ko": "천진"
+    }
   },
   "终结之地": {
     "name_zh": "终结之地",
@@ -27264,7 +28384,15 @@
         "hidden_ability": "坚毅"
       }
     ],
-    "id": "005"
+    "id": "005",
+    "localized_names": {
+      "fr": "Fermeté",
+      "de": "Robustheit",
+      "it": "Vigore",
+      "es-ES": "Robustez",
+      "es-419": "Robustez",
+      "ko": "옹골참"
+    }
   },
   "绝对睡眠": {
     "name_zh": "绝对睡眠",
@@ -27466,7 +28594,15 @@
         "hidden_ability": "耐热"
       }
     ],
-    "id": "085"
+    "id": "085",
+    "localized_names": {
+      "fr": "Ignifugé",
+      "de": "Hitzeschutz",
+      "it": "Antifuoco",
+      "es-ES": "Ignífugo",
+      "es-419": "Ignífugo",
+      "ko": "내열"
+    }
   },
   "胆怯": {
     "name_zh": "胆怯",
@@ -27726,7 +28862,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "155"
+    "id": "155",
+    "localized_names": {
+      "fr": "Phobique",
+      "de": "Hasenfuß",
+      "it": "Paura",
+      "es-ES": "Cobardía",
+      "es-419": "Cobardía",
+      "ko": "주눅"
+    }
   },
   "胆量": {
     "name_zh": "胆量",
@@ -27930,7 +29074,15 @@
         "hidden_ability": "同台共演"
       }
     ],
-    "id": "113"
+    "id": "113",
+    "localized_names": {
+      "fr": "Querelleur",
+      "de": "Rauflust",
+      "it": "Nervisaldi",
+      "es-ES": "Intrépido",
+      "es-419": "Intrépido",
+      "ko": "배짱"
+    }
   },
   "胜利之星": {
     "name_zh": "胜利之星",
@@ -28094,7 +29246,15 @@
         "hidden_ability": "腐蚀"
       }
     ],
-    "id": "212"
+    "id": "212",
+    "localized_names": {
+      "fr": "Corrosion",
+      "de": "Korrosion",
+      "it": "Corrosione",
+      "es-ES": "Corrosión",
+      "es-419": "Corrosión",
+      "ko": "부식"
+    }
   },
   "自信过度": {
     "name_zh": "自信过度",
@@ -28316,7 +29476,15 @@
         "hidden_ability": "自信过度"
       }
     ],
-    "id": "153"
+    "id": "153",
+    "localized_names": {
+      "fr": "Impudence",
+      "de": "Hochmut",
+      "it": "Arroganza",
+      "es-ES": "Autoestima",
+      "es-419": "Autoestima",
+      "ko": "자기과신"
+    }
   },
   "自然回复": {
     "name_zh": "自然回复",
@@ -28574,7 +29742,15 @@
         "hidden_ability": "铁拳"
       }
     ],
-    "id": "030"
+    "id": "030",
+    "localized_names": {
+      "fr": "Médic Nature",
+      "de": "Innere Kraft",
+      "it": "Alternacura",
+      "es-ES": "Cura Natural",
+      "es-419": "Curación Natural",
+      "ko": "자연회복"
+    }
   },
   "自由者": {
     "name_zh": "自由者",
@@ -28628,7 +29804,15 @@
         "hidden_ability": "自由者"
       }
     ],
-    "id": "236"
+    "id": "236",
+    "localized_names": {
+      "fr": "Libéro",
+      "de": "Libero",
+      "it": "Libero",
+      "es-ES": "Líbero",
+      "es-419": "Líbero",
+      "ko": "리베로"
+    }
   },
   "舍身": {
     "name_zh": "舍身",
@@ -28823,7 +30007,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "120"
+    "id": "120",
+    "localized_names": {
+      "fr": "Téméraire",
+      "de": "Achtlos",
+      "it": "Temerarietà",
+      "es-ES": "Audaz",
+      "es-419": "Audaz",
+      "ko": "이판사판"
+    }
   },
   "舞者": {
     "name_zh": "舞者",
@@ -29014,7 +30206,15 @@
         "hidden_ability": "自然回复"
       }
     ],
-    "id": "166"
+    "id": "166",
+    "localized_names": {
+      "fr": "Flora-Voile",
+      "de": "Blütenhülle",
+      "it": "Fiorvelo",
+      "es-ES": "Velo Flor",
+      "es-419": "Velo Florido",
+      "ko": "플라워베일"
+    }
   },
   "芳香幕": {
     "name_zh": "芳香幕",
@@ -29117,7 +30317,15 @@
         "hidden_ability": "芳香幕"
       }
     ],
-    "id": "165"
+    "id": "165",
+    "localized_names": {
+      "fr": "Aroma-Voile",
+      "de": "Dufthülle",
+      "it": "Aromavelo",
+      "es-ES": "Velo Aroma",
+      "es-419": "Velo Aromático",
+      "ko": "아로마베일"
+    }
   },
   "苍白嘶鸣": {
     "name_zh": "苍白嘶鸣",
@@ -29535,7 +30743,15 @@
         "hidden_ability": "变幻自如"
       }
     ],
-    "id": "065"
+    "id": "065",
+    "localized_names": {
+      "fr": "Engrais",
+      "de": "Notdünger",
+      "it": "Erbaiuto",
+      "es-ES": "Espesura",
+      "es-419": "Espesura",
+      "ko": "심록"
+    }
   },
   "草之毛皮": {
     "name_zh": "草之毛皮",
@@ -29578,7 +30794,15 @@
         "hidden_ability": "草之毛皮"
       }
     ],
-    "id": "179"
+    "id": "179",
+    "localized_names": {
+      "fr": "Toison Herbue",
+      "de": "Pflanzenpelz",
+      "it": "Peloderba",
+      "es-ES": "Manto Frondoso",
+      "es-419": "Manto Frondoso",
+      "ko": "풀모피"
+    }
   },
   "菌丝之力": {
     "name_zh": "菌丝之力",
@@ -29875,7 +31099,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "010"
+    "id": "010",
+    "localized_names": {
+      "fr": "Absorbe-Volt",
+      "de": "Voltabsorber",
+      "it": "Assorbivolt",
+      "es-ES": "Absorbe Electricidad",
+      "es-419": "Absorbevoltios",
+      "ko": "축전"
+    }
   },
   "蓄电池": {
     "name_zh": "蓄电池",
@@ -30378,7 +31610,15 @@
         "hidden_ability": "有色眼镜"
       }
     ],
-    "id": "068"
+    "id": "068",
+    "localized_names": {
+      "fr": "Essaim",
+      "de": "Hexaplaga",
+      "it": "Aiutinsetto",
+      "es-ES": "Enjambre",
+      "es-419": "Enjambre",
+      "ko": "벌레의알림"
+    }
   },
   "蜕皮": {
     "name_zh": "蜕皮",
@@ -30641,7 +31881,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "061"
+    "id": "061",
+    "localized_names": {
+      "fr": "Mue",
+      "de": "Expidermis",
+      "it": "Muta",
+      "es-ES": "Mudar",
+      "es-419": "Mudar",
+      "ko": "탈피"
+    }
   },
   "螺旋尾鳍": {
     "name_zh": "螺旋尾鳍",
@@ -30865,7 +32113,15 @@
         "hidden_ability": "咒术之躯"
       }
     ],
-    "id": "130"
+    "id": "130",
+    "localized_names": {
+      "fr": "Corps Maudit",
+      "de": "Tastfluch",
+      "it": "Corpofunesto",
+      "es-ES": "Cuerpo Maldito",
+      "es-419": "Cuerpo Maldito",
+      "ko": "저주받은바디"
+    }
   },
   "负电": {
     "name_zh": "负电",
@@ -30969,7 +32225,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "058"
+    "id": "058",
+    "localized_names": {
+      "fr": "Moins",
+      "de": "Minus",
+      "it": "Meno",
+      "es-ES": "Menos",
+      "es-419": "Menos",
+      "ko": "마이너스"
+    }
   },
   "贪吃鬼": {
     "name_zh": "贪吃鬼",
@@ -31421,7 +32685,15 @@
         "hidden_ability": "黏着"
       }
     ],
-    "id": "082"
+    "id": "082",
+    "localized_names": {
+      "fr": "Gloutonnerie",
+      "de": "Völlerei",
+      "it": "Voracità",
+      "es-ES": "Gula",
+      "es-419": "Gula",
+      "ko": "먹보"
+    }
   },
   "超幸运": {
     "name_zh": "超幸运",
@@ -31554,7 +32826,15 @@
         "hidden_ability": "斗争心"
       }
     ],
-    "id": "105"
+    "id": "105",
+    "localized_names": {
+      "fr": "Chanceux",
+      "de": "Glückspilz",
+      "it": "Supersorte",
+      "es-ES": "Afortunado",
+      "es-419": "Supersuerte",
+      "ko": "대운"
+    }
   },
   "超级发射器": {
     "name_zh": "超级发射器",
@@ -31608,7 +32888,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "178"
+    "id": "178",
+    "localized_names": {
+      "fr": "Méga Blaster",
+      "de": "Megawumme",
+      "it": "Megalancio",
+      "es-ES": "Megadisparador",
+      "es-419": "Megalanzador",
+      "ko": "메가런처"
+    }
   },
   "跃跃欲逃": {
     "name_zh": "跃跃欲逃",
@@ -31669,7 +32957,15 @@
         "hidden_ability": "加速"
       }
     ],
-    "id": "290"
+    "id": "290",
+    "localized_names": {
+      "fr": "Opportuniste",
+      "de": "Profiteur",
+      "it": "Scrocco",
+      "es-ES": "Oportunista",
+      "es-419": "Oportunista",
+      "ko": "편승"
+    }
   },
   "踩影": {
     "name_zh": "踩影",
@@ -31760,7 +33056,15 @@
         "hidden_ability": "踩影"
       }
     ],
-    "id": "023"
+    "id": "023",
+    "localized_names": {
+      "fr": "Marque Ombre",
+      "de": "Wegsperre",
+      "it": "Pedinombra",
+      "es-ES": "Sombra Trampa",
+      "es-419": "Sombra Trampa",
+      "ko": "그림자밟기"
+    }
   },
   "蹒跚": {
     "name_zh": "蹒跚",
@@ -31895,7 +33199,15 @@
         "hidden_ability": "同台共演"
       }
     ],
-    "id": "077"
+    "id": "077",
+    "localized_names": {
+      "fr": "Pieds Confus",
+      "de": "Taumelschritt",
+      "it": "Intricopiedi",
+      "es-ES": "Tumbos",
+      "es-419": "Tambaleo",
+      "ko": "갈지자걸음"
+    }
   },
   "蹲守": {
     "name_zh": "蹲守",
@@ -32009,7 +33321,15 @@
         "hidden_ability": "蹲守"
       }
     ],
-    "id": "198"
+    "id": "198",
+    "localized_names": {
+      "fr": "Filature",
+      "de": "Beschattung",
+      "it": "Sorveglianza",
+      "es-ES": "Vigilante",
+      "es-419": "Vigilante",
+      "ko": "잠복"
+    }
   },
   "软弱": {
     "name_zh": "软弱",
@@ -32281,7 +33601,15 @@
         "hidden_ability": "恶作剧之心"
       }
     ],
-    "id": "084"
+    "id": "084",
+    "localized_names": {
+      "fr": "Délestage",
+      "de": "Entlastung",
+      "it": "Agiltecnica",
+      "es-ES": "Liviano",
+      "es-419": "Liviano",
+      "ko": "곡예"
+    }
   },
   "轻金属": {
     "name_zh": "轻金属",
@@ -32377,7 +33705,15 @@
         "hidden_ability": "坚毅"
       }
     ],
-    "id": "135"
+    "id": "135",
+    "localized_names": {
+      "fr": "Light Metal",
+      "de": "Leichtmetall",
+      "it": "Metalleggero",
+      "es-ES": "Metal Liviano",
+      "es-419": "Metal Liviano",
+      "ko": "라이트메탈"
+    }
   },
   "达摩模式": {
     "name_zh": "达摩模式",
@@ -32515,7 +33851,15 @@
         "hidden_ability": "过滤"
       }
     ],
-    "id": "111"
+    "id": "111",
+    "localized_names": {
+      "fr": "Filtre",
+      "de": "Filter",
+      "it": "Filtro",
+      "es-ES": "Filtro",
+      "es-419": "Filtro",
+      "ko": "필터"
+    }
   },
   "远隔": {
     "name_zh": "远隔",
@@ -32572,7 +33916,15 @@
         "hidden_ability": "远隔"
       }
     ],
-    "id": "203"
+    "id": "203",
+    "localized_names": {
+      "fr": "Longue Portée",
+      "de": "Langstrecke",
+      "it": "Distacco",
+      "es-ES": "Remoto",
+      "es-419": "Remoto",
+      "ko": "원격"
+    }
   },
   "连续攻击": {
     "name_zh": "连续攻击",
@@ -32715,7 +34067,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "092"
+    "id": "092",
+    "localized_names": {
+      "fr": "Multi-Coups",
+      "de": "Wertelink",
+      "it": "Abillegame",
+      "es-ES": "Encadenado",
+      "es-419": "Encadenado",
+      "ko": "스킬링크"
+    }
   },
   "迟钝": {
     "name_zh": "迟钝",
@@ -33050,7 +34410,15 @@
         "hidden_ability": "水幕"
       }
     ],
-    "id": "012"
+    "id": "012",
+    "localized_names": {
+      "fr": "Benêt",
+      "de": "Dösigkeit",
+      "it": "Indifferenza",
+      "es-ES": "Despiste",
+      "es-419": "Despistado",
+      "ko": "둔감"
+    }
   },
   "迷人之躯": {
     "name_zh": "迷人之躯",
@@ -33253,7 +34621,15 @@
         "hidden_ability": "唱反调"
       }
     ],
-    "id": "056"
+    "id": "056",
+    "localized_names": {
+      "fr": "Joli Sourire",
+      "de": "Charmebolzen",
+      "it": "Incantevole",
+      "es-ES": "Gran Encanto",
+      "es-419": "Gran Encanto",
+      "ko": "헤롱헤롱바디"
+    }
   },
   "适应力": {
     "name_zh": "适应力",
@@ -33457,7 +34833,15 @@
         "hidden_ability": "破格"
       }
     ],
-    "id": "091"
+    "id": "091",
+    "localized_names": {
+      "fr": "Adaptabilité",
+      "de": "Anpassung",
+      "it": "Adattabilità",
+      "es-ES": "Adaptable",
+      "es-419": "Adaptable",
+      "ko": "적응력"
+    }
   },
   "逃跑": {
     "name_zh": "逃跑",
@@ -33878,7 +35262,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "050"
+    "id": "050",
+    "localized_names": {
+      "fr": "Fuite",
+      "de": "Angsthase",
+      "it": "Fugafacile",
+      "es-ES": "Fuga",
+      "es-419": "Fuga",
+      "ko": "도주"
+    }
   },
   "速击": {
     "name_zh": "速击",
@@ -33909,7 +35301,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "259"
+    "id": "259",
+    "localized_names": {
+      "fr": "Tir Vif",
+      "de": "Schnellschuss",
+      "it": "Colpolesto",
+      "es-ES": "Mano Rápida",
+      "es-419": "Mano Rápida",
+      "ko": "퀵드로"
+    }
   },
   "遇水凝固": {
     "name_zh": "遇水凝固",
@@ -34218,7 +35618,15 @@
         "hidden_ability": "电气制造者"
       }
     ],
-    "id": "031"
+    "id": "031",
+    "localized_names": {
+      "fr": "Paratonnerre",
+      "de": "Blitzfänger",
+      "it": "Parafulmine",
+      "es-ES": "Pararrayos",
+      "es-419": "Pararrayos",
+      "ko": "피뢰침"
+    }
   },
   "采蜜": {
     "name_zh": "采蜜",
@@ -34408,7 +35816,15 @@
         "hidden_ability": "坚毅"
       }
     ],
-    "id": "134"
+    "id": "134",
+    "localized_names": {
+      "fr": "Heavy Metal",
+      "de": "Schwermetall",
+      "it": "Metalpesante",
+      "es-ES": "Metal Pesado",
+      "es-419": "Metal Pesado",
+      "ko": "헤비메탈"
+    }
   },
   "金属防护": {
     "name_zh": "金属防护",
@@ -34471,7 +35887,15 @@
         "hidden_ability": "钢之意志"
       }
     ],
-    "id": "252"
+    "id": "252",
+    "localized_names": {
+      "fr": "Boost Acier",
+      "de": "Stählerner Wille",
+      "it": "Spiritoferreo",
+      "es-ES": "Alma Acerada",
+      "es-419": "Alma Acerada",
+      "ko": "강철정신"
+    }
   },
   "钢能力者": {
     "name_zh": "钢能力者",
@@ -34802,7 +36226,15 @@
         "hidden_ability": "铁拳"
       }
     ],
-    "id": "089"
+    "id": "089",
+    "localized_names": {
+      "fr": "Poing de Fer",
+      "de": "Eisenfaust",
+      "it": "Ferropugno",
+      "es-ES": "Puño Férreo",
+      "es-419": "Puño Férreo",
+      "ko": "철주먹"
+    }
   },
   "锋锐": {
     "name_zh": "锋锐",
@@ -34872,7 +36304,15 @@
         "hidden_ability": "锋锐"
       }
     ],
-    "id": "292"
+    "id": "292",
+    "localized_names": {
+      "fr": "Incisif",
+      "de": "Scharfkantig",
+      "it": "Affilama",
+      "es-ES": "Cortante",
+      "es-419": "Cortante",
+      "ko": "예리함"
+    }
   },
   "锐利目光": {
     "name_zh": "锐利目光",
@@ -35436,7 +36876,15 @@
         "hidden_ability": "搬岩"
       }
     ],
-    "id": "051"
+    "id": "051",
+    "localized_names": {
+      "fr": "Regard Vif",
+      "de": "Adlerauge",
+      "it": "Sguardofermo",
+      "es-ES": "Vista Lince",
+      "es-419": "Perspicacia",
+      "ko": "날카로운눈"
+    }
   },
   "镜甲": {
     "name_zh": "镜甲",
@@ -35468,7 +36916,15 @@
         "hidden_ability": "镜甲"
       }
     ],
-    "id": "240"
+    "id": "240",
+    "localized_names": {
+      "fr": "Armure Miroir",
+      "de": "Spiegelrüstung",
+      "it": "Blindospecchio",
+      "es-ES": "Coraza Reflejo",
+      "es-419": "Coraza Reflejo",
+      "ko": "미러아머"
+    }
   },
   "防尘": {
     "name_zh": "防尘",
@@ -35777,7 +37233,15 @@
         "hidden_ability": "过滤"
       }
     ],
-    "id": "142"
+    "id": "142",
+    "localized_names": {
+      "fr": "Envelocape",
+      "de": "Partikelschutz",
+      "it": "Copricapo",
+      "es-ES": "Funda",
+      "es-419": "Funda",
+      "ko": "방진"
+    }
   },
   "防弹": {
     "name_zh": "防弹",
@@ -35921,7 +37385,15 @@
         "hidden_ability": "紧张感"
       }
     ],
-    "id": "171"
+    "id": "171",
+    "localized_names": {
+      "fr": "Pare-Balles",
+      "de": "Kugelsicher",
+      "it": "Antiproiettile",
+      "es-ES": "Antibalas",
+      "es-419": "Antibalas",
+      "ko": "방탄"
+    }
   },
   "阴晴不定": {
     "name_zh": "阴晴不定",
@@ -35987,7 +37459,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "059"
+    "id": "059",
+    "localized_names": {
+      "fr": "Météo",
+      "de": "Prognose",
+      "it": "Previsioni",
+      "es-ES": "Predicción",
+      "es-419": "Predicción",
+      "ko": "기분파"
+    }
   },
   "降雨": {
     "name_zh": "降雨",
@@ -36042,7 +37522,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "002"
+    "id": "002",
+    "localized_names": {
+      "fr": "Crachin",
+      "de": "Niesel",
+      "it": "Piovischio",
+      "es-ES": "Llovizna",
+      "es-419": "Llovizna",
+      "ko": "잔비"
+    }
   },
   "降雪": {
     "name_zh": "降雪",
@@ -36162,7 +37650,15 @@
         "hidden_ability": "降雪"
       }
     ],
-    "id": "117"
+    "id": "117",
+    "localized_names": {
+      "fr": "Alerte Neige",
+      "de": "Schneeschauer",
+      "it": "Scendineve",
+      "es-ES": "Nevada",
+      "es-419": "Nevada",
+      "ko": "눈퍼뜨리기"
+    }
   },
   "除障": {
     "name_zh": "除障",
@@ -36206,7 +37702,15 @@
         "hidden_ability": "冰冻之躯"
       }
     ],
-    "id": "251"
+    "id": "251",
+    "localized_names": {
+      "fr": "Brise-Barrière",
+      "de": "Hemmungslos",
+      "it": "Annullabarriere",
+      "es-ES": "Antibarrera",
+      "es-419": "Antibarrera",
+      "ko": "배리어프리"
+    }
   },
   "隔音": {
     "name_zh": "隔音",
@@ -36439,7 +37943,15 @@
         "hidden_ability": "防尘"
       }
     ],
-    "id": "043"
+    "id": "043",
+    "localized_names": {
+      "fr": "Anti-Bruit",
+      "de": "Lärmschutz",
+      "it": "Antisuono",
+      "es-ES": "Insonorizar",
+      "es-419": "Insonorización",
+      "ko": "방음"
+    }
   },
   "雨盘": {
     "name_zh": "雨盘",
@@ -36623,7 +38135,15 @@
         "hidden_ability": "雨盘"
       }
     ],
-    "id": "044"
+    "id": "044",
+    "localized_names": {
+      "fr": "Cuvette",
+      "de": "Regengenuss",
+      "it": "Copripioggia",
+      "es-ES": "Cura Lluvia",
+      "es-419": "Curación Pluvial",
+      "ko": "젖은접시"
+    }
   },
   "雪隐": {
     "name_zh": "雪隐",
@@ -36830,7 +38350,15 @@
         "hidden_ability": "强行"
       }
     ],
-    "id": "081"
+    "id": "081",
+    "localized_names": {
+      "fr": "Rideau Neige",
+      "de": "Schneemantel",
+      "it": "Mantelneve",
+      "es-ES": "Manto Níveo",
+      "es-419": "Manto Níveo",
+      "ko": "눈숨기"
+    }
   },
   "青草制造者": {
     "name_zh": "青草制造者",
@@ -36897,7 +38425,15 @@
         "hidden_ability": "青草制造者"
       }
     ],
-    "id": "229"
+    "id": "229",
+    "localized_names": {
+      "fr": "Créa-Herbe",
+      "de": "Gras-Erzeuger",
+      "it": "Erbogenesi",
+      "es-ES": "Herbogénesis",
+      "es-419": "Herbogénesis",
+      "ko": "그래스메이커"
+    }
   },
   "静电": {
     "name_zh": "静电",
@@ -37186,7 +38722,15 @@
         "hidden_ability": "湿气"
       }
     ],
-    "id": "009"
+    "id": "009",
+    "localized_names": {
+      "fr": "Statik",
+      "de": "Statik",
+      "it": "Statico",
+      "es-ES": "Electricidad Estática",
+      "es-419": "Electricidad Estática",
+      "ko": "정전기"
+    }
   },
   "面影辉映": {
     "name_zh": "面影辉映",
@@ -37467,7 +39011,15 @@
         "hidden_ability": "顺手牵羊"
       }
     ],
-    "id": "124"
+    "id": "124",
+    "localized_names": {
+      "fr": "Pickpocket",
+      "de": "Langfinger",
+      "it": "Arraffalesto",
+      "es-ES": "Hurto",
+      "es-419": "Hurto",
+      "ko": "나쁜손버릇"
+    }
   },
   "预知梦": {
     "name_zh": "预知梦",
@@ -37559,7 +39111,15 @@
         "hidden_ability": "心灵感应"
       }
     ],
-    "id": "108"
+    "id": "108",
+    "localized_names": {
+      "fr": "Prédiction",
+      "de": "Vorwarnung",
+      "it": "Premonizione",
+      "es-ES": "Alerta",
+      "es-419": "Alerta",
+      "ko": "예지몽"
+    }
   },
   "颊囊": {
     "name_zh": "颊囊",
@@ -37651,7 +39211,15 @@
         "hidden_ability": "技术高手"
       }
     ],
-    "id": "167"
+    "id": "167",
+    "localized_names": {
+      "fr": "Bajoues",
+      "de": "Backentaschen",
+      "it": "Guancegonfie",
+      "es-ES": "Carrillo",
+      "es-419": "Mejillas",
+      "ko": "볼주머니"
+    }
   },
   "风力发电": {
     "name_zh": "风力发电",
@@ -38204,7 +39772,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "026"
+    "id": "026",
+    "localized_names": {
+      "fr": "Lévitation",
+      "de": "Schwebe",
+      "it": "Levitazione",
+      "es-ES": "Levitación",
+      "es-419": "Levitación",
+      "ko": "부유"
+    }
   },
   "飞出的内在物": {
     "name_zh": "飞出的内在物",
@@ -38234,7 +39810,15 @@
         "hidden_ability": "纯朴"
       }
     ],
-    "id": "215"
+    "id": "215",
+    "localized_names": {
+      "fr": "Expuls’Organes",
+      "de": "Magenkrempler",
+      "it": "Espellinterno",
+      "es-ES": "Revés",
+      "es-419": "Revés",
+      "ko": "내용물분출"
+    }
   },
   "飞毛腿": {
     "name_zh": "飞毛腿",
@@ -38386,7 +39970,15 @@
         "hidden_ability": "飞毛腿"
       }
     ],
-    "id": "095"
+    "id": "095",
+    "localized_names": {
+      "fr": "Pied Véloce",
+      "de": "Rasanz",
+      "it": "Piedisvelti",
+      "es-ES": "Pies Rápidos",
+      "es-419": "Pies Rápidos",
+      "ko": "속보"
+    }
   },
   "飞行皮肤": {
     "name_zh": "飞行皮肤",
@@ -38430,7 +40022,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "184"
+    "id": "184",
+    "localized_names": {
+      "fr": "Peau Céleste",
+      "de": "Zenithaut",
+      "it": "Pellecielo",
+      "es-ES": "Piel Celeste",
+      "es-419": "Piel Celeste",
+      "ko": "스카이스킨"
+    }
   },
   "食土": {
     "name_zh": "食土",
@@ -38461,7 +40061,15 @@
         "hidden_ability": "沙隐"
       }
     ],
-    "id": "297"
+    "id": "297",
+    "localized_names": {
+      "fr": "Absorbe-Terre",
+      "de": "Bodenschmaus",
+      "it": "Mangiaterra",
+      "es-ES": "Geofagia",
+      "es-419": "Geofagia",
+      "ko": "흙먹기"
+    }
   },
   "食草": {
     "name_zh": "食草",
@@ -38743,7 +40351,15 @@
         "hidden_ability": "食草"
       }
     ],
-    "id": "157"
+    "id": "157",
+    "localized_names": {
+      "fr": "Herbivore",
+      "de": "Vegetarier",
+      "it": "Mangiaerba",
+      "es-ES": "Herbívoro",
+      "es-419": "Herbívoro",
+      "ko": "초식"
+    }
   },
   "饱了又饿": {
     "name_zh": "饱了又饿",
@@ -38787,7 +40403,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "258"
+    "id": "258",
+    "localized_names": {
+      "fr": "Déclic Fringale",
+      "de": "Heißhunger",
+      "it": "Pancialterna",
+      "es-ES": "Mutapetito",
+      "es-419": "Mutapetito",
+      "ko": "꼬르륵스위치"
+    }
   },
   "魂心": {
     "name_zh": "魂心",
@@ -38925,7 +40549,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "170"
+    "id": "170",
+    "localized_names": {
+      "fr": "Magicien",
+      "de": "Zauberer",
+      "it": "Prestigiatore",
+      "es-ES": "Prestidigitador",
+      "es-419": "Prestidigitador",
+      "ko": "매지션"
+    }
   },
   "魔法镜": {
     "name_zh": "魔法镜",
@@ -39057,7 +40689,15 @@
         "hidden_ability": "魔法镜"
       }
     ],
-    "id": "156"
+    "id": "156",
+    "localized_names": {
+      "fr": "Miroir Magik",
+      "de": "Magiespiegel",
+      "it": "Magispecchio",
+      "es-ES": "Espejo Mágico",
+      "es-419": "Espejo Mágico",
+      "ko": "매직미러"
+    }
   },
   "魔法防守": {
     "name_zh": "魔法防守",
@@ -39197,7 +40837,15 @@
         "hidden_ability": "再生力"
       }
     ],
-    "id": "098"
+    "id": "098",
+    "localized_names": {
+      "fr": "Garde Magik",
+      "de": "Magieschild",
+      "it": "Magicscudo",
+      "es-ES": "Muro Mágico",
+      "es-419": "Muro Mágico",
+      "ko": "매직가드"
+    }
   },
   "鱼群": {
     "name_zh": "鱼群",
@@ -39430,7 +41078,15 @@
         "hidden_ability": "冰鳞粉"
       }
     ],
-    "id": "019"
+    "id": "019",
+    "localized_names": {
+      "fr": "Écran Poudre",
+      "de": "Puderabwehr",
+      "it": "Polvoscudo",
+      "es-ES": "Polvo Escudo",
+      "es-419": "Polvo Escudo",
+      "ko": "인분"
+    }
   },
   "黄金之躯": {
     "name_zh": "黄金之躯",
@@ -39462,7 +41118,15 @@
         "hidden_ability": ""
       }
     ],
-    "id": "283"
+    "id": "283",
+    "localized_names": {
+      "fr": "Corps en Or",
+      "de": "Goldkörper",
+      "it": "Corpo Aureo",
+      "es-ES": "Cuerpo Áureo",
+      "es-419": "Cuerpo Áureo",
+      "ko": "황금몸"
+    }
   },
   "黏滑": {
     "name_zh": "黏滑",
@@ -39566,7 +41230,15 @@
         "hidden_ability": "沙隐"
       }
     ],
-    "id": "183"
+    "id": "183",
+    "localized_names": {
+      "fr": "Poisseux",
+      "de": "Viskosität",
+      "it": "Viscosità",
+      "es-ES": "Baba",
+      "es-419": "Baba",
+      "ko": "미끈미끈"
+    }
   },
   "黏着": {
     "name_zh": "黏着",
@@ -39708,7 +41380,15 @@
         "hidden_ability": "黏着"
       }
     ],
-    "id": "060"
+    "id": "060",
+    "localized_names": {
+      "fr": "Glu",
+      "de": "Klebekörper",
+      "it": "Antifurto",
+      "es-ES": "Viscosidad",
+      "es-419": "Viscosidad",
+      "ko": "점착"
+    }
   },
   "龙颚": {
     "name_zh": "龙颚",
@@ -39783,7 +41463,15 @@
       "不在入场时发动"
     ],
     "introduction": "一般属性的招式会变为龙属性，威力会少量提高。",
-    "effect": "一般属性招式会变为龙属性招式，且威力变为1.2倍。"
+    "effect": "一般属性招式会变为龙属性招式，且威力变为1.2倍。",
+    "localized_names": {
+      "fr": "Peau Draconique",
+      "de": "Drachenschicht",
+      "it": "Pelledrago",
+      "es-ES": "Piel Dragontina",
+      "es-419": "Piel Dracónica",
+      "ko": "드래곤스킨"
+    }
   },
   "超级日光": {
     "name_zh": "超级日光",
@@ -39798,7 +41486,15 @@
       "不在入场时发动"
     ],
     "introduction": "即使天气不是大晴天状态，也能以大晴天状态使用招式。",
-    "effect": "自身使用招式时视为处于大晴天状态。"
+    "effect": "自身使用招式时视为处于大晴天状态。",
+    "localized_names": {
+      "fr": "Méga-Soleil",
+      "de": "Mega-Solarladung",
+      "it": "Megasolar",
+      "es-ES": "Megasolar",
+      "es-419": "Megasolar",
+      "ko": "메가솔라"
+    }
   },
   "火焰鬃毛": {
     "name_zh": "火焰鬃毛",
@@ -39813,7 +41509,15 @@
       "不在入场时发动"
     ],
     "introduction": "火属性招式的威力会变为1.5倍。",
-    "effect": "火属性招式威力变为1.5倍。"
+    "effect": "火属性招式威力变为1.5倍。",
+    "localized_names": {
+      "fr": "Crinière de Feu",
+      "de": "Flammenmähne",
+      "it": "Pirocriniera",
+      "es-ES": "Crin de Fuego",
+      "es-419": "Melena de Fuego",
+      "ko": "불꽃의갈기"
+    }
   },
   "贯穿钻": {
     "name_zh": "贯穿钻",
@@ -39828,7 +41532,15 @@
       "不在入场时发动"
     ],
     "introduction": "使用接触类招式时，会无视对手的防守效果，给予原本的1/4的伤害。",
-    "effect": "接触类招式可穿透保护等防守效果，但伤害变为原本的1/4。"
+    "effect": "接触类招式可穿透保护等防守效果，但伤害变为原本的1/4。",
+    "localized_names": {
+      "fr": "Transperceuse",
+      "de": "Stichbohrer",
+      "it": "Punta Perforante",
+      "es-ES": "Turbotaladro",
+      "es-419": "Turbotaladro",
+      "ko": "관통드릴"
+    }
   },
   "鳗鳗高升": {
     "name_zh": "鳗鳗高升",
@@ -39843,7 +41555,15 @@
       "不在入场时发动"
     ],
     "introduction": "会变为不在地面上，地面属性招式、撒菱、毒菱、黏黏网状态将无效。用攻击打倒对手时，自己最高的那项能力会提高1阶。",
-    "effect": "免疫地面属性招式与撒菱、毒菱、黏黏网。用攻击击倒对手时，最高能力提高1阶。"
+    "effect": "免疫地面属性招式与撒菱、毒菱、黏黏网。用攻击击倒对手时，最高能力提高1阶。",
+    "localized_names": {
+      "fr": "Lévitaboost",
+      "de": "Emporwindung",
+      "it": "Rapidascesa",
+      "es-ES": "Impulso Anguila",
+      "es-419": "Impulso Anguila",
+      "ko": "천정부지"
+    }
   },
   "辣椒喷发": {
     "name_zh": "辣椒喷发",
@@ -39858,7 +41578,15 @@
       "不在入场时发动"
     ],
     "introduction": "受到招式的伤害时，会让对手陷入灼伤状态。",
-    "effect": "受到招式伤害时，攻击方陷入灼伤状态。"
+    "effect": "受到招式伤害时，攻击方陷入灼伤状态。",
+    "localized_names": {
+      "fr": "Habanéruption",
+      "de": "Chilispritzer",
+      "it": "Spargipiccante",
+      "es-ES": "Salpicante",
+      "es-419": "Salpicante",
+      "ko": "하바네로분출"
+    }
   },
   "波导防护": {
     "name_zh": "波导防护",
@@ -39873,6 +41601,14 @@
       "不在入场时发动"
     ],
     "introduction": "受到接触类招式攻击时，伤害会减半。",
-    "effect": "受到接触类招式攻击时，伤害变为原本的1/2。长距离特性的招式不视为接触；携带拳击手套时，拳类招式不视为接触。"
+    "effect": "受到接触类招式攻击时，伤害变为原本的1/2。长距离特性的招式不视为接触；携带拳击手套时，拳类招式不视为接触。",
+    "localized_names": {
+      "fr": "Aura Protectrice",
+      "de": "Aura-Abwehr",
+      "it": "Ondascudo",
+      "es-ES": "Aura Protectora",
+      "es-419": "Aura Protectora",
+      "ko": "파동의방호"
+    }
   }
 }

@@ -51,6 +51,7 @@ class Pokemon:
     # Derived stats (calculated once then cached)
     raw_stats: dict[str, int] = field(default_factory=dict)
     stats: dict[str, int] = field(default_factory=dict)
+    fire_boost: bool = False           # Champions Flash Fire status, retained after Mega Evolution
 
 
 @dataclass

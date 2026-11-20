@@ -2,6 +2,38 @@
 
 > 本文件为 SKILL.md 的按需参考，不自动加载。当需要 `speed` / `meta` / `filter-pokemon` / `survivability` / `calc-raw` / `find-move` 的参数细节，或在 Windows 环境下执行命令时，先阅读本文件。
 
+## 多语言名称
+
+```powershell
+python scripts/query.py lookup 'Rock Slide' --locale fr
+python scripts/query.py move Éboulement
+python scripts/query.py lookup 'Flash Fire' --locale es-419
+python scripts/query.py lookup Charge --input-locale fr --locale de
+python scripts/query.py calc 'Méga-Dracaufeu X' Éboulement Florizarre --locale fr
+```
+
+宝可梦、形态、招式、特性和道具接受数据中已核实的简中、繁中、英、日、法、德、意、西及韩文名称。`es-ES` 和 `es-419` 的名称都可直接输入。遇到多个候选时按实体类型查询或确认名称。
+
+有些名称在不同语言中拼写相同，例如法语 `Charge` 对应英文 `Tackle`，西班牙和拉美的 `Remolino` 分别对应 `Whirlwind` 和 `Whirlpool`。`lookup` 和 `calc` 可用 `--input-locale` 优先按输入名称的语言识别。混用多种输入语言时，可以先用 `lookup` 分别确认。`lookup --entity move` 等可把候选限定为指定类型。省略输入语言时沿用已有名称匹配顺序。
+
+`lookup` 默认返回 `input`、`canonical_en`、`entity_type`。`--locale` 可用于 `lookup` 和 `calc`，按需返回游戏译名。首版新增地区标记为 `fr`、`de`、`it`、`es-ES`、`es-419`、`ko`。`es` 等同于 `es-ES`，输入名称可以与显示语言不同。`lookup` 的 `display_name` 和 `display_locale` 表示实际采用的译名和语言。`calc` 的 `localized_names` 在 `attacker`、`defender`、`move` 下提供 `name` 和 `locale`，攻守方还可返回实际形态、特性或道具。缺译名时读取可用的游戏名称，按实际语言标记回退。
+
+输出中的规则、威力、命中、伤害和补丁日期应读取对应的结构化字段。`--locale` 请求显示名称，响应的 JSON 键与说明正文继续沿用原有格式。
+
+## Champions 平衡补丁版本
+
+```powershell
+python scripts/query.py --patch baseline move 岩崩
+python scripts/query.py calc 烈焰猴 火焰拳 巨钳螳螂 --patch 2026-12-02
+python scripts/query.py find-move 嬉闹 --patch 2026-12-02
+```
+
+`--patch` 可放在命令前或后。省略时，默认选择随 Skill 发布的最高日期补丁 ID，按打包版本决定，不读取当前日期或联网检查。`baseline` 表示补丁前的 Champions 基线，`2026-12-02` 固定使用「2026-12-2宝可梦冠军平衡性补丁」。补丁只用于 Champions 数据，Gen9 正作记录不套用。
+
+被补丁实际影响的查询或计算结果会在对应实体信息上带 `balance_patch`，其中包含最近贡献补丁的 ID、名称、生效日和官方来源；`balance_changes` 逐项列出修改字段和值，并标明来源补丁。计算时，招式改动位于 `move_info`，显式启用的火力提升位于对应一方的 `attacker_info` / `defender_info`。新增学招在 `learnset` 中通过 `added_moves` 标明，在 `find-move` 命中项通过 `added_to_forms` 标明。没有受补丁影响的实体不显示补丁标记。查询使用的补丁版本应与计算使用的版本一致，回答时引用脚本返回的补丁来源。
+
+本补丁把招式命中率作为更新后的字段返回，但 `calc` 不把命中概率折进伤害范围或 KO 概率。畏缩概率不参与伤害模拟。引火的 Mega 继承效果通过计算态 `fire_boost` 表达，应由用户输入是否已触发；仅指定特性名不会推断触发状态。`calc-raw` 接收用户提供的招式参数，不读取补丁招式数值；其 `fire_boost` 状态仍会校验是否有支持的补丁。坚毅的查询结果会说明替身穿透，但伤害引擎不模拟替身承伤。
+
 ## speed 速度计算器
 
 ```powershell

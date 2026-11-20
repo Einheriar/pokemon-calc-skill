@@ -14,8 +14,8 @@
 4. **纯函数接口**
    计算函数为纯函数，输入输出明确，便于测试和集成。
 
-5. **中文优先，能力值优先**
-   接受已收录的简体中文、繁体中文、英文与日文实体名称，规范英文道具名支持大小写不敏感查询；CLI 的文本说明以简体中文为主，JSON 字段及部分规范名保留英文，没有 `--lang` 切换选项。自然语言理解由调用方 Agent 负责。在回答中始终使用能力值描述，将用户输入的努力值转换为能力值呈现。
+5. **多语言查名，能力值优先**
+   接受已收录的简中、繁中、英、日、法、德、意、西和韩文游戏名。CLI 的说明正文以简体中文为主。`lookup` 和 `calc` 可通过 `--locale` 读取显示译名。调用方 Agent 选择回答语言，将用户输入的努力值转换为能力值呈现。
 
 6. **全国图鉴百科 + Gen9 伤害计算**
    百科查询数据（`pokemon.json`）覆盖全国图鉴（1~1025 号）及已收录形态。伤害计算引擎基于 Gen9 逻辑，数据适配层优先使用 Champions 规则补丁，再回退至 Gen9 数据；响应的 `_data_source` 与规则元信息说明实际来源。计算支持理论配置，不进行完整对战合法性检查；复杂回合或未建模组合会明确提示限制。
@@ -79,17 +79,17 @@ pokemon-calc/
 
 ### 1. query.py（主查询入口）
 
-所有查询通过执行 `query.py` 完成，命令与参数以空格分隔。
+所有查询通过执行 `query.py` 完成，命令与参数以空格分隔。基础库的物种、招式、特性、道具记录以及已核对的 `forms[]` 记录可包含 `localized_names`，键为地区标记，值为游戏名称。名称解析使用这些值查回现有实体键及对应形态。命令可用地区、回退和调用示例见 [多语言名称](references/commands.md#多语言名称)。
 
 #### 子命令列表
 
 | 命令 | 参数 | 用途 | 返回值 |
 |------|------|------|--------|
-| `pokemon <name>` | 已收录的简中/繁中/英文/日文宝可梦名 | 基础信息、形态、特性、种族值、进化链 | JSON 对象 |
-| `lookup <name>` | 已收录的简中/繁中/英文/日文宝可梦、招式、特性或道具名 | 轻量解析：返回 `{input, canonical_en, entity_type}`；未命中返回 error + suggestions | JSON 对象 |
-| `move <name>` | 已收录的简中/繁中/英文/日文招式名 | 威力、命中、PP、属性、分类、效果描述 | JSON 对象 |
-| `ability <name>` | 已收录的简中/繁中/英文/日文特性名 | 效果描述、元信息 | JSON 对象 |
-| `item <name>` | 已收录的简中/繁中/英文/日文道具名 | 效果描述、分类、持有效果；规范英文名匹配不区分大小写 | JSON 对象 |
+| `pokemon <name>` | 已收录的宝可梦或形态名 | 基础信息、形态、特性、种族值、进化链 | JSON 对象 |
+| `lookup <name> [--locale <tag>]` | 已收录的宝可梦、招式、特性或道具名 | 轻量解析，返回 `{input, canonical_en, entity_type}`，可选显示译名。未命中返回错误与候选。 | JSON 对象 |
+| `move <name>` | 已收录的招式名 | 威力、命中、PP、属性、分类、效果描述 | JSON 对象 |
+| `ability <name>` | 已收录的特性名 | 效果描述、元信息 | JSON 对象 |
+| `item <name>` | 已收录的道具名 | 效果描述、分类、持有效果。规范英文名匹配忽略大小写。 | JSON 对象 |
 | `type <atk> <def>` | 攻击属性 防御属性 | 属性相克倍率与描述 | JSON 对象 |
 | `stats <name>` | 宝可梦名 | 各形态种族值与总和 | JSON 对象 |
 | `weak <name>` | 宝可梦名 | 弱点、抗性、免疫列表 | JSON 对象 |
@@ -101,7 +101,7 @@ pokemon-calc/
 | `filter-moves [--type ...] [--category ...] [--min-power n] [--max-power n]` | 筛选条件 | 按属性/分类/威力范围筛选招式 | JSON 对象 |
 | `filter-pokemon [--type ...] [--min-stat stat n] [--max-stat stat n] [--ability ...]` | 筛选条件 | 按属性（AND）/种族值范围/特性（OR）筛选宝可梦 | JSON 对象 |
 | `preset <pokemon> [preset_name]` | 宝可梦名 [预设名] | 列出/获取 VGC 预设配置 | JSON 对象 |
-| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override]` | 攻击方 招式 防御方 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖） | JSON 对象 |
+| `calc <attacker> <move> <defender> [att_override] [move_override] [def_override] [field_override] [--locale <tag>]` | 攻击方、招式、防御方与配置覆盖 | 快速伤害计算（默认 Lv.50，支持 preset 覆盖），可选显示实际使用的实体译名 | JSON 对象 |
 | `compute-stats <base_stats> [--evs JSON] [--ivs JSON] [--nature <nature>] [--level <level>]` | 种族值 JSON | 从配置计算能力值 | JSON 对象 |
 | `calc-raw <attacker_json> <move_json> <defender_json> [field_json]` | 完整参数 JSON | 纯参数伤害计算（不查名字） | JSON 对象 |
 | `optimize <attacker> <move> <defender> [--goal <goal>] [--target <target>] [--threshold <threshold>] [--mode ev\|sp] [--att_ov JSON] [--def_ov JSON] [--field_ov JSON]` | 攻击方 招式 防御方 | 努力值优化搜索 | JSON 对象 |

@@ -29,7 +29,15 @@
           "厚脂肪"
         ],
         "weight": 155.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Florizarre",
+          "de": "Mega-Bisaflor",
+          "it": "MegaVenusaur",
+          "es-ES": "Mega-Venusaur",
+          "es-419": "Mega-Venusaur",
+          "ko": "메가이상해꽃"
+        }
       }
     ],
     "stats": [
@@ -88,7 +96,15 @@
           "硬爪"
         ],
         "weight": 110.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Dracaufeu X",
+          "de": "Mega-Glurak X",
+          "it": "MegaCharizard X",
+          "es-ES": "Mega-Charizard X",
+          "es-419": "Mega-Charizard X",
+          "ko": "메가리자몽X"
+        }
       },
       {
         "name": "超级喷火龙Ｙ",
@@ -102,7 +118,15 @@
           "日照"
         ],
         "weight": 100.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Dracaufeu Y",
+          "de": "Mega-Glurak Y",
+          "it": "MegaCharizard Y",
+          "es-ES": "Mega-Charizard Y",
+          "es-419": "Mega-Charizard Y",
+          "ko": "메가리자몽Y"
+        }
       }
     ],
     "stats": [
@@ -171,7 +195,15 @@
           "超级发射器"
         ],
         "weight": 101.1,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Tortank",
+          "de": "Mega-Turtok",
+          "it": "MegaBlastoise",
+          "es-ES": "Mega-Blastoise",
+          "es-419": "Mega-Blastoise",
+          "ko": "메가거북왕"
+        }
       }
     ],
     "stats": [
@@ -230,7 +262,15 @@
           "适应力"
         ],
         "weight": 40.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Dardargnan",
+          "de": "Mega-Bibor",
+          "it": "MegaBeedrill",
+          "es-ES": "Mega-Beedrill",
+          "es-419": "Mega-Beedrill",
+          "ko": "메가독침붕"
+        }
       }
     ],
     "stats": [
@@ -289,7 +329,15 @@
           "无防守"
         ],
         "weight": 50.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Roucarnage",
+          "de": "Mega-Tauboss",
+          "it": "MegaPidgeot",
+          "es-ES": "Mega-Pidgeot",
+          "es-419": "Mega-Pidgeot",
+          "ko": "메가피죤투"
+        }
       }
     ],
     "stats": [
@@ -424,7 +472,15 @@
           "电气制造者"
         ],
         "weight": 38.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Raichu X",
+          "de": "Mega-Raichu X",
+          "it": "MegaRaichu X",
+          "es-ES": "Mega-Raichu X",
+          "es-419": "Mega-Raichu X",
+          "ko": "메가라이츄X"
+        }
       },
       {
         "name": "超级雷丘Ｙ",
@@ -437,7 +493,15 @@
           "无防守"
         ],
         "weight": 26.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Raichu Y",
+          "de": "Mega-Raichu Y",
+          "it": "MegaRaichu Y",
+          "es-ES": "Mega-Raichu Y",
+          "es-419": "Mega-Raichu Y",
+          "ko": "메가라이츄Y"
+        }
       }
     ],
     "stats": [
@@ -519,7 +583,15 @@
           "魔法镜"
         ],
         "weight": 42.3,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Mélodelfe",
+          "de": "Mega-Pixi",
+          "it": "MegaClefable",
+          "es-ES": "Mega-Clefable",
+          "es-419": "Mega-Clefable",
+          "ko": "메가픽시"
+        }
       }
     ],
     "stats": [
@@ -815,7 +887,15 @@
           "复制"
         ],
         "weight": 48.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Alakazam",
+          "de": "Mega-Simsala",
+          "it": "MegaAlakazam",
+          "es-ES": "Mega-Alakazam",
+          "es-419": "Mega-Alakazam",
+          "ko": "메가후딘"
+        }
       }
     ],
     "stats": [
@@ -906,7 +986,15 @@
           "飞出的内在物"
         ],
         "weight": 125.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Empiflor",
+          "de": "Mega-Sarzenia",
+          "it": "MegaVictreebel",
+          "es-ES": "Mega-Victreebel",
+          "es-419": "Mega-Victreebel",
+          "ko": "메가우츠보트"
+        }
       }
     ],
     "stats": [
@@ -965,7 +1053,15 @@
           "硬壳盔甲"
         ],
         "weight": 120.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Flagadoss",
+          "de": "Mega-Lahmus",
+          "it": "MegaSlowbro",
+          "es-ES": "Mega-Slowbro",
+          "es-419": "Mega-Slowbro",
+          "ko": "메가야도란"
+        }
       },
       {
         "name": "伽勒尔呆壳兽",
@@ -1083,7 +1179,15 @@
           "踩影"
         ],
         "weight": 40.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Ectoplasma",
+          "de": "Mega-Gengar",
+          "it": "MegaGengar",
+          "es-ES": "Mega-Gengar",
+          "es-419": "Mega-Gengar",
+          "ko": "메가팬텀"
+        }
       }
     ],
     "stats": [
@@ -1140,7 +1244,15 @@
           "亲子爱"
         ],
         "weight": 100.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Kangourex",
+          "de": "Mega-Kangama",
+          "it": "MegaKangaskhan",
+          "es-ES": "Mega-Kangaskhan",
+          "es-419": "Mega-Kangaskhan",
+          "ko": "메가캥카"
+        }
       }
     ],
     "stats": [
@@ -1199,7 +1311,15 @@
           "大力士"
         ],
         "weight": 80.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Staross",
+          "de": "Mega-Starmie",
+          "it": "MegaStarmie",
+          "es-ES": "Mega-Starmie",
+          "es-419": "Mega-Starmie",
+          "ko": "메가아쿠스타"
+        }
       }
     ],
     "stats": [
@@ -1290,7 +1410,15 @@
           "飞行皮肤"
         ],
         "weight": 59.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Scarabrute",
+          "de": "Mega-Pinsir",
+          "it": "MegaPinsir",
+          "es-ES": "Mega-Pinsir",
+          "es-419": "Mega-Pinsir",
+          "ko": "메가쁘사이저"
+        }
       }
     ],
     "stats": [
@@ -1458,7 +1586,15 @@
           "破格"
         ],
         "weight": 305.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Léviator",
+          "de": "Mega-Garados",
+          "it": "MegaGyarados",
+          "es-ES": "Mega-Gyarados",
+          "es-419": "Mega-Gyarados",
+          "ko": "메가갸라도스"
+        }
       }
     ],
     "stats": [
@@ -1645,7 +1781,15 @@
           "硬爪"
         ],
         "weight": 79.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Ptéra",
+          "de": "Mega-Aerodactyl",
+          "it": "MegaAerodactyl",
+          "es-ES": "Mega-Aerodactyl",
+          "es-419": "Mega-Aerodactyl",
+          "ko": "메가프테라"
+        }
       }
     ],
     "stats": [
@@ -1736,7 +1880,15 @@
           "多重鳞片"
         ],
         "weight": 290.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Dracolosse",
+          "de": "Mega-Dragoran",
+          "it": "MegaDragonite",
+          "es-ES": "Mega-Dragonite",
+          "es-419": "Mega-Dragonite",
+          "ko": "메가망나뇽"
+        }
       }
     ],
     "stats": [
@@ -1794,7 +1946,15 @@
           "超级日光"
         ],
         "weight": 201.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Méganium",
+          "de": "Mega-Meganie",
+          "it": "MegaMeganium",
+          "es-ES": "Mega-Meganium",
+          "es-419": "Mega-Meganium",
+          "ko": "메가메가니움"
+        }
       }
     ],
     "stats": [
@@ -1910,7 +2070,15 @@
           "龙皮肤"
         ],
         "weight": 108.8,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Aligatueur",
+          "de": "Mega-Impergator",
+          "it": "MegaFeraligatr",
+          "es-ES": "Mega-Feraligatr",
+          "es-419": "Mega-Feraligatr",
+          "ko": "메가장크로다일"
+        }
       }
     ],
     "stats": [
@@ -2001,7 +2169,15 @@
           "破格"
         ],
         "weight": 61.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Pharamp",
+          "de": "Mega-Ampharos",
+          "it": "MegaAmpharos",
+          "es-ES": "Mega-Ampharos",
+          "es-419": "Mega-Ampharos",
+          "ko": "메가전룡"
+        }
       }
     ],
     "stats": [
@@ -2281,7 +2457,15 @@
           "沙之力"
         ],
         "weight": 740.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Steelix",
+          "de": "Mega-Stahlos",
+          "it": "MegaSteelix",
+          "es-ES": "Mega-Steelix",
+          "es-419": "Mega-Steelix",
+          "ko": "메가강철톤"
+        }
       }
     ],
     "stats": [
@@ -2373,7 +2557,15 @@
           "技术高手"
         ],
         "weight": 125.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Cizayox",
+          "de": "Mega-Scherox",
+          "it": "MegaScizor",
+          "es-ES": "Mega-Scizor",
+          "es-419": "Mega-Scizor",
+          "ko": "메가핫삼"
+        }
       }
     ],
     "stats": [
@@ -2432,7 +2624,15 @@
           "连续攻击"
         ],
         "weight": 62.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Scarhino",
+          "de": "Mega-Skaraborn",
+          "it": "MegaHeracross",
+          "es-ES": "Mega-Heracross",
+          "es-419": "Mega-Heracross",
+          "ko": "메가헤라크로스"
+        }
       }
     ],
     "stats": [
@@ -2491,7 +2691,15 @@
           "坚毅"
         ],
         "weight": 40.4,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Airmure",
+          "de": "Mega-Panzaeron",
+          "it": "MegaSkarmory",
+          "es-ES": "Mega-Skarmory",
+          "es-419": "Mega-Skarmory",
+          "ko": "메가무장조"
+        }
       }
     ],
     "stats": [
@@ -2550,7 +2758,15 @@
           "太阳之力"
         ],
         "weight": 49.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Démolosse",
+          "de": "Mega-Hundemon",
+          "it": "MegaHoundoom",
+          "es-ES": "Mega-Houndoom",
+          "es-419": "Mega-Houndoom",
+          "ko": "메가헬가"
+        }
       }
     ],
     "stats": [
@@ -2609,7 +2825,15 @@
           "扬沙"
         ],
         "weight": 255.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Tyranocif",
+          "de": "Mega-Despotar",
+          "it": "MegaTyranitar",
+          "es-ES": "Mega-Tyranitar",
+          "es-419": "Mega-Tyranitar",
+          "ko": "메가마기라스"
+        }
       }
     ],
     "stats": [
@@ -2667,7 +2891,15 @@
           "避雷针"
         ],
         "weight": 55.2,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Jungko",
+          "de": "Mega-Gewaldro",
+          "it": "MegaSceptile",
+          "es-ES": "Mega-Sceptile",
+          "es-419": "Mega-Sceptile",
+          "ko": "메가나무킹"
+        }
       }
     ],
     "stats": [
@@ -2726,7 +2958,15 @@
           "加速"
         ],
         "weight": 52.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Braségali",
+          "de": "Mega-Lohgock",
+          "it": "MegaBlaziken",
+          "es-ES": "Mega-Blaziken",
+          "es-419": "Mega-Blaziken",
+          "ko": "메가번치코"
+        }
       }
     ],
     "stats": [
@@ -2785,7 +3025,15 @@
           "悠游自如"
         ],
         "weight": 102.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Laggron",
+          "de": "Mega-Sumpex",
+          "it": "MegaSwampert",
+          "es-ES": "Mega-Swampert",
+          "es-419": "Mega-Swampert",
+          "ko": "메가대짱이"
+        }
       }
     ],
     "stats": [
@@ -2877,7 +3125,15 @@
           "妖精皮肤"
         ],
         "weight": 48.4,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Gardevoir",
+          "de": "Mega-Guardevoir",
+          "it": "MegaGardevoir",
+          "es-ES": "Mega-Gardevoir",
+          "es-419": "Mega-Gardevoir",
+          "ko": "메가가디안"
+        }
       }
     ],
     "stats": [
@@ -2936,7 +3192,15 @@
           "魔法镜"
         ],
         "weight": 161.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Ténéfix",
+          "de": "Mega-Zobiris",
+          "it": "MegaSableye",
+          "es-ES": "Mega-Sableye",
+          "es-419": "Mega-Sableye",
+          "ko": "메가깜까미"
+        }
       }
     ],
     "stats": [
@@ -2995,7 +3259,15 @@
           "大力士"
         ],
         "weight": 23.5,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Mysdibule",
+          "de": "Mega-Flunkifer",
+          "it": "MegaMawile",
+          "es-ES": "Mega-Mawile",
+          "es-419": "Mega-Mawile",
+          "ko": "메가입치트"
+        }
       }
     ],
     "stats": [
@@ -3053,7 +3325,15 @@
           "过滤"
         ],
         "weight": 395.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Galeking",
+          "de": "Mega-Stolloss",
+          "it": "MegaAggron",
+          "es-ES": "Mega-Aggron",
+          "es-419": "Mega-Aggron",
+          "ko": "메가보스로라"
+        }
       }
     ],
     "stats": [
@@ -3112,7 +3392,15 @@
           "瑜伽之力"
         ],
         "weight": 31.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Charmina",
+          "de": "Mega-Meditalis",
+          "it": "MegaMedicham",
+          "es-ES": "Mega-Medicham",
+          "es-419": "Mega-Medicham",
+          "ko": "메가요가램"
+        }
       }
     ],
     "stats": [
@@ -3169,7 +3457,15 @@
           "威吓"
         ],
         "weight": 44.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Élecsprint",
+          "de": "Mega-Voltenso",
+          "it": "MegaManectric",
+          "es-ES": "Mega-Manectric",
+          "es-419": "Mega-Manectric",
+          "ko": "메가썬더볼트"
+        }
       }
     ],
     "stats": [
@@ -3260,7 +3556,15 @@
           "强壮之颚"
         ],
         "weight": 130.3,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Sharpedo",
+          "de": "Mega-Tohaido",
+          "it": "MegaSharpedo",
+          "es-ES": "Mega-Sharpedo",
+          "es-419": "Mega-Sharpedo",
+          "ko": "메가샤크니아"
+        }
       }
     ],
     "stats": [
@@ -3319,7 +3623,15 @@
           "强行"
         ],
         "weight": 320.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Camérupt",
+          "de": "Mega-Camerupt",
+          "it": "MegaCamerupt",
+          "es-ES": "Mega-Camerupt",
+          "es-419": "Mega-Camerupt",
+          "ko": "메가폭타"
+        }
       }
     ],
     "stats": [
@@ -3410,7 +3722,15 @@
           "妖精皮肤"
         ],
         "weight": 20.6,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Altaria",
+          "de": "Mega-Altaria",
+          "it": "MegaAltaria",
+          "es-ES": "Mega-Altaria",
+          "es-419": "Mega-Altaria",
+          "ko": "메가파비코리"
+        }
       }
     ],
     "stats": [
@@ -3606,7 +3926,15 @@
           "恶作剧之心"
         ],
         "weight": 13.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Branette",
+          "de": "Mega-Banette",
+          "it": "MegaBanette",
+          "es-ES": "Mega-Banette",
+          "es-419": "Mega-Banette",
+          "ko": "메가다크펫"
+        }
       }
     ],
     "stats": [
@@ -3664,7 +3992,15 @@
           "飘浮"
         ],
         "weight": 8.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Éoko",
+          "de": "Mega-Palimpalim",
+          "it": "MegaChimecho",
+          "es-ES": "Mega-Chimecho",
+          "es-419": "Mega-Chimecho",
+          "ko": "메가치렁"
+        }
       }
     ],
     "stats": [
@@ -3721,7 +4057,15 @@
           "魔法镜"
         ],
         "weight": 49.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Absol",
+          "de": "Mega-Absol",
+          "it": "MegaAbsol",
+          "es-ES": "Mega-Absol",
+          "es-419": "Mega-Absol",
+          "ko": "메가앱솔"
+        }
       },
       {
         "name": "超级阿勃梭鲁Ｚ",
@@ -3735,7 +4079,15 @@
           "锋锐"
         ],
         "weight": 49.0,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Absol Z",
+          "de": "Mega-Absol Z",
+          "it": "MegaAbsol Z",
+          "es-ES": "Mega-Absol Z",
+          "es-419": "Mega-Absol Z",
+          "ko": "메가앱솔Z"
+        }
       }
     ],
     "stats": [
@@ -3804,7 +4156,15 @@
           "冰冻皮肤"
         ],
         "weight": 350.2,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Oniglali",
+          "de": "Mega-Firnontor",
+          "it": "MegaGlalie",
+          "es-ES": "Mega-Glalie",
+          "es-419": "Mega-Glalie",
+          "ko": "메가얼음귀신"
+        }
       }
     ],
     "stats": [
@@ -3863,7 +4223,15 @@
           "飞行皮肤"
         ],
         "weight": 112.6,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Drattak",
+          "de": "Mega-Brutalanda",
+          "it": "MegaSalamence",
+          "es-ES": "Mega-Salamence",
+          "es-419": "Mega-Salamence",
+          "ko": "메가보만다"
+        }
       }
     ],
     "stats": [
@@ -3922,7 +4290,15 @@
           "硬爪"
         ],
         "weight": 942.9,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Métalosse",
+          "de": "Mega-Metagross",
+          "it": "MegaMetagross",
+          "es-ES": "Mega-Metagross",
+          "es-419": "Mega-Metagross",
+          "ko": "메가메타그로스"
+        }
       }
     ],
     "stats": [
@@ -4080,7 +4456,15 @@
           "唱反调"
         ],
         "weight": 50.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Étouraptor",
+          "de": "Mega-Staraptor",
+          "it": "MegaStaraptor",
+          "es-ES": "Mega-Staraptor",
+          "es-419": "Mega-Staraptor",
+          "ko": "메가찌르호크"
+        }
       }
     ],
     "stats": [
@@ -4268,7 +4652,15 @@
           "胆量"
         ],
         "weight": 28.3,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Lockpin",
+          "de": "Mega-Schlapor",
+          "it": "MegaLopunny",
+          "es-ES": "Mega-Lopunny",
+          "es-419": "Mega-Lopunny",
+          "ko": "메가이어롭"
+        }
       }
     ],
     "stats": [
@@ -4360,7 +4752,15 @@
           "沙之力"
         ],
         "weight": 95.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Carchacrok",
+          "de": "Mega-Knakrack",
+          "it": "MegaGarchomp",
+          "es-ES": "Mega-Garchomp",
+          "es-419": "Mega-Garchomp",
+          "ko": "메가한카리아스"
+        }
       },
       {
         "name": "超级烈咬陆鲨Ｚ",
@@ -4373,7 +4773,15 @@
           "飘浮"
         ],
         "weight": 99.0,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Carchacrok Z",
+          "de": "Mega-Knakrack Z",
+          "it": "MegaGarchomp Z",
+          "es-ES": "Mega-Garchomp Z",
+          "es-419": "Mega-Garchomp Z",
+          "ko": "메가한카리아스Z"
+        }
       }
     ],
     "stats": [
@@ -4444,7 +4852,15 @@
           "适应力"
         ],
         "weight": 57.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Lucario",
+          "de": "Mega-Lucario",
+          "it": "MegaLucario",
+          "es-ES": "Mega-Lucario",
+          "es-419": "Mega-Lucario",
+          "ko": "메가루카리오"
+        }
       },
       {
         "name": "超级路卡利欧Ｚ",
@@ -4458,7 +4874,15 @@
           "波导防护"
         ],
         "weight": 49.4,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Lucario Z",
+          "de": "Mega-Lucario Z",
+          "it": "MegaLucario Z",
+          "es-ES": "Mega-Lucario Z",
+          "es-419": "Mega-Lucario Z",
+          "ko": "메가루카리오Z"
+        }
       }
     ],
     "stats": [
@@ -4594,7 +5018,15 @@
           "降雪"
         ],
         "weight": 185.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Blizzaroi",
+          "de": "Mega-Rexblisar",
+          "it": "MegaAbomasnow",
+          "es-ES": "Mega-Abomasnow",
+          "es-419": "Mega-Abomasnow",
+          "ko": "메가눈설왕"
+        }
       }
     ],
     "stats": [
@@ -4849,7 +5281,15 @@
           "精神力"
         ],
         "weight": 56.4,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Gallame",
+          "de": "Mega-Galagladi",
+          "it": "MegaGallade",
+          "es-ES": "Mega-Gallade",
+          "es-419": "Mega-Gallade",
+          "ko": "메가엘레이드"
+        }
       }
     ],
     "stats": [
@@ -4908,7 +5348,15 @@
           "降雪"
         ],
         "weight": 29.6,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Momartik",
+          "de": "Mega-Frosdedje",
+          "it": "MegaFroslass",
+          "es-ES": "Mega-Froslass",
+          "es-419": "Mega-Froslass",
+          "ko": "메가눈여아"
+        }
       }
     ],
     "stats": [
@@ -5162,7 +5610,15 @@
           "破格"
         ],
         "weight": 180.3,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Roitiflam",
+          "de": "Mega-Flambirex",
+          "it": "MegaEmboar",
+          "es-ES": "Mega-Emboar",
+          "es-419": "Mega-Emboar",
+          "ko": "메가염무왕"
+        }
       }
     ],
     "stats": [
@@ -5471,7 +5927,15 @@
           "贯穿钻"
         ],
         "weight": 60.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Minotaupe",
+          "de": "Mega-Stalobor",
+          "it": "MegaExcadrill",
+          "es-ES": "Mega-Excadrill",
+          "es-419": "Mega-Excadrill",
+          "ko": "메가몰드류"
+        }
       }
     ],
     "stats": [
@@ -5529,7 +5993,15 @@
           "治愈之心"
         ],
         "weight": 32.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Nanméouïe",
+          "de": "Mega-Ohrdoch",
+          "it": "MegaAudino",
+          "es-ES": "Mega-Audino",
+          "es-419": "Mega-Audino",
+          "ko": "메가다부니"
+        }
       }
     ],
     "stats": [
@@ -5620,7 +6092,15 @@
           "硬壳盔甲"
         ],
         "weight": 230.5,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Brutapode",
+          "de": "Mega-Cerapendra",
+          "it": "MegaScolipede",
+          "es-ES": "Mega-Scolipede",
+          "es-419": "Mega-Scolipede",
+          "ko": "메가펜드라"
+        }
       }
     ],
     "stats": [
@@ -5745,7 +6225,15 @@
           "威吓"
         ],
         "weight": 31.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Baggaïd",
+          "de": "Mega-Irokex",
+          "it": "MegaScrafty",
+          "es-ES": "Mega-Scrafty",
+          "es-419": "Mega-Scrafty",
+          "ko": "메가곤율거니"
+        }
       }
     ],
     "stats": [
@@ -6021,7 +6509,15 @@
           "鳗鳗高升"
         ],
         "weight": 180.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Ohmassacre",
+          "de": "Mega-Zapplarang",
+          "it": "MegaEelektross",
+          "es-ES": "Mega-Eelektross",
+          "es-419": "Mega-Eelektross",
+          "ko": "메가저리더프"
+        }
       }
     ],
     "stats": [
@@ -6080,7 +6576,15 @@
           "穿透"
         ],
         "weight": 69.6,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Lugulabre",
+          "de": "Mega-Skelabra",
+          "it": "MegaChandelure",
+          "es-ES": "Mega-Chandelure",
+          "es-419": "Mega-Chandelure",
+          "ko": "메가샹델라"
+        }
       }
     ],
     "stats": [
@@ -6230,7 +6734,15 @@
           "无形拳"
         ],
         "weight": 330.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Golemastoc",
+          "de": "Mega-Golgantes",
+          "it": "MegaGolurk",
+          "es-ES": "Mega-Golurk",
+          "es-419": "Mega-Golurk",
+          "ko": "메가골루그"
+        }
       }
     ],
     "stats": [
@@ -6355,7 +6867,15 @@
           "防弹"
         ],
         "weight": 90.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Blindépique",
+          "de": "Mega-Brigaron",
+          "it": "MegaChesnaught",
+          "es-ES": "Mega-Chesnaught",
+          "es-419": "Mega-Chesnaught",
+          "ko": "메가브리가론"
+        }
       }
     ],
     "stats": [
@@ -6414,7 +6934,15 @@
           "飘浮"
         ],
         "weight": 39.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Goupelin",
+          "de": "Mega-Fennexis",
+          "it": "MegaDelphox",
+          "es-ES": "Mega-Delphox",
+          "es-419": "Mega-Delphox",
+          "ko": "메가마폭시"
+        }
       }
     ],
     "stats": [
@@ -6473,7 +7001,15 @@
           "变幻自如"
         ],
         "weight": 40.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Amphinobi",
+          "de": "Mega-Quajutsu",
+          "it": "MegaGreninja",
+          "es-ES": "Mega-Greninja",
+          "es-419": "Mega-Greninja",
+          "ko": "메가개굴닌자"
+        }
       }
     ],
     "stats": [
@@ -6603,7 +7139,15 @@
           "火焰鬃毛"
         ],
         "weight": 93.3,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Némélios",
+          "de": "Mega-Pyroleo",
+          "it": "MegaPyroar",
+          "es-ES": "Mega-Pyroar",
+          "es-419": "Mega-Pyroar",
+          "ko": "메가화염레오"
+        }
       }
     ],
     "stats": [
@@ -6660,7 +7204,15 @@
           "妖精气场"
         ],
         "weight": 100.8,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Floette",
+          "de": "Mega-Floette",
+          "it": "MegaFloette",
+          "es-ES": "Mega-Floette",
+          "es-419": "Mega-Floette",
+          "ko": "메가플라엣테"
+        }
       }
     ],
     "stats": [
@@ -6999,7 +7551,15 @@
           "唱反调"
         ],
         "weight": 69.8,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Sepiatroce",
+          "de": "Mega-Calamanero",
+          "it": "MegaMalamar",
+          "es-ES": "Mega-Malamar",
+          "es-419": "Mega-Malamar",
+          "ko": "메가칼라마네로"
+        }
       }
     ],
     "stats": [
@@ -7058,7 +7618,15 @@
           "硬爪"
         ],
         "weight": 100.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Golgopathe",
+          "de": "Mega-Thanathora",
+          "it": "MegaBarbaracle",
+          "es-ES": "Mega-Barbaracle",
+          "es-419": "Mega-Barbaracle",
+          "ko": "메가거북손데스"
+        }
       }
     ],
     "stats": [
@@ -7117,7 +7685,15 @@
           "再生力"
         ],
         "weight": 100.3,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Kravarech",
+          "de": "Mega-Tandrak",
+          "it": "MegaDragalge",
+          "es-ES": "Mega-Dragalge",
+          "es-419": "Mega-Dragalge",
+          "ko": "메가드래캄"
+        }
       }
     ],
     "stats": [
@@ -7339,7 +7915,15 @@
           "无防守"
         ],
         "weight": 25.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Brutalibré",
+          "de": "Mega-Resladero",
+          "it": "MegaHawlucha",
+          "es-ES": "Mega-Hawlucha",
+          "es-419": "Mega-Hawlucha",
+          "ko": "메가루차불"
+        }
       }
     ],
     "stats": [
@@ -7915,7 +8499,15 @@
           "铁拳"
         ],
         "weight": 252.8,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Crabominable",
+          "de": "Mega-Krawell",
+          "it": "MegaCrabominable",
+          "es-ES": "Mega-Crabominable",
+          "es-419": "Mega-Crabominable",
+          "ko": "메가모단단게"
+        }
       }
     ],
     "stats": [
@@ -8284,7 +8876,15 @@
           "硬爪"
         ],
         "weight": 148.0,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Sarmuraï",
+          "de": "Mega-Tectass",
+          "it": "MegaGolisopod",
+          "es-ES": "Mega-Golisopod",
+          "es-419": "Mega-Golisopod",
+          "ko": "메가갑주무사"
+        }
       }
     ],
     "stats": [
@@ -8402,7 +9002,15 @@
           "怒火冲天"
         ],
         "weight": 240.5,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Draïeul",
+          "de": "Mega-Sen-Long",
+          "it": "MegaDrampa",
+          "es-ES": "Mega-Drampa",
+          "es-419": "Mega-Drampa",
+          "ko": "메가할비롱"
+        }
       }
     ],
     "stats": [
@@ -9048,7 +9656,15 @@
           "不服输"
         ],
         "weight": 99.0,
-        "regulation": "M-B"
+        "regulation": "M-B",
+        "localized_names": {
+          "fr": "Méga-Hexadron",
+          "de": "Mega-Legios",
+          "it": "MegaFalinks",
+          "es-ES": "Mega-Falinks",
+          "es-419": "Mega-Falinks",
+          "ko": "메가대여르"
+        }
       }
     ],
     "stats": [
@@ -9976,7 +10592,15 @@
           "辣椒喷发"
         ],
         "weight": 22.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Scovilain",
+          "de": "Mega-Halupenjo",
+          "it": "MegaScovillain",
+          "es-ES": "Mega-Scovillain",
+          "es-419": "Mega-Scovillain",
+          "ko": "메가스코빌런"
+        }
       }
     ],
     "stats": [
@@ -10189,7 +10813,15 @@
           "适应力"
         ],
         "weight": 77.0,
-        "regulation": "M-A"
+        "regulation": "M-A",
+        "localized_names": {
+          "fr": "Méga-Floréclat",
+          "de": "Mega-Lumiflora",
+          "it": "MegaGlimmora",
+          "es-ES": "Mega-Glimmora",
+          "es-419": "Mega-Glimmora",
+          "ko": "메가킬라플로르"
+        }
       }
     ],
     "stats": [
@@ -10379,7 +11011,15 @@
           "热交换"
         ],
         "weight": 315.0,
-        "regulation": "M-C"
+        "regulation": "M-C",
+        "localized_names": {
+          "fr": "Méga-Glaivodo",
+          "de": "Mega-Espinodon",
+          "it": "MegaBaxcalibur",
+          "es-ES": "Mega-Baxcalibur",
+          "es-419": "Mega-Baxcalibur",
+          "ko": "메가드닐레이브"
+        }
       }
     ],
     "stats": [
